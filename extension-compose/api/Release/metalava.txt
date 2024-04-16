@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.extension.compose {
 
-  @com.mapbox.maps.MapboxExperimental public final class ComposeMapInitOptions {
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ComposeMapInitOptions {
     ctor public ComposeMapInitOptions(com.mapbox.maps.MapOptions mapOptions, boolean textureView = false, int antialiasingSampleCount = 1, String mapName = "");
     ctor public ComposeMapInitOptions(float pixelRatio, boolean textureView = false, int antialiasingSampleCount = 1, String mapName = "");
     method public com.mapbox.maps.MapOptions component1();
@@ -82,8 +82,14 @@ package com.mapbox.maps.extension.compose {
   }
 
   public final class MapboxMapKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.MapEvents? mapEvents = null, com.mapbox.maps.extension.compose.ComposeMapInitOptions composeMapInitOptions = com.mapbox.maps.extension.compose.ComposeMapInitOptions(LocalDensity.current.density), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = GesturesSettings({ 
-
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.MapEvents? mapEvents = null, com.mapbox.maps.extension.compose.ComposeMapInitOptions composeMapInitOptions = with(LocalDensity.current, { 
+    return remember({ 
+        return <init>(density)
+    })
+}), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = remember({ 
+    return GesturesSettings({ 
+    
+    })
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope,kotlin.Unit> compass = { Compass() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope,kotlin.Unit> scaleBar = { ScaleBar() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope,kotlin.Unit> logo = { Logo() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope,kotlin.Unit> attribution = { Attribution() }, com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener = DefaultSettingsProvider.defaultOnClickListener, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener, kotlin.jvm.functions.Function0<kotlin.Unit> style = { MapboxStandardStyle() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
   }
 

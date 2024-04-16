@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose
 
 import android.content.Context
+import androidx.compose.runtime.Immutable
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MapView
@@ -17,6 +18,7 @@ import com.mapbox.maps.plugin.Plugin
  * @property mapName Custom name which will be appended to map render related logs. May be useful when using several [MapView]s. Defaults to an empty string.
  */
 @MapboxExperimental
+@Immutable
 public data class ComposeMapInitOptions(
   val mapOptions: MapOptions,
   val textureView: Boolean = false,

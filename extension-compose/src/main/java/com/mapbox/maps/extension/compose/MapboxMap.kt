@@ -56,8 +56,14 @@ import kotlinx.coroutines.awaitCancellation
 public fun MapboxMap(
   modifier: Modifier = Modifier,
   mapEvents: MapEvents? = null,
-  composeMapInitOptions: ComposeMapInitOptions = ComposeMapInitOptions(LocalDensity.current.density),
-  gesturesSettings: GesturesSettings = GesturesSettings { },
+  composeMapInitOptions: ComposeMapInitOptions = with(LocalDensity.current) {
+    remember {
+      ComposeMapInitOptions(density)
+    }
+  },
+  gesturesSettings: GesturesSettings = remember {
+    GesturesSettings { }
+  },
   compass: (@Composable MapCompassScope.() -> Unit) = { Compass() },
   scaleBar: (@Composable MapScaleBarScope.() -> Unit) = { ScaleBar() },
   logo: (@Composable MapLogoScope.() -> Unit) = { Logo() },

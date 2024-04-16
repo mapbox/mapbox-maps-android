@@ -21,7 +21,6 @@ public final class com/mapbox/maps/extension/compose/ComposableSingletons$Mapbox
 }
 
 public final class com/mapbox/maps/extension/compose/ComposeMapInitOptions {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions$Companion;
 	public static final field DEFAULT_ANTIALIASING_SAMPLE_COUNT I
 	public fun <init> (FZILjava/lang/String;)V
