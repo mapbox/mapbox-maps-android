@@ -8,6 +8,8 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.TileCacheBudgetInMegabytes
+import com.mapbox.maps.TileCacheBudgetInTiles
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.sources.generated.RasterArraySource.RasterDataLayer
@@ -317,36 +319,6 @@ public data class PrefetchZoomDelta(public val value: Value) {
      * Default value for [PrefetchZoomDelta], setting default will result in restoring the property value defined in the style.
      */
     public val default: PrefetchZoomDelta = PrefetchZoomDelta(Value.nullValue())
-  }
-}
-
-/**
- * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the tile cache goes over the defined limit, the least recently used tile will be evicted from the in-memory cache. Note that the current implementation does not take into account resources allocated by the visible tiles.
- *
- * @param value the property wrapped in [Value] to be used with native renderer.
- */
-@Immutable
-@MapboxExperimental
-public data class TileCacheBudget(public val value: Value) {
-  /**
-   * Construct the TileCacheBudget with [com.mapbox.maps.TileCacheBudget].
-   */
-  public constructor(value: com.mapbox.maps.TileCacheBudget) : this(ComposeTypeUtils.wrapToValue(value))
-  /**
-   * Construct the TileCacheBudget with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
-   */
-  public constructor(expression: Expression) : this(expression as Value)
-
-  /**
-   * Public companion object.
-   */
-  public companion object {
-    internal const val NAME: String = "tile-cache-budget"
-
-    /**
-     * Default value for [TileCacheBudget], setting default will result in restoring the property value defined in the style.
-     */
-    public val default: TileCacheBudget = TileCacheBudget(Value.nullValue())
   }
 }
 
@@ -842,6 +814,42 @@ public data class GenerateId(public val value: Value) {
      * Default value for [GenerateId], setting default will result in restoring the property value defined in the style.
      */
     public val default: GenerateId = GenerateId(Value.nullValue())
+  }
+}
+
+/**
+ * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the tile cache goes over the defined limit, the least recently used tile will be evicted from the in-memory cache. Note that the current implementation does not take into account resources allocated by the visible tiles.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class TileCacheBudget(public val value: Value) {
+  /**
+   * Construct the TileCacheBudget with [TileCacheBudgetInMegabytes].
+   */
+  public constructor(value: TileCacheBudgetInMegabytes) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the TileCacheBudget with [TileCacheBudgetInTiles].
+   */
+  public constructor(value: TileCacheBudgetInTiles) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the TileCacheBudget with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "tile-cache-budget"
+
+    /**
+     * Default value for [TileCacheBudget], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: TileCacheBudget = TileCacheBudget(Value.nullValue())
   }
 }
 

@@ -4273,7 +4273,8 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TileCacheBudget {
     ctor public TileCacheBudget(com.mapbox.bindgen.Value value);
-    ctor public TileCacheBudget(com.mapbox.maps.TileCacheBudget value);
+    ctor public TileCacheBudget(com.mapbox.maps.TileCacheBudgetInMegabytes value);
+    ctor public TileCacheBudget(com.mapbox.maps.TileCacheBudgetInTiles value);
     ctor public TileCacheBudget(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.generated.TileCacheBudget copy(com.mapbox.bindgen.Value value);

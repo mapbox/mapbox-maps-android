@@ -4607,7 +4607,8 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Sch
 public final class com/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget$Companion;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/TileCacheBudget;)V
+	public fun <init> (Lcom/mapbox/maps/TileCacheBudgetInMegabytes;)V
+	public fun <init> (Lcom/mapbox/maps/TileCacheBudgetInTiles;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun component1 ()Lcom/mapbox/bindgen/Value;
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
