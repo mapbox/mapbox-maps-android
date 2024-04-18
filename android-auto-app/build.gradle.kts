@@ -60,7 +60,8 @@ dependencies {
 
   // Please review the compatibility guide. This app is showcasing the latest features.
   // https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10
-  implementation("com.mapbox.maps:android:10.10.0-beta.1")
+  implementation("com.mapbox.maps:android:10.16.6")
+  implementation("androidx.startup:startup-runtime:1.1.1")
 
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
