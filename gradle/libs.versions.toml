@@ -62,6 +62,7 @@ androidxTest = "1.5.0"
 androidxTestOrchestrator = "1.4.2"
 androidxTestRunner = "1.5.2"
 androidxUiAutomator = "2.2.0"
+androidxStartup = "1.1.1"
 
 squareRetrofit = "2.9.0"
 squareLeakCanary = "2.9.1"
@@ -129,6 +130,7 @@ androidx-testJUnit = { module = "androidx.test.ext:junit", version.ref = "androi
 androidx-testMonitor = { module = "androidx.test:monitor", version.ref = "androidXTestMonitor" }
 androidx-testRunner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 androidx-uiAutomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxUiAutomator" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
 asyncInflater = { module = "androidx.asynclayoutinflater:asynclayoutinflater", version.ref = "asyncInflater" }
 
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
