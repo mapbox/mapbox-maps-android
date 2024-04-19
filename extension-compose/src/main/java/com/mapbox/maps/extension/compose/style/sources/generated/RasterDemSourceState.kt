@@ -40,18 +40,15 @@ public inline fun rememberRasterDemSourceState(
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources#raster_dem)
  *
  * @param sourceId The id of the source state, by default a random generated ID will be used.
- * @param initialBuilderProperties The initial immutable properties of the source.
  * @param initialProperties The initial mutable properties of the source.
  */
 @MapboxExperimental
 public class RasterDemSourceState(
   override val sourceId: String = generateRandomSourceId("raster-dem"),
-  initialBuilderProperties: Map<String, Value> = mapOf(),
-  initialProperties: Map<String, Value> = mapOf(),
+  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
 ) : SourceState(
   sourceId = sourceId,
   sourceType = "raster-dem",
-  builderProperties = initialBuilderProperties.toMutableMap(),
   initialProperties = initialProperties,
 ) {
 
@@ -59,7 +56,7 @@ public class RasterDemSourceState(
    * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
    */
   public var url: Url
-    get() = Url(getBuilderProperty(Url.NAME) ?: Url.default.value)
+    get() = Url(getProperty(Url.NAME) ?: Url.default.value)
     set(value) {
       setBuilderProperty(Url.NAME, value.value)
     }
@@ -68,7 +65,7 @@ public class RasterDemSourceState(
    * An array of one or more tile source URLs, as in the TileJSON spec.
    */
   public var tiles: Tiles
-    get() = Tiles(getBuilderProperty(Tiles.NAME) ?: Tiles.default.value)
+    get() = Tiles(getProperty(Tiles.NAME) ?: Tiles.default.value)
     set(value) {
       setBuilderProperty(Tiles.NAME, value.value)
     }
@@ -79,7 +76,7 @@ public class RasterDemSourceState(
    * a source, no tiles outside of the given bounds are requested by Mapbox GL.
    */
   public var bounds: Bounds
-    get() = Bounds(getBuilderProperty(Bounds.NAME) ?: Bounds.default.value)
+    get() = Bounds(getProperty(Bounds.NAME) ?: Bounds.default.value)
     set(value) {
       setBuilderProperty(Bounds.NAME, value.value)
     }
@@ -88,7 +85,7 @@ public class RasterDemSourceState(
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
    */
   public var minZoom: MinZoom
-    get() = MinZoom(getBuilderProperty(MinZoom.NAME) ?: MinZoom.default.value)
+    get() = MinZoom(getProperty(MinZoom.NAME) ?: MinZoom.default.value)
     set(value) {
       setBuilderProperty(MinZoom.NAME, value.value)
     }
@@ -98,7 +95,7 @@ public class RasterDemSourceState(
    * at the maxzoom are used when displaying the map at higher zoom levels.
    */
   public var maxZoom: MaxZoom
-    get() = MaxZoom(getBuilderProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
+    get() = MaxZoom(getProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
     set(value) {
       setBuilderProperty(MaxZoom.NAME, value.value)
     }
@@ -107,7 +104,7 @@ public class RasterDemSourceState(
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
    */
   public var tileSize: TileSize
-    get() = TileSize(getBuilderProperty(TileSize.NAME) ?: TileSize.default.value)
+    get() = TileSize(getProperty(TileSize.NAME) ?: TileSize.default.value)
     set(value) {
       setBuilderProperty(TileSize.NAME, value.value)
     }
@@ -116,7 +113,7 @@ public class RasterDemSourceState(
    * Contains an attribution to be displayed when the map is shown to a user.
    */
   public var attribution: Attribution
-    get() = Attribution(getBuilderProperty(Attribution.NAME) ?: Attribution.default.value)
+    get() = Attribution(getProperty(Attribution.NAME) ?: Attribution.default.value)
     set(value) {
       setBuilderProperty(Attribution.NAME, value.value)
     }
@@ -125,7 +122,7 @@ public class RasterDemSourceState(
    * The encoding used by this source. Mapbox Terrain RGB is used by default
    */
   public var encoding: Encoding
-    get() = Encoding(getBuilderProperty(Encoding.NAME) ?: Encoding.default.value)
+    get() = Encoding(getProperty(Encoding.NAME) ?: Encoding.default.value)
     set(value) {
       setBuilderProperty(Encoding.NAME, value.value)
     }
@@ -134,7 +131,7 @@ public class RasterDemSourceState(
    * A setting to determine whether a source's tiles are cached locally.
    */
   public var volatile: Volatile
-    get() = Volatile(getBuilderProperty(Volatile.NAME) ?: Volatile.default.value)
+    get() = Volatile(getProperty(Volatile.NAME) ?: Volatile.default.value)
     set(value) {
       setBuilderProperty(Volatile.NAME, value.value)
     }
@@ -222,7 +219,6 @@ public class RasterDemSourceState(
       restore = {
         RasterDemSourceState(
           sourceId = it.sourcedId,
-          initialBuilderProperties = it.builderProperties,
           initialProperties = it.cachedProperties,
         )
       }

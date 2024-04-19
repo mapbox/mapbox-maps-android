@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,19 +44,23 @@ import com.mapbox.maps.extension.compose.style.layers.generated.TextField
 import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
 import com.mapbox.maps.extension.compose.style.layers.generated.Transition
 import com.mapbox.maps.extension.compose.style.projection.Projection
+import com.mapbox.maps.extension.compose.style.projection.Projection.Companion.GLOBE
+import com.mapbox.maps.extension.compose.style.projection.Projection.Companion.MERCATOR
+import com.mapbox.maps.extension.compose.style.projection.Projection.Companion.default
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 
 /**
  * Example to showcase usage of runtime styling with compose.
  */
 @OptIn(MapboxExperimental::class)
 public class StyleCompositionActivity : ComponentActivity() {
-  private val projections =
-    // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
-    // default so the map changes visually.
-    listOf(Projection.default, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR)
+  // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
+  // default so the map changes visually.
+  private val projections = listOf(default, MERCATOR, GLOBE, MERCATOR)
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -85,10 +88,6 @@ public class StyleCompositionActivity : ComponentActivity() {
         mutableStateOf(Color.Red)
       }
 
-      val geoJsonSource = rememberGeoJsonSourceState {
-        data = GeoJSONData(centerLocation)
-      }
-
       val animatedLocation by animateValueAsState(
         targetValue = centerLocation,
         typeConverter = PointToVector,
@@ -96,9 +95,8 @@ public class StyleCompositionActivity : ComponentActivity() {
         label = "Animate location"
       )
 
-      LaunchedEffect(animatedLocation) {
-        geoJsonSource.data = GeoJSONData(animatedLocation)
-      }
+      val geoJsonSource = rememberGeoJsonSourceState()
+      geoJsonSource.data = GeoJSONData(animatedLocation)
 
       val mapViewportState = rememberMapViewportState {
         setCameraOptions {
@@ -265,16 +263,12 @@ public class StyleCompositionActivity : ComponentActivity() {
     private var count = 0
     private const val OFFSET = 0.03
   }
+
   @OptIn(MapboxExperimental::class)
-  private fun Projection.friendlyName(): String {
-    return when (this) {
-      Projection.GLOBE -> "globe"
-
-      Projection.MERCATOR -> "mercator"
-
-      Projection.default -> "default"
-
-      else -> "Unknown"
-    }
+  private fun Projection.friendlyName(): String = when (this) {
+    GLOBE -> "globe"
+    MERCATOR -> "mercator"
+    default -> "default"
+    else -> "Unknown"
   }
 }

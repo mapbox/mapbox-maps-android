@@ -40,18 +40,15 @@ public inline fun rememberImageSourceState(
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources#image)
  *
  * @param sourceId The id of the source state, by default a random generated ID will be used.
- * @param initialBuilderProperties The initial immutable properties of the source.
  * @param initialProperties The initial mutable properties of the source.
  */
 @MapboxExperimental
 public class ImageSourceState(
   override val sourceId: String = generateRandomSourceId("image"),
-  initialBuilderProperties: Map<String, Value> = mapOf(),
-  initialProperties: Map<String, Value> = mapOf(),
+  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
 ) : SourceState(
   sourceId = sourceId,
   sourceType = "image",
-  builderProperties = initialBuilderProperties.toMutableMap(),
   initialProperties = initialProperties,
 ) {
 
@@ -60,7 +57,7 @@ public class ImageSourceState(
    * to be loaded directly during runtime.
    */
   public var url: Url
-    get() = Url(getBuilderProperty(Url.NAME) ?: Url.default.value)
+    get() = Url(getProperty(Url.NAME) ?: Url.default.value)
     set(value) {
       setBuilderProperty(Url.NAME, value.value)
     }
@@ -71,7 +68,7 @@ public class ImageSourceState(
    * value exceeds 85 degrees or falls below -85 degrees.
    */
   public var coordinates: Coordinates
-    get() = Coordinates(getBuilderProperty(Coordinates.NAME) ?: Coordinates.default.value)
+    get() = Coordinates(getProperty(Coordinates.NAME) ?: Coordinates.default.value)
     set(value) {
       setBuilderProperty(Coordinates.NAME, value.value)
     }
@@ -101,7 +98,6 @@ public class ImageSourceState(
       restore = {
         ImageSourceState(
           sourceId = it.sourcedId,
-          initialBuilderProperties = it.builderProperties,
           initialProperties = it.cachedProperties,
         )
       }

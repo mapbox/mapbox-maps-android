@@ -3663,29 +3663,26 @@ package com.mapbox.maps.extension.compose.style.projection {
 package com.mapbox.maps.extension.compose.style.sources {
 
   @com.mapbox.maps.MapboxExperimental public abstract class SourceState {
-    method protected final com.mapbox.bindgen.Value? getBuilderProperty(String name);
-    method protected final kotlinx.coroutines.flow.MutableStateFlow<com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData> getCachedGeoJsonSourceData();
+    method protected final com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData getGeoJSONData();
     method protected final com.mapbox.bindgen.Value? getProperty(String name);
     method public String getSourceId();
     method protected final void setBuilderProperty(String name, com.mapbox.bindgen.Value value);
+    method protected final void setGeoJSONData(com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData);
     method protected final void setProperty(String name, com.mapbox.bindgen.Value value);
-    property protected final kotlinx.coroutines.flow.MutableStateFlow<com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData> cachedGeoJsonSourceData;
+    property protected final com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData;
     property public String sourceId;
   }
 
   @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler @kotlinx.parcelize.TypeParceler public static final class SourceState.Holder implements android.os.Parcelable {
-    ctor public SourceState.Holder(String sourcedId, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> builderProperties, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData);
+    ctor public SourceState.Holder(String sourcedId, java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> cachedProperties, com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData);
     method public String component1();
-    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component2();
-    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component3();
-    method public com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData component4();
-    method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder copy(String sourcedId, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> builderProperties, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData);
-    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getBuilderProperties();
-    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getCachedProperties();
+    method public java.util.List<kotlin.Triple<java.lang.String,java.lang.Boolean,com.mapbox.bindgen.Value>> component2();
+    method public com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData component3();
+    method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder copy(String sourcedId, java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> cachedProperties, com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData);
+    method public java.util.List<kotlin.Triple<java.lang.String,java.lang.Boolean,com.mapbox.bindgen.Value>> getCachedProperties();
     method public com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData getGeoJSONData();
     method public String getSourcedId();
-    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> builderProperties;
-    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> cachedProperties;
+    property public final java.util.List<kotlin.Triple<java.lang.String,java.lang.Boolean,com.mapbox.bindgen.Value>> cachedProperties;
     property public final com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData;
     property public final String sourcedId;
   }
@@ -3874,7 +3871,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class GeoJsonSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
-    ctor public GeoJsonSourceState(String sourceId = generateRandomSourceId("geojson"), com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData initialData = GeoJSONData.default, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialBuilderProperties = mapOf(), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    ctor public GeoJsonSourceState(String sourceId = generateRandomSourceId("geojson"), com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData initialData = GeoJSONData.default, java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> initialProperties = emptyList());
     method public com.mapbox.maps.extension.compose.style.sources.generated.Attribution getAttribution();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Buffer getBuffer();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Cluster getCluster();
@@ -3933,7 +3930,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class ImageSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
-    ctor public ImageSourceState(String sourceId = generateRandomSourceId("image"), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialBuilderProperties = mapOf(), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    ctor public ImageSourceState(String sourceId = generateRandomSourceId("image"), java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> initialProperties = emptyList());
     method public com.mapbox.maps.extension.compose.style.sources.generated.Coordinates getCoordinates();
     method public com.mapbox.maps.extension.compose.style.sources.generated.PrefetchZoomDelta getPrefetchZoomDelta();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Url getUrl();
@@ -4056,7 +4053,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class PromoteId {
     ctor public PromoteId(com.mapbox.bindgen.Value value);
-    ctor public PromoteId(com.mapbox.maps.extension.compose.style.sources.generated.PromoteId value);
+    ctor public PromoteId(com.mapbox.maps.extension.style.types.PromoteId value);
     ctor public PromoteId(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.generated.PromoteId copy(com.mapbox.bindgen.Value value);
@@ -4071,7 +4068,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class RasterArraySourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
-    ctor public RasterArraySourceState(String sourceId = generateRandomSourceId("raster-array"), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialBuilderProperties = mapOf(), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    ctor public RasterArraySourceState(String sourceId = generateRandomSourceId("raster-array"), java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> initialProperties = emptyList());
     method public com.mapbox.maps.extension.compose.style.sources.generated.Attribution getAttribution();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Bounds getBounds();
     method public com.mapbox.maps.extension.compose.style.sources.generated.MaxZoom getMaxZoom();
@@ -4115,7 +4112,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class RasterDemSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
-    ctor public RasterDemSourceState(String sourceId = generateRandomSourceId("raster-dem"), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialBuilderProperties = mapOf(), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    ctor public RasterDemSourceState(String sourceId = generateRandomSourceId("raster-dem"), java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> initialProperties = emptyList());
     method public com.mapbox.maps.extension.compose.style.sources.generated.Attribution getAttribution();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Bounds getBounds();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Encoding getEncoding();
@@ -4193,7 +4190,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class RasterSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
-    ctor public RasterSourceState(String sourceId = generateRandomSourceId("raster"), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialBuilderProperties = mapOf(), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    ctor public RasterSourceState(String sourceId = generateRandomSourceId("raster"), java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> initialProperties = emptyList());
     method public com.mapbox.maps.extension.compose.style.sources.generated.Attribution getAttribution();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Bounds getBounds();
     method public com.mapbox.maps.extension.compose.style.sources.generated.MaxOverscaleFactorForParentTiles getMaxOverscaleFactorForParentTiles();
@@ -4385,7 +4382,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class VectorSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
-    ctor public VectorSourceState(String sourceId = generateRandomSourceId("vector"), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialBuilderProperties = mapOf(), java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    ctor public VectorSourceState(String sourceId = generateRandomSourceId("vector"), java.util.List<? extends kotlin.Triple<java.lang.String,java.lang.Boolean,? extends com.mapbox.bindgen.Value>> initialProperties = emptyList());
     method public com.mapbox.maps.extension.compose.style.sources.generated.Attribution getAttribution();
     method public com.mapbox.maps.extension.compose.style.sources.generated.Bounds getBounds();
     method public com.mapbox.maps.extension.compose.style.sources.generated.MaxOverscaleFactorForParentTiles getMaxOverscaleFactorForParentTiles();

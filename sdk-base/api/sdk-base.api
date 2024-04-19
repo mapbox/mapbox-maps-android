@@ -127,6 +127,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun removeStyleLayer (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleModel (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSource (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
+	public fun removeStyleSourceUnchecked (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;

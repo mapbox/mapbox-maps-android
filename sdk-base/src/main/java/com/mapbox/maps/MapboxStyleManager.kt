@@ -686,6 +686,19 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   }
 
   /**
+   * Removes an existing style source without checking if it's being used by any other component.
+   *
+   * @param sourceId An identifier of the style source to remove.
+   */
+  @CallSuper
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  open fun removeStyleSourceUnchecked(sourceId: String): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.removeStyleSourceUnchecked(sourceId)
+  }
+
+  /**
    * Checks whether a given style source exists.
    *
    * @param sourceId A style source identifier.

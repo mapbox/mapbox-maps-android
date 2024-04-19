@@ -42,7 +42,6 @@ public inline fun rememberGeoJsonSourceState(
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources#geojson)
  *
  * @param sourceId The id of the source state, by default a random generated ID will be used.
- * @param initialBuilderProperties The initial immutable properties of the source.
  * @param initialProperties The initial mutable properties of the source.
  * @param initialData The initial [GeoJSONData] of the source.
  */
@@ -50,12 +49,10 @@ public inline fun rememberGeoJsonSourceState(
 public class GeoJsonSourceState(
   override val sourceId: String = generateRandomSourceId("geojson"),
   initialData: GeoJSONData = GeoJSONData.default,
-  initialBuilderProperties: Map<String, Value> = mapOf(),
-  initialProperties: Map<String, Value> = mapOf(),
+  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
 ) : SourceState(
   sourceId = sourceId,
   sourceType = "geojson",
-  builderProperties = initialBuilderProperties.toMutableMap(),
   initialProperties = initialProperties,
   initialGeoJsonData = initialData
 ) {
@@ -67,9 +64,9 @@ public class GeoJsonSourceState(
    * If [data] is invalid - `MapLoadingError` with `type = metadata` will be invoked.
    */
   public var data: GeoJSONData
-    get() = cachedGeoJsonSourceData.value
+    get() = geoJSONData
     set(value) {
-      cachedGeoJsonSourceData.value = value
+      geoJSONData = value
     }
 
   /**
@@ -77,7 +74,7 @@ public class GeoJsonSourceState(
    * levels).
    */
   public var maxZoom: MaxZoom
-    get() = MaxZoom(getBuilderProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
+    get() = MaxZoom(getProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
     set(value) {
       setBuilderProperty(MaxZoom.NAME, value.value)
     }
@@ -86,7 +83,7 @@ public class GeoJsonSourceState(
    * Contains an attribution to be displayed when the map is shown to a user.
    */
   public var attribution: Attribution
-    get() = Attribution(getBuilderProperty(Attribution.NAME) ?: Attribution.default.value)
+    get() = Attribution(getProperty(Attribution.NAME) ?: Attribution.default.value)
     set(value) {
       setBuilderProperty(Attribution.NAME, value.value)
     }
@@ -97,7 +94,7 @@ public class GeoJsonSourceState(
    * rendering artifacts near tile edges and slower performance.
    */
   public var buffer: Buffer
-    get() = Buffer(getBuilderProperty(Buffer.NAME) ?: Buffer.default.value)
+    get() = Buffer(getProperty(Buffer.NAME) ?: Buffer.default.value)
     set(value) {
       setBuilderProperty(Buffer.NAME, value.value)
     }
@@ -106,7 +103,7 @@ public class GeoJsonSourceState(
    * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
    */
   public var tolerance: Tolerance
-    get() = Tolerance(getBuilderProperty(Tolerance.NAME) ?: Tolerance.default.value)
+    get() = Tolerance(getProperty(Tolerance.NAME) ?: Tolerance.default.value)
     set(value) {
       setBuilderProperty(Tolerance.NAME, value.value)
     }
@@ -121,7 +118,7 @@ public class GeoJsonSourceState(
    * - `point_count_abbreviated` An abbreviated point count
    */
   public var cluster: Cluster
-    get() = Cluster(getBuilderProperty(Cluster.NAME) ?: Cluster.default.value)
+    get() = Cluster(getProperty(Cluster.NAME) ?: Cluster.default.value)
     set(value) {
       setBuilderProperty(Cluster.NAME, value.value)
     }
@@ -131,7 +128,7 @@ public class GeoJsonSourceState(
    * to the width of a tile.
    */
   public var clusterRadius: ClusterRadius
-    get() = ClusterRadius(getBuilderProperty(ClusterRadius.NAME) ?: ClusterRadius.default.value)
+    get() = ClusterRadius(getProperty(ClusterRadius.NAME) ?: ClusterRadius.default.value)
     set(value) {
       setBuilderProperty(ClusterRadius.NAME, value.value)
     }
@@ -142,7 +139,7 @@ public class GeoJsonSourceState(
    * levels so setting clusterMaxZoom to 14 means the clusters will be displayed until z15.
    */
   public var clusterMaxZoom: ClusterMaxZoom
-    get() = ClusterMaxZoom(getBuilderProperty(ClusterMaxZoom.NAME) ?: ClusterMaxZoom.default.value)
+    get() = ClusterMaxZoom(getProperty(ClusterMaxZoom.NAME) ?: ClusterMaxZoom.default.value)
     set(value) {
       setBuilderProperty(ClusterMaxZoom.NAME, value.value)
     }
@@ -160,7 +157,7 @@ public class GeoJsonSourceState(
    * `{"sum": [["+", ["accumulated"], ["get", "sum"]], ["get", "scalerank"]]}`
    */
   public var clusterProperties: ClusterProperties
-    get() = ClusterProperties(getBuilderProperty(ClusterProperties.NAME) ?: ClusterProperties.default.value)
+    get() = ClusterProperties(getProperty(ClusterProperties.NAME) ?: ClusterProperties.default.value)
     set(value) {
       setBuilderProperty(ClusterProperties.NAME, value.value)
     }
@@ -169,7 +166,7 @@ public class GeoJsonSourceState(
    * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
    */
   public var lineMetrics: LineMetrics
-    get() = LineMetrics(getBuilderProperty(LineMetrics.NAME) ?: LineMetrics.default.value)
+    get() = LineMetrics(getProperty(LineMetrics.NAME) ?: LineMetrics.default.value)
     set(value) {
       setBuilderProperty(LineMetrics.NAME, value.value)
     }
@@ -179,7 +176,7 @@ public class GeoJsonSourceState(
    * assigned based on its index in the `features` array, over-writing any previous values.
    */
   public var generateId: GenerateId
-    get() = GenerateId(getBuilderProperty(GenerateId.NAME) ?: GenerateId.default.value)
+    get() = GenerateId(getProperty(GenerateId.NAME) ?: GenerateId.default.value)
     set(value) {
       setBuilderProperty(GenerateId.NAME, value.value)
     }
@@ -189,7 +186,7 @@ public class GeoJsonSourceState(
    * an object of the form `{<sourceLayer>: <propertyName>}`.
    */
   public var promoteId: PromoteId
-    get() = PromoteId(getBuilderProperty(PromoteId.NAME) ?: PromoteId.default.value)
+    get() = PromoteId(getProperty(PromoteId.NAME) ?: PromoteId.default.value)
     set(value) {
       setBuilderProperty(PromoteId.NAME, value.value)
     }
@@ -232,7 +229,6 @@ public class GeoJsonSourceState(
         GeoJsonSourceState(
           sourceId = it.sourcedId,
           initialData = it.geoJSONData,
-          initialBuilderProperties = it.builderProperties,
           initialProperties = it.cachedProperties,
         )
       }

@@ -49,7 +49,7 @@ internal class LayerNode(
   }
 
   private fun detachSource() {
-    sourceState?.detachFromLayer(layerId)
+    sourceState?.detachFromLayer(layerId, map)
   }
 
   override fun onRemoved(parent: MapNode) {

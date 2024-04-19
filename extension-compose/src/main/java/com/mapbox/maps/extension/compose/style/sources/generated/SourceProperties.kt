@@ -243,7 +243,7 @@ public data class PromoteId(public val value: Value) {
   /**
    * Construct the PromoteId with [PromoteId].
    */
-  public constructor(value: PromoteId) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: com.mapbox.maps.extension.style.types.PromoteId) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the PromoteId with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
