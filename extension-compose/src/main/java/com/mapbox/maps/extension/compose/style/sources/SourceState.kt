@@ -1,12 +1,11 @@
 package com.mapbox.maps.extension.compose.style.sources
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.mapbox.bindgen.Value
-import com.mapbox.geojson.Feature
-import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.compose.style.internal.GeoJSONDataParceler
+import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
 import com.mapbox.maps.logD
@@ -22,7 +21,6 @@ import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.TypeParceler
 
@@ -382,68 +380,6 @@ public abstract class SourceState internal constructor(
     val cachedProperties: List<Triple<String, Boolean, Value>>,
     val geoJSONData: GeoJSONData
   ) : Parcelable
-
-  private object ValueParceler : Parceler<Value> {
-    override fun create(parcel: Parcel): Value {
-      return Value.fromJson(parcel.readString()!!).value!!
-    }
-
-    override fun Value.write(parcel: Parcel, flags: Int) {
-      parcel.writeString(this.toJson())
-    }
-  }
-
-  private object GeoJSONDataParceler : Parceler<GeoJSONData> {
-    override fun create(parcel: Parcel): GeoJSONData {
-      val typeInfo = GeoJSONSourceData.Type.valueOf(parcel.readString()!!)
-      return when (typeInfo) {
-        GeoJSONSourceData.Type.FEATURE -> GeoJSONData(Feature.fromJson(parcel.readString()!!))
-        GeoJSONSourceData.Type.GEOMETRY -> GeoJSONData(
-          Feature.fromJson(parcel.readString()!!).geometry()!!
-        )
-
-        GeoJSONSourceData.Type.LIST -> {
-          val size = parcel.readInt()
-          val list = mutableListOf<Feature>()
-          repeat(size) {
-            list.add(Feature.fromJson(parcel.readString()!!))
-          }
-          GeoJSONData(list)
-        }
-
-        GeoJSONSourceData.Type.STRING -> GeoJSONData(parcel.readString()!!)
-        else -> throw IllegalStateException("Cannot create GeoJSONData from parcel $parcel")
-      }
-    }
-
-    override fun GeoJSONData.write(parcel: Parcel, flags: Int) {
-      val typeInfo = data.typeInfo.name
-      parcel.writeSerializable(typeInfo)
-      when (data.typeInfo) {
-        GeoJSONSourceData.Type.FEATURE -> {
-          parcel.writeString(data.feature.toJson())
-        }
-
-        GeoJSONSourceData.Type.GEOMETRY -> {
-          // wrap into a feature to be able to use fromJson constructor.
-          parcel.writeString(Feature.fromGeometry(data.geometry).toJson())
-        }
-
-        GeoJSONSourceData.Type.LIST -> {
-          parcel.writeInt(data.list.size)
-          data.list.forEach { parcel.writeString(it.toJson()) }
-        }
-
-        GeoJSONSourceData.Type.STRING -> {
-          parcel.writeString(data.string)
-        }
-
-        else -> {
-          Unit
-        }
-      }
-    }
-  }
 
   /**
    * Save the current SourceState to the [Holder] class.

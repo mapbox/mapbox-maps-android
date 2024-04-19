@@ -175,6 +175,16 @@
                 android:name="@string/category"
                 android:value="@string/category_basic" />
         </activity>
+        <activity
+            android:name=".examples.style.StyleStatesActivity"
+            android:description="@string/description_style_states"
+            android:exported="true"
+            android:label="@string/activity_style_states"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
     </application>
 
 </manifest>

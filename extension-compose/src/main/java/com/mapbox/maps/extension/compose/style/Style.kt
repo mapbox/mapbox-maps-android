@@ -10,6 +10,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.extension.compose.style.internal.StyleConfig
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
@@ -84,6 +85,7 @@ public fun GenericStyle(
   layerPositions: Map<LayerPosition, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
   configs: Map<String, Map<String, Value>> = emptyMap(),
   projection: Projection = Projection.default,
+  atmosphereState: AtmosphereState = AtmosphereState.default,
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -96,12 +98,16 @@ public fun GenericStyle(
         MapStyleNode(
           style = style,
           mapboxMap = mapApplier.mapView.mapboxMap,
-          projection = projection
+          projection = projection,
+          atmosphereState = atmosphereState,
         )
       },
       update = {
         update(projection) {
           updateProjection(projection)
+        }
+        update(atmosphereState) {
+          updateAtmosphere(atmosphereState)
         }
       }
     ) {

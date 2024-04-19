@@ -7,6 +7,7 @@ import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleDataLoadedType
 import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
+import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.projection.Projection
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
@@ -27,6 +28,7 @@ internal class MapStyleNode(
   val style: String,
   val mapboxMap: MapboxMap,
   private val projection: Projection,
+  var atmosphereState: AtmosphereState,
 ) : MapNode() {
 
   val coroutineScope =
@@ -63,6 +65,7 @@ internal class MapStyleNode(
     logD(TAG, "onAttached: parent=$parent")
     updateStyle(style)
     updateProjection(projection)
+    updateAtmosphere(atmosphereState)
   }
 
   override fun onRemoved(parent: MapNode) {
@@ -81,6 +84,11 @@ internal class MapStyleNode(
     }
   }
 
+  override fun onClear() {
+    super.onClear()
+    atmosphereState.applier.detach()
+  }
+
   private fun updateStyle(style: String) {
     logD(TAG, "loadStyle $style started")
     mapboxMap.loadStyle(style) {
@@ -97,6 +105,18 @@ internal class MapStyleNode(
           }.onError {
             Log.e(TAG, "Error $it when applying $projection projection")
           }
+      }
+    }
+  }
+
+  internal fun updateAtmosphere(atmosphereState: AtmosphereState) {
+    // we have to detach (in a sense of cancelling property collector jobs) the previous state
+    // before attaching the new state; otherwise the jobs will be duplicated
+    this.atmosphereState.applier.detach()
+    this.atmosphereState = atmosphereState
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        atmosphereState.applier.attachTo(mapboxMap)
       }
     }
   }
