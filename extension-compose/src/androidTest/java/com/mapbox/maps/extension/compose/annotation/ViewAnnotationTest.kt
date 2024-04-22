@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose.annotation
 
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -47,6 +46,7 @@ public class ViewAnnotationTest {
     ) {
       Text(VIEW_ANNOTATION_TEXT)
     }
+
     composeTestRule.waitUntil(timeoutMillis = VIEW_APPEAR_TIMEOUT_MS, condition = {
       composeTestRule
         .onAllNodesWithText(VIEW_ANNOTATION_TEXT)
@@ -129,14 +129,15 @@ public class ViewAnnotationTest {
         mapEvents = idleCallback?.let { MapEvents(onMapIdle = idleCallback) }
       ) {
         ViewAnnotation(
-          layoutParams = ViewGroup.LayoutParams(
-            100, 100
-          ),
           options = viewAnnotationOptions {
             geometry(annotationCenter)
             annotationAnchor {
               anchor(ViewAnnotationAnchor.BOTTOM)
             }
+            // specifying the size here because when composeTestRule adds view annotations,
+            // view layout is not yet attached (all of them - mapView / viewAnnotationView / rootView)
+            width(100.0)
+            height(100.0)
             allowOverlap(false)
             visible(visible)
           }

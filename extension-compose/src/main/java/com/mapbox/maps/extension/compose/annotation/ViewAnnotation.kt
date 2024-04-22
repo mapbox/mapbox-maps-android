@@ -67,10 +67,6 @@ public fun ViewAnnotation(
   options: ViewAnnotationOptions,
   modifier: Modifier = Modifier,
   onUpdatedListener: OnViewAnnotationUpdatedListener? = null,
-  layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(
-    FrameLayout.LayoutParams.WRAP_CONTENT,
-    FrameLayout.LayoutParams.WRAP_CONTENT
-  ),
   content: @Composable () -> Unit,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
@@ -82,7 +78,10 @@ public fun ViewAnnotation(
         mapApplier?.mapView?.viewAnnotationManager ?: error("Error adding view annotation")
 
       val composeView = ComposeView(mapApplier.mapView.context).apply {
-        this.layoutParams = layoutParams
+        this.layoutParams = ViewGroup.LayoutParams(
+          FrameLayout.LayoutParams.WRAP_CONTENT,
+          FrameLayout.LayoutParams.WRAP_CONTENT
+        )
       }
 
       composeView.apply {

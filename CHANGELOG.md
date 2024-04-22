@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * [compose] Remove `locationComponentSettings` from `MapboxMap` composable function, `MapEffect` with location component API should be used instead. More compose-friendly location component API will be introduced in future releases.
 * [compose] Remove `TileCacheBudget(com.mapbox.maps.TileCacheBudget)` constructor and introduce `TileCacheBudget(TileCacheBudgetInMegabytes)` and `TileCacheBudget(TileCacheBudgetInTiles)` constructor instead.
+* [compose] Remove `layoutParams` from `ViewAnnotation` composable function, the internal `ComposeView` wrapping the `ViewAnnotation.content` will always use `WRAP_CONTENT`; In case of tests where the assertion happens before the measure, user can force the content size using `ViewAnnotationOptions.width/height` APIs.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.

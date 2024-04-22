@@ -133,7 +133,7 @@ public final class com/mapbox/maps/extension/compose/animation/viewport/MapViewp
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt {
-	public static final fun ViewAnnotation (Lcom/mapbox/maps/ViewAnnotationOptions;Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;Landroid/view/ViewGroup$LayoutParams;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ViewAnnotation (Lcom/mapbox/maps/ViewAnnotationOptions;Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupKt {
