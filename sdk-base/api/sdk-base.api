@@ -33,6 +33,10 @@ public final class com/mapbox/maps/ImageHolder$Creator : android/os/Parcelable$C
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public abstract interface class com/mapbox/maps/MapLoadingErrorDelegate {
+	public abstract fun sendMapLoadingError (Lcom/mapbox/maps/MapLoadingError;)V
+}
+
 public final class com/mapbox/maps/MapboxAnnotationException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 }
@@ -90,6 +94,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun addStyleLayer (Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleModel (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleSource (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public final fun getMapLoadingErrorDelegate ()Lcom/mapbox/maps/MapLoadingErrorDelegate;
 	public final fun getPixelRatio ()F
 	public fun getStyleAtmosphereProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleDefaultCamera ()Lcom/mapbox/maps/CameraOptions;
@@ -128,6 +133,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun removeStyleModel (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSource (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSourceUnchecked (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
+	public final fun setMapLoadingErrorDelegate (Lcom/mapbox/maps/MapLoadingErrorDelegate;)V
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;

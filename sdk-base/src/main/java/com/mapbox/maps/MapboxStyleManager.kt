@@ -98,6 +98,14 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     }
 
   /**
+   * For internal usage.
+   *
+   * @suppress
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  var mapLoadingErrorDelegate: MapLoadingErrorDelegate? = null
+
+  /**
    * Returns the map style's transition options. By default, the style parser will attempt
    * to read the style default transition options, if any, fallback-ing to an immediate transition
    * otherwise. Transition options can be overridden via [setStyleTransition], but the options are

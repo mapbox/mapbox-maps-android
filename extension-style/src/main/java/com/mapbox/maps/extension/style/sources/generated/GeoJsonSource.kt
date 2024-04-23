@@ -4,15 +4,17 @@ package com.mapbox.maps.extension.style.sources.generated
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.*
-import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.TileCacheBudget
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -22,6 +24,7 @@ import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import org.json.JSONObject
 import java.util.*
 
 /**
@@ -48,33 +51,53 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     Handler(workerThread.looper)
   }
 
-  private fun setGeoJson(geoJson: GeoJson, dataId: String) {
+  private val mainHandler by lazy {
+    Handler(Looper.getMainLooper())
+  }
+
+  private fun setDataAsync(data: GeoJSONSourceData, dataId: String) {
     delegate?.let { style ->
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
-        style.setStyleGeoJSONSourceData(
-          /* sourceId = */ sourceId,
-          /* dataId = */ dataId,
-          /* data = */ toGeoJsonData(geoJson)
-        )
+        var nativeExpected: Expected<String, None>? = null
+        var nativeException: Throwable? = null
+        try {
+          nativeExpected = style.setStyleGeoJSONSourceData(sourceId, dataId, data)
+        } catch (e: Throwable) {
+          nativeException = e
+        }
+        if (nativeExpected?.isError == true || nativeException != null) {
+          val errorJsonString = JSONObject().apply {
+            put("dataId", dataId)
+            put("message", "setStyleGeoJSONSourceData error: ${nativeExpected?.error ?: nativeException?.message}")
+          }.toString()
+          val errorTime = Date()
+          logE(TAG, errorJsonString)
+          mainHandler.post {
+            style.mapLoadingErrorDelegate?.sendMapLoadingError(
+              MapLoadingError(
+                MapLoadingErrorType.SOURCE,
+                errorJsonString,
+                sourceId,
+                null,
+                errorTime
+              )
+            )
+          }
+        }
       }
     }
+  }
+
+  private fun setGeoJson(geoJson: GeoJson, dataId: String) {
+    setDataAsync(toGeoJsonData(geoJson), dataId)
     currentGeoJson = geoJson
     currentDataId = dataId
     currentData = null
   }
 
   private fun setData(data: String, dataId: String) {
-    delegate?.let { style ->
-      workerHandler.removeCallbacksAndMessages(null)
-      workerHandler.post {
-        style.setStyleGeoJSONSourceData(
-          /* sourceId = */ sourceId,
-          /* dataId = */ dataId,
-          /* data = */ GeoJSONSourceData.valueOf(data)
-        )
-      }
-    }
+    setDataAsync(GeoJSONSourceData.valueOf(data), dataId)
     currentData = data
     currentDataId = dataId
     currentGeoJson = null
@@ -107,7 +130,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    * [value] could be an URL to a GeoJSON file, or an inline GeoJSON.
    *
    * The data will be scheduled and applied on a worker thread and no validation happens synchronously.
-   * If [value] is invalid - `MapLoadingError` with `type = metadata` will be invoked.
+   * If [value] is invalid - `MapLoadingError` with `type = source` will be invoked.
    *
    * @param value an URL to a GeoJSON file, or an inline GeoJSON.
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
@@ -367,7 +390,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to `SourceDataLoaded` (optionally pass `data-id` to filter the events)
-   * or `MapLoadingError` with `type = metadata` if data parsing error has occurred.
+   * or `MapLoadingError` with `type = source` if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Feature is parsed on a worker thread, please make sure
    * the Feature is immutable as well as all collections that are used to build it.
@@ -384,7 +407,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to `SourceDataLoaded` (optionally pass `data-id` to filter the events)
-   * or `MapLoadingError` with `type = metadata` if data parsing error has occurred.
+   * or `MapLoadingError` with `type = source` if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The FeatureCollection is parsed on a worker thread, please make sure
    * the FeatureCollection is immutable as well as all collections that are used to build it.
@@ -401,7 +424,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to `SourceDataLoaded` (optionally pass `data-id` to filter the events)
-   * or `MapLoadingError` with `type = metadata` if data parsing error has occurred.
+   * or `MapLoadingError` with `type = source` if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Geometry is parsed on a worker thread, please make sure
    * the Geometry is immutable as well as all collections that are used to build it.
@@ -439,7 +462,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * [value] could be an URL to a GeoJSON file, or an inline GeoJSON.
      *
      * The data will be scheduled and applied on a worker thread and no validation happens synchronously.
-     * If [value] is invalid - `MapLoadingError` with `type = metadata` will be invoked.
+     * If [value] is invalid - `MapLoadingError` with `type = source` will be invoked.
      *
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
@@ -879,7 +902,7 @@ fun geoJsonSource(
  *
  * In order to capture events when actual data is drawn on the map please refer to [Observer] API
  * and listen to `SourceDataLoaded` (optionally pass `data-id` with the data update call
- * to filter the events) or `MapLoadingError` with `type = metadata`
+ * to filter the events) or `MapLoadingError` with `type = source`
  * if data parsing error has occurred.
  */
 fun geoJsonSource(

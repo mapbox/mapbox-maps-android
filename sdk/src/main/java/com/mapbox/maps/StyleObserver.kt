@@ -14,7 +14,8 @@ internal class StyleObserver(
   private val styleManager: StyleManager,
   private val styleLoadedListener: Style.OnStyleLoaded,
   private val nativeObserver: NativeObserver,
-  private val pixelRatio: Float
+  private val pixelRatio: Float,
+  private val mapLoadingErrorDelegate: MapLoadingErrorDelegate,
 ) : StyleLoadedCallback, MapLoadingErrorCallback, StyleDataLoadedCallback {
 
   private var userStyleLoadedListener: Style.OnStyleLoaded? = null
@@ -118,7 +119,7 @@ internal class StyleObserver(
   override fun run(eventData: StyleDataLoaded) {
     when (eventData.type) {
       StyleDataLoadedType.STYLE -> {
-        preLoadedStyle = Style(styleManager, pixelRatio).also {
+        preLoadedStyle = Style(styleManager, pixelRatio, mapLoadingErrorDelegate).also {
           styleDataStyleLoadedListener?.onStyleLoaded(it)
         }
         styleDataStyleLoadedListener = null

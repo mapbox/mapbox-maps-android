@@ -99,6 +99,8 @@ internal class NativeObserver(
     override fun hashCode(): Int = Objects.hash(super.hashCode(), resubscriber)
   }
 
+  private val mapLoadingErrorCallbackSet = CopyOnWriteArraySet<MapLoadingErrorCallback>()
+
   private val cancelableSet = CopyOnWriteArraySet<ExtendedCancelable>()
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   // ExtendedCancelable is private so we expose the set as generic Cancelable set
@@ -422,15 +424,29 @@ internal class NativeObserver(
     listener = mapIdleListener,
   )
 
+  /**
+   * This method differs from similar other ones.
+   *
+   * We allow sending [MapLoadingErrorCallback] from GeoJsonSource directly from our code
+   * when exception happens during marshalling and initial parsing on worker thread.
+   * In order to trigger user's [mapLoadingErrorCallback] when [sendMapLoadingError] happens we
+   * store them in [mapLoadingErrorCallbackSet] and remove when the user unsubscribes and [onCancel] is triggered.
+   */
   fun subscribeMapLoadingError(
     mapLoadingErrorCallback: MapLoadingErrorCallback,
     onCancel: (() -> Unit)? = null,
     mapLoadingErrorListener: OnMapLoadErrorListener? = null,
-  ): Cancelable = ExtendedCancelable(
-    observable.subscribe(mapLoadingErrorCallback),
-    onCancel = onCancel,
-    listener = mapLoadingErrorListener,
-  )
+  ): Cancelable {
+    mapLoadingErrorCallbackSet.add(mapLoadingErrorCallback)
+    return ExtendedCancelable(
+      observable.subscribe(mapLoadingErrorCallback),
+      onCancel = {
+        mapLoadingErrorCallbackSet.remove(mapLoadingErrorCallback)
+        onCancel?.invoke()
+      },
+      listener = mapLoadingErrorListener,
+    )
+  }
 
   fun subscribeStyleLoaded(
     styleLoadedCallback: StyleLoadedCallback,
@@ -567,5 +583,9 @@ internal class NativeObserver(
   fun onDestroy() {
     cancelableSet.forEach(Cancelable::cancel)
     resubscribableSet.forEach(Cancelable::cancel)
+  }
+
+  fun sendMapLoadingError(error: MapLoadingError) {
+    mapLoadingErrorCallbackSet.forEach { it.run(error) }
   }
 }

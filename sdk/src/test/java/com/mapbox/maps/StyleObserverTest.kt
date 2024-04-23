@@ -35,7 +35,8 @@ class StyleObserverTest {
       styleManager = mockk(relaxUnitFun = true),
       styleLoadedListener = mainStyleLoadedListener,
       nativeObserver = nativeObserver,
-      pixelRatio = 1.0f
+      pixelRatio = 1.0f,
+      mockk()
     )
   }
 
@@ -49,7 +50,7 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleObserverCreate() {
-    StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f)
+    StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f, mockk())
     verify { nativeObserver.subscribeStyleLoaded(any()) }
     verify { nativeObserver.subscribeMapLoadingError(any()) }
     verify { nativeObserver.subscribeStyleDataLoaded(any()) }
@@ -60,7 +61,7 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleObserverDestroy() {
-    val styleObserver = StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f)
+    val styleObserver = StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f, mockk())
     styleObserver.onDestroy()
     assertTrue(styleObserver.cancelableList.isEmpty())
   }

@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.
+* Handle updating geo-json data exceptions and propagate them to `MapboxMap.subscribeMapLoadingError(mapLoadingErrorCallback)`.
 
 ## Bug fixes 🐞
 * [compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised. 

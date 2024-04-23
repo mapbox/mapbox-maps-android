@@ -18,8 +18,16 @@ import com.mapbox.geojson.Feature
  */
 class Style internal constructor(
   styleManager: StyleManager,
-  pixelRatio: Float
+  pixelRatio: Float,
 ) : MapboxStyleManager(styleManager, pixelRatio) {
+
+  internal constructor(
+    styleManager: StyleManager,
+    pixelRatio: Float,
+    mapLoadingErrorDelegate: MapLoadingErrorDelegate,
+  ) : this(styleManager, pixelRatio) {
+    super.mapLoadingErrorDelegate = mapLoadingErrorDelegate
+  }
 
   @Volatile
   private var isStyleValid = true

@@ -118,13 +118,18 @@ class MapboxMap :
   ) : super(nativeMap.map, pixelRatio) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
+    val mapLoadingErrorDelegate = MapLoadingErrorDelegate { error ->
+      this.nativeObserver.sendMapLoadingError(error)
+    }
+    super.mapLoadingErrorDelegate = mapLoadingErrorDelegate
     // we register our internal native observers here and
     // this is critical to always have our observers registered first
     this.styleObserver = StyleObserver(
       this.nativeMap.map,
       { style -> this.style = style },
       nativeObserver,
-      pixelRatio
+      pixelRatio,
+      mapLoadingErrorDelegate
     )
   }
 
