@@ -12,7 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.ViewAnnotationAnchorConfig
 import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.R
@@ -26,11 +29,61 @@ internal class ViewAnnotationNode(
   val view: View,
   var updatedListener: OnViewAnnotationUpdatedListener?,
 ) : MapNode() {
-  override fun onAttached(parent: MapNode) {
-    viewAnnotationManager.apply {
-      updatedListener?.let {
-        addOnViewAnnotationUpdatedListener(it)
+  // The internal listener used to forward the specific view related events to update listener
+  private val internalViewAnnotationUpdatedListener = object : OnViewAnnotationUpdatedListener {
+    override fun onViewAnnotationAnchorCoordinateUpdated(
+      view: View,
+      anchorCoordinate: Point
+    ) {
+      if (view == this@ViewAnnotationNode.view) {
+        updatedListener?.onViewAnnotationAnchorCoordinateUpdated(view, anchorCoordinate)
       }
+    }
+
+    override fun onViewAnnotationAnchorUpdated(view: View, anchor: ViewAnnotationAnchorConfig) {
+      if (view == this@ViewAnnotationNode.view) {
+        updatedListener?.onViewAnnotationAnchorUpdated(view, anchor)
+      }
+    }
+
+    override fun onViewAnnotationPositionUpdated(
+      view: View,
+      leftTopCoordinate: ScreenCoordinate,
+      width: Double,
+      height: Double
+    ) {
+      if (view == this@ViewAnnotationNode.view) {
+        updatedListener?.onViewAnnotationPositionUpdated(view, leftTopCoordinate, width, height)
+      }
+    }
+
+    override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
+      if (view == this@ViewAnnotationNode.view) {
+        updatedListener?.onViewAnnotationVisibilityUpdated(view, visible)
+      }
+    }
+  }
+
+  // Keep track of whether internal listener is registered
+  private var isObservingUpdate = false
+
+  override fun onAttached(parent: MapNode) {
+    updateAndSubscribe(updatedListener)
+  }
+
+  internal fun updateAndSubscribe(listener: OnViewAnnotationUpdatedListener?) {
+    updatedListener = listener
+    // if listener is valid and we have not started the internal observer, we add internal update listener to forward events
+    if (listener != null && !isObservingUpdate) {
+      viewAnnotationManager.addOnViewAnnotationUpdatedListener(internalViewAnnotationUpdatedListener)
+      isObservingUpdate = true
+    }
+    // if listener is null, we don't need to forward events, and we should remove the internal update listener
+    if (listener == null && isObservingUpdate) {
+      viewAnnotationManager.removeOnViewAnnotationUpdatedListener(
+        internalViewAnnotationUpdatedListener
+      )
+      isObservingUpdate = false
     }
   }
 
@@ -44,11 +97,12 @@ internal class ViewAnnotationNode(
 
   private fun cleanUp() {
     viewAnnotationManager.apply {
-      updatedListener?.let {
-        removeOnViewAnnotationUpdatedListener(it)
+      if (isObservingUpdate) {
+        removeOnViewAnnotationUpdatedListener(internalViewAnnotationUpdatedListener)
       }
+      removeViewAnnotation(view = view)
     }
-    viewAnnotationManager.removeViewAnnotation(view = view)
+    updatedListener = null
   }
 }
 
@@ -127,7 +181,7 @@ public fun ViewAnnotation(
         )
       }
       update(onUpdatedListener) { onUpdatedListener ->
-        this.updatedListener = onUpdatedListener
+        updateAndSubscribe(onUpdatedListener)
       }
     }
   )

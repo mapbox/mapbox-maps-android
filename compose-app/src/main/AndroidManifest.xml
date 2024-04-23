@@ -100,6 +100,17 @@
                 android:value="@string/category_annotation" />
         </activity>
         <activity
+            android:name=".examples.annotation.DynamicViewAnnotationActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_dynamic_view_annotation"
+            android:exported="true"
+            android:label="@string/activity_dynamic_view_annotation"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
+        <activity
             android:name=".examples.animation.MapViewportAnimationsActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_map_viewport_animation"

@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised. 
 * [compose] Remember default `ComposeMapInitOptions` and `GesturesSettings` so that we don't reconstruct these classes when `MapboxMap` recomposes.
+* [compose] Filter relevant events for `ViewAnnotation.onUpdatedListener` and skip events from other view annotations.
 
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
