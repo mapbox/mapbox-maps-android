@@ -68,7 +68,8 @@ open class Snapshotter {
           snapshotStyleCallback?.onDidFinishLoadingStyle(
             Style(
               coreSnapshotter,
-              pixelRatio
+              pixelRatio,
+              mapLoadingErrorDelegate = { }
             )
           )
         }
@@ -80,7 +81,8 @@ open class Snapshotter {
         snapshotStyleCallback?.onDidFullyLoadStyle(
           Style(
             coreSnapshotter,
-            pixelRatio
+            pixelRatio,
+            mapLoadingErrorDelegate = { }
           )
         )
         styleLoadedCancelable?.cancel()

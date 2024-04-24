@@ -30,7 +30,7 @@ class StyleTest {
   fun setUp() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    style = Style(styleManager, 1.0f)
+    style = Style(styleManager, 1.0f, mapLoadingErrorDelegate = { })
   }
 
   @After

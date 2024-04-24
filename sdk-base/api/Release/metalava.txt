@@ -22,6 +22,10 @@ package com.mapbox.maps {
     method public com.mapbox.maps.ImageHolder from(android.graphics.Bitmap bitmap);
   }
 
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public fun interface MapLoadingErrorDelegate {
+    method public void sendMapLoadingError(com.mapbox.maps.MapLoadingError error);
+  }
+
   public final class MapboxAnnotationException extends java.lang.RuntimeException {
     ctor public MapboxAnnotationException(String? exceptionText);
   }
@@ -64,7 +68,7 @@ package com.mapbox.maps {
   }
 
   public class MapboxStyleManager {
-    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public MapboxStyleManager(com.mapbox.maps.StyleManager styleManager, float pixelRatio);
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public MapboxStyleManager(com.mapbox.maps.StyleManager styleManager, float pixelRatio, com.mapbox.maps.MapLoadingErrorDelegate mapLoadingErrorDelegate);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<com.mapbox.geojson.Feature> features);
     method @CallSuper @MainThread public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, com.mapbox.maps.Image image, boolean sdf);
     method @CallSuper @MainThread public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, com.mapbox.maps.Image image);
@@ -79,6 +83,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleLayer(com.mapbox.bindgen.Value parameters, com.mapbox.maps.LayerPosition? position);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleModel(String modelId, String modelUri);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleSource(String sourceId, com.mapbox.bindgen.Value properties);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.MapLoadingErrorDelegate getMapLoadingErrorDelegate();
     method public final float getPixelRatio();
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleAtmosphereProperty(String property);
     method @CallSuper @MainThread public com.mapbox.maps.CameraOptions getStyleDefaultCamera();
@@ -139,6 +144,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public boolean styleSourceExists(String sourceId);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<com.mapbox.geojson.Feature> features);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImageSourceImage(String sourceId, com.mapbox.maps.Image image);
+    property @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.MapLoadingErrorDelegate mapLoadingErrorDelegate;
     property public final float pixelRatio;
     property @CallSuper @MainThread public com.mapbox.maps.CameraOptions styleDefaultCamera;
     property @CallSuper @MainThread public String styleJSON;

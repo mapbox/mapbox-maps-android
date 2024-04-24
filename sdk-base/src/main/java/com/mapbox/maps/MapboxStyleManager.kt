@@ -24,6 +24,11 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    * Current pixel ratio.
    */
   val pixelRatio: Float,
+  /**
+   * For internal usage.
+   */
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val mapLoadingErrorDelegate: MapLoadingErrorDelegate,
 ) {
   /**
    * Returns the map style's default camera, if any, or a default camera otherwise.
@@ -96,14 +101,6 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
       ThreadChecker.throwIfNotMainThread()
       return styleManager.styleSources
     }
-
-  /**
-   * For internal usage.
-   *
-   * @suppress
-   */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
-  var mapLoadingErrorDelegate: MapLoadingErrorDelegate? = null
 
   /**
    * Returns the map style's transition options. By default, the style parser will attempt

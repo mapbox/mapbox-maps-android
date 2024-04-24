@@ -79,7 +79,7 @@ public final class com/mapbox/maps/MapboxStyleException : java/lang/RuntimeExcep
 }
 
 public class com/mapbox/maps/MapboxStyleManager {
-	public fun <init> (Lcom/mapbox/maps/StyleManager;F)V
+	public fun <init> (Lcom/mapbox/maps/StyleManager;FLcom/mapbox/maps/MapLoadingErrorDelegate;)V
 	public fun addGeoJSONSourceFeatures (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public final fun addImage (Ljava/lang/String;Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;
 	public final fun addImage (Ljava/lang/String;Landroid/graphics/Bitmap;Z)Lcom/mapbox/bindgen/Expected;
@@ -133,7 +133,6 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun removeStyleModel (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSource (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSourceUnchecked (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
-	public final fun setMapLoadingErrorDelegate (Lcom/mapbox/maps/MapLoadingErrorDelegate;)V
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;

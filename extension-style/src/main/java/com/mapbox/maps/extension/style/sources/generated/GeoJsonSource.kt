@@ -74,7 +74,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
           val errorTime = Date()
           logE(TAG, errorJsonString)
           mainHandler.post {
-            style.mapLoadingErrorDelegate?.sendMapLoadingError(
+            style.mapLoadingErrorDelegate.sendMapLoadingError(
               MapLoadingError(
                 MapLoadingErrorType.SOURCE,
                 errorJsonString,
