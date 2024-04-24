@@ -5,8 +5,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.forEachGesture
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.input.pointer.PointerInputScope
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.maps.MapView
@@ -31,6 +34,7 @@ import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.animation.camera
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlin.math.abs
@@ -93,38 +97,39 @@ public class MapCompassScope internal constructor(
         }
     }
 
-    val interactionSource = remember { MutableInteractionSource() }
-
     AnimatedVisibility(
       visible = compassVisibility,
       enter = fadeIn(animationSpec = tween(durationMillis = 500)),
       exit = fadeOut(animationSpec = tween(durationMillis = 500, delayMillis = 500)),
       modifier = with(boxScope) {
-          Modifier
-              .padding(contentPadding)
-              .then(modifier)
-              .align(alignment)
-              .rotate(compassBearing)
-              .clickable(
-                  interactionSource = interactionSource,
-                  indication = null
-              ) {
-                  if (resetToNorthUponClick) {
-                      // Reset bearing to 0 and set the animation owner to GESTURES so that it can interrupt current viewport.
-                      mapView.camera.easeTo(
-                          cameraOptions { bearing(0.0) },
-                          MapAnimationOptions.mapAnimationOptions {
-                              owner(
-                                  MapAnimationOwnerRegistry.GESTURES
-                              )
-                          }
-                      )
-                  }
+        Modifier
+          .padding(contentPadding)
+          .then(modifier)
+          .align(alignment)
+          .rotate(compassBearing)
+          .pointerInput(Unit) {
+            detectTapWithoutConsume {
+              if (resetToNorthUponClick) {
+                resetToFacingNorth()
               }
+            }
+          }
       }
     ) {
       content()
     }
+  }
+
+  private fun resetToFacingNorth() {
+    // Reset bearing to 0 and set the animation owner to GESTURES so that it can interrupt current viewport.
+    mapView.camera.easeTo(
+      cameraOptions { bearing(0.0) },
+      MapAnimationOptions.mapAnimationOptions {
+        owner(
+          MapAnimationOwnerRegistry.GESTURES
+        )
+      }
+    )
   }
 
   private fun isFacingNorth(rotation: Float): Boolean {
@@ -133,4 +138,18 @@ public class MapCompassScope internal constructor(
       this >= 359.0 || this <= 1.0
     }
   }
+
+  private suspend fun PointerInputScope.detectTapWithoutConsume(onTap: () -> Unit) =
+    coroutineScope {
+      forEachGesture {
+        awaitPointerEventScope {
+          awaitFirstDown()
+          val up = waitForUpOrCancellation()
+          // invoke onTap only if tap-up was not canceled
+          if (up != null) {
+            onTap.invoke()
+          }
+        }
+      }
+    }
 }

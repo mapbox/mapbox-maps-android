@@ -1,6 +1,7 @@
 package com.mapbox.maps.compose.testapp.examples.ornaments
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -9,6 +10,8 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
@@ -61,6 +65,7 @@ public class OrnamentCustomisationActivity : ComponentActivity() {
       var showBottomBar by remember {
         mutableStateOf(true)
       }
+      val context = LocalContext.current
       MapboxMapComposeTheme {
         ExampleScaffold(
           floatingActionButton = {
@@ -143,8 +148,17 @@ public class OrnamentCustomisationActivity : ComponentActivity() {
           MapboxMap(
             modifier = Modifier.fillMaxSize(),
             compass = {
-              // Add a default Compass at default position.
-              Compass(modifier = Modifier.padding(scaffoldPadding))
+              // Add a default Compass at with padding from scaffold, and also add
+              // a clickable without visual touch effects
+              val interactionSource = remember { MutableInteractionSource() }
+              Compass(
+                modifier = Modifier.padding(scaffoldPadding).clickable(
+                  interactionSource = interactionSource,
+                  indication = null
+                ) {
+                  Toast.makeText(context, "Clicked on Compass!", Toast.LENGTH_SHORT).show()
+                }
+              )
               // Add another custom Compass.
               Compass(
                 modifier = Modifier.padding(scaffoldPadding),
