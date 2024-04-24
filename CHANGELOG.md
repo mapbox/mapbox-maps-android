@@ -12,12 +12,30 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.
 * Handle updating geo-json data exceptions and propagate them to `MapboxMap.subscribeMapLoadingError(mapLoadingErrorCallback)`.
+* Add statistics for graphics pipeline program creation.
+* Enable `raster-elevation` for tiled raster sources.
+* Improve tile processing performance by filtering out tiny polygon holes.
+* Reduce number of evaluations of step expression in `line-gradient` properties.
+* Add support for `line-trim-offset` with `line-pattern`.
+* Enable two dimensional data handling in Mapbox Raster tiles.
+* Trim zoom ranges for the style at tileset descriptor resolving.
+* Extend `SymbolLayer.iconColorSaturation` range from [0, 1] to [-1, 1] and change default value to 0.
+* Reduce time spent on model layer re-evaluation during light change.
 
 ## Bug fixes 🐞
 * [compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised. 
 * [compose] Remember default `ComposeMapInitOptions` and `GesturesSettings` so that we don't reconstruct these classes when `MapboxMap` recomposes.
 * [compose] Filter relevant events for `ViewAnnotation.onUpdatedListener` and skip events from other view annotations.
 * Fix `Snapshotter.cameraForCoordinates` arguments `padding`, `bearing` and `pitch` to be nullable. 
+* Fix config with format expression that contains text property overrides.
+* Make non-vector tile parsing cancellable.
+* Move cutoff opacity calculation to CPU side.
+* Fix icon/pattern missing issue if the missing image is only added after map gets rendered.
+* Introduce a dedicated thread for 3d landmarks parsing.
+* Fix crash on start when no free disk space left.
+
+## Dependencies
+* Update gl-native to v11.4.0-beta.1 and common to v24.4.0-beta.1.
 
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
