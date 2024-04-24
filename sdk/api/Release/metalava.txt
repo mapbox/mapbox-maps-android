@@ -392,7 +392,7 @@ package com.mapbox.maps {
   public class Snapshotter {
     ctor public Snapshotter(android.content.Context context, com.mapbox.maps.MapSnapshotOptions options, com.mapbox.maps.SnapshotOverlayOptions overlayOptions = com.mapbox.maps.SnapshotOverlayOptions());
     ctor public Snapshotter(android.content.Context context, com.mapbox.maps.MapSnapshotOptions options);
-    method public final com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets padding, double bearing, double pitch);
+    method public final com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? padding, Double? bearing, Double? pitch);
     method public final void cancel();
     method public static final void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);
     method public final com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions options);

@@ -258,9 +258,9 @@ open class Snapshotter {
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
-    padding: EdgeInsets,
-    bearing: Double,
-    pitch: Double
+    padding: EdgeInsets?,
+    bearing: Double?,
+    pitch: Double?
   ): CameraOptions {
     return coreSnapshotter.cameraForCoordinates(coordinates, padding, bearing, pitch)
   }

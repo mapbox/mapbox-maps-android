@@ -405,7 +405,7 @@ public class com/mapbox/maps/Snapshotter {
 	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/MapSnapshotOptions;Lcom/mapbox/maps/SnapshotOverlayOptions;)V
 	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/MapSnapshotOptions;Lcom/mapbox/maps/SnapshotOverlayOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ljava/lang/ref/WeakReference;Lcom/mapbox/maps/MapSnapshotOptions;Lcom/mapbox/maps/SnapshotOverlayOptions;Lcom/mapbox/maps/MapSnapshotter;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;DD)Lcom/mapbox/maps/CameraOptions;
+	public final fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
 	public final fun cancel ()V
 	public static final fun clearData (Lcom/mapbox/maps/AsyncOperationResultCallback;)V
 	public final fun coordinateBoundsForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBounds;
