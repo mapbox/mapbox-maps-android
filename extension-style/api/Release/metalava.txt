@@ -4085,6 +4085,35 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public static com.mapbox.maps.extension.style.layers.generated.SkyLayer skyLayer(String layerId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.SkyLayerDsl,kotlin.Unit> block);
   }
 
+  @UiThread public final class SlotLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.SlotLayerDsl {
+    ctor public SlotLayer(String layerId);
+    method public String getLayerId();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
+    method public String? getSlot();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getVisibility();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
+    method public com.mapbox.maps.extension.style.layers.generated.SlotLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.SlotLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.SlotLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.SlotLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.generated.SlotLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+    property public String layerId;
+    property public Double? maxZoom;
+    property public Double? minZoom;
+    property public String? slot;
+    property public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? visibility;
+    property public com.mapbox.maps.extension.style.expressions.generated.Expression? visibilityAsExpression;
+  }
+
+  @com.mapbox.maps.extension.style.types.LayersDsl public interface SlotLayerDsl {
+    method public com.mapbox.maps.extension.style.layers.generated.SlotLayer slot(String slot);
+  }
+
+  public final class SlotLayerKt {
+    method public static com.mapbox.maps.extension.style.layers.generated.SlotLayer slotLayer(String layerId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.SlotLayerDsl,kotlin.Unit> block);
+  }
+
   @UiThread public final class SymbolLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.SymbolLayerDsl {
     ctor public SymbolLayer(String layerId, String sourceId);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);

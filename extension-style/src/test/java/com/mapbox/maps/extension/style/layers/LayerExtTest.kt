@@ -3,11 +3,13 @@ package com.mapbox.maps.extension.style.layers
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.CustomLayerRenderParameters
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.ShadowStyleManager
+import com.mapbox.maps.extension.style.layers.generated.slotLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import io.mockk.*
 import org.junit.After
@@ -108,5 +110,27 @@ class LayerExtTest {
     layer.bindTo(style)
     assertTrue(layer.isPersistent()!!)
     verify { style.isStyleLayerPersistent("id") }
+  }
+
+  @Test
+  fun testSlotLayerAdd() {
+    val layerId = "id"
+    val slotName = "customSlot"
+    val layer = slotLayer(layerId) {
+      slot(slotName)
+    }
+    style.addLayer(layer)
+    verify(exactly = 1) {
+      style.addStyleLayer(
+        Value.valueOf(
+          hashMapOf(
+            "id" to Value(layerId),
+            "slot" to Value(slotName),
+            "type" to Value("slot"),
+          )
+        ),
+        any()
+      )
+    }
   }
 }

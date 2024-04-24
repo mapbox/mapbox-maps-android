@@ -52,6 +52,7 @@ fun MapboxStyleManager.getLayer(layerId: String): Layer? {
         }
       }
     )
+    "slot" -> SlotLayer(layerId)
     else -> {
       logE(TAG, "Layer type: $type unknown.")
       null

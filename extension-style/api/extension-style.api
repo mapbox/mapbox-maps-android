@@ -3387,6 +3387,34 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayerKt {
 	public static final fun skyLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 }
 
+public final class com/mapbox/maps/extension/style/layers/generated/SlotLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/SlotLayerDsl {
+	public fun <init> (Ljava/lang/String;)V
+	public fun getLayerId ()Ljava/lang/String;
+	public fun getMaxZoom ()Ljava/lang/Double;
+	public fun getMinZoom ()Ljava/lang/Double;
+	public fun getSlot ()Ljava/lang/String;
+	public fun getVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+	public fun getVisibilityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public synthetic fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+	public synthetic fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/layers/generated/SlotLayerDsl {
+	public abstract fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/SlotLayerKt {
+	public static final fun slotLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SlotLayer;
+}
+
 public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl {
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V

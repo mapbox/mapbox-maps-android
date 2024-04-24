@@ -12,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.
 * Handle updating geo-json data exceptions and propagate them to `MapboxMap.subscribeMapLoadingError(mapLoadingErrorCallback)`.
+* Introduce `SlotLayer` in Style DSL.
 * Add statistics for graphics pipeline program creation.
 * Enable `raster-elevation` for tiled raster sources.
 * Improve tile processing performance by filtering out tiny polygon holes.
