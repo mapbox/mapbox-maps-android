@@ -80,6 +80,8 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleCustomLayer(String layerId, com.mapbox.maps.CustomLayerHost layerHost, com.mapbox.maps.LayerPosition? layerPosition);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleCustomRasterSource(String sourceId, com.mapbox.maps.CustomRasterSourceOptions options);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleImage(String imageId, float scale, com.mapbox.maps.Image image, boolean sdf, java.util.List<com.mapbox.maps.ImageStretches> stretchX, java.util.List<com.mapbox.maps.ImageStretches> stretchY, com.mapbox.maps.ImageContent? content);
+    method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleImportFromJSON(String importId, String json, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? config, com.mapbox.maps.ImportPosition? importPosition);
+    method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleImportFromURI(String importId, String uri, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? config, com.mapbox.maps.ImportPosition? importPosition);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleLayer(com.mapbox.bindgen.Value parameters, com.mapbox.maps.LayerPosition? position);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleModel(String modelId, String modelUri);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleSource(String sourceId, com.mapbox.bindgen.Value properties);
@@ -114,6 +116,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomRasterSourceTile(String sourceId, com.mapbox.maps.CanonicalTileID tileId);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,java.lang.Boolean> isStyleLayerPersistent(String layerId);
     method @CallSuper @MainThread public boolean isStyleLoaded();
+    method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> moveStyleImport(String importId, com.mapbox.maps.ImportPosition? importPosition);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> moveStyleLayer(String layerId, com.mapbox.maps.LayerPosition? layerPosition);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<java.lang.String> featureIds);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleImage(String imageId);
@@ -144,6 +147,8 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public boolean styleSourceExists(String sourceId);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<com.mapbox.geojson.Feature> features);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImageSourceImage(String sourceId, com.mapbox.maps.Image image);
+    method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImportWithJSON(String importId, String json, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? config);
+    method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImportWithURI(String importId, String uri, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? config);
     property @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.MapLoadingErrorDelegate mapLoadingErrorDelegate;
     property public final float pixelRatio;
     property @CallSuper @MainThread public com.mapbox.maps.CameraOptions styleDefaultCamera;

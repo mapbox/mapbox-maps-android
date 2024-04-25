@@ -446,6 +446,8 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun addStyleCustomLayer (Ljava/lang/String;Lcom/mapbox/maps/CustomLayerHost;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleCustomRasterSource (Ljava/lang/String;Lcom/mapbox/maps/CustomRasterSourceOptions;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleImage (Ljava/lang/String;FLcom/mapbox/maps/Image;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)Lcom/mapbox/bindgen/Expected;
+	public fun addStyleImportFromJSON (Ljava/lang/String;Ljava/lang/String;Ljava/util/HashMap;Lcom/mapbox/maps/ImportPosition;)Lcom/mapbox/bindgen/Expected;
+	public fun addStyleImportFromURI (Ljava/lang/String;Ljava/lang/String;Ljava/util/HashMap;Lcom/mapbox/maps/ImportPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleLayer (Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleModel (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleSource (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
@@ -478,6 +480,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun isStyleLayerPersistent (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLoaded ()Z
 	public final fun isValid ()Z
+	public fun moveStyleImport (Ljava/lang/String;Lcom/mapbox/maps/ImportPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun moveStyleLayer (Ljava/lang/String;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun removeGeoJSONSourceFeatures (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleImage (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
@@ -507,6 +510,8 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun styleSourceExists (Ljava/lang/String;)Z
 	public fun updateGeoJSONSourceFeatures (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun updateStyleImageSourceImage (Ljava/lang/String;Lcom/mapbox/maps/Image;)Lcom/mapbox/bindgen/Expected;
+	public fun updateStyleImportWithJSON (Ljava/lang/String;Ljava/lang/String;Ljava/util/HashMap;)Lcom/mapbox/bindgen/Expected;
+	public fun updateStyleImportWithURI (Ljava/lang/String;Ljava/lang/String;Ljava/util/HashMap;)Lcom/mapbox/bindgen/Expected;
 }
 
 public final class com/mapbox/maps/Style$Companion {

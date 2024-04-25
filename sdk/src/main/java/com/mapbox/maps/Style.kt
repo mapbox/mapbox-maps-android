@@ -231,6 +231,109 @@ class Style internal constructor(
   }
 
   /**
+   * Adds new import to current style, loaded from a JSON string.
+   *
+   * @param importId Identifier of import to update.
+   * @param json The JSON string to be loaded directly as the import.
+   * @param config A map containing the configuration options of the import.
+   * @param importPosition The import will be positioned according to the ImportPosition parameters. If not specified, then the import is moved to the top of the import stack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MainThread
+  override fun addStyleImportFromJSON(
+    importId: String,
+    json: String,
+    config: HashMap<String, Value>?,
+    importPosition: ImportPosition?
+  ): Expected<String, None> {
+    checkNativeStyle("addStyleImportFromJSON")
+    return super.addStyleImportFromJSON(importId, json, config, importPosition)
+  }
+
+  /**
+   * Adds new import to current style, loaded from an URI.
+   *
+   * @param importId Identifier of import to update.
+   * @param uri URI of the import.
+   * @param config A map containing the configuration options of the import.
+   * @param importPosition The import will be positioned according to the ImportPosition parameters. If not specified, then the import is moved to the top of the import stack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MainThread
+  override fun addStyleImportFromURI(
+    importId: String,
+    uri: String,
+    config: HashMap<String, Value>?,
+    importPosition: ImportPosition?
+  ): Expected<String, None> {
+    checkNativeStyle("addStyleImportFromURI")
+    return super.addStyleImportFromURI(importId, uri, config, importPosition)
+  }
+
+  /**
+   * Updates an existing import in the style.
+   * The function replaces the content of the import, with the content loaded from the provided data value.
+   * The configuration values of the import are merged with the configuration provided in the update.
+   *
+   * @param importId Identifier of import to update.
+   * @param json The JSON string to be loaded directly as the import.
+   * @param config A map containing the configuration options of the import.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MainThread
+  override fun updateStyleImportWithJSON(
+    importId: String,
+    json: String,
+    config: HashMap<String, Value>?
+  ): Expected<String, None> {
+    checkNativeStyle("updateStyleImportWithJSON")
+    return super.updateStyleImportWithJSON(
+      importId, json, config
+    )
+  }
+
+  /**
+   * Updates an existing import in the style.
+   * The function replaces the content of the import, with the content loaded from the provided URI.
+   * The configuration values of the import are merged with the configuration provided in the update.
+   *
+   * @param importId Identifier of import to update.
+   * @param uri URI of the import.
+   * @param config A map containing the configuration options of the import.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MainThread
+  override fun updateStyleImportWithURI(
+    importId: String,
+    uri: String,
+    config: HashMap<String, Value>?
+  ): Expected<String, None> {
+    checkNativeStyle("updateStyleImportWithURI")
+    return super.updateStyleImportWithURI(importId, uri, config)
+  }
+
+  /**
+   * Moves import to position before another import, specified with `beforeId`. Order of imported styles corresponds to order of their layers.
+   *
+   * @param importId Identifier of import to move.
+   * @param importPosition The import will be positioned according to the ImportPosition parameters. If not specified, then the import is moved to the top of the import stack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MainThread
+  override fun moveStyleImport(
+    importId: String,
+    importPosition: ImportPosition?
+  ): Expected<String, None> {
+    checkNativeStyle("moveStyleImport")
+    return super.moveStyleImport(importId, importPosition)
+  }
+
+  /**
    * Get the styleURI of the current Mapbox Style in use.
    */
   override val styleURI: String

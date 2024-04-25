@@ -4,7 +4,14 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.spyk
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -544,6 +551,52 @@ class StyleTest {
     val value = Value.valueOf("value")
     style.setStyleImportConfigProperty(importId, config, value)
     verify { styleManager.setStyleImportConfigProperty(importId, config, value) }
+  }
+
+  @Test
+  fun addStyleImportFromJSON() {
+    val importId = "import-id"
+    val json = "{}"
+    val configs = hashMapOf("test" to Value("testvalue"))
+    val importPosition = ImportPosition(null, "below-layer", null)
+    style.addStyleImportFromJSON(importId, json, configs, importPosition)
+    verify { styleManager.addStyleImportFromJSON(importId, json, configs, importPosition) }
+  }
+
+  @Test
+  fun addStyleImportFromURI() {
+    val importId = "import-id"
+    val uri = "mapbox://standard"
+    val configs = hashMapOf("test" to Value("testvalue"))
+    val importPosition = ImportPosition(null, "below-layer", null)
+    style.addStyleImportFromJSON(importId, uri, configs, importPosition)
+    verify { styleManager.addStyleImportFromJSON(importId, uri, configs, importPosition) }
+  }
+
+  @Test
+  fun updateStyleImportWithJSON() {
+    val importId = "import-id"
+    val json = "{}"
+    val configs = hashMapOf("test" to Value("testvalue"))
+    style.updateStyleImportWithJSON(importId, json, configs)
+    verify { styleManager.updateStyleImportWithJSON(importId, json, configs) }
+  }
+
+  @Test
+  fun updateStyleImportWithURI() {
+    val importId = "import-id"
+    val uri = "mapbox://standard"
+    val configs = hashMapOf("test" to Value("testvalue"))
+    style.updateStyleImportWithURI(importId, uri, configs)
+    verify { styleManager.updateStyleImportWithURI(importId, uri, configs) }
+  }
+
+  @Test
+  fun moveStyleImport() {
+    val importId = "import-id"
+    val importPosition = ImportPosition(null, "below-layer", null)
+    style.moveStyleImport(importId, importPosition)
+    verify { styleManager.moveStyleImport(importId, importPosition) }
   }
 
   @Test

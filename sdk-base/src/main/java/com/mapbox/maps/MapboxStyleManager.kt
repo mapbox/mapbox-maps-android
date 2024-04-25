@@ -9,7 +9,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
-import java.util.HashMap
 
 /**
  * Wrapper class for [StyleManager] allowing to expose style related methods for MapboxMap.
@@ -239,6 +238,114 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   ): Expected<String, None> {
     ThreadChecker.throwIfNotMainThread()
     return styleManager.setStyleImportConfigProperty(importId, config, value)
+  }
+
+  /**
+   * Adds new import to current style, loaded from a JSON string.
+   *
+   * @param importId Identifier of import to update.
+   * @param json The JSON string to be loaded directly as the import.
+   * @param config A map containing the configuration options of the import.
+   * @param importPosition The import will be positioned according to the ImportPosition parameters. If not specified, then the import is moved to the top of the import stack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  open fun addStyleImportFromJSON(
+    importId: String,
+    json: String,
+    config: HashMap<String, Value>?,
+    importPosition: ImportPosition?
+  ): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.addStyleImportFromJSON(importId, json, config, importPosition)
+  }
+
+  /**
+   * Adds new import to current style, loaded from an URI.
+   *
+   * @param importId Identifier of import to update.
+   * @param uri URI of the import.
+   * @param config A map containing the configuration options of the import.
+   * @param importPosition The import will be positioned according to the ImportPosition parameters. If not specified, then the import is moved to the top of the import stack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  open fun addStyleImportFromURI(
+    importId: String,
+    uri: String,
+    config: HashMap<String, Value>?,
+    importPosition: ImportPosition?
+  ): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.addStyleImportFromURI(importId, uri, config, importPosition)
+  }
+
+  /**
+   * Updates an existing import in the style.
+   * The function replaces the content of the import, with the content loaded from the provided data value.
+   * The configuration values of the import are merged with the configuration provided in the update.
+   *
+   * @param importId Identifier of import to update.
+   * @param json The JSON string to be loaded directly as the import.
+   * @param config A map containing the configuration options of the import.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  open fun updateStyleImportWithJSON(
+    importId: String,
+    json: String,
+    config: HashMap<String, Value>?
+  ): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.updateStyleImportWithJSON(
+      importId, json, config
+    )
+  }
+
+  /**
+   * Updates an existing import in the style.
+   * The function replaces the content of the import, with the content loaded from the provided URI.
+   * The configuration values of the import are merged with the configuration provided in the update.
+   *
+   * @param importId Identifier of import to update.
+   * @param uri URI of the import.
+   * @param config A map containing the configuration options of the import.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  open fun updateStyleImportWithURI(
+    importId: String,
+    uri: String,
+    config: HashMap<String, Value>?
+  ): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.updateStyleImportWithURI(importId, uri, config)
+  }
+
+  /**
+   * Moves import to position before another import, specified with `beforeId`. Order of imported styles corresponds to order of their layers.
+   *
+   * @param importId Identifier of import to move.
+   * @param importPosition The import will be positioned according to the ImportPosition parameters. If not specified, then the import is moved to the top of the import stack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  open fun moveStyleImport(
+    importId: String,
+    importPosition: ImportPosition?
+  ): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.moveStyleImport(importId, importPosition)
   }
 
   /**
