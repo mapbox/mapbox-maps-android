@@ -295,6 +295,12 @@ class StyleTest {
   }
 
   @Test
+  fun getStyleSlots() {
+    style.styleSlots
+    verify { styleManager.styleSlots }
+  }
+
+  @Test
   fun addCustomGeometrySource() {
     val options = mockk<CustomGeometrySourceOptions>()
     style.addStyleCustomGeometrySource("id", options)

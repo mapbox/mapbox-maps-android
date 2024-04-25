@@ -23,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Trim zoom ranges for the style at tileset descriptor resolving.
 * Extend `SymbolLayer.iconColorSaturation` range from [0, 1] to [-1, 1] and change default value to 0.
 * Reduce time spent on model layer re-evaluation during light change.
+* Expose experimental `Style.styleSlots` allowing to get the ordered list of slots.
 
 ## Bug fixes 🐞
 * [compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised. 

@@ -420,6 +420,7 @@ package com.mapbox.maps {
     property @MainThread public com.mapbox.maps.CameraOptions styleDefaultCamera;
     property @MainThread public String styleJSON;
     property @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleLayers;
+    property @MainThread public java.util.List<java.lang.String> styleSlots;
     property @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleSources;
     property @MainThread public String styleURI;
     field public static final com.mapbox.maps.Style.Companion Companion;

@@ -1020,6 +1020,19 @@ class Style internal constructor(
     }
 
   /**
+   * Returns the ordered slot identifiers of current style and its imports.
+   *
+   * @return The ordered list of slot identifiers.
+   */
+  @MapboxExperimental
+  override val styleSlots: List<String>
+    @MainThread
+    get() {
+      checkNativeStyle("getStyleSlots")
+      return super.styleSlots
+    }
+
+  /**
    * Returns the existing style layers.
    *
    * @return The list containing the ids of the existing style layers.

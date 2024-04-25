@@ -113,6 +113,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun getStyleLights ()Ljava/util/List;
 	public final fun getStyleManager ()Lcom/mapbox/maps/StyleManager;
 	public fun getStyleProjectionProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
+	public fun getStyleSlots ()Ljava/util/List;
 	public fun getStyleSourceProperties (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun getStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleSources ()Ljava/util/List;

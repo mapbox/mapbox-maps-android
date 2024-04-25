@@ -89,6 +89,20 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     }
 
   /**
+   * Returns the ordered slot identifiers of current style and its imports.
+   *
+   * @return The ordered list of slot identifiers.
+   */
+  @MapboxExperimental
+  open val styleSlots: List<String>
+    @CallSuper
+    @MainThread
+    get() {
+      ThreadChecker.throwIfNotMainThread()
+      return styleManager.styleSlots
+    }
+
+  /**
    * Returns the existing style sources.
    *
    * @return The list containing the information about existing style source objects.

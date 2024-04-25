@@ -102,6 +102,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLights();
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.StyleManager getStyleManager();
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleProjectionProperty(String property);
+    method @CallSuper @MainThread public java.util.List<java.lang.String> getStyleSlots();
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleSourceProperties(String sourceId);
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleSourceProperty(String sourceId, String property);
     method @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleSources();
@@ -155,6 +156,7 @@ package com.mapbox.maps {
     property @CallSuper @MainThread public String styleJSON;
     property @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleLayers;
     property @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.StyleManager styleManager;
+    property @CallSuper @MainThread public java.util.List<java.lang.String> styleSlots;
     property @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleSources;
     property @CallSuper @MainThread public String styleURI;
   }
