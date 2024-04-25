@@ -17,6 +17,18 @@ internal class StyleSlotNode(
     mapStyleNode = parent as MapStyleNode
   }
 
+  override fun onRemoved(parent: MapNode) {
+    cleanUp()
+  }
+
+  override fun onClear() {
+    cleanUp()
+  }
+
+  private fun cleanUp() {
+    this.children.forEach { it.onClear() }
+  }
+
   override fun toString(): String {
     return "StyleSlotNode(slotName=$slotName)"
   }

@@ -29,6 +29,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Remember default `ComposeMapInitOptions` and `GesturesSettings` so that we don't reconstruct these classes when `MapboxMap` recomposes.
 * [compose] Filter relevant events for `ViewAnnotation.onUpdatedListener` and skip events from other view annotations.
 * [compose] Do not consume tap event for `Compass`, so that user set `clickable` can be processed.
+* [compose] Fix slots and layerposition content not being cleaned up during recomposition.
 * Fix `Snapshotter.cameraForCoordinates` arguments `padding`, `bearing` and `pitch` to be nullable. 
 * Fix config with format expression that contains text property overrides.
 * Make non-vector tile parsing cancellable.
