@@ -40,6 +40,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v11.4.0-beta.1 and common to v24.4.0-beta.1.
 
+## Known issues
+* In v11.4.0-beta.1, setting a RasterLayer’s rasterColor property with an expression will block the layer from rendering. This issue will be resolved in v11.4.0-rc.1.
+
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
 * [compose] Introduce experimental `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
