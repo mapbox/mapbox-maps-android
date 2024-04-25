@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 @MapboxExperimental
 public data class Color(public val value: Value) {
   /**
-   * Construct the Color with [Color].
+   * Construct the Color with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
@@ -47,7 +47,7 @@ public data class Color(public val value: Value) {
 @MapboxExperimental
 public data class HighColor(public val value: Value) {
   /**
-   * Construct the HighColor with [Color].
+   * Construct the HighColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
@@ -137,7 +137,7 @@ public data class Range(public val value: Value) {
 @MapboxExperimental
 public data class SpaceColor(public val value: Value) {
   /**
-   * Construct the SpaceColor with [Color].
+   * Construct the SpaceColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**

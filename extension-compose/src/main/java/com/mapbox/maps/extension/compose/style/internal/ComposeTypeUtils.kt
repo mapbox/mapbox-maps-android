@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.TileCacheBudgetInMegabytes
 import com.mapbox.maps.TileCacheBudgetInTiles
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 
@@ -26,6 +27,12 @@ internal object ComposeTypeUtils {
           )
         )
       )
+      is PromoteId -> with(value) {
+        val propertyNameValue = Value(propertyName)
+        sourceId?.let {
+          Value(hashMapOf(sourceId to propertyNameValue))
+        } ?: propertyNameValue
+      }
       else -> TypeUtils.wrapToValue(value)
     }
   }

@@ -3,7 +3,6 @@
 package com.mapbox.maps.extension.compose.style.layers.generated
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.ui.graphics.Color
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
@@ -78,9 +77,9 @@ public data class FillAntialias(public val value: Value) {
 @MapboxExperimental
 public data class FillColor(public val value: Value) {
   /**
-   * Construct the FillColor with [Color].
+   * Construct the FillColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the FillColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -171,9 +170,9 @@ public data class FillOpacity(public val value: Value) {
 @MapboxExperimental
 public data class FillOutlineColor(public val value: Value) {
   /**
-   * Construct the FillOutlineColor with [Color].
+   * Construct the FillOutlineColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the FillOutlineColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -664,9 +663,9 @@ public data class LineBlur(public val value: Value) {
 @MapboxExperimental
 public data class LineBorderColor(public val value: Value) {
   /**
-   * Construct the LineBorderColor with [Color].
+   * Construct the LineBorderColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the LineBorderColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -726,9 +725,9 @@ public data class LineBorderWidth(public val value: Value) {
 @MapboxExperimental
 public data class LineColor(public val value: Value) {
   /**
-   * Construct the LineColor with [Color].
+   * Construct the LineColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the LineColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2684,9 +2683,9 @@ public data class TextWritingMode(public val value: Value) {
 @MapboxExperimental
 public data class IconColor(public val value: Value) {
   /**
-   * Construct the IconColor with [Color].
+   * Construct the IconColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the IconColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2808,9 +2807,9 @@ public data class IconHaloBlur(public val value: Value) {
 @MapboxExperimental
 public data class IconHaloColor(public val value: Value) {
   /**
-   * Construct the IconHaloColor with [Color].
+   * Construct the IconHaloColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the IconHaloColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3001,9 +3000,9 @@ public data class IconTranslateAnchor(public val value: Value) {
 @MapboxExperimental
 public data class TextColor(public val value: Value) {
   /**
-   * Construct the TextColor with [Color].
+   * Construct the TextColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the TextColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3094,9 +3093,9 @@ public data class TextHaloBlur(public val value: Value) {
 @MapboxExperimental
 public data class TextHaloColor(public val value: Value) {
   /**
-   * Construct the TextHaloColor with [Color].
+   * Construct the TextHaloColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the TextHaloColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3317,9 +3316,9 @@ public data class CircleBlur(public val value: Value) {
 @MapboxExperimental
 public data class CircleColor(public val value: Value) {
   /**
-   * Construct the CircleColor with [Color].
+   * Construct the CircleColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the CircleColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3517,9 +3516,9 @@ public data class CircleRadius(public val value: Value) {
 @MapboxExperimental
 public data class CircleStrokeColor(public val value: Value) {
   /**
-   * Construct the CircleStrokeColor with [Color].
+   * Construct the CircleStrokeColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the CircleStrokeColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4044,9 +4043,9 @@ public data class FillExtrusionBase(public val value: Value) {
 @MapboxExperimental
 public data class FillExtrusionColor(public val value: Value) {
   /**
-   * Construct the FillExtrusionColor with [Color].
+   * Construct the FillExtrusionColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the FillExtrusionColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4136,9 +4135,9 @@ public data class FillExtrusionEmissiveStrength(public val value: Value) {
 @MapboxExperimental
 public data class FillExtrusionFloodLightColor(public val value: Value) {
   /**
-   * Construct the FillExtrusionFloodLightColor with [Color].
+   * Construct the FillExtrusionFloodLightColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the FillExtrusionFloodLightColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4977,9 +4976,9 @@ public data class RasterSaturation(public val value: Value) {
 @MapboxExperimental
 public data class HillshadeAccentColor(public val value: Value) {
   /**
-   * Construct the HillshadeAccentColor with [Color].
+   * Construct the HillshadeAccentColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the HillshadeAccentColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5070,9 +5069,9 @@ public data class HillshadeExaggeration(public val value: Value) {
 @MapboxExperimental
 public data class HillshadeHighlightColor(public val value: Value) {
   /**
-   * Construct the HillshadeHighlightColor with [Color].
+   * Construct the HillshadeHighlightColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the HillshadeHighlightColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5169,9 +5168,9 @@ public data class HillshadeIlluminationDirection(public val value: Value) {
 @MapboxExperimental
 public data class HillshadeShadowColor(public val value: Value) {
   /**
-   * Construct the HillshadeShadowColor with [Color].
+   * Construct the HillshadeShadowColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the HillshadeShadowColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5291,9 +5290,9 @@ public data class ModelCastShadows(public val value: Value) {
 @MapboxExperimental
 public data class ModelColor(public val value: Value) {
   /**
-   * Construct the ModelColor with [Color].
+   * Construct the ModelColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the ModelColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5706,9 +5705,9 @@ public data class ModelType(public val value: Value) {
 @MapboxExperimental
 public data class BackgroundColor(public val value: Value) {
   /**
-   * Construct the BackgroundColor with [Color].
+   * Construct the BackgroundColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the BackgroundColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5829,9 +5828,9 @@ public data class BackgroundPattern(public val value: Value) {
 @MapboxExperimental
 public data class SkyAtmosphereColor(public val value: Value) {
   /**
-   * Construct the SkyAtmosphereColor with [Color].
+   * Construct the SkyAtmosphereColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the SkyAtmosphereColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5859,9 +5858,9 @@ public data class SkyAtmosphereColor(public val value: Value) {
 @MapboxExperimental
 public data class SkyAtmosphereHaloColor(public val value: Value) {
   /**
-   * Construct the SkyAtmosphereHaloColor with [Color].
+   * Construct the SkyAtmosphereHaloColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the SkyAtmosphereHaloColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6225,9 +6224,9 @@ public data class AccuracyRadius(public val value: Value) {
 @MapboxExperimental
 public data class AccuracyRadiusBorderColor(public val value: Value) {
   /**
-   * Construct the AccuracyRadiusBorderColor with [Color].
+   * Construct the AccuracyRadiusBorderColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the AccuracyRadiusBorderColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6256,9 +6255,9 @@ public data class AccuracyRadiusBorderColor(public val value: Value) {
 @MapboxExperimental
 public data class AccuracyRadiusColor(public val value: Value) {
   /**
-   * Construct the AccuracyRadiusColor with [Color].
+   * Construct the AccuracyRadiusColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the AccuracyRadiusColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6349,9 +6348,9 @@ public data class BearingImageSize(public val value: Value) {
 @MapboxExperimental
 public data class EmphasisCircleColor(public val value: Value) {
   /**
-   * Construct the EmphasisCircleColor with [Color].
+   * Construct the EmphasisCircleColor with [androidx.compose.ui.graphics.Color].
    */
-  public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+  public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
   /**
    * Construct the EmphasisCircleColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */

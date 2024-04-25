@@ -4602,7 +4602,8 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Pro
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId$Companion;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/types/PromoteId;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/mapbox/bindgen/Value;
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;

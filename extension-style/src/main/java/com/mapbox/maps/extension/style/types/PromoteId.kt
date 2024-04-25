@@ -44,7 +44,7 @@ data class PromoteId @JvmOverloads constructor(
         @Suppress("UNCHECKED_CAST")
         try {
           val propertyMap = propertyName as HashMap<String, String>
-          if (!propertyMap.keys.isNullOrEmpty()) {
+          if (propertyMap.keys.isNotEmpty()) {
             val key = propertyMap.keys.iterator().next()
             PromoteId(propertyMap[key] ?: "", key)
           } else {

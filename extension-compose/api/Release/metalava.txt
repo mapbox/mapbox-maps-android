@@ -4221,7 +4221,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class PromoteId {
     ctor public PromoteId(com.mapbox.bindgen.Value value);
-    ctor public PromoteId(com.mapbox.maps.extension.style.types.PromoteId value);
+    ctor public PromoteId(String propertyName, String? sourceId = null);
     ctor public PromoteId(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.generated.PromoteId copy(com.mapbox.bindgen.Value value);
