@@ -12,7 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix TilePrefetch for GeoJSON sources.
 
 ## Dependencies
-* Update gl-native to v11.3.1.
+* Update gl-native to v11.3.2.
 
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
