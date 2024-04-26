@@ -174,12 +174,13 @@ package com.mapbox.maps {
     method @Deprecated public void addOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
     method @Deprecated public void addOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
     method public Object? cameraAnimationsPlugin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimationsPlugin,?> function);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding, Double? bearing, Double? pitch, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? bearing, Double? pitch);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
+    method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding, Double? bearing, Double? pitch, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
+    method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? bearing, Double? pitch);
+    method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
+    method public void cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions,kotlin.Unit> result);
     method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
-    method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding, Double? bearing, Double? pitch);
+    method @Deprecated public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding, Double? bearing, Double? pitch);
     method public static void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
@@ -505,6 +506,7 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, String style);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.CameraOptions! cameraForCoordinates(com.mapbox.maps.MapboxMap, java.util.List<? extends com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding = null, double maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
     method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.GenericEvent>! genericEvents(com.mapbox.maps.MapboxMap, String eventName);
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);

@@ -49,9 +49,6 @@ package com.mapbox.maps.plugin.animation {
     method public void setDefaultAnimatorOptions(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> block);
   }
 
-  public final class CameraOptionsUtilsKt {
-  }
-
 }
 
 package com.mapbox.maps.plugin.animation.animator {

@@ -216,8 +216,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onSizeChanged(w: Int, h: Int) {
+    // we could not reliably check here if new dimensions differ from
+    // current ones due to different threads so we always set flag to false
+    // and set it to true below
+    nativeMap.sizeSet = false
     renderer.queueRenderEvent {
       renderer.onSurfaceChanged(w, h)
+      // Map.setSize might not be called if dimensions are the same
+      // so we need to make sure we set `sizeSet = true` explicitly
+      nativeMap.sizeSet = true
     }
     pluginRegistry.onSizeChanged(w, h)
   }

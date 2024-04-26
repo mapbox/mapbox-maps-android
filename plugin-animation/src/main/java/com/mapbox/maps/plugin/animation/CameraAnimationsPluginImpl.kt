@@ -18,6 +18,7 @@ import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
 import com.mapbox.maps.util.MathUtils
+import com.mapbox.maps.util.isEmpty
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates

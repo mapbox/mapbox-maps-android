@@ -1,8 +1,13 @@
-package com.mapbox.maps.plugin.animation
+@file:JvmName("CameraOptionsUtils")
+
+package com.mapbox.maps.util
 
 import com.mapbox.maps.CameraOptions
 
-internal val CameraOptions.isEmpty: Boolean
+/**
+ * Check whether given [CameraOptions] object is empty.
+ */
+val CameraOptions.isEmpty: Boolean
   get() {
     if (center != null) return false
     if (padding != null) return false

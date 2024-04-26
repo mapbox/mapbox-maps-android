@@ -723,6 +723,7 @@ class MapboxMapTest {
     val points = mockk<List<Point>>()
     val camera = mockk<CameraOptions>()
     val offset = mockk<ScreenCoordinate>()
+    every { nativeMap.sizeSet } returns true
     every { nativeMap.cameraForCoordinates(any(), any(), any(), any(), any()) } returns
       ExpectedFactory.createValue(mockk())
 

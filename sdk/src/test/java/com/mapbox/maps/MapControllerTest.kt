@@ -227,6 +227,7 @@ class MapControllerTest {
     val slotRunnable = slot<Runnable>()
     every { mockRenderer.queueRenderEvent(capture(slotRunnable)) } answers { slotRunnable.captured.run() }
     every { mockRenderer.onSurfaceChanged(any(), any()) } just Runs
+    every { mockNativeMap.sizeSet = any() } just Runs
 
     testMapController.onSizeChanged(0, 0)
 

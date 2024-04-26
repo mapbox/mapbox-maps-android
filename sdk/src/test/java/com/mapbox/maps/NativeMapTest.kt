@@ -431,6 +431,31 @@ class NativeMapTest {
     nativeMap.setSize(size)
     verify { map.size = size }
   }
+  @Test
+  fun initialSizeSetCallbacksTestBeforeSetSize() {
+    val nativeMap = NativeMapImpl(map)
+    var callbackTriggered = false
+    var anotherCallbackTriggered = false
+    val callback: () -> Unit = { callbackTriggered = true }
+    val anotherCallback: () -> Unit = { anotherCallbackTriggered = true }
+    nativeMap.whenMapSizeReady(callback)
+    nativeMap.whenMapSizeReady(anotherCallback)
+    assert(!callbackTriggered)
+    assert(!anotherCallbackTriggered)
+    nativeMap.setSize(Size(1.0f, 2.0f))
+    assert(callbackTriggered)
+    assert(anotherCallbackTriggered)
+  }
+
+  @Test
+  fun initialSizeSetCallbackTestAfterSetSize() {
+    val nativeMap = NativeMapImpl(map)
+    var callbackTriggered = false
+    val callback: () -> Unit = { callbackTriggered = true }
+    nativeMap.setSize(Size(1.0f, 2.0f))
+    nativeMap.whenMapSizeReady(callback)
+    assert(callbackTriggered)
+  }
 
   @Test
   fun getSize() {

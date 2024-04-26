@@ -7,6 +7,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.util.isEmpty
 
 /**
  * Definition of a camera delegate. Any invocation will interact with the map's actual camera.
@@ -37,6 +38,11 @@ interface MapCameraManagerDelegate {
    * @return the converted [CameraOptions]. Padding is absent in the returned [CameraOptions]
    * as the zoom level already accounts for the [boundsPadding] provided.
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
     boundsPadding: EdgeInsets? = null,
@@ -57,6 +63,11 @@ interface MapCameraManagerDelegate {
    *
    * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   fun cameraForCoordinates(
     coordinates: List<Point>,
     coordinatesPadding: EdgeInsets? = null,
@@ -84,10 +95,39 @@ interface MapCameraManagerDelegate {
    *
    * @return The [CameraOptions] object with the zoom level adjusted to fit [coordinates] into the [box].
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   fun cameraForCoordinates(
     coordinates: List<Point>,
     camera: CameraOptions,
     box: ScreenBox
+  ): CameraOptions
+
+  /**
+   * Convenience method that returns the [CameraOptions] object for given parameters.
+   *
+   * Note: if the render thread did not yet calculate the size of the map (due to initialization or map resizing) - empty [CameraOptions] will be returned.
+   *  Emptiness could be checked with [CameraOptions.isEmpty]. Consider using asynchronous overloaded method.
+   *
+   * @param coordinates The `coordinates` representing the bounds of the camera.
+   * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
+   * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
+   *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
+   * @param maxZoom The maximum zoom level allowed in the returned camera options.
+   * @param offset The center of the given bounds relative to map center in pixels.
+   *
+   * @return The [CameraOptions] object representing the provided parameters if the map size was calculated and empty [CameraOptions] otherwise, see [CameraOptions.isEmpty].
+   *  Also empty [CameraOptions] are returned in case of an internal error.
+   */
+  fun cameraForCoordinates(
+    coordinates: List<Point>,
+    camera: CameraOptions,
+    coordinatesPadding: EdgeInsets?,
+    maxZoom: Double?,
+    offset: ScreenCoordinate?
   ): CameraOptions
 
   /**
@@ -99,18 +139,16 @@ interface MapCameraManagerDelegate {
    *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
    * @param offset The center of the given bounds relative to map center in pixels.
-   *
-   * Note: if the render thread did not yet calculate the size of the map - current [cameraState] will be returned.
-   *
-   * @return The [CameraOptions] object representing the provided parameters.
+   * @param result Callback returning the [CameraOptions] object representing the provided parameters. Those [CameraOptions] always take into account actual MapView size and may return empty ([CameraOptions.isEmpty]) options only if an internal error has occurred.
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
     camera: CameraOptions,
     coordinatesPadding: EdgeInsets?,
     maxZoom: Double?,
-    offset: ScreenCoordinate?
-  ): CameraOptions
+    offset: ScreenCoordinate?,
+    result: (CameraOptions) -> Unit
+  )
 
   /**
    * Convert the given [geometry], [geometryPadding], [bearing] and [pitch] values to [CameraOptions].
@@ -129,6 +167,11 @@ interface MapCameraManagerDelegate {
    * @return Returns the converted [CameraOptions]. Padding is absent in the returned
    * [CameraOptions] as the zoom level already accounts for the [geometryPadding] provided.
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   fun cameraForGeometry(
     geometry: Geometry,
     geometryPadding: EdgeInsets? = null,

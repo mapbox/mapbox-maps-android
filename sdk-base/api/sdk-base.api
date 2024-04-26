@@ -1620,6 +1620,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapAttributionD
 public abstract interface class com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate {
 	public abstract fun cameraForCoordinateBounds (Lcom/mapbox/maps/CoordinateBounds;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/CameraOptions;
 	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/ScreenBox;)Lcom/mapbox/maps/CameraOptions;
 	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
 	public abstract fun cameraForDrag (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/CameraOptions;
@@ -2849,6 +2850,10 @@ public final class com/mapbox/maps/threading/AnimationThreadController {
 	public final fun postOnMainThread (Lkotlin/jvm/functions/Function0;)V
 	public final fun useBackgroundThread ()V
 	public final fun useMainThread ()V
+}
+
+public final class com/mapbox/maps/util/CameraOptionsUtils {
+	public static final fun isEmpty (Lcom/mapbox/maps/CameraOptions;)Z
 }
 
 public final class com/mapbox/maps/util/CoreGesturesHandler {

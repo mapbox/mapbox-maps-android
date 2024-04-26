@@ -25,6 +25,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Extend `SymbolLayer.iconColorSaturation` range from [0, 1] to [-1, 1] and change default value to 0.
 * Reduce time spent on model layer re-evaluation during light change.
 * Expose experimental `Style.styleSlots` allowing to get the ordered list of slots.
+* Deprecate `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForGeometry` and some synchronous overloaded `MapboxMap.cameraForCoordinates` in favour of single synchronous, asynchronous and suspend `MapboxMap.cameraForCoordinates`. Synchronous `MapboxMap.cameraForCoordinates` returns empty camera (could be checked with `CameraOptions.isEmpty`) if the map's size is not yet calculated.
 
 ## Bug fixes 🐞
 * [compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised. 

@@ -13,6 +13,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.utils.transition
@@ -20,6 +21,8 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.util.isEmpty
+import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
 
 /**
@@ -688,6 +691,11 @@ class MapboxMap :
    * @return the converted [CameraOptions]. Padding is absent in the returned [CameraOptions]
    * as the zoom level already accounts for the [boundsPadding] provided.
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   override fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
     boundsPadding: EdgeInsets?,
@@ -718,6 +726,11 @@ class MapboxMap :
    *
    * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   override fun cameraForCoordinates(
     coordinates: List<Point>,
     coordinatesPadding: EdgeInsets?,
@@ -748,6 +761,11 @@ class MapboxMap :
    *
    * @return The [CameraOptions] object with the zoom level adjusted to fit [coordinates] into the [box].
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   override fun cameraForCoordinates(
     coordinates: List<Point>,
     camera: CameraOptions,
@@ -760,6 +778,9 @@ class MapboxMap :
   /**
    * Convenience method that returns the [CameraOptions] object for given parameters.
    *
+   * Note: if the render thread did not yet calculate the size of the map (due to initialization or map resizing) - empty [CameraOptions] will be returned.
+   *  Emptiness could be checked with [CameraOptions.isEmpty]. Consider using asynchronous overloaded method.
+   *
    * @param coordinates The `coordinates` representing the bounds of the camera.
    * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
    * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
@@ -767,9 +788,8 @@ class MapboxMap :
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
    * @param offset The center of the given bounds relative to map center in pixels.
    *
-   * Note: if the render thread did not yet calculate the size of the map - current [cameraState] will be returned.
-   *
-   * @return The [CameraOptions] object representing the provided parameters.
+   * @return The [CameraOptions] object representing the provided parameters if the map size was calculated and empty [CameraOptions] otherwise, see [CameraOptions.isEmpty].
+   *  Also empty [CameraOptions] are returned in case of an internal error.
    */
   override fun cameraForCoordinates(
     coordinates: List<Point>,
@@ -779,8 +799,50 @@ class MapboxMap :
     offset: ScreenCoordinate?
   ): CameraOptions {
     checkNativeMap("cameraForCoordinates")
+    if (!nativeMap.sizeSet) {
+      return cameraOptions { }
+    }
     return nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset).getValueOrElse {
-      return@getValueOrElse cameraState.toCameraOptions()
+      logE(
+        TAG,
+        "Error occurred in synchronous cameraForCoordinates: $it, empty cameraState will be returned"
+      )
+      return@getValueOrElse cameraOptions { }
+    }
+  }
+
+  /**
+   * Convenience method that returns the [CameraOptions] object for given parameters.
+   *
+   * @param coordinates The `coordinates` representing the bounds of the camera.
+   * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
+   * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
+   *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
+   * @param maxZoom The maximum zoom level allowed in the returned camera options.
+   * @param offset The center of the given bounds relative to map center in pixels.
+   * @param result Callback returning the [CameraOptions] object representing the provided parameters. Those [CameraOptions] always take into account actual MapView size and may return empty ([CameraOptions.isEmpty]) options only if an internal error has occurred.
+   */
+  override fun cameraForCoordinates(
+    coordinates: List<Point>,
+    camera: CameraOptions,
+    coordinatesPadding: EdgeInsets?,
+    maxZoom: Double?,
+    offset: ScreenCoordinate?,
+    result: (CameraOptions) -> Unit
+  ) {
+    checkNativeMap("cameraForCoordinates")
+    val weakResult = WeakReference(result)
+    nativeMap.whenMapSizeReady {
+      weakResult.get()?.invoke(
+        nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset)
+          .getValueOrElse {
+            logE(
+              TAG,
+              "Error occurred in asynchronous cameraForCoordinates: $it, empty cameraState will be returned"
+            )
+            return@getValueOrElse cameraOptions { }
+          }
+      )
     }
   }
 
@@ -801,6 +863,11 @@ class MapboxMap :
    * @return Returns the converted [CameraOptions]. Padding is absent in the returned
    * [CameraOptions] as the zoom level already accounts for the [geometryPadding] provided.
    */
+  @Deprecated(
+    message = "Deprecated",
+    replaceWith = ReplaceWith("cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset, result)"),
+    level = DeprecationLevel.WARNING
+  )
   override fun cameraForGeometry(
     geometry: Geometry,
     geometryPadding: EdgeInsets?,
