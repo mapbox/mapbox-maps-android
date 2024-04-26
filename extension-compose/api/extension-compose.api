@@ -222,10 +222,21 @@ public final class com/mapbox/maps/extension/compose/style/IdGenerator {
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {
 }
 
+public final class com/mapbox/maps/extension/compose/style/SlotsContent {
+	public fun <init> ()V
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/SlotsContent;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/SlotsContent;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/SlotsContent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun slot (Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/mapbox/maps/extension/compose/style/StyleKt {
-	public static final fun GenericStyle (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GenericStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MapStyle (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/bindgen/Value;Landroidx/compose/runtime/Composer;II)V
+	public static final fun slotsContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/SlotsContent;
 }
 
 public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState {

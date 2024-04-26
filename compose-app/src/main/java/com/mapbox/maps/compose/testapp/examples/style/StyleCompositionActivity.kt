@@ -42,6 +42,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
 import com.mapbox.maps.extension.compose.style.layers.generated.TextField
 import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
 import com.mapbox.maps.extension.compose.style.layers.generated.Transition
+import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -65,6 +66,10 @@ public class StyleCompositionActivity : ComponentActivity() {
 
       var styleUri by remember {
         mutableStateOf(Style.LIGHT)
+      }
+
+      var showBackground by remember {
+        mutableStateOf(true)
       }
 
       var centerLocation by rememberSaveable {
@@ -141,6 +146,15 @@ public class StyleCompositionActivity : ComponentActivity() {
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Toggle Style")
               }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  showBackground = !showBackground
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle BG Layer")
+              }
             }
           }
         ) {
@@ -150,27 +164,37 @@ public class StyleCompositionActivity : ComponentActivity() {
             style = {
               GenericStyle(
                 style = styleUri,
-                slots = mapOf(
-                  "top" to {
-                    // Only add background layer in top slot for standard style, where the top slot
-                    // is available.
-                    if (styleUri == Style.STANDARD) {
+                slots = slotsContent {
+                  if (styleUri == Style.STANDARD) {
+                    if (showBackground) {
+                      slot("top") {
+                        // Only add background layer in top slot for standard style, where the top slot
+                        // is available.
+                        BackgroundLayer(
+                          backgroundColor = BackgroundColor(Color.Yellow),
+                          backgroundOpacity = BackgroundOpacity(0.3)
+                        )
+                      }
+                    }
+                    slot("middle") {
                       BackgroundLayer(
-                        backgroundColor = BackgroundColor(Color.Yellow),
+                        backgroundColor = BackgroundColor(Color.Red),
                         backgroundOpacity = BackgroundOpacity(0.3)
                       )
                     }
                   }
-                ),
+                },
                 layerPositions = mapOf(
                   LayerPosition(null, "building", null) to {
                     // only add background layer below building layer if the style is not standard
                     // style, where layers are available in runtime styling.
                     if (styleUri != Style.STANDARD) {
-                      BackgroundLayer(
-                        backgroundColor = BackgroundColor(Color.Red),
-                        backgroundOpacity = BackgroundOpacity(0.3)
-                      )
+                      if (showBackground) {
+                        BackgroundLayer(
+                          backgroundColor = BackgroundColor(Color.Red),
+                          backgroundOpacity = BackgroundOpacity(0.3)
+                        )
+                      }
                     }
                   }
                 ),

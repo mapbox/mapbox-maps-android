@@ -240,10 +240,16 @@ package com.mapbox.maps.extension.compose.style {
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleComposable {
   }
 
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SlotsContent {
+    method public com.mapbox.maps.extension.compose.style.SlotsContent copy(java.util.Map<java.lang.String,kotlin.jvm.functions.Function0<kotlin.Unit>> entries);
+    method public void slot(String name, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+  }
+
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, java.util.Map<java.lang.String,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> slots = emptyMap(), java.util.Map<com.mapbox.maps.LayerPosition,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> layerPositions = emptyMap(), java.util.Map<java.lang.String,? extends java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value>> configs = emptyMap(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slots = com.mapbox.maps.extension.compose.style.SlotsContent(), java.util.Map<com.mapbox.maps.LayerPosition,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> layerPositions = emptyMap(), java.util.Map<java.lang.String,? extends java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value>> configs = emptyMap(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style);
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.bindgen.Value lightPreset = Value.nullValue());
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
   }
 
 }

@@ -53,7 +53,7 @@ internal fun StyleSlot(
       factory = {
         StyleSlotNode(name)
       },
-      update = { }
+      update = {}
     ) {
       content?.invoke()
     }

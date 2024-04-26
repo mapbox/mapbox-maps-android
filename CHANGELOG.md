@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Remove `TileCacheBudget(com.mapbox.maps.TileCacheBudget)` constructor and introduce `TileCacheBudget(TileCacheBudgetInMegabytes)` and `TileCacheBudget(TileCacheBudgetInTiles)` constructor instead.
 * [compose] Remove `layoutParams` from `ViewAnnotation` composable function, the internal `ComposeView` wrapping the `ViewAnnotation.content` will always use `WRAP_CONTENT`; In case of tests where the assertion happens before the measure, user can force the content size using `ViewAnnotationOptions.width/height` APIs.
 * [compose] Constructor in `PromoteId` data class from compose now takes `PropertyName` and optional `SourceId` instead of itself.
+* [compose] Use new `SlotsContent` instead of generic `Map` to handle the style content for slots. Introduced `slotsContent` builder function.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.

@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.compose.style
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.key
 import com.mapbox.bindgen.Value
@@ -37,11 +38,11 @@ public fun MapboxStandardStyle(
 ) {
   GenericStyle(
     style = Style.STANDARD,
-    slots = mapOf(
-      "top" to topSlot,
-      "middle" to middleSlot,
-      "bottom" to bottomSlot,
-    ),
+    slots = slotsContent {
+      topSlot?.let { slot("top", it) }
+      middleSlot?.let { slot("middle", it) }
+      bottomSlot?.let { slot("bottom", it) }
+    },
     configs = mapOf(
       "basemap" to mapOf(
         "lightPreset" to lightPreset
@@ -63,6 +64,36 @@ public fun MapStyle(style: String) {
 }
 
 /**
+ * Class that holds [MapboxMapComposable] content per each slot.
+ */
+@Stable
+@MapboxExperimental
+public data class SlotsContent internal constructor(
+  internal val entries: MutableMap<String, @Composable @MapboxMapComposable (() -> Unit)> = mutableMapOf()
+) {
+  /**
+   * Assign a new [MapboxMapComposable] [content] to the given slot [name].
+   *
+   * @param name The name of the slot.
+   * @param content a [MapboxMapComposable] to be applied to the slot.
+   *
+   * @throws IllegalArgumentException if [name] slot already has [content].
+   */
+  public fun slot(name: String, content: @Composable @MapboxMapComposable (() -> Unit)) {
+    if (entries.containsKey(name)) {
+      throw IllegalArgumentException("Slot [$name] already has content.")
+    }
+    entries[name] = content
+  }
+}
+
+/**
+ * Type-safe builder for slot based [MapboxMapComposable] content.
+ */
+@MapboxExperimental
+public fun slotsContent(init: SlotsContent.() -> Unit): SlotsContent = SlotsContent().apply(init)
+
+/**
  * Generic Style that you can insert [MapboxMapComposable] functions in any slot you defined as a
  * plain string, or set any map import configs given as plain string and [Value] pairs.
  *
@@ -72,7 +103,7 @@ public fun MapStyle(style: String) {
  * Always prefer strongly typed [MapboxStyleComposable] over the [GenericStyle].
  *
  * @param style The Style JSON or Style Uri to be set to the map.
- * @param slots The slot name and [MapboxStyleComposable] pairs that would be inserted to the corresponding slots in the style.
+ * @param slots The slots and their [MapboxMapComposable] that would be inserted to the corresponding slots in the style. You can use [slotsContent] to create it.
  * @param configs The map of importId and the config name/value pairs that would be applied to the style as style import configs.
  * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
  */
@@ -81,7 +112,7 @@ public fun MapStyle(style: String) {
 @MapboxExperimental
 public fun GenericStyle(
   style: String,
-  slots: Map<String, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
+  slots: SlotsContent = SlotsContent(),
   layerPositions: Map<LayerPosition, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
   configs: Map<String, Map<String, Value>> = emptyMap(),
   projection: Projection = Projection.default,
@@ -111,7 +142,7 @@ public fun GenericStyle(
         }
       }
     ) {
-      slots.entries.filter { it.value != null }.forEach {
+      slots.entries.forEach {
         key(it.key) {
           StyleSlot(name = it.key, content = it.value)
         }
