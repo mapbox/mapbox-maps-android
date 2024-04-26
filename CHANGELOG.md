@@ -2,8 +2,17 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.3.1
+## Features ✨ and improvements 🏁
+* Reduce time spent on model layer re-evaluation during light change.
 
+## Bug fixes 🐞
+* Make non-vector tile parsing cancellable.
+* Introduce a dedicated thread for 3d landmarks parsing.
+* Fix TilePrefetch for GeoJSON sources.
+
+## Dependencies
+* Update gl-native to v11.3.1.
 
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
