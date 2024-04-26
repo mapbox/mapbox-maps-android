@@ -46,6 +46,18 @@ Mapbox welcomes participation and contributions from everyone.
 ## Known issues
 * In v11.4.0-beta.1, setting a RasterLayer’s rasterColor property with an expression will block the layer from rendering. This issue will be resolved in v11.4.0-rc.1.
 
+# 11.3.1
+## Features ✨ and improvements 🏁
+* Reduce time spent on model layer re-evaluation during light change.
+
+## Bug fixes 🐞
+* Make non-vector tile parsing cancellable.
+* Introduce a dedicated thread for 3d landmarks parsing.
+* Fix TilePrefetch for GeoJSON sources.
+
+## Dependencies
+* Update gl-native to v11.3.1.
+
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
 * [compose] Introduce experimental `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
