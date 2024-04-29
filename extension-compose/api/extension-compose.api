@@ -219,6 +219,29 @@ public final class com/mapbox/maps/extension/compose/style/IdGenerator {
 	public final fun generateRandomSourceId (Ljava/lang/String;)Ljava/lang/String;
 }
 
+public final class com/mapbox/maps/extension/compose/style/ImportConfig {
+	public fun <init> ()V
+	public final fun config (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/ImportConfig;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/ImportConfig;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/ImportConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/LayerPositionedContent {
+	public fun <init> ()V
+	public final fun aboveLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public final fun atIndex (ILkotlin/jvm/functions/Function2;)V
+	public final fun belowLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun layerPosition (Lcom/mapbox/maps/LayerPosition;Lkotlin/jvm/functions/Function2;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {
 }
 
@@ -232,11 +255,22 @@ public final class com/mapbox/maps/extension/compose/style/SlotsContent {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/mapbox/maps/extension/compose/style/StyleImportsConfig {
+	public fun <init> ()V
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun importConfig (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/mapbox/maps/extension/compose/style/StyleKt {
-	public static final fun GenericStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Landroidx/compose/runtime/Composer;II)V
-	public static final fun MapStyle (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
-	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/bindgen/Value;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GenericStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun layerPositionedContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;
 	public static final fun slotsContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/SlotsContent;
+	public static final fun styleImportsConfig (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
 }
 
 public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState {
@@ -4984,5 +5018,31 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vol
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/Volatile$Companion {
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/LightPreset {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/standard/LightPreset$Companion;
+	public static final field DAWN Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+	public static final field DAY Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+	public static final field DUSK Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+	public static final field NIGHT Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/LightPreset$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/MapboxStandardStyleKt {
+	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Landroidx/compose/runtime/Composer;II)V
 }
 

@@ -16,4 +16,5 @@
     <string name="description_navigation_simulation">Simulate navigation experience with compose</string>
     <string name="description_multi_map">Showcase displaying two maps in the same Activity</string>
     <string name="description_style_states">Showcase using style states</string>
+    <string name="description_style_positions">Showcase usage of slotsContent and layerPositionedContent to arrange contents within the base style using GenericStyle API.</string>
 </resources>

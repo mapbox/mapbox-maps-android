@@ -59,7 +59,6 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
-import com.mapbox.maps.extension.compose.style.MapboxStandardStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
@@ -74,6 +73,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.LineWidth
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.location

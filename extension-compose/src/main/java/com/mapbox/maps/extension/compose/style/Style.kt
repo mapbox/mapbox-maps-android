@@ -8,7 +8,6 @@ import androidx.compose.runtime.key
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
@@ -19,48 +18,21 @@ import com.mapbox.maps.extension.compose.style.internal.StyleSlot
 import com.mapbox.maps.extension.compose.style.projection.Projection
 
 /**
- * The convenient composable function to set a Mapbox Standard style to the map, with available slots
- * and config options.
- *
- * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
- * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
- * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
- * @param lightPreset The lightPreset settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk".
- */
-@Composable
-@MapboxStyleComposable
-@MapboxExperimental
-public fun MapboxStandardStyle(
-  topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
-  middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
-  bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
-  lightPreset: Value = Value.nullValue(),
-) {
-  GenericStyle(
-    style = Style.STANDARD,
-    slots = slotsContent {
-      topSlot?.let { slot("top", it) }
-      middleSlot?.let { slot("middle", it) }
-      bottomSlot?.let { slot("bottom", it) }
-    },
-    configs = mapOf(
-      "basemap" to mapOf(
-        "lightPreset" to lightPreset
-      )
-    )
-  )
-}
-
-/**
  * A simple composable function to set the style to the map without slots or import configs.
  *
  * @param style The Style JSON or Style Uri to be set to the map.
+ * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
+ * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in [style] definition.
  */
 @Composable
 @MapboxStyleComposable
 @MapboxExperimental
-public fun MapStyle(style: String) {
-  GenericStyle(style = style)
+public fun MapStyle(
+  style: String,
+  projection: Projection = Projection.default,
+  atmosphereState: AtmosphereState = AtmosphereState.default,
+) {
+  GenericStyle(style = style, projection = projection, atmosphereState = atmosphereState)
 }
 
 /**
@@ -69,7 +41,7 @@ public fun MapStyle(style: String) {
 @Stable
 @MapboxExperimental
 public data class SlotsContent internal constructor(
-  internal val entries: MutableMap<String, @Composable @MapboxMapComposable (() -> Unit)> = mutableMapOf()
+  internal val entries: MutableMap<String, @Composable @MapboxMapComposable () -> Unit> = mutableMapOf()
 ) {
   /**
    * Assign a new [MapboxMapComposable] [content] to the given slot [name].
@@ -79,7 +51,7 @@ public data class SlotsContent internal constructor(
    *
    * @throws IllegalArgumentException if [name] slot already has [content].
    */
-  public fun slot(name: String, content: @Composable @MapboxMapComposable (() -> Unit)) {
+  public fun slot(name: String, content: @Composable @MapboxMapComposable () -> Unit) {
     if (entries.containsKey(name)) {
       throw IllegalArgumentException("Slot [$name] already has content.")
     }
@@ -94,6 +66,131 @@ public data class SlotsContent internal constructor(
 public fun slotsContent(init: SlotsContent.() -> Unit): SlotsContent = SlotsContent().apply(init)
 
 /**
+ * Class that holds [MapboxMapComposable] content per each [LayerPosition].
+ */
+@Stable
+@MapboxExperimental
+public data class LayerPositionedContent internal constructor(
+  internal val entries: MutableMap<LayerPosition, @Composable @MapboxMapComposable () -> Unit> = mutableMapOf()
+) {
+  /**
+   * Assign a new [MapboxMapComposable] [content] to the given [layerPosition].
+   *
+   * @param layerPosition The layer position the content will be inserted to.
+   * @param content a [MapboxMapComposable] to be applied at the [layerPosition].
+   *
+   * @throws IllegalArgumentException if [layerPosition] already has [content].
+   */
+  public fun layerPosition(
+    layerPosition: LayerPosition,
+    content: @Composable @MapboxMapComposable () -> Unit
+  ) {
+    if (entries.containsKey(layerPosition)) {
+      throw IllegalArgumentException("LayerPosition [$layerPosition] already has content.")
+    }
+    entries[layerPosition] = content
+  }
+
+  /**
+   * Assign a new [MapboxMapComposable] [content] above [layerId].
+   *
+   * @param [layerId] The layer id the content will be inserted above.
+   * @param content a [MapboxMapComposable] to be applied above the [layerId].
+   *
+   * @throws IllegalArgumentException if [layerPosition] already has [content].
+   */
+  public fun aboveLayer(layerId: String, content: @Composable @MapboxMapComposable () -> Unit) {
+    layerPosition(LayerPosition(layerId, null, null), content)
+  }
+
+  /**
+   * Assign a new [MapboxMapComposable] [content] below [layerId].
+   *
+   * @param [layerId] The layer id the content will be inserted below.
+   * @param content a [MapboxMapComposable] to be applied below the [layerId].
+   *
+   * @throws IllegalArgumentException if [layerPosition] already has [content].
+   */
+  public fun belowLayer(layerId: String, content: @Composable @MapboxMapComposable () -> Unit) {
+    layerPosition(LayerPosition(null, layerId, null), content)
+  }
+
+  /**
+   * Assign a new [MapboxMapComposable] [content] at [index].
+   *
+   * @param [index] The index that the content will be inserted to in the layers stack.
+   * @param content a [MapboxMapComposable] to be applied to the index position.
+   *
+   * @throws IllegalArgumentException if [layerPosition] already has [content].
+   */
+  public fun atIndex(index: Int, content: @Composable @MapboxMapComposable () -> Unit) {
+    layerPosition(LayerPosition(null, null, index), content)
+  }
+}
+
+/**
+ * Type-safe builder for layer position based [MapboxMapComposable] content.
+ */
+@MapboxExperimental
+public fun layerPositionedContent(init: LayerPositionedContent.() -> Unit): LayerPositionedContent =
+  LayerPositionedContent().apply(init)
+
+/**
+ * Class that holds [ImportConfig] per each Import ID.
+ */
+@Stable
+@MapboxExperimental
+public data class StyleImportsConfig internal constructor(
+  internal val entries: MutableMap<String, ImportConfig> = mutableMapOf()
+) {
+  /**
+   * Assign a new [ImportConfig] to the given [importId].
+   *
+   * @param importId The import ID to configure.
+   * @param configs The configs to be applied to the import id.
+   *
+   * @throws IllegalArgumentException if [importId] already has [configs].
+   */
+  public fun importConfig(importId: String, configs: ImportConfig.() -> Unit) {
+    if (entries.containsKey(importId)) {
+      throw IllegalArgumentException("Configs for Import ID [$importId] already set.")
+    }
+    entries[importId] = ImportConfig().apply(configs)
+  }
+}
+
+/**
+ * Type-safe builder for [StyleImportsConfig].
+ */
+@MapboxExperimental
+public fun styleImportsConfig(init: StyleImportsConfig.() -> Unit): StyleImportsConfig =
+  StyleImportsConfig().apply(init)
+
+/**
+ * Class that holds the configs for one import ID.
+ */
+@Stable
+@MapboxExperimental
+public data class ImportConfig internal constructor(
+  internal val configs: MutableMap<String, Value> = mutableMapOf()
+) {
+  /**
+   * Assign a new [Value] to the given config name.
+   *
+   * @param name The configuration name.
+   * @param value The value for the configuration.
+   *
+   * @throws IllegalArgumentException if [name] already has [value].
+   */
+  public fun config(name: String, value: Value) {
+    if (configs.containsKey(name)) {
+      throw IllegalArgumentException("Config name [$name] already set")
+    }
+    configs[name] = value
+  }
+}
+
+/**
  * Generic Style that you can insert [MapboxMapComposable] functions in any slot you defined as a
  * plain string, or set any map import configs given as plain string and [Value] pairs.
  *
@@ -103,18 +200,20 @@ public fun slotsContent(init: SlotsContent.() -> Unit): SlotsContent = SlotsCont
  * Always prefer strongly typed [MapboxStyleComposable] over the [GenericStyle].
  *
  * @param style The Style JSON or Style Uri to be set to the map.
- * @param slots The slots and their [MapboxMapComposable] that would be inserted to the corresponding slots in the style. You can use [slotsContent] to create it.
- * @param configs The map of importId and the config name/value pairs that would be applied to the style as style import configs.
+ * @param slotsContent The slots and their [MapboxMapComposable] that would be inserted to the corresponding slots in the style. You can use [slotsContent] to create it.
+ * @param layerPositionedContent The [MapboxMapComposable] content to be placed at specific layer position in the style. You can use [layerPositionedContent] to create it.
+ * @param styleImportsConfig The style import configurations for all the style imports in the style. You can use [styleImportsConfig] to create it.
  * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
+ * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in [style] definition.
  */
 @Composable
 @MapboxStyleComposable
 @MapboxExperimental
 public fun GenericStyle(
   style: String,
-  slots: SlotsContent = SlotsContent(),
-  layerPositions: Map<LayerPosition, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
-  configs: Map<String, Map<String, Value>> = emptyMap(),
+  slotsContent: SlotsContent = SlotsContent(),
+  layerPositionedContent: LayerPositionedContent = LayerPositionedContent(),
+  styleImportsConfig: StyleImportsConfig = StyleImportsConfig(),
   projection: Projection = Projection.default,
   atmosphereState: AtmosphereState = AtmosphereState.default,
 ) {
@@ -142,20 +241,20 @@ public fun GenericStyle(
         }
       }
     ) {
-      slots.entries.forEach {
+      slotsContent.entries.forEach {
         key(it.key) {
           StyleSlot(name = it.key, content = it.value)
         }
       }
-      layerPositions.filter { it.value != null }.entries.forEach {
+      layerPositionedContent.entries.forEach {
         key(it.key) {
           StyleLayerPosition(layerPosition = it.key, content = it.value)
         }
       }
-      configs.entries.forEach { import ->
-        import.value.entries.forEach {
-          key(import.key, it.key) {
-            StyleConfig(importId = import.key, name = it.key, property = it.value)
+      styleImportsConfig.entries.forEach { import ->
+        import.value.configs.forEach { config ->
+          key(import.key, config.key) {
+            StyleConfig(importId = import.key, name = config.key, property = config.value)
           }
         }
       }

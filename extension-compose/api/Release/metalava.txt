@@ -237,6 +237,19 @@ package com.mapbox.maps.extension.compose.style {
     field public static final com.mapbox.maps.extension.compose.style.IdGenerator INSTANCE;
   }
 
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ImportConfig {
+    method public void config(String name, com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.ImportConfig copy(java.util.Map<java.lang.String,com.mapbox.bindgen.Value> configs);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class LayerPositionedContent {
+    method public void aboveLayer(String layerId, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+    method public void atIndex(int index, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+    method public void belowLayer(String layerId, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+    method public com.mapbox.maps.extension.compose.style.LayerPositionedContent copy(java.util.Map<com.mapbox.maps.LayerPosition,kotlin.jvm.functions.Function0<kotlin.Unit>> entries);
+    method public void layerPosition(com.mapbox.maps.LayerPosition layerPosition, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+  }
+
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleComposable {
   }
 
@@ -245,11 +258,17 @@ package com.mapbox.maps.extension.compose.style {
     method public void slot(String name, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StyleImportsConfig {
+    method public com.mapbox.maps.extension.compose.style.StyleImportsConfig copy(java.util.Map<java.lang.String,com.mapbox.maps.extension.compose.style.ImportConfig> entries);
+    method public void importConfig(String importId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfig,kotlin.Unit> configs);
+  }
+
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slots = com.mapbox.maps.extension.compose.style.SlotsContent(), java.util.Map<com.mapbox.maps.LayerPosition,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> layerPositions = emptyMap(), java.util.Map<java.lang.String,? extends java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value>> configs = emptyMap(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.bindgen.Value lightPreset = Value.nullValue());
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = com.mapbox.maps.extension.compose.style.SlotsContent(), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = com.mapbox.maps.extension.compose.style.LayerPositionedContent(), com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig = com.mapbox.maps.extension.compose.style.StyleImportsConfig(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
   }
 
 }
@@ -4631,6 +4650,34 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   public static final class Volatile.Companion {
     method public com.mapbox.maps.extension.compose.style.sources.generated.Volatile getDefault();
     property public final com.mapbox.maps.extension.compose.style.sources.generated.Volatile default;
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.standard {
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LightPreset {
+    ctor public LightPreset(com.mapbox.bindgen.Value value);
+    ctor public LightPreset(String value);
+    ctor public LightPreset(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.standard.LightPreset copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.standard.LightPreset.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.standard.LightPreset DAWN;
+    field public static final com.mapbox.maps.extension.compose.style.standard.LightPreset DAY;
+    field public static final com.mapbox.maps.extension.compose.style.standard.LightPreset DUSK;
+    field public static final com.mapbox.maps.extension.compose.style.standard.LightPreset NIGHT;
+  }
+
+  public static final class LightPreset.Companion {
+    method public com.mapbox.maps.extension.compose.style.standard.LightPreset getDefault();
+    property public final com.mapbox.maps.extension.compose.style.standard.LightPreset default;
+  }
+
+  public final class MapboxStandardStyleKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.LightPreset lightPreset = LightPreset.default, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
   }
 
 }

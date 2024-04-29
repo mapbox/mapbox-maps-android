@@ -49,6 +49,7 @@ internal class LayerNode(
   }
 
   private fun detachSource() {
+    logD(TAG, "detaching Source: $this")
     sourceState?.detachFromLayer(layerId, map)
   }
 

@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
-import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -30,10 +29,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.style.GenericStyle
-import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundColor
-import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundOpacity
+import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleRadius
@@ -42,7 +38,6 @@ import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
 import com.mapbox.maps.extension.compose.style.layers.generated.TextField
 import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
 import com.mapbox.maps.extension.compose.style.layers.generated.Transition
-import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -66,10 +61,6 @@ public class StyleCompositionActivity : ComponentActivity() {
 
       var styleUri by remember {
         mutableStateOf(Style.LIGHT)
-      }
-
-      var showBackground by remember {
-        mutableStateOf(true)
       }
 
       var centerLocation by rememberSaveable {
@@ -146,15 +137,6 @@ public class StyleCompositionActivity : ComponentActivity() {
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Toggle Style")
               }
-              FloatingActionButton(
-                modifier = Modifier.padding(bottom = 10.dp),
-                onClick = {
-                  showBackground = !showBackground
-                },
-                shape = RoundedCornerShape(16.dp),
-              ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Toggle BG Layer")
-              }
             }
           }
         ) {
@@ -162,42 +144,8 @@ public class StyleCompositionActivity : ComponentActivity() {
             Modifier.fillMaxSize(),
             mapViewportState = mapViewportState,
             style = {
-              GenericStyle(
+              MapStyle(
                 style = styleUri,
-                slots = slotsContent {
-                  if (styleUri == Style.STANDARD) {
-                    if (showBackground) {
-                      slot("top") {
-                        // Only add background layer in top slot for standard style, where the top slot
-                        // is available.
-                        BackgroundLayer(
-                          backgroundColor = BackgroundColor(Color.Yellow),
-                          backgroundOpacity = BackgroundOpacity(0.3)
-                        )
-                      }
-                    }
-                    slot("middle") {
-                      BackgroundLayer(
-                        backgroundColor = BackgroundColor(Color.Red),
-                        backgroundOpacity = BackgroundOpacity(0.3)
-                      )
-                    }
-                  }
-                },
-                layerPositions = mapOf(
-                  LayerPosition(null, "building", null) to {
-                    // only add background layer below building layer if the style is not standard
-                    // style, where layers are available in runtime styling.
-                    if (styleUri != Style.STANDARD) {
-                      if (showBackground) {
-                        BackgroundLayer(
-                          backgroundColor = BackgroundColor(Color.Red),
-                          backgroundOpacity = BackgroundOpacity(0.3)
-                        )
-                      }
-                    }
-                  }
-                ),
               )
             }
           ) {

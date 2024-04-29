@@ -10,9 +10,13 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Remove `layoutParams` from `ViewAnnotation` composable function, the internal `ComposeView` wrapping the `ViewAnnotation.content` will always use `WRAP_CONTENT`; In case of tests where the assertion happens before the measure, user can force the content size using `ViewAnnotationOptions.width/height` APIs.
 * [compose] Constructor in `PromoteId` data class from compose now takes `PropertyName` and optional `SourceId` instead of itself.
 * [compose] Use new `SlotsContent` instead of generic `Map` to handle the style content for slots. Introduced `slotsContent` builder function.
+* [compose] Use new `LayerPositionedContent` instead of generic `Map` to handle the layer positioned style content. Introduced `layerPositionedContent` builder function.
+* [compose] Use new `StyleImportsConfig` instead of generic `Map` to handle the style import configurations. Introduced `styleImportsConfig` builder function.
+* [compose] Move `MapboxStandardStyle` to a different package and introduce `LightPreset` with available presets as constants.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.
+* [compose] Introduce `Projection` and `AtmosphereState` API on `MapStyle` and `MapboxStandardStyle`.
 * Introduce `addStyleImportFromJSON`, `addStyleImportFromURI`, `updateStyleImportWithJSON`, `updateStyleImportWithURI`, `moveStyleImport` APIs to `MapboxMap` and `Style`. 
 * Handle updating geo-json data exceptions and propagate them to `MapboxMap.subscribeMapLoadingError(mapLoadingErrorCallback)`.
 * Introduce `SlotLayer` in Style DSL.
@@ -34,6 +38,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Filter relevant events for `ViewAnnotation.onUpdatedListener` and skip events from other view annotations.
 * [compose] Do not consume tap event for `Compass`, so that user set `clickable` can be processed.
 * [compose] Fix slots and layerposition content not being cleaned up during recomposition.
+* [compose] Propagate onRemoved and onClear to children nodes of MapStyleNode to do proper clean up.
+* [compose] Fix lost style import config during style switch by waiting for style load event.
 * Fix `Snapshotter.cameraForCoordinates` arguments `padding`, `bearing` and `pitch` to be nullable. 
 * Fix config with format expression that contains text property overrides.
 * Make non-vector tile parsing cancellable.

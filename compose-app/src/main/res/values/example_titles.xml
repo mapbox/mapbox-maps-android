@@ -16,4 +16,5 @@
     <string name="activity_navigation_simulation">Simulate navigation</string>
     <string name="activity_multi_map">Display multiple maps</string>
     <string name="activity_style_states">Style States</string>
+    <string name="activity_style_positions">Position content using GenericStyle</string>
 </resources>

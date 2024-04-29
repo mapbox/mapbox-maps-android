@@ -82,11 +82,14 @@ internal class MapStyleNode(
         logW(TAG, "\t${it.style}")
       }
     }
+
+    children.forEach { it.onRemoved(this) }
   }
 
   override fun onClear() {
     super.onClear()
     atmosphereState.applier.detach()
+    children.forEach { it.onClear() }
   }
 
   private fun updateStyle(style: String) {

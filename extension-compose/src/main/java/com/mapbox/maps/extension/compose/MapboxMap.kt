@@ -28,8 +28,8 @@ import com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionSco
 import com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope
 import com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope
 import com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope
-import com.mapbox.maps.extension.compose.style.MapboxStandardStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings

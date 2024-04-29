@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.api.directions.v5.models.DirectionsResponse
-import com.mapbox.bindgen.Value
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
@@ -35,7 +34,6 @@ import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.style.MapboxStandardStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.layers.generated.LineCap
 import com.mapbox.maps.extension.compose.style.layers.generated.LineGradient
@@ -46,6 +44,8 @@ import com.mapbox.maps.extension.compose.style.layers.generated.LineWidth
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.LineMetrics
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
+import com.mapbox.maps.extension.compose.style.standard.LightPreset
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
@@ -81,7 +81,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
       }
 
       var lightPreset by remember {
-        mutableStateOf(Value("day"))
+        mutableStateOf(LightPreset.DAY)
       }
 
       LaunchedEffect(Unit) {
@@ -138,10 +138,10 @@ public class NavigationSimulationActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  lightPreset = if (lightPreset.contents == "day") {
-                    Value("night")
+                  lightPreset = if (lightPreset == LightPreset.DAY) {
+                    LightPreset.NIGHT
                   } else {
-                    Value("day")
+                    LightPreset.DAY
                   }
                 },
                 shape = RoundedCornerShape(16.dp),
@@ -188,7 +188,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
 
   @MapboxStyleComposable
   @Composable
-  public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: Value) {
+  public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: LightPreset) {
     val geoJsonSource = rememberGeoJsonSourceState {
       lineMetrics = LineMetrics(true)
     }

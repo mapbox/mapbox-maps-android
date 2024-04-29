@@ -3,29 +3,47 @@ package com.mapbox.maps.extension.compose.style.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
+import com.mapbox.maps.logD
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 internal class StyleConfigNode(
   private val importId: String,
   private val configName: String,
   private val mapboxMap: MapboxMap,
-) : MapNode() {
-  lateinit var mapStyleNode: MapStyleNode
+  private val coroutineScope: CoroutineScope,
+) : PausingDispatcherNode() {
   override fun onAttached(parent: MapNode) {
-    mapStyleNode = parent as MapStyleNode
+    val mapStyleNode = parent as MapStyleNode
+    coroutineScope.launch {
+      mapStyleNode.styleDataLoaded.collect {
+        onNodeReady()
+      }
+    }
   }
 
   fun setProperty(value: Value) {
-    mapboxMap.setStyleImportConfigProperty(importId = importId, config = configName, value)
+    coroutineScope.launch {
+      whenNodeReady {
+        logD(TAG, "Setting style import config property $value for $this")
+        mapboxMap.setStyleImportConfigProperty(importId = importId, config = configName, value)
+      }
+    }
   }
 
   override fun toString(): String {
     return "StyleConfigNode(importId=$importId, configName=$configName)"
+  }
+
+  companion object {
+    private const val TAG = "StyleConfigNode"
   }
 }
 
@@ -43,11 +61,12 @@ internal fun StyleConfig(
   property: Value,
 ) {
   val applier = currentComposer.applier as? MapApplier
+  val coroutineScope = rememberCoroutineScope()
   applier?.let { mapApplier ->
     // Insert a MapNode to the MapApplier node tree
     ComposeNode<StyleConfigNode, MapApplier>(
       factory = {
-        StyleConfigNode(importId, name, mapApplier.mapView.mapboxMap)
+        StyleConfigNode(importId, name, mapApplier.mapView.mapboxMap, coroutineScope)
       },
       update = {
         set(property) {
