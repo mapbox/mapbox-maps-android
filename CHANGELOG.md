@@ -53,6 +53,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * In v11.4.0-beta.1, setting a RasterLayer’s rasterColor property with an expression will block the layer from rendering. This issue will be resolved in v11.4.0-rc.1.
+* In v11.4.0-beta.1, the map destroy might block main thread for short amount of time and cause UI to freeze. This issue will be resolved in v11.4.0-rc.1.
 
 
 # 11.3.1 April 26, 2024
