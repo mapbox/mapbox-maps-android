@@ -13,6 +13,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 
@@ -54,6 +55,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param iconTranslateAnchor Controls the frame of reference for {@link PropertyFactory#iconTranslate}.
  * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of textTranslate is in density-independent pixels.
  * @param textTranslateAnchor Controls the frame of reference for {@link PropertyFactory#textTranslate}.
+ * @param onAnnotationManagerCreated get pointAnnotationManager for use of annotation id
  * @param onClick Callback to be invoked when one of the [PointAnnotation] in the cluster is clicked. The clicked [PointAnnotation] will be passed as parameter.
  */
 @Composable
@@ -90,6 +92,7 @@ public fun PointAnnotationGroup(
   iconTranslateAnchor: IconTranslateAnchor? = null,
   textTranslate: List<Double>? = null,
   textTranslateAnchor: TextTranslateAnchor? = null,
+  onAnnotationManagerCreated: (PointAnnotationManager) -> Unit = {},
   onClick: (PointAnnotation) -> Boolean = { false },
 ) {
 
@@ -100,6 +103,7 @@ public fun PointAnnotationGroup(
     factory = {
       val annotationManager =
         mapApplier.mapView.annotations.createPointAnnotationManager(annotationConfig)
+      onAnnotationManagerCreated(annotationManager)
       PointAnnotationManagerNode(annotationManager, onClick)
     },
     update = {
