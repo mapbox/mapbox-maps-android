@@ -22,6 +22,7 @@ internal class RenderHandlerThread(
   internal val handlerThread: HandlerThread =
     HandlerThread(handlerThreadName, THREAD_PRIORITY_DISPLAY)
 
+  @Volatile
   internal var handler: Handler? = null
 
   internal val isRunning
