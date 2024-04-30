@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.4.0-beta.2
+
+# 11.4.0-beta.2 April 30, 2024
 ## Features ✨ and improvements 🏁
 * Avoid locking main thread when it is not needed on map destroy.
 
@@ -15,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.4.0-beta.2 and common to v24.4.0-beta.2.
+
 
 # 11.4.0-beta.1 April 29, 2024
 ## Breaking changes ⚠️
