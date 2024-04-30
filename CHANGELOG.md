@@ -8,6 +8,14 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Avoid locking main thread when it is not needed on map destroy.
 
+## Bug fixes 🐞
+* Fix TilePrefetch for GeoJSON sources.
+* Fix snapshotter latency when 3d tiles involved.
+* Fix renderer destruction being blocked by 3d models parsing completion.
+
+## Dependencies
+* Update gl-native to v11.4.0-beta.2 and common to v24.4.0-beta.2.
+
 # 11.4.0-beta.1 April 29, 2024
 ## Breaking changes ⚠️
 * [compose] Remove `locationComponentSettings` from `MapboxMap` composable function, `MapEffect` with location component API should be used instead. More compose-friendly location component API will be introduced in future releases.
