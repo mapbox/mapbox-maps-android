@@ -2,6 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.opengl.EGL14
 import android.opengl.EGLContext
+import android.util.Log
 import android.view.Surface
 import com.mapbox.countDownEvery
 import com.mapbox.maps.logE
@@ -18,12 +19,14 @@ import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowChoreographer
+import org.robolectric.shadows.ShadowLog
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -58,9 +61,10 @@ class MapboxRenderThreadTest {
     )
     renderHandlerThread.start()
     mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logE(any(), any()) } just Runs
-    every { logW(any(), any()) } just Runs
-    every { logI(any(), any()) } just Runs
+    ShadowLog.stream = System.out
+    every { logE(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
+    every { logW(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
+    every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
   }
 
   private fun mockSurface() {
@@ -386,11 +390,100 @@ class MapboxRenderThreadTest {
     }
   }
 
+  /**
+   * Test to validate that main thread is not locked when render thread destroy is run
+   * asynchronously.
+   */
   @Test
-  fun destroyTest() {
+  fun destroySurfaceDestroyedBeforeTest() {
+    initRenderThread()
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    // Call `onSurfaceDestroyed` first so `destroy` can perform asynchronous clean up
+    mapboxRenderThread.destroy()
+    // we immediately release the lock so render thread is still running
+    assertTrue(renderHandlerThread.isRunning)
+    // give some time for render thread to clean up and stop itself
+    Thread.sleep(500)
+    assertFalse(renderHandlerThread.isRunning)
+    verifyOrder {
+      mapboxRenderer.destroyRenderer()
+      mapboxRenderer.map = null
+    }
+  }
+
+  /**
+   * Validate that `onSurfaceCreated` does not hang in main thread if render thread is destroyed
+   * asynchronously
+   */
+  @Test
+  fun surfaceCreatedDuringDestroyTest() {
+    initRenderThread()
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    mapboxRenderThread.destroy()
+    // we immediately release the lock so render thread is still running
+    assertTrue(renderHandlerThread.isRunning)
+    val someSurface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { surface.release() } just Runs
+    mapboxRenderThread.onSurfaceCreated(someSurface, 1, 1)
+    // give some time for render thread to clean up and stop itself
+    Thread.sleep(500)
+    assertFalse(renderHandlerThread.isRunning)
+    verifyOnce {
+      mapboxRenderer.onSurfaceChanged(any(), any())
+    }
+    verifyOrder {
+      mapboxRenderer.destroyRenderer()
+      mapboxRenderer.map = null
+    }
+  }
+
+  @Test
+  fun surfaceDestroyedDuringDestroyTest() {
+    initRenderThread()
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    mapboxRenderThread.destroy()
+    // we immediately release the lock so render thread is still running
+    assertTrue(renderHandlerThread.isRunning)
+    mapboxRenderThread.onSurfaceDestroyed()
+    // give some time for render thread to clean up and stop itself
+    Thread.sleep(500)
+    assertFalse(renderHandlerThread.isRunning)
+    verify(exactly = 2) {
+      eglCore.releaseSurface(any())
+    }
+    verifyOrder {
+      mapboxRenderer.destroyRenderer()
+      mapboxRenderer.map = null
+    }
+  }
+
+  @Test
+  fun noSurfaceDestroyedBeforeDestroyTest() {
+    initRenderThread()
+    provideValidSurface()
+    mapboxRenderThread.destroy()
+    // lock is held until render thread cleans up and stops itself
+    assertFalse(renderHandlerThread.isRunning)
+    verifyOrder {
+      mapboxRenderer.destroyRenderer()
+      mapboxRenderer.map = null
+    }
+  }
+
+  @Test
+  fun destroySurfaceNotProvidedTest() {
     initRenderThread()
     mapboxRenderThread.destroy()
-    assertFalse(renderHandlerThread.isRunning)
+    // when native renderer was not created - destroy async
+    assertTrue(renderHandlerThread.isRunning)
+    // as no surface was provided, we did not either create nor destroy native renderer
+    verifyNo { mapboxRenderer.createRenderer() }
+    verifyNo { mapboxRenderer.destroyRenderer() }
+    verifyOnce { mapboxRenderer.map = null }
   }
 
   @Test

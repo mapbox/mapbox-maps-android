@@ -1,6 +1,7 @@
 package com.mapbox.maps.renderer
 
 import android.opengl.EGL14
+import android.opengl.EGLContext
 import android.opengl.EGLSurface
 import android.opengl.GLES20
 import android.os.SystemClock
@@ -40,9 +41,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val mapboxRenderer: MapboxRenderer
   internal val eglCore: EGLCore
 
-  private val lock = ReentrantLock()
-  private val createCondition = lock.newCondition()
-  private val destroyCondition = lock.newCondition()
+  /**
+   * [ReentrantLock] to guarantee consistent behaviour of surface create / destroy events.
+   */
+  private val surfaceProcessingLock = ReentrantLock()
+
+  /**
+   * Condition used to lock the Android main thread until [EGLContext] is setup.
+   */
+  private val createCondition = surfaceProcessingLock.newCondition()
+
+  /**
+   * Condition used to lock the Android main thread until either [EGLContext] is destroyed
+   * or we understand [EGLContext] was already destroyed before (checking [eglContextMadeCurrent] flag from render thread).
+   */
+  private val destroyCondition = surfaceProcessingLock.newCondition()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
@@ -193,7 +206,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun setUpRenderThread(creatingSurface: Boolean): Boolean {
-    lock.withLock {
+    surfaceProcessingLock.withLock {
       try {
         logI(
           TAG,
@@ -489,13 +502,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun onSurfaceDestroyed() {
     trace("surface-destroyed") {
       logI(TAG, "onSurfaceDestroyed")
-      lock.withLock {
-        // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
+      surfaceProcessingLock.withLock {
         if (renderHandlerThread.isRunning) {
           renderHandlerThread.post {
             awaitingNextVsync = false
             Choreographer.getInstance().removeFrameCallback(this)
-            lock.withLock {
+            surfaceProcessingLock.withLock {
               // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
               if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
                 releaseAll()
@@ -510,6 +522,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           logI(TAG, "onSurfaceDestroyed: waiting until EGL will be cleaned up...")
           destroyCondition.await()
           logI(TAG, "onSurfaceDestroyed: EGL resources were cleaned up.")
+        } else {
+          logI(TAG, "onSurfaceDestroyed: render thread is not running.")
         }
       }
     }
@@ -553,7 +567,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     trace("surface-created") {
       logI(TAG, "onSurfaceCreated")
-      lock.withLock {
+      surfaceProcessingLock.withLock {
         if (renderHandlerThread.isRunning) {
           renderHandlerThread.post {
             processAndroidSurface(surface, width, height)
@@ -561,6 +575,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           logI(TAG, "onSurfaceCreated: waiting Android surface to be processed...")
           createCondition.await()
           logI(TAG, "onSurfaceCreated: Android surface was processed.")
+        } else {
+          logI(TAG, "onSurfaceCreated: render thread is not running.")
         }
       }
     }
@@ -688,27 +704,51 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun destroy() {
     trace("destroy") {
       logI(TAG, "destroy")
-      lock.withLock {
-        // do nothing if destroy for some reason called more than once to avoid deadlock
+      surfaceProcessingLock.withLock {
         if (renderHandlerThread.isRunning) {
           renderHandlerThread.post {
-            lock.withLock {
+            var synchronousCleanUpNeeded = true
+            surfaceProcessingLock.lock()
+            try {
+              // it is safe to release main thread immediately if EGLSurface was destroyed
+              // and EGLContext was cleared beforehand in onSurfaceDestroyed
+              if (!eglContextMadeCurrent) {
+                destroyCondition.signal()
+                surfaceProcessingLock.unlock()
+                synchronousCleanUpNeeded = false
+              }
               if (nativeRenderCreated) {
                 releaseAll()
               }
               renderHandlerThread.clearRenderEventQueue()
               fpsManager.destroy()
               eglCore.clearRendererStateListeners()
-              destroyCondition.signal()
+              surfaceProcessingLock.isLocked
+              mapboxRenderer.map = null
+              renderHandlerThread.stop()
+            } finally {
+              if (synchronousCleanUpNeeded) {
+                destroyCondition.signal()
+                surfaceProcessingLock.unlock()
+              } else {
+                // if the system somehow sent us surfaceCreated / surfaceDestroyed from main thread
+                // during async destroy - signal to release the lock on main thread to avoid ANR
+                surfaceProcessingLock.withLock {
+                  createCondition.signal()
+                }
+                surfaceProcessingLock.withLock {
+                  destroyCondition.signal()
+                }
+              }
             }
           }
           logI(TAG, "destroy: waiting until all resources will be cleaned up...")
           destroyCondition.await()
           logI(TAG, "destroy: all resources were cleaned up.")
+        } else {
+          logI(TAG, "destroy: render thread is not running.")
         }
       }
-      renderHandlerThread.stop()
-      mapboxRenderer.map = null
     }
   }
 
