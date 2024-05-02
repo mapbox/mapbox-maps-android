@@ -82,7 +82,7 @@ public class MapCompassScope internal constructor(
       mutableStateOf(0f)
     }
     var compassVisibility by remember {
-      mutableStateOf(true)
+      mutableStateOf(false)
     }
     LaunchedEffect(Unit) {
       compassBearing = -mapView.mapboxMap.cameraState.bearing.toFloat()

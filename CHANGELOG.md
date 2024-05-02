@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.4.0-rc.1
+## Bug fixes 🐞
+* [compose] Make the initial compass visibility to be false, so the compass wouldn't show and hide initially if the user is facing north. 
 
 # 11.4.0-beta.2 April 30, 2024
 ## Features ✨ and improvements 🏁
