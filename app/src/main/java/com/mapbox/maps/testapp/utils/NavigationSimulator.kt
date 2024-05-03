@@ -4,14 +4,17 @@ import android.os.Handler
 import android.os.Looper
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.MapView
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
+import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
@@ -34,13 +37,10 @@ import com.mapbox.maps.testapp.R
  */
 class NavigationSimulator(
   private val mapView: MapView,
-  private val routePoints: LineString,
-  private val style: String = DEFAULT_STYLE
+  routePoints: LineString,
 ) :
   NavigationSimulatorCameraController, OnIndicatorPositionChangedListener {
-  private val locationProvider by lazy {
-    SimulateRouteLocationProvider(route = routePoints)
-  }
+  private val locationProvider = SimulateRouteLocationProvider(route = routePoints)
   private lateinit var routeLayer: LineLayer
   private lateinit var casingLayer: LineLayer
   private val handler = Handler(Looper.getMainLooper())
@@ -53,14 +53,6 @@ class NavigationSimulator(
   )
   private var gesturesEnabled = true
 
-  init {
-    viewportPlugin.defaultTransition = viewportPlugin.makeDefaultViewportTransition(
-      DefaultViewportTransitionOptions.Builder()
-        .maxDurationMs(DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION).build()
-    )
-    initMapboxMap()
-  }
-
   private val onMapClickListener = OnMapClickListener {
     with(viewportPlugin.status) {
       if (this is ViewportStatus.State) {
@@ -71,6 +63,14 @@ class NavigationSimulator(
       }
     }
     true
+  }
+
+  init {
+    viewportPlugin.defaultTransition = viewportPlugin.makeDefaultViewportTransition(
+      DefaultViewportTransitionOptions.Builder()
+        .maxDurationMs(DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION).build()
+    )
+    initMapboxMap()
   }
 
   private fun initMapboxMap() {
@@ -186,20 +186,19 @@ class NavigationSimulator(
         }
       )
     }
-    mapView.mapboxMap.loadStyle(
-      style(style) {
-        +geoJsonSource(GEOJSON_SOURCE_ID) {
+    mapView.mapboxMap.getStyle {
+      it.addSource(
+        geoJsonSource(GEOJSON_SOURCE_ID) {
           geometry(locationProvider.route)
           lineMetrics(true)
         }
-        +casingLayer
-        +routeLayer
-      }
-    ) {
-      mapView.recordFrameStats()
-      initLocationComponent()
-      viewportPlugin.transitionTo(overviewViewportState)
-      enableGestures()
+      )
+      it.addLayer(casingLayer)
+      it.addLayer(routeLayer)
+    mapView.recordFrameStats()
+    initLocationComponent()
+    viewportPlugin.transitionTo(overviewViewportState)
+    enableGestures()
     }
   }
 
@@ -375,7 +374,6 @@ class NavigationSimulator(
 
   companion object {
     private const val TAG = "NavigationSimulator"
-    private val DEFAULT_STYLE = Style.STANDARD
     private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 5000L
     private const val DEFAULT_SCRIPT_DURATION_MS = 20000L
     private const val DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION = 2000L

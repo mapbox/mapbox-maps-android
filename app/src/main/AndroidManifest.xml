@@ -887,7 +887,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markersandcallouts.PolygoneAnnotationActivity"
+            android:name=".examples.markersandcallouts.PolygonAnnotationActivity"
             android:description="@string/description_annotation_fill"
             android:exported="true"
             android:label="@string/activity_fill">

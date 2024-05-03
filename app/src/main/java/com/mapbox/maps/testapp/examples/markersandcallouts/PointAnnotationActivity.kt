@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -31,6 +32,7 @@ import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -193,22 +195,20 @@ class PointAnnotationActivity : AppCompatActivity() {
           create(nearbyOptions)
         }
         // random add symbols across the globe
-        val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-        for (i in 0..20) {
-          pointAnnotationOptionsList.add(
-            PointAnnotationOptions()
-              .withPoint(AnnotationUtils.createRandomPoint())
-              .withIconImage(MAKI_ICON_CAR)
-              .withDraggable(true)
-          )
+        val pointAnnotationOptionsList = List(20) {
+          PointAnnotationOptions()
+            .withPoint(AnnotationUtils.createRandomPoint())
+            .withIconImage(MAKI_ICON_CAR)
+            .withDraggable(true)
         }
         create(pointAnnotationOptionsList)
 
-        AnnotationUtils.loadStringFromAssets(
-          this@PointAnnotationActivity,
-          "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
+        lifecycleScope.launch {
+          val annotationsAsset = AnnotationUtils.loadStringFromAssets(
+            this@PointAnnotationActivity,
+            "annotations.json"
+          )
+          create(FeatureCollection.fromJson(annotationsAsset))
         }
       }
 

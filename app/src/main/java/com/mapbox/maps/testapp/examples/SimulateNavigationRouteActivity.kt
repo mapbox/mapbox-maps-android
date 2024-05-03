@@ -1,19 +1,18 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
@@ -23,29 +22,28 @@ import com.mapbox.maps.testapp.utils.NavigationSimulator
 class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   private lateinit var navigationSimulator: NavigationSimulator
-  private val handler = Handler(Looper.getMainLooper())
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    val routePoints = LineString.fromPolyline(
-      DirectionsResponse.fromJson(
-        AnnotationUtils.loadStringFromAssets(
-          this,
-          NAVIGATION_ROUTE_JSON_NAME
-        )
-      ).routes()[0].geometry()!!,
-      Constants.PRECISION_6
+    mapView.mapboxMap.setCamera(
+      cameraOptions {
+        center(Point.fromLngLat(-118.289795, 34.03084))
+        bearing(0.0)
+        pitch(0.0)
+        zoom(9.0)
+      }
     )
-    mapView.mapboxMap.loadStyle(Style.STANDARD) {
-      mapView.mapboxMap.setCamera(
-        cameraOptions {
-          center(Point.fromLngLat(-118.410042, 33.942791))
-          bearing(0.0)
-          pitch(0.0)
-          zoom(9.0)
-        }
+    lifecycleScope.launch {
+      val routePoints = LineString.fromPolyline(
+        DirectionsResponse.fromJson(
+          AnnotationUtils.loadStringFromAssets(
+            this@SimulateNavigationRouteActivity,
+            NAVIGATION_ROUTE_JSON_NAME
+          )
+        ).routes()[0].geometry()!!,
+        Constants.PRECISION_6
       )
       navigationSimulator = NavigationSimulator(mapView, routePoints)
       navigationSimulator.apply {
@@ -62,12 +60,8 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
           }
         )
       }
-      handler.postDelayed(
-        {
-          finish()
-        },
-        SIMULATION_DURATION
-      )
+      delay(SIMULATION_DURATION)
+      finish()
       // Uncomment below to play the default navigation script in loop.
       // navigationSimulator.playDefaultNavigationScriptsInLoop()
     }
@@ -75,7 +69,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    handler.removeCallbacksAndMessages(null)
     if (this::navigationSimulator.isInitialized) {
       navigationSimulator.onDestroy()
     }

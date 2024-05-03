@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -11,11 +12,17 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
-import java.util.*
+import kotlinx.coroutines.launch
+import java.util.Random
 
 /**
  * Example showing how to add Line annotations
@@ -95,24 +102,21 @@ class PolylineAnnotationActivity : AppCompatActivity() {
         create(polylineAnnotationOptions)
 
         // random add lines across the globe
-        val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
-        for (i in 0..99) {
-          lists.add(AnnotationUtils.createRandomPoints())
-        }
-        val lineOptionsList = lists.map {
+        val lineOptionsList = List(100) {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           PolylineAnnotationOptions()
-            .withPoints(it)
+            .withPoints(AnnotationUtils.createRandomPoints())
             .withLineColor(color)
         }
 
         create(lineOptionsList)
 
-        AnnotationUtils.loadStringFromAssets(
-          this@PolylineAnnotationActivity,
-          "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
+        lifecycleScope.launch {
+          val annotationsAsset = AnnotationUtils.loadStringFromAssets(
+            this@PolylineAnnotationActivity,
+            "annotations.json"
+          )
+          create(FeatureCollection.fromJson(annotationsAsset))
         }
       }
     }

@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -19,11 +20,12 @@ import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManage
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
+import kotlinx.coroutines.launch
 
 /**
- * Example showing how to add Polygone annotations
+ * Example showing how to add Polygon annotations
  */
-class PolygoneAnnotationActivity : AppCompatActivity() {
+class PolygonAnnotationActivity : AppCompatActivity() {
   private var polygonAnnotationManager: PolygonAnnotationManager? = null
   private var styleIndex: Int = 0
   private var slotIndex: Int = 0
@@ -48,7 +50,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
       polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager().apply {
         addClickListener(
           OnPolygonAnnotationClickListener {
-            Toast.makeText(this@PolygoneAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+            Toast.makeText(this@PolygonAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
               .show()
             false
           }
@@ -57,7 +59,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
         addInteractionListener(object : OnPolygonAnnotationInteractionListener {
           override fun onSelectAnnotation(annotation: PolygonAnnotation) {
             Toast.makeText(
-              this@PolygoneAnnotationActivity,
+              this@PolygonAnnotationActivity,
               "onSelectAnnotation ${annotation.id}",
               Toast.LENGTH_SHORT
             ).show()
@@ -65,7 +67,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
 
           override fun onDeselectAnnotation(annotation: PolygonAnnotation) {
             Toast.makeText(
-              this@PolygoneAnnotationActivity,
+              this@PolygonAnnotationActivity,
               "onDeselectAnnotation ${annotation.id}",
               Toast.LENGTH_SHORT
             ).show()
@@ -89,11 +91,12 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
           .withDraggable(true)
         create(polygonAnnotationOptions)
 
-        AnnotationUtils.loadStringFromAssets(
-          this@PolygoneAnnotationActivity,
-          "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
+        lifecycleScope.launch {
+          val annotationsAsset = AnnotationUtils.loadStringFromAssets(
+            this@PolygonAnnotationActivity,
+            "annotations.json"
+          )
+          create(FeatureCollection.fromJson(annotationsAsset))
         }
       }
     }

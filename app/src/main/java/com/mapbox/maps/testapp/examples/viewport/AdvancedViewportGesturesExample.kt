@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples.viewport
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.android.gestures.RotateGestureDetector
 import com.mapbox.android.gestures.ShoveGestureDetector
 import com.mapbox.android.gestures.StandardScaleGestureDetector
@@ -10,6 +11,7 @@ import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
@@ -39,9 +41,10 @@ import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
+import kotlinx.coroutines.launch
 
 /**
- * Showcase the use age of viewport plugin with advanced gestures customisation.
+ * Showcase the usage of viewport plugin with advanced gestures customisation.
  *
  * Touch the map to toggle the following and overview mode.
  *
@@ -152,20 +155,22 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    mapView = MapView(this)
+    mapView = MapView(this, MapInitOptions(this, styleUri = Style.TRAFFIC_DAY))
     setContentView(mapView)
-    routePoints = LineString.fromPolyline(
-      DirectionsResponse.fromJson(
-        AnnotationUtils.loadStringFromAssets(
-          this,
-          NAVIGATION_ROUTE_JSON_NAME
-        )
-      ).routes()[0].geometry()!!,
-      Constants.PRECISION_6
-    )
-    mapView.mapboxMap.loadStyle(
-      // Show the route line on the map
-      style(Style.TRAFFIC_DAY) {
+
+    lifecycleScope.launch {
+      routePoints = LineString.fromPolyline(
+        DirectionsResponse.fromJson(
+          AnnotationUtils.loadStringFromAssets(
+            this@AdvancedViewportGesturesExample,
+            NAVIGATION_ROUTE_JSON_NAME
+          )
+        ).routes()[0].geometry()!!,
+        Constants.PRECISION_6
+      )
+      mapView.mapboxMap.loadStyle(
+        style(Style.TRAFFIC_DAY) {
+        // Show the route line on the map
         +geoJsonSource(GEOJSON_SOURCE_ID) {
           geometry(routePoints)
         }
@@ -179,25 +184,26 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
           lineJoin(LineJoin.ROUND)
         }
       }
-    ) {
-      // Prepare the location component with puck styling and a simulated route.
-      setupLocationComponent(routePoints)
+      ) {
+        // Prepare the location component with puck styling and a simulated route.
+        setupLocationComponent(routePoints)
 
-      // Observe the viewport status to setup/clean up the gestures settings
-      // specifically for followPuckViewportState
-      mapView.viewport.addStatusObserver(viewportStatusObserver)
+        // Observe the viewport status to setup/clean up the gestures settings
+        // specifically for followPuckViewportState
+        mapView.viewport.addStatusObserver(viewportStatusObserver)
 
-      // Switch ViewportStates by single tapping on the map.
-      mapView.gestures.addOnMapClickListener {
-        mapView.viewport.transitionTo(
-          when (mapView.viewport.status.getCurrentOrNextState()) {
-            followPuckViewportState -> overviewViewportState
-            else -> followPuckViewportState
-          }
-        )
-        false
+        // Switch ViewportStates by single tapping on the map.
+        mapView.gestures.addOnMapClickListener {
+          mapView.viewport.transitionTo(
+            when (mapView.viewport.status.getCurrentOrNextState()) {
+              followPuckViewportState -> overviewViewportState
+              else -> followPuckViewportState
+            }
+          )
+          false
+        }
+        mapView.viewport.transitionTo(overviewViewportState)
       }
-      mapView.viewport.transitionTo(overviewViewportState)
     }
   }
 

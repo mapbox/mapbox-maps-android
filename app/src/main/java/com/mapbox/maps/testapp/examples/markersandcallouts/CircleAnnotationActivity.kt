@@ -4,16 +4,26 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationLongClickListener
+import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
-import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Random
 
 /**
  * Example showing how to add Circle annotations
@@ -60,7 +70,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
         CameraOptions.Builder()
           .center(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
           .pitch(0.0)
-          .zoom(5.0)
+          .zoom(3.0)
           .bearing(0.0)
           .build()
       )
@@ -91,24 +101,27 @@ class CircleAnnotationActivity : AppCompatActivity() {
           .withDraggable(false)
         create(circleAnnotationOptions)
 
-        // random add circles across the globe
-        val circleAnnotationOptionsList: MutableList<CircleAnnotationOptions> = ArrayList()
-        for (i in 0..2000) {
-          val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-          circleAnnotationOptionsList.add(
-            CircleAnnotationOptions()
-              .withPoint(AnnotationUtils.createRandomPoint())
-              .withCircleColor(color)
-              .withCircleRadius(8.0)
-              .withDraggable(false)
+        lifecycleScope.launch {
+          // random add circles across the globe
+          val circleAnnotationOptionsList = withContext(Dispatchers.Default) {
+            List(2_000) {
+              val color =
+                Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+              CircleAnnotationOptions()
+                .withPoint(AnnotationUtils.createRandomPoint())
+                .withCircleColor(color)
+                .withCircleRadius(8.0)
+                .withDraggable(false)
+            }
+          }
+          create(circleAnnotationOptionsList)
+          val annotationsJsonContents = FeatureCollection.fromJson(
+            AnnotationUtils.loadStringFromAssets(
+              this@CircleAnnotationActivity,
+              "annotations.json"
+            )
           )
-        }
-        create(circleAnnotationOptionsList)
-
-        AnnotationUtils.loadStringFromAssets(
-          this@CircleAnnotationActivity, "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
+          create(annotationsJsonContents)
         }
       }
     }
