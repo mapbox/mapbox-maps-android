@@ -70,3 +70,18 @@ internal object GeoJSONDataParceler : Parceler<GeoJSONData> {
     }
   }
 }
+
+internal object TripleParceler : Parceler<Triple<String, Boolean, Value>> {
+  override fun create(parcel: Parcel): Triple<String, Boolean, Value> {
+    val name = parcel.readString()!!
+    val isBuilderProperty = parcel.readInt() == 1
+    val value = Value.fromJson(parcel.readString()!!).value!!
+    return Triple(name, isBuilderProperty, value)
+  }
+
+  override fun Triple<String, Boolean, Value>.write(parcel: Parcel, flags: Int) {
+    parcel.writeString(first)
+    parcel.writeInt(if (second) 1 else 0)
+    parcel.writeString(third.toJson())
+  }
+}

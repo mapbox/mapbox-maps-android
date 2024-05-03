@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.internal.GeoJSONDataParceler
+import com.mapbox.maps.extension.compose.style.internal.TripleParceler
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
@@ -375,6 +376,7 @@ public abstract class SourceState internal constructor(
   @Parcelize
   @TypeParceler<GeoJSONData, GeoJSONDataParceler>
   @TypeParceler<Value, ValueParceler>
+  @TypeParceler<Triple<String, Boolean, Value>, TripleParceler>
   public data class Holder(
     val sourcedId: String,
     val cachedProperties: List<Triple<String, Boolean, Value>>,
