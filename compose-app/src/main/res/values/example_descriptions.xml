@@ -17,4 +17,7 @@
     <string name="description_multi_map">Showcase displaying two maps in the same Activity</string>
     <string name="description_style_states">Showcase using style states</string>
     <string name="description_style_positions">Showcase usage of slotsContent and layerPositionedContent to arrange contents within the base style using GenericStyle API.</string>
+    <string name="description_model_layer">Showcase the usage of a 3D model layer.</string>
+    <string name="description_style_image_source">Use an image source to easily display images on the map.</string>
+    <string name="description_animated_image_source">Load a raster image to a style using ImageSource and display it on a map as animated weather data using RasterLayer.</string>
 </resources>

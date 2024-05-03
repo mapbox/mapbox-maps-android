@@ -206,6 +206,36 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.style.ModelLayerActivity"
+            android:description="@string/description_model_layer"
+            android:exported="true"
+            android:label="@string/activity_model_layer"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
+        <activity
+            android:name=".examples.style.ImageSourceActivity"
+            android:description="@string/description_style_image_source"
+            android:exported="true"
+            android:label="@string/activity_style_image_source_title"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
+        <activity
+            android:name=".examples.style.AnimatedImageSourceActivity"
+            android:description="@string/description_animated_image_source"
+            android:exported="true"
+            android:label="@string/activity_animated_image_source"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
     </application>
 
 </manifest>

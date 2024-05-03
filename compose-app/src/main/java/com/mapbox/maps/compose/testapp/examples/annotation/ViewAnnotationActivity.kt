@@ -20,7 +20,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations.HELSINKI
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -30,7 +31,7 @@ import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
-import java.util.*
+import java.util.Random
 
 /**
  * Example to showcase usage of MapboxMap.
