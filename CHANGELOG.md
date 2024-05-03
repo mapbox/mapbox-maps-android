@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.4.0-rc.1
+## Features ✨ and improvements 🏁
+* Add experimental `MapView.setSnapshotLegacyMode` function to help avoiding `MapView.snapshot` native crash on some Samsung devices running Android 14.
+
 ## Bug fixes 🐞
 * [compose] Make the initial compass visibility to be false, so the compass wouldn't show and hide initially if the user is facing north. 
 
