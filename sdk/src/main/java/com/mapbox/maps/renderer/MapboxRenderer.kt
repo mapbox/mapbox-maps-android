@@ -41,6 +41,12 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   @Suppress("PrivatePropertyName")
   private val TAG = "Mbgl-Renderer" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
+  internal var snapshotLegacyModeEnabled = false
+    @MainThread
+    get
+    @MainThread
+    set
+
   @UiThread
   fun onDestroy() {
     widgetRenderer.cleanUpAllWidgets()
@@ -128,13 +134,14 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
     }
     val lock = ReentrantLock()
     val waitCondition = lock.newCondition()
+    val legacyMode = snapshotLegacyModeEnabled
     lock.withLock {
       var snapshot: Bitmap? = null
       renderThread.queueRenderEvent(
         RenderEvent(
           runnable = {
             lock.withLock {
-              snapshot = performSnapshot()
+              snapshot = performSnapshot(legacyMode)
               waitCondition.signal()
             }
           },
@@ -152,9 +159,10 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
       logE(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
     }
+    val legacyMode = snapshotLegacyModeEnabled
     renderThread.queueRenderEvent(
       RenderEvent(
-        runnable = { listener.onSnapshotReady(performSnapshot()) },
+        runnable = { listener.onSnapshotReady(performSnapshot(legacyMode)) },
         needRender = true,
       )
     )
@@ -176,15 +184,15 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   }
 
   @RenderThread
-  private fun performSnapshot(): Bitmap? {
+  private fun performSnapshot(legacyMode: Boolean): Bitmap? {
     if (width == 0 && height == 0) {
       logE(TAG, "Could not take map snapshot because map is not ready yet.")
       return null
     }
 
-    if (pixelReader == null || pixelReader?.width != width || pixelReader?.height != height) {
+    if (pixelReader == null || pixelReader?.width != width || pixelReader?.height != height || pixelReader?.legacyMode != legacyMode) {
       pixelReader?.release()
-      pixelReader = PixelReader(width, height)
+      pixelReader = PixelReader(width, height, legacyMode)
     }
     val pixelReader = pixelReader!!
 
@@ -213,15 +221,15 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
       }
     } catch (e: Throwable) {
       logW(TAG, "Exception ${e.localizedMessage} happened when reading pixels")
-      if (pixelReader.supportsPbo) {
+      if (!pixelReader.legacyMode) {
         logW(TAG, "Re-creating PixelReader with no PBO support and making snapshot again")
         pixelReader.release()
         this.pixelReader = PixelReader(
           width = pixelReader.width,
           height = pixelReader.height,
-          supportsPbo = false
+          legacyMode = true
         )
-        return performSnapshot()
+        return performSnapshot(legacyMode = true)
       }
     }
     return null
