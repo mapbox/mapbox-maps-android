@@ -2,11 +2,8 @@
 package com.mapbox.maps.plugin.annotation {
 
   @MainThread public abstract class AnnotationManagerImpl<G extends com.mapbox.geojson.Geometry, T extends com.mapbox.maps.plugin.annotation.Annotation<G>, S extends com.mapbox.maps.plugin.annotation.AnnotationOptions<G, T>, D extends com.mapbox.maps.plugin.annotation.OnAnnotationDragListener<? extends T>, U extends com.mapbox.maps.plugin.annotation.OnAnnotationClickListener<T>, V extends com.mapbox.maps.plugin.annotation.OnAnnotationLongClickListener<T>, I extends com.mapbox.maps.plugin.annotation.OnAnnotationInteractionListener<T>, L extends com.mapbox.maps.extension.style.layers.Layer> implements com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,S,D,U,V,I> {
-    ctor public AnnotationManagerImpl(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public T create(S option);
     method public java.util.List<T> create(java.util.List<? extends S> options);
-    method protected abstract L createDragLayer();
-    method protected abstract L createLayer();
     method public void delete(T annotation);
     method public void delete(java.util.List<? extends T> annotations);
     method public void deleteAll();
@@ -16,16 +13,10 @@ package com.mapbox.maps.plugin.annotation {
     method public java.util.List<U> getClickListeners();
     method protected final java.util.Map<java.lang.String,java.lang.Boolean> getDataDrivenPropertyUsageMap();
     method public final com.mapbox.maps.plugin.delegates.MapDelegateProvider getDelegateProvider();
-    method protected abstract String getDragLayerId();
     method public java.util.List<D> getDragListeners();
-    method protected abstract String getDragSourceId();
     method public java.util.List<I> getInteractionListener();
     method public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
-    method protected abstract String getLayerId();
     method public java.util.List<V> getLongClickListeners();
-    method protected abstract String getSourceId();
-    method protected final void initLayerAndSource(com.mapbox.maps.MapboxStyleManager style);
-    method protected abstract void initializeDataDrivenPropertyMap();
     method public void onDestroy();
     method public void onSizeChanged(int width, int height);
     method public final T? queryMapForFeatures(com.mapbox.geojson.Point point);
@@ -33,20 +24,17 @@ package com.mapbox.maps.plugin.annotation {
     method public void selectAnnotation(T annotation);
     method protected abstract void setDataDrivenPropertyIsUsed(String property);
     method public abstract void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method protected final void setLayerProperty(com.mapbox.bindgen.Value value, String propertyName);
     method public void update(T annotation);
     method public void update(java.util.List<? extends T> annotations);
     property public java.util.List<T> annotations;
     property public java.util.List<U> clickListeners;
     property protected final java.util.Map<java.lang.String,java.lang.Boolean> dataDrivenPropertyUsageMap;
     property public final com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider;
-    property protected abstract String dragLayerId;
     property public java.util.List<D> dragListeners;
-    property protected abstract String dragSourceId;
     property public java.util.List<I> interactionListener;
     property public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
-    property protected abstract String layerId;
     property public java.util.List<V> longClickListeners;
-    property protected abstract String sourceId;
   }
 
   public final class AnnotationManagerImpl.MapClick implements com.mapbox.maps.plugin.gestures.OnMapClickListener {
@@ -137,21 +125,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     ctor public CircleAnnotationManager(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotation> create(String json);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotation> create(com.mapbox.geojson.FeatureCollection featureCollection);
-    method protected com.mapbox.maps.extension.style.layers.generated.CircleLayer createDragLayer();
-    method protected com.mapbox.maps.extension.style.layers.generated.CircleLayer createLayer();
     method public String getAnnotationIdKey();
     method public Double? getCircleEmissiveStrength();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? getCirclePitchAlignment();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? getCirclePitchScale();
     method public java.util.List<java.lang.Double>? getCircleTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? getCircleTranslateAnchor();
-    method protected String getDragLayerId();
-    method protected String getDragSourceId();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
-    method protected String getLayerId();
     method public String? getSlot();
-    method protected String getSourceId();
-    method protected void initializeDataDrivenPropertyMap();
     method public void setCircleEmissiveStrength(Double?);
     method public void setCirclePitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment?);
     method public void setCirclePitchScale(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale?);
@@ -165,12 +146,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? circlePitchScale;
     property public final java.util.List<java.lang.Double>? circleTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor;
-    property protected String dragLayerId;
-    property protected String dragSourceId;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
-    property protected String layerId;
     property public final String? slot;
-    property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager.Companion Companion;
   }
 
@@ -423,11 +400,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     ctor public PointAnnotationManager(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotation> create(String json);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotation> create(com.mapbox.geojson.FeatureCollection featureCollection);
-    method protected com.mapbox.maps.extension.style.layers.generated.SymbolLayer createDragLayer();
-    method protected com.mapbox.maps.extension.style.layers.generated.SymbolLayer createLayer();
     method public String getAnnotationIdKey();
-    method protected String getDragLayerId();
-    method protected String getDragSourceId();
     method public Boolean? getIconAllowOverlap();
     method public Double? getIconColorSaturation();
     method public Boolean? getIconIgnorePlacement();
@@ -441,9 +414,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.Double>? getIconTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
-    method protected String getLayerId();
     method public String? getSlot();
-    method protected String getSourceId();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
     method public Double? getSymbolSpacing();
@@ -463,7 +434,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? getTextTranslateAnchor();
     method public java.util.List<java.lang.String>? getTextVariableAnchor();
     method public java.util.List<java.lang.String>? getTextWritingMode();
-    method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setIconAllowOverlap(Boolean?);
     method public void setIconColorSaturation(Double?);
@@ -498,8 +468,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor?);
     method public void setTextVariableAnchor(java.util.List<java.lang.String>?);
     method public void setTextWritingMode(java.util.List<java.lang.String>?);
-    property protected String dragLayerId;
-    property protected String dragSourceId;
     property public final Boolean? iconAllowOverlap;
     property public final Double? iconColorSaturation;
     property public final Boolean? iconIgnorePlacement;
@@ -513,9 +481,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.Double>? iconTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
-    property protected String layerId;
     property public final String? slot;
-    property protected String sourceId;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
     property public final Double? symbolSpacing;
@@ -771,20 +737,13 @@ package com.mapbox.maps.plugin.annotation.generated {
     ctor public PolygonAnnotationManager(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation> create(String json);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation> create(com.mapbox.geojson.FeatureCollection featureCollection);
-    method protected com.mapbox.maps.extension.style.layers.generated.FillLayer createDragLayer();
-    method protected com.mapbox.maps.extension.style.layers.generated.FillLayer createLayer();
     method public String getAnnotationIdKey();
-    method protected String getDragLayerId();
-    method protected String getDragSourceId();
     method public Boolean? getFillAntialias();
     method public Double? getFillEmissiveStrength();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
-    method protected String getLayerId();
     method public String? getSlot();
-    method protected String getSourceId();
-    method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setFillAntialias(Boolean?);
     method public void setFillEmissiveStrength(Double?);
@@ -792,16 +751,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     method public void setSlot(String?);
-    property protected String dragLayerId;
-    property protected String dragSourceId;
     property public final Boolean? fillAntialias;
     property public final Double? fillEmissiveStrength;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
-    property protected String layerId;
     property public final String? slot;
-    property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager.Companion Companion;
   }
 
@@ -918,13 +873,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     ctor public PolylineAnnotationManager(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation> create(String json);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation> create(com.mapbox.geojson.FeatureCollection featureCollection);
-    method protected com.mapbox.maps.extension.style.layers.generated.LineLayer createDragLayer();
-    method protected com.mapbox.maps.extension.style.layers.generated.LineLayer createLayer();
     method public String getAnnotationIdKey();
-    method protected String getDragLayerId();
-    method protected String getDragSourceId();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
-    method protected String getLayerId();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
@@ -935,8 +885,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public String? getSlot();
-    method protected String getSourceId();
-    method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
@@ -949,10 +897,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     method public void setSlot(String?);
-    property protected String dragLayerId;
-    property protected String dragSourceId;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
-    property protected String layerId;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
@@ -963,7 +908,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property public final String? slot;
-    property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;
   }
 

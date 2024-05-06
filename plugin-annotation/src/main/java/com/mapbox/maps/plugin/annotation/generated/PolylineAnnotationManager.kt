@@ -7,15 +7,13 @@ import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -26,73 +24,54 @@ class PolylineAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<LineString, PolylineAnnotation, PolylineAnnotationOptions, OnPolylineAnnotationDragListener, OnPolylineAnnotationClickListener, OnPolylineAnnotationLongClickListener, OnPolylineAnnotationInteractionListener, LineLayer>(
-    delegateProvider, annotationConfig
+    delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "polylineAnnotation", ::LineLayer
   ) {
-  private val id = ID_GENERATOR.incrementAndGet()
-  override val layerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-layer-$id"
-  override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-source-$id"
-  override val dragLayerId = "mapbox-android-polylineAnnotation-draglayer-$id"
-  override val dragSourceId = "mapbox-android-polylineAnnotation-dragsource-$id"
-
-  override fun initializeDataDrivenPropertyMap() {
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_JOIN] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BLUR] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_COLOR] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OFFSET] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OPACITY] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_PATTERN] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_WIDTH] = false
-  }
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       PolylineAnnotationOptions.PROPERTY_LINE_JOIN -> {
-        layer?.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
-        dragLayer?.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
+        layer.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
+        dragLayer.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY -> {
-        layer?.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
-        dragLayer?.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
+        layer.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
+        dragLayer.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_BLUR -> {
-        layer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
-        dragLayer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
+        layer.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
+        dragLayer.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR -> {
-        layer?.lineBorderColor(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR))
-        dragLayer?.lineBorderColor(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR))
+        layer.lineBorderColor(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR))
+        dragLayer.lineBorderColor(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH -> {
-        layer?.lineBorderWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH))
-        dragLayer?.lineBorderWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH))
+        layer.lineBorderWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH))
+        dragLayer.lineBorderWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_COLOR -> {
-        layer?.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
-        dragLayer?.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
+        layer.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
+        dragLayer.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH -> {
-        layer?.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
-        dragLayer?.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
+        layer.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
+        dragLayer.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_OFFSET -> {
-        layer?.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
-        dragLayer?.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
+        layer.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
+        dragLayer.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_OPACITY -> {
-        layer?.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
-        dragLayer?.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
+        layer.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
+        dragLayer.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_PATTERN -> {
-        layer?.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
-        dragLayer?.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
+        layer.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
+        dragLayer.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_WIDTH -> {
-        layer?.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
-        dragLayer?.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
+        layer.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
+        dragLayer.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
       }
     }
   }
@@ -183,18 +162,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around LineCap
      */
     get(): LineCap? {
-      return layer?.lineCap
+      return layer.lineCap
     }
     /**
      * Set the LineCap property
      * @param value property wrapper value around LineCap
      */
     set(value) {
-      val newValue = value ?: LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.lineCap(it)
-        dragLayer?.lineCap(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").value
       }
+      setLayerProperty(wrappedValue, "line-cap")
     }
 
   /**
@@ -209,18 +189,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer?.lineMiterLimit
+      return layer.lineMiterLimit
     }
     /**
      * Set the LineMiterLimit property
      * @param value property wrapper value around Double
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-miter-limit").silentUnwrap()
-      newValue?.let {
-        layer?.lineMiterLimit(it)
-        dragLayer?.lineMiterLimit(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-miter-limit").value
       }
+      setLayerProperty(wrappedValue, "line-miter-limit")
     }
 
   /**
@@ -235,18 +216,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer?.lineRoundLimit
+      return layer.lineRoundLimit
     }
     /**
      * Set the LineRoundLimit property
      * @param value property wrapper value around Double
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").silentUnwrap()
-      newValue?.let {
-        layer?.lineRoundLimit(it)
-        dragLayer?.lineRoundLimit(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").value
       }
+      setLayerProperty(wrappedValue, "line-round-limit")
     }
 
   /**
@@ -261,18 +243,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer?.lineDasharray
+      return layer.lineDasharray
     }
     /**
      * Set the LineDasharray property
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray").silentUnwrap()
-      newValue?.let {
-        layer?.lineDasharray(it)
-        dragLayer?.lineDasharray(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray").value
       }
+      setLayerProperty(wrappedValue, "line-dasharray")
     }
 
   /**
@@ -287,18 +270,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer?.lineDepthOcclusionFactor
+      return layer.lineDepthOcclusionFactor
     }
     /**
      * Set the LineDepthOcclusionFactor property
      * @param value property wrapper value around Double
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor").silentUnwrap()
-      newValue?.let {
-        layer?.lineDepthOcclusionFactor(it)
-        dragLayer?.lineDepthOcclusionFactor(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor").value
       }
+      setLayerProperty(wrappedValue, "line-depth-occlusion-factor")
     }
 
   /**
@@ -313,18 +297,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer?.lineEmissiveStrength
+      return layer.lineEmissiveStrength
     }
     /**
      * Set the LineEmissiveStrength property
      * @param value property wrapper value around Double
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").silentUnwrap()
-      newValue?.let {
-        layer?.lineEmissiveStrength(it)
-        dragLayer?.lineEmissiveStrength(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").value
       }
+      setLayerProperty(wrappedValue, "line-emissive-strength")
     }
 
   /**
@@ -339,18 +324,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer?.lineTranslate
+      return layer.lineTranslate
     }
     /**
      * Set the LineTranslate property
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate").silentUnwrap()
-      newValue?.let {
-        layer?.lineTranslate(it)
-        dragLayer?.lineTranslate(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate").value
       }
+      setLayerProperty(wrappedValue, "line-translate")
     }
 
   /**
@@ -365,18 +351,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around LineTranslateAnchor
      */
     get(): LineTranslateAnchor? {
-      return layer?.lineTranslateAnchor
+      return layer.lineTranslateAnchor
     }
     /**
      * Set the LineTranslateAnchor property
      * @param value property wrapper value around LineTranslateAnchor
      */
     set(value) {
-      val newValue = value ?: LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.lineTranslateAnchor(it)
-        dragLayer?.lineTranslateAnchor(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").value
       }
+      setLayerProperty(wrappedValue, "line-translate-anchor")
     }
 
   /**
@@ -391,18 +378,19 @@ class PolylineAnnotationManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer?.lineTrimOffset
+      return layer.lineTrimOffset
     }
     /**
      * Set the LineTrimOffset property
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap()
-      newValue?.let {
-        layer?.lineTrimOffset(it)
-        dragLayer?.lineTrimOffset(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").value
       }
+      setLayerProperty(wrappedValue, "line-trim-offset")
     }
 
   /**
@@ -417,31 +405,21 @@ class PolylineAnnotationManager(
      * @return property wrapper value around String
      */
     get(): String? {
-      return layer?.slot
+      return layer.slot
     }
     /**
      * Set the Slot property
      * @param value property wrapper value around String
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "slot").silentUnwrap()
-      newValue?.let {
-        layer?.slot(it)
-        dragLayer?.slot(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "slot").value
       }
+      setLayerProperty(wrappedValue, "slot")
     }
 
-  /**
-   * Create the layer for managed annotations
-   *
-   * @return the layer created
-   */
-  override fun createLayer(): LineLayer {
-    return lineLayer(layerId, sourceId) {}
-  }
-  override fun createDragLayer(): LineLayer {
-    return lineLayer(dragLayerId, dragSourceId) {}
-  }
   /**
    * The filter on the managed polylineAnnotations.
    */
@@ -451,7 +429,7 @@ class PolylineAnnotationManager(
      *
      * @return expression
      */
-    get() = layer?.filter
+    get() = layer.filter
     /**
      * Set filter on the managed polylineAnnotations.
      *
@@ -459,13 +437,23 @@ class PolylineAnnotationManager(
      */
     set(value) {
       value?.let {
-        layer?.filter(it)
-        dragLayer?.filter(it)
+        layer.filter(it)
+        dragLayer.filter(it)
       }
     }
 
   init {
-    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_JOIN] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BLUR] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_COLOR] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OFFSET] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OPACITY] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_PATTERN] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_WIDTH] = false
   }
 
   /**

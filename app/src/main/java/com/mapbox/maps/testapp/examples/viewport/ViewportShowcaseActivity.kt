@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
@@ -25,6 +26,7 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
+import kotlinx.coroutines.launch
 
 /**
  * Showcase the use age of viewport plugin.
@@ -34,26 +36,11 @@ import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
  * @see [User location guide](https://docs.mapbox.com/android/maps/guides/user-location/#location-tracking)
  */
 class ViewportShowcaseActivity : AppCompatActivity() {
-  private lateinit var mapboxMap: MapboxMap
-  private lateinit var mapView: MapView
   private lateinit var viewportButton: Button
-  private lateinit var viewport: ViewportPlugin
   private lateinit var followPuckViewportState: FollowPuckViewportState
   private lateinit var overviewViewportState: OverviewViewportState
   private val pixelDensity = Resources.getSystem().displayMetrics.density
-  private val simulateRouteLocationProvider by lazy {
-    SimulateRouteLocationProvider(
-      LineString.fromPolyline(
-        DirectionsResponse.fromJson(
-          AnnotationUtils.loadStringFromAssets(
-            this,
-            NAVIGATION_ROUTE_JSON_NAME
-          )
-        ).routes()[0].geometry()!!,
-        Constants.PRECISION_6
-      )
-    )
-  }
+  private lateinit var simulateRouteLocationProvider: SimulateRouteLocationProvider
 
   private val overviewPadding: EdgeInsets by lazy {
     EdgeInsets(
@@ -93,32 +80,44 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     val binding = ActivityViewportAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     viewportButton = binding.switchButton
-    mapView = binding.mapView
-    mapboxMap = binding.mapView.mapboxMap.apply {
-      subscribeStyleLoaded {
+    val mapView = binding.mapView
+    lifecycleScope.launch {
+      mapView.mapboxMap.apply {
         setCamera(
           CameraOptions.Builder()
             .zoom(14.0)
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
-        binding.mapView.location.apply {
-          setLocationProvider(simulateRouteLocationProvider)
-          updateSettings {
-            locationPuck = LocationPuck2D(
-              bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing)
-            )
-            puckBearingEnabled = true
+        simulateRouteLocationProvider = SimulateRouteLocationProvider(
+          LineString.fromPolyline(
+            DirectionsResponse.fromJson(
+              AnnotationUtils.loadStringFromAssets(
+                this@ViewportShowcaseActivity,
+                NAVIGATION_ROUTE_JSON_NAME
+              )
+            ).routes()[0].geometry()!!,
+            Constants.PRECISION_6
+          )
+        )
+        subscribeStyleLoaded {
+          mapView.location.apply {
+            setLocationProvider(simulateRouteLocationProvider)
+            updateSettings {
+              locationPuck = LocationPuck2D(
+                bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing)
+              )
+              puckBearingEnabled = true
+            }
           }
         }
+        setupViewportPlugin(mapView.viewport)
       }
     }
-    setupViewportPlugin()
   }
 
   @SuppressLint("SetTextI18n")
-  private fun setupViewportPlugin() {
-    viewport = mapView.viewport
+  private fun setupViewportPlugin(viewport: ViewportPlugin) {
     followPuckViewportState =
       viewport.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().build())
     overviewViewportState =

@@ -7,15 +7,13 @@ import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
-import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -26,43 +24,30 @@ class PolygonAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Polygon, PolygonAnnotation, PolygonAnnotationOptions, OnPolygonAnnotationDragListener, OnPolygonAnnotationClickListener, OnPolygonAnnotationLongClickListener, OnPolygonAnnotationInteractionListener, FillLayer>(
-    delegateProvider, annotationConfig
+    delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "polygonAnnotation", ::FillLayer
   ) {
-  private val id = ID_GENERATOR.incrementAndGet()
-  override val layerId = annotationConfig?.layerId ?: "mapbox-android-polygonAnnotation-layer-$id"
-  override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polygonAnnotation-source-$id"
-  override val dragLayerId = "mapbox-android-polygonAnnotation-draglayer-$id"
-  override val dragSourceId = "mapbox-android-polygonAnnotation-dragsource-$id"
-
-  override fun initializeDataDrivenPropertyMap() {
-    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY] = false
-    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_COLOR] = false
-    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OPACITY] = false
-    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR] = false
-    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_PATTERN] = false
-  }
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY -> {
-        layer?.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
-        dragLayer?.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
+        layer.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
+        dragLayer.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
       }
       PolygonAnnotationOptions.PROPERTY_FILL_COLOR -> {
-        layer?.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
-        dragLayer?.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
+        layer.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
+        dragLayer.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
       }
       PolygonAnnotationOptions.PROPERTY_FILL_OPACITY -> {
-        layer?.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
-        dragLayer?.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
+        layer.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
+        dragLayer.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
       }
       PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR -> {
-        layer?.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
-        dragLayer?.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
+        layer.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
+        dragLayer.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
       }
       PolygonAnnotationOptions.PROPERTY_FILL_PATTERN -> {
-        layer?.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
-        dragLayer?.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
+        layer.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
+        dragLayer.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
       }
     }
   }
@@ -141,18 +126,19 @@ class PolygonAnnotationManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer?.fillAntialias
+      return layer.fillAntialias
     }
     /**
      * Set the FillAntialias property
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias").silentUnwrap()
-      newValue?.let {
-        layer?.fillAntialias(it)
-        dragLayer?.fillAntialias(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias").value
       }
+      setLayerProperty(wrappedValue, "fill-antialias")
     }
 
   /**
@@ -167,18 +153,19 @@ class PolygonAnnotationManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer?.fillEmissiveStrength
+      return layer.fillEmissiveStrength
     }
     /**
      * Set the FillEmissiveStrength property
      * @param value property wrapper value around Double
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").silentUnwrap()
-      newValue?.let {
-        layer?.fillEmissiveStrength(it)
-        dragLayer?.fillEmissiveStrength(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").value
       }
+      setLayerProperty(wrappedValue, "fill-emissive-strength")
     }
 
   /**
@@ -193,18 +180,19 @@ class PolygonAnnotationManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer?.fillTranslate
+      return layer.fillTranslate
     }
     /**
      * Set the FillTranslate property
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate").silentUnwrap()
-      newValue?.let {
-        layer?.fillTranslate(it)
-        dragLayer?.fillTranslate(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate").value
       }
+      setLayerProperty(wrappedValue, "fill-translate")
     }
 
   /**
@@ -219,18 +207,19 @@ class PolygonAnnotationManager(
      * @return property wrapper value around FillTranslateAnchor
      */
     get(): FillTranslateAnchor? {
-      return layer?.fillTranslateAnchor
+      return layer.fillTranslateAnchor
     }
     /**
      * Set the FillTranslateAnchor property
      * @param value property wrapper value around FillTranslateAnchor
      */
     set(value) {
-      val newValue = value ?: FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.fillTranslateAnchor(it)
-        dragLayer?.fillTranslateAnchor(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").value
       }
+      setLayerProperty(wrappedValue, "fill-translate-anchor")
     }
 
   /**
@@ -245,31 +234,21 @@ class PolygonAnnotationManager(
      * @return property wrapper value around String
      */
     get(): String? {
-      return layer?.slot
+      return layer.slot
     }
     /**
      * Set the Slot property
      * @param value property wrapper value around String
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "slot").silentUnwrap()
-      newValue?.let {
-        layer?.slot(it)
-        dragLayer?.slot(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "slot").value
       }
+      setLayerProperty(wrappedValue, "slot")
     }
 
-  /**
-   * Create the layer for managed annotations
-   *
-   * @return the layer created
-   */
-  override fun createLayer(): FillLayer {
-    return fillLayer(layerId, sourceId) {}
-  }
-  override fun createDragLayer(): FillLayer {
-    return fillLayer(dragLayerId, dragSourceId) {}
-  }
   /**
    * The filter on the managed polygonAnnotations.
    */
@@ -279,7 +258,7 @@ class PolygonAnnotationManager(
      *
      * @return expression
      */
-    get() = layer?.filter
+    get() = layer.filter
     /**
      * Set filter on the managed polygonAnnotations.
      *
@@ -287,13 +266,17 @@ class PolygonAnnotationManager(
      */
     set(value) {
       value?.let {
-        layer?.filter(it)
-        dragLayer?.filter(it)
+        layer.filter(it)
+        dragLayer.filter(it)
       }
     }
 
   init {
-    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_COLOR] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OPACITY] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_PATTERN] = false
   }
 
   /**

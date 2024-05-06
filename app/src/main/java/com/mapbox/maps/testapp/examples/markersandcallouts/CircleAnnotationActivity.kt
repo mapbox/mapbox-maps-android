@@ -4,23 +4,32 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationLongClickListener
+import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
-import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Random
 
 /**
  * Example showing how to add Circle annotations
  */
 class CircleAnnotationActivity : AppCompatActivity() {
   private val random = Random()
-  private var circleAnnotationManager: CircleAnnotationManager? = null
   private var styleIndex: Int = 0
   private var slotIndex: Int = 0
   private val nextStyle: String
@@ -38,9 +47,11 @@ class CircleAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    Toast.makeText(this, "Long click a circle to start dragging.", Toast.LENGTH_LONG).show()
+    // Load initial style
+    switchToNextStyle()
+    Toast.makeText(this, "Long click a circle to enable dragging.", Toast.LENGTH_LONG).show()
     annotationPlugin = binding.mapView.annotations
-    circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
+    val circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
       addClickListener(
         OnCircleAnnotationClickListener {
           Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
@@ -60,72 +71,79 @@ class CircleAnnotationActivity : AppCompatActivity() {
         CameraOptions.Builder()
           .center(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
           .pitch(0.0)
-          .zoom(5.0)
+          .zoom(3.0)
           .bearing(0.0)
           .build()
       )
-      binding.mapView.mapboxMap.loadStyle(nextStyle) {
-        addInteractionListener(
-          object : OnCircleAnnotationInteractionListener {
-            override fun onSelectAnnotation(annotation: CircleAnnotation) {
-              Toast.makeText(
-                this@CircleAnnotationActivity,
-                "onSelectAnnotation: ${annotation.id}",
-                Toast.LENGTH_SHORT
-              ).show()
-            }
-
-            override fun onDeselectAnnotation(annotation: CircleAnnotation) {
-              Toast.makeText(
-                this@CircleAnnotationActivity,
-                "onDeselectAnnotation: ${annotation.id}",
-                Toast.LENGTH_SHORT
-              ).show()
-            }
+      addInteractionListener(
+        object : OnCircleAnnotationInteractionListener {
+          override fun onSelectAnnotation(annotation: CircleAnnotation) {
+            Toast.makeText(
+              this@CircleAnnotationActivity,
+              "onSelectAnnotation: ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
           }
-        )
-        val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
-          .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
-          .withCircleColor(Color.YELLOW)
-          .withCircleRadius(12.0)
-          .withDraggable(false)
-        create(circleAnnotationOptions)
 
+          override fun onDeselectAnnotation(annotation: CircleAnnotation) {
+            Toast.makeText(
+              this@CircleAnnotationActivity,
+              "onDeselectAnnotation: ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+        }
+      )
+
+      val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
+        .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
+        .withCircleColor(Color.YELLOW)
+        .withCircleRadius(12.0)
+        .withDraggable(false)
+      create(circleAnnotationOptions)
+
+      lifecycleScope.launch {
         // random add circles across the globe
-        val circleAnnotationOptionsList: MutableList<CircleAnnotationOptions> = ArrayList()
-        for (i in 0..2000) {
-          val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-          circleAnnotationOptionsList.add(
+        val circleAnnotationOptionsList = withContext(Dispatchers.Default) {
+          List(2_000) {
+            val color =
+              Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
             CircleAnnotationOptions()
               .withPoint(AnnotationUtils.createRandomPoint())
               .withCircleColor(color)
               .withCircleRadius(8.0)
               .withDraggable(false)
-          )
+          }
         }
         create(circleAnnotationOptionsList)
-
-        AnnotationUtils.loadStringFromAssets(
-          this@CircleAnnotationActivity, "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
-        }
+        val annotationsJsonContents = FeatureCollection.fromJson(
+          AnnotationUtils.loadStringFromAssets(
+            this@CircleAnnotationActivity,
+            "annotations.json"
+          )
+        )
+        create(annotationsJsonContents)
       }
     }
 
     binding.deleteAll.setOnClickListener {
-      circleAnnotationManager?.let {
-        annotationPlugin.removeAnnotationManager(it)
-      }
+      annotationPlugin.removeAnnotationManager(circleAnnotationManager)
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.mapboxMap.loadStyle(nextStyle)
+      switchToNextStyle()
     }
     binding.changeSlot.setOnClickListener {
       val slot = nextSlot
       showShortToast("Switching to $slot slot")
-      circleAnnotationManager?.slot = slot
+      circleAnnotationManager.slot = slot
     }
+  }
+
+  private fun switchToNextStyle() {
+    val style = nextStyle
+    binding.mapView.mapboxMap.loadStyle(style)
+    // only standard supports slots
+    binding.changeSlot.isEnabled = style == Style.STANDARD
   }
 
   companion object {

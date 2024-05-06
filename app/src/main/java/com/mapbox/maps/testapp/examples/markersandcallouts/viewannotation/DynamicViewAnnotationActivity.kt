@@ -15,10 +15,12 @@ import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeometryCollection
 import com.mapbox.geojson.LineString
+import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapView
@@ -26,6 +28,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationAnchorConfig
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
@@ -49,6 +52,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.annotatedLayerFeature
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import kotlinx.coroutines.launch
 
 /**
  * Example how to use dynamic view annotations on line layers and fixed positions.
@@ -85,18 +89,10 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
 
   private lateinit var viewAnnotationManager: ViewAnnotationManager
 
-  private val featureRouteMain: Feature by lazy { getFeatureFromAsset(ROUTE_MAIN_GEOJSON) }
-  private val featureRouteAlt: Feature by lazy { getFeatureFromAsset(ROUTE_ALT_GEOJSON) }
-  private val featureCollectionParkings: FeatureCollection by lazy {
-    getFeatureCollectionFromAsset(
-      PARKINGS_GEOJSON
-    )
-  }
-  private val featureCollectionConstructionSite: FeatureCollection by lazy {
-    getFeatureCollectionFromAsset(
-      CONSTRUCTION_GEOJSON
-    )
-  }
+  private lateinit var featureRouteMain: Feature
+  private lateinit var featureRouteAlt: Feature
+  private lateinit var featureCollectionParkings: FeatureCollection
+  private lateinit var featureCollectionConstructionSite: FeatureCollection
 
   // dynamic view annotations
   private lateinit var alternativeEtaView: View
@@ -134,29 +130,46 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     val mapView = binding.mapView
     viewAnnotationManager = mapView.viewAnnotationManager
 
-    binding.btnMode.setOnClickListener {
-      isOverview = !isOverview
-      if (isOverview) {
-        overviewRoute(binding.mapView)
-        refreshButton(binding.btnMode)
-      } else {
-        followLocationIndicator(binding.mapView)
-        refreshButton(binding.btnMode)
+    lifecycleScope.launch {
+      mapView.mapboxMap.setCamera(
+        cameraOptions {
+        center(Point.fromLngLat(-122.3004315, 37.535426700013154))
+        zoom(9.614)
       }
-    }
-
-    refreshButton(binding.btnMode)
-
-    mapView.mapboxMap.apply {
-      initStyleWithLayers {
-        setupLocation(mapView)
-        overviewRoute(mapView)
-
-        addViewAnnotations()
-        observeViewAnnotationUpdate()
+      )
+      binding.btnMode.isEnabled = false
+      binding.btnMode.setOnClickListener {
+        isOverview = !isOverview
+        if (isOverview) {
+          overviewRoute(binding.mapView)
+          refreshButton(binding.btnMode)
+        } else {
+          followLocationIndicator(binding.mapView)
+          refreshButton(binding.btnMode)
+        }
       }
+
+      loadAssets()
+
+      mapView.mapboxMap.apply {
+        initStyleWithLayers {
+          setupLocation(mapView)
+          overviewRoute(mapView)
+
+          addViewAnnotations()
+          observeViewAnnotationUpdate()
+        }
+      }
+      mapView.showPaddingZone()
+      refreshButton(binding.btnMode)
     }
-    mapView.showPaddingZone()
+  }
+
+  private suspend fun loadAssets() {
+    featureRouteMain = getFeatureFromAsset(ROUTE_MAIN_GEOJSON)
+    featureRouteAlt = getFeatureFromAsset(ROUTE_ALT_GEOJSON)
+    featureCollectionParkings = getFeatureCollectionFromAsset(PARKINGS_GEOJSON)
+    featureCollectionConstructionSite = getFeatureCollectionFromAsset(CONSTRUCTION_GEOJSON)
   }
 
   private fun MapboxMap.initStyleWithLayers(onLoaded: (Style) -> Unit) {
@@ -310,6 +323,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
   }
 
   private fun refreshButton(btnMode: Button) {
+    btnMode.isEnabled = true
     btnMode.text = getString(R.string.dynamic_mode, if (isOverview) "follow" else "overview")
   }
 
@@ -320,16 +334,16 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         annotatedLayerFeature(LAYER_MAIN_ID)
         annotationAnchors(
           {
-                  anchor(ViewAnnotationAnchor.TOP_RIGHT)
+            anchor(ViewAnnotationAnchor.TOP_RIGHT)
           },
           {
-                  anchor(ViewAnnotationAnchor.TOP_LEFT)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
           },
           {
-                  anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
+            anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
           },
           {
-                  anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
+            anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
           },
         )
       }
@@ -340,16 +354,16 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         annotatedLayerFeature(LAYER_ALT_ID)
         annotationAnchors(
           {
-                  anchor(ViewAnnotationAnchor.TOP_RIGHT)
+            anchor(ViewAnnotationAnchor.TOP_RIGHT)
           },
           {
-                  anchor(ViewAnnotationAnchor.TOP_LEFT)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
           },
           {
-                  anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
+            anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
           },
           {
-                  anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
+            anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
           },
         )
       }
@@ -434,18 +448,18 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     )
   }
 
-  private fun getFeatureFromAsset(featureGeojson: String) =
+  private suspend fun getFeatureFromAsset(featureGeojson: String) =
     Feature.fromJson(
       AnnotationUtils.loadStringFromAssets(
         this, featureGeojson
-      )!!
+      )
     )
 
-  private fun getFeatureCollectionFromAsset(featureGeojson: String) =
+  private suspend fun getFeatureCollectionFromAsset(featureGeojson: String) =
     FeatureCollection.fromJson(
       AnnotationUtils.loadStringFromAssets(
         this, featureGeojson
-      )!!
+      )
     )
 
   private fun getBackground(

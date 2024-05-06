@@ -10,10 +10,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationOptions
@@ -27,6 +29,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.turf.TurfConstants.UNIT_DEFAULT
 import com.mapbox.turf.TurfMeasurement
+import kotlinx.coroutines.launch
 import kotlin.math.roundToLong
 
 /**
@@ -44,25 +47,25 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    val mapView = MapView(this, mapInitOptions = MapInitOptions(this, styleUri = Style.LIGHT))
     setContentView(mapView)
 
-    // load feature collection from assets file
-    val featureCollection = FeatureCollection.fromJson(
-      AnnotationUtils.loadStringFromAssets(
-        this, ROUTE_FILE_NAME
-      )!!
-    )
+    lifecycleScope.launch {
+      // load feature collection from assets file
+      val routeAsset = AnnotationUtils.loadStringFromAssets(
+        this@ViewAnnotationAnimationActivity, ROUTE_FILE_NAME
+      )
+      val featureCollection = FeatureCollection.fromJson(routeAsset)
 
-    // calculate the route length, get coordinates from route geometry
-    val lineString = featureCollection.features()!![0].geometry() as LineString
-    routeCoordinateList = lineString.coordinates()
-    totalLength = TurfMeasurement.length(lineString, UNIT_DEFAULT)
+      // calculate the route length, get coordinates from route geometry
+      val lineString = featureCollection.features()!![0].geometry() as LineString
+      routeCoordinateList = lineString.coordinates()
+      totalLength = TurfMeasurement.length(lineString, UNIT_DEFAULT)
 
-    // initialize the mapview
-    mapView.mapboxMap.apply {
-      loadStyle(
-        style(Style.LIGHT) {
+      // initialize the mapview
+      mapView.mapboxMap.apply {
+        loadStyle(
+          style(Style.LIGHT) {
           // source for displaying the route
           +geoJsonSource(SOURCE_ID) {
             featureCollection(featureCollection)
@@ -73,31 +76,32 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
             lineWidth(4.0)
           }
         }
-      ) {
-        // center camera around SF airport
-        setCamera(
-          CameraOptions.Builder()
-            .center(Point.fromLngLat(-122.3915, 37.6177))
-            .zoom(11.0)
-            .build()
-        )
-        // get initial point
-        val initialPoint = routeCoordinateList[0]
+        ) {
+          // center camera around SF airport
+          setCamera(
+            CameraOptions.Builder()
+              .center(Point.fromLngLat(-122.3915, 37.6177))
+              .zoom(11.0)
+              .build()
+          )
+          // get initial point
+          val initialPoint = routeCoordinateList[0]
 
-        // create view annotation callout item
-        viewAnnotationManager = mapView.viewAnnotationManager
-        annotationView = viewAnnotationManager.addViewAnnotation(
-          R.layout.item_callout_view,
-          ViewAnnotationOptions.Builder()
-            .geometry(initialPoint)
-            .build()
-        )
+          // create view annotation callout item
+          viewAnnotationManager = mapView.viewAnnotationManager
+          annotationView = viewAnnotationManager.addViewAnnotation(
+            R.layout.item_callout_view,
+            ViewAnnotationOptions.Builder()
+              .geometry(initialPoint)
+              .build()
+          )
 
-        ItemCalloutViewBinding.bind(annotationView).apply {
-          textView = textNativeView
+          ItemCalloutViewBinding.bind(annotationView).apply {
+            textView = textNativeView
+          }
+
+          animateNextStep()
         }
-
-        animateNextStep()
       }
     }
   }

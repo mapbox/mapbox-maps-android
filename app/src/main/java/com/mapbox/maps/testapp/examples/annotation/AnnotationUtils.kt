@@ -5,6 +5,8 @@ import android.widget.Toast
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import com.mapbox.maps.logE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -86,25 +88,18 @@ object AnnotationUtils {
   }
 
   /**
-   * Load the string content from a assets file
+   * Load the string content from an assets file in the background
    *
    * @param context the context
    * @param fileName the file to load
+   * @return the contents of the file
+   *
+   * @throws IOException if the given [fileName] can't be read
    */
-  fun loadStringFromAssets(context: Context, fileName: String): String? {
-    return try {
-      val inputStream = context.assets.open(fileName)
-      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
-      val sb = StringBuilder()
-      rd.forEachLine {
-        sb.append(it)
-      }
-      sb.toString()
-    } catch (e: IOException) {
-      logE(TAG, "Unable to parse $fileName")
-      null
+  suspend fun loadStringFromAssets(context: Context, fileName: String): String =
+    withContext(Dispatchers.IO) {
+        context.assets.open(fileName).bufferedReader().readText()
     }
-  }
 
   /**
    * Load the string content from net

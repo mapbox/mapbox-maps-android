@@ -7,15 +7,13 @@ import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
-import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -26,58 +24,42 @@ class CircleAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Point, CircleAnnotation, CircleAnnotationOptions, OnCircleAnnotationDragListener, OnCircleAnnotationClickListener, OnCircleAnnotationLongClickListener, OnCircleAnnotationInteractionListener, CircleLayer>(
-    delegateProvider, annotationConfig
+    delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "circleAnnotation", ::CircleLayer
   ) {
-  private val id = ID_GENERATOR.incrementAndGet()
-  override val layerId = annotationConfig?.layerId ?: "mapbox-android-circleAnnotation-layer-$id"
-  override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-circleAnnotation-source-$id"
-  override val dragLayerId = "mapbox-android-circleAnnotation-draglayer-$id"
-  override val dragSourceId = "mapbox-android-circleAnnotation-dragsource-$id"
-
-  override fun initializeDataDrivenPropertyMap() {
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY] = false
-    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH] = false
-  }
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY -> {
-        layer?.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
-        dragLayer?.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
+        layer.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
+        dragLayer.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR -> {
-        layer?.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
-        dragLayer?.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
+        layer.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
+        dragLayer.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR -> {
-        layer?.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
-        dragLayer?.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
+        layer.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
+        dragLayer.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY -> {
-        layer?.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
-        dragLayer?.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
+        layer.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
+        dragLayer.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS -> {
-        layer?.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
-        dragLayer?.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
+        layer.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
+        dragLayer.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR -> {
-        layer?.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
-        dragLayer?.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
+        layer.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
+        dragLayer.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> {
-        layer?.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
-        dragLayer?.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+        layer.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+        dragLayer.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
       }
       CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> {
-        layer?.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
-        dragLayer?.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
+        layer.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
+        dragLayer.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
       }
     }
   }
@@ -162,18 +144,19 @@ class CircleAnnotationManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer?.circleEmissiveStrength
+      return layer.circleEmissiveStrength
     }
     /**
      * Set the CircleEmissiveStrength property
      * @param value property wrapper value around Double
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").silentUnwrap()
-      newValue?.let {
-        layer?.circleEmissiveStrength(it)
-        dragLayer?.circleEmissiveStrength(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").value
       }
+      setLayerProperty(wrappedValue, "circle-emissive-strength")
     }
 
   /**
@@ -188,18 +171,19 @@ class CircleAnnotationManager(
      * @return property wrapper value around CirclePitchAlignment
      */
     get(): CirclePitchAlignment? {
-      return layer?.circlePitchAlignment
+      return layer.circlePitchAlignment
     }
     /**
      * Set the CirclePitchAlignment property
      * @param value property wrapper value around CirclePitchAlignment
      */
     set(value) {
-      val newValue = value ?: CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.circlePitchAlignment(it)
-        dragLayer?.circlePitchAlignment(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").value
       }
+      setLayerProperty(wrappedValue, "circle-pitch-alignment")
     }
 
   /**
@@ -214,18 +198,19 @@ class CircleAnnotationManager(
      * @return property wrapper value around CirclePitchScale
      */
     get(): CirclePitchScale? {
-      return layer?.circlePitchScale
+      return layer.circlePitchScale
     }
     /**
      * Set the CirclePitchScale property
      * @param value property wrapper value around CirclePitchScale
      */
     set(value) {
-      val newValue = value ?: CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.circlePitchScale(it)
-        dragLayer?.circlePitchScale(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").value
       }
+      setLayerProperty(wrappedValue, "circle-pitch-scale")
     }
 
   /**
@@ -240,18 +225,19 @@ class CircleAnnotationManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer?.circleTranslate
+      return layer.circleTranslate
     }
     /**
      * Set the CircleTranslate property
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate").silentUnwrap()
-      newValue?.let {
-        layer?.circleTranslate(it)
-        dragLayer?.circleTranslate(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate").value
       }
+      setLayerProperty(wrappedValue, "circle-translate")
     }
 
   /**
@@ -266,18 +252,19 @@ class CircleAnnotationManager(
      * @return property wrapper value around CircleTranslateAnchor
      */
     get(): CircleTranslateAnchor? {
-      return layer?.circleTranslateAnchor
+      return layer.circleTranslateAnchor
     }
     /**
      * Set the CircleTranslateAnchor property
      * @param value property wrapper value around CircleTranslateAnchor
      */
     set(value) {
-      val newValue = value ?: CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.circleTranslateAnchor(it)
-        dragLayer?.circleTranslateAnchor(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").value
       }
+      setLayerProperty(wrappedValue, "circle-translate-anchor")
     }
 
   /**
@@ -292,31 +279,21 @@ class CircleAnnotationManager(
      * @return property wrapper value around String
      */
     get(): String? {
-      return layer?.slot
+      return layer.slot
     }
     /**
      * Set the Slot property
      * @param value property wrapper value around String
      */
     set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("circle", "slot").silentUnwrap()
-      newValue?.let {
-        layer?.slot(it)
-        dragLayer?.slot(it)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "slot").value
       }
+      setLayerProperty(wrappedValue, "slot")
     }
 
-  /**
-   * Create the layer for managed annotations
-   *
-   * @return the layer created
-   */
-  override fun createLayer(): CircleLayer {
-    return circleLayer(layerId, sourceId) {}
-  }
-  override fun createDragLayer(): CircleLayer {
-    return circleLayer(dragLayerId, dragSourceId) {}
-  }
   /**
    * The filter on the managed circleAnnotations.
    */
@@ -326,7 +303,7 @@ class CircleAnnotationManager(
      *
      * @return expression
      */
-    get() = layer?.filter
+    get() = layer.filter
     /**
      * Set filter on the managed circleAnnotations.
      *
@@ -334,13 +311,20 @@ class CircleAnnotationManager(
      */
     set(value) {
       value?.let {
-        layer?.filter(it)
-        dragLayer?.filter(it)
+        layer.filter(it)
+        dragLayer.filter(it)
       }
     }
 
   init {
-    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH] = false
   }
 
   /**
