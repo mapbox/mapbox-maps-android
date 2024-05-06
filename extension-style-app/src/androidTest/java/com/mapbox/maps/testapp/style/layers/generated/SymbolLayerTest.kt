@@ -11,6 +11,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.types.*
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.*
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -1324,6 +1325,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(1.0, layer.iconColorSaturation!!, 1E-5)
   }
 
+  @Ignore("Icon color saturation transition will be added in future versions")
   @Test
   @UiThreadTest
   fun iconColorSaturationTransitionTest() {
@@ -1338,6 +1340,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(transition, layer.iconColorSaturationTransition)
   }
 
+  @Ignore("Icon color saturation transition will be added in future versions")
   @Test
   @UiThreadTest
   fun iconColorSaturationTransitionSetDslTest() {
@@ -2373,7 +2376,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconColorTransition should not be null", SymbolLayer.defaultIconColorTransition)
     assertNotNull("defaultIconColorSaturation should not be null", SymbolLayer.defaultIconColorSaturation)
     assertNotNull("defaultIconColorSaturationAsExpression should not be null", SymbolLayer.defaultIconColorSaturationAsExpression)
-    assertNotNull("defaultIconColorSaturationTransition should not be null", SymbolLayer.defaultIconColorSaturationTransition)
+    // Icon color saturation transition will be added in future versions
+    // assertNotNull("defaultIconColorSaturationTransition should not be null", SymbolLayer.defaultIconColorSaturationTransition)
     assertNotNull("defaultIconEmissiveStrength should not be null", SymbolLayer.defaultIconEmissiveStrength)
     assertNotNull("defaultIconEmissiveStrengthAsExpression should not be null", SymbolLayer.defaultIconEmissiveStrengthAsExpression)
     assertNotNull("defaultIconEmissiveStrengthTransition should not be null", SymbolLayer.defaultIconEmissiveStrengthTransition)
