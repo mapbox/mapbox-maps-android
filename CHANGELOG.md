@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.4.0-beta.3
+
+# 11.4.0-beta.3 May 06, 2024
 ## Features ✨ and improvements 🏁
 * Add experimental `MapView.setSnapshotLegacyMode` function to help avoiding `MapView.snapshot` native crash on some Samsung devices running Android 14.
 
@@ -14,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update common to v24.4.0-beta.3.
+
 
 # 11.4.0-beta.2 April 30, 2024
 ## Features ✨ and improvements 🏁
