@@ -1,13 +1,10 @@
 public abstract class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl : com/mapbox/maps/plugin/annotation/AnnotationManager {
-	public fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)V
 	public fun addClickListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationClickListener;)Z
 	public fun addDragListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationDragListener;)Z
 	public fun addInteractionListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationInteractionListener;)Z
 	public fun addLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener;)Z
 	public fun create (Lcom/mapbox/maps/plugin/annotation/AnnotationOptions;)Lcom/mapbox/maps/plugin/annotation/Annotation;
 	public fun create (Ljava/util/List;)Ljava/util/List;
-	protected abstract fun createDragLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
-	protected abstract fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun delete (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
 	public fun delete (Ljava/util/List;)V
 	public fun deleteAll ()V
@@ -17,16 +14,10 @@ public abstract class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl : 
 	public fun getClickListeners ()Ljava/util/List;
 	protected final fun getDataDrivenPropertyUsageMap ()Ljava/util/Map;
 	public final fun getDelegateProvider ()Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;
-	protected abstract fun getDragLayerId ()Ljava/lang/String;
 	public fun getDragListeners ()Ljava/util/List;
-	protected abstract fun getDragSourceId ()Ljava/lang/String;
 	public fun getInteractionListener ()Ljava/util/List;
 	public abstract fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	protected abstract fun getLayerId ()Ljava/lang/String;
 	public fun getLongClickListeners ()Ljava/util/List;
-	protected abstract fun getSourceId ()Ljava/lang/String;
-	protected final fun initLayerAndSource (Lcom/mapbox/maps/MapboxStyleManager;)V
-	protected abstract fun initializeDataDrivenPropertyMap ()V
 	public fun onDestroy ()V
 	public fun onSizeChanged (II)V
 	public final fun queryMapForFeatures (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/plugin/annotation/Annotation;
@@ -38,6 +29,7 @@ public abstract class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl : 
 	public fun selectAnnotation (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
 	protected abstract fun setDataDrivenPropertyIsUsed (Ljava/lang/String;)V
 	public abstract fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	protected final fun setLayerProperty (Lcom/mapbox/bindgen/Value;Ljava/lang/String;)V
 	public fun update (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
 	public fun update (Ljava/util/List;)V
 }
@@ -119,8 +111,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public synthetic fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun create (Lcom/mapbox/geojson/FeatureCollection;)Ljava/util/List;
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
-	public synthetic fun createDragLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
-	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;
@@ -345,8 +335,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public synthetic fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun create (Lcom/mapbox/geojson/FeatureCollection;)Ljava/util/List;
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
-	public synthetic fun createDragLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
-	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public final fun getIconAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getIconColorSaturation ()Ljava/lang/Double;
@@ -613,8 +601,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public synthetic fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun create (Lcom/mapbox/geojson/FeatureCollection;)Ljava/util/List;
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
-	public synthetic fun createDragLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
-	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
@@ -728,8 +714,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public synthetic fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun create (Lcom/mapbox/geojson/FeatureCollection;)Ljava/util/List;
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
-	public synthetic fun createDragLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
-	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
