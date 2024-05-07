@@ -395,6 +395,11 @@ fun properties(): Expression = Expression.properties()
 fun random(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.random(block)
 
 /**
+ * Returns the length of the particle velocity vector. Can only be used in the `raster-particle-color` property.
+ */
+fun rasterParticleSpeed(): Expression = Expression.rasterParticleSpeed()
+
+/**
  * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the `raster-color` property.
  */
 fun rasterValue(): Expression = Expression.rasterValue()

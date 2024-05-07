@@ -3259,6 +3259,135 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterOpacity;
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand$Companion;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor$Companion;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount$Companion;
+	public fun <init> (J)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor$Companion;
+	public fun <init> (D)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleLayerKt {
+	public static final fun RasterParticleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleArrayBand;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleCount;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleFadeOpacityFactor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;III)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed$Companion;
+	public fun <init> (D)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleMaxSpeed;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor$Companion;
+	public fun <init> (D)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleResetRateFactor;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor$Companion;
+	public fun <init> (D)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleSpeedFactor;
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterResampling {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResampling$Companion;
 	public static final field LINEAR Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResampling;

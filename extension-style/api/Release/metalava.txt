@@ -290,6 +290,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression properties();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression random(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleSpeed();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression rasterValue();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression rgb(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -449,6 +450,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression properties();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression random(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleSpeed();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression rasterValue();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression rgb(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -678,6 +680,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression properties();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression random(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression random(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleSpeed();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression rasterValue();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -843,6 +846,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder product(double... double);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder properties();
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder random(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rasterParticleSpeed();
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rasterValue();
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rgb(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -3914,6 +3918,153 @@ package com.mapbox.maps.extension.style.layers.generated {
 
   public final class RasterLayerKt {
     method public static com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.RasterLayerDsl,kotlin.Unit> block);
+  }
+
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class RasterParticleLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.RasterParticleLayerDsl {
+    ctor public RasterParticleLayer(String layerId, String sourceId);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFilter();
+    method public String getLayerId();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
+    method public String? getRasterParticleArrayBand();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleArrayBandAsExpression();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleColor();
+    method public Long? getRasterParticleCount();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleCountAsExpression();
+    method public Double? getRasterParticleFadeOpacityFactor();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleFadeOpacityFactorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterParticleFadeOpacityFactorTransition();
+    method public Double? getRasterParticleMaxSpeed();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleMaxSpeedAsExpression();
+    method public Double? getRasterParticleResetRateFactor();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleResetRateFactorAsExpression();
+    method public Double? getRasterParticleSpeedFactor();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterParticleSpeedFactorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterParticleSpeedFactorTransition();
+    method public String? getSlot();
+    method public String getSourceId();
+    method public String? getSourceLayer();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getVisibility();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleArrayBand(String rasterParticleArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleColor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleCount(long rasterParticleCount);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleCount(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleCount);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactor(double rasterParticleFadeOpacityFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleFadeOpacityFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleMaxSpeed(double rasterParticleMaxSpeed);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleMaxSpeed(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleMaxSpeed);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleResetRateFactor(double rasterParticleResetRateFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleResetRateFactor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleResetRateFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactor(double rasterParticleSpeedFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleSpeedFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer sourceLayer(String sourceLayer);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? filter;
+    property public String layerId;
+    property public Double? maxZoom;
+    property public Double? minZoom;
+    property public final String? rasterParticleArrayBand;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleArrayBandAsExpression;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleColor;
+    property public final Long? rasterParticleCount;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleCountAsExpression;
+    property public final Double? rasterParticleFadeOpacityFactor;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleFadeOpacityFactorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterParticleFadeOpacityFactorTransition;
+    property public final Double? rasterParticleMaxSpeed;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleMaxSpeedAsExpression;
+    property public final Double? rasterParticleResetRateFactor;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleResetRateFactorAsExpression;
+    property public final Double? rasterParticleSpeedFactor;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterParticleSpeedFactorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterParticleSpeedFactorTransition;
+    property public String? slot;
+    property public final String sourceId;
+    property public final String? sourceLayer;
+    property public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? visibility;
+    property public com.mapbox.maps.extension.style.expressions.generated.Expression? visibilityAsExpression;
+    field public static final com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer.Companion Companion;
+  }
+
+  public static final class RasterParticleLayer.Companion {
+    method public Double? getDefaultMaxZoom();
+    method public Double? getDefaultMinZoom();
+    method public String? getDefaultRasterParticleArrayBand();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleArrayBandAsExpression();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleColor();
+    method public Long? getDefaultRasterParticleCount();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleCountAsExpression();
+    method public Double? getDefaultRasterParticleFadeOpacityFactor();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleFadeOpacityFactorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterParticleFadeOpacityFactorTransition();
+    method public Double? getDefaultRasterParticleMaxSpeed();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleMaxSpeedAsExpression();
+    method public Double? getDefaultRasterParticleResetRateFactor();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleResetRateFactorAsExpression();
+    method public Double? getDefaultRasterParticleSpeedFactor();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterParticleSpeedFactorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterParticleSpeedFactorTransition();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
+    property public final Double? defaultMaxZoom;
+    property public final Double? defaultMinZoom;
+    property public final String? defaultRasterParticleArrayBand;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleArrayBandAsExpression;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleColor;
+    property public final Long? defaultRasterParticleCount;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleCountAsExpression;
+    property public final Double? defaultRasterParticleFadeOpacityFactor;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleFadeOpacityFactorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterParticleFadeOpacityFactorTransition;
+    property public final Double? defaultRasterParticleMaxSpeed;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleMaxSpeedAsExpression;
+    property public final Double? defaultRasterParticleResetRateFactor;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleResetRateFactorAsExpression;
+    property public final Double? defaultRasterParticleSpeedFactor;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterParticleSpeedFactorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterParticleSpeedFactorTransition;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterParticleLayerDsl {
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleArrayBand(String rasterParticleArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleColor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleCount(long rasterParticleCount = 512L);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleCount(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleCount);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactor(double rasterParticleFadeOpacityFactor = 0.98);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleFadeOpacityFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleFadeOpacityFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleMaxSpeed(double rasterParticleMaxSpeed = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleMaxSpeed(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleMaxSpeed);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleResetRateFactor(double rasterParticleResetRateFactor = 0.8);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleResetRateFactor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleResetRateFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactor(double rasterParticleSpeedFactor = 0.2);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterParticleSpeedFactor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleSpeedFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer sourceLayer(String sourceLayer);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+  }
+
+  public final class RasterParticleLayerKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.layers.generated.RasterParticleLayer rasterParticleLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.RasterParticleLayerDsl,kotlin.Unit> block);
   }
 
   @UiThread public final class SkyLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.SkyLayerDsl {

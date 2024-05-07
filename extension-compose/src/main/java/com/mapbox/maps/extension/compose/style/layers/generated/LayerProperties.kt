@@ -5114,6 +5114,220 @@ public data class RasterSaturation(public val value: Value) {
 }
 
 /**
+ * Displayed band of raster array source layer
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleArrayBand(public val value: Value) {
+  /**
+   * Construct the RasterParticleArrayBand with [String].
+   */
+  public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the RasterParticleArrayBand with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-array-band"
+
+    /**
+     * Default value for [RasterParticleArrayBand], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleArrayBand = RasterParticleArrayBand(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a color map by which to colorize a raster particle layer, parameterized by the `["raster-particle-speed"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-particle-max-speed`.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleColor(public val value: Value) {
+  /**
+   * Construct the RasterParticleColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-color"
+
+    /**
+     * Default value for [RasterParticleColor], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleColor = RasterParticleColor(Value.nullValue())
+  }
+}
+
+/**
+ * Defines the amount of particles per tile.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleCount(public val value: Value) {
+  /**
+   * Construct the RasterParticleCount with [Long].
+   */
+  public constructor(value: Long) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the RasterParticleCount with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-count"
+
+    /**
+     * Default value for [RasterParticleCount], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleCount = RasterParticleCount(Value.nullValue())
+  }
+}
+
+/**
+ * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleFadeOpacityFactor(public val value: Value) {
+  /**
+   * Construct the RasterParticleFadeOpacityFactor with [Double].
+   */
+  public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the RasterParticleFadeOpacityFactor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-fade-opacity-factor"
+    internal const val TRANSITION_NAME = "$NAME-transition"
+
+    /**
+     * Default value for [RasterParticleFadeOpacityFactor], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleFadeOpacityFactor = RasterParticleFadeOpacityFactor(Value.nullValue())
+  }
+}
+
+/**
+ * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleMaxSpeed(public val value: Value) {
+  /**
+   * Construct the RasterParticleMaxSpeed with [Double].
+   */
+  public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the RasterParticleMaxSpeed with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-max-speed"
+
+    /**
+     * Default value for [RasterParticleMaxSpeed], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleMaxSpeed = RasterParticleMaxSpeed(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleResetRateFactor(public val value: Value) {
+  /**
+   * Construct the RasterParticleResetRateFactor with [Double].
+   */
+  public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the RasterParticleResetRateFactor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-reset-rate-factor"
+
+    /**
+     * Default value for [RasterParticleResetRateFactor], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleResetRateFactor = RasterParticleResetRateFactor(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a coefficient for the speed of particles’ motion.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterParticleSpeedFactor(public val value: Value) {
+  /**
+   * Construct the RasterParticleSpeedFactor with [Double].
+   */
+  public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the RasterParticleSpeedFactor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "raster-particle-speed-factor"
+    internal const val TRANSITION_NAME = "$NAME-transition"
+
+    /**
+     * Default value for [RasterParticleSpeedFactor], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: RasterParticleSpeedFactor = RasterParticleSpeedFactor(Value.nullValue())
+  }
+}
+
+/**
  * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.

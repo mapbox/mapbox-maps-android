@@ -53,6 +53,7 @@ fun MapboxStyleManager.getLayer(layerId: String): Layer? {
       }
     )
     "slot" -> SlotLayer(layerId)
+    "raster-particle" -> RasterParticleLayer(layerId, source)
     else -> {
       logE(TAG, "Layer type: $type unknown.")
       null

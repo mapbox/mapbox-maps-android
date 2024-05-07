@@ -1216,6 +1216,12 @@ class ExpressionTest {
   }
 
   @Test
+  fun expression_rasterParticleSpeed() {
+    val expression = rasterParticleSpeed()
+    assertEquals("assert raster-particle-speed expression", "[raster-particle-speed]", expression.toString())
+  }
+
+  @Test
   fun expression_rasterValue() {
     val expression = rasterValue()
     assertEquals("assert raster-value expression", "[raster-value]", expression.toString())
