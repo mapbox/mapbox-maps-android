@@ -29,7 +29,9 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.turf.TurfConstants.UNIT_DEFAULT
 import com.mapbox.turf.TurfMeasurement
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.roundToLong
 
 /**
@@ -52,10 +54,13 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
 
     lifecycleScope.launch {
       // load feature collection from assets file
-      val routeAsset = AnnotationUtils.loadStringFromAssets(
-        this@ViewAnnotationAnimationActivity, ROUTE_FILE_NAME
-      )
-      val featureCollection = FeatureCollection.fromJson(routeAsset)
+      val featureCollection = withContext(Dispatchers.Default) {
+        FeatureCollection.fromJson(
+          AnnotationUtils.loadStringFromAssets(
+            this@ViewAnnotationAnimationActivity, ROUTE_FILE_NAME
+          )
+        )
+      }
 
       // calculate the route length, get coordinates from route geometry
       val lineString = featureCollection.features()!![0].geometry() as LineString

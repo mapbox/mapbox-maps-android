@@ -20,7 +20,9 @@ import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManage
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Example showing how to add Polygon annotations
@@ -92,11 +94,15 @@ class PolygonAnnotationActivity : AppCompatActivity() {
         create(polygonAnnotationOptions)
 
         lifecycleScope.launch {
-          val annotationsAsset = AnnotationUtils.loadStringFromAssets(
-            this@PolygonAnnotationActivity,
-            "annotations.json"
-          )
-          create(FeatureCollection.fromJson(annotationsAsset))
+          val featureCollection = withContext(Dispatchers.Default) {
+            FeatureCollection.fromJson(
+              AnnotationUtils.loadStringFromAssets(
+                this@PolygonAnnotationActivity,
+                "annotations.json"
+              )
+            )
+          }
+          create(featureCollection)
         }
       }
     }

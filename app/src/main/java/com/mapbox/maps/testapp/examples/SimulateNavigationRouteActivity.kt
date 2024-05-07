@@ -11,8 +11,10 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
@@ -36,15 +38,17 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       }
     )
     lifecycleScope.launch {
-      val routePoints = LineString.fromPolyline(
-        DirectionsResponse.fromJson(
-          AnnotationUtils.loadStringFromAssets(
-            this@SimulateNavigationRouteActivity,
-            NAVIGATION_ROUTE_JSON_NAME
-          )
-        ).routes()[0].geometry()!!,
-        Constants.PRECISION_6
-      )
+      val routePoints = withContext(Dispatchers.Default) {
+        LineString.fromPolyline(
+          DirectionsResponse.fromJson(
+            AnnotationUtils.loadStringFromAssets(
+              this@SimulateNavigationRouteActivity,
+              NAVIGATION_ROUTE_JSON_NAME
+            )
+          ).routes()[0].geometry()!!,
+          Constants.PRECISION_6
+        )
+      }
       navigationSimulator = NavigationSimulator(mapView, routePoints)
       navigationSimulator.apply {
         disableGestures()

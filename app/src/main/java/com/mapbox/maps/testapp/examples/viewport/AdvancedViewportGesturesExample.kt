@@ -41,7 +41,9 @@ import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Showcase the usage of viewport plugin with advanced gestures customisation.
@@ -159,15 +161,17 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     setContentView(mapView)
 
     lifecycleScope.launch {
-      routePoints = LineString.fromPolyline(
-        DirectionsResponse.fromJson(
-          AnnotationUtils.loadStringFromAssets(
-            this@AdvancedViewportGesturesExample,
-            NAVIGATION_ROUTE_JSON_NAME
-          )
-        ).routes()[0].geometry()!!,
-        Constants.PRECISION_6
-      )
+      routePoints = withContext(Dispatchers.Default) {
+        LineString.fromPolyline(
+          DirectionsResponse.fromJson(
+            AnnotationUtils.loadStringFromAssets(
+              this@AdvancedViewportGesturesExample,
+              NAVIGATION_ROUTE_JSON_NAME
+            )
+          ).routes()[0].geometry()!!,
+          Constants.PRECISION_6
+        )
+      }
       mapView.mapboxMap.loadStyle(
         style(Style.TRAFFIC_DAY) {
         // Show the route line on the map

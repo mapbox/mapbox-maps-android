@@ -52,7 +52,9 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.annotatedLayerFeature
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Example how to use dynamic view annotations on line layers and fixed positions.
@@ -166,10 +168,12 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
   }
 
   private suspend fun loadAssets() {
-    featureRouteMain = getFeatureFromAsset(ROUTE_MAIN_GEOJSON)
-    featureRouteAlt = getFeatureFromAsset(ROUTE_ALT_GEOJSON)
-    featureCollectionParkings = getFeatureCollectionFromAsset(PARKINGS_GEOJSON)
-    featureCollectionConstructionSite = getFeatureCollectionFromAsset(CONSTRUCTION_GEOJSON)
+    withContext(Dispatchers.Default) {
+      featureRouteMain = getFeatureFromAsset(ROUTE_MAIN_GEOJSON)
+      featureRouteAlt = getFeatureFromAsset(ROUTE_ALT_GEOJSON)
+      featureCollectionParkings = getFeatureCollectionFromAsset(PARKINGS_GEOJSON)
+      featureCollectionConstructionSite = getFeatureCollectionFromAsset(CONSTRUCTION_GEOJSON)
+    }
   }
 
   private fun MapboxMap.initStyleWithLayers(onLoaded: (Style) -> Unit) {

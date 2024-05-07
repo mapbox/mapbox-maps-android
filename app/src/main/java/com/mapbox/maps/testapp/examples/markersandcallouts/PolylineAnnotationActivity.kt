@@ -21,7 +21,9 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Random
 
 /**
@@ -112,11 +114,15 @@ class PolylineAnnotationActivity : AppCompatActivity() {
         create(lineOptionsList)
 
         lifecycleScope.launch {
-          val annotationsAsset = AnnotationUtils.loadStringFromAssets(
-            this@PolylineAnnotationActivity,
-            "annotations.json"
-          )
-          create(FeatureCollection.fromJson(annotationsAsset))
+          val featureCollection = withContext(Dispatchers.Default) {
+            FeatureCollection.fromJson(
+              AnnotationUtils.loadStringFromAssets(
+                this@PolylineAnnotationActivity,
+                "annotations.json"
+              )
+            )
+          }
+          create(featureCollection)
         }
       }
     }

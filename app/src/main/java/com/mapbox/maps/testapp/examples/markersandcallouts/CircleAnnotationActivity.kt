@@ -116,12 +116,14 @@ class CircleAnnotationActivity : AppCompatActivity() {
           }
         }
         create(circleAnnotationOptionsList)
-        val annotationsJsonContents = FeatureCollection.fromJson(
-          AnnotationUtils.loadStringFromAssets(
-            this@CircleAnnotationActivity,
-            "annotations.json"
+        val annotationsJsonContents = withContext(Dispatchers.Default) {
+          FeatureCollection.fromJson(
+            AnnotationUtils.loadStringFromAssets(
+              this@CircleAnnotationActivity,
+              "annotations.json"
+            )
           )
-        )
+        }
         create(annotationsJsonContents)
       }
     }

@@ -57,23 +57,23 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
       )
       loadStyle(
         style(Style.STANDARD) {
-        // add an icon that uses very small geojson source
-        +image(
-          "icon",
-          ContextCompat.getDrawable(
-            this@LargeGeojsonPerformanceActivity,
-            R.drawable.ic_blue_marker
-          )!!.toBitmap()
-        )
-        +geoJsonSource("${SOURCE}_marker") {
-          logI(TAG, "Update marker ${SOURCE}_marker, data-id : $jsonUpdateCounter")
-          geometry(Point.fromLngLat(LONGITUDE, LATITUDE), jsonUpdateCounter++.toString())
+          // add an icon that uses very small geojson source
+          +image(
+            "icon",
+            ContextCompat.getDrawable(
+              this@LargeGeojsonPerformanceActivity,
+              R.drawable.ic_blue_marker
+            )!!.toBitmap()
+          )
+          +geoJsonSource("${SOURCE}_marker") {
+            logI(TAG, "Update marker ${SOURCE}_marker, data-id : $jsonUpdateCounter")
+            geometry(Point.fromLngLat(LONGITUDE, LATITUDE), jsonUpdateCounter++.toString())
+          }
+          +symbolLayer("${LAYER}_marker", "${SOURCE}_marker") {
+            iconImage("icon")
+            iconAnchor(IconAnchor.BOTTOM)
+          }
         }
-        +symbolLayer("${LAYER}_marker", "${SOURCE}_marker") {
-          iconImage("icon")
-          iconAnchor(IconAnchor.BOTTOM)
-        }
-      }
       ) {
         lifecycleScope.launch {
           // start an animation that uses UI thread to update map camera
@@ -81,13 +81,14 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
             CameraOptions.Builder().zoom(END_ZOOM).build(),
             MapAnimationOptions.mapAnimationOptions { duration(ANIMATION_DURATION_MS) }
           )
-          val routeAsset = AnnotationUtils.loadStringFromAssets(
-            this@LargeGeojsonPerformanceActivity,
-            LARGE_GEOJSON_ASSET_NAME
-          )
           // Converting a big String to Feature takes some time so we'll do it in a worker thread
           val routePoints = withContext(Dispatchers.Default) {
-            Feature.fromJson(routeAsset)
+            Feature.fromJson(
+              AnnotationUtils.loadStringFromAssets(
+                this@LargeGeojsonPerformanceActivity,
+                LARGE_GEOJSON_ASSET_NAME
+              )
+            )
           }
 
           addGeoJsonLines(routePoints, mapView.mapboxMap)
