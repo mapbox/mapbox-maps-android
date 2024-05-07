@@ -428,23 +428,24 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
 
         private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
           (animation as? CameraAnimator<*>)?.apply {
-            if (skipped) {
-              return
-            }
-            runningAnimatorsQueue.remove(animation)
             if (debugMode) {
               val logText = when (finishStatus) {
                 AnimationFinishStatus.CANCELED -> "was canceled."
                 AnimationFinishStatus.ENDED -> "ended."
               }
-              logI(TAG, "Animation ${type.name}(${hashCode()}) $logText")
+              logI(TAG, "Animation ${type.name}(${hashCode()})${if (skipped) " skipped" else ""} $logText")
             }
+            // Even if skipped we need to unregister it
             if (isInternal) {
-              if (debugMode) {
-                logI(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
-              }
               unregisterAnimators(this, cancelAnimators = false)
+              if (debugMode) {
+                logI(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered (${animators.size})")
+              }
             }
+            if (skipped) {
+              return
+            }
+            runningAnimatorsQueue.remove(animation)
             if (runningAnimatorsQueue.isEmpty()) {
               mapTransformDelegate.setUserAnimationInProgress(false)
             }
@@ -458,7 +459,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
               commitChanges()
             }
           } ?: throw MapboxCameraAnimationException(
-            "Could not start animation as it must be an instance of CameraAnimator and not null!"
+            "Could not finish animation as it must be an instance of CameraAnimator and not null!"
           )
         }
       })
@@ -522,6 +523,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
         }
       }
       animators.addAll(cameraAnimators.map { it as CameraAnimator<*> })
+      if (debugMode) {
+        logI(TAG, "Registered ${cameraAnimators.size} animators. Currently, ${animators.size} animators registered.")
+      }
     }
   }
 
