@@ -65,7 +65,7 @@ public fun FillLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of FillLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 
@@ -112,6 +112,9 @@ public fun FillLayer(
           setProperty(FillOutlineColor.TRANSITION_NAME, fillOutlineColorTransition.value)
         }
         if (fillPattern != FillPattern.default) {
+          fillPattern.styleImage?.let {
+            addImage(it)
+          }
           setProperty(FillPattern.NAME, fillPattern.value)
         }
         if (fillTranslate != FillTranslate.default) {
@@ -176,6 +179,9 @@ public fun FillLayer(
         setProperty(FillOutlineColor.TRANSITION_NAME, fillOutlineColorTransition.value)
       }
       update(fillPattern) {
+        fillPattern.styleImage?.let {
+          addImage(it)
+        }
         setProperty(FillPattern.NAME, fillPattern.value)
       }
       update(fillTranslate) {

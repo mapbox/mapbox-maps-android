@@ -55,7 +55,7 @@ public fun HeatmapLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of HeatmapLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 

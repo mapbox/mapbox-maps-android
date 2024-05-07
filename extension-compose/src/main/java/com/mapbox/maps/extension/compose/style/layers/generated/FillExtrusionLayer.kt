@@ -105,7 +105,7 @@ public fun FillExtrusionLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of FillExtrusionLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 
@@ -218,6 +218,9 @@ public fun FillExtrusionLayer(
           setProperty(FillExtrusionOpacity.TRANSITION_NAME, fillExtrusionOpacityTransition.value)
         }
         if (fillExtrusionPattern != FillExtrusionPattern.default) {
+          fillExtrusionPattern.styleImage?.let {
+            addImage(it)
+          }
           setProperty(FillExtrusionPattern.NAME, fillExtrusionPattern.value)
         }
         if (fillExtrusionRoundedRoof != FillExtrusionRoundedRoof.default) {
@@ -360,6 +363,9 @@ public fun FillExtrusionLayer(
         setProperty(FillExtrusionOpacity.TRANSITION_NAME, fillExtrusionOpacityTransition.value)
       }
       update(fillExtrusionPattern) {
+        fillExtrusionPattern.styleImage?.let {
+          addImage(it)
+        }
         setProperty(FillExtrusionPattern.NAME, fillExtrusionPattern.value)
       }
       update(fillExtrusionRoundedRoof) {

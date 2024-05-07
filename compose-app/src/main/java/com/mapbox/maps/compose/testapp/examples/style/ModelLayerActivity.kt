@@ -3,12 +3,23 @@ package com.mapbox.maps.compose.testapp.examples.style
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
+import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -38,8 +49,38 @@ public class ModelLayerActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
+      var showModelLayer by remember {
+        mutableStateOf(true)
+      }
+      var modelUri by remember {
+        mutableStateOf(SAMPLE_MODEL_URI_1)
+      }
       MapboxMapComposeTheme {
-        ExampleScaffold {
+        ExampleScaffold(
+          floatingActionButton = {
+            Column {
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  showModelLayer = !showModelLayer
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle model layers")
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  modelUri =
+                    if (modelUri == SAMPLE_MODEL_URI_1) SAMPLE_MODEL_URI_2 else SAMPLE_MODEL_URI_1
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle model uri")
+              }
+            }
+          }
+        ) {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = rememberMapViewportState {
@@ -56,25 +97,38 @@ public class ModelLayerActivity : ComponentActivity() {
                 addModel(model(MODEL_ID_2) { uri(SAMPLE_MODEL_URI_2) })
               }
             }
-            ModelLayer(
-              sourceState = rememberGeoJsonSourceState {
-                data = GeoJSONData(
-                  listOf(
-                    Feature.fromGeometry(MODEL1_COORDINATES)
-                      .also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_1) },
-                    Feature.fromGeometry(MAPBOX_HELSINKI)
-                      .also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_2) }
+            if (showModelLayer) {
+              // Add model through data driven expression.
+              ModelLayer(
+                sourceState = rememberGeoJsonSourceState {
+                  data = GeoJSONData(
+                    listOf(
+                      Feature.fromGeometry(MODEL1_COORDINATES)
+                        .also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_1) },
+                      Feature.fromGeometry(MAPBOX_HELSINKI)
+                        .also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_2) }
+                    )
                   )
-                )
-              },
-              modelId = ModelId(Expression.get(MODEL_ID_KEY)),
-              modelType = ModelType.COMMON_3D,
-              modelScale = ModelScale(listOf(40.0, 40.0, 40.0)),
-              modelTranslation = ModelTranslation(listOf(0.0, 0.0, 0.0)),
-              modelRotation = ModelRotation(listOf(0.0, 0.0, 90.0)),
-              modelOpacity = ModelOpacity(0.7),
-              modelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity(1.0)
-            )
+                },
+                modelId = ModelId(Expression.get(MODEL_ID_KEY)),
+                modelType = ModelType.COMMON_3D,
+                modelScale = ModelScale(listOf(40.0, 40.0, 40.0)),
+                modelTranslation = ModelTranslation(listOf(0.0, 0.0, 0.0)),
+                modelRotation = ModelRotation(listOf(0.0, 0.0, 90.0)),
+                modelOpacity = ModelOpacity(0.7),
+                modelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity(1.0)
+              )
+              // Add model through inlined model uri.
+              ModelLayer(
+                sourceState = rememberGeoJsonSourceState {
+                  data = GeoJSONData(CityLocations.HELSINKI)
+                },
+                modelId = ModelId(modelId = MODEL_ID_3, uri = modelUri),
+                modelType = ModelType.COMMON_3D,
+                modelScale = ModelScale(listOf(40.0, 40.0, 40.0)),
+                modelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity(1.0)
+              )
+            }
           }
         }
       }
@@ -87,6 +141,7 @@ public class ModelLayerActivity : ComponentActivity() {
     const val MODEL_ID_KEY = "model-id-key"
     const val MODEL_ID_1 = "model-id-1"
     const val MODEL_ID_2 = "model-id-2"
+    const val MODEL_ID_3 = "model-id-3"
     const val SAMPLE_MODEL_URI_1 =
       "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Embedded/Duck.gltf"
     const val SAMPLE_MODEL_URI_2 = "asset://sportcar.glb"

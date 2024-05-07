@@ -204,6 +204,9 @@ public fun SymbolLayer(
           setProperty(IconIgnorePlacement.NAME, iconIgnorePlacement.value)
         }
         if (iconImage != IconImage.default) {
+          iconImage.styleImage?.let {
+            addImage(it)
+          }
           setProperty(IconImage.NAME, iconImage.value)
         }
         if (iconKeepUpright != IconKeepUpright.default) {
@@ -454,6 +457,9 @@ public fun SymbolLayer(
         setProperty(IconIgnorePlacement.NAME, iconIgnorePlacement.value)
       }
       update(iconImage) {
+        iconImage.styleImage?.let {
+          addImage(it)
+        }
         setProperty(IconImage.NAME, iconImage.value)
       }
       update(iconKeepUpright) {

@@ -4,6 +4,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.internal.MapNode
+import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.internal.PausingDispatcherNode
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.extension.compose.style.internal.StyleSlotNode
@@ -31,6 +32,9 @@ internal class LayerNode(
     }
   }
 
+  private val addedImages = mutableListOf<String>()
+  private val addedModels = mutableListOf<String>()
+
   private lateinit var parentNode: MapNode
 
   override fun onAttached(parent: MapNode) {
@@ -55,15 +59,30 @@ internal class LayerNode(
 
   override fun onRemoved(parent: MapNode) {
     logD(TAG, "onRemoved: parent=$parent")
-    removeLayer()
-    detachSource()
+    cleanUp()
     super.onRemoved(parent)
   }
 
   override fun onClear() {
+    cleanUp()
+    super.onClear()
+  }
+
+  private fun cleanUp() {
     removeLayer()
     detachSource()
-    super.onClear()
+    cleanUpResources()
+  }
+
+  private fun cleanUpResources() {
+    addedImages.forEach {
+      map.removeStyleImage(it)
+    }
+    addedImages.clear()
+    addedModels.forEach {
+      map.removeStyleModel(it)
+    }
+    addedModels.clear()
   }
 
   private fun addLayer(parent: MapNode = parentNode) {
@@ -151,6 +170,39 @@ internal class LayerNode(
     parameters["source"] = Value(sourceState.sourceId)
     addLayer()
     attachSource()
+  }
+
+  internal fun addModel(modelInfo: Pair<String, String>) {
+    coroutineScope.launch {
+      whenNodeReady {
+        map.addStyleModel(modelInfo.first, modelInfo.second)
+          .onError {
+            logW(TAG, "Failed to add style model $modelInfo: $it")
+          }.onValue {
+            addedModels.add(modelInfo.first)
+          }
+      }
+    }
+  }
+
+  internal fun addImage(styleImage: StyleImage) {
+    coroutineScope.launch {
+      whenNodeReady {
+        map.addStyleImage(
+          imageId = styleImage.imageId,
+          scale = styleImage.scale ?: map.pixelRatio,
+          image = styleImage.image,
+          sdf = styleImage.sdf,
+          stretchX = styleImage.stretchX,
+          stretchY = styleImage.stretchY,
+          content = styleImage.content
+        ).onError {
+          logW(TAG, "Failed to add style image $styleImage: $it")
+        }.onValue {
+          addedImages.add(styleImage.imageId)
+        }
+      }
+    }
   }
 
   internal fun setProperty(name: String, value: Value) {

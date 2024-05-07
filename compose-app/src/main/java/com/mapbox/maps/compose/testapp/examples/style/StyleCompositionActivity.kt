@@ -20,19 +20,24 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
+import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleRadius
+import com.mapbox.maps.extension.compose.style.layers.generated.IconAnchor
+import com.mapbox.maps.extension.compose.style.layers.generated.IconImage
 import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
 import com.mapbox.maps.extension.compose.style.layers.generated.TextField
@@ -69,6 +74,10 @@ public class StyleCompositionActivity : ComponentActivity() {
 
       var textColor by remember {
         mutableStateOf(Color.Red)
+      }
+
+      var markerResource by remember {
+        mutableStateOf(R.drawable.ic_red_marker)
       }
 
       val animatedLocation by animateValueAsState(
@@ -110,6 +119,16 @@ public class StyleCompositionActivity : ComponentActivity() {
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Animate Source")
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  markerResource =
+                    if (markerResource == R.drawable.ic_red_marker) R.drawable.ic_blue_marker else R.drawable.ic_red_marker
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle icon image")
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
@@ -158,6 +177,13 @@ public class StyleCompositionActivity : ComponentActivity() {
               )
               SymbolLayer(
                 sourceState = geoJsonSource,
+                iconImage = IconImage(
+                  StyleImage(
+                    imageId = "icon_id",
+                    painter = painterResource(id = markerResource)
+                  )
+                ),
+                iconAnchor = IconAnchor.BOTTOM,
                 textField = text,
                 textColor = TextColor(textColor),
                 textColorTransition = Transition(duration = 1000),

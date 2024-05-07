@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
@@ -20,6 +21,7 @@ public data class FillSortKey(public val value: Value) {
    * Construct the FillSortKey with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillSortKey with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -50,6 +52,7 @@ public data class FillAntialias(public val value: Value) {
    * Construct the FillAntialias with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillAntialias with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -80,6 +83,7 @@ public data class FillColor(public val value: Value) {
    * Construct the FillColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -111,6 +115,7 @@ public data class FillEmissiveStrength(public val value: Value) {
    * Construct the FillEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -142,6 +147,7 @@ public data class FillOpacity(public val value: Value) {
    * Construct the FillOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -173,6 +179,7 @@ public data class FillOutlineColor(public val value: Value) {
    * Construct the FillOutlineColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillOutlineColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -196,14 +203,21 @@ public data class FillOutlineColor(public val value: Value) {
  * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class FillPattern(public val value: Value) {
+public data class FillPattern(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the FillPattern with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the FillPattern with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillPattern with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -234,6 +248,7 @@ public data class FillTranslate(public val value: Value) {
    * Construct the FillTranslate with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillTranslate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -341,6 +356,7 @@ public data class MinZoom(public val value: Value) {
    * Construct the MinZoom with [Long].
    */
   public constructor(value: Long) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the MinZoom with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -371,6 +387,7 @@ public data class MaxZoom(public val value: Value) {
    * Construct the MaxZoom with [Long].
    */
   public constructor(value: Long) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the MaxZoom with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -401,6 +418,7 @@ public data class SourceLayer(public val value: Value) {
    * Construct the SourceLayer with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SourceLayer with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -545,6 +563,7 @@ public data class LineMiterLimit(public val value: Value) {
    * Construct the LineMiterLimit with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineMiterLimit with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -575,6 +594,7 @@ public data class LineRoundLimit(public val value: Value) {
    * Construct the LineRoundLimit with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineRoundLimit with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -605,6 +625,7 @@ public data class LineSortKey(public val value: Value) {
    * Construct the LineSortKey with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineSortKey with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -635,6 +656,7 @@ public data class LineBlur(public val value: Value) {
    * Construct the LineBlur with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineBlur with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -666,6 +688,7 @@ public data class LineBorderColor(public val value: Value) {
    * Construct the LineBorderColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineBorderColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -697,6 +720,7 @@ public data class LineBorderWidth(public val value: Value) {
    * Construct the LineBorderWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineBorderWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -728,6 +752,7 @@ public data class LineColor(public val value: Value) {
    * Construct the LineColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -759,6 +784,7 @@ public data class LineDasharray(public val value: Value) {
    * Construct the LineDasharray with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineDasharray with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -789,6 +815,7 @@ public data class LineDepthOcclusionFactor(public val value: Value) {
    * Construct the LineDepthOcclusionFactor with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineDepthOcclusionFactor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -820,6 +847,7 @@ public data class LineEmissiveStrength(public val value: Value) {
    * Construct the LineEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -851,6 +879,7 @@ public data class LineGapWidth(public val value: Value) {
    * Construct the LineGapWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineGapWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -908,6 +937,7 @@ public data class LineOffset(public val value: Value) {
    * Construct the LineOffset with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineOffset with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -939,6 +969,7 @@ public data class LineOpacity(public val value: Value) {
    * Construct the LineOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -962,14 +993,21 @@ public data class LineOpacity(public val value: Value) {
  * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class LinePattern(public val value: Value) {
+public data class LinePattern(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the LinePattern with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the LinePattern with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LinePattern with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1000,6 +1038,7 @@ public data class LineTranslate(public val value: Value) {
    * Construct the LineTranslate with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineTranslate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1069,6 +1108,7 @@ public data class LineTrimOffset(public val value: Value) {
    * Construct the LineTrimOffset with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineTrimOffset with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1099,6 +1139,7 @@ public data class LineWidth(public val value: Value) {
    * Construct the LineWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LineWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1130,6 +1171,7 @@ public data class IconAllowOverlap(public val value: Value) {
    * Construct the IconAllowOverlap with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconAllowOverlap with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1240,6 +1282,7 @@ public data class IconIgnorePlacement(public val value: Value) {
    * Construct the IconIgnorePlacement with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconIgnorePlacement with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1262,14 +1305,21 @@ public data class IconIgnorePlacement(public val value: Value) {
  * Name of image in sprite to use for drawing an image background.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class IconImage(public val value: Value) {
+public data class IconImage(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the IconImage with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the IconImage with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconImage with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1300,6 +1350,7 @@ public data class IconKeepUpright(public val value: Value) {
    * Construct the IconKeepUpright with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconKeepUpright with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1330,6 +1381,7 @@ public data class IconOffset(public val value: Value) {
    * Construct the IconOffset with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconOffset with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1360,6 +1412,7 @@ public data class IconOptional(public val value: Value) {
    * Construct the IconOptional with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconOptional with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1390,6 +1443,7 @@ public data class IconPadding(public val value: Value) {
    * Construct the IconPadding with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconPadding with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1464,6 +1518,7 @@ public data class IconRotate(public val value: Value) {
    * Construct the IconRotate with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconRotate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1538,6 +1593,7 @@ public data class IconSize(public val value: Value) {
    * Construct the IconSize with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconSize with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1618,6 +1674,7 @@ public data class IconTextFitPadding(public val value: Value) {
    * Construct the IconTextFitPadding with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconTextFitPadding with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1648,6 +1705,7 @@ public data class SymbolAvoidEdges(public val value: Value) {
    * Construct the SymbolAvoidEdges with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SymbolAvoidEdges with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1722,6 +1780,7 @@ public data class SymbolSortKey(public val value: Value) {
    * Construct the SymbolSortKey with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SymbolSortKey with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1752,6 +1811,7 @@ public data class SymbolSpacing(public val value: Value) {
    * Construct the SymbolSpacing with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SymbolSpacing with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1782,6 +1842,7 @@ public data class SymbolZElevate(public val value: Value) {
    * Construct the SymbolZElevate with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SymbolZElevate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1856,6 +1917,7 @@ public data class TextAllowOverlap(public val value: Value) {
    * Construct the TextAllowOverlap with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextAllowOverlap with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1966,6 +2028,7 @@ public data class TextField(public val value: Value) {
    * Construct the TextField with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextField with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1996,6 +2059,7 @@ public data class TextFont(public val value: Value) {
    * Construct the TextFont with [List<String>].
    */
   public constructor(value: List<String>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextFont with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2026,6 +2090,7 @@ public data class TextIgnorePlacement(public val value: Value) {
    * Construct the TextIgnorePlacement with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextIgnorePlacement with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2106,6 +2171,7 @@ public data class TextKeepUpright(public val value: Value) {
    * Construct the TextKeepUpright with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextKeepUpright with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2136,6 +2202,7 @@ public data class TextLetterSpacing(public val value: Value) {
    * Construct the TextLetterSpacing with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextLetterSpacing with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2166,6 +2233,7 @@ public data class TextLineHeight(public val value: Value) {
    * Construct the TextLineHeight with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextLineHeight with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2196,6 +2264,7 @@ public data class TextMaxAngle(public val value: Value) {
    * Construct the TextMaxAngle with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextMaxAngle with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2226,6 +2295,7 @@ public data class TextMaxWidth(public val value: Value) {
    * Construct the TextMaxWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextMaxWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2256,6 +2326,7 @@ public data class TextOffset(public val value: Value) {
    * Construct the TextOffset with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextOffset with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2286,6 +2357,7 @@ public data class TextOptional(public val value: Value) {
    * Construct the TextOptional with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextOptional with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2316,6 +2388,7 @@ public data class TextPadding(public val value: Value) {
    * Construct the TextPadding with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextPadding with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2390,6 +2463,7 @@ public data class TextRadialOffset(public val value: Value) {
    * Construct the TextRadialOffset with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextRadialOffset with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2420,6 +2494,7 @@ public data class TextRotate(public val value: Value) {
    * Construct the TextRotate with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextRotate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2494,6 +2569,7 @@ public data class TextSize(public val value: Value) {
    * Construct the TextSize with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextSize with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2686,6 +2762,7 @@ public data class IconColor(public val value: Value) {
    * Construct the IconColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2717,6 +2794,7 @@ public data class IconColorSaturation(public val value: Value) {
    * Construct the IconColorSaturation with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconColorSaturation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2748,6 +2826,7 @@ public data class IconEmissiveStrength(public val value: Value) {
    * Construct the IconEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2779,6 +2858,7 @@ public data class IconHaloBlur(public val value: Value) {
    * Construct the IconHaloBlur with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconHaloBlur with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2810,6 +2890,7 @@ public data class IconHaloColor(public val value: Value) {
    * Construct the IconHaloColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconHaloColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2841,6 +2922,7 @@ public data class IconHaloWidth(public val value: Value) {
    * Construct the IconHaloWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconHaloWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2872,6 +2954,7 @@ public data class IconImageCrossFade(public val value: Value) {
    * Construct the IconImageCrossFade with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconImageCrossFade with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2903,6 +2986,7 @@ public data class IconOpacity(public val value: Value) {
    * Construct the IconOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2934,6 +3018,7 @@ public data class IconTranslate(public val value: Value) {
    * Construct the IconTranslate with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the IconTranslate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3003,6 +3088,7 @@ public data class TextColor(public val value: Value) {
    * Construct the TextColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3034,6 +3120,7 @@ public data class TextEmissiveStrength(public val value: Value) {
    * Construct the TextEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3065,6 +3152,7 @@ public data class TextHaloBlur(public val value: Value) {
    * Construct the TextHaloBlur with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextHaloBlur with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3096,6 +3184,7 @@ public data class TextHaloColor(public val value: Value) {
    * Construct the TextHaloColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextHaloColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3127,6 +3216,7 @@ public data class TextHaloWidth(public val value: Value) {
    * Construct the TextHaloWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextHaloWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3158,6 +3248,7 @@ public data class TextOpacity(public val value: Value) {
    * Construct the TextOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3189,6 +3280,7 @@ public data class TextTranslate(public val value: Value) {
    * Construct the TextTranslate with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TextTranslate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3258,6 +3350,7 @@ public data class CircleSortKey(public val value: Value) {
    * Construct the CircleSortKey with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleSortKey with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3288,6 +3381,7 @@ public data class CircleBlur(public val value: Value) {
    * Construct the CircleBlur with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleBlur with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3319,6 +3413,7 @@ public data class CircleColor(public val value: Value) {
    * Construct the CircleColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3350,6 +3445,7 @@ public data class CircleEmissiveStrength(public val value: Value) {
    * Construct the CircleEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3381,6 +3477,7 @@ public data class CircleOpacity(public val value: Value) {
    * Construct the CircleOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3488,6 +3585,7 @@ public data class CircleRadius(public val value: Value) {
    * Construct the CircleRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3519,6 +3617,7 @@ public data class CircleStrokeColor(public val value: Value) {
    * Construct the CircleStrokeColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleStrokeColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3550,6 +3649,7 @@ public data class CircleStrokeOpacity(public val value: Value) {
    * Construct the CircleStrokeOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleStrokeOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3581,6 +3681,7 @@ public data class CircleStrokeWidth(public val value: Value) {
    * Construct the CircleStrokeWidth with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleStrokeWidth with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3612,6 +3713,7 @@ public data class CircleTranslate(public val value: Value) {
    * Construct the CircleTranslate with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the CircleTranslate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3707,6 +3809,7 @@ public data class HeatmapIntensity(public val value: Value) {
    * Construct the HeatmapIntensity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HeatmapIntensity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3738,6 +3841,7 @@ public data class HeatmapOpacity(public val value: Value) {
    * Construct the HeatmapOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HeatmapOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3769,6 +3873,7 @@ public data class HeatmapRadius(public val value: Value) {
    * Construct the HeatmapRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HeatmapRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3800,6 +3905,7 @@ public data class HeatmapWeight(public val value: Value) {
    * Construct the HeatmapWeight with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HeatmapWeight with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3830,6 +3936,7 @@ public data class FillExtrusionEdgeRadius(public val value: Value) {
    * Construct the FillExtrusionEdgeRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionEdgeRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3860,6 +3967,7 @@ public data class FillExtrusionAmbientOcclusionGroundAttenuation(public val valu
    * Construct the FillExtrusionAmbientOcclusionGroundAttenuation with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionAmbientOcclusionGroundAttenuation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3891,6 +3999,7 @@ public data class FillExtrusionAmbientOcclusionGroundRadius(public val value: Va
    * Construct the FillExtrusionAmbientOcclusionGroundRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionAmbientOcclusionGroundRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3922,6 +4031,7 @@ public data class FillExtrusionAmbientOcclusionIntensity(public val value: Value
    * Construct the FillExtrusionAmbientOcclusionIntensity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionAmbientOcclusionIntensity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3953,6 +4063,7 @@ public data class FillExtrusionAmbientOcclusionRadius(public val value: Value) {
    * Construct the FillExtrusionAmbientOcclusionRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionAmbientOcclusionRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -3984,6 +4095,7 @@ public data class FillExtrusionAmbientOcclusionWallRadius(public val value: Valu
    * Construct the FillExtrusionAmbientOcclusionWallRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionAmbientOcclusionWallRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4015,6 +4127,7 @@ public data class FillExtrusionBase(public val value: Value) {
    * Construct the FillExtrusionBase with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionBase with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4046,6 +4159,7 @@ public data class FillExtrusionColor(public val value: Value) {
    * Construct the FillExtrusionColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4077,6 +4191,7 @@ public data class FillExtrusionCutoffFadeRange(public val value: Value) {
    * Construct the FillExtrusionCutoffFadeRange with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionCutoffFadeRange with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4107,6 +4222,7 @@ public data class FillExtrusionEmissiveStrength(public val value: Value) {
    * Construct the FillExtrusionEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4138,6 +4254,7 @@ public data class FillExtrusionFloodLightColor(public val value: Value) {
    * Construct the FillExtrusionFloodLightColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionFloodLightColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4169,6 +4286,7 @@ public data class FillExtrusionFloodLightGroundAttenuation(public val value: Val
    * Construct the FillExtrusionFloodLightGroundAttenuation with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionFloodLightGroundAttenuation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4200,6 +4318,7 @@ public data class FillExtrusionFloodLightGroundRadius(public val value: Value) {
    * Construct the FillExtrusionFloodLightGroundRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionFloodLightGroundRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4231,6 +4350,7 @@ public data class FillExtrusionFloodLightIntensity(public val value: Value) {
    * Construct the FillExtrusionFloodLightIntensity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionFloodLightIntensity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4262,6 +4382,7 @@ public data class FillExtrusionFloodLightWallRadius(public val value: Value) {
    * Construct the FillExtrusionFloodLightWallRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionFloodLightWallRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4293,6 +4414,7 @@ public data class FillExtrusionHeight(public val value: Value) {
    * Construct the FillExtrusionHeight with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionHeight with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4324,6 +4446,7 @@ public data class FillExtrusionOpacity(public val value: Value) {
    * Construct the FillExtrusionOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4347,14 +4470,21 @@ public data class FillExtrusionOpacity(public val value: Value) {
  * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class FillExtrusionPattern(public val value: Value) {
+public data class FillExtrusionPattern(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the FillExtrusionPattern with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the FillExtrusionPattern with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionPattern with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4385,6 +4515,7 @@ public data class FillExtrusionRoundedRoof(public val value: Value) {
    * Construct the FillExtrusionRoundedRoof with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionRoundedRoof with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4415,6 +4546,7 @@ public data class FillExtrusionTranslate(public val value: Value) {
    * Construct the FillExtrusionTranslate with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionTranslate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4484,6 +4616,7 @@ public data class FillExtrusionVerticalGradient(public val value: Value) {
    * Construct the FillExtrusionVerticalGradient with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionVerticalGradient with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4514,6 +4647,7 @@ public data class FillExtrusionVerticalScale(public val value: Value) {
    * Construct the FillExtrusionVerticalScale with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the FillExtrusionVerticalScale with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4545,6 +4679,7 @@ public data class RasterArrayBand(public val value: Value) {
    * Construct the RasterArrayBand with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterArrayBand with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4575,6 +4710,7 @@ public data class RasterBrightnessMax(public val value: Value) {
    * Construct the RasterBrightnessMax with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterBrightnessMax with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4606,6 +4742,7 @@ public data class RasterBrightnessMin(public val value: Value) {
    * Construct the RasterBrightnessMin with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterBrightnessMin with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4663,6 +4800,7 @@ public data class RasterColorMix(public val value: Value) {
    * Construct the RasterColorMix with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterColorMix with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4694,6 +4832,7 @@ public data class RasterColorRange(public val value: Value) {
    * Construct the RasterColorRange with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterColorRange with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4725,6 +4864,7 @@ public data class RasterContrast(public val value: Value) {
    * Construct the RasterContrast with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterContrast with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4756,6 +4896,7 @@ public data class RasterElevation(public val value: Value) {
    * Construct the RasterElevation with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterElevation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4787,6 +4928,7 @@ public data class RasterEmissiveStrength(public val value: Value) {
    * Construct the RasterEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4818,6 +4960,7 @@ public data class RasterFadeDuration(public val value: Value) {
    * Construct the RasterFadeDuration with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterFadeDuration with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4848,6 +4991,7 @@ public data class RasterHueRotate(public val value: Value) {
    * Construct the RasterHueRotate with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterHueRotate with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4879,6 +5023,7 @@ public data class RasterOpacity(public val value: Value) {
    * Construct the RasterOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4948,6 +5093,7 @@ public data class RasterSaturation(public val value: Value) {
    * Construct the RasterSaturation with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the RasterSaturation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -4979,6 +5125,7 @@ public data class HillshadeAccentColor(public val value: Value) {
    * Construct the HillshadeAccentColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HillshadeAccentColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5010,6 +5157,7 @@ public data class HillshadeEmissiveStrength(public val value: Value) {
    * Construct the HillshadeEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HillshadeEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5041,6 +5189,7 @@ public data class HillshadeExaggeration(public val value: Value) {
    * Construct the HillshadeExaggeration with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HillshadeExaggeration with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5072,6 +5221,7 @@ public data class HillshadeHighlightColor(public val value: Value) {
    * Construct the HillshadeHighlightColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HillshadeHighlightColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5141,6 +5291,7 @@ public data class HillshadeIlluminationDirection(public val value: Value) {
    * Construct the HillshadeIlluminationDirection with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HillshadeIlluminationDirection with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5171,6 +5322,7 @@ public data class HillshadeShadowColor(public val value: Value) {
    * Construct the HillshadeShadowColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the HillshadeShadowColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5191,36 +5343,6 @@ public data class HillshadeShadowColor(public val value: Value) {
 }
 
 /**
- * Model to render.
- *
- * @param value the property wrapped in [Value] to be used with native renderer.
- */
-@Immutable
-@MapboxExperimental
-public data class ModelId(public val value: Value) {
-  /**
-   * Construct the ModelId with [String].
-   */
-  public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
-  /**
-   * Construct the ModelId with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
-   */
-  public constructor(expression: Expression) : this(expression as Value)
-
-  /**
-   * Public companion object.
-   */
-  public companion object {
-    internal const val NAME: String = "model-id"
-
-    /**
-     * Default value for [ModelId], setting default will result in restoring the property value defined in the style.
-     */
-    public val default: ModelId = ModelId(Value.nullValue())
-  }
-}
-
-/**
  * Intensity of the ambient occlusion if present in the 3D model.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
@@ -5232,6 +5354,7 @@ public data class ModelAmbientOcclusionIntensity(public val value: Value) {
    * Construct the ModelAmbientOcclusionIntensity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelAmbientOcclusionIntensity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5263,6 +5386,7 @@ public data class ModelCastShadows(public val value: Value) {
    * Construct the ModelCastShadows with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelCastShadows with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5293,6 +5417,7 @@ public data class ModelColor(public val value: Value) {
    * Construct the ModelColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5324,6 +5449,7 @@ public data class ModelColorMixIntensity(public val value: Value) {
    * Construct the ModelColorMixIntensity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelColorMixIntensity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5355,6 +5481,7 @@ public data class ModelCutoffFadeRange(public val value: Value) {
    * Construct the ModelCutoffFadeRange with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelCutoffFadeRange with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5385,6 +5512,7 @@ public data class ModelEmissiveStrength(public val value: Value) {
    * Construct the ModelEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5416,6 +5544,7 @@ public data class ModelHeightBasedEmissiveStrengthMultiplier(public val value: V
    * Construct the ModelHeightBasedEmissiveStrengthMultiplier with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelHeightBasedEmissiveStrengthMultiplier with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5447,6 +5576,7 @@ public data class ModelOpacity(public val value: Value) {
    * Construct the ModelOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5478,6 +5608,7 @@ public data class ModelReceiveShadows(public val value: Value) {
    * Construct the ModelReceiveShadows with [Boolean].
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelReceiveShadows with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5508,6 +5639,7 @@ public data class ModelRotation(public val value: Value) {
    * Construct the ModelRotation with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelRotation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5539,6 +5671,7 @@ public data class ModelRoughness(public val value: Value) {
    * Construct the ModelRoughness with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelRoughness with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5570,6 +5703,7 @@ public data class ModelScale(public val value: Value) {
    * Construct the ModelScale with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelScale with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5639,6 +5773,7 @@ public data class ModelTranslation(public val value: Value) {
    * Construct the ModelTranslation with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ModelTranslation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5708,6 +5843,7 @@ public data class BackgroundColor(public val value: Value) {
    * Construct the BackgroundColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the BackgroundColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5739,6 +5875,7 @@ public data class BackgroundEmissiveStrength(public val value: Value) {
    * Construct the BackgroundEmissiveStrength with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the BackgroundEmissiveStrength with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5770,6 +5907,7 @@ public data class BackgroundOpacity(public val value: Value) {
    * Construct the BackgroundOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the BackgroundOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5793,14 +5931,21 @@ public data class BackgroundOpacity(public val value: Value) {
  * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class BackgroundPattern(public val value: Value) {
+public data class BackgroundPattern(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the BackgroundPattern with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the BackgroundPattern with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the BackgroundPattern with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5831,6 +5976,7 @@ public data class SkyAtmosphereColor(public val value: Value) {
    * Construct the SkyAtmosphereColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyAtmosphereColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5861,6 +6007,7 @@ public data class SkyAtmosphereHaloColor(public val value: Value) {
    * Construct the SkyAtmosphereHaloColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyAtmosphereHaloColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5891,6 +6038,7 @@ public data class SkyAtmosphereSun(public val value: Value) {
    * Construct the SkyAtmosphereSun with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyAtmosphereSun with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5921,6 +6069,7 @@ public data class SkyAtmosphereSunIntensity(public val value: Value) {
    * Construct the SkyAtmosphereSunIntensity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyAtmosphereSunIntensity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -5977,6 +6126,7 @@ public data class SkyGradientCenter(public val value: Value) {
    * Construct the SkyGradientCenter with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyGradientCenter with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6007,6 +6157,7 @@ public data class SkyGradientRadius(public val value: Value) {
    * Construct the SkyGradientRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyGradientRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6037,6 +6188,7 @@ public data class SkyOpacity(public val value: Value) {
    * Construct the SkyOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the SkyOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6098,14 +6250,21 @@ public data class SkyType(public val value: Value) {
  * Name of image in sprite to use as the middle of the location indicator.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class BearingImage(public val value: Value) {
+public data class BearingImage(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the BearingImage with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the BearingImage with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the BearingImage with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6128,14 +6287,21 @@ public data class BearingImage(public val value: Value) {
  * Name of image in sprite to use as the background of the location indicator.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class ShadowImage(public val value: Value) {
+public data class ShadowImage(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the ShadowImage with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the ShadowImage with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ShadowImage with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6158,14 +6324,21 @@ public data class ShadowImage(public val value: Value) {
  * Name of image in sprite to use as the top of the location indicator.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
 @MapboxExperimental
-public data class TopImage(public val value: Value) {
+public data class TopImage(public val value: Value, public val styleImage: StyleImage? = null) {
+  /**
+   * Construct the TopImage with [StyleImage].
+   */
+  public constructor(styleImage: StyleImage) : this(Value(styleImage.imageId), styleImage)
+
   /**
    * Construct the TopImage with [String].
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TopImage with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6196,6 +6369,7 @@ public data class AccuracyRadius(public val value: Value) {
    * Construct the AccuracyRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the AccuracyRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6227,6 +6401,7 @@ public data class AccuracyRadiusBorderColor(public val value: Value) {
    * Construct the AccuracyRadiusBorderColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the AccuracyRadiusBorderColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6258,6 +6433,7 @@ public data class AccuracyRadiusColor(public val value: Value) {
    * Construct the AccuracyRadiusColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the AccuracyRadiusColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6289,6 +6465,7 @@ public data class Bearing(public val value: Value) {
    * Construct the Bearing with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the Bearing with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6320,6 +6497,7 @@ public data class BearingImageSize(public val value: Value) {
    * Construct the BearingImageSize with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the BearingImageSize with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6351,6 +6529,7 @@ public data class EmphasisCircleColor(public val value: Value) {
    * Construct the EmphasisCircleColor with [androidx.compose.ui.graphics.Color].
    */
   public constructor(value: androidx.compose.ui.graphics.Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the EmphasisCircleColor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6382,6 +6561,7 @@ public data class EmphasisCircleRadius(public val value: Value) {
    * Construct the EmphasisCircleRadius with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the EmphasisCircleRadius with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6413,6 +6593,7 @@ public data class ImagePitchDisplacement(public val value: Value) {
    * Construct the ImagePitchDisplacement with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ImagePitchDisplacement with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6443,6 +6624,7 @@ public data class Location(public val value: Value) {
    * Construct the Location with [List<Double>].
    */
   public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the Location with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6474,6 +6656,7 @@ public data class LocationIndicatorOpacity(public val value: Value) {
    * Construct the LocationIndicatorOpacity with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the LocationIndicatorOpacity with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6505,6 +6688,7 @@ public data class PerspectiveCompensation(public val value: Value) {
    * Construct the PerspectiveCompensation with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the PerspectiveCompensation with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6535,6 +6719,7 @@ public data class ShadowImageSize(public val value: Value) {
    * Construct the ShadowImageSize with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the ShadowImageSize with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6566,6 +6751,7 @@ public data class TopImageSize(public val value: Value) {
    * Construct the TopImageSize with [Double].
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the TopImageSize with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -6612,6 +6798,46 @@ public data class Transition private constructor(public val value: Value) {
      * Default value for [Transition], setting default will result in restoring the transition defined in the style.
      */
     public val default: Transition = Transition(Value.nullValue())
+  }
+}
+
+/**
+ * Model to render.
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ * @param modelInfo The optional 3D model information, including the model id and model uri as a pair of [String]. It will be added to the style if available.
+ */
+@Immutable
+@MapboxExperimental
+public data class ModelId(public val value: Value, public val modelInfo: Pair<String, String>? = null) {
+  /**
+   * Construct the ModelId with [String].
+   */
+  public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the ModelId with [modelId] and [uri].
+   *
+   * @param modelId the ID of the model
+   * @param uri the uri of the model
+   */
+  public constructor(modelId: String, uri: String) : this(Value(modelId), modelId to uri)
+
+  /**
+   * Construct the ModelId with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    internal const val NAME: String = "model-id"
+
+    /**
+     * Default value for [ModelId], setting default will result in restoring the property value defined in the style.
+     */
+    public val default: ModelId = ModelId(Value.nullValue())
   }
 }
 // End of generated file.

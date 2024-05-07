@@ -8,6 +8,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix memory leak when camera animations are skipped.
 
+# 11.4.0-rc.1
+## Features ✨ and improvements 🏁
+* [compose] Add `StyleImage` to construct following image layer properties: `IconImage`, `FillPattern`, `LinePattern`, `BearingImage`, `ShadowImage`, `TopImage`.
+* [compose] Add `ModelId` constructor to add model id and uri.
 
 # 11.4.0-beta.3 May 06, 2024
 ## Features ✨ and improvements 🏁
