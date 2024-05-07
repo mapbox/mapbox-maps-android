@@ -102,6 +102,9 @@ class CameraAnimationsPluginImplTest {
     animators.forEach {
       verify { it.addInternalListener(any()) }
     }
+    animators.forEach {
+      assertTrue(cameraAnimationsPluginImpl.animators.contains(it))
+    }
   }
 
   @Test
@@ -117,6 +120,7 @@ class CameraAnimationsPluginImplTest {
         it.removeInternalListener()
       }
     }
+    assertTrue("Animators is not empty", cameraAnimationsPluginImpl.animators.isEmpty())
   }
 
   @Test
@@ -316,10 +320,14 @@ class CameraAnimationsPluginImplTest {
     every {
       mapCameraManagerDelegate.cameraState
     } answers { cameraPosition.toCameraState() }
-    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+
+    every {
+      mapCameraManagerDelegate.setCamera(any<CameraOptions>())
+    } answers {
       cameraPosition = firstArg<CameraOptions>()
       cameraAnimationsPluginImpl.onCameraMove(cameraPosition.toCameraState())
     }
+
     val targetPitch = 5.0
     val cameraOptions = CameraOptions.Builder().pitch(targetPitch).build()
     val expectedValues = mutableSetOf(targetPitch)
@@ -373,6 +381,66 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
+  fun `two same immediate animations, second is skipped`() {
+    var cameraPosition = CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers {
+      cameraPosition.toCameraState()
+    }
+    every {
+      mapCameraManagerDelegate.setCamera(any<CameraOptions>())
+    } answers {
+      cameraPosition = firstArg<CameraOptions>()
+      cameraAnimationsPluginImpl.onCameraMove(cameraPosition.toCameraState())
+    }
+
+    val cameraAnimatorOptions = cameraAnimatorOptions(10.0) {
+      startValue(10.0)
+    }
+    val bearingFirst = CameraBearingAnimator(cameraAnimatorOptions, true) {
+      duration = 0
+    }
+    bearingFirst.addListener(onStart = {
+      assertEquals(2, cameraAnimationsPluginImpl.animators.size)
+      assertEquals(false, (it as CameraAnimator<*>).skipped)
+    })
+
+    val bearingSecond = CameraBearingAnimator(cameraAnimatorOptions, true) {
+      duration = 0
+    }
+    bearingSecond.addListener(onStart = {
+      assertEquals(1, cameraAnimationsPluginImpl.animators.size)
+      assertEquals(true, (it as CameraAnimator<*>).skipped)
+    })
+
+    cameraAnimationsPluginImpl.playAnimatorsTogether(bearingFirst, bearingSecond)
+    assertTrue("Animators is not empty", cameraAnimationsPluginImpl.animators.isEmpty())
+  }
+
+  @Test
+  fun `animation skipped if camera already has target value`() {
+    val cameraPosition = CameraOptions.Builder().bearing(10.0).build().toCameraState()
+    // Make sure current camera animations plugin has the right initial value
+    cameraAnimationsPluginImpl.onCameraMove(cameraPosition)
+
+    val cameraAnimatorOptions = cameraAnimatorOptions(10.0) {
+      startValue(10.0)
+    }
+
+    val bearingAnimator = CameraBearingAnimator(cameraAnimatorOptions, true) {
+      duration = 0
+    }
+    bearingAnimator.addListener(onStart = {
+      assertEquals(1, cameraAnimationsPluginImpl.animators.size)
+      assertEquals(true, (it as CameraAnimator<*>).skipped)
+    })
+
+    cameraAnimationsPluginImpl.playAnimatorsTogether(bearingAnimator)
+    assertTrue("Animators is not empty", cameraAnimationsPluginImpl.animators.isEmpty())
+  }
+
+  @Test
   fun testEaseToSequenceDurationZero() {
     var cameraPosition = CameraState(
       Point.fromLngLat(90.0, 90.0),
@@ -405,9 +473,9 @@ class CameraAnimationsPluginImplTest {
 
     shadowOf(getMainLooper()).pause()
 
-    val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(0) })
 
+    val handler = Handler(getMainLooper())
     handler.postDelayed(
       {
         cameraAnimationsPluginImpl.easeTo(
