@@ -2,6 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.17.1
+## Bug fixes 🐞
+* Fix memory leak when camera animations are skipped.
+
 # 10.17.0 April 02, 2024
 ## Bug fixes 🐞
 * Fix map being pixelated on some devices when `ContextMode.SHARED` is used (e.g. in AndroidAuto extension).
