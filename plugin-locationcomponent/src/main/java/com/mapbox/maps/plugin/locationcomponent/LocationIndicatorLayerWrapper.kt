@@ -24,6 +24,8 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
 
   fun bearing(bearing: Double) = updateProperty("bearing", Value(bearing))
 
+  fun slot(slot: String?) = updateProperty("slot", slot?.let { Value(it) } ?: Value.nullValue())
+
   fun location(location: List<Double>) = updateProperty("location", Value(location.map(::Value)))
 
   fun accuracyRadiusColor(expression: List<Value>) = updateProperty("accuracy-radius-color", Value(expression))

@@ -79,6 +79,11 @@ interface LocationComponentSettingsInterface {
   var puckBearing: PuckBearing
 
   /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists, it will be placed at that position in the layer order.
+   */
+  var slot: String?
+
+  /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time.
    */
   var locationPuck: LocationPuck

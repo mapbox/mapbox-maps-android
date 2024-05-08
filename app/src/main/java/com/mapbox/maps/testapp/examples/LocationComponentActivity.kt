@@ -163,6 +163,18 @@ class LocationComponentActivity : AppCompatActivity() {
         }
         return true
       }
+      R.id.move_to_bottom_slot -> {
+        val location = binding.mapView.location
+        location.slot = "bottom"
+        return true
+      }
+
+      R.id.reset_slot -> {
+        val location = binding.mapView.location
+        location.slot = null
+        return true
+      }
+
       else -> return super.onOptionsItemSelected(item)
     }
   }

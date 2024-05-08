@@ -193,6 +193,13 @@ class ModelLayerWrapperTest {
   }
 
   @Test
+  fun testSlot() {
+    val middleSlot = "middle"
+    layer.slot(middleSlot)
+    verify(exactly = 1) { style.setStyleLayerProperty(MODEL_LAYER_ID, "slot", Value(middleSlot)) }
+  }
+
+  @Test
   fun testModelScaleModeViewPort() {
     setModelScaleMode(ModelScaleMode.VIEWPORT)
   }

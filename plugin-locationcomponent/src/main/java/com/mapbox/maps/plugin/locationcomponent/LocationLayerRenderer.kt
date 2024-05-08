@@ -40,4 +40,6 @@ internal interface LocationLayerRenderer {
   fun clearBitmaps()
 
   fun updateStyle(style: MapboxStyleManager)
+
+  fun slot(slot: String?)
 }

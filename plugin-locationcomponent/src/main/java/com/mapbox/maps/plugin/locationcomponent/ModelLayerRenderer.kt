@@ -115,6 +115,10 @@ internal class ModelLayerRenderer(
   override fun clearBitmaps() {
   }
 
+  override fun slot(slot: String?) {
+    modelLayer.slot(slot)
+  }
+
   override fun updateStyle(style: MapboxStyleManager) {
     this.style = style
     modelLayer.updateStyle(style)

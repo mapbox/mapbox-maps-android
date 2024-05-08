@@ -2117,7 +2117,7 @@ public abstract interface class com/mapbox/maps/plugin/locationcomponent/PuckLoc
 
 public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (ZZIFZIILjava/lang/String;Ljava/lang/String;ZLcom/mapbox/maps/plugin/PuckBearing;Lcom/mapbox/maps/plugin/LocationPuck;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ZZIFZIILjava/lang/String;Ljava/lang/String;ZLcom/mapbox/maps/plugin/PuckBearing;Ljava/lang/String;Lcom/mapbox/maps/plugin/LocationPuck;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccuracyRingBorderColor ()I
@@ -2132,6 +2132,7 @@ public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationCo
 	public final fun getPulsingEnabled ()Z
 	public final fun getPulsingMaxRadius ()F
 	public final fun getShowAccuracyRing ()Z
+	public final fun getSlot ()Ljava/lang/String;
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings$Builder;
 	public fun toString ()Ljava/lang/String;
@@ -2153,6 +2154,7 @@ public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationCo
 	public final fun getPulsingEnabled ()Z
 	public final fun getPulsingMaxRadius ()F
 	public final fun getShowAccuracyRing ()Z
+	public final fun getSlot ()Ljava/lang/String;
 	public final fun setAccuracyRingBorderColor (I)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings$Builder;
 	public final synthetic fun setAccuracyRingBorderColor (I)V
 	public final fun setAccuracyRingColor (I)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings$Builder;
@@ -2177,6 +2179,8 @@ public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationCo
 	public final synthetic fun setPulsingMaxRadius (F)V
 	public final fun setShowAccuracyRing (Z)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings$Builder;
 	public final synthetic fun setShowAccuracyRing (Z)V
+	public final fun setSlot (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings$Builder;
+	public final synthetic fun setSlot (Ljava/lang/String;)V
 }
 
 public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings$Creator : android/os/Parcelable$Creator {
@@ -2204,6 +2208,7 @@ public abstract class com/mapbox/maps/plugin/locationcomponent/generated/Locatio
 	public fun getPulsingMaxRadius ()F
 	public fun getSettings ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
 	public fun getShowAccuracyRing ()Z
+	public fun getSlot ()Ljava/lang/String;
 	public fun setAccuracyRingBorderColor (I)V
 	public fun setAccuracyRingColor (I)V
 	public fun setEnabled (Z)V
@@ -2217,6 +2222,7 @@ public abstract class com/mapbox/maps/plugin/locationcomponent/generated/Locatio
 	public fun setPulsingEnabled (Z)V
 	public fun setPulsingMaxRadius (F)V
 	public fun setShowAccuracyRing (Z)V
+	public fun setSlot (Ljava/lang/String;)V
 	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
 }
 
@@ -2242,6 +2248,7 @@ public abstract interface class com/mapbox/maps/plugin/locationcomponent/generat
 	public abstract fun getPulsingMaxRadius ()F
 	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
 	public abstract fun getShowAccuracyRing ()Z
+	public abstract fun getSlot ()Ljava/lang/String;
 	public abstract fun setAccuracyRingBorderColor (I)V
 	public abstract fun setAccuracyRingColor (I)V
 	public abstract fun setEnabled (Z)V
@@ -2254,6 +2261,7 @@ public abstract interface class com/mapbox/maps/plugin/locationcomponent/generat
 	public abstract fun setPulsingEnabled (Z)V
 	public abstract fun setPulsingMaxRadius (F)V
 	public abstract fun setShowAccuracyRing (Z)V
+	public abstract fun setSlot (Ljava/lang/String;)V
 	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
 }
 

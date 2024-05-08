@@ -165,6 +165,13 @@ class LocationIndicatorLayerWrapperTest {
     verify(exactly = 1) { newStyle.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", any()) }
   }
 
+  @Test
+  fun testSlot() {
+    val middleSlot = "middle"
+    layer.slot(middleSlot)
+    verify(exactly = 1) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "slot", Value(middleSlot)) }
+  }
+
   companion object {
     private const val INDICATOR_LAYER_ID = "indicatorLayerId"
   }

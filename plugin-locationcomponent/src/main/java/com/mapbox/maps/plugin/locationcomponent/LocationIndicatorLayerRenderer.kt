@@ -80,6 +80,10 @@ internal class LocationIndicatorLayerRenderer(
     layer.topImageSize(scaleExpression)
   }
 
+  override fun slot(slot: String?) {
+    layer.slot(slot)
+  }
+
   private fun setupBitmaps(style: MapboxStyleManager) {
     addImageToStyle(style, TOP_ICON, puckOptions.topImage)
     addImageToStyle(style, BEARING_ICON, puckOptions.bearingImage)

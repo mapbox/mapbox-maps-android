@@ -175,6 +175,13 @@ class LocationComponentAttributeParserTest {
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
     assertEquals(PuckBearing.COURSE, settings.puckBearing)
   }
+
+  @Test
+  fun slotTest() {
+    every { typedArray.getString(any()) } returns null
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(null, settings.slot)
+  }
 }
 
 // End of generated file.
