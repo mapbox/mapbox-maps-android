@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.4.0-rc.1
+
+# 11.4.0-rc.1 May 08, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Add `StyleImage` to construct following image layer properties: `IconImage`, `FillPattern`, `LinePattern`, `BearingImage`, `ShadowImage`, `TopImage`.
 * [compose] Add `ModelId` constructor to add model id and uri.
@@ -20,6 +21,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.4.0-rc.1 and common to v24.4.0-rc.1.
+
 
 # 11.4.0-beta.3 May 06, 2024
 ## Features ✨ and improvements 🏁
