@@ -13,6 +13,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix memory leak when camera animations are skipped.
+* Fix incorrect size of the tile memory budget for vector tiles when the budget is set in megabytes.
+* Fix known issue from 11.4.0-beta.1 where setting a RasterLayer’s rasterColor property with an expression will block the layer from rendering.
+
+## Dependencies
+* Update gl-native to v11.4.0-rc.1 and common to v24.4.0-rc.1.
 
 # 11.4.0-beta.3 May 06, 2024
 ## Features ✨ and improvements 🏁
