@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereSt
 import com.mapbox.maps.extension.compose.style.projection.Projection
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.styleImportsConfig
+import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
@@ -77,8 +78,9 @@ public data class LightPreset(public val value: Value) {
  * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
  * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
  * @param lightPreset The [LightPreset] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk".
- * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
- * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in [style] definition.
+ * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the Standard style definition.
+ * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in Standard style definition.
+ * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  */
 @Composable
 @MapboxStyleComposable
@@ -90,6 +92,7 @@ public fun MapboxStandardStyle(
   lightPreset: LightPreset = LightPreset.default,
   projection: Projection = Projection.default,
   atmosphereState: AtmosphereState = AtmosphereState.default,
+  terrainState: TerrainState = TerrainState.initial,
 ) {
   GenericStyle(
     style = Style.STANDARD,
@@ -104,6 +107,7 @@ public fun MapboxStandardStyle(
       }
     },
     projection = projection,
-    atmosphereState = atmosphereState
+    atmosphereState = atmosphereState,
+    terrainState = terrainState,
   )
 }

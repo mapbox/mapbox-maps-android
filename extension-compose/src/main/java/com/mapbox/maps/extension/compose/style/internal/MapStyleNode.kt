@@ -9,6 +9,7 @@ import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.projection.Projection
+import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineName
@@ -29,6 +30,7 @@ internal class MapStyleNode(
   val mapboxMap: MapboxMap,
   private val projection: Projection,
   var atmosphereState: AtmosphereState,
+  var terrainState: TerrainState,
 ) : MapNode() {
 
   val coroutineScope =
@@ -66,6 +68,7 @@ internal class MapStyleNode(
     updateStyle(style)
     updateProjection(projection)
     updateAtmosphere(atmosphereState)
+    updateTerrain(terrainState)
   }
 
   override fun onRemoved(parent: MapNode) {
@@ -89,6 +92,7 @@ internal class MapStyleNode(
   override fun onClear() {
     super.onClear()
     atmosphereState.applier.detach()
+    terrainState.applier.detach()
     children.forEach { it.onClear() }
   }
 
@@ -120,6 +124,26 @@ internal class MapStyleNode(
     coroutineScope.launch {
       styleDataLoaded.collect {
         atmosphereState.applier.attachTo(mapboxMap)
+      }
+    }
+  }
+
+  internal fun updateTerrain(terrainState: TerrainState) {
+    val previousTerrainState = this.terrainState
+    this.terrainState = terrainState
+    // we have to detach (in a sense of cancelling property collector jobs) the previous state
+    // before attaching the new state; otherwise the jobs will be duplicated
+    previousTerrainState.applier.detach()
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        // we have to treat terrain as some sort of persistent layer and attach / detach map accordingly
+        previousTerrainState.rasterDemSourceState?.let {
+          it.detachFromLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
+        }
+        terrainState.rasterDemSourceState?.let {
+          it.attachToLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
+        }
+        terrainState.applier.attachTo(mapboxMap)
       }
     }
   }

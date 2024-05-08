@@ -20,4 +20,5 @@
     <string name="description_model_layer">Showcase the usage of a 3D model layer.</string>
     <string name="description_style_image_source">Use an image source to easily display images on the map.</string>
     <string name="description_animated_image_source">Load a raster image to a style using ImageSource and display it on a map as animated weather data using RasterLayer.</string>
+    <string name="description_terrain">Add terrain on top of raster-dem source</string>
 </resources>

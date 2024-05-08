@@ -296,8 +296,8 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = com.mapbox.maps.extension.compose.style.SlotsContent(), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = com.mapbox.maps.extension.compose.style.LayerPositionedContent(), com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig = com.mapbox.maps.extension.compose.style.StyleImportsConfig(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = com.mapbox.maps.extension.compose.style.SlotsContent(), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = com.mapbox.maps.extension.compose.style.LayerPositionedContent(), com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig = com.mapbox.maps.extension.compose.style.StyleImportsConfig(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
@@ -4862,7 +4862,67 @@ package com.mapbox.maps.extension.compose.style.standard {
   }
 
   public final class MapboxStandardStyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.LightPreset lightPreset = LightPreset.default, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.LightPreset lightPreset = LightPreset.default, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.terrain {
+
+  public final class TerrainStateApplierKt {
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.terrain.generated {
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class Exaggeration {
+    ctor public Exaggeration(com.mapbox.bindgen.Value value);
+    ctor public Exaggeration(double value);
+    ctor public Exaggeration(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration.Companion Companion;
+  }
+
+  public static final class Exaggeration.Companion {
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration getDefault();
+    property public final com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration default;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class TerrainState {
+    ctor public TerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration getExaggeration();
+    method public void setExaggeration(com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration);
+    property public final com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration exaggeration;
+    field public static final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Companion Companion;
+  }
+
+  public static final class TerrainState.Companion {
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState getDisabled();
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState,com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState,com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Holder> Saver;
+    property public final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState disabled;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class TerrainState.Holder implements android.os.Parcelable {
+    ctor public TerrainState.Holder(com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, boolean initial);
+    method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? component1();
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component2();
+    method public boolean component3();
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Holder copy(com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, boolean initial);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getCachedProperties();
+    method public boolean getInitial();
+    method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? getRasterDemSourceStateHolder();
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> cachedProperties;
+    property public final boolean initial;
+    property public final com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder;
+  }
+
+  public final class TerrainStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState rememberTerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState, String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState,kotlin.Unit> init = {});
   }
 
 }
