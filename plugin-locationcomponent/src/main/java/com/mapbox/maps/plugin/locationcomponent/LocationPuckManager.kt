@@ -110,6 +110,7 @@ internal class LocationPuckManager(
     locationLayerRenderer.clearBitmaps()
     locationLayerRenderer.removeLayers()
     locationLayerRenderer = getLocationLayerRenderer(settings)
+    locationLayerRenderer.slot(settings.slot)
     initialize(delegateProvider.mapStyleManagerDelegate)
   }
 

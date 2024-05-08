@@ -2136,6 +2136,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
     method public boolean getShowAccuracyRing();
+    method public String? getSlot();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder toBuilder();
     property public final int accuracyRingBorderColor;
     property public final int accuracyRingColor;
@@ -2149,6 +2150,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public final boolean pulsingEnabled;
     property public final float pulsingMaxRadius;
     property public final boolean showAccuracyRing;
+    property public final String? slot;
   }
 
   public static final class LocationComponentSettings.Builder {
@@ -2165,6 +2167,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
     method public boolean getShowAccuracyRing();
+    method public String? getSlot();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setAccuracyRingBorderColor(int accuracyRingBorderColor);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setAccuracyRingColor(int accuracyRingColor);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setEnabled(boolean enabled);
@@ -2177,6 +2180,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPulsingEnabled(boolean pulsingEnabled);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPulsingMaxRadius(float pulsingMaxRadius);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setShowAccuracyRing(boolean showAccuracyRing);
+    method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setSlot(String? slot);
     property public final int accuracyRingBorderColor;
     property public final int accuracyRingColor;
     property public final boolean enabled;
@@ -2188,6 +2192,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public final boolean pulsingEnabled;
     property public final float pulsingMaxRadius;
     property public final boolean showAccuracyRing;
+    property public final String? slot;
   }
 
   public abstract class LocationComponentSettingsBase implements com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsInterface {
@@ -2207,6 +2212,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public float getPulsingMaxRadius();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getSettings();
     method public boolean getShowAccuracyRing();
+    method public String? getSlot();
     method public void setAccuracyRingBorderColor(int);
     method public void setAccuracyRingColor(int);
     method public void setEnabled(boolean);
@@ -2220,6 +2226,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public void setPulsingEnabled(boolean);
     method public void setPulsingMaxRadius(float);
     method public void setShowAccuracyRing(boolean);
+    method public void setSlot(String?);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder,kotlin.Unit> block);
     property public int accuracyRingBorderColor;
     property public int accuracyRingColor;
@@ -2234,6 +2241,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public boolean pulsingEnabled;
     property public float pulsingMaxRadius;
     property public boolean showAccuracyRing;
+    property public String? slot;
   }
 
   public interface LocationComponentSettingsInterface {
@@ -2250,6 +2258,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public float getPulsingMaxRadius();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getSettings();
     method public boolean getShowAccuracyRing();
+    method public String? getSlot();
     method public void setAccuracyRingBorderColor(int);
     method public void setAccuracyRingColor(int);
     method public void setEnabled(boolean);
@@ -2262,6 +2271,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public void setPulsingEnabled(boolean);
     method public void setPulsingMaxRadius(float);
     method public void setShowAccuracyRing(boolean);
+    method public void setSlot(String?);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder,kotlin.Unit> block);
     property public abstract int accuracyRingBorderColor;
     property public abstract int accuracyRingColor;
@@ -2275,6 +2285,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public abstract boolean pulsingEnabled;
     property public abstract float pulsingMaxRadius;
     property public abstract boolean showAccuracyRing;
+    property public abstract String? slot;
   }
 
   public final class LocationComponentSettingsKt {

@@ -112,6 +112,9 @@
     <string name="move_camera">Move Camera</string>
     <string name="style_pack">Style pack</string>
     <string name="tile_region">Tile region</string>
+    <string name="move_to_bottom_slot">Move to bottom slot</string>
+    <string name="reset_slot">Reset slot</string>
+
 
     <!--Debug Mode Activity-->
     <string name="toggle_tile_borders">Tile Borders</string>

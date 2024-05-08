@@ -69,6 +69,11 @@ public class LocationComponentSettings private constructor(
    */
   public val puckBearing: PuckBearing,
   /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists, it will be
+   * placed at that position in the layer order.
+   */
+  public val slot: String?,
+  /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck
    * variables won't have any effect, a new puck needs to be set every time.
    */
@@ -82,7 +87,7 @@ public class LocationComponentSettings private constructor(
       pulsingMaxRadius=$pulsingMaxRadius, showAccuracyRing=$showAccuracyRing,
       accuracyRingColor=$accuracyRingColor, accuracyRingBorderColor=$accuracyRingBorderColor,
       layerAbove=$layerAbove, layerBelow=$layerBelow, puckBearingEnabled=$puckBearingEnabled,
-      puckBearing=$puckBearing, locationPuck=$locationPuck)""".trimIndent()
+      puckBearing=$puckBearing, slot=$slot, locationPuck=$locationPuck)""".trimIndent()
 
   /**
    * Overloaded equals function.
@@ -99,7 +104,7 @@ public class LocationComponentSettings private constructor(
         accuracyRingBorderColor == other.accuracyRingBorderColor &&
         layerAbove == other.layerAbove && layerBelow == other.layerBelow &&
         puckBearingEnabled == other.puckBearingEnabled && puckBearing == other.puckBearing &&
-        locationPuck == other.locationPuck
+        slot == other.slot && locationPuck == other.locationPuck
   }
 
   /**
@@ -107,7 +112,7 @@ public class LocationComponentSettings private constructor(
    */
   public override fun hashCode(): Int = Objects.hash(enabled, pulsingEnabled, pulsingColor,
       pulsingMaxRadius, showAccuracyRing, accuracyRingColor, accuracyRingBorderColor, layerAbove,
-      layerBelow, puckBearingEnabled, puckBearing, locationPuck)
+      layerBelow, puckBearingEnabled, puckBearing, slot, locationPuck)
 
   /**
    * Convert to Builder allowing to change class properties.
@@ -117,7 +122,7 @@ public class LocationComponentSettings private constructor(
       .setPulsingMaxRadius(pulsingMaxRadius) .setShowAccuracyRing(showAccuracyRing)
       .setAccuracyRingColor(accuracyRingColor) .setAccuracyRingBorderColor(accuracyRingBorderColor)
       .setLayerAbove(layerAbove) .setLayerBelow(layerBelow)
-      .setPuckBearingEnabled(puckBearingEnabled) .setPuckBearing(puckBearing)
+      .setPuckBearingEnabled(puckBearingEnabled) .setPuckBearing(puckBearing) .setSlot(slot)
       .setLocationPuck(locationPuck)
 
   /**
@@ -201,6 +206,13 @@ public class LocationComponentSettings private constructor(
      */
     @set:JvmSynthetic
     public var puckBearing: PuckBearing = PuckBearing.HEADING
+
+    /**
+     * The slot this layer is assigned to. If specified, and a slot with that name exists, it will
+     * be placed at that position in the layer order.
+     */
+    @set:JvmSynthetic
+    public var slot: String? = null
 
     /**
      * Setter for enabled: whether the user location is visible on the map.
@@ -333,6 +345,18 @@ public class LocationComponentSettings private constructor(
     }
 
     /**
+     * Setter for slot: the slot this layer is assigned to. If specified, and a slot with that name
+     * exists, it will be placed at that position in the layer order.
+     *
+     * @param slot
+     * @return Builder
+     */
+    public fun setSlot(slot: String?): Builder {
+      this.slot = slot
+      return this
+    }
+
+    /**
      * Setter for locationPuck: defines what the customised look of the location puck. Note that
      * direct changes to the puck variables won't have any effect, a new puck needs to be set every
      * time.
@@ -353,7 +377,7 @@ public class LocationComponentSettings private constructor(
      */
     public fun build(): LocationComponentSettings = LocationComponentSettings(enabled,
         pulsingEnabled, pulsingColor, pulsingMaxRadius, showAccuracyRing, accuracyRingColor,
-        accuracyRingBorderColor, layerAbove, layerBelow, puckBearingEnabled, puckBearing,
+        accuracyRingBorderColor, layerAbove, layerBelow, puckBearingEnabled, puckBearing, slot,
         locationPuck)
   }
 }

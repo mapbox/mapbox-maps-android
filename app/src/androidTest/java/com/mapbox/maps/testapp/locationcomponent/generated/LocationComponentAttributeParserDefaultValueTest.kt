@@ -77,6 +77,11 @@ class LocationComponentAttributeParserDefaultValueTest : BaseMapTest() {
       PuckBearing.HEADING,
       mapView.location.getSettings().puckBearing
     )
+    assertEquals(
+      "slot test failed..",
+      null,
+      mapView.location.getSettings().slot
+    )
   }
 }
 

@@ -41,6 +41,14 @@
         android:title="@string/toggle_opacity"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/move_to_bottom_slot"
+        android:title="@string/move_to_bottom_slot"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/reset_slot"
+        android:title="@string/reset_slot"
+        app:showAsAction="never"/>
+
     <group
         android:id="@+id/group"
         android:checkableBehavior="single">

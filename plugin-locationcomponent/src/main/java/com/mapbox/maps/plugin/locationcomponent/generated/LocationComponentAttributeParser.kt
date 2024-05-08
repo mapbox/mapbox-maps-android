@@ -81,6 +81,7 @@ internal object LocationComponentAttributeParser {
         layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow)
         this.puckBearingEnabled = puckBearingEnabled
         puckBearing = PuckBearing.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearing, 0)]
+        slot = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentSlot)
       }
     } finally {
       typedArray.recycle()

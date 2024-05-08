@@ -195,6 +195,20 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists, it will be placed at that position in the layer order.
+   */
+  override var slot: String?
+    get() {
+      return this.internalSettings.slot
+    }
+    set(value) {
+      if (this.internalSettings.slot != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setSlot(value).build()
+        applySettings()
+      }
+    }
+
+  /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time.
    */
   override var locationPuck: LocationPuck

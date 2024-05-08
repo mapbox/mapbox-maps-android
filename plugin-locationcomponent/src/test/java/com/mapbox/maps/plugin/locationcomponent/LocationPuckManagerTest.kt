@@ -79,6 +79,7 @@ class LocationPuckManagerTest {
     every { locationLayerRenderer.removeLayers() } just runs
     every { locationLayerRenderer.initializeComponents(any()) } just runs
     every { locationLayerRenderer.updateStyle(any()) } just runs
+    every { locationLayerRenderer.slot(any()) } just runs
     locationPuckManager = LocationPuckManager(
       settings,
       mockk(),

@@ -55,4 +55,6 @@ internal class ModelLayerWrapper(
   fun modelOpacity(opacity: Double) = updateProperty("model-opacity", Value(opacity))
 
   fun modelScaleMode(modelScaleMode: ModelScaleMode) = updateProperty("model-scale-mode", Value(modelScaleMode.value))
+
+  fun slot(slot: String?) = updateProperty("slot", slot?.let { Value(it) } ?: Value.nullValue())
 }

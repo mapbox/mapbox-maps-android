@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `ModelId` constructor to add model id and uri.
 * [compose] Add `TerrainState` parameter to `GenericStyle`, `MapStyle` and `MapboxStandardStyle` composable functions.
 * Add experimental `RasterParticleLayer` in Style DSL and Compose.
+* Add `mapView.location.slot` API to assign a slot for the location indicator.
 
 ## Bug fixes 🐞
 * Fix memory leak when camera animations are skipped.
