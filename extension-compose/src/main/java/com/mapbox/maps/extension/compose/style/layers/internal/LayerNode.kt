@@ -206,17 +206,17 @@ internal class LayerNode(
   }
 
   internal fun setProperty(name: String, value: Value) {
-    logD(TAG, "settingProperty: property=$name, value=$value ...")
+    logD(TAG, "[$layerType] settingProperty: property=$name, value=$value ...")
     coroutineScope.launch {
       whenNodeReady {
         parameters[name] = value
         map.setStyleLayerProperty(layerId, name, value).error?.let {
           logW(
             TAG,
-            "Failed to set $name property as $value on SymbolLayer $layerId: $it"
+            "Failed to set $name property as $value on $layerType layer $layerId: $it"
           )
         }
-        logD(TAG, "setProperty: property=$name, value=$value executed")
+        logD(TAG, "[$layerType] setProperty: property=$name, value=$value executed")
       }
     }
   }

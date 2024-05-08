@@ -257,14 +257,8 @@ public final class com/mapbox/maps/extension/compose/style/SlotsContent {
 
 public final class com/mapbox/maps/extension/compose/style/StyleImage {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Landroid/graphics/Bitmap;Ljava/lang/Float;Z)V
-	public synthetic fun <init> (Ljava/lang/String;Landroid/graphics/Bitmap;Ljava/lang/Float;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)V
 	public synthetic fun <init> (Ljava/lang/String;Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)V
-	public synthetic fun <init> (Ljava/lang/String;Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/Image;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)V
-	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/Image;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lcom/mapbox/maps/Image;
 	public final fun component3 ()Ljava/lang/Float;
