@@ -2925,6 +2925,123 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterOpacity default;
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleArrayBand {
+    ctor public RasterParticleArrayBand(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleArrayBand(String value);
+    ctor public RasterParticleArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleArrayBand copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleArrayBand.Companion Companion;
+  }
+
+  public static final class RasterParticleArrayBand.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleArrayBand getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleArrayBand default;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleColor {
+    ctor public RasterParticleColor(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleColor(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleColor copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleColor.Companion Companion;
+  }
+
+  public static final class RasterParticleColor.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleColor getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleColor default;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleCount {
+    ctor public RasterParticleCount(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleCount(long value);
+    ctor public RasterParticleCount(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleCount copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleCount.Companion Companion;
+  }
+
+  public static final class RasterParticleCount.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleCount getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleCount default;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleFadeOpacityFactor {
+    ctor public RasterParticleFadeOpacityFactor(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleFadeOpacityFactor(double value);
+    ctor public RasterParticleFadeOpacityFactor(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleFadeOpacityFactor copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleFadeOpacityFactor.Companion Companion;
+  }
+
+  public static final class RasterParticleFadeOpacityFactor.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleFadeOpacityFactor getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleFadeOpacityFactor default;
+  }
+
+  public final class RasterParticleLayerKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void RasterParticleLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    return generateRandomLayerId("raster-particle")
+}), com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleArrayBand rasterParticleArrayBand = RasterParticleArrayBand.default, com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleColor rasterParticleColor = RasterParticleColor.default, com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleCount rasterParticleCount = RasterParticleCount.default, com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleFadeOpacityFactor rasterParticleFadeOpacityFactor = RasterParticleFadeOpacityFactor.default, com.mapbox.maps.extension.compose.style.layers.generated.Transition rasterParticleFadeOpacityFactorTransition = Transition.default, com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleMaxSpeed rasterParticleMaxSpeed = RasterParticleMaxSpeed.default, com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleResetRateFactor rasterParticleResetRateFactor = RasterParticleResetRateFactor.default, com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleSpeedFactor rasterParticleSpeedFactor = RasterParticleSpeedFactor.default, com.mapbox.maps.extension.compose.style.layers.generated.Transition rasterParticleSpeedFactorTransition = Transition.default, com.mapbox.maps.extension.compose.style.layers.generated.Visibility visibility = Visibility.default, com.mapbox.maps.extension.compose.style.layers.generated.MinZoom minZoom = MinZoom.default, com.mapbox.maps.extension.compose.style.layers.generated.MaxZoom maxZoom = MaxZoom.default, com.mapbox.maps.extension.compose.style.layers.generated.SourceLayer sourceLayer = SourceLayer.default, com.mapbox.maps.extension.compose.style.layers.generated.Filter filter = Filter.default);
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleMaxSpeed {
+    ctor public RasterParticleMaxSpeed(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleMaxSpeed(double value);
+    ctor public RasterParticleMaxSpeed(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleMaxSpeed copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleMaxSpeed.Companion Companion;
+  }
+
+  public static final class RasterParticleMaxSpeed.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleMaxSpeed getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleMaxSpeed default;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleResetRateFactor {
+    ctor public RasterParticleResetRateFactor(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleResetRateFactor(double value);
+    ctor public RasterParticleResetRateFactor(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleResetRateFactor copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleResetRateFactor.Companion Companion;
+  }
+
+  public static final class RasterParticleResetRateFactor.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleResetRateFactor getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleResetRateFactor default;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterParticleSpeedFactor {
+    ctor public RasterParticleSpeedFactor(com.mapbox.bindgen.Value value);
+    ctor public RasterParticleSpeedFactor(double value);
+    ctor public RasterParticleSpeedFactor(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleSpeedFactor copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleSpeedFactor.Companion Companion;
+  }
+
+  public static final class RasterParticleSpeedFactor.Companion {
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleSpeedFactor getDefault();
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterParticleSpeedFactor default;
+  }
+
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterResampling {
     ctor public RasterResampling(com.mapbox.bindgen.Value value);
     ctor public RasterResampling(com.mapbox.maps.extension.style.expressions.generated.Expression expression);

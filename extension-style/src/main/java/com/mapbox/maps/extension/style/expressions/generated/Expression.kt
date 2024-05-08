@@ -802,6 +802,13 @@ class Expression : Value {
     }
 
     /**
+     * Returns the length of the particle velocity vector. Can only be used in the `raster-particle-color` property.
+     */
+    fun rasterParticleSpeed(): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.rasterParticleSpeed())
+    }
+
+    /**
      * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the
      * `raster-color` property.
      */
@@ -3136,6 +3143,12 @@ class Expression : Value {
      */
     fun random(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("random").apply(block).build()
+
+    /**
+     * Returns the length of the particle velocity vector. Can only be used in the `raster-particle-color` property.
+     */
+    @JvmStatic
+    fun rasterParticleSpeed(): Expression = ExpressionBuilder("raster-particle-speed").build()
 
     /**
      * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the

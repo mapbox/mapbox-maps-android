@@ -259,6 +259,7 @@ public final class com/mapbox/maps/extension/style/expressions/dsl/generated/Exp
 	public static final fun product ([D)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun properties ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun random (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun rasterParticleSpeed ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun rasterValue ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun resolvedLocale (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun rgb (DDD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -421,6 +422,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public static final fun product ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun properties ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun random ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun rasterParticleSpeed ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun rasterValue ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun resolvedLocale ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun rgb (DDD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -654,6 +656,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public final fun properties ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun random (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun random ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun rasterParticleSpeed ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun rasterValue ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun resolvedLocale (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun resolvedLocale ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -819,6 +822,7 @@ public class com/mapbox/maps/extension/style/expressions/generated/Expression$Ex
 	public final fun product ([D)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun properties ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun random (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
+	public final fun rasterParticleSpeed ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun rasterValue ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun resolvedLocale (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun rgb (DDD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
@@ -3251,6 +3255,124 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayerD
 
 public final class com/mapbox/maps/extension/style/layers/generated/RasterLayerKt {
 	public static final fun rasterLayer (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/RasterParticleLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public fun getLayerId ()Ljava/lang/String;
+	public fun getMaxZoom ()Ljava/lang/Double;
+	public fun getMinZoom ()Ljava/lang/Double;
+	public final fun getRasterParticleArrayBand ()Ljava/lang/String;
+	public final fun getRasterParticleArrayBandAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleColor ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleCount ()Ljava/lang/Long;
+	public final fun getRasterParticleCountAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleFadeOpacityFactor ()Ljava/lang/Double;
+	public final fun getRasterParticleFadeOpacityFactorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleFadeOpacityFactorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getRasterParticleMaxSpeed ()Ljava/lang/Double;
+	public final fun getRasterParticleMaxSpeedAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleResetRateFactor ()Ljava/lang/Double;
+	public final fun getRasterParticleResetRateFactorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleSpeedFactor ()Ljava/lang/Double;
+	public final fun getRasterParticleSpeedFactorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterParticleSpeedFactorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public fun getSlot ()Ljava/lang/String;
+	public final fun getSourceId ()Ljava/lang/String;
+	public final fun getSourceLayer ()Ljava/lang/String;
+	public fun getVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+	public fun getVisibilityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public synthetic fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleArrayBand (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleArrayBand (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleCount (J)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleCount (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleFadeOpacityFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleFadeOpacityFactor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleFadeOpacityFactorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleFadeOpacityFactorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleMaxSpeed (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleMaxSpeed (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleResetRateFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleResetRateFactor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleSpeedFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleSpeedFactor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleSpeedFactorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleSpeedFactorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public synthetic fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/RasterParticleLayer$Companion {
+	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
+	public final fun getDefaultMinZoom ()Ljava/lang/Double;
+	public final fun getDefaultRasterParticleArrayBand ()Ljava/lang/String;
+	public final fun getDefaultRasterParticleArrayBandAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleColor ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleCount ()Ljava/lang/Long;
+	public final fun getDefaultRasterParticleCountAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleFadeOpacityFactor ()Ljava/lang/Double;
+	public final fun getDefaultRasterParticleFadeOpacityFactorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleFadeOpacityFactorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultRasterParticleMaxSpeed ()Ljava/lang/Double;
+	public final fun getDefaultRasterParticleMaxSpeedAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleResetRateFactor ()Ljava/lang/Double;
+	public final fun getDefaultRasterParticleResetRateFactorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleSpeedFactor ()Ljava/lang/Double;
+	public final fun getDefaultRasterParticleSpeedFactorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterParticleSpeedFactorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl {
+	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleArrayBand (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleArrayBand (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleCount (J)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleCount (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleFadeOpacityFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleFadeOpacityFactor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleFadeOpacityFactorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleFadeOpacityFactorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleMaxSpeed (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleMaxSpeed (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleResetRateFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleResetRateFactor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleSpeedFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleSpeedFactor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleSpeedFactorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleSpeedFactorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl$DefaultImpls {
+	public static synthetic fun rasterParticleCount$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public static synthetic fun rasterParticleFadeOpacityFactor$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public static synthetic fun rasterParticleMaxSpeed$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public static synthetic fun rasterParticleResetRateFactor$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public static synthetic fun rasterParticleSpeedFactor$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/RasterParticleLayerKt {
+	public static final fun rasterParticleLayer (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 }
 
 public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/SkyLayerDsl {
