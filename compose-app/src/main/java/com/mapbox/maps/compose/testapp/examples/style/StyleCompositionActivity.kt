@@ -19,8 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
@@ -162,11 +168,7 @@ public class StyleCompositionActivity : ComponentActivity() {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = mapViewportState,
-            style = {
-              MapStyle(
-                style = styleUri,
-              )
-            }
+            style = { MapStyle(style = styleUri) }
           ) {
             if (showSymbolLayer) {
               CircleLayer(
@@ -175,12 +177,18 @@ public class StyleCompositionActivity : ComponentActivity() {
                 circleRadius = CircleRadius(50.0),
                 circleRadiusTransition = Transition(duration = 1000L)
               )
+
+              val painter = painterResource(id = markerResource)
+              // Every time `painter.drawToBitmap()` is called a new bitmap is created so we need to remember it
+              val imageBitmap: ImageBitmap = remember(painter) {
+                painter.drawToBitmap()
+              }
               SymbolLayer(
                 sourceState = geoJsonSource,
                 iconImage = IconImage(
                   StyleImage(
                     imageId = "icon_id",
-                    painter = painterResource(id = markerResource)
+                    imageBitmap = imageBitmap
                   )
                 ),
                 iconAnchor = IconAnchor.BOTTOM,
@@ -228,5 +236,19 @@ public class StyleCompositionActivity : ComponentActivity() {
     const val ZOOM: Double = 9.0
     private var count = 0
     private const val OFFSET = 0.03
+    fun Painter.drawToBitmap(): ImageBitmap {
+      val drawScope = CanvasDrawScope()
+      val bitmap = ImageBitmap(intrinsicSize.width.toInt(), intrinsicSize.height.toInt())
+      val canvas = Canvas(bitmap)
+      drawScope.draw(
+        density = Density(1f),
+        layoutDirection = LayoutDirection.Ltr,
+        canvas = canvas,
+        size = intrinsicSize
+      ) {
+        draw(intrinsicSize)
+      }
+      return bitmap
+    }
   }
 }

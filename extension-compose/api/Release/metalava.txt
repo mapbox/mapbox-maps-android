@@ -259,10 +259,7 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class StyleImage {
-    ctor public StyleImage(String imageId, com.mapbox.maps.Image image, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
     ctor public StyleImage(String imageId, androidx.compose.ui.graphics.ImageBitmap imageBitmap, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
-    ctor public StyleImage(String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
-    ctor public StyleImage(String imageId, android.graphics.Bitmap ninePatchBitmap, Float? scale = null, boolean sdf = false);
     method public String component1();
     method public com.mapbox.maps.Image component2();
     method public Float? component3();
@@ -285,9 +282,6 @@ package com.mapbox.maps.extension.compose.style {
     property public final boolean sdf;
     property public final java.util.List<com.mapbox.maps.ImageStretches> stretchX;
     property public final java.util.List<com.mapbox.maps.ImageStretches> stretchY;
-  }
-
-  public final class StyleImageKt {
   }
 
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StyleImportsConfig {
