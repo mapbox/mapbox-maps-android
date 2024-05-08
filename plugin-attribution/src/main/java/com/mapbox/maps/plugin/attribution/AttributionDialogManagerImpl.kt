@@ -144,7 +144,7 @@ class AttributionDialogManagerImpl(
     try {
       val intent = Intent(Intent.ACTION_VIEW)
       intent.data = Uri.parse(url)
-      context.applicationContext.startActivity(intent)
+      context.startActivity(intent)
     } catch (exception: ActivityNotFoundException) {
       Toast.makeText(context, R.string.mapbox_attributionErrorNoBrowser, Toast.LENGTH_LONG).show()
     } catch (t: Throwable) {

@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix memory leak when camera animations are skipped.
+* Fix Mapbox attribution and telemetry links not opening in a browser.
 * Fix incorrect size of the tile memory budget for vector tiles when the budget is set in megabytes.
 * Fix known issue from 11.4.0-beta.1 where setting a RasterLayer’s rasterColor property with an expression will block the layer from rendering.
 
