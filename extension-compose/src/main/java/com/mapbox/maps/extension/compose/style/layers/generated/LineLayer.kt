@@ -95,7 +95,7 @@ public fun LineLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of LineLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 
@@ -187,6 +187,9 @@ public fun LineLayer(
           setProperty(LineOpacity.TRANSITION_NAME, lineOpacityTransition.value)
         }
         if (linePattern != LinePattern.default) {
+          linePattern.styleImage?.let {
+            addImage(it)
+          }
           setProperty(LinePattern.NAME, linePattern.value)
         }
         if (lineTranslate != LineTranslate.default) {
@@ -305,6 +308,9 @@ public fun LineLayer(
         setProperty(LineOpacity.TRANSITION_NAME, lineOpacityTransition.value)
       }
       update(linePattern) {
+        linePattern.styleImage?.let {
+          addImage(it)
+        }
         setProperty(LinePattern.NAME, linePattern.value)
       }
       update(lineTranslate) {

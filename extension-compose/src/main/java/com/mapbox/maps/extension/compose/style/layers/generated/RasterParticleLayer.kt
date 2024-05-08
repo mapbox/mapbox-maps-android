@@ -58,7 +58,7 @@ public fun RasterParticleLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of RasterParticleLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 

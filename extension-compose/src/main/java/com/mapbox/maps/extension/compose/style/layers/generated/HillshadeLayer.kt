@@ -61,7 +61,7 @@ public fun HillshadeLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of HillshadeLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 

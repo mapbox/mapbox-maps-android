@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.4.0-rc.1
 ## Features ✨ and improvements 🏁
+* [compose] Add `StyleImage` to construct following image layer properties: `IconImage`, `FillPattern`, `LinePattern`, `BearingImage`, `ShadowImage`, `TopImage`.
+* [compose] Add `ModelId` constructor to add model id and uri.
 * Add experimental `RasterParticleLayer` in Style DSL and Compose.
 
 ## Bug fixes 🐞

@@ -82,7 +82,7 @@ public fun ModelLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of ModelLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 
@@ -99,6 +99,9 @@ public fun ModelLayer(
     update = {
       init {
         if (modelId != ModelId.default) {
+          modelId.modelInfo?.let {
+            addModel(it)
+          }
           setProperty(ModelId.NAME, modelId.value)
         }
         if (modelAmbientOcclusionIntensity != ModelAmbientOcclusionIntensity.default) {
@@ -199,6 +202,9 @@ public fun ModelLayer(
         updateLayerId(layerId)
       }
       update(modelId) {
+        modelId.modelInfo?.let {
+          addModel(it)
+        }
         setProperty(ModelId.NAME, modelId.value)
       }
       update(modelAmbientOcclusionIntensity) {

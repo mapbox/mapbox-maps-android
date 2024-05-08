@@ -46,7 +46,7 @@ public fun BackgroundLayer(
   maxZoom: MaxZoom = MaxZoom.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of BackgroundLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 
@@ -80,6 +80,9 @@ public fun BackgroundLayer(
           setProperty(BackgroundOpacity.TRANSITION_NAME, backgroundOpacityTransition.value)
         }
         if (backgroundPattern != BackgroundPattern.default) {
+          backgroundPattern.styleImage?.let {
+            addImage(it)
+          }
           setProperty(BackgroundPattern.NAME, backgroundPattern.value)
         }
         if (visibility != Visibility.default) {
@@ -114,6 +117,9 @@ public fun BackgroundLayer(
         setProperty(BackgroundOpacity.TRANSITION_NAME, backgroundOpacityTransition.value)
       }
       update(backgroundPattern) {
+        backgroundPattern.styleImage?.let {
+          addImage(it)
+        }
         setProperty(BackgroundPattern.NAME, backgroundPattern.value)
       }
       update(visibility) {

@@ -258,6 +258,38 @@ package com.mapbox.maps.extension.compose.style {
     method public void slot(String name, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
+  @com.mapbox.maps.MapboxExperimental public final class StyleImage {
+    ctor public StyleImage(String imageId, com.mapbox.maps.Image image, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    ctor public StyleImage(String imageId, androidx.compose.ui.graphics.ImageBitmap imageBitmap, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    ctor public StyleImage(String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    ctor public StyleImage(String imageId, android.graphics.Bitmap ninePatchBitmap, Float? scale = null, boolean sdf = false);
+    method public String component1();
+    method public com.mapbox.maps.Image component2();
+    method public Float? component3();
+    method public boolean component4();
+    method public java.util.List<com.mapbox.maps.ImageStretches> component5();
+    method public java.util.List<com.mapbox.maps.ImageStretches> component6();
+    method public com.mapbox.maps.ImageContent? component7();
+    method public com.mapbox.maps.extension.compose.style.StyleImage copy(String imageId, com.mapbox.maps.Image image, Float? scale, boolean sdf, java.util.List<com.mapbox.maps.ImageStretches> stretchX, java.util.List<com.mapbox.maps.ImageStretches> stretchY, com.mapbox.maps.ImageContent? content);
+    method public com.mapbox.maps.ImageContent? getContent();
+    method public com.mapbox.maps.Image getImage();
+    method public String getImageId();
+    method public Float? getScale();
+    method public boolean getSdf();
+    method public java.util.List<com.mapbox.maps.ImageStretches> getStretchX();
+    method public java.util.List<com.mapbox.maps.ImageStretches> getStretchY();
+    property public final com.mapbox.maps.ImageContent? content;
+    property public final com.mapbox.maps.Image image;
+    property public final String imageId;
+    property public final Float? scale;
+    property public final boolean sdf;
+    property public final java.util.List<com.mapbox.maps.ImageStretches> stretchX;
+    property public final java.util.List<com.mapbox.maps.ImageStretches> stretchY;
+  }
+
+  public final class StyleImageKt {
+  }
+
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StyleImportsConfig {
     method public com.mapbox.maps.extension.compose.style.StyleImportsConfig copy(java.util.Map<java.lang.String,com.mapbox.maps.extension.compose.style.ImportConfig> entries);
     method public void importConfig(String importId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfig,kotlin.Unit> configs);
@@ -559,12 +591,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class BackgroundPattern {
-    ctor public BackgroundPattern(com.mapbox.bindgen.Value value);
+    ctor public BackgroundPattern(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public BackgroundPattern(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public BackgroundPattern(String value);
     ctor public BackgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPattern copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPattern copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPattern.Companion Companion;
   }
@@ -591,12 +627,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class BearingImage {
-    ctor public BearingImage(com.mapbox.bindgen.Value value);
+    ctor public BearingImage(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public BearingImage(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public BearingImage(String value);
     ctor public BearingImage(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.BearingImage copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.BearingImage copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.BearingImage.Companion Companion;
   }
@@ -1198,12 +1238,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FillExtrusionPattern {
-    ctor public FillExtrusionPattern(com.mapbox.bindgen.Value value);
+    ctor public FillExtrusionPattern(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public FillExtrusionPattern(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public FillExtrusionPattern(String value);
     ctor public FillExtrusionPattern(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionPattern copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionPattern copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionPattern.Companion Companion;
   }
@@ -1333,12 +1377,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FillPattern {
-    ctor public FillPattern(com.mapbox.bindgen.Value value);
+    ctor public FillPattern(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public FillPattern(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public FillPattern(String value);
     ctor public FillPattern(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.FillPattern copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.FillPattern copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillPattern.Companion Companion;
   }
@@ -1769,12 +1817,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class IconImage {
-    ctor public IconImage(com.mapbox.bindgen.Value value);
+    ctor public IconImage(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public IconImage(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public IconImage(String value);
     ctor public IconImage(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.IconImage copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.IconImage copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconImage.Companion Companion;
   }
@@ -2266,12 +2318,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LinePattern {
-    ctor public LinePattern(com.mapbox.bindgen.Value value);
+    ctor public LinePattern(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public LinePattern(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public LinePattern(String value);
     ctor public LinePattern(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.LinePattern copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.LinePattern copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LinePattern.Companion Companion;
   }
@@ -2561,12 +2617,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ModelId {
-    ctor public ModelId(com.mapbox.bindgen.Value value);
+    ctor public ModelId(com.mapbox.bindgen.Value value, kotlin.Pair<java.lang.String,java.lang.String>? modelInfo = null);
     ctor public ModelId(String value);
+    ctor public ModelId(String modelId, String uri);
     ctor public ModelId(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.ModelId copy(com.mapbox.bindgen.Value value);
+    method public kotlin.Pair<java.lang.String,java.lang.String>? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ModelId copy(com.mapbox.bindgen.Value value, kotlin.Pair<java.lang.String,java.lang.String>? modelInfo);
+    method public kotlin.Pair<java.lang.String,java.lang.String>? getModelInfo();
     method public com.mapbox.bindgen.Value getValue();
+    property public final kotlin.Pair<java.lang.String,java.lang.String>? modelInfo;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelId.Companion Companion;
   }
@@ -3076,12 +3136,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ShadowImage {
-    ctor public ShadowImage(com.mapbox.bindgen.Value value);
+    ctor public ShadowImage(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public ShadowImage(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public ShadowImage(String value);
     ctor public ShadowImage(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.ShadowImage copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ShadowImage copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ShadowImage.Companion Companion;
   }
@@ -3887,12 +3951,16 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TopImage {
-    ctor public TopImage(com.mapbox.bindgen.Value value);
+    ctor public TopImage(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage = null);
+    ctor public TopImage(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public TopImage(String value);
     ctor public TopImage(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.layers.generated.TopImage copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? component2();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.TopImage copy(com.mapbox.bindgen.Value value, com.mapbox.maps.extension.compose.style.StyleImage? styleImage);
+    method public com.mapbox.maps.extension.compose.style.StyleImage? getStyleImage();
     method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.maps.extension.compose.style.StyleImage? styleImage;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TopImage.Companion Companion;
   }

@@ -82,7 +82,7 @@ public fun LocationIndicatorLayer(
   filter: Filter = Filter.default,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
-    ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
+    ?: throw IllegalStateException("Illegal use of LocationIndicatorLayer inside unsupported composable function")
 
   val coroutineScope = rememberCoroutineScope()
 
@@ -98,12 +98,21 @@ public fun LocationIndicatorLayer(
     update = {
       init {
         if (bearingImage != BearingImage.default) {
+          bearingImage.styleImage?.let {
+            addImage(it)
+          }
           setProperty(BearingImage.NAME, bearingImage.value)
         }
         if (shadowImage != ShadowImage.default) {
+          shadowImage.styleImage?.let {
+            addImage(it)
+          }
           setProperty(ShadowImage.NAME, shadowImage.value)
         }
         if (topImage != TopImage.default) {
+          topImage.styleImage?.let {
+            addImage(it)
+          }
           setProperty(TopImage.NAME, topImage.value)
         }
         if (accuracyRadius != AccuracyRadius.default) {
@@ -198,12 +207,21 @@ public fun LocationIndicatorLayer(
         updateLayerId(layerId)
       }
       update(bearingImage) {
+        bearingImage.styleImage?.let {
+          addImage(it)
+        }
         setProperty(BearingImage.NAME, bearingImage.value)
       }
       update(shadowImage) {
+        shadowImage.styleImage?.let {
+          addImage(it)
+        }
         setProperty(ShadowImage.NAME, shadowImage.value)
       }
       update(topImage) {
+        topImage.styleImage?.let {
+          addImage(it)
+        }
         setProperty(TopImage.NAME, topImage.value)
       }
       update(accuracyRadius) {
