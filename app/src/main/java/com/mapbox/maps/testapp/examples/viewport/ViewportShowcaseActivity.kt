@@ -26,7 +26,9 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Showcase the use age of viewport plugin.
@@ -89,7 +91,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
-        simulateRouteLocationProvider = SimulateRouteLocationProvider(
+        val route = withContext(Dispatchers.Default) {
           LineString.fromPolyline(
             DirectionsResponse.fromJson(
               AnnotationUtils.loadStringFromAssets(
@@ -99,6 +101,9 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             ).routes()[0].geometry()!!,
             Constants.PRECISION_6
           )
+        }
+        simulateRouteLocationProvider = SimulateRouteLocationProvider(
+          route
         )
         subscribeStyleLoaded {
           mapView.location.apply {

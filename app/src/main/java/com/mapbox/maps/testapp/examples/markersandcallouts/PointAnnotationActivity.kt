@@ -32,7 +32,9 @@ import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
@@ -204,11 +206,15 @@ class PointAnnotationActivity : AppCompatActivity() {
         create(pointAnnotationOptionsList)
 
         lifecycleScope.launch {
-          val annotationsAsset = AnnotationUtils.loadStringFromAssets(
-            this@PointAnnotationActivity,
-            "annotations.json"
-          )
-          create(FeatureCollection.fromJson(annotationsAsset))
+          val featureCollection = withContext(Dispatchers.Default) {
+            FeatureCollection.fromJson(
+              AnnotationUtils.loadStringFromAssets(
+                this@PointAnnotationActivity,
+                "annotations.json"
+              )
+            )
+          }
+          create(featureCollection)
         }
       }
 
