@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Add `StyleImage` to construct following image layer properties: `IconImage`, `FillPattern`, `LinePattern`, `BearingImage`, `ShadowImage`, `TopImage`.
 * [compose] Add `ModelId` constructor to add model id and uri.
+* [compose] Add `TerrainState` parameter to `GenericStyle`, `MapStyle` and `MapboxStandardStyle` composable functions.
 * Add experimental `RasterParticleLayer` in Style DSL and Compose.
 
 ## Bug fixes 🐞

@@ -45,7 +45,6 @@ private data class PropertyDetails(
  *
  * @param sourceId The id of the source state.
  * @param sourceType The type of the source in plain text.
- * @param builderProperties The immutable properties of the source.
  * @param initialProperties The initial mutable properties of the source.
  * @param initialGeoJsonData The initial [GeoJSONData] of the source to be used for [GeoJsonSourceState].
  */

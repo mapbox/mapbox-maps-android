@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.compose.style.internal.StyleConfig
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
 import com.mapbox.maps.extension.compose.style.internal.StyleSlot
 import com.mapbox.maps.extension.compose.style.projection.Projection
+import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 
 /**
  * A simple composable function to set the style to the map without slots or import configs.
@@ -23,6 +24,7 @@ import com.mapbox.maps.extension.compose.style.projection.Projection
  * @param style The Style JSON or Style Uri to be set to the map.
  * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
  * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in [style] definition.
+ * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
  */
 @Composable
 @MapboxStyleComposable
@@ -31,8 +33,14 @@ public fun MapStyle(
   style: String,
   projection: Projection = Projection.default,
   atmosphereState: AtmosphereState = AtmosphereState.default,
+  terrainState: TerrainState = TerrainState.initial,
 ) {
-  GenericStyle(style = style, projection = projection, atmosphereState = atmosphereState)
+  GenericStyle(
+    style = style,
+    projection = projection,
+    atmosphereState = atmosphereState,
+    terrainState = terrainState
+  )
 }
 
 /**
@@ -205,6 +213,7 @@ public data class ImportConfig internal constructor(
  * @param styleImportsConfig The style import configurations for all the style imports in the style. You can use [styleImportsConfig] to create it.
  * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
  * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in [style] definition.
+ * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
  */
 @Composable
 @MapboxStyleComposable
@@ -216,6 +225,7 @@ public fun GenericStyle(
   styleImportsConfig: StyleImportsConfig = StyleImportsConfig(),
   projection: Projection = Projection.default,
   atmosphereState: AtmosphereState = AtmosphereState.default,
+  terrainState: TerrainState = TerrainState.initial,
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -230,6 +240,7 @@ public fun GenericStyle(
           mapboxMap = mapApplier.mapView.mapboxMap,
           projection = projection,
           atmosphereState = atmosphereState,
+          terrainState = terrainState,
         )
       },
       update = {
@@ -238,6 +249,9 @@ public fun GenericStyle(
         }
         update(atmosphereState) {
           updateAtmosphere(atmosphereState)
+        }
+        update(terrainState) {
+          updateTerrain(terrainState)
         }
       }
     ) {
