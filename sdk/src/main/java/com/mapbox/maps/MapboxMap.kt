@@ -22,7 +22,6 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.util.isEmpty
-import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
 
 /**
@@ -831,9 +830,8 @@ class MapboxMap :
     result: (CameraOptions) -> Unit
   ) {
     checkNativeMap("cameraForCoordinates")
-    val weakResult = WeakReference(result)
     nativeMap.whenMapSizeReady {
-      weakResult.get()?.invoke(
+      result.invoke(
         nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset)
           .getValueOrElse {
             logE(

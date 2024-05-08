@@ -127,30 +127,6 @@ class RasterParticleLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun rasterParticleCountTest() {
-    val testValue = 1L
-    val layer = rasterParticleLayer("id", "source") {
-      rasterParticleCount(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.rasterParticleCount?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun rasterParticleCountAsExpressionTest() {
-    val expression = literal(1L)
-    val layer = rasterParticleLayer("id", "source") {
-      rasterParticleCount(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.rasterParticleCountAsExpression.toString())
-    assertEquals(1L, layer.rasterParticleCount!!)
-  }
-
-  @Test
-  @UiThreadTest
   fun rasterParticleFadeOpacityFactorTest() {
     val testValue = 1.0
     val layer = rasterParticleLayer("id", "source") {
@@ -342,9 +318,6 @@ class RasterParticleLayerTest : BaseStyleTest() {
     assertNotNull("defaultMaxZoom should not be null", RasterParticleLayer.defaultMaxZoom)
     assertNotNull("defaultRasterParticleArrayBand should not be null", RasterParticleLayer.defaultRasterParticleArrayBand)
     assertNotNull("defaultRasterParticleArrayBandAsExpression should not be null", RasterParticleLayer.defaultRasterParticleArrayBandAsExpression)
-    assertNotNull("defaultRasterParticleColor should not be null", RasterParticleLayer.defaultRasterParticleColor)
-    assertNotNull("defaultRasterParticleCount should not be null", RasterParticleLayer.defaultRasterParticleCount)
-    assertNotNull("defaultRasterParticleCountAsExpression should not be null", RasterParticleLayer.defaultRasterParticleCountAsExpression)
     assertNotNull("defaultRasterParticleFadeOpacityFactor should not be null", RasterParticleLayer.defaultRasterParticleFadeOpacityFactor)
     assertNotNull("defaultRasterParticleFadeOpacityFactorAsExpression should not be null", RasterParticleLayer.defaultRasterParticleFadeOpacityFactorAsExpression)
     assertNotNull("defaultRasterParticleFadeOpacityFactorTransition should not be null", RasterParticleLayer.defaultRasterParticleFadeOpacityFactorTransition)
@@ -389,7 +362,6 @@ class RasterParticleLayerTest : BaseStyleTest() {
         }
       }
     }
-    val rasterParticleCountTestValue = 1L
     val rasterParticleFadeOpacityFactorTestValue = 1.0
     val rasterParticleMaxSpeedTestValue = 1.0
     val rasterParticleResetRateFactorTestValue = 1.0
@@ -404,7 +376,6 @@ class RasterParticleLayerTest : BaseStyleTest() {
       filter(filterTestValue)
       rasterParticleArrayBand(rasterParticleArrayBandTestValue)
       rasterParticleColor(rasterParticleColorTestValue)
-      rasterParticleCount(rasterParticleCountTestValue)
       rasterParticleFadeOpacityFactor(rasterParticleFadeOpacityFactorTestValue)
       rasterParticleMaxSpeed(rasterParticleMaxSpeedTestValue)
       rasterParticleResetRateFactor(rasterParticleResetRateFactorTestValue)
@@ -424,7 +395,6 @@ class RasterParticleLayerTest : BaseStyleTest() {
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(rasterParticleArrayBandTestValue, cachedLayer.rasterParticleArrayBand)
     assertEquals(rasterParticleColorTestValue, cachedLayer.rasterParticleColor)
-    assertEquals(rasterParticleCountTestValue, cachedLayer.rasterParticleCount)
     assertEquals(rasterParticleFadeOpacityFactorTestValue, cachedLayer.rasterParticleFadeOpacityFactor)
     assertEquals(rasterParticleMaxSpeedTestValue, cachedLayer.rasterParticleMaxSpeed)
     assertEquals(rasterParticleResetRateFactorTestValue, cachedLayer.rasterParticleResetRateFactor)
