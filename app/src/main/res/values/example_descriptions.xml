@@ -103,4 +103,5 @@
     <string name="description_secondary_display_presentation">Displaying a map on a secondary display using Presentation.</string>
     <string name="description_model_layer">Showcase the usage of a 3D model layer.</string>
     <string name="description_custom_raster_source">Showcase the usage of a custom raster source.</string>
+    <string name="description_slot_layer">Showcase the usage of slot layer.</string>
 </resources>
