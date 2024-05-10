@@ -17,13 +17,23 @@ import java.nio.IntBuffer
  * 2. By using single PBO with `glReadPixels` on newer devices in order not to block GPU pipeline.
  *
  * Inspired by http://www.songho.ca/opengl/gl_pbo.html
+ *
+ * @param width width in pixels to read
+ * @param height height in pixels to read
+ * @param legacyMode if true we read pixels without using PBO (use glReadPixels).
+ *  Otherwise, we use PBO for faster reading if it is supported.
  */
 internal class PixelReader(
   val width: Int,
   val height: Int,
-  @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
-  internal val supportsPbo: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+  val legacyMode: Boolean,
 ) {
+  @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
+  private val supportsPbo: Boolean = if (legacyMode)
+    false
+  else
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+
   private val bufferSize = width * height * channelNum
   private var buffer = ByteBuffer
     .allocateDirect(bufferSize)

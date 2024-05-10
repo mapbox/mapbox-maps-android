@@ -131,6 +131,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
+	public final fun setSnapshotLegacyMode (Z)V
 	public fun snapshot ()Landroid/graphics/Bitmap;
 	public fun snapshot (Lcom/mapbox/maps/MapView$OnSnapshotReady;)V
 }
