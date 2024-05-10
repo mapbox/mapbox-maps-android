@@ -2,7 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+
 # 10.17.1
+## Features ✨ and improvements 🏁
+* Add experimental `MapView.setSnapshotLegacyMode` function to help avoiding `MapView.snapshot` native crash on some Samsung devices running Android 14.
+
 ## Bug fixes 🐞
 * Fix memory leak when camera animations are skipped.
 
@@ -14,7 +19,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.17.0 and common to v23.9.2.
-
 
 # 10.16.6 March 04, 2024
 ## Bug fixes 🐞

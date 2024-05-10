@@ -285,6 +285,20 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   /**
+   * Set whether legacy mode should be used for [snapshot].
+   *
+   * Legacy mode is not that efficient (as it blocks map rendering when making the snapshot)
+   * but may help with vendor specific issues like described in
+   * https://github.com/mapbox/mapbox-maps-android/issues/2280.
+   *
+   * @param enabled enables legacy mode when True and disables otherwise.
+   */
+  @MapboxExperimental
+  fun setSnapshotLegacyMode(enabled: Boolean) {
+    mapController.renderer.snapshotLegacyModeEnabled = enabled
+  }
+
+  /**
    * Set new maximum FPS for map rendering.
    *
    * @param fps new maximum FPS value that must be > 0 and less than max integer.
