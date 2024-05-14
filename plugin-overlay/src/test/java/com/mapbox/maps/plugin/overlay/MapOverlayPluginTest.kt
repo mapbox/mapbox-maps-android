@@ -4,10 +4,10 @@ import android.view.View
 import android.widget.FrameLayout
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.util.isEmpty
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -141,11 +141,13 @@ class MapOverlayPluginTest {
       }
     })
 
-    val slot = slot<CoordinateBounds>()
+    val slot = slot<List<Point>>()
+    val cameraOptionsSlot = slot<CameraOptions>()
     val paddingSlot = slot<EdgeInsets>()
     every {
-      mapCameraManagerDelegate.cameraForCoordinateBounds(
+      mapCameraManagerDelegate.cameraForCoordinates(
         capture(slot),
+        capture(cameraOptionsSlot),
         capture(paddingSlot),
         any(),
         any()
@@ -157,10 +159,11 @@ class MapOverlayPluginTest {
     }
 
     assertEquals(
-      CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0), false),
+      listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)),
       slot.captured
     )
     assertEquals(EdgeInsets(0.0, .00, 0.0, 0.0), paddingSlot.captured)
+    assertTrue(cameraOptionsSlot.captured.isEmpty)
 
     val cameraSlot = slot<CameraOptions>()
     every { mapCameraManagerDelegate.setCamera(capture(cameraSlot)) } just Runs

@@ -12,9 +12,11 @@ import androidx.core.view.isVisible
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.renderer.RenderThread
+import com.mapbox.maps.util.isEmpty
 import java.util.UUID
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.abs
@@ -195,14 +197,24 @@ internal class ViewAnnotationManagerImpl(
       .toMap()
 
   /**
-   * Calculates CameraOptions to fit the given view annotations, including their width and height.
+   * Return camera options bound to given view annotation list, padding, bearing and pitch values.
+   * Annotations with [ViewAnnotationOptions.visible] set to false will be excluded from the calculations of [CameraOptions].
+   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions]
    *
-   * @param annotations List of [View] to be shown.
-   * @param edgeInsets [EdgeInsets] to be applied to the camera.
-   * @param bearing [Double] bearing to be applied to the camera.
-   * @param pitch [Double] pitch to be applied to the camera.
+   * Note: This API isn't supported by Globe projection and will return NULL.
+   * Calling this API immediately after adding the view is a no-op.
+   * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
+   * view annotation is positioned.
    *
-   * @return [CameraOptions] object.
+   * If the render thread did not yet calculate the size of the map (due to initialization or map resizing), it will return NULL.
+   *
+   * @param annotations view annotation list to be shown. Annotations should be added beforehand
+   * with [ViewAnnotationManager.addViewAnnotation] API.
+   * @param edgeInsets paddings to apply.
+   * @param bearing camera bearing to apply.
+   * @param pitch camera pitch to apply.
+   *
+   * @return [CameraOptions] object or NULL if [annotations] list is empty.
    */
   override fun cameraForAnnotations(
     annotations: List<View>,
@@ -222,12 +234,21 @@ internal class ViewAnnotationManagerImpl(
     if (viewAnnotations.isEmpty()) return null
     val pointCoordinates =
       viewAnnotations.mapNotNull { it.coordinate(it.positionDescriptor) }
+
+    val options = cameraOptions {
+      pitch(pitch)
+      bearing(bearing)
+    }
+
     var cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinates(
-      pointCoordinates,
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      bearing,
-      pitch
+      coordinates = pointCoordinates,
+      camera = options,
+      coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      maxZoom = null,
+      offset = null
     )
+
+    if (cameraForViewAnnotationPoints.isEmpty) return null
 
     var isCorrectBound = false
     // viewAnnotation, frame and max coordinate
@@ -279,7 +300,7 @@ internal class ViewAnnotationManagerImpl(
         return null
       }
 
-      val coordinateBoundsForCamera = CoordinateBounds(
+      val coordinateBoundsForCamera = listOf(
         Point.fromLngLat(
           west!!.first.coordinate(west!!.first.positionDescriptor)!!.longitude(),
           south!!.first.coordinate(south!!.first.positionDescriptor)!!.latitude()
@@ -297,14 +318,15 @@ internal class ViewAnnotationManagerImpl(
         (edgeInsets?.right ?: 0).toDouble() + abs((east!!.second?.right ?: 0.0).toDouble())
       )
 
-      cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinateBounds(
-        coordinateBoundsForCamera,
-        paddings,
-        bearing,
-        pitch
+      cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinates(
+        coordinates = coordinateBoundsForCamera,
+        camera = options,
+        coordinatesPadding = paddings,
+        maxZoom = null,
+        offset = null
       )
     }
-    return cameraForViewAnnotationPoints
+    return cameraForViewAnnotationPoints.takeUnless { it.isEmpty }
   }
 
   /**

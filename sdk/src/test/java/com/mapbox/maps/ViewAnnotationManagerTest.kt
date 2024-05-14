@@ -502,6 +502,7 @@ class ViewAnnotationManagerTest {
         any(),
         any(),
         any(),
+        any(),
         any()
       )
     } answers { expectedCameraOptions }
