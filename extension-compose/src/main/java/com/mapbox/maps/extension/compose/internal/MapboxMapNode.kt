@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.compose.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
-import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.MapIdleCallback
 import com.mapbox.maps.MapLoadedCallback
@@ -28,8 +27,6 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.viewport.ViewportStatusObserver
-import com.mapbox.maps.plugin.viewport.viewport
 
 /**
  * MapboxMapNode to observe/update the input arguments of MapboxMap.
@@ -39,32 +36,22 @@ private class MapboxMapNode(
   val controller: MapView,
   initialClickListener: OnMapClickListener,
   initialLongClickListener: OnMapLongClickListener,
-  mapViewportState: MapViewportState,
+  initialMapViewportState: MapViewportState,
   mapEvents: MapEvents?,
 ) : MapNode() {
-  private var cancelable: Cancelable? = null
   private var mapEventCancelableHolder: MapEventCancelableHolder
-  private val cameraChangedCallback = CameraChangedCallback {
-    val cameraState = controller.mapboxMap.cameraState
-    mapViewportState.cameraState = cameraState
-  }
-  private val viewportStatusObserver = ViewportStatusObserver { _, to, reason ->
-    mapViewportState.mapViewportStatus = to
-    mapViewportState.mapViewportStatusChangedReason = reason
-  }
 
-  init {
-    mapViewportState.setMap(controller)
-    mapEventCancelableHolder = MapEventCancelableHolder(controller.mapboxMap)
-  }
-
-  var mapViewportState = mapViewportState
+  var mapViewportState = initialMapViewportState
     set(value) {
       if (value == field) return
       field.setMap(null)
       field = value
       value.setMap(controller)
     }
+
+  init {
+    mapEventCancelableHolder = MapEventCancelableHolder(controller.mapboxMap)
+  }
 
   var clickListener: OnMapClickListener = initialClickListener
     set(value) {
@@ -187,9 +174,7 @@ private class MapboxMapNode(
       addNonDefaultOnClickListener(clickListener)
       addNonDefaultOnLongClickListener(longClickListener)
     }
-    mapViewportState.cameraState = controller.mapboxMap.cameraState
-    controller.viewport.addStatusObserver(viewportStatusObserver)
-    cancelable = controller.mapboxMap.subscribeCameraChanged(cameraChangedCallback)
+    mapViewportState.setMap(controller)
     mapEventCancelableHolder.apply {
       cancelAndSubscribeToMapLoaded(mapLoadedCallback)
       cancelAndSubscribeToMapIdle(mapIdleCallback)
@@ -221,9 +206,8 @@ private class MapboxMapNode(
       removeNonDefaultOnClickListener(clickListener)
       removeNonDefaultOnLongClickListener(longClickListener)
     }
-    cancelable?.cancel()
+    mapViewportState.setMap(null)
     mapEventCancelableHolder.cancelAll()
-    controller.viewport.removeStatusObserver(viewportStatusObserver)
   }
 
   override fun toString(): String {
@@ -256,6 +240,9 @@ internal fun MapboxMapComposeNode(
       // input arguments updater
       set(gesturesSettings) {
         this.controller.gestures.applySettings(it)
+      }
+      update(mapViewportState) {
+        this.mapViewportState = mapViewportState
       }
       update(onMapClickListener) { listener ->
         this.clickListener = listener

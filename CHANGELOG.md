@@ -3,6 +3,13 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+# 11.4.0-rc.2
+## Breaking changes ⚠️
+* [compose] `MapViewportState` properties `cameraState`, `mapViewportStatusChangedReason` and `mapViewportStatus` are null when the state is not attached to a map.
+* [compose] `MapViewportState` constructor parameter has been renamed to `initialCameraState`.
+ 
+## Bug fixes 🐞
+* [compose] Queue viewport operations when the `MapViewportState` is no yet attached to the map, to avoid losing events.
 
 
 # 11.4.0-rc.1 May 08, 2024

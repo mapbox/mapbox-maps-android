@@ -16,6 +16,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.MultiPoint
@@ -55,18 +56,22 @@ public class MapViewportAnimationsActivity : ComponentActivity() {
         )
       }
       MapboxMapComposeTheme {
+        val cameraState = mapViewportState.cameraState
         ExampleScaffold(
           floatingActionButton = {
             Column {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (cameraState != null) MaterialTheme.colors.secondary else Color.LightGray,
                 onClick = {
-                  val currentCenter = mapViewportState.cameraState.center
-                  mapViewportState.easeTo(
-                    cameraOptions = cameraOptions {
-                      center(currentCenter.offset())
-                    }
-                  )
+                  if (cameraState != null) {
+                    val currentCenter = cameraState.center
+                    mapViewportState.easeTo(
+                      cameraOptions = cameraOptions {
+                        center(currentCenter.offset())
+                      }
+                    )
+                  }
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -146,7 +151,7 @@ public class MapViewportAnimationsActivity : ComponentActivity() {
                 modifier = Modifier
                   .padding(10.dp),
                 textAlign = TextAlign.Center,
-                text = mapViewportState.cameraState.toString()
+                text = cameraState.toString()
               )
             }
           }
