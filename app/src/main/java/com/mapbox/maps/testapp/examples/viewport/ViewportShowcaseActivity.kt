@@ -102,18 +102,14 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             Constants.PRECISION_6
           )
         }
-        simulateRouteLocationProvider = SimulateRouteLocationProvider(
-          route
-        )
-        subscribeStyleLoaded {
-          mapView.location.apply {
-            setLocationProvider(simulateRouteLocationProvider)
-            updateSettings {
-              locationPuck = LocationPuck2D(
-                bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing)
-              )
-              puckBearingEnabled = true
-            }
+        simulateRouteLocationProvider = SimulateRouteLocationProvider(route)
+        mapView.location.apply {
+          setLocationProvider(simulateRouteLocationProvider)
+          updateSettings {
+            locationPuck = LocationPuck2D(
+              bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing)
+            )
+            puckBearingEnabled = true
           }
         }
         setupViewportPlugin(mapView.viewport)
