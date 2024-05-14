@@ -71,9 +71,6 @@ class LogoViewImpl : LogoView, AppCompatImageView {
         logW("MbxLogo", context.getString(R.string.mapbox_warning_logo_disabled))
         View.GONE
       }
-      if (::presenter.isInitialized) {
-        presenter.enabled = value
-      }
     }
 
   /**

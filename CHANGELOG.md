@@ -11,7 +11,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Queue viewport operations when the `MapViewportState` is no yet attached to the map, to avoid losing events.
 * Fix `LogoView.logoEnabled` not being in sync with `MapView.logo.enabled` state.
-* Fix `CompassViewImpl.isCompassEnabled` not being in sync with `MapView.compass.enabled` state.
 
 # 11.4.0-rc.1 May 08, 2024
 ## Features ✨ and improvements 🏁

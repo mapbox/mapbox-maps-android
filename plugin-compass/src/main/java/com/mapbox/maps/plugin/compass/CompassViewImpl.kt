@@ -83,9 +83,6 @@ open class CompassViewImpl
     set(value) {
       if (isEnabled != value) {
         isEnabled = value
-        if (::presenter.isInitialized) {
-          presenter.enabled = value
-        }
       }
     }
 
