@@ -18,6 +18,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.attribution.AttributionLayout
 import com.mapbox.maps.attribution.AttributionMeasure
 import com.mapbox.maps.attribution.AttributionParser
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.module.MapTelemetry
 import java.lang.ref.WeakReference
 import kotlin.math.min
@@ -264,7 +265,22 @@ open class Snapshotter {
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
-    return coreSnapshotter.cameraForCoordinates(coordinates, padding, bearing, pitch)
+    return coreSnapshotter.cameraForCoordinates(
+      coordinates,
+      cameraOptions {
+        bearing(bearing)
+        pitch(pitch)
+      },
+      padding,
+      null,
+      null
+    ).getValueOrElse {
+      logE(
+        TAG,
+        "Error occurred in synchronous cameraForCoordinates: $it, empty cameraState will be returned"
+      )
+      return@getValueOrElse cameraOptions { }
+    }
   }
 
   /**

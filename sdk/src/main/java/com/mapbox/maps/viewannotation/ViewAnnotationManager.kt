@@ -174,6 +174,8 @@ interface ViewAnnotationManager {
    * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
    * view annotation is positioned.
    *
+   * If the render thread did not yet calculate the size of the map (due to initialization or map resizing), it will return NULL.
+   *
    * @param annotations view annotation list to be shown. Annotations should be added beforehand
    * with [ViewAnnotationManager.addViewAnnotation] API.
    * @param edgeInsets paddings to apply.

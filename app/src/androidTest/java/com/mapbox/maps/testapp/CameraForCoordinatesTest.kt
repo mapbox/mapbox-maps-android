@@ -6,7 +6,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapInitOptions
+import com.mapbox.maps.MapSnapshotOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.Size
+import com.mapbox.maps.Snapshotter
+import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.util.isEmpty
 import org.junit.Assert
@@ -67,6 +71,32 @@ class CameraForCoordinatesTest {
     }
     if (!latch.await(LATCH_TIMEOUT_MS, TimeUnit.SECONDS)) {
       throw TimeoutException()
+    }
+    Assert.assertEquals(expectedBearing, actualCamera!!.bearing!!, EPS)
+    Assert.assertEquals(expectedPitch, actualCamera!!.pitch!!, EPS)
+    Assert.assertEquals(expectedPoint.latitude(), actualCamera!!.center!!.latitude(), EPS)
+    Assert.assertEquals(expectedPoint.longitude(), actualCamera!!.center!!.longitude(), EPS)
+  }
+
+  @Test
+  fun snapshotterCameraForCoordinates() {
+    var actualCamera: CameraOptions? = null
+    val snapshotterOptions = MapSnapshotOptions.Builder()
+      .size(Size(512.0f, 512.0f))
+      .pixelRatio(1.0f)
+      .build()
+
+    testActivity.scenario.onActivity { activity ->
+      val mapSnapshotter = Snapshotter(activity, snapshotterOptions).apply {
+        setStyleUri(Style.STANDARD)
+        setCamera(initialCamera)
+      }
+      actualCamera = mapSnapshotter.cameraForCoordinates(
+        coordinates = listOf(firstCoordinate, secondCoordinate),
+        padding = null,
+        bearing = expectedBearing,
+        pitch = expectedPitch,
+      )
     }
     Assert.assertEquals(expectedBearing, actualCamera!!.bearing!!, EPS)
     Assert.assertEquals(expectedPitch, actualCamera!!.pitch!!, EPS)

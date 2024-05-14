@@ -18,9 +18,9 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -153,13 +153,16 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
           val currentRoute = body.routes()[0]
           binding.mapView.mapboxMap.getStyle { style ->
             binding.mapView.mapboxMap.let { mapboxMap ->
+              val cameraOptionsForCoordinates = mapboxMap.cameraForCoordinates(
+                coordinates = listOf(originPoint, destinationPoint),
+                camera = cameraOptions { },
+                coordinatesPadding = EdgeInsets(50.0, 50.0, 50.0, 50.0),
+                maxZoom = null,
+                offset = null
+              )
+
               mapboxMap.easeTo(
-                mapboxMap.cameraForCoordinateBounds(
-                  CoordinateBounds(originPoint, destinationPoint, false),
-                  EdgeInsets(50.0, 50.0, 50.0, 50.0),
-                  null,
-                  null
-                ),
+                cameraOptionsForCoordinates,
                 mapAnimationOptions {
                   duration(5000L)
                 }

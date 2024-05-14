@@ -4,8 +4,8 @@ import android.view.View
 import androidx.annotation.RestrictTo
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.delegates.*
 import java.util.*
 
@@ -141,9 +141,13 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
         east = maxOf(east, point.longitude())
       }
 
-      val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north), false)
-      val edgeInsets = getEdgeInsets()
-      return mapCameraManagerDelegate.cameraForCoordinateBounds(bounds, edgeInsets, null, null)
+      return mapCameraManagerDelegate.cameraForCoordinates(
+        coordinates = listOf(Point.fromLngLat(west, south), Point.fromLngLat(east, north)),
+        camera = cameraOptions { },
+        coordinatesPadding = getEdgeInsets(),
+        maxZoom = null,
+        offset = null
+      )
     }
     return null
   }
