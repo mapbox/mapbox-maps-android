@@ -97,7 +97,7 @@ internal class CompassViewPlugin(
    * Defines whether the plugins is enabled or disabled.
    */
   override var enabled: Boolean
-    get() = compassView.isCompassEnabled
+    get() = internalSettings.enabled
     set(value) {
       internalSettings = internalSettings.toBuilder().setEnabled(value).build()
       compassView.isCompassEnabled = value

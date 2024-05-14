@@ -38,9 +38,13 @@ internal class LogoViewPlugin(
    * Defines whether the plugins is enabled or disabled.
    */
   override var enabled: Boolean
-    get() = logoView.logoEnabled
+    get() = internalSettings.enabled
     set(value) {
-      logoView.logoEnabled = value
+      if (internalSettings.enabled != value) {
+        internalSettings = internalSettings.toBuilder().setEnabled(value).build()
+        applySettings()
+        logoView.logoEnabled = value
+      }
     }
 
   /**
