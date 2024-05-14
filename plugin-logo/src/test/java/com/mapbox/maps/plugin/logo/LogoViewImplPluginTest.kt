@@ -21,6 +21,7 @@ class LogoViewImplPluginTest {
   @Before
   fun setUp() {
     logoPlugin = LogoViewPlugin { logoView }
+    every { logoView.logoEnabled } returns true
     logoPlugin.onPluginView(logoView)
     logoPlugin.onDelegateProvider(delegateProvider)
   }
@@ -47,13 +48,14 @@ class LogoViewImplPluginTest {
     every { mapCameraDelegate.cameraState.bearing } returns 10.0
     every { logoView.logoEnabled } returns true
     logoPlugin.enabled = true
-    verify { logoView.logoEnabled = true }
+    // logo is enabled by default so we do not update the logoView with the same state
+    verify(exactly = 0) { logoView.logoEnabled = true }
   }
 
   @Test
   fun setEnabled_false() {
     every { mapCameraDelegate.cameraState.bearing } returns 0.0
-    every { logoView.logoEnabled } returns false
+    every { logoView.logoEnabled } returns true
     logoPlugin.enabled = false
     verify { logoView.logoEnabled = false }
   }
@@ -92,5 +94,16 @@ class LogoViewImplPluginTest {
       position = Gravity.BOTTOM
     }
     verify { logoView.logoGravity = Gravity.BOTTOM }
+  }
+
+  @Test
+  fun updateOtherSettingsAfterSetEnabled() {
+    every { logoView.logoEnabled } returns true
+    logoPlugin.enabled = false
+
+    logoPlugin.marginBottom = 1.0F
+
+    assertEquals(false, logoPlugin.enabled)
+    verify { logoView.logoEnabled = false }
   }
 }

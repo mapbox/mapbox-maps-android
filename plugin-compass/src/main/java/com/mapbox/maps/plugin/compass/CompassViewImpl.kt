@@ -81,7 +81,9 @@ open class CompassViewImpl
   override var isCompassEnabled: Boolean
     get() = isEnabled
     set(value) {
-      isEnabled = value
+      if (isEnabled != value) {
+        isEnabled = value
+      }
     }
 
   /**
