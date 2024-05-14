@@ -115,7 +115,7 @@ public class StyleStatesActivity : ComponentActivity() {
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Change to random color")
               }
-              val enableProjectionBt = mapViewportState.cameraState.zoom < 6.0
+              val enableProjectionBt = (mapViewportState.cameraState?.zoom ?: Double.NaN) < 6.0
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 backgroundColor = if (enableProjectionBt) MaterialTheme.colors.secondary else Color.LightGray,
