@@ -91,7 +91,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       )
     )
     this.cameraChangedCallback = CameraChangedCallback {
-      pluginRegistry.onCameraMove(nativeMap.getCameraState())
+      pluginRegistry.onCameraMove(it.cameraState)
     }
     this.styleDataLoadedCallback = StyleDataLoadedCallback { eventData ->
       if (eventData.type == StyleDataLoadedType.STYLE) {
