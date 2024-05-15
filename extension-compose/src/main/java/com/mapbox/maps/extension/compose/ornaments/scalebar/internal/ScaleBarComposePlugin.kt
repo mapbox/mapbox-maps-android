@@ -25,7 +25,7 @@ internal class ScaleBarComposePlugin(
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private val cameraChangeListener = CameraChangedCallback {
-    invalidateScaleBar()
+    invalidateScaleBar(it.cameraState)
   }
   private var cancelable: Cancelable? = null
 
@@ -60,8 +60,7 @@ internal class ScaleBarComposePlugin(
   /**
    * Invalid scale bar
    */
-  private fun invalidateScaleBar() {
-    val cameraState: CameraState = mapCameraManagerDelegate.cameraState
+  private fun invalidateScaleBar(cameraState: CameraState = mapCameraManagerDelegate.cameraState) {
     val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
       cameraState.center.latitude(),
       cameraState.zoom
