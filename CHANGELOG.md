@@ -11,6 +11,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Queue viewport operations when the `MapViewportState` is no yet attached to the map, to avoid losing events.
 * Fix `LogoView.logoEnabled` not being in sync with `MapView.logo.enabled` state.
+* Fix raster-particle not being visible on some Android devices.
+
+## Dependencies
+* Update gl-native to v11.4.0-rc.2 and common to v24.4.0-rc.2.
 
 # 11.4.0-rc.1 May 08, 2024
 ## Features ✨ and improvements 🏁
