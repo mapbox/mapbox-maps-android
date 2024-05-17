@@ -645,6 +645,16 @@ public abstract interface class com/mapbox/maps/module/MapTelemetry {
 	public abstract fun setUserTelemetryRequestState (Z)V
 }
 
+public final class com/mapbox/maps/module/TelemetryEvent {
+	public static final field Companion Lcom/mapbox/maps/module/TelemetryEvent$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun increment ()V
+}
+
+public final class com/mapbox/maps/module/TelemetryEvent$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/module/TelemetryEvent;
+}
+
 public abstract interface class com/mapbox/maps/plugin/ContextBinder {
 	public abstract fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
 }

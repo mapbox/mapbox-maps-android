@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.model.ModelExtensionImpl
 import com.mapbox.maps.extension.style.projection.generated.Projection
 import com.mapbox.maps.extension.style.sources.*
 import com.mapbox.maps.extension.style.terrain.generated.Terrain
+import com.mapbox.maps.extension.style.utils.StyleTelemetryEvents
 
 /**
  * The concrete implementation of style extension.
@@ -253,6 +254,7 @@ class StyleExtensionImpl private constructor(
      * @return an [StyleContract.StyleExtension] instance.
      */
     fun build(): StyleContract.StyleExtension {
+      StyleTelemetryEvents.dsl.increment()
       return StyleExtensionImpl(this)
     }
   }

@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.4.0
+## Features ✨ and improvements 🏁
+* Add feature metrics collection. Mapbox Maps SDK collects anonymous data about which of its features are used. Mapbox uses this data to understand how our software is being used and prioritize plans to improve it. These metrics tell us whether a feature has been used ("flyTo was called"), but not how ("flyTo was called with this position"). No user-level metrics or identifiers are collected as part of this initiative.
+
 # 11.4.0-rc.2 May 15, 2024
 ## Breaking changes ⚠️
 * [compose] `MapViewportState` properties `cameraState`, `mapViewportStatusChangedReason` and `mapViewportStatus` are null when the state is not attached to a map.
