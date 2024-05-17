@@ -20,6 +20,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.internal.ComposeTelemetryEvents
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapPreviewPlaceHolder
 import com.mapbox.maps.extension.compose.internal.MapViewLifecycle
@@ -84,6 +85,7 @@ public fun MapboxMap(
   key(composeMapInitOptions) {
     val context = LocalContext.current
     val mapView = remember {
+      ComposeTelemetryEvents.map.increment()
       MapView(
         context,
         mapInitOptions = composeMapInitOptions.getMapInitOptions(context)

@@ -8,6 +8,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.module.TelemetryEvent
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -42,6 +43,8 @@ class MapboxMapTest {
 
   @Before
   fun setUp() {
+    mockkObject(TelemetryEvent)
+    every { TelemetryEvent.create(any()) } returns mockk<TelemetryEvent>(relaxed = true)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     styleObserver = mockk(relaxUnitFun = true)
@@ -1353,6 +1356,7 @@ class PixelForCoordinatesTest(
 
   @After
   fun cleanUp() {
+    unmockkObject(TelemetryEvent)
     unmockkStatic(Map::class)
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }

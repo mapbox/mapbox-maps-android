@@ -25,6 +25,7 @@ import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransitionImpl
 import com.mapbox.maps.plugin.viewport.transition.ImmediateViewportTransition
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
+import com.mapbox.maps.plugin.viewport.util.ViewportTelemetryEvents
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -124,6 +125,7 @@ internal class ViewportPluginImpl(private val handler: Handler = Handler(Looper.
    * @param completionListener The listener to observe the completion state.
    */
   override fun transitionTo(targetState: ViewportState, transition: ViewportTransition?, completionListener: CompletionListener?) {
+    ViewportTelemetryEvents.stateTransition.increment()
     with(status) {
       when (this) {
         is ViewportStatus.State -> {
@@ -238,6 +240,7 @@ internal class ViewportPluginImpl(private val handler: Handler = Handler(Looper.
    * @param options The desired [FollowPuckViewportStateOptions]
    */
   override fun makeFollowPuckViewportState(options: FollowPuckViewportStateOptions): FollowPuckViewportState {
+    ViewportTelemetryEvents.stateFollowPuck.increment()
     return FollowPuckViewportStateImpl(delegateProvider, options)
   }
 
@@ -247,6 +250,7 @@ internal class ViewportPluginImpl(private val handler: Handler = Handler(Looper.
    * @param options The desired [OverviewViewportStateOptions]
    */
   override fun makeOverviewViewportState(options: OverviewViewportStateOptions): OverviewViewportState {
+    ViewportTelemetryEvents.stateOverview.increment()
     return OverviewViewportStateImpl(delegateProvider, options)
   }
 
