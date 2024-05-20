@@ -430,6 +430,10 @@ public final class com/mapbox/maps/Snapshotter$Companion {
 	public final fun clearData (Lcom/mapbox/maps/AsyncOperationResultCallback;)V
 }
 
+public final class com/mapbox/maps/SnapshotterDestroyedException : java/lang/IllegalStateException {
+	public fun <init> ()V
+}
+
 public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public static final field Companion Lcom/mapbox/maps/Style$Companion;
 	public static final field DARK Ljava/lang/String;

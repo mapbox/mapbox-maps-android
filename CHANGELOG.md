@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
 
 # 11.4.0
 ## Features ✨ and improvements 🏁

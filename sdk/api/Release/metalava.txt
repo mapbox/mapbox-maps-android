@@ -417,6 +417,10 @@ package com.mapbox.maps {
     method public void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);
   }
 
+  public final class SnapshotterDestroyedException extends java.lang.IllegalStateException {
+    ctor public SnapshotterDestroyedException();
+  }
+
   public final class Style extends com.mapbox.maps.MapboxStyleManager {
     method public boolean isValid();
     property @MainThread public com.mapbox.maps.CameraOptions styleDefaultCamera;

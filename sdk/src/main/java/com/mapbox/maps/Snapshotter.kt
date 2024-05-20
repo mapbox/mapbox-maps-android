@@ -25,11 +25,16 @@ import kotlin.math.min
 
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
+ * The [Snapshotter] is valid until [destroy] is called.
  */
 open class Snapshotter {
 
   private val context: WeakReference<Context>
-  private val coreSnapshotter: MapSnapshotter
+
+  /**
+   * The [MapSnapshotter] created in constructor. It is valid until [destroy] is called.
+   */
+  private var coreSnapshotter: MapSnapshotter?
   private val pixelRatio: Float
   private val mapSnapshotOptions: MapSnapshotOptions
   @get:JvmSynthetic @set:JvmSynthetic
@@ -64,28 +69,32 @@ open class Snapshotter {
     }
     cancelableEvents.add(
       subscribeStyleDataLoaded {
-      if (it.type == StyleDataLoadedType.STYLE) {
-        weakSelf.get()?.apply {
-          snapshotStyleCallback?.onDidFinishLoadingStyle(
+        if (it.type == StyleDataLoadedType.STYLE) {
+          weakSelf.get()?.apply {
+            coreSnapshotter?.let { snapshotter ->
+              snapshotStyleCallback?.onDidFinishLoadingStyle(
+                Style(
+                  snapshotter,
+                  pixelRatio,
+                  mapLoadingErrorDelegate = { }
+                )
+              )
+            }
+          }
+        }
+      }
+    )
+    styleLoadedCancelable = subscribeStyleLoaded {
+      weakSelf.get()?.apply {
+        coreSnapshotter?.let { snapshotter ->
+          snapshotStyleCallback?.onDidFullyLoadStyle(
             Style(
-              coreSnapshotter,
+              snapshotter,
               pixelRatio,
               mapLoadingErrorDelegate = { }
             )
           )
         }
-      }
-    }
-    )
-    styleLoadedCancelable = subscribeStyleLoaded {
-      weakSelf.get()?.apply {
-        snapshotStyleCallback?.onDidFullyLoadStyle(
-          Style(
-            coreSnapshotter,
-            pixelRatio,
-            mapLoadingErrorDelegate = { }
-          )
-        )
         styleLoadedCancelable?.cancel()
       }
     }
@@ -145,7 +154,7 @@ open class Snapshotter {
     if (getStyleJson().isEmpty() && getStyleUri().isEmpty()) {
       throw IllegalStateException("It's required to call setUri or setJson to provide a style definition before calling start.")
     }
-    coreSnapshotter.start { result ->
+    requireCoreSnapshotter().start { result ->
       if (result.isValue) {
         result.value?.let { coreMapSnapshot ->
           val snapshotBitmap = coreMapSnapshot.moveImage()?.let { coreImage ->
@@ -204,7 +213,7 @@ open class Snapshotter {
    * Cancel taking snapshot if it was running.
    */
   fun cancel() {
-    coreSnapshotter.cancel()
+    requireCoreSnapshotter().cancel()
   }
 
   /**
@@ -217,6 +226,7 @@ open class Snapshotter {
     loadingErrorCancelable?.cancel()
     styleLoadedCancelable?.cancel()
     snapshotStyleCallback = null
+    coreSnapshotter = null
   }
 
   /**
@@ -225,7 +235,7 @@ open class Snapshotter {
    * @param cameraOptions the camera options of the snapshot.
    */
   fun setCamera(cameraOptions: CameraOptions) {
-    coreSnapshotter.setCamera(cameraOptions)
+    requireCoreSnapshotter().setCamera(cameraOptions)
   }
 
   /**
@@ -234,7 +244,7 @@ open class Snapshotter {
    * @param styleUri string containing a Mapbox style URI.
    */
   fun setStyleUri(styleUri: String) {
-    coreSnapshotter.styleURI = styleUri
+    requireCoreSnapshotter().styleURI = styleUri
   }
 
   /**
@@ -246,7 +256,7 @@ open class Snapshotter {
    * @return CoordinateBounds
    */
   fun coordinateBoundsForCamera(options: CameraOptions): CoordinateBounds {
-    return coreSnapshotter.coordinateBoundsForCamera(options)
+    return requireCoreSnapshotter().coordinateBoundsForCamera(options)
   }
 
   /**
@@ -265,7 +275,7 @@ open class Snapshotter {
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
-    return coreSnapshotter.cameraForCoordinates(
+    return requireCoreSnapshotter().cameraForCoordinates(
       coordinates,
       cameraOptions {
         bearing(bearing)
@@ -289,7 +299,7 @@ open class Snapshotter {
    * @return [CameraState] object.
    */
   fun getCameraState(): CameraState {
-    return coreSnapshotter.cameraState
+    return requireCoreSnapshotter().cameraState
   }
 
   /**
@@ -298,7 +308,7 @@ open class Snapshotter {
    * @param size The new size of the snapshot in \link MapOptions#size platform pixels \endlink
    */
   fun setSize(size: Size) {
-    coreSnapshotter.size = size
+    requireCoreSnapshotter().size = size
   }
 
   /**
@@ -307,7 +317,7 @@ open class Snapshotter {
    * @return Snapshot size in \link MapOptions#size platform pixels \endlink
    */
   fun getSize(): Size {
-    return coreSnapshotter.size
+    return requireCoreSnapshotter().size
   }
 
   /**
@@ -318,7 +328,7 @@ open class Snapshotter {
    * @param styleJson A JSON string containing a serialized Mapbox Style.
    */
   fun setStyleJson(styleJson: String) {
-    coreSnapshotter.styleJSON = styleJson
+    requireCoreSnapshotter().styleJSON = styleJson
   }
 
   /**
@@ -327,7 +337,7 @@ open class Snapshotter {
    * @return A JSON string containing a serialized Mapbox Style.
    */
   fun getStyleJson(): String {
-    return coreSnapshotter.styleJSON
+    return requireCoreSnapshotter().styleJSON
   }
 
   /**
@@ -336,23 +346,23 @@ open class Snapshotter {
    * @return A string containing a Mapbox style URI.
    */
   fun getStyleUri(): String {
-    return coreSnapshotter.styleURI
+    return requireCoreSnapshotter().styleURI
   }
 
   private fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
-    return coreSnapshotter.subscribe(mapLoadingErrorCallback)
+    return requireCoreSnapshotter().subscribe(mapLoadingErrorCallback)
   }
 
   private fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable {
-    return coreSnapshotter.subscribe(styleLoadedCallback)
+    return requireCoreSnapshotter().subscribe(styleLoadedCallback)
   }
 
   private fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
-    return coreSnapshotter.subscribe(styleDataLoadedCallback)
+    return requireCoreSnapshotter().subscribe(styleDataLoadedCallback)
   }
 
   private fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
-    return coreSnapshotter.subscribe(styleImageMissingCallback)
+    return requireCoreSnapshotter().subscribe(styleImageMissingCallback)
   }
 
   private fun drawAttribution(
@@ -526,7 +536,7 @@ open class Snapshotter {
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions?
   ): MutableList<CanonicalTileID> {
-    return coreSnapshotter.tileCover(tileCoverOptions, cameraOptions)
+    return requireCoreSnapshotter().tileCover(tileCoverOptions, cameraOptions)
   }
 
   private data class Logo constructor(
@@ -534,6 +544,14 @@ open class Snapshotter {
     val small: Bitmap,
     val scale: Float
   )
+
+  /**
+   * @return the current [coreSnapshotter] or throws [IllegalStateException] if not available
+   * @throws IllegalStateException if [coreSnapshotter] was already destroyed
+   */
+  private fun requireCoreSnapshotter(): MapSnapshotter {
+    return coreSnapshotter ?: throw SnapshotterDestroyedException()
+  }
 
   /**
    * Static variables and methods.
