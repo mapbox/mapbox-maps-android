@@ -7,8 +7,77 @@ Mapbox welcomes participation and contributions from everyone.
 * `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
 
 # 11.4.0
+
+## Breaking changes ⚠️
+* [compose] Remove `locationComponentSettings` from `MapboxMap` composable function, `MapEffect` with location component API should be used instead. More compose-friendly location component API will be introduced in future releases.
+* [compose] Remove `TileCacheBudget(com.mapbox.maps.TileCacheBudget)` constructor and introduce `TileCacheBudget(TileCacheBudgetInMegabytes)` and `TileCacheBudget(TileCacheBudgetInTiles)` constructor instead.
+* [compose] Remove `layoutParams` from `ViewAnnotation` composable function, the internal `ComposeView` wrapping the `ViewAnnotation.content` will always use `WRAP_CONTENT`; In case of tests where the assertion happens before the measure, user can force the content size using `ViewAnnotationOptions.width/height` APIs.
+* [compose] Constructor in `PromoteId` data class from compose now takes `PropertyName` and optional `SourceId` instead of itself.
+* [compose] Use new `SlotsContent` instead of generic `Map` to handle the style content for slots. Introduced `slotsContent` builder function.
+* [compose] Use new `LayerPositionedContent` instead of generic `Map` to handle the layer positioned style content. Introduced `layerPositionedContent` builder function.
+* [compose] Use new `StyleImportsConfig` instead of generic `Map` to handle the style import configurations. Introduced `styleImportsConfig` builder function.
+* [compose] Move `MapboxStandardStyle` to a different package and introduce `LightPreset` with available presets as constants.
+* [compose] `MapViewportState` properties `cameraState`, `mapViewportStatusChangedReason` and `mapViewportStatus` are null when the state is not attached to a map.
+* [compose] `MapViewportState` constructor parameter has been renamed to `initialCameraState`.
+
 ## Features ✨ and improvements 🏁
+* [compose] Add `AtmosphereState` parameter to `GenericStyle` composable function.
+* [compose] Introduce `Projection` and `AtmosphereState` API on `MapStyle` and `MapboxStandardStyle`.
+* [compose] Add `StyleImage` to construct following image layer properties: `IconImage`, `FillPattern`, `LinePattern`, `BearingImage`, `ShadowImage`, `TopImage`.
+* [compose] Add `ModelId` constructor to add model id and uri.
+* [compose] Add `TerrainState` parameter to `GenericStyle`, `MapStyle` and `MapboxStandardStyle` composable functions.
+* Introduce `addStyleImportFromJSON`, `addStyleImportFromURI`, `updateStyleImportWithJSON`, `updateStyleImportWithURI`, `moveStyleImport` APIs to `MapboxMap` and `Style`.
+* Handle updating geo-json data exceptions and propagate them to `MapboxMap.subscribeMapLoadingError(mapLoadingErrorCallback)`.
+* Introduce `SlotLayer` in Style DSL.
+* Add statistics for graphics pipeline program creation.
+* Enable `raster-elevation` for tiled raster sources.
+* Improve tile processing performance by filtering out tiny polygon holes.
+* Reduce number of evaluations of step expression in `line-gradient` properties.
+* Add support for `line-trim-offset` with `line-pattern`.
+* Enable two dimensional data handling in Mapbox Raster tiles.
+* Trim zoom ranges for the style at tileset descriptor resolving.
+* Extend `SymbolLayer.iconColorSaturation` range from [0, 1] to [-1, 1] and change default value to 0.
+* Reduce time spent on model layer re-evaluation during light change.
+* Expose experimental `Style.styleSlots` allowing to get the ordered list of slots.
+* Deprecate `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForGeometry` and some synchronous overloaded `MapboxMap.cameraForCoordinates` in favour of single synchronous, asynchronous and suspend `MapboxMap.cameraForCoordinates`. Synchronous `MapboxMap.cameraForCoordinates` returns empty camera (could be checked with `CameraOptions.isEmpty`) if the map's size is not yet calculated. 
 * Add feature metrics collection. Mapbox Maps SDK collects anonymous data about which of its features are used. Mapbox uses this data to understand how our software is being used and prioritize plans to improve it. These metrics tell us whether a feature has been used ("flyTo was called"), but not how ("flyTo was called with this position"). No user-level metrics or identifiers are collected as part of this initiative.
+* Avoid locking main thread when it is not needed on map destroy.
+* Add experimental `MapView.setSnapshotLegacyMode` function to help avoiding `MapView.snapshot` native crash on some Samsung devices running Android 14.
+* Add experimental `RasterParticleLayer` in Style DSL and Compose.
+* Add `mapView.location.slot` API to assign a slot for the location indicator.
+
+## Bug fixes 🐞
+* [compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised.
+* [compose] Remember default `ComposeMapInitOptions` and `GesturesSettings` so that we don't reconstruct these classes when `MapboxMap` recomposes.
+* [compose] Filter relevant events for `ViewAnnotation.onUpdatedListener` and skip events from other view annotations.
+* [compose] Do not consume tap event for `Compass`, so that user set `clickable` can be processed.
+* [compose] Fix slots and layerposition content not being cleaned up during recomposition.
+* [compose] Propagate onRemoved and onClear to children nodes of MapStyleNode to do proper clean up.
+* [compose] Fix lost style import config during style switch by waiting for style load event.
+* [compose] Make the initial compass visibility to be false, so the compass wouldn't show and hide initially if the user is facing north.
+* [compose] Fix `java.io.NotSerializableException: com.mapbox.bindgen.Value` for SourceState.
+* [compose] Queue viewport operations when the `MapViewportState` is no yet attached to the map, to avoid losing events.
+* Fix `Snapshotter.cameraForCoordinates` arguments `padding`, `bearing` and `pitch` to be nullable.
+* Fix config with format expression that contains text property overrides.
+* Make non-vector tile parsing cancellable.
+* Move cutoff opacity calculation to CPU side.
+* Fix icon/pattern missing issue if the missing image is only added after map gets rendered.
+* Introduce a dedicated thread for 3d landmarks parsing.
+* Fix crash on start when no free disk space left.
+* Fix TilePrefetch for GeoJSON sources.
+* Fix snapshotter latency when 3d tiles involved.
+* Fix renderer destruction being blocked by 3d models parsing completion.
+* Fix memory leak when camera animations are skipped.
+* Fix Mapbox attribution and telemetry links not opening in a browser.
+* Fix incorrect size of the tile memory budget for vector tiles when the budget is set in megabytes.
+* Fix `LogoView.logoEnabled` not being in sync with `MapView.logo.enabled` state.
+* Fix raster-particle not being visible on some Android devices.
+* Fixed invalid circle order while using `circle-sort-key`.
+* Fixed duplicate circles in static viewport mode.
+* Fixed a crash during style change.
+
+## Dependencies
+* Update gl-native to v11.4.0 and common to v24.4.0.
 
 # 11.4.0-rc.2 May 15, 2024
 ## Breaking changes ⚠️
