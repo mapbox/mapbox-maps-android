@@ -4,8 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.4.0
 
+# 11.4.0 May 22, 2024
 ## Breaking changes ⚠️
 * [compose] Remove `locationComponentSettings` from `MapboxMap` composable function, `MapEffect` with location component API should be used instead. More compose-friendly location component API will be introduced in future releases.
 * [compose] Remove `TileCacheBudget(com.mapbox.maps.TileCacheBudget)` constructor and introduce `TileCacheBudget(TileCacheBudgetInMegabytes)` and `TileCacheBudget(TileCacheBudgetInTiles)` constructor instead.
@@ -76,6 +76,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.4.0 and common to v24.4.0.
+
 
 # 11.4.0-rc.2 May 15, 2024
 ## Breaking changes ⚠️
