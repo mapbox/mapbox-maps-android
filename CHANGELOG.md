@@ -2,8 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 10.18.0
+## Bug fixes 🐞
+* Reduce unnecessary usage of main thread during lifecycle monitoring.
+* Fixed invalid circle order while using circle-sort-key. Fixed duplicate circles in static viewport mode.
+* Fixed a crash during style change.
 
+## Dependencies
+* Update gl-native to v10.18.0 and common to v23.10.0.
 
 # 10.17.1 May 10, 2024
 ## Features ✨ and improvements 🏁
