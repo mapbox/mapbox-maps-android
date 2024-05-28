@@ -200,6 +200,12 @@ class ModelLayerWrapperTest {
   }
 
   @Test
+  fun testNullSlot() {
+    layer.slot(null)
+    verify(exactly = 1) { style.setStyleLayerProperty(MODEL_LAYER_ID, "slot", Value("")) }
+  }
+
+  @Test
   fun testModelScaleModeViewPort() {
     setModelScaleMode(ModelScaleMode.VIEWPORT)
   }

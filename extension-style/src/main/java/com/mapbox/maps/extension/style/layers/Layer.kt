@@ -115,7 +115,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    *
-   * @param slot value of slot
+   * @param slot value of slot. Setting it to empty string removes the slot.
    */
   abstract fun slot(slot: String): Layer
 

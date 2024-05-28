@@ -56,5 +56,5 @@ internal class ModelLayerWrapper(
 
   fun modelScaleMode(modelScaleMode: ModelScaleMode) = updateProperty("model-scale-mode", Value(modelScaleMode.value))
 
-  fun slot(slot: String?) = updateProperty("slot", slot?.let { Value(it) } ?: Value.nullValue())
+  fun slot(slot: String?) = updateProperty("slot", Value(slot ?: ""))
 }

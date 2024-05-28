@@ -172,6 +172,12 @@ class LocationIndicatorLayerWrapperTest {
     verify(exactly = 1) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "slot", Value(middleSlot)) }
   }
 
+  @Test
+  fun testNullSlot() {
+    layer.slot(null)
+    verify(exactly = 1) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "slot", Value("")) }
+  }
+
   companion object {
     private const val INDICATOR_LAYER_ID = "indicatorLayerId"
   }

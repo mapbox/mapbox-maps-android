@@ -59,7 +59,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    *
-   * @param slot value of slot
+   * @param slot value of slot. Setting it to empty string removes the slot.
    */
   override fun slot(slot: String): FillLayer = apply {
     val param = PropertyValue("slot", slot)
@@ -1576,7 +1576,7 @@ interface FillLayerDsl {
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    *
-   * @param slot value of slot
+   * @param slot value of slot. Setting it to empty string removes the slot.
    */
   fun slot(slot: String): FillLayer
 
