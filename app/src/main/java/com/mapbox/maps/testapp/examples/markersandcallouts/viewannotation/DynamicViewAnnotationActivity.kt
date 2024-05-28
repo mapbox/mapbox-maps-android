@@ -320,9 +320,9 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
       invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
       super.onDraw(canvas)
-      canvas?.drawRect(rect, paint)
+      canvas.drawRect(rect, paint)
     }
   }
 
