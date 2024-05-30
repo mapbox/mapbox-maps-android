@@ -97,7 +97,7 @@ class OfflineActivity : AppCompatActivity() {
         mapView = MapView(this@OfflineActivity).also { mapview ->
           val mapboxMap = mapview.mapboxMap
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
-          mapboxMap.loadStyle(Style.OUTDOORS) {
+          mapboxMap.loadStyle(Style.SATELLITE_STREETS) {
             // Add a circle annotation to the offline geometry.
             mapview.annotations.createCircleAnnotationManager().create(
               CircleAnnotationOptions()
@@ -153,7 +153,7 @@ class OfflineActivity : AppCompatActivity() {
     // Style packs are stored in the disk cache database, but their resources are not subject to
     // the data eviction algorithm and are not considered when calculating the disk cache size.
     stylePackCancelable = offlineManager.loadStylePack(
-      Style.OUTDOORS,
+      Style.SATELLITE_STREETS,
       // Build Style pack load options
       StylePackLoadOptions.Builder()
         .glyphsRasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
@@ -188,7 +188,7 @@ class OfflineActivity : AppCompatActivity() {
 
     // - - - - - - - -
 
-    // 2. Create a tile region with tiles for the outdoors style
+    // 2. Create a tile region with tiles for the satellite street style
 
     // A Tile Region represents an identifiable geographic tile region with metadata, consisting of
     // a set of tiles packs that cover a given area (a polygon). Tile Regions allow caching tiles
@@ -205,7 +205,8 @@ class OfflineActivity : AppCompatActivity() {
     // The OfflineManager is responsible for creating tileset descriptors for the given style and zoom range.
     val tilesetDescriptor = offlineManager.createTilesetDescriptor(
       TilesetDescriptorOptions.Builder()
-        .styleURI(Style.OUTDOORS)
+        .styleURI(Style.SATELLITE_STREETS)
+        .pixelRatio(this.resources.displayMetrics.density)
         .minZoom(0)
         .maxZoom(16)
         .build()
@@ -291,7 +292,7 @@ class OfflineActivity : AppCompatActivity() {
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
     // not a part of the existing style pack. The resources still exists as disk cache.
-    offlineManager.removeStylePack(Style.OUTDOORS)
+    offlineManager.removeStylePack(Style.SATELLITE_STREETS)
 
     MapboxMap.clearData {
       it.error?.let { error ->
@@ -413,7 +414,7 @@ class OfflineActivity : AppCompatActivity() {
     private const val ZOOM = 12.0
     private val TOKYO: Point = Point.fromLngLat(139.769305, 35.682027)
     private const val TILE_REGION_ID = "myTileRegion"
-    private const val STYLE_PACK_METADATA = "my-outdoor-style-pack"
-    private const val TILE_REGION_METADATA = "my-outdoors-tile-region"
+    private const val STYLE_PACK_METADATA = "my-satellite-street-style-pack"
+    private const val TILE_REGION_METADATA = "my-satellite-street-region"
   }
 }
