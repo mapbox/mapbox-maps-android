@@ -2,6 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.18.1
+## Bug fixes 🐞
+* Fix a bug when billing event can be retried endlessly with 0 timeout in case network returns error.
+
+## Dependencies
+* Update common to v23.10.1.
 
 # 10.18.0 May 23, 2024
 ## Bug fixes 🐞

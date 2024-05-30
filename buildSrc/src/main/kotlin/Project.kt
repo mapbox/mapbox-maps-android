@@ -115,7 +115,7 @@ object Versions {
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
   const val mapboxGlNative = "10.18.0"
-  const val mapboxCommon = "23.10.0"
+  const val mapboxCommon = "23.10.1"
   const val androidxCore = "1.6.0" // Latest version that supports compile SDK 30
   const val androidxFragmentTesting = "1.3.6" // Latest version that supports compile SDK 30
   const val androidxAnnotation = "1.1.0"
