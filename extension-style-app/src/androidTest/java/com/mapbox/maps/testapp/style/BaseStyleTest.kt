@@ -13,9 +13,11 @@ import com.mapbox.maps.extension.style.atmosphere.generated.setAtmosphere
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.getLayer
+import com.mapbox.maps.extension.style.light.Light
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
 import com.mapbox.maps.extension.style.light.generated.FlatLight
+import com.mapbox.maps.extension.style.light.getLight
 import com.mapbox.maps.extension.style.light.setLight
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.terrain.generated.setTerrain
@@ -109,5 +111,9 @@ abstract class BaseStyleTest {
 
   fun getLayer(id: String): Layer? {
     return style.getLayer(id)
+  }
+
+  fun getLight(id: String): Light? {
+    return style.getLight(id)
   }
 }

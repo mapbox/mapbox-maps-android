@@ -3,6 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
+* Fix precision issues in `ColorUtils` methods.
+* Fix NPE when parsing `rgb(...)` strings with `ColorUtils` methods.
+* Fix an issue that `getLight` API always returns null.
 
 
 # 11.4.0 May 22, 2024

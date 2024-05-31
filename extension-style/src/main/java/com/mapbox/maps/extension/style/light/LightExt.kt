@@ -10,7 +10,6 @@ import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
 import com.mapbox.maps.extension.style.light.generated.FlatLight
-import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.logE
 import kotlin.collections.HashMap
 
@@ -97,7 +96,7 @@ private fun convertPropertyMapToValue(property: HashMap<String, PropertyValue<*>
  * @param lightId Id of dynamic light.
  */
 fun MapboxStyleManager.getLight(lightId: String): Light? {
-  return when (val type = getStyleLightProperty(lightId, "type").silentUnwrap<String>()) {
+  return when (val type = getStyleLights().firstOrNull { it.id == lightId }?.type) {
     "ambient" -> AmbientLight(lightId)
     "directional" -> DirectionalLight(lightId)
     "flat" -> FlatLight(lightId)
