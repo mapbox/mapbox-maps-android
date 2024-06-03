@@ -8,9 +8,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix precision issues in `ColorUtils` methods.
 * Fix NPE when parsing `rgb(...)` strings with `ColorUtils` methods.
 
-# 11.4.1
+
+# 11.4.1 June 03, 2024
 ## Bug fixes 🐞
 * Fix an issue that `getLight` API always returns null.
+
 
 # 11.4.0 May 22, 2024
 ## Breaking changes ⚠️
