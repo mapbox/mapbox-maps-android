@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.compose.style.standard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.remember
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
@@ -79,7 +80,7 @@ public data class LightPreset(public val value: Value) {
  * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
  * @param lightPreset The [LightPreset] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk".
  * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the Standard style definition.
- * @param atmosphereState The atmosphere to be set to the map. Defaults to [AtmosphereState.default] meaning that atmosphere is the default defined in Standard style definition.
+ * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  */
 @Composable
@@ -91,7 +92,7 @@ public fun MapboxStandardStyle(
   bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   lightPreset: LightPreset = LightPreset.default,
   projection: Projection = Projection.default,
-  atmosphereState: AtmosphereState = AtmosphereState.default,
+  atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.initial,
 ) {
   GenericStyle(

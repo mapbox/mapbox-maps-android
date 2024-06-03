@@ -4,16 +4,22 @@ package com.mapbox.maps.extension.compose.style.terrain.generated
 
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 import com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState
 import com.mapbox.maps.extension.compose.style.terrain.TerrainStateApplier
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.TypeParceler
+import java.util.Objects
 
 /**
  * Create and [rememberSaveable] a [TerrainState] using [TerrainState.Saver].
@@ -42,46 +48,94 @@ public inline fun rememberTerrainState(
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/terrain/)
  */
 @MapboxExperimental
-public class TerrainState {
-
-  internal val rasterDemSourceState: RasterDemSourceState?
-  internal val applier: TerrainStateApplier
+public class TerrainState private constructor(
+  internal val applier: TerrainStateApplier,
+  exaggeration: DoubleValue,
+) {
 
   public constructor(
     /**
      * The [RasterDemSourceState] that drives the terrain.
      */
     rasterDemSourceState: RasterDemSourceState,
-    /**
-     * The initial mutable properties of the source.
-     */
-    initialProperties: Map<String, Value> = mapOf()
-  ) {
-    this.rasterDemSourceState = rasterDemSourceState
-    this.applier = TerrainStateApplier(
+  ) : this(
+    TerrainStateApplier(
       rasterDemSourceState = rasterDemSourceState,
-      initialProperties = initialProperties,
+      initialProperties = emptyMap(),
       initial = false
-    )
-  }
+    ),
+    DoubleValue.INITIAL,
+  )
 
-  internal constructor(initial: Boolean) {
-    this.rasterDemSourceState = null
-    this.applier = TerrainStateApplier(
+  /**
+   * Constructor used by [Companion.initial] and [Companion.disabled].
+   */
+  private constructor(initial: Boolean) : this(
+    TerrainStateApplier(
       rasterDemSourceState = null,
       initialProperties = emptyMap(),
       initial = initial
-    )
-  }
+    ),
+    DoubleValue.INITIAL,
+  )
+
+  private val exaggerationState: MutableState<DoubleValue> = mutableStateOf(exaggeration)
 
   /**
    * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   *
+   * The minimum accepted value is `0` and the maximum is `1000`.
    */
-  public var exaggeration: Exaggeration
-    get() = Exaggeration(applier.getProperty(Exaggeration.NAME) ?: Exaggeration.default.value)
-    set(value) {
-      applier.setProperty(Exaggeration.NAME, value.value)
+  public var exaggeration: DoubleValue by exaggerationState
+
+  @Composable
+  private fun UpdateExaggeration() {
+    exaggerationState.value.apply {
+      if (notInitial) {
+        applier.setProperty("exaggeration", value)
+      }
     }
+  }
+
+  @Composable
+  internal fun UpdateProperties() {
+    UpdateExaggeration()
+  }
+
+  private fun getProperties(): Map<String, Value> =
+    listOfNotNull(
+      ("exaggeration" to exaggeration.value).takeIf { exaggeration.notInitial },
+    ).toMap()
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as TerrainState
+
+    if (applier != other.applier) return false
+    if (exaggeration != other.exaggeration) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int = Objects.hash(
+    applier,
+    exaggeration,
+  )
+
+  /**
+   * @return a string representation of the object.
+   */
+  override fun toString(): String {
+    return "TerrainState(applier=$applier, exaggeration=$exaggeration)"
+  }
 
   /**
    * Terrain Holder class to be used within [Saver].
@@ -89,15 +143,15 @@ public class TerrainState {
   @MapboxExperimental
   @Parcelize
   @TypeParceler<Value, ValueParceler>
-  public data class Holder(
+  public data class Holder internal constructor(
     /**
-     * Cached holder for [RasterDemSourceState].
+     * Saved holder for [RasterDemSourceState].
      */
     val rasterDemSourceStateHolder: SourceState.Holder?,
     /**
-     * Cached properties.
+     * Saved properties.
      */
-    val cachedProperties: Map<String, Value>,
+    val savedProperties: Map<String, Value>,
     /**
      * If it is initial value meaning that no runtime terrain was set.
      */
@@ -112,22 +166,26 @@ public class TerrainState {
      * The default saver implementation for [TerrainState]
      */
     public val Saver: Saver<TerrainState, Holder> = Saver(
-      save = { it.applier.save() },
-      restore = {
-        it.rasterDemSourceStateHolder?.let { rasterDemSourceState ->
-          TerrainState(
-            RasterDemSourceState(
-              sourceId = rasterDemSourceState.sourcedId,
-              initialProperties = rasterDemSourceState.cachedProperties
-            ),
-            initialProperties = it.cachedProperties,
-          )
-        } ?: TerrainState(it.initial)
+      save = { it.applier.save(it.getProperties()) },
+      restore = { holder ->
+        TerrainState(
+          TerrainStateApplier(
+            holder.rasterDemSourceStateHolder?.let {
+              RasterDemSourceState(
+                sourceId = it.sourcedId,
+                initialProperties = holder.rasterDemSourceStateHolder.cachedProperties
+              )
+            },
+            holder.savedProperties,
+            holder.initial
+          ),
+          exaggeration = holder.savedProperties["exaggeration"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+        )
       }
     )
 
     /**
-     * Initial value for [TerrainState], meaning that no terrain is added.
+     * Initial value for [TerrainState], meaning that no changes will be applied to the current style.
      */
     internal val initial: TerrainState = TerrainState(initial = true)
 

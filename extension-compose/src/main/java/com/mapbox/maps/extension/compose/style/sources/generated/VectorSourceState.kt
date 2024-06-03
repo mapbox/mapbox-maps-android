@@ -10,6 +10,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import java.util.Objects
 
 /**
  * Create and [rememberSaveable] a [VectorSourceState] using [VectorSourceState.Saver].
@@ -209,6 +210,65 @@ public class VectorSourceState(
     set(value) {
       setProperty(TileNetworkRequestsDelay.NAME, value.value)
     }
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as VectorSourceState
+
+    if (sourceId != other.sourceId) return false
+    if (url != other.url) return false
+    if (tiles != other.tiles) return false
+    if (bounds != other.bounds) return false
+    if (scheme != other.scheme) return false
+    if (minZoom != other.minZoom) return false
+    if (maxZoom != other.maxZoom) return false
+    if (attribution != other.attribution) return false
+    if (promoteId != other.promoteId) return false
+    if (volatile != other.volatile) return false
+    if (prefetchZoomDelta != other.prefetchZoomDelta) return false
+    if (tileCacheBudget != other.tileCacheBudget) return false
+    if (minimumTileUpdateInterval != other.minimumTileUpdateInterval) return false
+    if (maxOverscaleFactorForParentTiles != other.maxOverscaleFactorForParentTiles) return false
+    if (tileRequestsDelay != other.tileRequestsDelay) return false
+    if (tileNetworkRequestsDelay != other.tileNetworkRequestsDelay) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int {
+    return Objects.hash(
+      sourceId,
+      url,
+      tiles,
+      bounds,
+      scheme,
+      minZoom,
+      maxZoom,
+      attribution,
+      promoteId,
+      volatile,
+      prefetchZoomDelta,
+      tileCacheBudget,
+      minimumTileUpdateInterval,
+      maxOverscaleFactorForParentTiles,
+      tileRequestsDelay,
+      tileNetworkRequestsDelay,
+    )
+  }
+
+  /**
+   * Returns a string representation of the object.
+   */
+  override fun toString(): String =
+    "VectorSourceState(sourceId=$sourceId, url=$url, tiles=$tiles, bounds=$bounds, scheme=$scheme, minZoom=$minZoom, maxZoom=$maxZoom, attribution=$attribution, promoteId=$promoteId, volatile=$volatile, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget, minimumTileUpdateInterval=$minimumTileUpdateInterval, maxOverscaleFactorForParentTiles=$maxOverscaleFactorForParentTiles, tileRequestsDelay=$tileRequestsDelay, tileNetworkRequestsDelay=$tileNetworkRequestsDelay)"
 
   /**
    * Public companion object.

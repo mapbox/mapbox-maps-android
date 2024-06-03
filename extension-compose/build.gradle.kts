@@ -39,7 +39,10 @@ dependencies {
     implementation(libs.bundles.base.dependencies)
 
     implementation(libs.androidx.coreKtx)
+    debugImplementation(libs.compose.uiTestManifest)
+
     androidTestUtil(libs.androidx.orchestrator)
+
     androidTestImplementation(libs.androidx.testRunner)
     androidTestImplementation(libs.androidx.jUnitTestRules)
     androidTestImplementation(libs.androidx.testJUnit)
@@ -47,8 +50,11 @@ dependencies {
     androidTestImplementation(libs.androidx.uiAutomator)
     androidTestImplementation(project(":sdk"))
     androidTestImplementation(libs.compose.uiTest)
-    debugImplementation(libs.compose.uiTestManifest)
+
+    testImplementation(libs.bundles.base.dependenciesTests)
+    testImplementation(project(":sdk"))
     testImplementation(libs.junit)
+
     detektPlugins(libs.detektFormatting)
   }
 }

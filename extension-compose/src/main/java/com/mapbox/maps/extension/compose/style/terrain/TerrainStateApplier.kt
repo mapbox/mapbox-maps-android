@@ -16,15 +16,23 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.Objects
 
 /**
  * A [MutableStateFlow] to keep the latest value for a Terrain Property
  */
 private typealias PropertyValueFlow = MutableStateFlow<Value>
 
+/**
+ * Propagates the terrain state properties to [MapboxMap].
+ *
+ * There are two special cases:
+ * 1. if [initial] is true then this class will behave as no-op. That is, it won't change anything related to Terrain from current [MapboxMap] state.
+ * 2. if [initial] is false but [rasterDemSourceState] is `null` then terrain will be removed (the default (`Value.nullValue()`) in gl-native engine).
+ */
 @OptIn(MapboxExperimental::class)
-internal open class TerrainStateApplier internal constructor(
-  private val rasterDemSourceState: RasterDemSourceState?,
+internal class TerrainStateApplier internal constructor(
+  internal val rasterDemSourceState: RasterDemSourceState?,
   initialProperties: Map<String, Value>,
   internal val initial: Boolean,
   private val coroutineScope: CoroutineScope = CoroutineScope(
@@ -120,17 +128,46 @@ internal open class TerrainStateApplier internal constructor(
     }
   }
 
-  internal fun getProperty(name: String): Value? =
-    propertiesFlowsToCollect.replayCache.firstOrNull {
-      it.first == name
-    }?.second?.value
-
   @OptIn(MapboxExperimental::class)
-  internal fun save(): TerrainState.Holder = TerrainState.Holder(
+  internal fun save(properties: Map<String, Value>): TerrainState.Holder = TerrainState.Holder(
     rasterDemSourceState?.save(),
-    propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value },
+    properties,
     initial
   )
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as TerrainStateApplier
+
+    if (rasterDemSourceState != other.rasterDemSourceState) return false
+    if (initial != other.initial) return false
+
+    val thisProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    val otherProperties = other.propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    if (thisProperties != otherProperties) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int {
+    val thisProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    return Objects.hash(rasterDemSourceState, initial, thisProperties)
+  }
+
+  /**
+   * Returns a string representation of the object.
+   */
+  override fun toString(): String {
+    return "TerrainStateApplier(rasterDemSourceState=$rasterDemSourceState, initial=$initial)"
+  }
 
   private companion object {
     private const val TAG = "TerrainStateApplier"

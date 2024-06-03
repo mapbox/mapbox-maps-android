@@ -1,9 +1,7 @@
 package com.mapbox.maps.extension.compose.style.atmosphere
 
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import kotlinx.coroutines.CoroutineName
@@ -15,13 +13,14 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.Objects
 
 /**
  * A [MutableStateFlow] to keep the latest value for a Atmosphere Property
  */
 private typealias PropertyValueFlow = MutableStateFlow<Value>
 
-internal open class AtmosphereStateApplier internal constructor(
+internal class AtmosphereStateApplier internal constructor(
   initialProperties: Map<String, Value>,
   private val coroutineScope: CoroutineScope = CoroutineScope(
     Dispatchers.Main.immediate + SupervisorJob() + CoroutineName(
@@ -70,7 +69,7 @@ internal open class AtmosphereStateApplier internal constructor(
 
   private fun startCollectingPropertyFlows(mapboxMap: MapboxMap) {
     val collectNewPropertiesJob = coroutineScope.launch {
-      propertiesFlowsToCollect.collect { (name: String, valueFlow: MutableStateFlow<Value>) ->
+      propertiesFlowsToCollect.collect { (name: String, valueFlow: PropertyValueFlow) ->
         val updatePropertyJob = coroutineScope.launch {
           valueFlow.collect { value ->
             logD(TAG, "settingProperty: name=$name, value=$value ...")
@@ -125,15 +124,23 @@ internal open class AtmosphereStateApplier internal constructor(
     }
   }
 
-  internal fun getProperty(name: String): Value? =
-    propertiesFlowsToCollect.replayCache.firstOrNull {
-      it.first == name
-    }?.second?.value
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
 
-  @OptIn(MapboxExperimental::class)
-  internal fun save(): AtmosphereState.Holder = AtmosphereState.Holder(
-    propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value },
-  )
+    other as AtmosphereStateApplier
+
+    val thisProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    val otherProperties = other.propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    if (thisProperties != otherProperties) return false
+
+    return atmosphereSet == other.atmosphereSet
+  }
+
+  override fun hashCode(): Int {
+    val thisProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    return Objects.hash(atmosphereSet, thisProperties)
+  }
 
   private companion object {
     private const val TAG = "AtmosphereStateApplier"

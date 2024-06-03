@@ -10,6 +10,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import java.util.Objects
 
 /**
  * Create and [rememberSaveable] a [RasterArraySourceState] using [RasterArraySourceState.Saver].
@@ -138,6 +139,53 @@ public class RasterArraySourceState(
     set(value) {
       setProperty(TileCacheBudget.NAME, value.value)
     }
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as RasterArraySourceState
+
+    if (sourceId != other.sourceId) return false
+    if (url != other.url) return false
+    if (tiles != other.tiles) return false
+    if (bounds != other.bounds) return false
+    if (minZoom != other.minZoom) return false
+    if (maxZoom != other.maxZoom) return false
+    if (tileSize != other.tileSize) return false
+    if (attribution != other.attribution) return false
+    if (rasterLayers != other.rasterLayers) return false
+    if (tileCacheBudget != other.tileCacheBudget) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int {
+    return Objects.hash(
+      sourceId,
+      url,
+      tiles,
+      bounds,
+      minZoom,
+      maxZoom,
+      tileSize,
+      attribution,
+      rasterLayers,
+      tileCacheBudget,
+    )
+  }
+
+  /**
+   * Returns a string representation of the object.
+   */
+  override fun toString(): String =
+    "RasterArraySourceState(sourceId=$sourceId, url=$url, tiles=$tiles, bounds=$bounds, minZoom=$minZoom, maxZoom=$maxZoom, tileSize=$tileSize, attribution=$attribution, rasterLayers=$rasterLayers, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.

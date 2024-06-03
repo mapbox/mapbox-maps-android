@@ -231,6 +231,42 @@ package com.mapbox.maps.extension.compose.ornaments.scalebar {
 
 package com.mapbox.maps.extension.compose.style {
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ColorValue {
+    ctor public ColorValue(com.mapbox.bindgen.Value value);
+    ctor public ColorValue(long value);
+    ctor public ColorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.ColorValue copy(com.mapbox.bindgen.Value value);
+    method public androidx.compose.ui.graphics.Color? getColorOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final androidx.compose.ui.graphics.Color? colorOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.ColorValue.Companion Companion;
+  }
+
+  public static final class ColorValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.ColorValue getDefault();
+    property public final com.mapbox.maps.extension.compose.style.ColorValue default;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class DoubleValue {
+    ctor public DoubleValue(com.mapbox.bindgen.Value value);
+    ctor public DoubleValue(double value);
+    ctor public DoubleValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue copy(com.mapbox.bindgen.Value value);
+    method public Double? getDoubleOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final Double? doubleOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.DoubleValue.Companion Companion;
+  }
+
+  public static final class DoubleValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDefault();
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue default;
+  }
+
   @com.mapbox.maps.MapboxExperimental public final class IdGenerator {
     method @com.mapbox.maps.MapboxExperimental public String generateRandomLayerId(String layerType);
     method @com.mapbox.maps.MapboxExperimental public String generateRandomSourceId(String sourceType);
@@ -251,6 +287,25 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleComposable {
+  }
+
+  public final class RangeDoubleValue {
+    ctor public RangeDoubleValue(com.mapbox.bindgen.Value value);
+    ctor public RangeDoubleValue(double lower, double upper);
+    ctor public RangeDoubleValue(android.util.Range<java.lang.Double> range);
+    ctor public RangeDoubleValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue copy(com.mapbox.bindgen.Value value);
+    method public android.util.Range<java.lang.Double>? getRangeOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final android.util.Range<java.lang.Double>? rangeOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.RangeDoubleValue.Companion Companion;
+  }
+
+  public static final class RangeDoubleValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue getDefault();
+    property public final com.mapbox.maps.extension.compose.style.RangeDoubleValue default;
   }
 
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SlotsContent {
@@ -290,8 +345,12 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = com.mapbox.maps.extension.compose.style.SlotsContent(), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = com.mapbox.maps.extension.compose.style.LayerPositionedContent(), com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig = com.mapbox.maps.extension.compose.style.StyleImportsConfig(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = com.mapbox.maps.extension.compose.style.SlotsContent(), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = com.mapbox.maps.extension.compose.style.LayerPositionedContent(), com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig = com.mapbox.maps.extension.compose.style.StyleImportsConfig(), com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
@@ -309,160 +368,45 @@ package com.mapbox.maps.extension.compose.style.atmosphere {
 package com.mapbox.maps.extension.compose.style.atmosphere.generated {
 
   @com.mapbox.maps.MapboxExperimental public final class AtmosphereState {
-    ctor public AtmosphereState(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.Color getColor();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor getHighColor();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend getHorizonBlend();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.Range getRange();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor getSpaceColor();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity getStarIntensity();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange getVerticalRange();
-    method public void setColor(com.mapbox.maps.extension.compose.style.atmosphere.generated.Color);
-    method public void setHighColor(com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor);
-    method public void setHorizonBlend(com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend);
-    method public void setRange(com.mapbox.maps.extension.compose.style.atmosphere.generated.Range);
-    method public void setSpaceColor(com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor);
-    method public void setStarIntensity(com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity);
-    method public void setVerticalRange(com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange);
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.Color color;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor highColor;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend horizonBlend;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.Range range;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor spaceColor;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity starIntensity;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange verticalRange;
+    ctor public AtmosphereState();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getHighColor();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getHorizonBlend();
+    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue getRange();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getSpaceColor();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getStarIntensity();
+    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue getVerticalRange();
+    method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setHighColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setHorizonBlend(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setRange(com.mapbox.maps.extension.compose.style.RangeDoubleValue);
+    method public void setSpaceColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setStarIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setVerticalRange(com.mapbox.maps.extension.compose.style.RangeDoubleValue);
+    property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue highColor;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue horizonBlend;
+    property public final com.mapbox.maps.extension.compose.style.RangeDoubleValue range;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue spaceColor;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue starIntensity;
+    property public final com.mapbox.maps.extension.compose.style.RangeDoubleValue verticalRange;
     field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Companion Companion;
   }
 
   public static final class AtmosphereState.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getDefault();
     method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState,com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Holder> getSaver();
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState,com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Holder> Saver;
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState default;
   }
 
   @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class AtmosphereState.Holder implements android.os.Parcelable {
-    ctor public AtmosphereState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties);
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties);
-    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getCachedProperties();
-    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> cachedProperties;
+    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
   }
 
   public final class AtmosphereStateKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState rememberAtmosphereState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState,kotlin.Unit> init = {});
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class Color {
-    ctor public Color(com.mapbox.bindgen.Value value);
-    ctor public Color(long value);
-    ctor public Color(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.Color copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.Color.Companion Companion;
-  }
-
-  public static final class Color.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.Color getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.Color default;
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class HighColor {
-    ctor public HighColor(com.mapbox.bindgen.Value value);
-    ctor public HighColor(long value);
-    ctor public HighColor(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor.Companion Companion;
-  }
-
-  public static final class HighColor.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.HighColor default;
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class HorizonBlend {
-    ctor public HorizonBlend(com.mapbox.bindgen.Value value);
-    ctor public HorizonBlend(double value);
-    ctor public HorizonBlend(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend.Companion Companion;
-  }
-
-  public static final class HorizonBlend.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.HorizonBlend default;
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class Range {
-    ctor public Range(com.mapbox.bindgen.Value value);
-    ctor public Range(java.util.List<java.lang.Double> value);
-    ctor public Range(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.Range copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.Range.Companion Companion;
-  }
-
-  public static final class Range.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.Range getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.Range default;
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class SpaceColor {
-    ctor public SpaceColor(com.mapbox.bindgen.Value value);
-    ctor public SpaceColor(long value);
-    ctor public SpaceColor(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor.Companion Companion;
-  }
-
-  public static final class SpaceColor.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor default;
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StarIntensity {
-    ctor public StarIntensity(com.mapbox.bindgen.Value value);
-    ctor public StarIntensity(double value);
-    ctor public StarIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity.Companion Companion;
-  }
-
-  public static final class StarIntensity.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity default;
-  }
-
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class VerticalRange {
-    ctor public VerticalRange(com.mapbox.bindgen.Value value);
-    ctor public VerticalRange(java.util.List<java.lang.Double> value);
-    ctor public VerticalRange(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange.Companion Companion;
-  }
-
-  public static final class VerticalRange.Companion {
-    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange getDefault();
-    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.VerticalRange default;
   }
 
 }
@@ -4856,7 +4800,9 @@ package com.mapbox.maps.extension.compose.style.standard {
   }
 
   public final class MapboxStandardStyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.LightPreset lightPreset = LightPreset.default, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = AtmosphereState.default, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.LightPreset lightPreset = LightPreset.default, com.mapbox.maps.extension.compose.style.projection.Projection projection = Projection.default, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = TerrainState.initial);
   }
 
 }
@@ -4870,27 +4816,11 @@ package com.mapbox.maps.extension.compose.style.terrain {
 
 package com.mapbox.maps.extension.compose.style.terrain.generated {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class Exaggeration {
-    ctor public Exaggeration(com.mapbox.bindgen.Value value);
-    ctor public Exaggeration(double value);
-    ctor public Exaggeration(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration copy(com.mapbox.bindgen.Value value);
-    method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration.Companion Companion;
-  }
-
-  public static final class Exaggeration.Companion {
-    method public com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration getDefault();
-    property public final com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration default;
-  }
-
   @com.mapbox.maps.MapboxExperimental public final class TerrainState {
-    ctor public TerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> initialProperties = mapOf());
-    method public com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration getExaggeration();
-    method public void setExaggeration(com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration);
-    property public final com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration exaggeration;
+    ctor public TerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState);
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getExaggeration();
+    method public void setExaggeration(com.mapbox.maps.extension.compose.style.DoubleValue);
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue exaggeration;
     field public static final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Companion Companion;
   }
 
@@ -4902,17 +4832,16 @@ package com.mapbox.maps.extension.compose.style.terrain.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class TerrainState.Holder implements android.os.Parcelable {
-    ctor public TerrainState.Holder(com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, boolean initial);
     method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? component1();
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component2();
     method public boolean component3();
-    method public com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Holder copy(com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, boolean initial);
-    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getCachedProperties();
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Holder copy(com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties, boolean initial);
     method public boolean getInitial();
     method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? getRasterDemSourceStateHolder();
-    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> cachedProperties;
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
     property public final boolean initial;
     property public final com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? rasterDemSourceStateHolder;
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
   }
 
   public final class TerrainStateKt {

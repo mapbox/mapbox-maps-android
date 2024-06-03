@@ -212,6 +212,44 @@ public final class com/mapbox/maps/extension/compose/ornaments/scalebar/MapScale
 	public final fun ScaleBar-vLKV3eY (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JJJFFFFJZJZFZLandroidx/compose/runtime/Composer;III)V
 }
 
+public final class com/mapbox/maps/extension/compose/style/ColorValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/ColorValue$Companion;
+	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColorOrNull-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/ColorValue$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+}
+
+public final class com/mapbox/maps/extension/compose/style/DoubleValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/DoubleValue$Companion;
+	public fun <init> (D)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDoubleOrNull ()Ljava/lang/Double;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/DoubleValue$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+}
+
 public final class com/mapbox/maps/extension/compose/style/IdGenerator {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/style/IdGenerator;
@@ -243,6 +281,27 @@ public final class com/mapbox/maps/extension/compose/style/LayerPositionedConten
 }
 
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/maps/extension/compose/style/RangeDoubleValue {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue$Companion;
+	public fun <init> (DD)V
+	public fun <init> (Landroid/util/Range;)V
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRangeOrNull ()Landroid/util/Range;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/RangeDoubleValue$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;
 }
 
 public final class com/mapbox/maps/extension/compose/style/SlotsContent {
@@ -302,39 +361,39 @@ public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color;
-	public final fun getHighColor ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor;
-	public final fun getHorizonBlend ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend;
-	public final fun getRange ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range;
-	public final fun getSpaceColor ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor;
-	public final fun getStarIntensity ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity;
-	public final fun getVerticalRange ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange;
-	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color;)V
-	public final fun setHighColor (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor;)V
-	public final fun setHorizonBlend (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend;)V
-	public final fun setRange (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range;)V
-	public final fun setSpaceColor (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor;)V
-	public final fun setStarIntensity (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity;)V
-	public final fun setVerticalRange (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/atmosphere/AtmosphereStateApplier;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getHighColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getHorizonBlend ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRange ()Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;
+	public final fun getSpaceColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getStarIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getVerticalRange ()Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;
+	public fun hashCode ()I
+	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setHighColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setHorizonBlend (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRange (Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;)V
+	public final fun setSpaceColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setStarIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setVerticalRange (Lcom/mapbox/maps/extension/compose/style/RangeDoubleValue;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;
 	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
 }
 
 public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Holder : android/os/Parcelable {
 	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/util/Map;)V
 	public final fun component1 ()Ljava/util/Map;
 	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Holder;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Holder;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Holder;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCachedProperties ()Ljava/util/Map;
+	public final fun getSavedProperties ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -350,132 +409,6 @@ public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/
 
 public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereStateKt {
 	public static final fun rememberAtmosphereState (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/Color {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color$Companion;
-	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/Color$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Color;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor$Companion;
-	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HighColor;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/HorizonBlend;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/Range {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/Range$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/Range;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor$Companion;
-	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/SpaceColor;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/StarIntensity;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/VerticalRange;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/AccuracyRadius {
@@ -4663,6 +4596,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
 	public final fun getBuffer ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;
 	public final fun getCluster ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;
@@ -4678,6 +4612,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public fun getSourceId ()Ljava/lang/String;
 	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
 	public final fun getTolerance ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;
+	public fun hashCode ()I
 	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
 	public final fun setBuffer (Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;)V
 	public final fun setCluster (Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;)V
@@ -4692,6 +4627,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;)V
 	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
 	public final fun setTolerance (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion {
@@ -4708,13 +4644,16 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ima
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCoordinates ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;
 	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
 	public fun getSourceId ()Ljava/lang/String;
 	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public fun hashCode ()I
 	public final fun setCoordinates (Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;)V
 	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
 	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState$Companion {
@@ -4858,6 +4797,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
 	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
@@ -4868,6 +4808,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
 	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
 	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public fun hashCode ()I
 	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
 	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
@@ -4877,6 +4818,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
 	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
 	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState$Companion {
@@ -4893,6 +4835,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
 	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
 	public final fun getEncoding ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
@@ -4909,6 +4852,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
 	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
 	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public fun hashCode ()I
 	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
 	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
 	public final fun setEncoding (Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;)V
@@ -4924,6 +4868,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
 	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
 	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState$Companion {
@@ -4958,6 +4903,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
 	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
 	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
@@ -4974,6 +4920,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
 	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
 	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public fun hashCode ()I
 	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
 	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
 	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
@@ -4989,6 +4936,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
 	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
 	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState$Companion {
@@ -5151,6 +5099,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vec
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
 	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
 	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
@@ -5167,6 +5116,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vec
 	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
 	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
 	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public fun hashCode ()I
 	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
 	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
 	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
@@ -5182,6 +5132,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vec
 	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
 	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
 	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState$Companion {
@@ -5236,31 +5187,16 @@ public final class com/mapbox/maps/extension/compose/style/standard/MapboxStanda
 	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/LightPreset;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Landroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration;
-}
-
 public final class com/mapbox/maps/extension/compose/style/terrain/generated/TerrainState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState;Ljava/util/Map;)V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getExaggeration ()Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration;
-	public final fun setExaggeration (Lcom/mapbox/maps/extension/compose/style/terrain/generated/Exaggeration;)V
+	public fun <init> (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/terrain/TerrainStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExaggeration ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public fun hashCode ()I
+	public final fun setExaggeration (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/terrain/generated/TerrainState$Companion {
@@ -5271,7 +5207,6 @@ public final class com/mapbox/maps/extension/compose/style/terrain/generated/Ter
 public final class com/mapbox/maps/extension/compose/style/terrain/generated/TerrainState$Holder : android/os/Parcelable {
 	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;Ljava/util/Map;Z)V
 	public final fun component1 ()Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
 	public final fun component2 ()Ljava/util/Map;
 	public final fun component3 ()Z
@@ -5279,9 +5214,9 @@ public final class com/mapbox/maps/extension/compose/style/terrain/generated/Ter
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState$Holder;Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;Ljava/util/Map;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState$Holder;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCachedProperties ()Ljava/util/Map;
 	public final fun getInitial ()Z
 	public final fun getRasterDemSourceStateHolder ()Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public final fun getSavedProperties ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V

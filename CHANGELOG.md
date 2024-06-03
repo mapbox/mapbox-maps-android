@@ -3,6 +3,13 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Breaking changes ⚠️
+* Replace terrain property `Exaggeration` with `DoubleValue`.
+* Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `RangeDoubleValue`.
+
+## Features ✨ and improvements 🏁
+* Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
+
 ## Bug fixes 🐞
 * `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
 * Fix precision issues in `ColorUtils` methods.

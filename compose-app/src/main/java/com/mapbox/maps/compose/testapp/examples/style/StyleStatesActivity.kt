@@ -24,12 +24,13 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
-import com.mapbox.maps.extension.compose.style.atmosphere.generated.SpaceColor
-import com.mapbox.maps.extension.compose.style.atmosphere.generated.StarIntensity
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.rememberAtmosphereState
 import com.mapbox.maps.extension.compose.style.projection.Projection
+import kotlin.math.round
 import kotlin.random.Random
 
 /**
@@ -56,9 +57,15 @@ public class StyleStatesActivity : ComponentActivity() {
         mutableStateOf(0)
       }
 
-      val initialAtmosphereState = rememberAtmosphereState()
+      val initialAtmosphereState = rememberAtmosphereState {
+        spaceColor = ColorValue(Color.Black)
+        starIntensity = DoubleValue(0.8)
+        horizonBlend = DoubleValue(0.01)
+      }
       val anotherAtmosphereState = rememberAtmosphereState {
-        this.spaceColor = SpaceColor.default
+        spaceColor = randomColor()
+        horizonBlend = DoubleValue(0.2)
+        starIntensity = DoubleValue(0.0)
       }
 
       var currentAtmosphereState by remember {
@@ -79,37 +86,34 @@ public class StyleStatesActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  var starIntensity = currentAtmosphereState.starIntensity.value.contents as Double? ?: 0.0
+                  var starIntensity = currentAtmosphereState.starIntensity.doubleOrNull!!
                   if (starIntensityIncrease) {
                     starIntensity += 0.1
                   } else {
                     starIntensity -= 0.1
                   }
+                  starIntensity = (round(starIntensity * 100)) / 100.0
                   if (starIntensity >= 1.0) {
                     starIntensityIncrease = false
                   }
                   if (starIntensity <= 0.0) {
                     starIntensityIncrease = true
                   }
-                  currentAtmosphereState.starIntensity = StarIntensity(starIntensity)
+                  currentAtmosphereState.starIntensity = DoubleValue(starIntensity)
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
+                val starIntensity = currentAtmosphereState.starIntensity.doubleOrNull!!
+                val action = if (starIntensityIncrease) "Increase" else "Decrease"
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "${if (starIntensityIncrease) { "Increase" } else { "Decrease" }} star intensity"
+                  text = "$action star intensity ($starIntensity)"
                 )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  currentAtmosphereState.spaceColor = SpaceColor(
-                    Color(
-                      Random.nextInt(255),
-                      Random.nextInt(255),
-                      Random.nextInt(255),
-                    )
-                  )
+                  currentAtmosphereState.spaceColor = randomColor()
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -166,6 +170,14 @@ public class StyleStatesActivity : ComponentActivity() {
       }
     }
   }
+
+  private fun randomColor() = ColorValue(
+    Color(
+      Random.nextInt(255),
+      Random.nextInt(255),
+      Random.nextInt(255),
+    )
+  )
 
   @OptIn(MapboxExperimental::class)
   private fun Projection.friendlyName(): String {

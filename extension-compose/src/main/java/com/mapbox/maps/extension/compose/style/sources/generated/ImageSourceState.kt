@@ -10,6 +10,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import java.util.Objects
 
 /**
  * Create and [rememberSaveable] a [ImageSourceState] using [ImageSourceState.Saver].
@@ -85,6 +86,41 @@ public class ImageSourceState(
     set(value) {
       setProperty(PrefetchZoomDelta.NAME, value.value)
     }
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as ImageSourceState
+
+    if (sourceId != other.sourceId) return false
+    if (url != other.url) return false
+    if (coordinates != other.coordinates) return false
+    if (prefetchZoomDelta != other.prefetchZoomDelta) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int {
+    return Objects.hash(
+      sourceId,
+      url,
+      coordinates,
+      prefetchZoomDelta,
+    )
+  }
+
+  /**
+   * Returns a string representation of the object.
+   */
+  override fun toString(): String =
+    "ImageSourceState(sourceId=$sourceId, url=$url, coordinates=$coordinates, prefetchZoomDelta=$prefetchZoomDelta)"
 
   /**
    * Public companion object.

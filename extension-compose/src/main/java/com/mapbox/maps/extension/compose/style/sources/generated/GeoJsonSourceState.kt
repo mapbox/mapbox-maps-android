@@ -10,6 +10,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import java.util.Objects
 
 /**
  * Create and [rememberSaveable] a [GeoJsonSourceState] using [GeoJsonSourceState.Saver].
@@ -215,6 +216,62 @@ public class GeoJsonSourceState(
     set(value) {
       setProperty(TileCacheBudget.NAME, value.value)
     }
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as GeoJsonSourceState
+
+    if (sourceId != other.sourceId) return false
+    if (data != other.data) return false
+    if (maxZoom != other.maxZoom) return false
+    if (attribution != other.attribution) return false
+    if (buffer != other.buffer) return false
+    if (tolerance != other.tolerance) return false
+    if (cluster != other.cluster) return false
+    if (clusterRadius != other.clusterRadius) return false
+    if (clusterMaxZoom != other.clusterMaxZoom) return false
+    if (clusterProperties != other.clusterProperties) return false
+    if (lineMetrics != other.lineMetrics) return false
+    if (generateId != other.generateId) return false
+    if (promoteId != other.promoteId) return false
+    if (prefetchZoomDelta != other.prefetchZoomDelta) return false
+    if (tileCacheBudget != other.tileCacheBudget) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int {
+    return Objects.hash(
+      sourceId,
+      maxZoom,
+      attribution,
+      buffer,
+      tolerance,
+      cluster,
+      clusterRadius,
+      clusterMaxZoom,
+      clusterProperties,
+      lineMetrics,
+      generateId,
+      promoteId,
+      prefetchZoomDelta,
+      tileCacheBudget,
+    )
+  }
+
+  /**
+   * Returns a string representation of the object.
+   */
+  override fun toString(): String =
+    "GeoJsonSourceState(sourceId=$sourceId,  data=$data, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.

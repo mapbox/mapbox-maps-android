@@ -4,14 +4,22 @@ package com.mapbox.maps.extension.compose.style.atmosphere.generated
 
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.RangeDoubleValue
 import com.mapbox.maps.extension.compose.style.atmosphere.AtmosphereStateApplier
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.TypeParceler
+import java.util.Objects
 
 /**
  * Create and [rememberSaveable] a [AtmosphereState] using [AtmosphereState.Saver].
@@ -38,89 +46,216 @@ public inline fun rememberAtmosphereState(
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/)
  */
 @MapboxExperimental
-public class AtmosphereState(
-  /**
-   * The initial mutable properties of the source.
-   */
-  initialProperties: Map<String, Value> = mapOf()
+public class AtmosphereState private constructor(
+  internal val applier: AtmosphereStateApplier,
+  color: ColorValue,
+  highColor: ColorValue,
+  horizonBlend: DoubleValue,
+  range: RangeDoubleValue,
+  spaceColor: ColorValue,
+  starIntensity: DoubleValue,
+  verticalRange: RangeDoubleValue,
 ) {
 
-  internal val applier: AtmosphereStateApplier = AtmosphereStateApplier(initialProperties)
+  public constructor() : this(
+    AtmosphereStateApplier(emptyMap()),
+    ColorValue.INITIAL,
+    ColorValue.INITIAL,
+    DoubleValue.INITIAL,
+    RangeDoubleValue.INITIAL,
+    ColorValue.INITIAL,
+    DoubleValue.INITIAL,
+    RangeDoubleValue.INITIAL,
+  )
+
+  private val colorState: MutableState<ColorValue> = mutableStateOf(color)
 
   /**
    * The color of the atmosphere region immediately below the horizon and within the `range` and above
    * the horizon and within `horizon-blend`. Using opacity is recommended only for smoothly transitioning fog on/off as
    * anything less than 100% opacity results in more tiles loaded and drawn.
    */
-  public var color: Color
-    get() = Color(applier.getProperty(Color.NAME) ?: Color.default.value)
-    set(value) {
-      applier.setProperty(Color.NAME, value.value)
+  public var color: ColorValue by colorState
+
+  @Composable
+  private fun UpdateColor() {
+    colorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("color", value)
+      }
     }
+  }
+  private val highColorState: MutableState<ColorValue> = mutableStateOf(highColor)
 
   /**
    * The color of the atmosphere region above the horizon, `high-color` extends further above the horizon than
    * the `color` property and its spread can be controlled with `horizon-blend`. The opacity can be set
    * to `0` to remove the high atmosphere color contribution.
    */
-  public var highColor: HighColor
-    get() = HighColor(applier.getProperty(HighColor.NAME) ?: HighColor.default.value)
-    set(value) {
-      applier.setProperty(HighColor.NAME, value.value)
+  public var highColor: ColorValue by highColorState
+
+  @Composable
+  private fun UpdateHighColor() {
+    highColorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("high-color", value)
+      }
     }
+  }
+  private val horizonBlendState: MutableState<DoubleValue> = mutableStateOf(horizonBlend)
 
   /**
    * Horizon blend applies a smooth fade from the color of the atmosphere to the color of
    * space. A value of zero leaves a sharp transition from atmosphere to space. Increasing the value
    * blends the color of atmosphere into increasingly high angles of the sky.
+   *
+   * The minimum accepted value is `0` and the maximum is `1`.
    */
-  public var horizonBlend: HorizonBlend
-    get() = HorizonBlend(applier.getProperty(HorizonBlend.NAME) ?: HorizonBlend.default.value)
-    set(value) {
-      applier.setProperty(HorizonBlend.NAME, value.value)
+  public var horizonBlend: DoubleValue by horizonBlendState
+
+  @Composable
+  private fun UpdateHorizonBlend() {
+    horizonBlendState.value.apply {
+      if (notInitial) {
+        applier.setProperty("horizon-blend", value)
+      }
     }
+  }
+  private val rangeState: MutableState<RangeDoubleValue> = mutableStateOf(range)
 
   /**
    * The start and end distance range in which fog fades from fully transparent to fully opaque.
    * The distance to the point at the center of the map is defined as zero, so
    * that negative range values are closer to the camera, and positive values are farther away.
+   *
+   * The minimum accepted value is `-20` and the maximum is `20`.
    */
-  public var range: Range
-    get() = Range(applier.getProperty(Range.NAME) ?: Range.default.value)
-    set(value) {
-      applier.setProperty(Range.NAME, value.value)
+  public var range: RangeDoubleValue by rangeState
+
+  @Composable
+  private fun UpdateRange() {
+    rangeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("range", value)
+      }
     }
+  }
+  private val spaceColorState: MutableState<ColorValue> = mutableStateOf(spaceColor)
 
   /**
    * The color of the region above the horizon and after the end of the `horizon-blend` contribution.
    * The opacity can be set to `0` to have a transparent background.
    */
-  public var spaceColor: SpaceColor
-    get() = SpaceColor(applier.getProperty(SpaceColor.NAME) ?: SpaceColor.default.value)
-    set(value) {
-      applier.setProperty(SpaceColor.NAME, value.value)
+  public var spaceColor: ColorValue by spaceColorState
+
+  @Composable
+  private fun UpdateSpaceColor() {
+    spaceColorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("space-color", value)
+      }
     }
+  }
+  private val starIntensityState: MutableState<DoubleValue> = mutableStateOf(starIntensity)
 
   /**
    * A value controlling the star intensity where `0` will show no stars and `1` will show
    * stars at their maximum intensity.
+   *
+   * The minimum accepted value is `0` and the maximum is `1`.
    */
-  public var starIntensity: StarIntensity
-    get() = StarIntensity(applier.getProperty(StarIntensity.NAME) ?: StarIntensity.default.value)
-    set(value) {
-      applier.setProperty(StarIntensity.NAME, value.value)
+  public var starIntensity: DoubleValue by starIntensityState
+
+  @Composable
+  private fun UpdateStarIntensity() {
+    starIntensityState.value.apply {
+      if (notInitial) {
+        applier.setProperty("star-intensity", value)
+      }
     }
+  }
+  private val verticalRangeState: MutableState<RangeDoubleValue> = mutableStateOf(verticalRange)
 
   /**
    * An array of two number values, specifying the vertical range, measured in meters, over which the
    * fog should gradually fade out. When both parameters are set to zero, the fog will be
    * rendered without any vertical constraints.
+   *
+   * The minimum accepted value is `0`
    */
-  public var verticalRange: VerticalRange
-    get() = VerticalRange(applier.getProperty(VerticalRange.NAME) ?: VerticalRange.default.value)
-    set(value) {
-      applier.setProperty(VerticalRange.NAME, value.value)
+  public var verticalRange: RangeDoubleValue by verticalRangeState
+
+  @Composable
+  private fun UpdateVerticalRange() {
+    verticalRangeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vertical-range", value)
+      }
     }
+  }
+
+  @Composable
+  internal fun UpdateProperties() {
+    UpdateColor()
+    UpdateHighColor()
+    UpdateHorizonBlend()
+    UpdateRange()
+    UpdateSpaceColor()
+    UpdateStarIntensity()
+    UpdateVerticalRange()
+  }
+
+  private fun getProperties(): Map<String, Value> =
+    listOfNotNull(
+      ("color" to color.value).takeIf { color.notInitial },
+      ("high-color" to highColor.value).takeIf { highColor.notInitial },
+      ("horizon-blend" to horizonBlend.value).takeIf { horizonBlend.notInitial },
+      ("range" to range.value).takeIf { range.notInitial },
+      ("space-color" to spaceColor.value).takeIf { spaceColor.notInitial },
+      ("star-intensity" to starIntensity.value).takeIf { starIntensity.notInitial },
+      ("vertical-range" to verticalRange.value).takeIf { verticalRange.notInitial },
+    ).toMap()
+
+  /**
+   * See [Any.equals]
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as AtmosphereState
+
+    if (applier != other.applier) return false
+    if (color != other.color) return false
+    if (highColor != other.highColor) return false
+    if (horizonBlend != other.horizonBlend) return false
+    if (range != other.range) return false
+    if (spaceColor != other.spaceColor) return false
+    if (starIntensity != other.starIntensity) return false
+    if (verticalRange != other.verticalRange) return false
+
+    return true
+  }
+
+  /**
+   * See [Any.hashCode]
+   */
+  override fun hashCode(): Int = Objects.hash(
+    applier,
+    color,
+    highColor,
+    horizonBlend,
+    range,
+    spaceColor,
+    starIntensity,
+    verticalRange,
+  )
+
+  /**
+   * Returns a string representation of the object.
+   */
+  override fun toString(): String =
+    "AtmosphereState(color=$color, highColor=$highColor, horizonBlend=$horizonBlend, range=$range, spaceColor=$spaceColor, starIntensity=$starIntensity, verticalRange=$verticalRange)"
 
   /**
    * Atmosphere Holder class to be used within [Saver].
@@ -128,11 +263,12 @@ public class AtmosphereState(
   @MapboxExperimental
   @Parcelize
   @TypeParceler<Value, ValueParceler>
-  public data class Holder(
+  public data class Holder internal constructor(
     /**
-     * Cached properties.
+     * Saved properties.
+     * Note that we use a generic [Map] to be able to evolve this class without breaking changes.
      */
-    val cachedProperties: Map<String, Value>,
+    val savedProperties: Map<String, Value>,
   ) : Parcelable
 
   /**
@@ -143,18 +279,20 @@ public class AtmosphereState(
      * The default saver implementation for [AtmosphereState]
      */
     public val Saver: Saver<AtmosphereState, Holder> = Saver(
-      save = { it.applier.save() },
-      restore = {
+      save = { Holder(it.getProperties()) },
+      restore = { holder ->
         AtmosphereState(
-          initialProperties = it.cachedProperties,
+          AtmosphereStateApplier(holder.savedProperties),
+          color = holder.savedProperties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
+          highColor = holder.savedProperties["high-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
+          horizonBlend = holder.savedProperties["horizon-blend"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          range = holder.savedProperties["range"]?.let { RangeDoubleValue(it) } ?: RangeDoubleValue.INITIAL,
+          spaceColor = holder.savedProperties["space-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
+          starIntensity = holder.savedProperties["star-intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          verticalRange = holder.savedProperties["vertical-range"]?.let { RangeDoubleValue(it) } ?: RangeDoubleValue.INITIAL,
         )
       }
     )
-
-    /**
-     * Default value for [AtmosphereState], setting default will result in restoring the property value defined in the style.
-     */
-    public val default: AtmosphereState = AtmosphereState()
   }
 }
 // End of generated file.

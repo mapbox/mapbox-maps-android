@@ -100,6 +100,11 @@ internal class MapStyleNode(
     logD(TAG, "loadStyle $style started")
     mapboxMap.loadStyle(style) {
       logD(TAG, "loadStyle $style finished")
+
+    // TODO: create an AtmosphereState with the gl-native default prefilled then read the
+    //       properties from the style (gl-native could be optimized to only return only the
+    //       mutated ones from their default values, for now we need to read them individually) and
+    //       merge them as the `styleAtmosphereState`.
     }
   }
 
@@ -120,6 +125,9 @@ internal class MapStyleNode(
     // we have to detach (in a sense of cancelling property collector jobs) the previous state
     // before attaching the new state; otherwise the jobs will be duplicated
     this.atmosphereState.applier.detach()
+    // TODO: merge the atmosphere state from the `styleAtmosphereState` (it was captured above in
+    //       updateStyle) and the new one and then set all the properties. So we avoid possible
+    //       flickering if we would reset the AtmosphereState and then apply the new one
     this.atmosphereState = atmosphereState
     coroutineScope.launch {
       styleDataLoaded.collect {
@@ -137,10 +145,10 @@ internal class MapStyleNode(
     coroutineScope.launch {
       styleDataLoaded.collect {
         // we have to treat terrain as some sort of persistent layer and attach / detach map accordingly
-        previousTerrainState.rasterDemSourceState?.let {
+        previousTerrainState.applier.rasterDemSourceState?.let {
           it.detachFromLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
         }
-        terrainState.rasterDemSourceState?.let {
+        terrainState.applier.rasterDemSourceState?.let {
           it.attachToLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
         }
         terrainState.applier.attachTo(mapboxMap)

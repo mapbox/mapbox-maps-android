@@ -24,13 +24,14 @@ import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.sources.generated.TileSize
 import com.mapbox.maps.extension.compose.style.sources.generated.Url
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberRasterDemSourceState
-import com.mapbox.maps.extension.compose.style.terrain.generated.Exaggeration
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.compose.style.terrain.generated.rememberTerrainState
+import kotlin.math.round
 
 /**
  * Example to showcase usage of terrain.
@@ -46,7 +47,9 @@ public class TerrainActivity : ComponentActivity() {
         tileSize = TileSize(TILE_SIZE)
       }
 
-      val customTerrainState = rememberTerrainState(rasterDemSourceState)
+      val customTerrainState = rememberTerrainState(rasterDemSourceState) {
+        exaggeration = DoubleValue(1.0)
+      }
 
       var currentTerrainState by rememberSaveable(stateSaver = TerrainState.Saver) {
         mutableStateOf(customTerrainState)
@@ -60,13 +63,15 @@ public class TerrainActivity : ComponentActivity() {
                 modifier = Modifier.padding(bottom = 10.dp),
                 backgroundColor = if (currentTerrainState == TerrainState.disabled) Color.LightGray else MaterialTheme.colors.secondary,
                 onClick = {
-                  val currentExaggeration =
-                    (currentTerrainState.exaggeration.value.contents as? Double) ?: 1.0
-                  currentTerrainState.exaggeration = Exaggeration(currentExaggeration + 0.2)
+                  if (currentTerrainState != TerrainState.disabled) {
+                    var exaggeration = currentTerrainState.exaggeration.doubleOrNull!! + 0.2
+                    exaggeration = (round(exaggeration * 100)) / 100.0
+                    currentTerrainState.exaggeration = DoubleValue(exaggeration)
+                  }
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Increase exaggeration")
+                Text(modifier = Modifier.padding(10.dp), text = "Increase exaggeration (${currentTerrainState.exaggeration.doubleOrNull})")
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
