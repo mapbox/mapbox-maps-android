@@ -231,6 +231,24 @@ package com.mapbox.maps.extension.compose.ornaments.scalebar {
 
 package com.mapbox.maps.extension.compose.style {
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class BooleanValue {
+    ctor public BooleanValue(com.mapbox.bindgen.Value value);
+    ctor public BooleanValue(boolean value);
+    ctor public BooleanValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue copy(com.mapbox.bindgen.Value value);
+    method public Boolean? getBooleanOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final Boolean? booleanOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.BooleanValue.Companion Companion;
+  }
+
+  public static final class BooleanValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue DEFAULT;
+  }
+
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ColorValue {
     ctor public ColorValue(com.mapbox.bindgen.Value value);
     ctor public ColorValue(long value);
@@ -245,8 +263,46 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public static final class ColorValue.Companion {
-    method public com.mapbox.maps.extension.compose.style.ColorValue getDefault();
-    property public final com.mapbox.maps.extension.compose.style.ColorValue default;
+    method public com.mapbox.maps.extension.compose.style.ColorValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.ColorValue DEFAULT;
+  }
+
+  public final class DoubleListValue {
+    ctor public DoubleListValue(com.mapbox.bindgen.Value value);
+    ctor public DoubleListValue(double... value);
+    ctor public DoubleListValue(java.util.List<java.lang.Double> value);
+    ctor public DoubleListValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue copy(com.mapbox.bindgen.Value value);
+    method public java.util.List<java.lang.Double>? getDoubleListOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final java.util.List<java.lang.Double>? doubleListOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.DoubleListValue.Companion Companion;
+  }
+
+  public static final class DoubleListValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.DoubleListValue DEFAULT;
+  }
+
+  public final class DoubleRangeValue {
+    ctor public DoubleRangeValue(com.mapbox.bindgen.Value value);
+    ctor public DoubleRangeValue(double lower, double upper);
+    ctor public DoubleRangeValue(android.util.Range<java.lang.Double> range);
+    ctor public DoubleRangeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue copy(com.mapbox.bindgen.Value value);
+    method public android.util.Range<java.lang.Double>? getRangeOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final android.util.Range<java.lang.Double>? rangeOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.DoubleRangeValue.Companion Companion;
+  }
+
+  public static final class DoubleRangeValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue DEFAULT;
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class DoubleValue {
@@ -263,8 +319,8 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public static final class DoubleValue.Companion {
-    method public com.mapbox.maps.extension.compose.style.DoubleValue getDefault();
-    property public final com.mapbox.maps.extension.compose.style.DoubleValue default;
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue DEFAULT;
   }
 
   @com.mapbox.maps.MapboxExperimental public final class IdGenerator {
@@ -286,31 +342,67 @@ package com.mapbox.maps.extension.compose.style {
     method public void layerPosition(com.mapbox.maps.LayerPosition layerPosition, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
-  @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleComposable {
-  }
-
-  public final class RangeDoubleValue {
-    ctor public RangeDoubleValue(com.mapbox.bindgen.Value value);
-    ctor public RangeDoubleValue(double lower, double upper);
-    ctor public RangeDoubleValue(android.util.Range<java.lang.Double> range);
-    ctor public RangeDoubleValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LongValue {
+    ctor public LongValue(com.mapbox.bindgen.Value value);
+    ctor public LongValue(long value);
+    ctor public LongValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
-    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue copy(com.mapbox.bindgen.Value value);
-    method public android.util.Range<java.lang.Double>? getRangeOrNull();
+    method public com.mapbox.maps.extension.compose.style.LongValue copy(com.mapbox.bindgen.Value value);
+    method public Long? getLongOrNull();
     method public com.mapbox.bindgen.Value getValue();
-    property public final android.util.Range<java.lang.Double>? rangeOrNull;
+    property public final Long? longOrNull;
     property public final com.mapbox.bindgen.Value value;
-    field public static final com.mapbox.maps.extension.compose.style.RangeDoubleValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.LongValue.Companion Companion;
   }
 
-  public static final class RangeDoubleValue.Companion {
-    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue getDefault();
-    property public final com.mapbox.maps.extension.compose.style.RangeDoubleValue default;
+  public static final class LongValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.LongValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.LongValue DEFAULT;
+  }
+
+  @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleComposable {
   }
 
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SlotsContent {
     method public com.mapbox.maps.extension.compose.style.SlotsContent copy(java.util.Map<java.lang.String,kotlin.jvm.functions.Function0<kotlin.Unit>> entries);
     method public void slot(String name, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StringListValue {
+    ctor public StringListValue(com.mapbox.bindgen.Value value);
+    ctor public StringListValue(java.lang.String... value);
+    ctor public StringListValue(java.util.List<java.lang.String> value);
+    ctor public StringListValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.StringListValue copy(com.mapbox.bindgen.Value value);
+    method public java.util.List<java.lang.String>? getStringListOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final java.util.List<java.lang.String>? stringListOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.StringListValue.Companion Companion;
+  }
+
+  public static final class StringListValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.StringListValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.StringListValue DEFAULT;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StringValue {
+    ctor public StringValue(com.mapbox.bindgen.Value value);
+    ctor public StringValue(String value);
+    ctor public StringValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.StringValue copy(com.mapbox.bindgen.Value value);
+    method public String? getStringOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final String? stringOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.StringValue.Companion Companion;
+  }
+
+  public static final class StringValue.Companion {
+    method public com.mapbox.maps.extension.compose.style.StringValue getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.StringValue DEFAULT;
   }
 
   @com.mapbox.maps.MapboxExperimental public final class StyleImage {
@@ -356,6 +448,20 @@ package com.mapbox.maps.extension.compose.style {
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
   }
 
+  public final class Transition {
+    ctor public Transition(long duration = 0L, long delay = 0L);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.Transition copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.Transition.Companion Companion;
+  }
+
+  public static final class Transition.Companion {
+    method public com.mapbox.maps.extension.compose.style.Transition getDEFAULT();
+    property public final com.mapbox.maps.extension.compose.style.Transition DEFAULT;
+  }
+
 }
 
 package com.mapbox.maps.extension.compose.style.atmosphere {
@@ -370,26 +476,47 @@ package com.mapbox.maps.extension.compose.style.atmosphere.generated {
   @com.mapbox.maps.MapboxExperimental public final class AtmosphereState {
     ctor public AtmosphereState();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
     method public com.mapbox.maps.extension.compose.style.ColorValue getHighColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getHighColorTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getHorizonBlend();
-    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue getRange();
+    method public com.mapbox.maps.extension.compose.style.Transition getHorizonBlendTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getRange();
+    method public com.mapbox.maps.extension.compose.style.Transition getRangeTransition();
     method public com.mapbox.maps.extension.compose.style.ColorValue getSpaceColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getSpaceColorTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getStarIntensity();
-    method public com.mapbox.maps.extension.compose.style.RangeDoubleValue getVerticalRange();
+    method public com.mapbox.maps.extension.compose.style.Transition getStarIntensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getVerticalRange();
+    method public com.mapbox.maps.extension.compose.style.Transition getVerticalRangeTransition();
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setHighColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setHighColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setHorizonBlend(com.mapbox.maps.extension.compose.style.DoubleValue);
-    method public void setRange(com.mapbox.maps.extension.compose.style.RangeDoubleValue);
+    method public void setHorizonBlendTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setRange(com.mapbox.maps.extension.compose.style.DoubleRangeValue);
+    method public void setRangeTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setSpaceColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setSpaceColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setStarIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
-    method public void setVerticalRange(com.mapbox.maps.extension.compose.style.RangeDoubleValue);
+    method public void setStarIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setVerticalRange(com.mapbox.maps.extension.compose.style.DoubleRangeValue);
+    method public void setVerticalRangeTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
     property public final com.mapbox.maps.extension.compose.style.ColorValue highColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition highColorTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue horizonBlend;
-    property public final com.mapbox.maps.extension.compose.style.RangeDoubleValue range;
+    property public final com.mapbox.maps.extension.compose.style.Transition horizonBlendTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue range;
+    property public final com.mapbox.maps.extension.compose.style.Transition rangeTransition;
     property public final com.mapbox.maps.extension.compose.style.ColorValue spaceColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition spaceColorTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue starIntensity;
-    property public final com.mapbox.maps.extension.compose.style.RangeDoubleValue verticalRange;
+    property public final com.mapbox.maps.extension.compose.style.Transition starIntensityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue verticalRange;
+    property public final com.mapbox.maps.extension.compose.style.Transition verticalRangeTransition;
     field public static final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Companion Companion;
   }
 
@@ -4819,8 +4946,11 @@ package com.mapbox.maps.extension.compose.style.terrain.generated {
   @com.mapbox.maps.MapboxExperimental public final class TerrainState {
     ctor public TerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState);
     method public com.mapbox.maps.extension.compose.style.DoubleValue getExaggeration();
+    method public com.mapbox.maps.extension.compose.style.Transition getExaggerationTransition();
     method public void setExaggeration(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setExaggerationTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.DoubleValue exaggeration;
+    property public final com.mapbox.maps.extension.compose.style.Transition exaggerationTransition;
     field public static final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Companion Companion;
   }
 

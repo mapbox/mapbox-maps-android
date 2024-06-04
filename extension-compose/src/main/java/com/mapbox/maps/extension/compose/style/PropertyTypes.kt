@@ -55,17 +55,17 @@ public data class ColorValue(public val value: Value) {
      * Use this constant to signal that no property should be set to the Maps engine.
      * This is needed because sending nullValue resets the value of the property to the default one
      * defined by the Maps engine, which results in overriding the value from the loaded style.
-     * Moreover, we set a custom String to differentiate it from [default], otherwise things
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
     internal val INITIAL: ColorValue = ColorValue(Value.valueOf("ColorValue.INITIAL"))
 
     /**
-     * Default value for [ColorValue], setting [default] will result in setting the property value
+     * Default value for [ColorValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
-    public val default: ColorValue = ColorValue(Value.nullValue())
+    public val DEFAULT: ColorValue = ColorValue(Value.nullValue())
   }
 }
 
@@ -108,17 +108,17 @@ public data class DoubleValue(public val value: Value) {
      * Use this constant to signal that no property should be set to the Maps engine.
      * This is needed because sending nullValue resets the value of the property to the default one
      * defined by the Maps engine, which results in overriding the value from the loaded style.
-     * Moreover, we set a custom String to differentiate it from [default], otherwise things
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
     internal val INITIAL: DoubleValue = DoubleValue(Value("DoubleValue.INITIAL"))
 
     /**
-     * Default value for [DoubleValue], setting [default] will result in setting the property value
+     * Default value for [DoubleValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
-    public val default: DoubleValue = DoubleValue(Value.nullValue())
+    public val DEFAULT: DoubleValue = DoubleValue(Value.nullValue())
   }
 }
 
@@ -127,10 +127,10 @@ public data class DoubleValue(public val value: Value) {
  *
  * @param value a value representing an array of two numbers. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
-public data class RangeDoubleValue(public val value: Value) {
+public data class DoubleRangeValue(public val value: Value) {
 
   /**
-   * Create a [RangeDoubleValue] that contains a list of [Double] that represent a range.
+   * Create a [DoubleRangeValue] that contains a list of [Double] that represent a range.
    *
    * @param lower the lower limit [Double] to store
    * @param upper the upper limit [Double] to store
@@ -178,23 +178,387 @@ public data class RangeDoubleValue(public val value: Value) {
     get() = this !== INITIAL
 
   /**
-   * [RangeDoubleValue]'s companion object.
+   * [DoubleRangeValue]'s companion object.
    */
   public companion object {
     /**
      * Use this constant to signal that no property should be set to the Maps engine.
      * This is needed because sending nullValue resets the value of the property to the default one
      * defined by the Maps engine, which results in overriding the value from the loaded style.
-     * Moreover, we set a custom String to differentiate it from [default], otherwise things
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
-    internal val INITIAL: RangeDoubleValue = RangeDoubleValue(Value.valueOf("RangeDoubleValue.INITIAL"))
+    internal val INITIAL: DoubleRangeValue = DoubleRangeValue(Value.valueOf("DoubleRangeValue.INITIAL"))
 
     /**
-     * Default value for [RangeDoubleValue], setting [default] will result in setting the property
+     * Default value for [DoubleRangeValue], setting [DEFAULT] will result in setting the property
      * value defined by the rendering engine.
      */
-    public val default: RangeDoubleValue = RangeDoubleValue(Value.nullValue())
+    public val DEFAULT: DoubleRangeValue = DoubleRangeValue(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a Number primitive that can accommodate a [Long].
+ *
+ * @param value a value representing a number. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
+ */
+@Immutable
+@MapboxExperimental
+public data class LongValue(public val value: Value) {
+  /**
+   * Create a [LongValue] that contains long [value].
+   *
+   * @param value the [Long] to store
+   */
+  public constructor(value: Long) : this(ComposeTypeUtils.wrapToValue(value))
+  /**
+   * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * The [Long] represented by [value] or `null` if the stored [Value] is not a [Long].
+   */
+  public val longOrNull: Long?
+    get() = (value.contents as? Double)?.toLong()
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * [LongValue]'s companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    internal val INITIAL: LongValue = LongValue(Value("LongValue.INITIAL"))
+
+    /**
+     * Default value for [LongValue], setting [DEFAULT] will result in setting the property value
+     * defined by the rendering engine.
+     */
+    public val DEFAULT: LongValue = LongValue(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a Boolean primitive that can accommodate a [Boolean]. See [Boolean](https://docs.mapbox.com/style-spec/reference/types/#boolean).
+ *
+ * @param value a value representing a boolean.
+ */
+@Immutable
+@MapboxExperimental
+public data class BooleanValue(public val value: Value) {
+  /**
+   * Create a [BooleanValue] that contains boolean [value].
+   *
+   * @param value the [Boolean] to store
+   */
+  public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+  /**
+   * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * The [Boolean] represented by [value] or `null` if the stored [Value] is not a [Boolean].
+   */
+  public val booleanOrNull: Boolean?
+    get() = value.contents as? Boolean
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * [BooleanValue]'s companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    internal val INITIAL: BooleanValue = BooleanValue(Value("BooleanValue.INITIAL"))
+
+    /**
+     * Default value for [BooleanValue], setting [DEFAULT] will result in setting the property value
+     * defined by the rendering engine.
+     */
+    public val DEFAULT: BooleanValue = BooleanValue(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a String primitive that can accommodate a [String]. See [String](https://docs.mapbox.com/style-spec/reference/types/#string).
+ *
+ * @param value a value representing a string.
+ */
+@Immutable
+@MapboxExperimental
+public data class StringValue(public val value: Value) {
+  /**
+   * Create a [StringValue] that contains string [value].
+   *
+   * @param value the [StringValue] to store
+   */
+  public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+  /**
+   * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * The [String] represented by [value] or `null` if the stored [Value] is not a [String].
+   */
+  public val stringOrNull: String?
+    get() = value.contents as? String
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * [StringValue]'s companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    internal val INITIAL: StringValue = StringValue(Value("StringValue.INITIAL"))
+
+    /**
+     * Default value for [StringValue], setting [DEFAULT] will result in setting the property value
+     * defined by the rendering engine.
+     */
+    public val DEFAULT: StringValue = StringValue(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a list of String primitive that can accommodate a list of [String].
+ *
+ * @param value a value representing a string.
+ */
+@Immutable
+@MapboxExperimental
+public data class StringListValue(public val value: Value) {
+  /**
+   * Create a [StringListValue] that contains string [value].
+   *
+   * @param value the [StringListValue] to store
+   */
+  public constructor(vararg value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Create a [StringListValue] that contains string [value].
+   *
+   * @param value the [StringListValue] to store
+   */
+  public constructor(value: List<String>) : this(ComposeTypeUtils.wrapToValue(value))
+  /**
+   * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * The list of [String] represented by [value] or `null` if the stored [Value] is not a list of [String].
+   */
+  public val stringListOrNull: List<String>?
+    get() {
+      if (value.contents is ArrayList<*>) {
+        val contents = value.contents as ArrayList<*>
+        // Handle value constructed with `Expression.array(...)`
+        val idx = if (contents.firstOrNull() == "array") 1 else 0
+        if (contents.size > idx) {
+          val mutableList = mutableListOf<String>()
+          contents.subList(idx, contents.size).forEach {
+            if (it is String) {
+              mutableList.add(it)
+            } else {
+              return null
+            }
+          }
+          return mutableList.toList()
+        }
+        return null
+      } else {
+        return null
+      }
+    }
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * [StringValue]'s companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    internal val INITIAL: StringListValue = StringListValue(Value("StringListValue.INITIAL"))
+
+    /**
+     * Default value for [StringListValue], setting [DEFAULT] will result in setting the property value
+     * defined by the rendering engine.
+     */
+    public val DEFAULT: StringListValue = StringListValue(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a primitive that can accommodate a list of [Double].
+ *
+ * @param value a value representing an array of numbers. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
+ */
+public data class DoubleListValue(public val value: Value) {
+  /**
+   * Create a [DoubleListValue] from a list of [Double].
+   *
+   * @param value the list of [Double] to store
+   */
+  public constructor(vararg value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Create a [DoubleListValue] from a list of [Double].
+   *
+   * @param value the list of [Double] to store
+   */
+  public constructor(value: List<Double>) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the Color with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * The list of [Double] represented by [value] or `null` if the stored [Value] is not a list of [Double].
+   */
+  public val doubleListOrNull: List<Double>?
+    get() {
+      if (value.contents is ArrayList<*>) {
+        val contents = value.contents as ArrayList<*>
+        // Handle value constructed with `Expression.array(...)`
+        val idx = if (contents.firstOrNull() == "array") 1 else 0
+        if (contents.size > idx) {
+          val mutableList = mutableListOf<Double>()
+          contents.subList(idx, contents.size).forEach {
+            if (it is Double) {
+              mutableList.add(it)
+            } else {
+              return null
+            }
+          }
+          return mutableList.toList()
+        }
+        return null
+      } else {
+        return null
+      }
+    }
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * [DoubleListValue]'s companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    internal val INITIAL: DoubleListValue = DoubleListValue(Value.valueOf("DoubleListValue.INITIAL"))
+
+    /**
+     * Default value for [DoubleListValue], setting [DEFAULT] will result in setting the property
+     * value defined by the rendering engine.
+     */
+    public val DEFAULT: DoubleListValue = DoubleListValue(Value.nullValue())
+  }
+}
+
+/**
+ * Defines the timing for the interpolation between a transitionable style layer property's previous value and new value.
+ *
+ * @param value the transition wrapped in [Value] to be used with native renderer.
+ */
+public data class Transition internal constructor(public val value: Value) {
+
+  /**
+   * Construct the [Transition] with duration and delay.
+   */
+  public constructor(duration: Long = 0L, delay: Long = 0L) : this(
+    Value(
+      hashMapOf(
+        "delay" to Value(delay),
+        "duration" to Value(duration)
+      )
+    )
+  )
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    internal val INITIAL: Transition = Transition(Value.valueOf("Transition.INITIAL"))
+
+    /**
+     * Default value for [Transition], setting default will result in restoring the default transition defined in the rendering engine.
+     */
+    public val DEFAULT: Transition = Transition(Value.nullValue())
   }
 }

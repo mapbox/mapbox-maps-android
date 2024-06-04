@@ -71,7 +71,7 @@ public class PropertiesTests {
 
   @Test
   public fun `ColorValue default is different than INITIAL`() {
-    assertNotEquals(ColorValue.default, ColorValue.INITIAL)
+    assertNotEquals(ColorValue.DEFAULT, ColorValue.INITIAL)
   }
 
   @Test
@@ -94,53 +94,53 @@ public class PropertiesTests {
 
   @Test
   public fun `DoubleValue default is different than INITIAL`() {
-    assertNotEquals(DoubleValue.default, DoubleValue.INITIAL)
+    assertNotEquals(DoubleValue.DEFAULT, DoubleValue.INITIAL)
   }
 
   @Test
   public fun `RangeDoubleValue to Range`() {
-    val rangeDoubleValue = RangeDoubleValue(1.0, 2.0)
-    assertEquals(Range(1.0, 2.0), rangeDoubleValue.rangeOrNull)
+    val doubleRangeValue = DoubleRangeValue(1.0, 2.0)
+    assertEquals(Range(1.0, 2.0), doubleRangeValue.rangeOrNull)
   }
 
   @Test
   public fun `RangeDoubleValue with mixed upper and lower to Range null`() {
-    val rangeDoubleValue = RangeDoubleValue(2.0, 1.0)
-    assertNull(rangeDoubleValue.rangeOrNull)
+    val doubleRangeValue = DoubleRangeValue(2.0, 1.0)
+    assertNull(doubleRangeValue.rangeOrNull)
   }
 
   @Test
   public fun `Custom expression RangeDoubleValue to Range is null`() {
-    val rangeDoubleValue = RangeDoubleValue(Expression.literal("Custom value"))
-    assertNull(rangeDoubleValue.rangeOrNull)
+    val doubleRangeValue = DoubleRangeValue(Expression.literal("Custom value"))
+    assertNull(doubleRangeValue.rangeOrNull)
   }
 
   @Test
   public fun `RangeDoubleValue expression to RAnge`() {
-    val rangeDoubleValue =
-      RangeDoubleValue(Expression.array(Expression.literal(1.0), Expression.literal(2.0)))
-    assertEquals(Range(1.0, 2.0), rangeDoubleValue.rangeOrNull)
+    val doubleRangeValue =
+      DoubleRangeValue(Expression.array(Expression.literal(1.0), Expression.literal(2.0)))
+    assertEquals(Range(1.0, 2.0), doubleRangeValue.rangeOrNull)
   }
 
   @Test
   public fun `RangeDoubleValue expression with more than 2 returns null`() {
-    val rangeDoubleValue = RangeDoubleValue(
+    val doubleRangeValue = DoubleRangeValue(
       Expression.array(
         Expression.literal(1.0),
         Expression.literal(2.0),
         Expression.literal(3.0)
       )
     )
-    assertNull(rangeDoubleValue.rangeOrNull)
+    assertNull(doubleRangeValue.rangeOrNull)
   }
 
   @Test
   public fun `RangeDoubleValue array expression empty returns null`() {
-    assertNull(RangeDoubleValue(Expression.array()).rangeOrNull)
+    assertNull(DoubleRangeValue(Expression.array()).rangeOrNull)
   }
 
   @Test
   public fun `RangeDoubleValue default is different than INITIAL`() {
-    assertNotEquals(RangeDoubleValue.default, RangeDoubleValue.INITIAL)
+    assertNotEquals(DoubleRangeValue.DEFAULT, DoubleRangeValue.INITIAL)
   }
 }

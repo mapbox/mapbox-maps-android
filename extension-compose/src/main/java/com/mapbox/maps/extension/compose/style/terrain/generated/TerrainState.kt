@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 import com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState
@@ -51,6 +52,7 @@ public inline fun rememberTerrainState(
 public class TerrainState private constructor(
   internal val applier: TerrainStateApplier,
   exaggeration: DoubleValue,
+  exaggerationTransition: Transition,
 ) {
 
   public constructor(
@@ -65,6 +67,7 @@ public class TerrainState private constructor(
       initial = false
     ),
     DoubleValue.INITIAL,
+    Transition.INITIAL,
   )
 
   /**
@@ -77,6 +80,7 @@ public class TerrainState private constructor(
       initial = initial
     ),
     DoubleValue.INITIAL,
+    Transition.INITIAL,
   )
 
   private val exaggerationState: MutableState<DoubleValue> = mutableStateOf(exaggeration)
@@ -96,15 +100,34 @@ public class TerrainState private constructor(
       }
     }
   }
+  private val exaggerationTransitionState: MutableState<Transition> = mutableStateOf(exaggerationTransition)
+
+  /**
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   *
+   * The minimum accepted value is `0` and the maximum is `1000`.
+   */
+  public var exaggerationTransition: Transition by exaggerationTransitionState
+
+  @Composable
+  private fun UpdateExaggerationTransition() {
+    exaggerationTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("exaggeration-transition", value)
+      }
+    }
+  }
 
   @Composable
   internal fun UpdateProperties() {
     UpdateExaggeration()
+    UpdateExaggerationTransition()
   }
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
       ("exaggeration" to exaggeration.value).takeIf { exaggeration.notInitial },
+      ("exaggeration-transition" to exaggerationTransition.value).takeIf { exaggerationTransition.notInitial },
     ).toMap()
 
   /**
@@ -118,6 +141,7 @@ public class TerrainState private constructor(
 
     if (applier != other.applier) return false
     if (exaggeration != other.exaggeration) return false
+    if (exaggerationTransition != other.exaggerationTransition) return false
 
     return true
   }
@@ -128,13 +152,14 @@ public class TerrainState private constructor(
   override fun hashCode(): Int = Objects.hash(
     applier,
     exaggeration,
+    exaggerationTransition,
   )
 
   /**
    * @return a string representation of the object.
    */
   override fun toString(): String {
-    return "TerrainState(applier=$applier, exaggeration=$exaggeration)"
+    return "TerrainState(applier=$applier, exaggeration=$exaggeration, exaggerationTransition=$exaggerationTransition)"
   }
 
   /**
@@ -180,6 +205,7 @@ public class TerrainState private constructor(
             holder.initial
           ),
           exaggeration = holder.savedProperties["exaggeration"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          exaggerationTransition = holder.savedProperties["exaggeration-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )
       }
     )
