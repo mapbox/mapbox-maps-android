@@ -34,13 +34,13 @@ import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
-import com.mapbox.maps.extension.compose.style.layers.generated.LineCap
-import com.mapbox.maps.extension.compose.style.layers.generated.LineGradient
-import com.mapbox.maps.extension.compose.style.layers.generated.LineJoin
+import com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue
+import com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue
 import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.LineTrimOffset
-import com.mapbox.maps.extension.compose.style.layers.generated.LineWidth
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.LineMetrics
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
@@ -203,8 +203,8 @@ public class NavigationSimulationActivity : ComponentActivity() {
         if (routeLine != null) {
           LineLayer(
             sourceState = geoJsonSource,
-            lineTrimOffset = LineTrimOffset(listOf(0.0, progress)),
-            lineWidth = LineWidth(
+            lineTrimOffset = DoubleListValue(listOf(0.0, progress)),
+            lineWidth = DoubleValue(
               interpolate {
                 exponential {
                   literal(1.5)
@@ -232,9 +232,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
                 }
               }
             ),
-            lineCap = LineCap.ROUND,
-            lineJoin = LineJoin.ROUND,
-            lineGradient = LineGradient(
+            lineCap = LineCapValue.ROUND,
+            lineJoin = LineJoinValue.ROUND,
+            lineGradient = ColorValue(
               interpolate {
                 linear()
                 lineProgress()
@@ -251,8 +251,8 @@ public class NavigationSimulationActivity : ComponentActivity() {
           )
           LineLayer(
             sourceState = geoJsonSource,
-            lineTrimOffset = LineTrimOffset(listOf(0.0, progress)),
-            lineWidth = LineWidth(
+            lineTrimOffset = DoubleListValue(listOf(0.0, progress)),
+            lineWidth = DoubleValue(
               interpolate {
                 exponential {
                   literal(1.5)
@@ -284,9 +284,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
                 }
               }
             ),
-            lineCap = LineCap.ROUND,
-            lineJoin = LineJoin.ROUND,
-            lineGradient = LineGradient(
+            lineCap = LineCapValue.ROUND,
+            lineJoin = LineJoinValue.ROUND,
+            lineGradient = ColorValue(
               interpolate {
                 linear()
                 lineProgress()

@@ -10,7 +10,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.BooleanValue
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -23,27 +32,44 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param fillExtrusionEdgeRadius Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
  * @param fillExtrusionAmbientOcclusionGroundAttenuation Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+ * @param fillExtrusionAmbientOcclusionGroundAttenuationTransition Defines the transition of [fillExtrusionAmbientOcclusionGroundAttenuation].
  * @param fillExtrusionAmbientOcclusionGroundRadius The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+ * @param fillExtrusionAmbientOcclusionGroundRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionGroundRadius].
  * @param fillExtrusionAmbientOcclusionIntensity Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+ * @param fillExtrusionAmbientOcclusionIntensityTransition Defines the transition of [fillExtrusionAmbientOcclusionIntensity].
  * @param fillExtrusionAmbientOcclusionRadius Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+ * @param fillExtrusionAmbientOcclusionRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionRadius].
  * @param fillExtrusionAmbientOcclusionWallRadius Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+ * @param fillExtrusionAmbientOcclusionWallRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionWallRadius].
  * @param fillExtrusionBase The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+ * @param fillExtrusionBaseTransition Defines the transition of [fillExtrusionBase].
  * @param fillExtrusionColor The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+ * @param fillExtrusionColorTransition Defines the transition of [fillExtrusionColor].
  * @param fillExtrusionCutoffFadeRange This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
  * @param fillExtrusionEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param fillExtrusionEmissiveStrengthTransition Defines the transition of [fillExtrusionEmissiveStrength].
  * @param fillExtrusionFloodLightColor The color of the flood light effect on the walls of the extruded buildings.
+ * @param fillExtrusionFloodLightColorTransition Defines the transition of [fillExtrusionFloodLightColor].
  * @param fillExtrusionFloodLightGroundAttenuation Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+ * @param fillExtrusionFloodLightGroundAttenuationTransition Defines the transition of [fillExtrusionFloodLightGroundAttenuation].
  * @param fillExtrusionFloodLightGroundRadius The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+ * @param fillExtrusionFloodLightGroundRadiusTransition Defines the transition of [fillExtrusionFloodLightGroundRadius].
  * @param fillExtrusionFloodLightIntensity The intensity of the flood light color.
+ * @param fillExtrusionFloodLightIntensityTransition Defines the transition of [fillExtrusionFloodLightIntensity].
  * @param fillExtrusionFloodLightWallRadius The extent of the flood light effect on the walls of the extruded buildings in meters.
+ * @param fillExtrusionFloodLightWallRadiusTransition Defines the transition of [fillExtrusionFloodLightWallRadius].
  * @param fillExtrusionHeight The height with which to extrude this layer.
+ * @param fillExtrusionHeightTransition Defines the transition of [fillExtrusionHeight].
  * @param fillExtrusionOpacity The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+ * @param fillExtrusionOpacityTransition Defines the transition of [fillExtrusionOpacity].
  * @param fillExtrusionPattern Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  * @param fillExtrusionRoundedRoof Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
  * @param fillExtrusionTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+ * @param fillExtrusionTranslateTransition Defines the transition of [fillExtrusionTranslate].
  * @param fillExtrusionTranslateAnchor Controls the frame of reference for `fill-extrusion-translate`.
  * @param fillExtrusionVerticalGradient Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
  * @param fillExtrusionVerticalScale A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+ * @param fillExtrusionVerticalScaleTransition Defines the transition of [fillExtrusionVerticalScale].
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
  * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -58,51 +84,51 @@ public fun FillExtrusionLayer(
   layerId: String = remember {
     generateRandomLayerId("fill-extrusion")
   },
-  fillExtrusionEdgeRadius: FillExtrusionEdgeRadius = FillExtrusionEdgeRadius.default,
-  fillExtrusionAmbientOcclusionGroundAttenuation: FillExtrusionAmbientOcclusionGroundAttenuation = FillExtrusionAmbientOcclusionGroundAttenuation.default,
-  fillExtrusionAmbientOcclusionGroundAttenuationTransition: Transition = Transition.default,
-  fillExtrusionAmbientOcclusionGroundRadius: FillExtrusionAmbientOcclusionGroundRadius = FillExtrusionAmbientOcclusionGroundRadius.default,
-  fillExtrusionAmbientOcclusionGroundRadiusTransition: Transition = Transition.default,
-  fillExtrusionAmbientOcclusionIntensity: FillExtrusionAmbientOcclusionIntensity = FillExtrusionAmbientOcclusionIntensity.default,
-  fillExtrusionAmbientOcclusionIntensityTransition: Transition = Transition.default,
-  fillExtrusionAmbientOcclusionRadius: FillExtrusionAmbientOcclusionRadius = FillExtrusionAmbientOcclusionRadius.default,
-  fillExtrusionAmbientOcclusionRadiusTransition: Transition = Transition.default,
-  fillExtrusionAmbientOcclusionWallRadius: FillExtrusionAmbientOcclusionWallRadius = FillExtrusionAmbientOcclusionWallRadius.default,
-  fillExtrusionAmbientOcclusionWallRadiusTransition: Transition = Transition.default,
-  fillExtrusionBase: FillExtrusionBase = FillExtrusionBase.default,
-  fillExtrusionBaseTransition: Transition = Transition.default,
-  fillExtrusionColor: FillExtrusionColor = FillExtrusionColor.default,
-  fillExtrusionColorTransition: Transition = Transition.default,
-  fillExtrusionCutoffFadeRange: FillExtrusionCutoffFadeRange = FillExtrusionCutoffFadeRange.default,
-  fillExtrusionEmissiveStrength: FillExtrusionEmissiveStrength = FillExtrusionEmissiveStrength.default,
-  fillExtrusionEmissiveStrengthTransition: Transition = Transition.default,
-  fillExtrusionFloodLightColor: FillExtrusionFloodLightColor = FillExtrusionFloodLightColor.default,
-  fillExtrusionFloodLightColorTransition: Transition = Transition.default,
-  fillExtrusionFloodLightGroundAttenuation: FillExtrusionFloodLightGroundAttenuation = FillExtrusionFloodLightGroundAttenuation.default,
-  fillExtrusionFloodLightGroundAttenuationTransition: Transition = Transition.default,
-  fillExtrusionFloodLightGroundRadius: FillExtrusionFloodLightGroundRadius = FillExtrusionFloodLightGroundRadius.default,
-  fillExtrusionFloodLightGroundRadiusTransition: Transition = Transition.default,
-  fillExtrusionFloodLightIntensity: FillExtrusionFloodLightIntensity = FillExtrusionFloodLightIntensity.default,
-  fillExtrusionFloodLightIntensityTransition: Transition = Transition.default,
-  fillExtrusionFloodLightWallRadius: FillExtrusionFloodLightWallRadius = FillExtrusionFloodLightWallRadius.default,
-  fillExtrusionFloodLightWallRadiusTransition: Transition = Transition.default,
-  fillExtrusionHeight: FillExtrusionHeight = FillExtrusionHeight.default,
-  fillExtrusionHeightTransition: Transition = Transition.default,
-  fillExtrusionOpacity: FillExtrusionOpacity = FillExtrusionOpacity.default,
-  fillExtrusionOpacityTransition: Transition = Transition.default,
-  fillExtrusionPattern: FillExtrusionPattern = FillExtrusionPattern.default,
-  fillExtrusionRoundedRoof: FillExtrusionRoundedRoof = FillExtrusionRoundedRoof.default,
-  fillExtrusionTranslate: FillExtrusionTranslate = FillExtrusionTranslate.default,
-  fillExtrusionTranslateTransition: Transition = Transition.default,
-  fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor = FillExtrusionTranslateAnchor.default,
-  fillExtrusionVerticalGradient: FillExtrusionVerticalGradient = FillExtrusionVerticalGradient.default,
-  fillExtrusionVerticalScale: FillExtrusionVerticalScale = FillExtrusionVerticalScale.default,
-  fillExtrusionVerticalScaleTransition: Transition = Transition.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  fillExtrusionEdgeRadius: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionAmbientOcclusionGroundAttenuation: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionAmbientOcclusionGroundAttenuationTransition: Transition = Transition.INITIAL,
+  fillExtrusionAmbientOcclusionGroundRadius: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionAmbientOcclusionGroundRadiusTransition: Transition = Transition.INITIAL,
+  fillExtrusionAmbientOcclusionIntensity: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionAmbientOcclusionIntensityTransition: Transition = Transition.INITIAL,
+  fillExtrusionAmbientOcclusionRadius: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionAmbientOcclusionRadiusTransition: Transition = Transition.INITIAL,
+  fillExtrusionAmbientOcclusionWallRadius: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionAmbientOcclusionWallRadiusTransition: Transition = Transition.INITIAL,
+  fillExtrusionBase: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionBaseTransition: Transition = Transition.INITIAL,
+  fillExtrusionColor: ColorValue = ColorValue.INITIAL,
+  fillExtrusionColorTransition: Transition = Transition.INITIAL,
+  fillExtrusionCutoffFadeRange: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  fillExtrusionFloodLightColor: ColorValue = ColorValue.INITIAL,
+  fillExtrusionFloodLightColorTransition: Transition = Transition.INITIAL,
+  fillExtrusionFloodLightGroundAttenuation: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionFloodLightGroundAttenuationTransition: Transition = Transition.INITIAL,
+  fillExtrusionFloodLightGroundRadius: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionFloodLightGroundRadiusTransition: Transition = Transition.INITIAL,
+  fillExtrusionFloodLightIntensity: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionFloodLightIntensityTransition: Transition = Transition.INITIAL,
+  fillExtrusionFloodLightWallRadius: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionFloodLightWallRadiusTransition: Transition = Transition.INITIAL,
+  fillExtrusionHeight: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionHeightTransition: Transition = Transition.INITIAL,
+  fillExtrusionOpacity: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionOpacityTransition: Transition = Transition.INITIAL,
+  fillExtrusionPattern: ImageValue = ImageValue.INITIAL,
+  fillExtrusionRoundedRoof: BooleanValue = BooleanValue.INITIAL,
+  fillExtrusionTranslate: DoubleListValue = DoubleListValue.INITIAL,
+  fillExtrusionTranslateTransition: Transition = Transition.INITIAL,
+  fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchorValue = FillExtrusionTranslateAnchorValue.INITIAL,
+  fillExtrusionVerticalGradient: BooleanValue = BooleanValue.INITIAL,
+  fillExtrusionVerticalScale: DoubleValue = DoubleValue.INITIAL,
+  fillExtrusionVerticalScaleTransition: Transition = Transition.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of FillExtrusionLayer inside unsupported composable function")
@@ -121,143 +147,143 @@ public fun FillExtrusionLayer(
     },
     update = {
       init {
-        if (fillExtrusionEdgeRadius != FillExtrusionEdgeRadius.default) {
-          setProperty(FillExtrusionEdgeRadius.NAME, fillExtrusionEdgeRadius.value)
+        if (fillExtrusionEdgeRadius.notInitial) {
+          setProperty("fill-extrusion-edge-radius", fillExtrusionEdgeRadius.value)
         }
-        if (fillExtrusionAmbientOcclusionGroundAttenuation != FillExtrusionAmbientOcclusionGroundAttenuation.default) {
-          setProperty(FillExtrusionAmbientOcclusionGroundAttenuation.NAME, fillExtrusionAmbientOcclusionGroundAttenuation.value)
+        if (fillExtrusionAmbientOcclusionGroundAttenuation.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-ground-attenuation", fillExtrusionAmbientOcclusionGroundAttenuation.value)
         }
-        if (fillExtrusionAmbientOcclusionGroundAttenuationTransition != Transition.default) {
-          setProperty(FillExtrusionAmbientOcclusionGroundAttenuation.TRANSITION_NAME, fillExtrusionAmbientOcclusionGroundAttenuationTransition.value)
+        if (fillExtrusionAmbientOcclusionGroundAttenuationTransition.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-ground-attenuation-transition", fillExtrusionAmbientOcclusionGroundAttenuationTransition.value)
         }
-        if (fillExtrusionAmbientOcclusionGroundRadius != FillExtrusionAmbientOcclusionGroundRadius.default) {
-          setProperty(FillExtrusionAmbientOcclusionGroundRadius.NAME, fillExtrusionAmbientOcclusionGroundRadius.value)
+        if (fillExtrusionAmbientOcclusionGroundRadius.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-ground-radius", fillExtrusionAmbientOcclusionGroundRadius.value)
         }
-        if (fillExtrusionAmbientOcclusionGroundRadiusTransition != Transition.default) {
-          setProperty(FillExtrusionAmbientOcclusionGroundRadius.TRANSITION_NAME, fillExtrusionAmbientOcclusionGroundRadiusTransition.value)
+        if (fillExtrusionAmbientOcclusionGroundRadiusTransition.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-ground-radius-transition", fillExtrusionAmbientOcclusionGroundRadiusTransition.value)
         }
-        if (fillExtrusionAmbientOcclusionIntensity != FillExtrusionAmbientOcclusionIntensity.default) {
-          setProperty(FillExtrusionAmbientOcclusionIntensity.NAME, fillExtrusionAmbientOcclusionIntensity.value)
+        if (fillExtrusionAmbientOcclusionIntensity.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-intensity", fillExtrusionAmbientOcclusionIntensity.value)
         }
-        if (fillExtrusionAmbientOcclusionIntensityTransition != Transition.default) {
-          setProperty(FillExtrusionAmbientOcclusionIntensity.TRANSITION_NAME, fillExtrusionAmbientOcclusionIntensityTransition.value)
+        if (fillExtrusionAmbientOcclusionIntensityTransition.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-intensity-transition", fillExtrusionAmbientOcclusionIntensityTransition.value)
         }
-        if (fillExtrusionAmbientOcclusionRadius != FillExtrusionAmbientOcclusionRadius.default) {
-          setProperty(FillExtrusionAmbientOcclusionRadius.NAME, fillExtrusionAmbientOcclusionRadius.value)
+        if (fillExtrusionAmbientOcclusionRadius.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-radius", fillExtrusionAmbientOcclusionRadius.value)
         }
-        if (fillExtrusionAmbientOcclusionRadiusTransition != Transition.default) {
-          setProperty(FillExtrusionAmbientOcclusionRadius.TRANSITION_NAME, fillExtrusionAmbientOcclusionRadiusTransition.value)
+        if (fillExtrusionAmbientOcclusionRadiusTransition.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-radius-transition", fillExtrusionAmbientOcclusionRadiusTransition.value)
         }
-        if (fillExtrusionAmbientOcclusionWallRadius != FillExtrusionAmbientOcclusionWallRadius.default) {
-          setProperty(FillExtrusionAmbientOcclusionWallRadius.NAME, fillExtrusionAmbientOcclusionWallRadius.value)
+        if (fillExtrusionAmbientOcclusionWallRadius.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-wall-radius", fillExtrusionAmbientOcclusionWallRadius.value)
         }
-        if (fillExtrusionAmbientOcclusionWallRadiusTransition != Transition.default) {
-          setProperty(FillExtrusionAmbientOcclusionWallRadius.TRANSITION_NAME, fillExtrusionAmbientOcclusionWallRadiusTransition.value)
+        if (fillExtrusionAmbientOcclusionWallRadiusTransition.notInitial) {
+          setProperty("fill-extrusion-ambient-occlusion-wall-radius-transition", fillExtrusionAmbientOcclusionWallRadiusTransition.value)
         }
-        if (fillExtrusionBase != FillExtrusionBase.default) {
-          setProperty(FillExtrusionBase.NAME, fillExtrusionBase.value)
+        if (fillExtrusionBase.notInitial) {
+          setProperty("fill-extrusion-base", fillExtrusionBase.value)
         }
-        if (fillExtrusionBaseTransition != Transition.default) {
-          setProperty(FillExtrusionBase.TRANSITION_NAME, fillExtrusionBaseTransition.value)
+        if (fillExtrusionBaseTransition.notInitial) {
+          setProperty("fill-extrusion-base-transition", fillExtrusionBaseTransition.value)
         }
-        if (fillExtrusionColor != FillExtrusionColor.default) {
-          setProperty(FillExtrusionColor.NAME, fillExtrusionColor.value)
+        if (fillExtrusionColor.notInitial) {
+          setProperty("fill-extrusion-color", fillExtrusionColor.value)
         }
-        if (fillExtrusionColorTransition != Transition.default) {
-          setProperty(FillExtrusionColor.TRANSITION_NAME, fillExtrusionColorTransition.value)
+        if (fillExtrusionColorTransition.notInitial) {
+          setProperty("fill-extrusion-color-transition", fillExtrusionColorTransition.value)
         }
-        if (fillExtrusionCutoffFadeRange != FillExtrusionCutoffFadeRange.default) {
-          setProperty(FillExtrusionCutoffFadeRange.NAME, fillExtrusionCutoffFadeRange.value)
+        if (fillExtrusionCutoffFadeRange.notInitial) {
+          setProperty("fill-extrusion-cutoff-fade-range", fillExtrusionCutoffFadeRange.value)
         }
-        if (fillExtrusionEmissiveStrength != FillExtrusionEmissiveStrength.default) {
-          setProperty(FillExtrusionEmissiveStrength.NAME, fillExtrusionEmissiveStrength.value)
+        if (fillExtrusionEmissiveStrength.notInitial) {
+          setProperty("fill-extrusion-emissive-strength", fillExtrusionEmissiveStrength.value)
         }
-        if (fillExtrusionEmissiveStrengthTransition != Transition.default) {
-          setProperty(FillExtrusionEmissiveStrength.TRANSITION_NAME, fillExtrusionEmissiveStrengthTransition.value)
+        if (fillExtrusionEmissiveStrengthTransition.notInitial) {
+          setProperty("fill-extrusion-emissive-strength-transition", fillExtrusionEmissiveStrengthTransition.value)
         }
-        if (fillExtrusionFloodLightColor != FillExtrusionFloodLightColor.default) {
-          setProperty(FillExtrusionFloodLightColor.NAME, fillExtrusionFloodLightColor.value)
+        if (fillExtrusionFloodLightColor.notInitial) {
+          setProperty("fill-extrusion-flood-light-color", fillExtrusionFloodLightColor.value)
         }
-        if (fillExtrusionFloodLightColorTransition != Transition.default) {
-          setProperty(FillExtrusionFloodLightColor.TRANSITION_NAME, fillExtrusionFloodLightColorTransition.value)
+        if (fillExtrusionFloodLightColorTransition.notInitial) {
+          setProperty("fill-extrusion-flood-light-color-transition", fillExtrusionFloodLightColorTransition.value)
         }
-        if (fillExtrusionFloodLightGroundAttenuation != FillExtrusionFloodLightGroundAttenuation.default) {
-          setProperty(FillExtrusionFloodLightGroundAttenuation.NAME, fillExtrusionFloodLightGroundAttenuation.value)
+        if (fillExtrusionFloodLightGroundAttenuation.notInitial) {
+          setProperty("fill-extrusion-flood-light-ground-attenuation", fillExtrusionFloodLightGroundAttenuation.value)
         }
-        if (fillExtrusionFloodLightGroundAttenuationTransition != Transition.default) {
-          setProperty(FillExtrusionFloodLightGroundAttenuation.TRANSITION_NAME, fillExtrusionFloodLightGroundAttenuationTransition.value)
+        if (fillExtrusionFloodLightGroundAttenuationTransition.notInitial) {
+          setProperty("fill-extrusion-flood-light-ground-attenuation-transition", fillExtrusionFloodLightGroundAttenuationTransition.value)
         }
-        if (fillExtrusionFloodLightGroundRadius != FillExtrusionFloodLightGroundRadius.default) {
-          setProperty(FillExtrusionFloodLightGroundRadius.NAME, fillExtrusionFloodLightGroundRadius.value)
+        if (fillExtrusionFloodLightGroundRadius.notInitial) {
+          setProperty("fill-extrusion-flood-light-ground-radius", fillExtrusionFloodLightGroundRadius.value)
         }
-        if (fillExtrusionFloodLightGroundRadiusTransition != Transition.default) {
-          setProperty(FillExtrusionFloodLightGroundRadius.TRANSITION_NAME, fillExtrusionFloodLightGroundRadiusTransition.value)
+        if (fillExtrusionFloodLightGroundRadiusTransition.notInitial) {
+          setProperty("fill-extrusion-flood-light-ground-radius-transition", fillExtrusionFloodLightGroundRadiusTransition.value)
         }
-        if (fillExtrusionFloodLightIntensity != FillExtrusionFloodLightIntensity.default) {
-          setProperty(FillExtrusionFloodLightIntensity.NAME, fillExtrusionFloodLightIntensity.value)
+        if (fillExtrusionFloodLightIntensity.notInitial) {
+          setProperty("fill-extrusion-flood-light-intensity", fillExtrusionFloodLightIntensity.value)
         }
-        if (fillExtrusionFloodLightIntensityTransition != Transition.default) {
-          setProperty(FillExtrusionFloodLightIntensity.TRANSITION_NAME, fillExtrusionFloodLightIntensityTransition.value)
+        if (fillExtrusionFloodLightIntensityTransition.notInitial) {
+          setProperty("fill-extrusion-flood-light-intensity-transition", fillExtrusionFloodLightIntensityTransition.value)
         }
-        if (fillExtrusionFloodLightWallRadius != FillExtrusionFloodLightWallRadius.default) {
-          setProperty(FillExtrusionFloodLightWallRadius.NAME, fillExtrusionFloodLightWallRadius.value)
+        if (fillExtrusionFloodLightWallRadius.notInitial) {
+          setProperty("fill-extrusion-flood-light-wall-radius", fillExtrusionFloodLightWallRadius.value)
         }
-        if (fillExtrusionFloodLightWallRadiusTransition != Transition.default) {
-          setProperty(FillExtrusionFloodLightWallRadius.TRANSITION_NAME, fillExtrusionFloodLightWallRadiusTransition.value)
+        if (fillExtrusionFloodLightWallRadiusTransition.notInitial) {
+          setProperty("fill-extrusion-flood-light-wall-radius-transition", fillExtrusionFloodLightWallRadiusTransition.value)
         }
-        if (fillExtrusionHeight != FillExtrusionHeight.default) {
-          setProperty(FillExtrusionHeight.NAME, fillExtrusionHeight.value)
+        if (fillExtrusionHeight.notInitial) {
+          setProperty("fill-extrusion-height", fillExtrusionHeight.value)
         }
-        if (fillExtrusionHeightTransition != Transition.default) {
-          setProperty(FillExtrusionHeight.TRANSITION_NAME, fillExtrusionHeightTransition.value)
+        if (fillExtrusionHeightTransition.notInitial) {
+          setProperty("fill-extrusion-height-transition", fillExtrusionHeightTransition.value)
         }
-        if (fillExtrusionOpacity != FillExtrusionOpacity.default) {
-          setProperty(FillExtrusionOpacity.NAME, fillExtrusionOpacity.value)
+        if (fillExtrusionOpacity.notInitial) {
+          setProperty("fill-extrusion-opacity", fillExtrusionOpacity.value)
         }
-        if (fillExtrusionOpacityTransition != Transition.default) {
-          setProperty(FillExtrusionOpacity.TRANSITION_NAME, fillExtrusionOpacityTransition.value)
+        if (fillExtrusionOpacityTransition.notInitial) {
+          setProperty("fill-extrusion-opacity-transition", fillExtrusionOpacityTransition.value)
         }
-        if (fillExtrusionPattern != FillExtrusionPattern.default) {
+        if (fillExtrusionPattern.notInitial) {
           fillExtrusionPattern.styleImage?.let {
             addImage(it)
           }
-          setProperty(FillExtrusionPattern.NAME, fillExtrusionPattern.value)
+          setProperty("fill-extrusion-pattern", fillExtrusionPattern.value)
         }
-        if (fillExtrusionRoundedRoof != FillExtrusionRoundedRoof.default) {
-          setProperty(FillExtrusionRoundedRoof.NAME, fillExtrusionRoundedRoof.value)
+        if (fillExtrusionRoundedRoof.notInitial) {
+          setProperty("fill-extrusion-rounded-roof", fillExtrusionRoundedRoof.value)
         }
-        if (fillExtrusionTranslate != FillExtrusionTranslate.default) {
-          setProperty(FillExtrusionTranslate.NAME, fillExtrusionTranslate.value)
+        if (fillExtrusionTranslate.notInitial) {
+          setProperty("fill-extrusion-translate", fillExtrusionTranslate.value)
         }
-        if (fillExtrusionTranslateTransition != Transition.default) {
-          setProperty(FillExtrusionTranslate.TRANSITION_NAME, fillExtrusionTranslateTransition.value)
+        if (fillExtrusionTranslateTransition.notInitial) {
+          setProperty("fill-extrusion-translate-transition", fillExtrusionTranslateTransition.value)
         }
-        if (fillExtrusionTranslateAnchor != FillExtrusionTranslateAnchor.default) {
-          setProperty(FillExtrusionTranslateAnchor.NAME, fillExtrusionTranslateAnchor.value)
+        if (fillExtrusionTranslateAnchor.notInitial) {
+          setProperty("fill-extrusion-translate-anchor", fillExtrusionTranslateAnchor.value)
         }
-        if (fillExtrusionVerticalGradient != FillExtrusionVerticalGradient.default) {
-          setProperty(FillExtrusionVerticalGradient.NAME, fillExtrusionVerticalGradient.value)
+        if (fillExtrusionVerticalGradient.notInitial) {
+          setProperty("fill-extrusion-vertical-gradient", fillExtrusionVerticalGradient.value)
         }
-        if (fillExtrusionVerticalScale != FillExtrusionVerticalScale.default) {
-          setProperty(FillExtrusionVerticalScale.NAME, fillExtrusionVerticalScale.value)
+        if (fillExtrusionVerticalScale.notInitial) {
+          setProperty("fill-extrusion-vertical-scale", fillExtrusionVerticalScale.value)
         }
-        if (fillExtrusionVerticalScaleTransition != Transition.default) {
-          setProperty(FillExtrusionVerticalScale.TRANSITION_NAME, fillExtrusionVerticalScaleTransition.value)
+        if (fillExtrusionVerticalScaleTransition.notInitial) {
+          setProperty("fill-extrusion-vertical-scale-transition", fillExtrusionVerticalScaleTransition.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -267,142 +293,142 @@ public fun FillExtrusionLayer(
         updateLayerId(layerId)
       }
       update(fillExtrusionEdgeRadius) {
-        setProperty(FillExtrusionEdgeRadius.NAME, fillExtrusionEdgeRadius.value)
+        setProperty("fill-extrusion-edge-radius", fillExtrusionEdgeRadius.value)
       }
       update(fillExtrusionAmbientOcclusionGroundAttenuation) {
-        setProperty(FillExtrusionAmbientOcclusionGroundAttenuation.NAME, fillExtrusionAmbientOcclusionGroundAttenuation.value)
+        setProperty("fill-extrusion-ambient-occlusion-ground-attenuation", fillExtrusionAmbientOcclusionGroundAttenuation.value)
       }
       update(fillExtrusionAmbientOcclusionGroundAttenuationTransition) {
-        setProperty(FillExtrusionAmbientOcclusionGroundAttenuation.TRANSITION_NAME, fillExtrusionAmbientOcclusionGroundAttenuationTransition.value)
+        setProperty("fill-extrusion-ambient-occlusion-ground-attenuation-transition", fillExtrusionAmbientOcclusionGroundAttenuationTransition.value)
       }
       update(fillExtrusionAmbientOcclusionGroundRadius) {
-        setProperty(FillExtrusionAmbientOcclusionGroundRadius.NAME, fillExtrusionAmbientOcclusionGroundRadius.value)
+        setProperty("fill-extrusion-ambient-occlusion-ground-radius", fillExtrusionAmbientOcclusionGroundRadius.value)
       }
       update(fillExtrusionAmbientOcclusionGroundRadiusTransition) {
-        setProperty(FillExtrusionAmbientOcclusionGroundRadius.TRANSITION_NAME, fillExtrusionAmbientOcclusionGroundRadiusTransition.value)
+        setProperty("fill-extrusion-ambient-occlusion-ground-radius-transition", fillExtrusionAmbientOcclusionGroundRadiusTransition.value)
       }
       update(fillExtrusionAmbientOcclusionIntensity) {
-        setProperty(FillExtrusionAmbientOcclusionIntensity.NAME, fillExtrusionAmbientOcclusionIntensity.value)
+        setProperty("fill-extrusion-ambient-occlusion-intensity", fillExtrusionAmbientOcclusionIntensity.value)
       }
       update(fillExtrusionAmbientOcclusionIntensityTransition) {
-        setProperty(FillExtrusionAmbientOcclusionIntensity.TRANSITION_NAME, fillExtrusionAmbientOcclusionIntensityTransition.value)
+        setProperty("fill-extrusion-ambient-occlusion-intensity-transition", fillExtrusionAmbientOcclusionIntensityTransition.value)
       }
       update(fillExtrusionAmbientOcclusionRadius) {
-        setProperty(FillExtrusionAmbientOcclusionRadius.NAME, fillExtrusionAmbientOcclusionRadius.value)
+        setProperty("fill-extrusion-ambient-occlusion-radius", fillExtrusionAmbientOcclusionRadius.value)
       }
       update(fillExtrusionAmbientOcclusionRadiusTransition) {
-        setProperty(FillExtrusionAmbientOcclusionRadius.TRANSITION_NAME, fillExtrusionAmbientOcclusionRadiusTransition.value)
+        setProperty("fill-extrusion-ambient-occlusion-radius-transition", fillExtrusionAmbientOcclusionRadiusTransition.value)
       }
       update(fillExtrusionAmbientOcclusionWallRadius) {
-        setProperty(FillExtrusionAmbientOcclusionWallRadius.NAME, fillExtrusionAmbientOcclusionWallRadius.value)
+        setProperty("fill-extrusion-ambient-occlusion-wall-radius", fillExtrusionAmbientOcclusionWallRadius.value)
       }
       update(fillExtrusionAmbientOcclusionWallRadiusTransition) {
-        setProperty(FillExtrusionAmbientOcclusionWallRadius.TRANSITION_NAME, fillExtrusionAmbientOcclusionWallRadiusTransition.value)
+        setProperty("fill-extrusion-ambient-occlusion-wall-radius-transition", fillExtrusionAmbientOcclusionWallRadiusTransition.value)
       }
       update(fillExtrusionBase) {
-        setProperty(FillExtrusionBase.NAME, fillExtrusionBase.value)
+        setProperty("fill-extrusion-base", fillExtrusionBase.value)
       }
       update(fillExtrusionBaseTransition) {
-        setProperty(FillExtrusionBase.TRANSITION_NAME, fillExtrusionBaseTransition.value)
+        setProperty("fill-extrusion-base-transition", fillExtrusionBaseTransition.value)
       }
       update(fillExtrusionColor) {
-        setProperty(FillExtrusionColor.NAME, fillExtrusionColor.value)
+        setProperty("fill-extrusion-color", fillExtrusionColor.value)
       }
       update(fillExtrusionColorTransition) {
-        setProperty(FillExtrusionColor.TRANSITION_NAME, fillExtrusionColorTransition.value)
+        setProperty("fill-extrusion-color-transition", fillExtrusionColorTransition.value)
       }
       update(fillExtrusionCutoffFadeRange) {
-        setProperty(FillExtrusionCutoffFadeRange.NAME, fillExtrusionCutoffFadeRange.value)
+        setProperty("fill-extrusion-cutoff-fade-range", fillExtrusionCutoffFadeRange.value)
       }
       update(fillExtrusionEmissiveStrength) {
-        setProperty(FillExtrusionEmissiveStrength.NAME, fillExtrusionEmissiveStrength.value)
+        setProperty("fill-extrusion-emissive-strength", fillExtrusionEmissiveStrength.value)
       }
       update(fillExtrusionEmissiveStrengthTransition) {
-        setProperty(FillExtrusionEmissiveStrength.TRANSITION_NAME, fillExtrusionEmissiveStrengthTransition.value)
+        setProperty("fill-extrusion-emissive-strength-transition", fillExtrusionEmissiveStrengthTransition.value)
       }
       update(fillExtrusionFloodLightColor) {
-        setProperty(FillExtrusionFloodLightColor.NAME, fillExtrusionFloodLightColor.value)
+        setProperty("fill-extrusion-flood-light-color", fillExtrusionFloodLightColor.value)
       }
       update(fillExtrusionFloodLightColorTransition) {
-        setProperty(FillExtrusionFloodLightColor.TRANSITION_NAME, fillExtrusionFloodLightColorTransition.value)
+        setProperty("fill-extrusion-flood-light-color-transition", fillExtrusionFloodLightColorTransition.value)
       }
       update(fillExtrusionFloodLightGroundAttenuation) {
-        setProperty(FillExtrusionFloodLightGroundAttenuation.NAME, fillExtrusionFloodLightGroundAttenuation.value)
+        setProperty("fill-extrusion-flood-light-ground-attenuation", fillExtrusionFloodLightGroundAttenuation.value)
       }
       update(fillExtrusionFloodLightGroundAttenuationTransition) {
-        setProperty(FillExtrusionFloodLightGroundAttenuation.TRANSITION_NAME, fillExtrusionFloodLightGroundAttenuationTransition.value)
+        setProperty("fill-extrusion-flood-light-ground-attenuation-transition", fillExtrusionFloodLightGroundAttenuationTransition.value)
       }
       update(fillExtrusionFloodLightGroundRadius) {
-        setProperty(FillExtrusionFloodLightGroundRadius.NAME, fillExtrusionFloodLightGroundRadius.value)
+        setProperty("fill-extrusion-flood-light-ground-radius", fillExtrusionFloodLightGroundRadius.value)
       }
       update(fillExtrusionFloodLightGroundRadiusTransition) {
-        setProperty(FillExtrusionFloodLightGroundRadius.TRANSITION_NAME, fillExtrusionFloodLightGroundRadiusTransition.value)
+        setProperty("fill-extrusion-flood-light-ground-radius-transition", fillExtrusionFloodLightGroundRadiusTransition.value)
       }
       update(fillExtrusionFloodLightIntensity) {
-        setProperty(FillExtrusionFloodLightIntensity.NAME, fillExtrusionFloodLightIntensity.value)
+        setProperty("fill-extrusion-flood-light-intensity", fillExtrusionFloodLightIntensity.value)
       }
       update(fillExtrusionFloodLightIntensityTransition) {
-        setProperty(FillExtrusionFloodLightIntensity.TRANSITION_NAME, fillExtrusionFloodLightIntensityTransition.value)
+        setProperty("fill-extrusion-flood-light-intensity-transition", fillExtrusionFloodLightIntensityTransition.value)
       }
       update(fillExtrusionFloodLightWallRadius) {
-        setProperty(FillExtrusionFloodLightWallRadius.NAME, fillExtrusionFloodLightWallRadius.value)
+        setProperty("fill-extrusion-flood-light-wall-radius", fillExtrusionFloodLightWallRadius.value)
       }
       update(fillExtrusionFloodLightWallRadiusTransition) {
-        setProperty(FillExtrusionFloodLightWallRadius.TRANSITION_NAME, fillExtrusionFloodLightWallRadiusTransition.value)
+        setProperty("fill-extrusion-flood-light-wall-radius-transition", fillExtrusionFloodLightWallRadiusTransition.value)
       }
       update(fillExtrusionHeight) {
-        setProperty(FillExtrusionHeight.NAME, fillExtrusionHeight.value)
+        setProperty("fill-extrusion-height", fillExtrusionHeight.value)
       }
       update(fillExtrusionHeightTransition) {
-        setProperty(FillExtrusionHeight.TRANSITION_NAME, fillExtrusionHeightTransition.value)
+        setProperty("fill-extrusion-height-transition", fillExtrusionHeightTransition.value)
       }
       update(fillExtrusionOpacity) {
-        setProperty(FillExtrusionOpacity.NAME, fillExtrusionOpacity.value)
+        setProperty("fill-extrusion-opacity", fillExtrusionOpacity.value)
       }
       update(fillExtrusionOpacityTransition) {
-        setProperty(FillExtrusionOpacity.TRANSITION_NAME, fillExtrusionOpacityTransition.value)
+        setProperty("fill-extrusion-opacity-transition", fillExtrusionOpacityTransition.value)
       }
       update(fillExtrusionPattern) {
         fillExtrusionPattern.styleImage?.let {
           addImage(it)
         }
-        setProperty(FillExtrusionPattern.NAME, fillExtrusionPattern.value)
+        setProperty("fill-extrusion-pattern", fillExtrusionPattern.value)
       }
       update(fillExtrusionRoundedRoof) {
-        setProperty(FillExtrusionRoundedRoof.NAME, fillExtrusionRoundedRoof.value)
+        setProperty("fill-extrusion-rounded-roof", fillExtrusionRoundedRoof.value)
       }
       update(fillExtrusionTranslate) {
-        setProperty(FillExtrusionTranslate.NAME, fillExtrusionTranslate.value)
+        setProperty("fill-extrusion-translate", fillExtrusionTranslate.value)
       }
       update(fillExtrusionTranslateTransition) {
-        setProperty(FillExtrusionTranslate.TRANSITION_NAME, fillExtrusionTranslateTransition.value)
+        setProperty("fill-extrusion-translate-transition", fillExtrusionTranslateTransition.value)
       }
       update(fillExtrusionTranslateAnchor) {
-        setProperty(FillExtrusionTranslateAnchor.NAME, fillExtrusionTranslateAnchor.value)
+        setProperty("fill-extrusion-translate-anchor", fillExtrusionTranslateAnchor.value)
       }
       update(fillExtrusionVerticalGradient) {
-        setProperty(FillExtrusionVerticalGradient.NAME, fillExtrusionVerticalGradient.value)
+        setProperty("fill-extrusion-vertical-gradient", fillExtrusionVerticalGradient.value)
       }
       update(fillExtrusionVerticalScale) {
-        setProperty(FillExtrusionVerticalScale.NAME, fillExtrusionVerticalScale.value)
+        setProperty("fill-extrusion-vertical-scale", fillExtrusionVerticalScale.value)
       }
       update(fillExtrusionVerticalScaleTransition) {
-        setProperty(FillExtrusionVerticalScale.TRANSITION_NAME, fillExtrusionVerticalScaleTransition.value)
+        setProperty("fill-extrusion-vertical-scale-transition", fillExtrusionVerticalScaleTransition.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

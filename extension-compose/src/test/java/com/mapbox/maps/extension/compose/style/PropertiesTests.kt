@@ -143,4 +143,99 @@ public class PropertiesTests {
   public fun `RangeDoubleValue default is different than INITIAL`() {
     assertNotEquals(DoubleRangeValue.DEFAULT, DoubleRangeValue.INITIAL)
   }
+
+  @Test
+  public fun `LongValue to long`() {
+    val longValue = LongValue(1)
+    assertEquals(1L, longValue.longOrNull)
+  }
+
+  @Test
+  public fun `BooleanValue to Boolean`() {
+    val booleanValue = BooleanValue(true)
+    assertEquals(true, booleanValue.booleanOrNull)
+  }
+
+  @Test
+  public fun `StringValue to String`() {
+    val stringValue = StringValue("abc")
+    assertEquals("abc", stringValue.stringOrNull)
+  }
+
+  @Test
+  public fun `DoubleListValue with vararg to DoubleList getter`() {
+    val doubleListValue = DoubleListValue(1.0, 2.0, 3.0)
+    assertEquals(3, doubleListValue.doubleListOrNull!!.size)
+    assertEquals(1.0, doubleListValue.doubleListOrNull!![0], EPS)
+    assertEquals(2.0, doubleListValue.doubleListOrNull!![1], EPS)
+    assertEquals(3.0, doubleListValue.doubleListOrNull!![2], EPS)
+  }
+
+  @Test
+  public fun `DoubleListValue with list to DoubleList getter`() {
+    val doubleListValue = DoubleListValue(listOf(1.0, 2.0, 3.0))
+    assertEquals(3, doubleListValue.doubleListOrNull!!.size)
+    assertEquals(1.0, doubleListValue.doubleListOrNull!![0], EPS)
+    assertEquals(2.0, doubleListValue.doubleListOrNull!![1], EPS)
+    assertEquals(3.0, doubleListValue.doubleListOrNull!![2], EPS)
+  }
+
+  @Test
+  public fun `DoubleListValue with Expression to DoubleList getter`() {
+    val doubleListValue = DoubleListValue(
+      Expression.array {
+        literal(1.0)
+        literal(2.0)
+        literal(3.0)
+      }
+    )
+    assertEquals(3, doubleListValue.doubleListOrNull!!.size)
+    assertEquals(1.0, doubleListValue.doubleListOrNull!![0], EPS)
+    assertEquals(2.0, doubleListValue.doubleListOrNull!![1], EPS)
+    assertEquals(3.0, doubleListValue.doubleListOrNull!![2], EPS)
+  }
+
+  @Test
+  public fun `StringListValue with vararg to StringList getter`() {
+    val stringListValue = StringListValue("a", "b", "c")
+    assertEquals(3, stringListValue.stringListOrNull!!.size)
+    assertEquals("a", stringListValue.stringListOrNull!![0])
+    assertEquals("b", stringListValue.stringListOrNull!![1])
+    assertEquals("c", stringListValue.stringListOrNull!![2])
+  }
+
+  @Test
+  public fun `StringListValue with list to StringList getter`() {
+    val stringListValue = StringListValue("a", "b", "c")
+    assertEquals(3, stringListValue.stringListOrNull!!.size)
+    assertEquals("a", stringListValue.stringListOrNull!![0])
+    assertEquals("b", stringListValue.stringListOrNull!![1])
+    assertEquals("c", stringListValue.stringListOrNull!![2])
+  }
+
+  @Test
+  public fun `StringListValue with Expression to StringList getter`() {
+    val stringListValue = StringListValue(
+      Expression.array {
+        literal("a")
+        literal("b")
+        literal("c")
+      }
+    )
+    assertEquals(3, stringListValue.stringListOrNull!!.size)
+    assertEquals("a", stringListValue.stringListOrNull!![0])
+    assertEquals("b", stringListValue.stringListOrNull!![1])
+    assertEquals("c", stringListValue.stringListOrNull!![2])
+  }
+
+  @Test
+  public fun `Transition duration and delay getter`() {
+    val transition = Transition(100, 1000)
+    assertEquals(100, transition.durationMillis)
+    assertEquals(1000, transition.delayMillis)
+  }
+
+  private companion object {
+    private const val EPS = 0.0000001
+  }
 }

@@ -26,16 +26,14 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
+import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layerPositionedContent
-import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundColor
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundOpacity
-import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.CircleRadius
-import com.mapbox.maps.extension.compose.style.layers.generated.Transition
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
@@ -193,17 +191,17 @@ public class GenericStylePositionsActivity : ComponentActivity() {
             slot("top") {
               CircleLayer(
                 sourceState = geoJsonSource,
-                circleColor = CircleColor(Color.Cyan),
-                circleRadius = CircleRadius(50.0),
-                circleRadiusTransition = Transition(duration = 1000L)
+                circleColor = ColorValue(Color.Cyan),
+                circleRadius = DoubleValue(50.0),
+                circleRadiusTransition = Transition(durationMillis = 1000L)
               )
             }
           }
           if (showMiddleSlotContent) {
             slot("middle") {
               BackgroundLayer(
-                backgroundColor = BackgroundColor(Color.Red),
-                backgroundOpacity = BackgroundOpacity(0.3)
+                backgroundColor = ColorValue(Color.Red),
+                backgroundOpacity = DoubleValue(0.3)
               )
             }
           }
@@ -216,8 +214,8 @@ public class GenericStylePositionsActivity : ComponentActivity() {
           if (showLayerPositionedContent) {
             belowLayer("building") {
               BackgroundLayer(
-                backgroundColor = BackgroundColor(Color.Yellow),
-                backgroundOpacity = BackgroundOpacity(0.3)
+                backgroundColor = ColorValue(Color.Yellow),
+                backgroundOpacity = DoubleValue(0.3)
               )
             }
           }

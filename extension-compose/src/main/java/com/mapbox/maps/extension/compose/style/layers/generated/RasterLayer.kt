@@ -10,7 +10,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleRangeValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -23,18 +31,28 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param rasterArrayBand Displayed band of raster array source layer
  * @param rasterBrightnessMax Increase or reduce the brightness of the image. The value is the maximum brightness.
+ * @param rasterBrightnessMaxTransition Defines the transition of [rasterBrightnessMax].
  * @param rasterBrightnessMin Increase or reduce the brightness of the image. The value is the minimum brightness.
+ * @param rasterBrightnessMinTransition Defines the transition of [rasterBrightnessMin].
  * @param rasterColor Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
  * @param rasterColorMix When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+ * @param rasterColorMixTransition Defines the transition of [rasterColorMix].
  * @param rasterColorRange When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+ * @param rasterColorRangeTransition Defines the transition of [rasterColorRange].
  * @param rasterContrast Increase or reduce the contrast of the image.
+ * @param rasterContrastTransition Defines the transition of [rasterContrast].
  * @param rasterElevation Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+ * @param rasterElevationTransition Defines the transition of [rasterElevation].
  * @param rasterEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param rasterEmissiveStrengthTransition Defines the transition of [rasterEmissiveStrength].
  * @param rasterFadeDuration Fade duration when a new tile is added.
  * @param rasterHueRotate Rotates hues around the color wheel.
+ * @param rasterHueRotateTransition Defines the transition of [rasterHueRotate].
  * @param rasterOpacity The opacity at which the image will be drawn.
+ * @param rasterOpacityTransition Defines the transition of [rasterOpacity].
  * @param rasterResampling The resampling/interpolation method to use for overscaling, also known as texture magnification filter
  * @param rasterSaturation Increase or reduce the saturation of the image.
+ * @param rasterSaturationTransition Defines the transition of [rasterSaturation].
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
  * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -49,35 +67,35 @@ public fun RasterLayer(
   layerId: String = remember {
     generateRandomLayerId("raster")
   },
-  rasterArrayBand: RasterArrayBand = RasterArrayBand.default,
-  rasterBrightnessMax: RasterBrightnessMax = RasterBrightnessMax.default,
-  rasterBrightnessMaxTransition: Transition = Transition.default,
-  rasterBrightnessMin: RasterBrightnessMin = RasterBrightnessMin.default,
-  rasterBrightnessMinTransition: Transition = Transition.default,
-  rasterColor: RasterColor = RasterColor.default,
-  rasterColorMix: RasterColorMix = RasterColorMix.default,
-  rasterColorMixTransition: Transition = Transition.default,
-  rasterColorRange: RasterColorRange = RasterColorRange.default,
-  rasterColorRangeTransition: Transition = Transition.default,
-  rasterContrast: RasterContrast = RasterContrast.default,
-  rasterContrastTransition: Transition = Transition.default,
-  rasterElevation: RasterElevation = RasterElevation.default,
-  rasterElevationTransition: Transition = Transition.default,
-  rasterEmissiveStrength: RasterEmissiveStrength = RasterEmissiveStrength.default,
-  rasterEmissiveStrengthTransition: Transition = Transition.default,
-  rasterFadeDuration: RasterFadeDuration = RasterFadeDuration.default,
-  rasterHueRotate: RasterHueRotate = RasterHueRotate.default,
-  rasterHueRotateTransition: Transition = Transition.default,
-  rasterOpacity: RasterOpacity = RasterOpacity.default,
-  rasterOpacityTransition: Transition = Transition.default,
-  rasterResampling: RasterResampling = RasterResampling.default,
-  rasterSaturation: RasterSaturation = RasterSaturation.default,
-  rasterSaturationTransition: Transition = Transition.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  rasterArrayBand: StringValue = StringValue.INITIAL,
+  rasterBrightnessMax: DoubleValue = DoubleValue.INITIAL,
+  rasterBrightnessMaxTransition: Transition = Transition.INITIAL,
+  rasterBrightnessMin: DoubleValue = DoubleValue.INITIAL,
+  rasterBrightnessMinTransition: Transition = Transition.INITIAL,
+  rasterColor: ColorValue = ColorValue.INITIAL,
+  rasterColorMix: DoubleListValue = DoubleListValue.INITIAL,
+  rasterColorMixTransition: Transition = Transition.INITIAL,
+  rasterColorRange: DoubleRangeValue = DoubleRangeValue.INITIAL,
+  rasterColorRangeTransition: Transition = Transition.INITIAL,
+  rasterContrast: DoubleValue = DoubleValue.INITIAL,
+  rasterContrastTransition: Transition = Transition.INITIAL,
+  rasterElevation: DoubleValue = DoubleValue.INITIAL,
+  rasterElevationTransition: Transition = Transition.INITIAL,
+  rasterEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  rasterEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  rasterFadeDuration: DoubleValue = DoubleValue.INITIAL,
+  rasterHueRotate: DoubleValue = DoubleValue.INITIAL,
+  rasterHueRotateTransition: Transition = Transition.INITIAL,
+  rasterOpacity: DoubleValue = DoubleValue.INITIAL,
+  rasterOpacityTransition: Transition = Transition.INITIAL,
+  rasterResampling: RasterResamplingValue = RasterResamplingValue.INITIAL,
+  rasterSaturation: DoubleValue = DoubleValue.INITIAL,
+  rasterSaturationTransition: Transition = Transition.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of RasterLayer inside unsupported composable function")
@@ -96,92 +114,92 @@ public fun RasterLayer(
     },
     update = {
       init {
-        if (rasterArrayBand != RasterArrayBand.default) {
-          setProperty(RasterArrayBand.NAME, rasterArrayBand.value)
+        if (rasterArrayBand.notInitial) {
+          setProperty("raster-array-band", rasterArrayBand.value)
         }
-        if (rasterBrightnessMax != RasterBrightnessMax.default) {
-          setProperty(RasterBrightnessMax.NAME, rasterBrightnessMax.value)
+        if (rasterBrightnessMax.notInitial) {
+          setProperty("raster-brightness-max", rasterBrightnessMax.value)
         }
-        if (rasterBrightnessMaxTransition != Transition.default) {
-          setProperty(RasterBrightnessMax.TRANSITION_NAME, rasterBrightnessMaxTransition.value)
+        if (rasterBrightnessMaxTransition.notInitial) {
+          setProperty("raster-brightness-max-transition", rasterBrightnessMaxTransition.value)
         }
-        if (rasterBrightnessMin != RasterBrightnessMin.default) {
-          setProperty(RasterBrightnessMin.NAME, rasterBrightnessMin.value)
+        if (rasterBrightnessMin.notInitial) {
+          setProperty("raster-brightness-min", rasterBrightnessMin.value)
         }
-        if (rasterBrightnessMinTransition != Transition.default) {
-          setProperty(RasterBrightnessMin.TRANSITION_NAME, rasterBrightnessMinTransition.value)
+        if (rasterBrightnessMinTransition.notInitial) {
+          setProperty("raster-brightness-min-transition", rasterBrightnessMinTransition.value)
         }
-        if (rasterColor != RasterColor.default) {
-          setProperty(RasterColor.NAME, rasterColor.value)
+        if (rasterColor.notInitial) {
+          setProperty("raster-color", rasterColor.value)
         }
-        if (rasterColorMix != RasterColorMix.default) {
-          setProperty(RasterColorMix.NAME, rasterColorMix.value)
+        if (rasterColorMix.notInitial) {
+          setProperty("raster-color-mix", rasterColorMix.value)
         }
-        if (rasterColorMixTransition != Transition.default) {
-          setProperty(RasterColorMix.TRANSITION_NAME, rasterColorMixTransition.value)
+        if (rasterColorMixTransition.notInitial) {
+          setProperty("raster-color-mix-transition", rasterColorMixTransition.value)
         }
-        if (rasterColorRange != RasterColorRange.default) {
-          setProperty(RasterColorRange.NAME, rasterColorRange.value)
+        if (rasterColorRange.notInitial) {
+          setProperty("raster-color-range", rasterColorRange.value)
         }
-        if (rasterColorRangeTransition != Transition.default) {
-          setProperty(RasterColorRange.TRANSITION_NAME, rasterColorRangeTransition.value)
+        if (rasterColorRangeTransition.notInitial) {
+          setProperty("raster-color-range-transition", rasterColorRangeTransition.value)
         }
-        if (rasterContrast != RasterContrast.default) {
-          setProperty(RasterContrast.NAME, rasterContrast.value)
+        if (rasterContrast.notInitial) {
+          setProperty("raster-contrast", rasterContrast.value)
         }
-        if (rasterContrastTransition != Transition.default) {
-          setProperty(RasterContrast.TRANSITION_NAME, rasterContrastTransition.value)
+        if (rasterContrastTransition.notInitial) {
+          setProperty("raster-contrast-transition", rasterContrastTransition.value)
         }
-        if (rasterElevation != RasterElevation.default) {
-          setProperty(RasterElevation.NAME, rasterElevation.value)
+        if (rasterElevation.notInitial) {
+          setProperty("raster-elevation", rasterElevation.value)
         }
-        if (rasterElevationTransition != Transition.default) {
-          setProperty(RasterElevation.TRANSITION_NAME, rasterElevationTransition.value)
+        if (rasterElevationTransition.notInitial) {
+          setProperty("raster-elevation-transition", rasterElevationTransition.value)
         }
-        if (rasterEmissiveStrength != RasterEmissiveStrength.default) {
-          setProperty(RasterEmissiveStrength.NAME, rasterEmissiveStrength.value)
+        if (rasterEmissiveStrength.notInitial) {
+          setProperty("raster-emissive-strength", rasterEmissiveStrength.value)
         }
-        if (rasterEmissiveStrengthTransition != Transition.default) {
-          setProperty(RasterEmissiveStrength.TRANSITION_NAME, rasterEmissiveStrengthTransition.value)
+        if (rasterEmissiveStrengthTransition.notInitial) {
+          setProperty("raster-emissive-strength-transition", rasterEmissiveStrengthTransition.value)
         }
-        if (rasterFadeDuration != RasterFadeDuration.default) {
-          setProperty(RasterFadeDuration.NAME, rasterFadeDuration.value)
+        if (rasterFadeDuration.notInitial) {
+          setProperty("raster-fade-duration", rasterFadeDuration.value)
         }
-        if (rasterHueRotate != RasterHueRotate.default) {
-          setProperty(RasterHueRotate.NAME, rasterHueRotate.value)
+        if (rasterHueRotate.notInitial) {
+          setProperty("raster-hue-rotate", rasterHueRotate.value)
         }
-        if (rasterHueRotateTransition != Transition.default) {
-          setProperty(RasterHueRotate.TRANSITION_NAME, rasterHueRotateTransition.value)
+        if (rasterHueRotateTransition.notInitial) {
+          setProperty("raster-hue-rotate-transition", rasterHueRotateTransition.value)
         }
-        if (rasterOpacity != RasterOpacity.default) {
-          setProperty(RasterOpacity.NAME, rasterOpacity.value)
+        if (rasterOpacity.notInitial) {
+          setProperty("raster-opacity", rasterOpacity.value)
         }
-        if (rasterOpacityTransition != Transition.default) {
-          setProperty(RasterOpacity.TRANSITION_NAME, rasterOpacityTransition.value)
+        if (rasterOpacityTransition.notInitial) {
+          setProperty("raster-opacity-transition", rasterOpacityTransition.value)
         }
-        if (rasterResampling != RasterResampling.default) {
-          setProperty(RasterResampling.NAME, rasterResampling.value)
+        if (rasterResampling.notInitial) {
+          setProperty("raster-resampling", rasterResampling.value)
         }
-        if (rasterSaturation != RasterSaturation.default) {
-          setProperty(RasterSaturation.NAME, rasterSaturation.value)
+        if (rasterSaturation.notInitial) {
+          setProperty("raster-saturation", rasterSaturation.value)
         }
-        if (rasterSaturationTransition != Transition.default) {
-          setProperty(RasterSaturation.TRANSITION_NAME, rasterSaturationTransition.value)
+        if (rasterSaturationTransition.notInitial) {
+          setProperty("raster-saturation-transition", rasterSaturationTransition.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -191,91 +209,91 @@ public fun RasterLayer(
         updateLayerId(layerId)
       }
       update(rasterArrayBand) {
-        setProperty(RasterArrayBand.NAME, rasterArrayBand.value)
+        setProperty("raster-array-band", rasterArrayBand.value)
       }
       update(rasterBrightnessMax) {
-        setProperty(RasterBrightnessMax.NAME, rasterBrightnessMax.value)
+        setProperty("raster-brightness-max", rasterBrightnessMax.value)
       }
       update(rasterBrightnessMaxTransition) {
-        setProperty(RasterBrightnessMax.TRANSITION_NAME, rasterBrightnessMaxTransition.value)
+        setProperty("raster-brightness-max-transition", rasterBrightnessMaxTransition.value)
       }
       update(rasterBrightnessMin) {
-        setProperty(RasterBrightnessMin.NAME, rasterBrightnessMin.value)
+        setProperty("raster-brightness-min", rasterBrightnessMin.value)
       }
       update(rasterBrightnessMinTransition) {
-        setProperty(RasterBrightnessMin.TRANSITION_NAME, rasterBrightnessMinTransition.value)
+        setProperty("raster-brightness-min-transition", rasterBrightnessMinTransition.value)
       }
       update(rasterColor) {
-        setProperty(RasterColor.NAME, rasterColor.value)
+        setProperty("raster-color", rasterColor.value)
       }
       update(rasterColorMix) {
-        setProperty(RasterColorMix.NAME, rasterColorMix.value)
+        setProperty("raster-color-mix", rasterColorMix.value)
       }
       update(rasterColorMixTransition) {
-        setProperty(RasterColorMix.TRANSITION_NAME, rasterColorMixTransition.value)
+        setProperty("raster-color-mix-transition", rasterColorMixTransition.value)
       }
       update(rasterColorRange) {
-        setProperty(RasterColorRange.NAME, rasterColorRange.value)
+        setProperty("raster-color-range", rasterColorRange.value)
       }
       update(rasterColorRangeTransition) {
-        setProperty(RasterColorRange.TRANSITION_NAME, rasterColorRangeTransition.value)
+        setProperty("raster-color-range-transition", rasterColorRangeTransition.value)
       }
       update(rasterContrast) {
-        setProperty(RasterContrast.NAME, rasterContrast.value)
+        setProperty("raster-contrast", rasterContrast.value)
       }
       update(rasterContrastTransition) {
-        setProperty(RasterContrast.TRANSITION_NAME, rasterContrastTransition.value)
+        setProperty("raster-contrast-transition", rasterContrastTransition.value)
       }
       update(rasterElevation) {
-        setProperty(RasterElevation.NAME, rasterElevation.value)
+        setProperty("raster-elevation", rasterElevation.value)
       }
       update(rasterElevationTransition) {
-        setProperty(RasterElevation.TRANSITION_NAME, rasterElevationTransition.value)
+        setProperty("raster-elevation-transition", rasterElevationTransition.value)
       }
       update(rasterEmissiveStrength) {
-        setProperty(RasterEmissiveStrength.NAME, rasterEmissiveStrength.value)
+        setProperty("raster-emissive-strength", rasterEmissiveStrength.value)
       }
       update(rasterEmissiveStrengthTransition) {
-        setProperty(RasterEmissiveStrength.TRANSITION_NAME, rasterEmissiveStrengthTransition.value)
+        setProperty("raster-emissive-strength-transition", rasterEmissiveStrengthTransition.value)
       }
       update(rasterFadeDuration) {
-        setProperty(RasterFadeDuration.NAME, rasterFadeDuration.value)
+        setProperty("raster-fade-duration", rasterFadeDuration.value)
       }
       update(rasterHueRotate) {
-        setProperty(RasterHueRotate.NAME, rasterHueRotate.value)
+        setProperty("raster-hue-rotate", rasterHueRotate.value)
       }
       update(rasterHueRotateTransition) {
-        setProperty(RasterHueRotate.TRANSITION_NAME, rasterHueRotateTransition.value)
+        setProperty("raster-hue-rotate-transition", rasterHueRotateTransition.value)
       }
       update(rasterOpacity) {
-        setProperty(RasterOpacity.NAME, rasterOpacity.value)
+        setProperty("raster-opacity", rasterOpacity.value)
       }
       update(rasterOpacityTransition) {
-        setProperty(RasterOpacity.TRANSITION_NAME, rasterOpacityTransition.value)
+        setProperty("raster-opacity-transition", rasterOpacityTransition.value)
       }
       update(rasterResampling) {
-        setProperty(RasterResampling.NAME, rasterResampling.value)
+        setProperty("raster-resampling", rasterResampling.value)
       }
       update(rasterSaturation) {
-        setProperty(RasterSaturation.NAME, rasterSaturation.value)
+        setProperty("raster-saturation", rasterSaturation.value)
       }
       update(rasterSaturationTransition) {
-        setProperty(RasterSaturation.TRANSITION_NAME, rasterSaturationTransition.value)
+        setProperty("raster-saturation-transition", rasterSaturationTransition.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

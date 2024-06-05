@@ -59,18 +59,13 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
-import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.FillColor
 import com.mapbox.maps.extension.compose.style.layers.generated.FillLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.FillOpacity
-import com.mapbox.maps.extension.compose.style.layers.generated.LineBorderColor
-import com.mapbox.maps.extension.compose.style.layers.generated.LineBorderWidth
-import com.mapbox.maps.extension.compose.style.layers.generated.LineCap
-import com.mapbox.maps.extension.compose.style.layers.generated.LineColor
+import com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue
 import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.LineWidth
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
@@ -271,32 +266,32 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
         LineLayer(
           sourceState = altRouteSourceState,
           layerId = LAYER_ALT_ID,
-          lineColor = LineColor(
+          lineColor = ColorValue(
             Color(0xFF999999)
           ),
-          lineWidth = LineWidth(12.0),
-          lineBorderWidth = LineBorderWidth(2.0),
-          lineBorderColor = LineBorderColor(Color(0xFF333333))
+          lineWidth = DoubleValue(12.0),
+          lineBorderWidth = DoubleValue(2.0),
+          lineBorderColor = ColorValue(Color(0xFF333333))
         )
         LineLayer(
           sourceState = mainRouteSourceState,
           layerId = LAYER_MAIN_ID,
-          lineColor = LineColor(Color(0xFF57A9FB)),
-          lineWidth = LineWidth(12.0),
-          lineCap = LineCap.ROUND,
-          lineBorderWidth = LineBorderWidth(2.0),
-          lineBorderColor = LineBorderColor(Color(0xFF327AC2))
+          lineColor = ColorValue(Color(0xFF57A9FB)),
+          lineWidth = DoubleValue(12.0),
+          lineCap = LineCapValue.ROUND,
+          lineBorderWidth = DoubleValue(2.0),
+          lineBorderColor = ColorValue(Color(0xFF327AC2))
         )
         FillLayer(
           sourceState = parkingSourceState,
           layerId = LAYER_PARKING,
-          fillColor = FillColor(Color(0xff0080ff)),
-          fillOpacity = FillOpacity(0.5)
+          fillColor = ColorValue(Color(0xff0080ff)),
+          fillOpacity = DoubleValue(0.5)
         )
         CircleLayer(
           sourceState = constructionSourceState,
           layerId = LAYER_CONSTRUCTION,
-          circleColor = CircleColor(Color.Transparent)
+          circleColor = ColorValue(Color.Transparent)
         )
       }
     )

@@ -10,7 +10,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -22,12 +28,17 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param hillshadeAccentColor The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+ * @param hillshadeAccentColorTransition Defines the transition of [hillshadeAccentColor].
  * @param hillshadeEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param hillshadeEmissiveStrengthTransition Defines the transition of [hillshadeEmissiveStrength].
  * @param hillshadeExaggeration Intensity of the hillshade
+ * @param hillshadeExaggerationTransition Defines the transition of [hillshadeExaggeration].
  * @param hillshadeHighlightColor The shading color of areas that faces towards the light source.
+ * @param hillshadeHighlightColorTransition Defines the transition of [hillshadeHighlightColor].
  * @param hillshadeIlluminationAnchor Direction of light source when map is rotated.
  * @param hillshadeIlluminationDirection The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
  * @param hillshadeShadowColor The shading color of areas that face away from the light source.
+ * @param hillshadeShadowColorTransition Defines the transition of [hillshadeShadowColor].
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
  * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -42,23 +53,23 @@ public fun HillshadeLayer(
   layerId: String = remember {
     generateRandomLayerId("hillshade")
   },
-  hillshadeAccentColor: HillshadeAccentColor = HillshadeAccentColor.default,
-  hillshadeAccentColorTransition: Transition = Transition.default,
-  hillshadeEmissiveStrength: HillshadeEmissiveStrength = HillshadeEmissiveStrength.default,
-  hillshadeEmissiveStrengthTransition: Transition = Transition.default,
-  hillshadeExaggeration: HillshadeExaggeration = HillshadeExaggeration.default,
-  hillshadeExaggerationTransition: Transition = Transition.default,
-  hillshadeHighlightColor: HillshadeHighlightColor = HillshadeHighlightColor.default,
-  hillshadeHighlightColorTransition: Transition = Transition.default,
-  hillshadeIlluminationAnchor: HillshadeIlluminationAnchor = HillshadeIlluminationAnchor.default,
-  hillshadeIlluminationDirection: HillshadeIlluminationDirection = HillshadeIlluminationDirection.default,
-  hillshadeShadowColor: HillshadeShadowColor = HillshadeShadowColor.default,
-  hillshadeShadowColorTransition: Transition = Transition.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  hillshadeAccentColor: ColorValue = ColorValue.INITIAL,
+  hillshadeAccentColorTransition: Transition = Transition.INITIAL,
+  hillshadeEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  hillshadeEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  hillshadeExaggeration: DoubleValue = DoubleValue.INITIAL,
+  hillshadeExaggerationTransition: Transition = Transition.INITIAL,
+  hillshadeHighlightColor: ColorValue = ColorValue.INITIAL,
+  hillshadeHighlightColorTransition: Transition = Transition.INITIAL,
+  hillshadeIlluminationAnchor: HillshadeIlluminationAnchorValue = HillshadeIlluminationAnchorValue.INITIAL,
+  hillshadeIlluminationDirection: DoubleValue = DoubleValue.INITIAL,
+  hillshadeShadowColor: ColorValue = ColorValue.INITIAL,
+  hillshadeShadowColorTransition: Transition = Transition.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of HillshadeLayer inside unsupported composable function")
@@ -77,56 +88,56 @@ public fun HillshadeLayer(
     },
     update = {
       init {
-        if (hillshadeAccentColor != HillshadeAccentColor.default) {
-          setProperty(HillshadeAccentColor.NAME, hillshadeAccentColor.value)
+        if (hillshadeAccentColor.notInitial) {
+          setProperty("hillshade-accent-color", hillshadeAccentColor.value)
         }
-        if (hillshadeAccentColorTransition != Transition.default) {
-          setProperty(HillshadeAccentColor.TRANSITION_NAME, hillshadeAccentColorTransition.value)
+        if (hillshadeAccentColorTransition.notInitial) {
+          setProperty("hillshade-accent-color-transition", hillshadeAccentColorTransition.value)
         }
-        if (hillshadeEmissiveStrength != HillshadeEmissiveStrength.default) {
-          setProperty(HillshadeEmissiveStrength.NAME, hillshadeEmissiveStrength.value)
+        if (hillshadeEmissiveStrength.notInitial) {
+          setProperty("hillshade-emissive-strength", hillshadeEmissiveStrength.value)
         }
-        if (hillshadeEmissiveStrengthTransition != Transition.default) {
-          setProperty(HillshadeEmissiveStrength.TRANSITION_NAME, hillshadeEmissiveStrengthTransition.value)
+        if (hillshadeEmissiveStrengthTransition.notInitial) {
+          setProperty("hillshade-emissive-strength-transition", hillshadeEmissiveStrengthTransition.value)
         }
-        if (hillshadeExaggeration != HillshadeExaggeration.default) {
-          setProperty(HillshadeExaggeration.NAME, hillshadeExaggeration.value)
+        if (hillshadeExaggeration.notInitial) {
+          setProperty("hillshade-exaggeration", hillshadeExaggeration.value)
         }
-        if (hillshadeExaggerationTransition != Transition.default) {
-          setProperty(HillshadeExaggeration.TRANSITION_NAME, hillshadeExaggerationTransition.value)
+        if (hillshadeExaggerationTransition.notInitial) {
+          setProperty("hillshade-exaggeration-transition", hillshadeExaggerationTransition.value)
         }
-        if (hillshadeHighlightColor != HillshadeHighlightColor.default) {
-          setProperty(HillshadeHighlightColor.NAME, hillshadeHighlightColor.value)
+        if (hillshadeHighlightColor.notInitial) {
+          setProperty("hillshade-highlight-color", hillshadeHighlightColor.value)
         }
-        if (hillshadeHighlightColorTransition != Transition.default) {
-          setProperty(HillshadeHighlightColor.TRANSITION_NAME, hillshadeHighlightColorTransition.value)
+        if (hillshadeHighlightColorTransition.notInitial) {
+          setProperty("hillshade-highlight-color-transition", hillshadeHighlightColorTransition.value)
         }
-        if (hillshadeIlluminationAnchor != HillshadeIlluminationAnchor.default) {
-          setProperty(HillshadeIlluminationAnchor.NAME, hillshadeIlluminationAnchor.value)
+        if (hillshadeIlluminationAnchor.notInitial) {
+          setProperty("hillshade-illumination-anchor", hillshadeIlluminationAnchor.value)
         }
-        if (hillshadeIlluminationDirection != HillshadeIlluminationDirection.default) {
-          setProperty(HillshadeIlluminationDirection.NAME, hillshadeIlluminationDirection.value)
+        if (hillshadeIlluminationDirection.notInitial) {
+          setProperty("hillshade-illumination-direction", hillshadeIlluminationDirection.value)
         }
-        if (hillshadeShadowColor != HillshadeShadowColor.default) {
-          setProperty(HillshadeShadowColor.NAME, hillshadeShadowColor.value)
+        if (hillshadeShadowColor.notInitial) {
+          setProperty("hillshade-shadow-color", hillshadeShadowColor.value)
         }
-        if (hillshadeShadowColorTransition != Transition.default) {
-          setProperty(HillshadeShadowColor.TRANSITION_NAME, hillshadeShadowColorTransition.value)
+        if (hillshadeShadowColorTransition.notInitial) {
+          setProperty("hillshade-shadow-color-transition", hillshadeShadowColorTransition.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -136,55 +147,55 @@ public fun HillshadeLayer(
         updateLayerId(layerId)
       }
       update(hillshadeAccentColor) {
-        setProperty(HillshadeAccentColor.NAME, hillshadeAccentColor.value)
+        setProperty("hillshade-accent-color", hillshadeAccentColor.value)
       }
       update(hillshadeAccentColorTransition) {
-        setProperty(HillshadeAccentColor.TRANSITION_NAME, hillshadeAccentColorTransition.value)
+        setProperty("hillshade-accent-color-transition", hillshadeAccentColorTransition.value)
       }
       update(hillshadeEmissiveStrength) {
-        setProperty(HillshadeEmissiveStrength.NAME, hillshadeEmissiveStrength.value)
+        setProperty("hillshade-emissive-strength", hillshadeEmissiveStrength.value)
       }
       update(hillshadeEmissiveStrengthTransition) {
-        setProperty(HillshadeEmissiveStrength.TRANSITION_NAME, hillshadeEmissiveStrengthTransition.value)
+        setProperty("hillshade-emissive-strength-transition", hillshadeEmissiveStrengthTransition.value)
       }
       update(hillshadeExaggeration) {
-        setProperty(HillshadeExaggeration.NAME, hillshadeExaggeration.value)
+        setProperty("hillshade-exaggeration", hillshadeExaggeration.value)
       }
       update(hillshadeExaggerationTransition) {
-        setProperty(HillshadeExaggeration.TRANSITION_NAME, hillshadeExaggerationTransition.value)
+        setProperty("hillshade-exaggeration-transition", hillshadeExaggerationTransition.value)
       }
       update(hillshadeHighlightColor) {
-        setProperty(HillshadeHighlightColor.NAME, hillshadeHighlightColor.value)
+        setProperty("hillshade-highlight-color", hillshadeHighlightColor.value)
       }
       update(hillshadeHighlightColorTransition) {
-        setProperty(HillshadeHighlightColor.TRANSITION_NAME, hillshadeHighlightColorTransition.value)
+        setProperty("hillshade-highlight-color-transition", hillshadeHighlightColorTransition.value)
       }
       update(hillshadeIlluminationAnchor) {
-        setProperty(HillshadeIlluminationAnchor.NAME, hillshadeIlluminationAnchor.value)
+        setProperty("hillshade-illumination-anchor", hillshadeIlluminationAnchor.value)
       }
       update(hillshadeIlluminationDirection) {
-        setProperty(HillshadeIlluminationDirection.NAME, hillshadeIlluminationDirection.value)
+        setProperty("hillshade-illumination-direction", hillshadeIlluminationDirection.value)
       }
       update(hillshadeShadowColor) {
-        setProperty(HillshadeShadowColor.NAME, hillshadeShadowColor.value)
+        setProperty("hillshade-shadow-color", hillshadeShadowColor.value)
       }
       update(hillshadeShadowColorTransition) {
-        setProperty(HillshadeShadowColor.TRANSITION_NAME, hillshadeShadowColorTransition.value)
+        setProperty("hillshade-shadow-color-transition", hillshadeShadowColorTransition.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

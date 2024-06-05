@@ -10,7 +10,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -23,18 +31,29 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @param shadowImage Name of image in sprite to use as the background of the location indicator.
  * @param topImage Name of image in sprite to use as the top of the location indicator.
  * @param accuracyRadius The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+ * @param accuracyRadiusTransition Defines the transition of [accuracyRadius].
  * @param accuracyRadiusBorderColor The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+ * @param accuracyRadiusBorderColorTransition Defines the transition of [accuracyRadiusBorderColor].
  * @param accuracyRadiusColor The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+ * @param accuracyRadiusColorTransition Defines the transition of [accuracyRadiusColor].
  * @param bearing The bearing of the location indicator.
+ * @param bearingTransition Defines the transition of [bearing].
  * @param bearingImageSize The size of the bearing image, as a scale factor applied to the size of the specified image.
+ * @param bearingImageSizeTransition Defines the transition of [bearingImageSize].
  * @param emphasisCircleColor The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+ * @param emphasisCircleColorTransition Defines the transition of [emphasisCircleColor].
  * @param emphasisCircleRadius The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+ * @param emphasisCircleRadiusTransition Defines the transition of [emphasisCircleRadius].
  * @param imagePitchDisplacement The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
  * @param location An array of [latitude, longitude, altitude] position of the location indicator.
+ * @param locationTransition Defines the transition of [location].
  * @param locationIndicatorOpacity The opacity of the entire location indicator layer.
+ * @param locationIndicatorOpacityTransition Defines the transition of [locationIndicatorOpacity].
  * @param perspectiveCompensation The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
  * @param shadowImageSize The size of the shadow image, as a scale factor applied to the size of the specified image.
+ * @param shadowImageSizeTransition Defines the transition of [shadowImageSize].
  * @param topImageSize The size of the top image, as a scale factor applied to the size of the specified image.
+ * @param topImageSizeTransition Defines the transition of [topImageSize].
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
  * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -48,38 +67,38 @@ public fun LocationIndicatorLayer(
   layerId: String = remember {
     generateRandomLayerId("location-indicator")
   },
-  bearingImage: BearingImage = BearingImage.default,
-  shadowImage: ShadowImage = ShadowImage.default,
-  topImage: TopImage = TopImage.default,
-  accuracyRadius: AccuracyRadius = AccuracyRadius.default,
-  accuracyRadiusTransition: Transition = Transition.default,
-  accuracyRadiusBorderColor: AccuracyRadiusBorderColor = AccuracyRadiusBorderColor.default,
-  accuracyRadiusBorderColorTransition: Transition = Transition.default,
-  accuracyRadiusColor: AccuracyRadiusColor = AccuracyRadiusColor.default,
-  accuracyRadiusColorTransition: Transition = Transition.default,
-  bearing: Bearing = Bearing.default,
-  bearingTransition: Transition = Transition.default,
-  bearingImageSize: BearingImageSize = BearingImageSize.default,
-  bearingImageSizeTransition: Transition = Transition.default,
-  emphasisCircleColor: EmphasisCircleColor = EmphasisCircleColor.default,
-  emphasisCircleColorTransition: Transition = Transition.default,
-  emphasisCircleRadius: EmphasisCircleRadius = EmphasisCircleRadius.default,
-  emphasisCircleRadiusTransition: Transition = Transition.default,
-  imagePitchDisplacement: ImagePitchDisplacement = ImagePitchDisplacement.default,
-  location: Location = Location.default,
-  locationTransition: Transition = Transition.default,
-  locationIndicatorOpacity: LocationIndicatorOpacity = LocationIndicatorOpacity.default,
-  locationIndicatorOpacityTransition: Transition = Transition.default,
-  perspectiveCompensation: PerspectiveCompensation = PerspectiveCompensation.default,
-  shadowImageSize: ShadowImageSize = ShadowImageSize.default,
-  shadowImageSizeTransition: Transition = Transition.default,
-  topImageSize: TopImageSize = TopImageSize.default,
-  topImageSizeTransition: Transition = Transition.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  bearingImage: ImageValue = ImageValue.INITIAL,
+  shadowImage: ImageValue = ImageValue.INITIAL,
+  topImage: ImageValue = ImageValue.INITIAL,
+  accuracyRadius: DoubleValue = DoubleValue.INITIAL,
+  accuracyRadiusTransition: Transition = Transition.INITIAL,
+  accuracyRadiusBorderColor: ColorValue = ColorValue.INITIAL,
+  accuracyRadiusBorderColorTransition: Transition = Transition.INITIAL,
+  accuracyRadiusColor: ColorValue = ColorValue.INITIAL,
+  accuracyRadiusColorTransition: Transition = Transition.INITIAL,
+  bearing: DoubleValue = DoubleValue.INITIAL,
+  bearingTransition: Transition = Transition.INITIAL,
+  bearingImageSize: DoubleValue = DoubleValue.INITIAL,
+  bearingImageSizeTransition: Transition = Transition.INITIAL,
+  emphasisCircleColor: ColorValue = ColorValue.INITIAL,
+  emphasisCircleColorTransition: Transition = Transition.INITIAL,
+  emphasisCircleRadius: DoubleValue = DoubleValue.INITIAL,
+  emphasisCircleRadiusTransition: Transition = Transition.INITIAL,
+  imagePitchDisplacement: DoubleValue = DoubleValue.INITIAL,
+  location: DoubleListValue = DoubleListValue.INITIAL,
+  locationTransition: Transition = Transition.INITIAL,
+  locationIndicatorOpacity: DoubleValue = DoubleValue.INITIAL,
+  locationIndicatorOpacityTransition: Transition = Transition.INITIAL,
+  perspectiveCompensation: DoubleValue = DoubleValue.INITIAL,
+  shadowImageSize: DoubleValue = DoubleValue.INITIAL,
+  shadowImageSizeTransition: Transition = Transition.INITIAL,
+  topImageSize: DoubleValue = DoubleValue.INITIAL,
+  topImageSizeTransition: Transition = Transition.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of LocationIndicatorLayer inside unsupported composable function")
@@ -97,110 +116,110 @@ public fun LocationIndicatorLayer(
     },
     update = {
       init {
-        if (bearingImage != BearingImage.default) {
+        if (bearingImage.notInitial) {
           bearingImage.styleImage?.let {
             addImage(it)
           }
-          setProperty(BearingImage.NAME, bearingImage.value)
+          setProperty("bearing-image", bearingImage.value)
         }
-        if (shadowImage != ShadowImage.default) {
+        if (shadowImage.notInitial) {
           shadowImage.styleImage?.let {
             addImage(it)
           }
-          setProperty(ShadowImage.NAME, shadowImage.value)
+          setProperty("shadow-image", shadowImage.value)
         }
-        if (topImage != TopImage.default) {
+        if (topImage.notInitial) {
           topImage.styleImage?.let {
             addImage(it)
           }
-          setProperty(TopImage.NAME, topImage.value)
+          setProperty("top-image", topImage.value)
         }
-        if (accuracyRadius != AccuracyRadius.default) {
-          setProperty(AccuracyRadius.NAME, accuracyRadius.value)
+        if (accuracyRadius.notInitial) {
+          setProperty("accuracy-radius", accuracyRadius.value)
         }
-        if (accuracyRadiusTransition != Transition.default) {
-          setProperty(AccuracyRadius.TRANSITION_NAME, accuracyRadiusTransition.value)
+        if (accuracyRadiusTransition.notInitial) {
+          setProperty("accuracy-radius-transition", accuracyRadiusTransition.value)
         }
-        if (accuracyRadiusBorderColor != AccuracyRadiusBorderColor.default) {
-          setProperty(AccuracyRadiusBorderColor.NAME, accuracyRadiusBorderColor.value)
+        if (accuracyRadiusBorderColor.notInitial) {
+          setProperty("accuracy-radius-border-color", accuracyRadiusBorderColor.value)
         }
-        if (accuracyRadiusBorderColorTransition != Transition.default) {
-          setProperty(AccuracyRadiusBorderColor.TRANSITION_NAME, accuracyRadiusBorderColorTransition.value)
+        if (accuracyRadiusBorderColorTransition.notInitial) {
+          setProperty("accuracy-radius-border-color-transition", accuracyRadiusBorderColorTransition.value)
         }
-        if (accuracyRadiusColor != AccuracyRadiusColor.default) {
-          setProperty(AccuracyRadiusColor.NAME, accuracyRadiusColor.value)
+        if (accuracyRadiusColor.notInitial) {
+          setProperty("accuracy-radius-color", accuracyRadiusColor.value)
         }
-        if (accuracyRadiusColorTransition != Transition.default) {
-          setProperty(AccuracyRadiusColor.TRANSITION_NAME, accuracyRadiusColorTransition.value)
+        if (accuracyRadiusColorTransition.notInitial) {
+          setProperty("accuracy-radius-color-transition", accuracyRadiusColorTransition.value)
         }
-        if (bearing != Bearing.default) {
-          setProperty(Bearing.NAME, bearing.value)
+        if (bearing.notInitial) {
+          setProperty("bearing", bearing.value)
         }
-        if (bearingTransition != Transition.default) {
-          setProperty(Bearing.TRANSITION_NAME, bearingTransition.value)
+        if (bearingTransition.notInitial) {
+          setProperty("bearing-transition", bearingTransition.value)
         }
-        if (bearingImageSize != BearingImageSize.default) {
-          setProperty(BearingImageSize.NAME, bearingImageSize.value)
+        if (bearingImageSize.notInitial) {
+          setProperty("bearing-image-size", bearingImageSize.value)
         }
-        if (bearingImageSizeTransition != Transition.default) {
-          setProperty(BearingImageSize.TRANSITION_NAME, bearingImageSizeTransition.value)
+        if (bearingImageSizeTransition.notInitial) {
+          setProperty("bearing-image-size-transition", bearingImageSizeTransition.value)
         }
-        if (emphasisCircleColor != EmphasisCircleColor.default) {
-          setProperty(EmphasisCircleColor.NAME, emphasisCircleColor.value)
+        if (emphasisCircleColor.notInitial) {
+          setProperty("emphasis-circle-color", emphasisCircleColor.value)
         }
-        if (emphasisCircleColorTransition != Transition.default) {
-          setProperty(EmphasisCircleColor.TRANSITION_NAME, emphasisCircleColorTransition.value)
+        if (emphasisCircleColorTransition.notInitial) {
+          setProperty("emphasis-circle-color-transition", emphasisCircleColorTransition.value)
         }
-        if (emphasisCircleRadius != EmphasisCircleRadius.default) {
-          setProperty(EmphasisCircleRadius.NAME, emphasisCircleRadius.value)
+        if (emphasisCircleRadius.notInitial) {
+          setProperty("emphasis-circle-radius", emphasisCircleRadius.value)
         }
-        if (emphasisCircleRadiusTransition != Transition.default) {
-          setProperty(EmphasisCircleRadius.TRANSITION_NAME, emphasisCircleRadiusTransition.value)
+        if (emphasisCircleRadiusTransition.notInitial) {
+          setProperty("emphasis-circle-radius-transition", emphasisCircleRadiusTransition.value)
         }
-        if (imagePitchDisplacement != ImagePitchDisplacement.default) {
-          setProperty(ImagePitchDisplacement.NAME, imagePitchDisplacement.value)
+        if (imagePitchDisplacement.notInitial) {
+          setProperty("image-pitch-displacement", imagePitchDisplacement.value)
         }
-        if (location != Location.default) {
-          setProperty(Location.NAME, location.value)
+        if (location.notInitial) {
+          setProperty("location", location.value)
         }
-        if (locationTransition != Transition.default) {
-          setProperty(Location.TRANSITION_NAME, locationTransition.value)
+        if (locationTransition.notInitial) {
+          setProperty("location-transition", locationTransition.value)
         }
-        if (locationIndicatorOpacity != LocationIndicatorOpacity.default) {
-          setProperty(LocationIndicatorOpacity.NAME, locationIndicatorOpacity.value)
+        if (locationIndicatorOpacity.notInitial) {
+          setProperty("location-indicator-opacity", locationIndicatorOpacity.value)
         }
-        if (locationIndicatorOpacityTransition != Transition.default) {
-          setProperty(LocationIndicatorOpacity.TRANSITION_NAME, locationIndicatorOpacityTransition.value)
+        if (locationIndicatorOpacityTransition.notInitial) {
+          setProperty("location-indicator-opacity-transition", locationIndicatorOpacityTransition.value)
         }
-        if (perspectiveCompensation != PerspectiveCompensation.default) {
-          setProperty(PerspectiveCompensation.NAME, perspectiveCompensation.value)
+        if (perspectiveCompensation.notInitial) {
+          setProperty("perspective-compensation", perspectiveCompensation.value)
         }
-        if (shadowImageSize != ShadowImageSize.default) {
-          setProperty(ShadowImageSize.NAME, shadowImageSize.value)
+        if (shadowImageSize.notInitial) {
+          setProperty("shadow-image-size", shadowImageSize.value)
         }
-        if (shadowImageSizeTransition != Transition.default) {
-          setProperty(ShadowImageSize.TRANSITION_NAME, shadowImageSizeTransition.value)
+        if (shadowImageSizeTransition.notInitial) {
+          setProperty("shadow-image-size-transition", shadowImageSizeTransition.value)
         }
-        if (topImageSize != TopImageSize.default) {
-          setProperty(TopImageSize.NAME, topImageSize.value)
+        if (topImageSize.notInitial) {
+          setProperty("top-image-size", topImageSize.value)
         }
-        if (topImageSizeTransition != Transition.default) {
-          setProperty(TopImageSize.TRANSITION_NAME, topImageSizeTransition.value)
+        if (topImageSizeTransition.notInitial) {
+          setProperty("top-image-size-transition", topImageSizeTransition.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(layerId) {
@@ -210,106 +229,106 @@ public fun LocationIndicatorLayer(
         bearingImage.styleImage?.let {
           addImage(it)
         }
-        setProperty(BearingImage.NAME, bearingImage.value)
+        setProperty("bearing-image", bearingImage.value)
       }
       update(shadowImage) {
         shadowImage.styleImage?.let {
           addImage(it)
         }
-        setProperty(ShadowImage.NAME, shadowImage.value)
+        setProperty("shadow-image", shadowImage.value)
       }
       update(topImage) {
         topImage.styleImage?.let {
           addImage(it)
         }
-        setProperty(TopImage.NAME, topImage.value)
+        setProperty("top-image", topImage.value)
       }
       update(accuracyRadius) {
-        setProperty(AccuracyRadius.NAME, accuracyRadius.value)
+        setProperty("accuracy-radius", accuracyRadius.value)
       }
       update(accuracyRadiusTransition) {
-        setProperty(AccuracyRadius.TRANSITION_NAME, accuracyRadiusTransition.value)
+        setProperty("accuracy-radius-transition", accuracyRadiusTransition.value)
       }
       update(accuracyRadiusBorderColor) {
-        setProperty(AccuracyRadiusBorderColor.NAME, accuracyRadiusBorderColor.value)
+        setProperty("accuracy-radius-border-color", accuracyRadiusBorderColor.value)
       }
       update(accuracyRadiusBorderColorTransition) {
-        setProperty(AccuracyRadiusBorderColor.TRANSITION_NAME, accuracyRadiusBorderColorTransition.value)
+        setProperty("accuracy-radius-border-color-transition", accuracyRadiusBorderColorTransition.value)
       }
       update(accuracyRadiusColor) {
-        setProperty(AccuracyRadiusColor.NAME, accuracyRadiusColor.value)
+        setProperty("accuracy-radius-color", accuracyRadiusColor.value)
       }
       update(accuracyRadiusColorTransition) {
-        setProperty(AccuracyRadiusColor.TRANSITION_NAME, accuracyRadiusColorTransition.value)
+        setProperty("accuracy-radius-color-transition", accuracyRadiusColorTransition.value)
       }
       update(bearing) {
-        setProperty(Bearing.NAME, bearing.value)
+        setProperty("bearing", bearing.value)
       }
       update(bearingTransition) {
-        setProperty(Bearing.TRANSITION_NAME, bearingTransition.value)
+        setProperty("bearing-transition", bearingTransition.value)
       }
       update(bearingImageSize) {
-        setProperty(BearingImageSize.NAME, bearingImageSize.value)
+        setProperty("bearing-image-size", bearingImageSize.value)
       }
       update(bearingImageSizeTransition) {
-        setProperty(BearingImageSize.TRANSITION_NAME, bearingImageSizeTransition.value)
+        setProperty("bearing-image-size-transition", bearingImageSizeTransition.value)
       }
       update(emphasisCircleColor) {
-        setProperty(EmphasisCircleColor.NAME, emphasisCircleColor.value)
+        setProperty("emphasis-circle-color", emphasisCircleColor.value)
       }
       update(emphasisCircleColorTransition) {
-        setProperty(EmphasisCircleColor.TRANSITION_NAME, emphasisCircleColorTransition.value)
+        setProperty("emphasis-circle-color-transition", emphasisCircleColorTransition.value)
       }
       update(emphasisCircleRadius) {
-        setProperty(EmphasisCircleRadius.NAME, emphasisCircleRadius.value)
+        setProperty("emphasis-circle-radius", emphasisCircleRadius.value)
       }
       update(emphasisCircleRadiusTransition) {
-        setProperty(EmphasisCircleRadius.TRANSITION_NAME, emphasisCircleRadiusTransition.value)
+        setProperty("emphasis-circle-radius-transition", emphasisCircleRadiusTransition.value)
       }
       update(imagePitchDisplacement) {
-        setProperty(ImagePitchDisplacement.NAME, imagePitchDisplacement.value)
+        setProperty("image-pitch-displacement", imagePitchDisplacement.value)
       }
       update(location) {
-        setProperty(Location.NAME, location.value)
+        setProperty("location", location.value)
       }
       update(locationTransition) {
-        setProperty(Location.TRANSITION_NAME, locationTransition.value)
+        setProperty("location-transition", locationTransition.value)
       }
       update(locationIndicatorOpacity) {
-        setProperty(LocationIndicatorOpacity.NAME, locationIndicatorOpacity.value)
+        setProperty("location-indicator-opacity", locationIndicatorOpacity.value)
       }
       update(locationIndicatorOpacityTransition) {
-        setProperty(LocationIndicatorOpacity.TRANSITION_NAME, locationIndicatorOpacityTransition.value)
+        setProperty("location-indicator-opacity-transition", locationIndicatorOpacityTransition.value)
       }
       update(perspectiveCompensation) {
-        setProperty(PerspectiveCompensation.NAME, perspectiveCompensation.value)
+        setProperty("perspective-compensation", perspectiveCompensation.value)
       }
       update(shadowImageSize) {
-        setProperty(ShadowImageSize.NAME, shadowImageSize.value)
+        setProperty("shadow-image-size", shadowImageSize.value)
       }
       update(shadowImageSizeTransition) {
-        setProperty(ShadowImageSize.TRANSITION_NAME, shadowImageSizeTransition.value)
+        setProperty("shadow-image-size-transition", shadowImageSizeTransition.value)
       }
       update(topImageSize) {
-        setProperty(TopImageSize.NAME, topImageSize.value)
+        setProperty("top-image-size", topImageSize.value)
       }
       update(topImageSizeTransition) {
-        setProperty(TopImageSize.TRANSITION_NAME, topImageSizeTransition.value)
+        setProperty("top-image-size-transition", topImageSizeTransition.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

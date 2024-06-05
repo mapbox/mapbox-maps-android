@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * Replace terrain property `Exaggeration` with `DoubleValue`.
 * Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `RangeDoubleValue`.
+* Replace concrete Layer properties(e.g. `CircleColor`, `CircleOpacity`, `IconImage` etc) with generic ones: `ColorValue`, `DoubleValue`, `ImageValue` etc.
 
 ## Features ✨ and improvements 🏁
 * Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.

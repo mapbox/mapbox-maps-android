@@ -10,7 +10,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -30,6 +37,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @param skyGradientCenter Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
  * @param skyGradientRadius The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
  * @param skyOpacity The opacity of the entire sky layer.
+ * @param skyOpacityTransition Defines the transition of [skyOpacity].
  * @param skyType The type of the sky
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -44,21 +52,21 @@ public fun SkyLayer(
   layerId: String = remember {
     generateRandomLayerId("sky")
   },
-  skyAtmosphereColor: SkyAtmosphereColor = SkyAtmosphereColor.default,
-  skyAtmosphereHaloColor: SkyAtmosphereHaloColor = SkyAtmosphereHaloColor.default,
-  skyAtmosphereSun: SkyAtmosphereSun = SkyAtmosphereSun.default,
-  skyAtmosphereSunIntensity: SkyAtmosphereSunIntensity = SkyAtmosphereSunIntensity.default,
-  skyGradient: SkyGradient = SkyGradient.default,
-  skyGradientCenter: SkyGradientCenter = SkyGradientCenter.default,
-  skyGradientRadius: SkyGradientRadius = SkyGradientRadius.default,
-  skyOpacity: SkyOpacity = SkyOpacity.default,
-  skyOpacityTransition: Transition = Transition.default,
-  skyType: SkyType = SkyType.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  skyAtmosphereColor: ColorValue = ColorValue.INITIAL,
+  skyAtmosphereHaloColor: ColorValue = ColorValue.INITIAL,
+  skyAtmosphereSun: DoubleListValue = DoubleListValue.INITIAL,
+  skyAtmosphereSunIntensity: DoubleValue = DoubleValue.INITIAL,
+  skyGradient: ColorValue = ColorValue.INITIAL,
+  skyGradientCenter: DoubleListValue = DoubleListValue.INITIAL,
+  skyGradientRadius: DoubleValue = DoubleValue.INITIAL,
+  skyOpacity: DoubleValue = DoubleValue.INITIAL,
+  skyOpacityTransition: Transition = Transition.INITIAL,
+  skyType: SkyTypeValue = SkyTypeValue.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of SkyLayer inside unsupported composable function")
@@ -76,99 +84,99 @@ public fun SkyLayer(
     },
     update = {
       init {
-        if (skyAtmosphereColor != SkyAtmosphereColor.default) {
-          setProperty(SkyAtmosphereColor.NAME, skyAtmosphereColor.value)
+        if (skyAtmosphereColor.notInitial) {
+          setProperty("sky-atmosphere-color", skyAtmosphereColor.value)
         }
-        if (skyAtmosphereHaloColor != SkyAtmosphereHaloColor.default) {
-          setProperty(SkyAtmosphereHaloColor.NAME, skyAtmosphereHaloColor.value)
+        if (skyAtmosphereHaloColor.notInitial) {
+          setProperty("sky-atmosphere-halo-color", skyAtmosphereHaloColor.value)
         }
-        if (skyAtmosphereSun != SkyAtmosphereSun.default) {
-          setProperty(SkyAtmosphereSun.NAME, skyAtmosphereSun.value)
+        if (skyAtmosphereSun.notInitial) {
+          setProperty("sky-atmosphere-sun", skyAtmosphereSun.value)
         }
-        if (skyAtmosphereSunIntensity != SkyAtmosphereSunIntensity.default) {
-          setProperty(SkyAtmosphereSunIntensity.NAME, skyAtmosphereSunIntensity.value)
+        if (skyAtmosphereSunIntensity.notInitial) {
+          setProperty("sky-atmosphere-sun-intensity", skyAtmosphereSunIntensity.value)
         }
-        if (skyGradient != SkyGradient.default) {
-          setProperty(SkyGradient.NAME, skyGradient.value)
+        if (skyGradient.notInitial) {
+          setProperty("sky-gradient", skyGradient.value)
         }
-        if (skyGradientCenter != SkyGradientCenter.default) {
-          setProperty(SkyGradientCenter.NAME, skyGradientCenter.value)
+        if (skyGradientCenter.notInitial) {
+          setProperty("sky-gradient-center", skyGradientCenter.value)
         }
-        if (skyGradientRadius != SkyGradientRadius.default) {
-          setProperty(SkyGradientRadius.NAME, skyGradientRadius.value)
+        if (skyGradientRadius.notInitial) {
+          setProperty("sky-gradient-radius", skyGradientRadius.value)
         }
-        if (skyOpacity != SkyOpacity.default) {
-          setProperty(SkyOpacity.NAME, skyOpacity.value)
+        if (skyOpacity.notInitial) {
+          setProperty("sky-opacity", skyOpacity.value)
         }
-        if (skyOpacityTransition != Transition.default) {
-          setProperty(SkyOpacity.TRANSITION_NAME, skyOpacityTransition.value)
+        if (skyOpacityTransition.notInitial) {
+          setProperty("sky-opacity-transition", skyOpacityTransition.value)
         }
-        if (skyType != SkyType.default) {
-          setProperty(SkyType.NAME, skyType.value)
+        if (skyType.notInitial) {
+          setProperty("sky-type", skyType.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(layerId) {
         updateLayerId(layerId)
       }
       update(skyAtmosphereColor) {
-        setProperty(SkyAtmosphereColor.NAME, skyAtmosphereColor.value)
+        setProperty("sky-atmosphere-color", skyAtmosphereColor.value)
       }
       update(skyAtmosphereHaloColor) {
-        setProperty(SkyAtmosphereHaloColor.NAME, skyAtmosphereHaloColor.value)
+        setProperty("sky-atmosphere-halo-color", skyAtmosphereHaloColor.value)
       }
       update(skyAtmosphereSun) {
-        setProperty(SkyAtmosphereSun.NAME, skyAtmosphereSun.value)
+        setProperty("sky-atmosphere-sun", skyAtmosphereSun.value)
       }
       update(skyAtmosphereSunIntensity) {
-        setProperty(SkyAtmosphereSunIntensity.NAME, skyAtmosphereSunIntensity.value)
+        setProperty("sky-atmosphere-sun-intensity", skyAtmosphereSunIntensity.value)
       }
       update(skyGradient) {
-        setProperty(SkyGradient.NAME, skyGradient.value)
+        setProperty("sky-gradient", skyGradient.value)
       }
       update(skyGradientCenter) {
-        setProperty(SkyGradientCenter.NAME, skyGradientCenter.value)
+        setProperty("sky-gradient-center", skyGradientCenter.value)
       }
       update(skyGradientRadius) {
-        setProperty(SkyGradientRadius.NAME, skyGradientRadius.value)
+        setProperty("sky-gradient-radius", skyGradientRadius.value)
       }
       update(skyOpacity) {
-        setProperty(SkyOpacity.NAME, skyOpacity.value)
+        setProperty("sky-opacity", skyOpacity.value)
       }
       update(skyOpacityTransition) {
-        setProperty(SkyOpacity.TRANSITION_NAME, skyOpacityTransition.value)
+        setProperty("sky-opacity-transition", skyOpacityTransition.value)
       }
       update(skyType) {
-        setProperty(SkyType.NAME, skyType.value)
+        setProperty("sky-type", skyType.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

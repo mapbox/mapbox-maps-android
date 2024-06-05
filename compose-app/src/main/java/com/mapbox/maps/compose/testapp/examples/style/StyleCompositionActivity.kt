@@ -37,18 +37,16 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.extension.compose.style.StyleImage
-import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.FormattedValue
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.CircleRadius
-import com.mapbox.maps.extension.compose.style.layers.generated.IconAnchor
-import com.mapbox.maps.extension.compose.style.layers.generated.IconImage
+import com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue
 import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
-import com.mapbox.maps.extension.compose.style.layers.generated.TextField
-import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
-import com.mapbox.maps.extension.compose.style.layers.generated.Transition
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -63,7 +61,7 @@ public class StyleCompositionActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       var text by remember {
-        mutableStateOf(TextField("Hello Helsinki"))
+        mutableStateOf(FormattedValue("Hello Helsinki"))
       }
 
       var showSymbolLayer by remember {
@@ -110,7 +108,7 @@ public class StyleCompositionActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  text = TextField("Hello ${count++}")
+                  text = FormattedValue("Hello ${count++}")
                   showSymbolLayer = !showSymbolLayer
                 },
                 shape = RoundedCornerShape(16.dp),
@@ -173,9 +171,9 @@ public class StyleCompositionActivity : ComponentActivity() {
             if (showSymbolLayer) {
               CircleLayer(
                 sourceState = geoJsonSource,
-                circleColor = CircleColor(Color.Cyan),
-                circleRadius = CircleRadius(50.0),
-                circleRadiusTransition = Transition(duration = 1000L)
+                circleColor = ColorValue(Color.Cyan),
+                circleRadius = DoubleValue(50.0),
+                circleRadiusTransition = Transition(durationMillis = 1000L)
               )
 
               val painter = painterResource(id = markerResource)
@@ -185,17 +183,17 @@ public class StyleCompositionActivity : ComponentActivity() {
               }
               SymbolLayer(
                 sourceState = geoJsonSource,
-                iconImage = IconImage(
+                iconImage = ImageValue(
                   StyleImage(
                     imageId = "icon_id",
                     imageBitmap = imageBitmap
                   )
                 ),
-                iconAnchor = IconAnchor.BOTTOM,
+                iconAnchor = IconAnchorValue.BOTTOM,
                 textField = text,
-                textColor = TextColor(textColor),
-                textColorTransition = Transition(duration = 1000),
-                textSize = TextSize(
+                textColor = ColorValue(textColor),
+                textColorTransition = Transition(durationMillis = 1000),
+                textSize = DoubleValue(
                   Expression.interpolate {
                     linear()
                     zoom()

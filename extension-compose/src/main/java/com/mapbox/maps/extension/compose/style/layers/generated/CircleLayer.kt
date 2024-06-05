@@ -10,7 +10,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -23,16 +30,25 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param circleSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
  * @param circleBlur Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+ * @param circleBlurTransition Defines the transition of [circleBlur].
  * @param circleColor The fill color of the circle.
+ * @param circleColorTransition Defines the transition of [circleColor].
  * @param circleEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param circleEmissiveStrengthTransition Defines the transition of [circleEmissiveStrength].
  * @param circleOpacity The opacity at which the circle will be drawn.
+ * @param circleOpacityTransition Defines the transition of [circleOpacity].
  * @param circlePitchAlignment Orientation of circle when map is pitched.
  * @param circlePitchScale Controls the scaling behavior of the circle when the map is pitched.
  * @param circleRadius Circle radius.
+ * @param circleRadiusTransition Defines the transition of [circleRadius].
  * @param circleStrokeColor The stroke color of the circle.
+ * @param circleStrokeColorTransition Defines the transition of [circleStrokeColor].
  * @param circleStrokeOpacity The opacity of the circle's stroke.
+ * @param circleStrokeOpacityTransition Defines the transition of [circleStrokeOpacity].
  * @param circleStrokeWidth The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
+ * @param circleStrokeWidthTransition Defines the transition of [circleStrokeWidth].
  * @param circleTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+ * @param circleTranslateTransition Defines the transition of [circleTranslate].
  * @param circleTranslateAnchor Controls the frame of reference for `circle-translate`.
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -48,33 +64,33 @@ public fun CircleLayer(
   layerId: String = remember {
     generateRandomLayerId("circle")
   },
-  circleSortKey: CircleSortKey = CircleSortKey.default,
-  circleBlur: CircleBlur = CircleBlur.default,
-  circleBlurTransition: Transition = Transition.default,
-  circleColor: CircleColor = CircleColor.default,
-  circleColorTransition: Transition = Transition.default,
-  circleEmissiveStrength: CircleEmissiveStrength = CircleEmissiveStrength.default,
-  circleEmissiveStrengthTransition: Transition = Transition.default,
-  circleOpacity: CircleOpacity = CircleOpacity.default,
-  circleOpacityTransition: Transition = Transition.default,
-  circlePitchAlignment: CirclePitchAlignment = CirclePitchAlignment.default,
-  circlePitchScale: CirclePitchScale = CirclePitchScale.default,
-  circleRadius: CircleRadius = CircleRadius.default,
-  circleRadiusTransition: Transition = Transition.default,
-  circleStrokeColor: CircleStrokeColor = CircleStrokeColor.default,
-  circleStrokeColorTransition: Transition = Transition.default,
-  circleStrokeOpacity: CircleStrokeOpacity = CircleStrokeOpacity.default,
-  circleStrokeOpacityTransition: Transition = Transition.default,
-  circleStrokeWidth: CircleStrokeWidth = CircleStrokeWidth.default,
-  circleStrokeWidthTransition: Transition = Transition.default,
-  circleTranslate: CircleTranslate = CircleTranslate.default,
-  circleTranslateTransition: Transition = Transition.default,
-  circleTranslateAnchor: CircleTranslateAnchor = CircleTranslateAnchor.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  circleSortKey: DoubleValue = DoubleValue.INITIAL,
+  circleBlur: DoubleValue = DoubleValue.INITIAL,
+  circleBlurTransition: Transition = Transition.INITIAL,
+  circleColor: ColorValue = ColorValue.INITIAL,
+  circleColorTransition: Transition = Transition.INITIAL,
+  circleEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  circleEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  circleOpacity: DoubleValue = DoubleValue.INITIAL,
+  circleOpacityTransition: Transition = Transition.INITIAL,
+  circlePitchAlignment: CirclePitchAlignmentValue = CirclePitchAlignmentValue.INITIAL,
+  circlePitchScale: CirclePitchScaleValue = CirclePitchScaleValue.INITIAL,
+  circleRadius: DoubleValue = DoubleValue.INITIAL,
+  circleRadiusTransition: Transition = Transition.INITIAL,
+  circleStrokeColor: ColorValue = ColorValue.INITIAL,
+  circleStrokeColorTransition: Transition = Transition.INITIAL,
+  circleStrokeOpacity: DoubleValue = DoubleValue.INITIAL,
+  circleStrokeOpacityTransition: Transition = Transition.INITIAL,
+  circleStrokeWidth: DoubleValue = DoubleValue.INITIAL,
+  circleStrokeWidthTransition: Transition = Transition.INITIAL,
+  circleTranslate: DoubleListValue = DoubleListValue.INITIAL,
+  circleTranslateTransition: Transition = Transition.INITIAL,
+  circleTranslateAnchor: CircleTranslateAnchorValue = CircleTranslateAnchorValue.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of CircleLayer inside unsupported composable function")
@@ -93,86 +109,86 @@ public fun CircleLayer(
     },
     update = {
       init {
-        if (circleSortKey != CircleSortKey.default) {
-          setProperty(CircleSortKey.NAME, circleSortKey.value)
+        if (circleSortKey.notInitial) {
+          setProperty("circle-sort-key", circleSortKey.value)
         }
-        if (circleBlur != CircleBlur.default) {
-          setProperty(CircleBlur.NAME, circleBlur.value)
+        if (circleBlur.notInitial) {
+          setProperty("circle-blur", circleBlur.value)
         }
-        if (circleBlurTransition != Transition.default) {
-          setProperty(CircleBlur.TRANSITION_NAME, circleBlurTransition.value)
+        if (circleBlurTransition.notInitial) {
+          setProperty("circle-blur-transition", circleBlurTransition.value)
         }
-        if (circleColor != CircleColor.default) {
-          setProperty(CircleColor.NAME, circleColor.value)
+        if (circleColor.notInitial) {
+          setProperty("circle-color", circleColor.value)
         }
-        if (circleColorTransition != Transition.default) {
-          setProperty(CircleColor.TRANSITION_NAME, circleColorTransition.value)
+        if (circleColorTransition.notInitial) {
+          setProperty("circle-color-transition", circleColorTransition.value)
         }
-        if (circleEmissiveStrength != CircleEmissiveStrength.default) {
-          setProperty(CircleEmissiveStrength.NAME, circleEmissiveStrength.value)
+        if (circleEmissiveStrength.notInitial) {
+          setProperty("circle-emissive-strength", circleEmissiveStrength.value)
         }
-        if (circleEmissiveStrengthTransition != Transition.default) {
-          setProperty(CircleEmissiveStrength.TRANSITION_NAME, circleEmissiveStrengthTransition.value)
+        if (circleEmissiveStrengthTransition.notInitial) {
+          setProperty("circle-emissive-strength-transition", circleEmissiveStrengthTransition.value)
         }
-        if (circleOpacity != CircleOpacity.default) {
-          setProperty(CircleOpacity.NAME, circleOpacity.value)
+        if (circleOpacity.notInitial) {
+          setProperty("circle-opacity", circleOpacity.value)
         }
-        if (circleOpacityTransition != Transition.default) {
-          setProperty(CircleOpacity.TRANSITION_NAME, circleOpacityTransition.value)
+        if (circleOpacityTransition.notInitial) {
+          setProperty("circle-opacity-transition", circleOpacityTransition.value)
         }
-        if (circlePitchAlignment != CirclePitchAlignment.default) {
-          setProperty(CirclePitchAlignment.NAME, circlePitchAlignment.value)
+        if (circlePitchAlignment.notInitial) {
+          setProperty("circle-pitch-alignment", circlePitchAlignment.value)
         }
-        if (circlePitchScale != CirclePitchScale.default) {
-          setProperty(CirclePitchScale.NAME, circlePitchScale.value)
+        if (circlePitchScale.notInitial) {
+          setProperty("circle-pitch-scale", circlePitchScale.value)
         }
-        if (circleRadius != CircleRadius.default) {
-          setProperty(CircleRadius.NAME, circleRadius.value)
+        if (circleRadius.notInitial) {
+          setProperty("circle-radius", circleRadius.value)
         }
-        if (circleRadiusTransition != Transition.default) {
-          setProperty(CircleRadius.TRANSITION_NAME, circleRadiusTransition.value)
+        if (circleRadiusTransition.notInitial) {
+          setProperty("circle-radius-transition", circleRadiusTransition.value)
         }
-        if (circleStrokeColor != CircleStrokeColor.default) {
-          setProperty(CircleStrokeColor.NAME, circleStrokeColor.value)
+        if (circleStrokeColor.notInitial) {
+          setProperty("circle-stroke-color", circleStrokeColor.value)
         }
-        if (circleStrokeColorTransition != Transition.default) {
-          setProperty(CircleStrokeColor.TRANSITION_NAME, circleStrokeColorTransition.value)
+        if (circleStrokeColorTransition.notInitial) {
+          setProperty("circle-stroke-color-transition", circleStrokeColorTransition.value)
         }
-        if (circleStrokeOpacity != CircleStrokeOpacity.default) {
-          setProperty(CircleStrokeOpacity.NAME, circleStrokeOpacity.value)
+        if (circleStrokeOpacity.notInitial) {
+          setProperty("circle-stroke-opacity", circleStrokeOpacity.value)
         }
-        if (circleStrokeOpacityTransition != Transition.default) {
-          setProperty(CircleStrokeOpacity.TRANSITION_NAME, circleStrokeOpacityTransition.value)
+        if (circleStrokeOpacityTransition.notInitial) {
+          setProperty("circle-stroke-opacity-transition", circleStrokeOpacityTransition.value)
         }
-        if (circleStrokeWidth != CircleStrokeWidth.default) {
-          setProperty(CircleStrokeWidth.NAME, circleStrokeWidth.value)
+        if (circleStrokeWidth.notInitial) {
+          setProperty("circle-stroke-width", circleStrokeWidth.value)
         }
-        if (circleStrokeWidthTransition != Transition.default) {
-          setProperty(CircleStrokeWidth.TRANSITION_NAME, circleStrokeWidthTransition.value)
+        if (circleStrokeWidthTransition.notInitial) {
+          setProperty("circle-stroke-width-transition", circleStrokeWidthTransition.value)
         }
-        if (circleTranslate != CircleTranslate.default) {
-          setProperty(CircleTranslate.NAME, circleTranslate.value)
+        if (circleTranslate.notInitial) {
+          setProperty("circle-translate", circleTranslate.value)
         }
-        if (circleTranslateTransition != Transition.default) {
-          setProperty(CircleTranslate.TRANSITION_NAME, circleTranslateTransition.value)
+        if (circleTranslateTransition.notInitial) {
+          setProperty("circle-translate-transition", circleTranslateTransition.value)
         }
-        if (circleTranslateAnchor != CircleTranslateAnchor.default) {
-          setProperty(CircleTranslateAnchor.NAME, circleTranslateAnchor.value)
+        if (circleTranslateAnchor.notInitial) {
+          setProperty("circle-translate-anchor", circleTranslateAnchor.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -182,85 +198,85 @@ public fun CircleLayer(
         updateLayerId(layerId)
       }
       update(circleSortKey) {
-        setProperty(CircleSortKey.NAME, circleSortKey.value)
+        setProperty("circle-sort-key", circleSortKey.value)
       }
       update(circleBlur) {
-        setProperty(CircleBlur.NAME, circleBlur.value)
+        setProperty("circle-blur", circleBlur.value)
       }
       update(circleBlurTransition) {
-        setProperty(CircleBlur.TRANSITION_NAME, circleBlurTransition.value)
+        setProperty("circle-blur-transition", circleBlurTransition.value)
       }
       update(circleColor) {
-        setProperty(CircleColor.NAME, circleColor.value)
+        setProperty("circle-color", circleColor.value)
       }
       update(circleColorTransition) {
-        setProperty(CircleColor.TRANSITION_NAME, circleColorTransition.value)
+        setProperty("circle-color-transition", circleColorTransition.value)
       }
       update(circleEmissiveStrength) {
-        setProperty(CircleEmissiveStrength.NAME, circleEmissiveStrength.value)
+        setProperty("circle-emissive-strength", circleEmissiveStrength.value)
       }
       update(circleEmissiveStrengthTransition) {
-        setProperty(CircleEmissiveStrength.TRANSITION_NAME, circleEmissiveStrengthTransition.value)
+        setProperty("circle-emissive-strength-transition", circleEmissiveStrengthTransition.value)
       }
       update(circleOpacity) {
-        setProperty(CircleOpacity.NAME, circleOpacity.value)
+        setProperty("circle-opacity", circleOpacity.value)
       }
       update(circleOpacityTransition) {
-        setProperty(CircleOpacity.TRANSITION_NAME, circleOpacityTransition.value)
+        setProperty("circle-opacity-transition", circleOpacityTransition.value)
       }
       update(circlePitchAlignment) {
-        setProperty(CirclePitchAlignment.NAME, circlePitchAlignment.value)
+        setProperty("circle-pitch-alignment", circlePitchAlignment.value)
       }
       update(circlePitchScale) {
-        setProperty(CirclePitchScale.NAME, circlePitchScale.value)
+        setProperty("circle-pitch-scale", circlePitchScale.value)
       }
       update(circleRadius) {
-        setProperty(CircleRadius.NAME, circleRadius.value)
+        setProperty("circle-radius", circleRadius.value)
       }
       update(circleRadiusTransition) {
-        setProperty(CircleRadius.TRANSITION_NAME, circleRadiusTransition.value)
+        setProperty("circle-radius-transition", circleRadiusTransition.value)
       }
       update(circleStrokeColor) {
-        setProperty(CircleStrokeColor.NAME, circleStrokeColor.value)
+        setProperty("circle-stroke-color", circleStrokeColor.value)
       }
       update(circleStrokeColorTransition) {
-        setProperty(CircleStrokeColor.TRANSITION_NAME, circleStrokeColorTransition.value)
+        setProperty("circle-stroke-color-transition", circleStrokeColorTransition.value)
       }
       update(circleStrokeOpacity) {
-        setProperty(CircleStrokeOpacity.NAME, circleStrokeOpacity.value)
+        setProperty("circle-stroke-opacity", circleStrokeOpacity.value)
       }
       update(circleStrokeOpacityTransition) {
-        setProperty(CircleStrokeOpacity.TRANSITION_NAME, circleStrokeOpacityTransition.value)
+        setProperty("circle-stroke-opacity-transition", circleStrokeOpacityTransition.value)
       }
       update(circleStrokeWidth) {
-        setProperty(CircleStrokeWidth.NAME, circleStrokeWidth.value)
+        setProperty("circle-stroke-width", circleStrokeWidth.value)
       }
       update(circleStrokeWidthTransition) {
-        setProperty(CircleStrokeWidth.TRANSITION_NAME, circleStrokeWidthTransition.value)
+        setProperty("circle-stroke-width-transition", circleStrokeWidthTransition.value)
       }
       update(circleTranslate) {
-        setProperty(CircleTranslate.NAME, circleTranslate.value)
+        setProperty("circle-translate", circleTranslate.value)
       }
       update(circleTranslateTransition) {
-        setProperty(CircleTranslate.TRANSITION_NAME, circleTranslateTransition.value)
+        setProperty("circle-translate-transition", circleTranslateTransition.value)
       }
       update(circleTranslateAnchor) {
-        setProperty(CircleTranslateAnchor.NAME, circleTranslateAnchor.value)
+        setProperty("circle-translate-anchor", circleTranslateAnchor.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

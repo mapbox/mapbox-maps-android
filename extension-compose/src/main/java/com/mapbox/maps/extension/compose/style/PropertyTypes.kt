@@ -92,7 +92,7 @@ public data class DoubleValue(public val value: Value) {
    * The [Double] represented by [value] or `null` if the stored [Value] is not a [Double].
    */
   public val doubleOrNull: Double?
-    get() = value.contents as? Double
+    get() = (value.contents as? Number)?.toDouble()
 
   /**
    * True if the this value is not [INITIAL]
@@ -112,12 +112,14 @@ public data class DoubleValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: DoubleValue = DoubleValue(Value("DoubleValue.INITIAL"))
 
     /**
      * Default value for [DoubleValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: DoubleValue = DoubleValue(Value.nullValue())
   }
 }
@@ -189,12 +191,14 @@ public data class DoubleRangeValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: DoubleRangeValue = DoubleRangeValue(Value.valueOf("DoubleRangeValue.INITIAL"))
 
     /**
      * Default value for [DoubleRangeValue], setting [DEFAULT] will result in setting the property
      * value defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: DoubleRangeValue = DoubleRangeValue(Value.nullValue())
   }
 }
@@ -222,7 +226,7 @@ public data class LongValue(public val value: Value) {
    * The [Long] represented by [value] or `null` if the stored [Value] is not a [Long].
    */
   public val longOrNull: Long?
-    get() = (value.contents as? Double)?.toLong()
+    get() = (value.contents as? Number)?.toLong()
 
   /**
    * True if the this value is not [INITIAL]
@@ -242,12 +246,14 @@ public data class LongValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: LongValue = LongValue(Value("LongValue.INITIAL"))
 
     /**
      * Default value for [LongValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: LongValue = LongValue(Value.nullValue())
   }
 }
@@ -295,12 +301,14 @@ public data class BooleanValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: BooleanValue = BooleanValue(Value("BooleanValue.INITIAL"))
 
     /**
      * Default value for [BooleanValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: BooleanValue = BooleanValue(Value.nullValue())
   }
 }
@@ -348,12 +356,14 @@ public data class StringValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: StringValue = StringValue(Value("StringValue.INITIAL"))
 
     /**
      * Default value for [StringValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: StringValue = StringValue(Value.nullValue())
   }
 }
@@ -395,12 +405,10 @@ public data class StringListValue(public val value: Value) {
         val idx = if (contents.firstOrNull() == "array") 1 else 0
         if (contents.size > idx) {
           val mutableList = mutableListOf<String>()
-          contents.subList(idx, contents.size).forEach {
-            if (it is String) {
+          contents.subList(idx, contents.size).forEach { content ->
+            ((content as? Value)?.contents as? String)?.let {
               mutableList.add(it)
-            } else {
-              return null
-            }
+            } ?: return null
           }
           return mutableList.toList()
         }
@@ -428,12 +436,14 @@ public data class StringListValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: StringListValue = StringListValue(Value("StringListValue.INITIAL"))
 
     /**
      * Default value for [StringListValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: StringListValue = StringListValue(Value.nullValue())
   }
 }
@@ -474,12 +484,10 @@ public data class DoubleListValue(public val value: Value) {
         val idx = if (contents.firstOrNull() == "array") 1 else 0
         if (contents.size > idx) {
           val mutableList = mutableListOf<Double>()
-          contents.subList(idx, contents.size).forEach {
-            if (it is Double) {
+          contents.subList(idx, contents.size).forEach { content ->
+            ((content as? Value)?.contents as? Double)?.let {
               mutableList.add(it)
-            } else {
-              return null
-            }
+            } ?: return null
           }
           return mutableList.toList()
         }
@@ -507,12 +515,14 @@ public data class DoubleListValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: DoubleListValue = DoubleListValue(Value.valueOf("DoubleListValue.INITIAL"))
 
     /**
      * Default value for [DoubleListValue], setting [DEFAULT] will result in setting the property
      * value defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: DoubleListValue = DoubleListValue(Value.nullValue())
   }
 }
@@ -527,14 +537,28 @@ public data class Transition internal constructor(public val value: Value) {
   /**
    * Construct the [Transition] with duration and delay.
    */
-  public constructor(duration: Long = 0L, delay: Long = 0L) : this(
+  public constructor(durationMillis: Long = 0L, delayMillis: Long = 0L) : this(
     Value(
       hashMapOf(
-        "delay" to Value(delay),
-        "duration" to Value(duration)
+        "delay" to Value(delayMillis),
+        "duration" to Value(durationMillis)
       )
     )
   )
+
+  /**
+   * Get the delay of the [Transition] in milliseconds.
+   */
+  @Suppress("UNCHECKED_CAST")
+  public val delayMillis: Long
+    get() = (value.contents as HashMap<String, Value>)["delay"]!!.contents as Long
+
+  /**
+   * Get the duration of the [Transition] in milliseconds.
+   */
+  @Suppress("UNCHECKED_CAST")
+  public val durationMillis: Long
+    get() = (value.contents as HashMap<String, Value>)["duration"]!!.contents as Long
 
   /**
    * True if the this value is not [INITIAL]
@@ -554,11 +578,13 @@ public data class Transition internal constructor(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: Transition = Transition(Value.valueOf("Transition.INITIAL"))
 
     /**
      * Default value for [Transition], setting default will result in restoring the default transition defined in the rendering engine.
      */
+    @JvmField
     public val DEFAULT: Transition = Transition(Value.nullValue())
   }
 }

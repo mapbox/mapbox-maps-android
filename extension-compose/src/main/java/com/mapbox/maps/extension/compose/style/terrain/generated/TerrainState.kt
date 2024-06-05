@@ -103,7 +103,7 @@ public class TerrainState private constructor(
   private val exaggerationTransitionState: MutableState<Transition> = mutableStateOf(exaggerationTransition)
 
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Defines the transition of [exaggeration].
    *
    * The minimum accepted value is `0` and the maximum is `1000`.
    */

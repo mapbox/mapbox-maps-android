@@ -103,9 +103,7 @@ public class AtmosphereState private constructor(
   private val colorTransitionState: MutableState<Transition> = mutableStateOf(colorTransition)
 
   /**
-   * The color of the atmosphere region immediately below the horizon and within the `range` and above
-   * the horizon and within `horizon-blend`. Using opacity is recommended only for smoothly transitioning fog on/off as
-   * anything less than 100% opacity results in more tiles loaded and drawn.
+   * Defines the transition of [color].
    */
   public var colorTransition: Transition by colorTransitionState
 
@@ -137,9 +135,7 @@ public class AtmosphereState private constructor(
   private val highColorTransitionState: MutableState<Transition> = mutableStateOf(highColorTransition)
 
   /**
-   * The color of the atmosphere region above the horizon, `high-color` extends further above the horizon than
-   * the `color` property and its spread can be controlled with `horizon-blend`. The opacity can be set
-   * to `0` to remove the high atmosphere color contribution.
+   * Defines the transition of [highColor].
    */
   public var highColorTransition: Transition by highColorTransitionState
 
@@ -173,9 +169,7 @@ public class AtmosphereState private constructor(
   private val horizonBlendTransitionState: MutableState<Transition> = mutableStateOf(horizonBlendTransition)
 
   /**
-   * Horizon blend applies a smooth fade from the color of the atmosphere to the color of
-   * space. A value of zero leaves a sharp transition from atmosphere to space. Increasing the value
-   * blends the color of atmosphere into increasingly high angles of the sky.
+   * Defines the transition of [horizonBlend].
    *
    * The minimum accepted value is `0` and the maximum is `1`.
    */
@@ -211,9 +205,7 @@ public class AtmosphereState private constructor(
   private val rangeTransitionState: MutableState<Transition> = mutableStateOf(rangeTransition)
 
   /**
-   * The start and end distance range in which fog fades from fully transparent to fully opaque.
-   * The distance to the point at the center of the map is defined as zero, so
-   * that negative range values are closer to the camera, and positive values are farther away.
+   * Defines the transition of [range].
    *
    * The minimum accepted value is `-20` and the maximum is `20`.
    */
@@ -246,8 +238,7 @@ public class AtmosphereState private constructor(
   private val spaceColorTransitionState: MutableState<Transition> = mutableStateOf(spaceColorTransition)
 
   /**
-   * The color of the region above the horizon and after the end of the `horizon-blend` contribution.
-   * The opacity can be set to `0` to have a transparent background.
+   * Defines the transition of [spaceColor].
    */
   public var spaceColorTransition: Transition by spaceColorTransitionState
 
@@ -280,8 +271,7 @@ public class AtmosphereState private constructor(
   private val starIntensityTransitionState: MutableState<Transition> = mutableStateOf(starIntensityTransition)
 
   /**
-   * A value controlling the star intensity where `0` will show no stars and `1` will show
-   * stars at their maximum intensity.
+   * Defines the transition of [starIntensity].
    *
    * The minimum accepted value is `0` and the maximum is `1`.
    */
@@ -317,9 +307,7 @@ public class AtmosphereState private constructor(
   private val verticalRangeTransitionState: MutableState<Transition> = mutableStateOf(verticalRangeTransition)
 
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the
-   * fog should gradually fade out. When both parameters are set to zero, the fog will be
-   * rendered without any vertical constraints.
+   * Defines the transition of [verticalRange].
    *
    * The minimum accepted value is `0`
    */

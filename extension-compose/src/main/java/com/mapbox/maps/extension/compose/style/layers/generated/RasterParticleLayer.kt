@@ -10,7 +10,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -25,9 +31,11 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param rasterParticleColor Defines a color map by which to colorize a raster particle layer, parameterized by the `["raster-particle-speed"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-particle-max-speed`.
  * @param rasterParticleCount Defines the amount of particles per tile.
  * @param rasterParticleFadeOpacityFactor Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+ * @param rasterParticleFadeOpacityFactorTransition Defines the transition of [rasterParticleFadeOpacityFactor].
  * @param rasterParticleMaxSpeed Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
  * @param rasterParticleResetRateFactor Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
  * @param rasterParticleSpeedFactor Defines a coefficient for the speed of particles’ motion.
+ * @param rasterParticleSpeedFactorTransition Defines the transition of [rasterParticleSpeedFactor].
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
  * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -42,20 +50,20 @@ public fun RasterParticleLayer(
   layerId: String = remember {
     generateRandomLayerId("raster-particle")
   },
-  rasterParticleArrayBand: RasterParticleArrayBand = RasterParticleArrayBand.default,
-  rasterParticleColor: RasterParticleColor = RasterParticleColor.default,
-  rasterParticleCount: RasterParticleCount = RasterParticleCount.default,
-  rasterParticleFadeOpacityFactor: RasterParticleFadeOpacityFactor = RasterParticleFadeOpacityFactor.default,
-  rasterParticleFadeOpacityFactorTransition: Transition = Transition.default,
-  rasterParticleMaxSpeed: RasterParticleMaxSpeed = RasterParticleMaxSpeed.default,
-  rasterParticleResetRateFactor: RasterParticleResetRateFactor = RasterParticleResetRateFactor.default,
-  rasterParticleSpeedFactor: RasterParticleSpeedFactor = RasterParticleSpeedFactor.default,
-  rasterParticleSpeedFactorTransition: Transition = Transition.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  rasterParticleArrayBand: StringValue = StringValue.INITIAL,
+  rasterParticleColor: ColorValue = ColorValue.INITIAL,
+  rasterParticleCount: LongValue = LongValue.INITIAL,
+  rasterParticleFadeOpacityFactor: DoubleValue = DoubleValue.INITIAL,
+  rasterParticleFadeOpacityFactorTransition: Transition = Transition.INITIAL,
+  rasterParticleMaxSpeed: DoubleValue = DoubleValue.INITIAL,
+  rasterParticleResetRateFactor: DoubleValue = DoubleValue.INITIAL,
+  rasterParticleSpeedFactor: DoubleValue = DoubleValue.INITIAL,
+  rasterParticleSpeedFactorTransition: Transition = Transition.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of RasterParticleLayer inside unsupported composable function")
@@ -74,47 +82,47 @@ public fun RasterParticleLayer(
     },
     update = {
       init {
-        if (rasterParticleArrayBand != RasterParticleArrayBand.default) {
-          setProperty(RasterParticleArrayBand.NAME, rasterParticleArrayBand.value)
+        if (rasterParticleArrayBand.notInitial) {
+          setProperty("raster-particle-array-band", rasterParticleArrayBand.value)
         }
-        if (rasterParticleColor != RasterParticleColor.default) {
-          setProperty(RasterParticleColor.NAME, rasterParticleColor.value)
+        if (rasterParticleColor.notInitial) {
+          setProperty("raster-particle-color", rasterParticleColor.value)
         }
-        if (rasterParticleCount != RasterParticleCount.default) {
-          setProperty(RasterParticleCount.NAME, rasterParticleCount.value)
+        if (rasterParticleCount.notInitial) {
+          setProperty("raster-particle-count", rasterParticleCount.value)
         }
-        if (rasterParticleFadeOpacityFactor != RasterParticleFadeOpacityFactor.default) {
-          setProperty(RasterParticleFadeOpacityFactor.NAME, rasterParticleFadeOpacityFactor.value)
+        if (rasterParticleFadeOpacityFactor.notInitial) {
+          setProperty("raster-particle-fade-opacity-factor", rasterParticleFadeOpacityFactor.value)
         }
-        if (rasterParticleFadeOpacityFactorTransition != Transition.default) {
-          setProperty(RasterParticleFadeOpacityFactor.TRANSITION_NAME, rasterParticleFadeOpacityFactorTransition.value)
+        if (rasterParticleFadeOpacityFactorTransition.notInitial) {
+          setProperty("raster-particle-fade-opacity-factor-transition", rasterParticleFadeOpacityFactorTransition.value)
         }
-        if (rasterParticleMaxSpeed != RasterParticleMaxSpeed.default) {
-          setProperty(RasterParticleMaxSpeed.NAME, rasterParticleMaxSpeed.value)
+        if (rasterParticleMaxSpeed.notInitial) {
+          setProperty("raster-particle-max-speed", rasterParticleMaxSpeed.value)
         }
-        if (rasterParticleResetRateFactor != RasterParticleResetRateFactor.default) {
-          setProperty(RasterParticleResetRateFactor.NAME, rasterParticleResetRateFactor.value)
+        if (rasterParticleResetRateFactor.notInitial) {
+          setProperty("raster-particle-reset-rate-factor", rasterParticleResetRateFactor.value)
         }
-        if (rasterParticleSpeedFactor != RasterParticleSpeedFactor.default) {
-          setProperty(RasterParticleSpeedFactor.NAME, rasterParticleSpeedFactor.value)
+        if (rasterParticleSpeedFactor.notInitial) {
+          setProperty("raster-particle-speed-factor", rasterParticleSpeedFactor.value)
         }
-        if (rasterParticleSpeedFactorTransition != Transition.default) {
-          setProperty(RasterParticleSpeedFactor.TRANSITION_NAME, rasterParticleSpeedFactorTransition.value)
+        if (rasterParticleSpeedFactorTransition.notInitial) {
+          setProperty("raster-particle-speed-factor-transition", rasterParticleSpeedFactorTransition.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -124,46 +132,46 @@ public fun RasterParticleLayer(
         updateLayerId(layerId)
       }
       update(rasterParticleArrayBand) {
-        setProperty(RasterParticleArrayBand.NAME, rasterParticleArrayBand.value)
+        setProperty("raster-particle-array-band", rasterParticleArrayBand.value)
       }
       update(rasterParticleColor) {
-        setProperty(RasterParticleColor.NAME, rasterParticleColor.value)
+        setProperty("raster-particle-color", rasterParticleColor.value)
       }
       update(rasterParticleCount) {
-        setProperty(RasterParticleCount.NAME, rasterParticleCount.value)
+        setProperty("raster-particle-count", rasterParticleCount.value)
       }
       update(rasterParticleFadeOpacityFactor) {
-        setProperty(RasterParticleFadeOpacityFactor.NAME, rasterParticleFadeOpacityFactor.value)
+        setProperty("raster-particle-fade-opacity-factor", rasterParticleFadeOpacityFactor.value)
       }
       update(rasterParticleFadeOpacityFactorTransition) {
-        setProperty(RasterParticleFadeOpacityFactor.TRANSITION_NAME, rasterParticleFadeOpacityFactorTransition.value)
+        setProperty("raster-particle-fade-opacity-factor-transition", rasterParticleFadeOpacityFactorTransition.value)
       }
       update(rasterParticleMaxSpeed) {
-        setProperty(RasterParticleMaxSpeed.NAME, rasterParticleMaxSpeed.value)
+        setProperty("raster-particle-max-speed", rasterParticleMaxSpeed.value)
       }
       update(rasterParticleResetRateFactor) {
-        setProperty(RasterParticleResetRateFactor.NAME, rasterParticleResetRateFactor.value)
+        setProperty("raster-particle-reset-rate-factor", rasterParticleResetRateFactor.value)
       }
       update(rasterParticleSpeedFactor) {
-        setProperty(RasterParticleSpeedFactor.NAME, rasterParticleSpeedFactor.value)
+        setProperty("raster-particle-speed-factor", rasterParticleSpeedFactor.value)
       }
       update(rasterParticleSpeedFactorTransition) {
-        setProperty(RasterParticleSpeedFactor.TRANSITION_NAME, rasterParticleSpeedFactorTransition.value)
+        setProperty("raster-particle-speed-factor-transition", rasterParticleSpeedFactorTransition.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

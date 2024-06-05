@@ -10,7 +10,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -23,8 +29,11 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param heatmapColor Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
  * @param heatmapIntensity Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+ * @param heatmapIntensityTransition Defines the transition of [heatmapIntensity].
  * @param heatmapOpacity The global opacity at which the heatmap layer will be drawn.
+ * @param heatmapOpacityTransition Defines the transition of [heatmapOpacity].
  * @param heatmapRadius Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
+ * @param heatmapRadiusTransition Defines the transition of [heatmapRadius].
  * @param heatmapWeight A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -40,19 +49,19 @@ public fun HeatmapLayer(
   layerId: String = remember {
     generateRandomLayerId("heatmap")
   },
-  heatmapColor: HeatmapColor = HeatmapColor.default,
-  heatmapIntensity: HeatmapIntensity = HeatmapIntensity.default,
-  heatmapIntensityTransition: Transition = Transition.default,
-  heatmapOpacity: HeatmapOpacity = HeatmapOpacity.default,
-  heatmapOpacityTransition: Transition = Transition.default,
-  heatmapRadius: HeatmapRadius = HeatmapRadius.default,
-  heatmapRadiusTransition: Transition = Transition.default,
-  heatmapWeight: HeatmapWeight = HeatmapWeight.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  heatmapColor: ColorValue = ColorValue.INITIAL,
+  heatmapIntensity: DoubleValue = DoubleValue.INITIAL,
+  heatmapIntensityTransition: Transition = Transition.INITIAL,
+  heatmapOpacity: DoubleValue = DoubleValue.INITIAL,
+  heatmapOpacityTransition: Transition = Transition.INITIAL,
+  heatmapRadius: DoubleValue = DoubleValue.INITIAL,
+  heatmapRadiusTransition: Transition = Transition.INITIAL,
+  heatmapWeight: DoubleValue = DoubleValue.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of HeatmapLayer inside unsupported composable function")
@@ -71,44 +80,44 @@ public fun HeatmapLayer(
     },
     update = {
       init {
-        if (heatmapColor != HeatmapColor.default) {
-          setProperty(HeatmapColor.NAME, heatmapColor.value)
+        if (heatmapColor.notInitial) {
+          setProperty("heatmap-color", heatmapColor.value)
         }
-        if (heatmapIntensity != HeatmapIntensity.default) {
-          setProperty(HeatmapIntensity.NAME, heatmapIntensity.value)
+        if (heatmapIntensity.notInitial) {
+          setProperty("heatmap-intensity", heatmapIntensity.value)
         }
-        if (heatmapIntensityTransition != Transition.default) {
-          setProperty(HeatmapIntensity.TRANSITION_NAME, heatmapIntensityTransition.value)
+        if (heatmapIntensityTransition.notInitial) {
+          setProperty("heatmap-intensity-transition", heatmapIntensityTransition.value)
         }
-        if (heatmapOpacity != HeatmapOpacity.default) {
-          setProperty(HeatmapOpacity.NAME, heatmapOpacity.value)
+        if (heatmapOpacity.notInitial) {
+          setProperty("heatmap-opacity", heatmapOpacity.value)
         }
-        if (heatmapOpacityTransition != Transition.default) {
-          setProperty(HeatmapOpacity.TRANSITION_NAME, heatmapOpacityTransition.value)
+        if (heatmapOpacityTransition.notInitial) {
+          setProperty("heatmap-opacity-transition", heatmapOpacityTransition.value)
         }
-        if (heatmapRadius != HeatmapRadius.default) {
-          setProperty(HeatmapRadius.NAME, heatmapRadius.value)
+        if (heatmapRadius.notInitial) {
+          setProperty("heatmap-radius", heatmapRadius.value)
         }
-        if (heatmapRadiusTransition != Transition.default) {
-          setProperty(HeatmapRadius.TRANSITION_NAME, heatmapRadiusTransition.value)
+        if (heatmapRadiusTransition.notInitial) {
+          setProperty("heatmap-radius-transition", heatmapRadiusTransition.value)
         }
-        if (heatmapWeight != HeatmapWeight.default) {
-          setProperty(HeatmapWeight.NAME, heatmapWeight.value)
+        if (heatmapWeight.notInitial) {
+          setProperty("heatmap-weight", heatmapWeight.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -118,43 +127,43 @@ public fun HeatmapLayer(
         updateLayerId(layerId)
       }
       update(heatmapColor) {
-        setProperty(HeatmapColor.NAME, heatmapColor.value)
+        setProperty("heatmap-color", heatmapColor.value)
       }
       update(heatmapIntensity) {
-        setProperty(HeatmapIntensity.NAME, heatmapIntensity.value)
+        setProperty("heatmap-intensity", heatmapIntensity.value)
       }
       update(heatmapIntensityTransition) {
-        setProperty(HeatmapIntensity.TRANSITION_NAME, heatmapIntensityTransition.value)
+        setProperty("heatmap-intensity-transition", heatmapIntensityTransition.value)
       }
       update(heatmapOpacity) {
-        setProperty(HeatmapOpacity.NAME, heatmapOpacity.value)
+        setProperty("heatmap-opacity", heatmapOpacity.value)
       }
       update(heatmapOpacityTransition) {
-        setProperty(HeatmapOpacity.TRANSITION_NAME, heatmapOpacityTransition.value)
+        setProperty("heatmap-opacity-transition", heatmapOpacityTransition.value)
       }
       update(heatmapRadius) {
-        setProperty(HeatmapRadius.NAME, heatmapRadius.value)
+        setProperty("heatmap-radius", heatmapRadius.value)
       }
       update(heatmapRadiusTransition) {
-        setProperty(HeatmapRadius.TRANSITION_NAME, heatmapRadiusTransition.value)
+        setProperty("heatmap-radius-transition", heatmapRadiusTransition.value)
       }
       update(heatmapWeight) {
-        setProperty(HeatmapWeight.NAME, heatmapWeight.value)
+        setProperty("heatmap-weight", heatmapWeight.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

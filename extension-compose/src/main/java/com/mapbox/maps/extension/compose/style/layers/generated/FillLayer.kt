@@ -10,7 +10,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.BooleanValue
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -24,11 +33,16 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param fillSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
  * @param fillAntialias Whether or not the fill should be antialiased.
  * @param fillColor The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+ * @param fillColorTransition Defines the transition of [fillColor].
  * @param fillEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param fillEmissiveStrengthTransition Defines the transition of [fillEmissiveStrength].
  * @param fillOpacity The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+ * @param fillOpacityTransition Defines the transition of [fillOpacity].
  * @param fillOutlineColor The outline color of the fill. Matches the value of `fill-color` if unspecified.
+ * @param fillOutlineColorTransition Defines the transition of [fillOutlineColor].
  * @param fillPattern Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  * @param fillTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+ * @param fillTranslateTransition Defines the transition of [fillTranslate].
  * @param fillTranslateAnchor Controls the frame of reference for `fill-translate`.
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -44,25 +58,25 @@ public fun FillLayer(
   layerId: String = remember {
     generateRandomLayerId("fill")
   },
-  fillSortKey: FillSortKey = FillSortKey.default,
-  fillAntialias: FillAntialias = FillAntialias.default,
-  fillColor: FillColor = FillColor.default,
-  fillColorTransition: Transition = Transition.default,
-  fillEmissiveStrength: FillEmissiveStrength = FillEmissiveStrength.default,
-  fillEmissiveStrengthTransition: Transition = Transition.default,
-  fillOpacity: FillOpacity = FillOpacity.default,
-  fillOpacityTransition: Transition = Transition.default,
-  fillOutlineColor: FillOutlineColor = FillOutlineColor.default,
-  fillOutlineColorTransition: Transition = Transition.default,
-  fillPattern: FillPattern = FillPattern.default,
-  fillTranslate: FillTranslate = FillTranslate.default,
-  fillTranslateTransition: Transition = Transition.default,
-  fillTranslateAnchor: FillTranslateAnchor = FillTranslateAnchor.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  fillSortKey: DoubleValue = DoubleValue.INITIAL,
+  fillAntialias: BooleanValue = BooleanValue.INITIAL,
+  fillColor: ColorValue = ColorValue.INITIAL,
+  fillColorTransition: Transition = Transition.INITIAL,
+  fillEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  fillEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  fillOpacity: DoubleValue = DoubleValue.INITIAL,
+  fillOpacityTransition: Transition = Transition.INITIAL,
+  fillOutlineColor: ColorValue = ColorValue.INITIAL,
+  fillOutlineColorTransition: Transition = Transition.INITIAL,
+  fillPattern: ImageValue = ImageValue.INITIAL,
+  fillTranslate: DoubleListValue = DoubleListValue.INITIAL,
+  fillTranslateTransition: Transition = Transition.INITIAL,
+  fillTranslateAnchor: FillTranslateAnchorValue = FillTranslateAnchorValue.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of FillLayer inside unsupported composable function")
@@ -81,65 +95,65 @@ public fun FillLayer(
     },
     update = {
       init {
-        if (fillSortKey != FillSortKey.default) {
-          setProperty(FillSortKey.NAME, fillSortKey.value)
+        if (fillSortKey.notInitial) {
+          setProperty("fill-sort-key", fillSortKey.value)
         }
-        if (fillAntialias != FillAntialias.default) {
-          setProperty(FillAntialias.NAME, fillAntialias.value)
+        if (fillAntialias.notInitial) {
+          setProperty("fill-antialias", fillAntialias.value)
         }
-        if (fillColor != FillColor.default) {
-          setProperty(FillColor.NAME, fillColor.value)
+        if (fillColor.notInitial) {
+          setProperty("fill-color", fillColor.value)
         }
-        if (fillColorTransition != Transition.default) {
-          setProperty(FillColor.TRANSITION_NAME, fillColorTransition.value)
+        if (fillColorTransition.notInitial) {
+          setProperty("fill-color-transition", fillColorTransition.value)
         }
-        if (fillEmissiveStrength != FillEmissiveStrength.default) {
-          setProperty(FillEmissiveStrength.NAME, fillEmissiveStrength.value)
+        if (fillEmissiveStrength.notInitial) {
+          setProperty("fill-emissive-strength", fillEmissiveStrength.value)
         }
-        if (fillEmissiveStrengthTransition != Transition.default) {
-          setProperty(FillEmissiveStrength.TRANSITION_NAME, fillEmissiveStrengthTransition.value)
+        if (fillEmissiveStrengthTransition.notInitial) {
+          setProperty("fill-emissive-strength-transition", fillEmissiveStrengthTransition.value)
         }
-        if (fillOpacity != FillOpacity.default) {
-          setProperty(FillOpacity.NAME, fillOpacity.value)
+        if (fillOpacity.notInitial) {
+          setProperty("fill-opacity", fillOpacity.value)
         }
-        if (fillOpacityTransition != Transition.default) {
-          setProperty(FillOpacity.TRANSITION_NAME, fillOpacityTransition.value)
+        if (fillOpacityTransition.notInitial) {
+          setProperty("fill-opacity-transition", fillOpacityTransition.value)
         }
-        if (fillOutlineColor != FillOutlineColor.default) {
-          setProperty(FillOutlineColor.NAME, fillOutlineColor.value)
+        if (fillOutlineColor.notInitial) {
+          setProperty("fill-outline-color", fillOutlineColor.value)
         }
-        if (fillOutlineColorTransition != Transition.default) {
-          setProperty(FillOutlineColor.TRANSITION_NAME, fillOutlineColorTransition.value)
+        if (fillOutlineColorTransition.notInitial) {
+          setProperty("fill-outline-color-transition", fillOutlineColorTransition.value)
         }
-        if (fillPattern != FillPattern.default) {
+        if (fillPattern.notInitial) {
           fillPattern.styleImage?.let {
             addImage(it)
           }
-          setProperty(FillPattern.NAME, fillPattern.value)
+          setProperty("fill-pattern", fillPattern.value)
         }
-        if (fillTranslate != FillTranslate.default) {
-          setProperty(FillTranslate.NAME, fillTranslate.value)
+        if (fillTranslate.notInitial) {
+          setProperty("fill-translate", fillTranslate.value)
         }
-        if (fillTranslateTransition != Transition.default) {
-          setProperty(FillTranslate.TRANSITION_NAME, fillTranslateTransition.value)
+        if (fillTranslateTransition.notInitial) {
+          setProperty("fill-translate-transition", fillTranslateTransition.value)
         }
-        if (fillTranslateAnchor != FillTranslateAnchor.default) {
-          setProperty(FillTranslateAnchor.NAME, fillTranslateAnchor.value)
+        if (fillTranslateAnchor.notInitial) {
+          setProperty("fill-translate-anchor", fillTranslateAnchor.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -149,64 +163,64 @@ public fun FillLayer(
         updateLayerId(layerId)
       }
       update(fillSortKey) {
-        setProperty(FillSortKey.NAME, fillSortKey.value)
+        setProperty("fill-sort-key", fillSortKey.value)
       }
       update(fillAntialias) {
-        setProperty(FillAntialias.NAME, fillAntialias.value)
+        setProperty("fill-antialias", fillAntialias.value)
       }
       update(fillColor) {
-        setProperty(FillColor.NAME, fillColor.value)
+        setProperty("fill-color", fillColor.value)
       }
       update(fillColorTransition) {
-        setProperty(FillColor.TRANSITION_NAME, fillColorTransition.value)
+        setProperty("fill-color-transition", fillColorTransition.value)
       }
       update(fillEmissiveStrength) {
-        setProperty(FillEmissiveStrength.NAME, fillEmissiveStrength.value)
+        setProperty("fill-emissive-strength", fillEmissiveStrength.value)
       }
       update(fillEmissiveStrengthTransition) {
-        setProperty(FillEmissiveStrength.TRANSITION_NAME, fillEmissiveStrengthTransition.value)
+        setProperty("fill-emissive-strength-transition", fillEmissiveStrengthTransition.value)
       }
       update(fillOpacity) {
-        setProperty(FillOpacity.NAME, fillOpacity.value)
+        setProperty("fill-opacity", fillOpacity.value)
       }
       update(fillOpacityTransition) {
-        setProperty(FillOpacity.TRANSITION_NAME, fillOpacityTransition.value)
+        setProperty("fill-opacity-transition", fillOpacityTransition.value)
       }
       update(fillOutlineColor) {
-        setProperty(FillOutlineColor.NAME, fillOutlineColor.value)
+        setProperty("fill-outline-color", fillOutlineColor.value)
       }
       update(fillOutlineColorTransition) {
-        setProperty(FillOutlineColor.TRANSITION_NAME, fillOutlineColorTransition.value)
+        setProperty("fill-outline-color-transition", fillOutlineColorTransition.value)
       }
       update(fillPattern) {
         fillPattern.styleImage?.let {
           addImage(it)
         }
-        setProperty(FillPattern.NAME, fillPattern.value)
+        setProperty("fill-pattern", fillPattern.value)
       }
       update(fillTranslate) {
-        setProperty(FillTranslate.NAME, fillTranslate.value)
+        setProperty("fill-translate", fillTranslate.value)
       }
       update(fillTranslateTransition) {
-        setProperty(FillTranslate.TRANSITION_NAME, fillTranslateTransition.value)
+        setProperty("fill-translate-transition", fillTranslateTransition.value)
       }
       update(fillTranslateAnchor) {
-        setProperty(FillTranslateAnchor.NAME, fillTranslateAnchor.value)
+        setProperty("fill-translate-anchor", fillTranslateAnchor.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

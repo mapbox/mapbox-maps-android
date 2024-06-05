@@ -10,7 +10,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.BooleanValue
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringListValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.Filter
+import com.mapbox.maps.extension.compose.style.layers.FormattedValue
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
@@ -64,22 +75,38 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param textVariableAnchor To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
  * @param textWritingMode The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
  * @param iconColor The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+ * @param iconColorTransition Defines the transition of [iconColor].
  * @param iconColorSaturation Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+ * @param iconColorSaturationTransition Defines the transition of [iconColorSaturation].
  * @param iconEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param iconEmissiveStrengthTransition Defines the transition of [iconEmissiveStrength].
  * @param iconHaloBlur Fade out the halo towards the outside.
+ * @param iconHaloBlurTransition Defines the transition of [iconHaloBlur].
  * @param iconHaloColor The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+ * @param iconHaloColorTransition Defines the transition of [iconHaloColor].
  * @param iconHaloWidth Distance of halo to the icon outline.
+ * @param iconHaloWidthTransition Defines the transition of [iconHaloWidth].
  * @param iconImageCrossFade Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+ * @param iconImageCrossFadeTransition Defines the transition of [iconImageCrossFade].
  * @param iconOpacity The opacity at which the icon will be drawn.
+ * @param iconOpacityTransition Defines the transition of [iconOpacity].
  * @param iconTranslate Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+ * @param iconTranslateTransition Defines the transition of [iconTranslate].
  * @param iconTranslateAnchor Controls the frame of reference for `icon-translate`.
  * @param textColor The color with which the text will be drawn.
+ * @param textColorTransition Defines the transition of [textColor].
  * @param textEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param textEmissiveStrengthTransition Defines the transition of [textEmissiveStrength].
  * @param textHaloBlur The halo's fadeout distance towards the outside.
+ * @param textHaloBlurTransition Defines the transition of [textHaloBlur].
  * @param textHaloColor The color of the text's halo, which helps it stand out from backgrounds.
+ * @param textHaloColorTransition Defines the transition of [textHaloColor].
  * @param textHaloWidth Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+ * @param textHaloWidthTransition Defines the transition of [textHaloWidth].
  * @param textOpacity The opacity at which the text will be drawn.
+ * @param textOpacityTransition Defines the transition of [textOpacity].
  * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+ * @param textTranslateTransition Defines the transition of [textTranslate].
  * @param textTranslateAnchor Controls the frame of reference for `text-translate`.
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -95,87 +122,87 @@ public fun SymbolLayer(
   layerId: String = remember {
     generateRandomLayerId("symbol")
   },
-  iconAllowOverlap: IconAllowOverlap = IconAllowOverlap.default,
-  iconAnchor: IconAnchor = IconAnchor.default,
-  iconIgnorePlacement: IconIgnorePlacement = IconIgnorePlacement.default,
-  iconImage: IconImage = IconImage.default,
-  iconKeepUpright: IconKeepUpright = IconKeepUpright.default,
-  iconOffset: IconOffset = IconOffset.default,
-  iconOptional: IconOptional = IconOptional.default,
-  iconPadding: IconPadding = IconPadding.default,
-  iconPitchAlignment: IconPitchAlignment = IconPitchAlignment.default,
-  iconRotate: IconRotate = IconRotate.default,
-  iconRotationAlignment: IconRotationAlignment = IconRotationAlignment.default,
-  iconSize: IconSize = IconSize.default,
-  iconTextFit: IconTextFit = IconTextFit.default,
-  iconTextFitPadding: IconTextFitPadding = IconTextFitPadding.default,
-  symbolAvoidEdges: SymbolAvoidEdges = SymbolAvoidEdges.default,
-  symbolPlacement: SymbolPlacement = SymbolPlacement.default,
-  symbolSortKey: SymbolSortKey = SymbolSortKey.default,
-  symbolSpacing: SymbolSpacing = SymbolSpacing.default,
-  symbolZElevate: SymbolZElevate = SymbolZElevate.default,
-  symbolZOrder: SymbolZOrder = SymbolZOrder.default,
-  textAllowOverlap: TextAllowOverlap = TextAllowOverlap.default,
-  textAnchor: TextAnchor = TextAnchor.default,
-  textField: TextField = TextField.default,
-  textFont: TextFont = TextFont.default,
-  textIgnorePlacement: TextIgnorePlacement = TextIgnorePlacement.default,
-  textJustify: TextJustify = TextJustify.default,
-  textKeepUpright: TextKeepUpright = TextKeepUpright.default,
-  textLetterSpacing: TextLetterSpacing = TextLetterSpacing.default,
-  textLineHeight: TextLineHeight = TextLineHeight.default,
-  textMaxAngle: TextMaxAngle = TextMaxAngle.default,
-  textMaxWidth: TextMaxWidth = TextMaxWidth.default,
-  textOffset: TextOffset = TextOffset.default,
-  textOptional: TextOptional = TextOptional.default,
-  textPadding: TextPadding = TextPadding.default,
-  textPitchAlignment: TextPitchAlignment = TextPitchAlignment.default,
-  textRadialOffset: TextRadialOffset = TextRadialOffset.default,
-  textRotate: TextRotate = TextRotate.default,
-  textRotationAlignment: TextRotationAlignment = TextRotationAlignment.default,
-  textSize: TextSize = TextSize.default,
-  textTransform: TextTransform = TextTransform.default,
-  textVariableAnchor: TextVariableAnchor = TextVariableAnchor.default,
-  textWritingMode: TextWritingMode = TextWritingMode.default,
-  iconColor: IconColor = IconColor.default,
-  iconColorTransition: Transition = Transition.default,
-  iconColorSaturation: IconColorSaturation = IconColorSaturation.default,
-  iconColorSaturationTransition: Transition = Transition.default,
-  iconEmissiveStrength: IconEmissiveStrength = IconEmissiveStrength.default,
-  iconEmissiveStrengthTransition: Transition = Transition.default,
-  iconHaloBlur: IconHaloBlur = IconHaloBlur.default,
-  iconHaloBlurTransition: Transition = Transition.default,
-  iconHaloColor: IconHaloColor = IconHaloColor.default,
-  iconHaloColorTransition: Transition = Transition.default,
-  iconHaloWidth: IconHaloWidth = IconHaloWidth.default,
-  iconHaloWidthTransition: Transition = Transition.default,
-  iconImageCrossFade: IconImageCrossFade = IconImageCrossFade.default,
-  iconImageCrossFadeTransition: Transition = Transition.default,
-  iconOpacity: IconOpacity = IconOpacity.default,
-  iconOpacityTransition: Transition = Transition.default,
-  iconTranslate: IconTranslate = IconTranslate.default,
-  iconTranslateTransition: Transition = Transition.default,
-  iconTranslateAnchor: IconTranslateAnchor = IconTranslateAnchor.default,
-  textColor: TextColor = TextColor.default,
-  textColorTransition: Transition = Transition.default,
-  textEmissiveStrength: TextEmissiveStrength = TextEmissiveStrength.default,
-  textEmissiveStrengthTransition: Transition = Transition.default,
-  textHaloBlur: TextHaloBlur = TextHaloBlur.default,
-  textHaloBlurTransition: Transition = Transition.default,
-  textHaloColor: TextHaloColor = TextHaloColor.default,
-  textHaloColorTransition: Transition = Transition.default,
-  textHaloWidth: TextHaloWidth = TextHaloWidth.default,
-  textHaloWidthTransition: Transition = Transition.default,
-  textOpacity: TextOpacity = TextOpacity.default,
-  textOpacityTransition: Transition = Transition.default,
-  textTranslate: TextTranslate = TextTranslate.default,
-  textTranslateTransition: Transition = Transition.default,
-  textTranslateAnchor: TextTranslateAnchor = TextTranslateAnchor.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
-  sourceLayer: SourceLayer = SourceLayer.default,
-  filter: Filter = Filter.default,
+  iconAllowOverlap: BooleanValue = BooleanValue.INITIAL,
+  iconAnchor: IconAnchorValue = IconAnchorValue.INITIAL,
+  iconIgnorePlacement: BooleanValue = BooleanValue.INITIAL,
+  iconImage: ImageValue = ImageValue.INITIAL,
+  iconKeepUpright: BooleanValue = BooleanValue.INITIAL,
+  iconOffset: DoubleListValue = DoubleListValue.INITIAL,
+  iconOptional: BooleanValue = BooleanValue.INITIAL,
+  iconPadding: DoubleValue = DoubleValue.INITIAL,
+  iconPitchAlignment: IconPitchAlignmentValue = IconPitchAlignmentValue.INITIAL,
+  iconRotate: DoubleValue = DoubleValue.INITIAL,
+  iconRotationAlignment: IconRotationAlignmentValue = IconRotationAlignmentValue.INITIAL,
+  iconSize: DoubleValue = DoubleValue.INITIAL,
+  iconTextFit: IconTextFitValue = IconTextFitValue.INITIAL,
+  iconTextFitPadding: DoubleListValue = DoubleListValue.INITIAL,
+  symbolAvoidEdges: BooleanValue = BooleanValue.INITIAL,
+  symbolPlacement: SymbolPlacementValue = SymbolPlacementValue.INITIAL,
+  symbolSortKey: DoubleValue = DoubleValue.INITIAL,
+  symbolSpacing: DoubleValue = DoubleValue.INITIAL,
+  symbolZElevate: BooleanValue = BooleanValue.INITIAL,
+  symbolZOrder: SymbolZOrderValue = SymbolZOrderValue.INITIAL,
+  textAllowOverlap: BooleanValue = BooleanValue.INITIAL,
+  textAnchor: TextAnchorValue = TextAnchorValue.INITIAL,
+  textField: FormattedValue = FormattedValue.INITIAL,
+  textFont: StringListValue = StringListValue.INITIAL,
+  textIgnorePlacement: BooleanValue = BooleanValue.INITIAL,
+  textJustify: TextJustifyValue = TextJustifyValue.INITIAL,
+  textKeepUpright: BooleanValue = BooleanValue.INITIAL,
+  textLetterSpacing: DoubleValue = DoubleValue.INITIAL,
+  textLineHeight: DoubleValue = DoubleValue.INITIAL,
+  textMaxAngle: DoubleValue = DoubleValue.INITIAL,
+  textMaxWidth: DoubleValue = DoubleValue.INITIAL,
+  textOffset: DoubleListValue = DoubleListValue.INITIAL,
+  textOptional: BooleanValue = BooleanValue.INITIAL,
+  textPadding: DoubleValue = DoubleValue.INITIAL,
+  textPitchAlignment: TextPitchAlignmentValue = TextPitchAlignmentValue.INITIAL,
+  textRadialOffset: DoubleValue = DoubleValue.INITIAL,
+  textRotate: DoubleValue = DoubleValue.INITIAL,
+  textRotationAlignment: TextRotationAlignmentValue = TextRotationAlignmentValue.INITIAL,
+  textSize: DoubleValue = DoubleValue.INITIAL,
+  textTransform: TextTransformValue = TextTransformValue.INITIAL,
+  textVariableAnchor: TextVariableAnchorListValue = TextVariableAnchorListValue.INITIAL,
+  textWritingMode: TextWritingModeListValue = TextWritingModeListValue.INITIAL,
+  iconColor: ColorValue = ColorValue.INITIAL,
+  iconColorTransition: Transition = Transition.INITIAL,
+  iconColorSaturation: DoubleValue = DoubleValue.INITIAL,
+  iconColorSaturationTransition: Transition = Transition.INITIAL,
+  iconEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  iconEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  iconHaloBlur: DoubleValue = DoubleValue.INITIAL,
+  iconHaloBlurTransition: Transition = Transition.INITIAL,
+  iconHaloColor: ColorValue = ColorValue.INITIAL,
+  iconHaloColorTransition: Transition = Transition.INITIAL,
+  iconHaloWidth: DoubleValue = DoubleValue.INITIAL,
+  iconHaloWidthTransition: Transition = Transition.INITIAL,
+  iconImageCrossFade: DoubleValue = DoubleValue.INITIAL,
+  iconImageCrossFadeTransition: Transition = Transition.INITIAL,
+  iconOpacity: DoubleValue = DoubleValue.INITIAL,
+  iconOpacityTransition: Transition = Transition.INITIAL,
+  iconTranslate: DoubleListValue = DoubleListValue.INITIAL,
+  iconTranslateTransition: Transition = Transition.INITIAL,
+  iconTranslateAnchor: IconTranslateAnchorValue = IconTranslateAnchorValue.INITIAL,
+  textColor: ColorValue = ColorValue.INITIAL,
+  textColorTransition: Transition = Transition.INITIAL,
+  textEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  textEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  textHaloBlur: DoubleValue = DoubleValue.INITIAL,
+  textHaloBlurTransition: Transition = Transition.INITIAL,
+  textHaloColor: ColorValue = ColorValue.INITIAL,
+  textHaloColorTransition: Transition = Transition.INITIAL,
+  textHaloWidth: DoubleValue = DoubleValue.INITIAL,
+  textHaloWidthTransition: Transition = Transition.INITIAL,
+  textOpacity: DoubleValue = DoubleValue.INITIAL,
+  textOpacityTransition: Transition = Transition.INITIAL,
+  textTranslate: DoubleListValue = DoubleListValue.INITIAL,
+  textTranslateTransition: Transition = Transition.INITIAL,
+  textTranslateAnchor: TextTranslateAnchorValue = TextTranslateAnchorValue.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
+  sourceLayer: StringValue = StringValue.INITIAL,
+  filter: Filter = Filter.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of SymbolLayer inside unsupported composable function")
@@ -194,251 +221,251 @@ public fun SymbolLayer(
     },
     update = {
       init {
-        if (iconAllowOverlap != IconAllowOverlap.default) {
-          setProperty(IconAllowOverlap.NAME, iconAllowOverlap.value)
+        if (iconAllowOverlap.notInitial) {
+          setProperty("icon-allow-overlap", iconAllowOverlap.value)
         }
-        if (iconAnchor != IconAnchor.default) {
-          setProperty(IconAnchor.NAME, iconAnchor.value)
+        if (iconAnchor.notInitial) {
+          setProperty("icon-anchor", iconAnchor.value)
         }
-        if (iconIgnorePlacement != IconIgnorePlacement.default) {
-          setProperty(IconIgnorePlacement.NAME, iconIgnorePlacement.value)
+        if (iconIgnorePlacement.notInitial) {
+          setProperty("icon-ignore-placement", iconIgnorePlacement.value)
         }
-        if (iconImage != IconImage.default) {
+        if (iconImage.notInitial) {
           iconImage.styleImage?.let {
             addImage(it)
           }
-          setProperty(IconImage.NAME, iconImage.value)
+          setProperty("icon-image", iconImage.value)
         }
-        if (iconKeepUpright != IconKeepUpright.default) {
-          setProperty(IconKeepUpright.NAME, iconKeepUpright.value)
+        if (iconKeepUpright.notInitial) {
+          setProperty("icon-keep-upright", iconKeepUpright.value)
         }
-        if (iconOffset != IconOffset.default) {
-          setProperty(IconOffset.NAME, iconOffset.value)
+        if (iconOffset.notInitial) {
+          setProperty("icon-offset", iconOffset.value)
         }
-        if (iconOptional != IconOptional.default) {
-          setProperty(IconOptional.NAME, iconOptional.value)
+        if (iconOptional.notInitial) {
+          setProperty("icon-optional", iconOptional.value)
         }
-        if (iconPadding != IconPadding.default) {
-          setProperty(IconPadding.NAME, iconPadding.value)
+        if (iconPadding.notInitial) {
+          setProperty("icon-padding", iconPadding.value)
         }
-        if (iconPitchAlignment != IconPitchAlignment.default) {
-          setProperty(IconPitchAlignment.NAME, iconPitchAlignment.value)
+        if (iconPitchAlignment.notInitial) {
+          setProperty("icon-pitch-alignment", iconPitchAlignment.value)
         }
-        if (iconRotate != IconRotate.default) {
-          setProperty(IconRotate.NAME, iconRotate.value)
+        if (iconRotate.notInitial) {
+          setProperty("icon-rotate", iconRotate.value)
         }
-        if (iconRotationAlignment != IconRotationAlignment.default) {
-          setProperty(IconRotationAlignment.NAME, iconRotationAlignment.value)
+        if (iconRotationAlignment.notInitial) {
+          setProperty("icon-rotation-alignment", iconRotationAlignment.value)
         }
-        if (iconSize != IconSize.default) {
-          setProperty(IconSize.NAME, iconSize.value)
+        if (iconSize.notInitial) {
+          setProperty("icon-size", iconSize.value)
         }
-        if (iconTextFit != IconTextFit.default) {
-          setProperty(IconTextFit.NAME, iconTextFit.value)
+        if (iconTextFit.notInitial) {
+          setProperty("icon-text-fit", iconTextFit.value)
         }
-        if (iconTextFitPadding != IconTextFitPadding.default) {
-          setProperty(IconTextFitPadding.NAME, iconTextFitPadding.value)
+        if (iconTextFitPadding.notInitial) {
+          setProperty("icon-text-fit-padding", iconTextFitPadding.value)
         }
-        if (symbolAvoidEdges != SymbolAvoidEdges.default) {
-          setProperty(SymbolAvoidEdges.NAME, symbolAvoidEdges.value)
+        if (symbolAvoidEdges.notInitial) {
+          setProperty("symbol-avoid-edges", symbolAvoidEdges.value)
         }
-        if (symbolPlacement != SymbolPlacement.default) {
-          setProperty(SymbolPlacement.NAME, symbolPlacement.value)
+        if (symbolPlacement.notInitial) {
+          setProperty("symbol-placement", symbolPlacement.value)
         }
-        if (symbolSortKey != SymbolSortKey.default) {
-          setProperty(SymbolSortKey.NAME, symbolSortKey.value)
+        if (symbolSortKey.notInitial) {
+          setProperty("symbol-sort-key", symbolSortKey.value)
         }
-        if (symbolSpacing != SymbolSpacing.default) {
-          setProperty(SymbolSpacing.NAME, symbolSpacing.value)
+        if (symbolSpacing.notInitial) {
+          setProperty("symbol-spacing", symbolSpacing.value)
         }
-        if (symbolZElevate != SymbolZElevate.default) {
-          setProperty(SymbolZElevate.NAME, symbolZElevate.value)
+        if (symbolZElevate.notInitial) {
+          setProperty("symbol-z-elevate", symbolZElevate.value)
         }
-        if (symbolZOrder != SymbolZOrder.default) {
-          setProperty(SymbolZOrder.NAME, symbolZOrder.value)
+        if (symbolZOrder.notInitial) {
+          setProperty("symbol-z-order", symbolZOrder.value)
         }
-        if (textAllowOverlap != TextAllowOverlap.default) {
-          setProperty(TextAllowOverlap.NAME, textAllowOverlap.value)
+        if (textAllowOverlap.notInitial) {
+          setProperty("text-allow-overlap", textAllowOverlap.value)
         }
-        if (textAnchor != TextAnchor.default) {
-          setProperty(TextAnchor.NAME, textAnchor.value)
+        if (textAnchor.notInitial) {
+          setProperty("text-anchor", textAnchor.value)
         }
-        if (textField != TextField.default) {
-          setProperty(TextField.NAME, textField.value)
+        if (textField.notInitial) {
+          setProperty("text-field", textField.value)
         }
-        if (textFont != TextFont.default) {
-          setProperty(TextFont.NAME, textFont.value)
+        if (textFont.notInitial) {
+          setProperty("text-font", textFont.value)
         }
-        if (textIgnorePlacement != TextIgnorePlacement.default) {
-          setProperty(TextIgnorePlacement.NAME, textIgnorePlacement.value)
+        if (textIgnorePlacement.notInitial) {
+          setProperty("text-ignore-placement", textIgnorePlacement.value)
         }
-        if (textJustify != TextJustify.default) {
-          setProperty(TextJustify.NAME, textJustify.value)
+        if (textJustify.notInitial) {
+          setProperty("text-justify", textJustify.value)
         }
-        if (textKeepUpright != TextKeepUpright.default) {
-          setProperty(TextKeepUpright.NAME, textKeepUpright.value)
+        if (textKeepUpright.notInitial) {
+          setProperty("text-keep-upright", textKeepUpright.value)
         }
-        if (textLetterSpacing != TextLetterSpacing.default) {
-          setProperty(TextLetterSpacing.NAME, textLetterSpacing.value)
+        if (textLetterSpacing.notInitial) {
+          setProperty("text-letter-spacing", textLetterSpacing.value)
         }
-        if (textLineHeight != TextLineHeight.default) {
-          setProperty(TextLineHeight.NAME, textLineHeight.value)
+        if (textLineHeight.notInitial) {
+          setProperty("text-line-height", textLineHeight.value)
         }
-        if (textMaxAngle != TextMaxAngle.default) {
-          setProperty(TextMaxAngle.NAME, textMaxAngle.value)
+        if (textMaxAngle.notInitial) {
+          setProperty("text-max-angle", textMaxAngle.value)
         }
-        if (textMaxWidth != TextMaxWidth.default) {
-          setProperty(TextMaxWidth.NAME, textMaxWidth.value)
+        if (textMaxWidth.notInitial) {
+          setProperty("text-max-width", textMaxWidth.value)
         }
-        if (textOffset != TextOffset.default) {
-          setProperty(TextOffset.NAME, textOffset.value)
+        if (textOffset.notInitial) {
+          setProperty("text-offset", textOffset.value)
         }
-        if (textOptional != TextOptional.default) {
-          setProperty(TextOptional.NAME, textOptional.value)
+        if (textOptional.notInitial) {
+          setProperty("text-optional", textOptional.value)
         }
-        if (textPadding != TextPadding.default) {
-          setProperty(TextPadding.NAME, textPadding.value)
+        if (textPadding.notInitial) {
+          setProperty("text-padding", textPadding.value)
         }
-        if (textPitchAlignment != TextPitchAlignment.default) {
-          setProperty(TextPitchAlignment.NAME, textPitchAlignment.value)
+        if (textPitchAlignment.notInitial) {
+          setProperty("text-pitch-alignment", textPitchAlignment.value)
         }
-        if (textRadialOffset != TextRadialOffset.default) {
-          setProperty(TextRadialOffset.NAME, textRadialOffset.value)
+        if (textRadialOffset.notInitial) {
+          setProperty("text-radial-offset", textRadialOffset.value)
         }
-        if (textRotate != TextRotate.default) {
-          setProperty(TextRotate.NAME, textRotate.value)
+        if (textRotate.notInitial) {
+          setProperty("text-rotate", textRotate.value)
         }
-        if (textRotationAlignment != TextRotationAlignment.default) {
-          setProperty(TextRotationAlignment.NAME, textRotationAlignment.value)
+        if (textRotationAlignment.notInitial) {
+          setProperty("text-rotation-alignment", textRotationAlignment.value)
         }
-        if (textSize != TextSize.default) {
-          setProperty(TextSize.NAME, textSize.value)
+        if (textSize.notInitial) {
+          setProperty("text-size", textSize.value)
         }
-        if (textTransform != TextTransform.default) {
-          setProperty(TextTransform.NAME, textTransform.value)
+        if (textTransform.notInitial) {
+          setProperty("text-transform", textTransform.value)
         }
-        if (textVariableAnchor != TextVariableAnchor.default) {
-          setProperty(TextVariableAnchor.NAME, textVariableAnchor.value)
+        if (textVariableAnchor.notInitial) {
+          setProperty("text-variable-anchor", textVariableAnchor.value)
         }
-        if (textWritingMode != TextWritingMode.default) {
-          setProperty(TextWritingMode.NAME, textWritingMode.value)
+        if (textWritingMode.notInitial) {
+          setProperty("text-writing-mode", textWritingMode.value)
         }
-        if (iconColor != IconColor.default) {
-          setProperty(IconColor.NAME, iconColor.value)
+        if (iconColor.notInitial) {
+          setProperty("icon-color", iconColor.value)
         }
-        if (iconColorTransition != Transition.default) {
-          setProperty(IconColor.TRANSITION_NAME, iconColorTransition.value)
+        if (iconColorTransition.notInitial) {
+          setProperty("icon-color-transition", iconColorTransition.value)
         }
-        if (iconColorSaturation != IconColorSaturation.default) {
-          setProperty(IconColorSaturation.NAME, iconColorSaturation.value)
+        if (iconColorSaturation.notInitial) {
+          setProperty("icon-color-saturation", iconColorSaturation.value)
         }
-        if (iconColorSaturationTransition != Transition.default) {
-          setProperty(IconColorSaturation.TRANSITION_NAME, iconColorSaturationTransition.value)
+        if (iconColorSaturationTransition.notInitial) {
+          setProperty("icon-color-saturation-transition", iconColorSaturationTransition.value)
         }
-        if (iconEmissiveStrength != IconEmissiveStrength.default) {
-          setProperty(IconEmissiveStrength.NAME, iconEmissiveStrength.value)
+        if (iconEmissiveStrength.notInitial) {
+          setProperty("icon-emissive-strength", iconEmissiveStrength.value)
         }
-        if (iconEmissiveStrengthTransition != Transition.default) {
-          setProperty(IconEmissiveStrength.TRANSITION_NAME, iconEmissiveStrengthTransition.value)
+        if (iconEmissiveStrengthTransition.notInitial) {
+          setProperty("icon-emissive-strength-transition", iconEmissiveStrengthTransition.value)
         }
-        if (iconHaloBlur != IconHaloBlur.default) {
-          setProperty(IconHaloBlur.NAME, iconHaloBlur.value)
+        if (iconHaloBlur.notInitial) {
+          setProperty("icon-halo-blur", iconHaloBlur.value)
         }
-        if (iconHaloBlurTransition != Transition.default) {
-          setProperty(IconHaloBlur.TRANSITION_NAME, iconHaloBlurTransition.value)
+        if (iconHaloBlurTransition.notInitial) {
+          setProperty("icon-halo-blur-transition", iconHaloBlurTransition.value)
         }
-        if (iconHaloColor != IconHaloColor.default) {
-          setProperty(IconHaloColor.NAME, iconHaloColor.value)
+        if (iconHaloColor.notInitial) {
+          setProperty("icon-halo-color", iconHaloColor.value)
         }
-        if (iconHaloColorTransition != Transition.default) {
-          setProperty(IconHaloColor.TRANSITION_NAME, iconHaloColorTransition.value)
+        if (iconHaloColorTransition.notInitial) {
+          setProperty("icon-halo-color-transition", iconHaloColorTransition.value)
         }
-        if (iconHaloWidth != IconHaloWidth.default) {
-          setProperty(IconHaloWidth.NAME, iconHaloWidth.value)
+        if (iconHaloWidth.notInitial) {
+          setProperty("icon-halo-width", iconHaloWidth.value)
         }
-        if (iconHaloWidthTransition != Transition.default) {
-          setProperty(IconHaloWidth.TRANSITION_NAME, iconHaloWidthTransition.value)
+        if (iconHaloWidthTransition.notInitial) {
+          setProperty("icon-halo-width-transition", iconHaloWidthTransition.value)
         }
-        if (iconImageCrossFade != IconImageCrossFade.default) {
-          setProperty(IconImageCrossFade.NAME, iconImageCrossFade.value)
+        if (iconImageCrossFade.notInitial) {
+          setProperty("icon-image-cross-fade", iconImageCrossFade.value)
         }
-        if (iconImageCrossFadeTransition != Transition.default) {
-          setProperty(IconImageCrossFade.TRANSITION_NAME, iconImageCrossFadeTransition.value)
+        if (iconImageCrossFadeTransition.notInitial) {
+          setProperty("icon-image-cross-fade-transition", iconImageCrossFadeTransition.value)
         }
-        if (iconOpacity != IconOpacity.default) {
-          setProperty(IconOpacity.NAME, iconOpacity.value)
+        if (iconOpacity.notInitial) {
+          setProperty("icon-opacity", iconOpacity.value)
         }
-        if (iconOpacityTransition != Transition.default) {
-          setProperty(IconOpacity.TRANSITION_NAME, iconOpacityTransition.value)
+        if (iconOpacityTransition.notInitial) {
+          setProperty("icon-opacity-transition", iconOpacityTransition.value)
         }
-        if (iconTranslate != IconTranslate.default) {
-          setProperty(IconTranslate.NAME, iconTranslate.value)
+        if (iconTranslate.notInitial) {
+          setProperty("icon-translate", iconTranslate.value)
         }
-        if (iconTranslateTransition != Transition.default) {
-          setProperty(IconTranslate.TRANSITION_NAME, iconTranslateTransition.value)
+        if (iconTranslateTransition.notInitial) {
+          setProperty("icon-translate-transition", iconTranslateTransition.value)
         }
-        if (iconTranslateAnchor != IconTranslateAnchor.default) {
-          setProperty(IconTranslateAnchor.NAME, iconTranslateAnchor.value)
+        if (iconTranslateAnchor.notInitial) {
+          setProperty("icon-translate-anchor", iconTranslateAnchor.value)
         }
-        if (textColor != TextColor.default) {
-          setProperty(TextColor.NAME, textColor.value)
+        if (textColor.notInitial) {
+          setProperty("text-color", textColor.value)
         }
-        if (textColorTransition != Transition.default) {
-          setProperty(TextColor.TRANSITION_NAME, textColorTransition.value)
+        if (textColorTransition.notInitial) {
+          setProperty("text-color-transition", textColorTransition.value)
         }
-        if (textEmissiveStrength != TextEmissiveStrength.default) {
-          setProperty(TextEmissiveStrength.NAME, textEmissiveStrength.value)
+        if (textEmissiveStrength.notInitial) {
+          setProperty("text-emissive-strength", textEmissiveStrength.value)
         }
-        if (textEmissiveStrengthTransition != Transition.default) {
-          setProperty(TextEmissiveStrength.TRANSITION_NAME, textEmissiveStrengthTransition.value)
+        if (textEmissiveStrengthTransition.notInitial) {
+          setProperty("text-emissive-strength-transition", textEmissiveStrengthTransition.value)
         }
-        if (textHaloBlur != TextHaloBlur.default) {
-          setProperty(TextHaloBlur.NAME, textHaloBlur.value)
+        if (textHaloBlur.notInitial) {
+          setProperty("text-halo-blur", textHaloBlur.value)
         }
-        if (textHaloBlurTransition != Transition.default) {
-          setProperty(TextHaloBlur.TRANSITION_NAME, textHaloBlurTransition.value)
+        if (textHaloBlurTransition.notInitial) {
+          setProperty("text-halo-blur-transition", textHaloBlurTransition.value)
         }
-        if (textHaloColor != TextHaloColor.default) {
-          setProperty(TextHaloColor.NAME, textHaloColor.value)
+        if (textHaloColor.notInitial) {
+          setProperty("text-halo-color", textHaloColor.value)
         }
-        if (textHaloColorTransition != Transition.default) {
-          setProperty(TextHaloColor.TRANSITION_NAME, textHaloColorTransition.value)
+        if (textHaloColorTransition.notInitial) {
+          setProperty("text-halo-color-transition", textHaloColorTransition.value)
         }
-        if (textHaloWidth != TextHaloWidth.default) {
-          setProperty(TextHaloWidth.NAME, textHaloWidth.value)
+        if (textHaloWidth.notInitial) {
+          setProperty("text-halo-width", textHaloWidth.value)
         }
-        if (textHaloWidthTransition != Transition.default) {
-          setProperty(TextHaloWidth.TRANSITION_NAME, textHaloWidthTransition.value)
+        if (textHaloWidthTransition.notInitial) {
+          setProperty("text-halo-width-transition", textHaloWidthTransition.value)
         }
-        if (textOpacity != TextOpacity.default) {
-          setProperty(TextOpacity.NAME, textOpacity.value)
+        if (textOpacity.notInitial) {
+          setProperty("text-opacity", textOpacity.value)
         }
-        if (textOpacityTransition != Transition.default) {
-          setProperty(TextOpacity.TRANSITION_NAME, textOpacityTransition.value)
+        if (textOpacityTransition.notInitial) {
+          setProperty("text-opacity-transition", textOpacityTransition.value)
         }
-        if (textTranslate != TextTranslate.default) {
-          setProperty(TextTranslate.NAME, textTranslate.value)
+        if (textTranslate.notInitial) {
+          setProperty("text-translate", textTranslate.value)
         }
-        if (textTranslateTransition != Transition.default) {
-          setProperty(TextTranslate.TRANSITION_NAME, textTranslateTransition.value)
+        if (textTranslateTransition.notInitial) {
+          setProperty("text-translate-transition", textTranslateTransition.value)
         }
-        if (textTranslateAnchor != TextTranslateAnchor.default) {
-          setProperty(TextTranslateAnchor.NAME, textTranslateAnchor.value)
+        if (textTranslateAnchor.notInitial) {
+          setProperty("text-translate-anchor", textTranslateAnchor.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
-        if (sourceLayer != SourceLayer.default) {
-          setProperty(SourceLayer.NAME, sourceLayer.value)
+        if (sourceLayer.notInitial) {
+          setProperty("source-layer", sourceLayer.value)
         }
-        if (filter != Filter.default) {
-          setProperty(Filter.NAME, filter.value)
+        if (filter.notInitial) {
+          setProperty("filter", filter.value)
         }
       }
       update(sourceState) {
@@ -448,250 +475,250 @@ public fun SymbolLayer(
         updateLayerId(layerId)
       }
       update(iconAllowOverlap) {
-        setProperty(IconAllowOverlap.NAME, iconAllowOverlap.value)
+        setProperty("icon-allow-overlap", iconAllowOverlap.value)
       }
       update(iconAnchor) {
-        setProperty(IconAnchor.NAME, iconAnchor.value)
+        setProperty("icon-anchor", iconAnchor.value)
       }
       update(iconIgnorePlacement) {
-        setProperty(IconIgnorePlacement.NAME, iconIgnorePlacement.value)
+        setProperty("icon-ignore-placement", iconIgnorePlacement.value)
       }
       update(iconImage) {
         iconImage.styleImage?.let {
           addImage(it)
         }
-        setProperty(IconImage.NAME, iconImage.value)
+        setProperty("icon-image", iconImage.value)
       }
       update(iconKeepUpright) {
-        setProperty(IconKeepUpright.NAME, iconKeepUpright.value)
+        setProperty("icon-keep-upright", iconKeepUpright.value)
       }
       update(iconOffset) {
-        setProperty(IconOffset.NAME, iconOffset.value)
+        setProperty("icon-offset", iconOffset.value)
       }
       update(iconOptional) {
-        setProperty(IconOptional.NAME, iconOptional.value)
+        setProperty("icon-optional", iconOptional.value)
       }
       update(iconPadding) {
-        setProperty(IconPadding.NAME, iconPadding.value)
+        setProperty("icon-padding", iconPadding.value)
       }
       update(iconPitchAlignment) {
-        setProperty(IconPitchAlignment.NAME, iconPitchAlignment.value)
+        setProperty("icon-pitch-alignment", iconPitchAlignment.value)
       }
       update(iconRotate) {
-        setProperty(IconRotate.NAME, iconRotate.value)
+        setProperty("icon-rotate", iconRotate.value)
       }
       update(iconRotationAlignment) {
-        setProperty(IconRotationAlignment.NAME, iconRotationAlignment.value)
+        setProperty("icon-rotation-alignment", iconRotationAlignment.value)
       }
       update(iconSize) {
-        setProperty(IconSize.NAME, iconSize.value)
+        setProperty("icon-size", iconSize.value)
       }
       update(iconTextFit) {
-        setProperty(IconTextFit.NAME, iconTextFit.value)
+        setProperty("icon-text-fit", iconTextFit.value)
       }
       update(iconTextFitPadding) {
-        setProperty(IconTextFitPadding.NAME, iconTextFitPadding.value)
+        setProperty("icon-text-fit-padding", iconTextFitPadding.value)
       }
       update(symbolAvoidEdges) {
-        setProperty(SymbolAvoidEdges.NAME, symbolAvoidEdges.value)
+        setProperty("symbol-avoid-edges", symbolAvoidEdges.value)
       }
       update(symbolPlacement) {
-        setProperty(SymbolPlacement.NAME, symbolPlacement.value)
+        setProperty("symbol-placement", symbolPlacement.value)
       }
       update(symbolSortKey) {
-        setProperty(SymbolSortKey.NAME, symbolSortKey.value)
+        setProperty("symbol-sort-key", symbolSortKey.value)
       }
       update(symbolSpacing) {
-        setProperty(SymbolSpacing.NAME, symbolSpacing.value)
+        setProperty("symbol-spacing", symbolSpacing.value)
       }
       update(symbolZElevate) {
-        setProperty(SymbolZElevate.NAME, symbolZElevate.value)
+        setProperty("symbol-z-elevate", symbolZElevate.value)
       }
       update(symbolZOrder) {
-        setProperty(SymbolZOrder.NAME, symbolZOrder.value)
+        setProperty("symbol-z-order", symbolZOrder.value)
       }
       update(textAllowOverlap) {
-        setProperty(TextAllowOverlap.NAME, textAllowOverlap.value)
+        setProperty("text-allow-overlap", textAllowOverlap.value)
       }
       update(textAnchor) {
-        setProperty(TextAnchor.NAME, textAnchor.value)
+        setProperty("text-anchor", textAnchor.value)
       }
       update(textField) {
-        setProperty(TextField.NAME, textField.value)
+        setProperty("text-field", textField.value)
       }
       update(textFont) {
-        setProperty(TextFont.NAME, textFont.value)
+        setProperty("text-font", textFont.value)
       }
       update(textIgnorePlacement) {
-        setProperty(TextIgnorePlacement.NAME, textIgnorePlacement.value)
+        setProperty("text-ignore-placement", textIgnorePlacement.value)
       }
       update(textJustify) {
-        setProperty(TextJustify.NAME, textJustify.value)
+        setProperty("text-justify", textJustify.value)
       }
       update(textKeepUpright) {
-        setProperty(TextKeepUpright.NAME, textKeepUpright.value)
+        setProperty("text-keep-upright", textKeepUpright.value)
       }
       update(textLetterSpacing) {
-        setProperty(TextLetterSpacing.NAME, textLetterSpacing.value)
+        setProperty("text-letter-spacing", textLetterSpacing.value)
       }
       update(textLineHeight) {
-        setProperty(TextLineHeight.NAME, textLineHeight.value)
+        setProperty("text-line-height", textLineHeight.value)
       }
       update(textMaxAngle) {
-        setProperty(TextMaxAngle.NAME, textMaxAngle.value)
+        setProperty("text-max-angle", textMaxAngle.value)
       }
       update(textMaxWidth) {
-        setProperty(TextMaxWidth.NAME, textMaxWidth.value)
+        setProperty("text-max-width", textMaxWidth.value)
       }
       update(textOffset) {
-        setProperty(TextOffset.NAME, textOffset.value)
+        setProperty("text-offset", textOffset.value)
       }
       update(textOptional) {
-        setProperty(TextOptional.NAME, textOptional.value)
+        setProperty("text-optional", textOptional.value)
       }
       update(textPadding) {
-        setProperty(TextPadding.NAME, textPadding.value)
+        setProperty("text-padding", textPadding.value)
       }
       update(textPitchAlignment) {
-        setProperty(TextPitchAlignment.NAME, textPitchAlignment.value)
+        setProperty("text-pitch-alignment", textPitchAlignment.value)
       }
       update(textRadialOffset) {
-        setProperty(TextRadialOffset.NAME, textRadialOffset.value)
+        setProperty("text-radial-offset", textRadialOffset.value)
       }
       update(textRotate) {
-        setProperty(TextRotate.NAME, textRotate.value)
+        setProperty("text-rotate", textRotate.value)
       }
       update(textRotationAlignment) {
-        setProperty(TextRotationAlignment.NAME, textRotationAlignment.value)
+        setProperty("text-rotation-alignment", textRotationAlignment.value)
       }
       update(textSize) {
-        setProperty(TextSize.NAME, textSize.value)
+        setProperty("text-size", textSize.value)
       }
       update(textTransform) {
-        setProperty(TextTransform.NAME, textTransform.value)
+        setProperty("text-transform", textTransform.value)
       }
       update(textVariableAnchor) {
-        setProperty(TextVariableAnchor.NAME, textVariableAnchor.value)
+        setProperty("text-variable-anchor", textVariableAnchor.value)
       }
       update(textWritingMode) {
-        setProperty(TextWritingMode.NAME, textWritingMode.value)
+        setProperty("text-writing-mode", textWritingMode.value)
       }
       update(iconColor) {
-        setProperty(IconColor.NAME, iconColor.value)
+        setProperty("icon-color", iconColor.value)
       }
       update(iconColorTransition) {
-        setProperty(IconColor.TRANSITION_NAME, iconColorTransition.value)
+        setProperty("icon-color-transition", iconColorTransition.value)
       }
       update(iconColorSaturation) {
-        setProperty(IconColorSaturation.NAME, iconColorSaturation.value)
+        setProperty("icon-color-saturation", iconColorSaturation.value)
       }
       update(iconColorSaturationTransition) {
-        setProperty(IconColorSaturation.TRANSITION_NAME, iconColorSaturationTransition.value)
+        setProperty("icon-color-saturation-transition", iconColorSaturationTransition.value)
       }
       update(iconEmissiveStrength) {
-        setProperty(IconEmissiveStrength.NAME, iconEmissiveStrength.value)
+        setProperty("icon-emissive-strength", iconEmissiveStrength.value)
       }
       update(iconEmissiveStrengthTransition) {
-        setProperty(IconEmissiveStrength.TRANSITION_NAME, iconEmissiveStrengthTransition.value)
+        setProperty("icon-emissive-strength-transition", iconEmissiveStrengthTransition.value)
       }
       update(iconHaloBlur) {
-        setProperty(IconHaloBlur.NAME, iconHaloBlur.value)
+        setProperty("icon-halo-blur", iconHaloBlur.value)
       }
       update(iconHaloBlurTransition) {
-        setProperty(IconHaloBlur.TRANSITION_NAME, iconHaloBlurTransition.value)
+        setProperty("icon-halo-blur-transition", iconHaloBlurTransition.value)
       }
       update(iconHaloColor) {
-        setProperty(IconHaloColor.NAME, iconHaloColor.value)
+        setProperty("icon-halo-color", iconHaloColor.value)
       }
       update(iconHaloColorTransition) {
-        setProperty(IconHaloColor.TRANSITION_NAME, iconHaloColorTransition.value)
+        setProperty("icon-halo-color-transition", iconHaloColorTransition.value)
       }
       update(iconHaloWidth) {
-        setProperty(IconHaloWidth.NAME, iconHaloWidth.value)
+        setProperty("icon-halo-width", iconHaloWidth.value)
       }
       update(iconHaloWidthTransition) {
-        setProperty(IconHaloWidth.TRANSITION_NAME, iconHaloWidthTransition.value)
+        setProperty("icon-halo-width-transition", iconHaloWidthTransition.value)
       }
       update(iconImageCrossFade) {
-        setProperty(IconImageCrossFade.NAME, iconImageCrossFade.value)
+        setProperty("icon-image-cross-fade", iconImageCrossFade.value)
       }
       update(iconImageCrossFadeTransition) {
-        setProperty(IconImageCrossFade.TRANSITION_NAME, iconImageCrossFadeTransition.value)
+        setProperty("icon-image-cross-fade-transition", iconImageCrossFadeTransition.value)
       }
       update(iconOpacity) {
-        setProperty(IconOpacity.NAME, iconOpacity.value)
+        setProperty("icon-opacity", iconOpacity.value)
       }
       update(iconOpacityTransition) {
-        setProperty(IconOpacity.TRANSITION_NAME, iconOpacityTransition.value)
+        setProperty("icon-opacity-transition", iconOpacityTransition.value)
       }
       update(iconTranslate) {
-        setProperty(IconTranslate.NAME, iconTranslate.value)
+        setProperty("icon-translate", iconTranslate.value)
       }
       update(iconTranslateTransition) {
-        setProperty(IconTranslate.TRANSITION_NAME, iconTranslateTransition.value)
+        setProperty("icon-translate-transition", iconTranslateTransition.value)
       }
       update(iconTranslateAnchor) {
-        setProperty(IconTranslateAnchor.NAME, iconTranslateAnchor.value)
+        setProperty("icon-translate-anchor", iconTranslateAnchor.value)
       }
       update(textColor) {
-        setProperty(TextColor.NAME, textColor.value)
+        setProperty("text-color", textColor.value)
       }
       update(textColorTransition) {
-        setProperty(TextColor.TRANSITION_NAME, textColorTransition.value)
+        setProperty("text-color-transition", textColorTransition.value)
       }
       update(textEmissiveStrength) {
-        setProperty(TextEmissiveStrength.NAME, textEmissiveStrength.value)
+        setProperty("text-emissive-strength", textEmissiveStrength.value)
       }
       update(textEmissiveStrengthTransition) {
-        setProperty(TextEmissiveStrength.TRANSITION_NAME, textEmissiveStrengthTransition.value)
+        setProperty("text-emissive-strength-transition", textEmissiveStrengthTransition.value)
       }
       update(textHaloBlur) {
-        setProperty(TextHaloBlur.NAME, textHaloBlur.value)
+        setProperty("text-halo-blur", textHaloBlur.value)
       }
       update(textHaloBlurTransition) {
-        setProperty(TextHaloBlur.TRANSITION_NAME, textHaloBlurTransition.value)
+        setProperty("text-halo-blur-transition", textHaloBlurTransition.value)
       }
       update(textHaloColor) {
-        setProperty(TextHaloColor.NAME, textHaloColor.value)
+        setProperty("text-halo-color", textHaloColor.value)
       }
       update(textHaloColorTransition) {
-        setProperty(TextHaloColor.TRANSITION_NAME, textHaloColorTransition.value)
+        setProperty("text-halo-color-transition", textHaloColorTransition.value)
       }
       update(textHaloWidth) {
-        setProperty(TextHaloWidth.NAME, textHaloWidth.value)
+        setProperty("text-halo-width", textHaloWidth.value)
       }
       update(textHaloWidthTransition) {
-        setProperty(TextHaloWidth.TRANSITION_NAME, textHaloWidthTransition.value)
+        setProperty("text-halo-width-transition", textHaloWidthTransition.value)
       }
       update(textOpacity) {
-        setProperty(TextOpacity.NAME, textOpacity.value)
+        setProperty("text-opacity", textOpacity.value)
       }
       update(textOpacityTransition) {
-        setProperty(TextOpacity.TRANSITION_NAME, textOpacityTransition.value)
+        setProperty("text-opacity-transition", textOpacityTransition.value)
       }
       update(textTranslate) {
-        setProperty(TextTranslate.NAME, textTranslate.value)
+        setProperty("text-translate", textTranslate.value)
       }
       update(textTranslateTransition) {
-        setProperty(TextTranslate.TRANSITION_NAME, textTranslateTransition.value)
+        setProperty("text-translate-transition", textTranslateTransition.value)
       }
       update(textTranslateAnchor) {
-        setProperty(TextTranslateAnchor.NAME, textTranslateAnchor.value)
+        setProperty("text-translate-anchor", textTranslateAnchor.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
       update(sourceLayer) {
-        setProperty(SourceLayer.NAME, sourceLayer.value)
+        setProperty("source-layer", sourceLayer.value)
       }
       update(filter) {
-        setProperty(Filter.NAME, filter.value)
+        setProperty("filter", filter.value)
       }
     }
   )

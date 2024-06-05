@@ -24,14 +24,11 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelAmbientOcclusionIntensity
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelId
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.layers.ModelIdValue
 import com.mapbox.maps.extension.compose.style.layers.generated.ModelLayer
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelOpacity
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelRotation
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelScale
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelTranslation
-import com.mapbox.maps.extension.compose.style.layers.generated.ModelType
+import com.mapbox.maps.extension.compose.style.layers.generated.ModelTypeValue
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -110,23 +107,23 @@ public class ModelLayerActivity : ComponentActivity() {
                     )
                   )
                 },
-                modelId = ModelId(Expression.get(MODEL_ID_KEY)),
-                modelType = ModelType.COMMON_3D,
-                modelScale = ModelScale(listOf(40.0, 40.0, 40.0)),
-                modelTranslation = ModelTranslation(listOf(0.0, 0.0, 0.0)),
-                modelRotation = ModelRotation(listOf(0.0, 0.0, 90.0)),
-                modelOpacity = ModelOpacity(0.7),
-                modelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity(1.0)
+                modelId = ModelIdValue(Expression.get(MODEL_ID_KEY)),
+                modelType = ModelTypeValue.COMMON_3D,
+                modelScale = DoubleListValue(listOf(40.0, 40.0, 40.0)),
+                modelTranslation = DoubleListValue(listOf(0.0, 0.0, 0.0)),
+                modelRotation = DoubleListValue(listOf(0.0, 0.0, 90.0)),
+                modelOpacity = DoubleValue(0.7),
+                modelAmbientOcclusionIntensity = DoubleValue(1.0)
               )
               // Add model through inlined model uri.
               ModelLayer(
                 sourceState = rememberGeoJsonSourceState {
                   data = GeoJSONData(CityLocations.HELSINKI)
                 },
-                modelId = ModelId(modelId = MODEL_ID_3, uri = modelUri),
-                modelType = ModelType.COMMON_3D,
-                modelScale = ModelScale(listOf(40.0, 40.0, 40.0)),
-                modelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity(1.0)
+                modelId = ModelIdValue(modelId = MODEL_ID_3, uri = modelUri),
+                modelType = ModelTypeValue.COMMON_3D,
+                modelScale = DoubleListValue(listOf(40.0, 40.0, 40.0)),
+                modelAmbientOcclusionIntensity = DoubleValue(1.0)
               )
             }
           }

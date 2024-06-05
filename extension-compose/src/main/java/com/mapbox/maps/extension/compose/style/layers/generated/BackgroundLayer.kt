@@ -10,7 +10,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.Transition
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -20,8 +25,11 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param backgroundColor The color with which the background will be drawn.
+ * @param backgroundColorTransition Defines the transition of [backgroundColor].
  * @param backgroundEmissiveStrength Controls the intensity of light emitted on the source features.
+ * @param backgroundEmissiveStrengthTransition Defines the transition of [backgroundEmissiveStrength].
  * @param backgroundOpacity The opacity at which the background will be drawn.
+ * @param backgroundOpacityTransition Defines the transition of [backgroundOpacity].
  * @param backgroundPattern Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
  * @param visibility Whether this layer is displayed.
  * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -34,16 +42,16 @@ public fun BackgroundLayer(
   layerId: String = remember {
     generateRandomLayerId("background")
   },
-  backgroundColor: BackgroundColor = BackgroundColor.default,
-  backgroundColorTransition: Transition = Transition.default,
-  backgroundEmissiveStrength: BackgroundEmissiveStrength = BackgroundEmissiveStrength.default,
-  backgroundEmissiveStrengthTransition: Transition = Transition.default,
-  backgroundOpacity: BackgroundOpacity = BackgroundOpacity.default,
-  backgroundOpacityTransition: Transition = Transition.default,
-  backgroundPattern: BackgroundPattern = BackgroundPattern.default,
-  visibility: Visibility = Visibility.default,
-  minZoom: MinZoom = MinZoom.default,
-  maxZoom: MaxZoom = MaxZoom.default,
+  backgroundColor: ColorValue = ColorValue.INITIAL,
+  backgroundColorTransition: Transition = Transition.INITIAL,
+  backgroundEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
+  backgroundEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  backgroundOpacity: DoubleValue = DoubleValue.INITIAL,
+  backgroundOpacityTransition: Transition = Transition.INITIAL,
+  backgroundPattern: ImageValue = ImageValue.INITIAL,
+  visibility: VisibilityValue = VisibilityValue.INITIAL,
+  minZoom: LongValue = LongValue.INITIAL,
+  maxZoom: LongValue = LongValue.INITIAL,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of BackgroundLayer inside unsupported composable function")
@@ -61,75 +69,75 @@ public fun BackgroundLayer(
     },
     update = {
       init {
-        if (backgroundColor != BackgroundColor.default) {
-          setProperty(BackgroundColor.NAME, backgroundColor.value)
+        if (backgroundColor.notInitial) {
+          setProperty("background-color", backgroundColor.value)
         }
-        if (backgroundColorTransition != Transition.default) {
-          setProperty(BackgroundColor.TRANSITION_NAME, backgroundColorTransition.value)
+        if (backgroundColorTransition.notInitial) {
+          setProperty("background-color-transition", backgroundColorTransition.value)
         }
-        if (backgroundEmissiveStrength != BackgroundEmissiveStrength.default) {
-          setProperty(BackgroundEmissiveStrength.NAME, backgroundEmissiveStrength.value)
+        if (backgroundEmissiveStrength.notInitial) {
+          setProperty("background-emissive-strength", backgroundEmissiveStrength.value)
         }
-        if (backgroundEmissiveStrengthTransition != Transition.default) {
-          setProperty(BackgroundEmissiveStrength.TRANSITION_NAME, backgroundEmissiveStrengthTransition.value)
+        if (backgroundEmissiveStrengthTransition.notInitial) {
+          setProperty("background-emissive-strength-transition", backgroundEmissiveStrengthTransition.value)
         }
-        if (backgroundOpacity != BackgroundOpacity.default) {
-          setProperty(BackgroundOpacity.NAME, backgroundOpacity.value)
+        if (backgroundOpacity.notInitial) {
+          setProperty("background-opacity", backgroundOpacity.value)
         }
-        if (backgroundOpacityTransition != Transition.default) {
-          setProperty(BackgroundOpacity.TRANSITION_NAME, backgroundOpacityTransition.value)
+        if (backgroundOpacityTransition.notInitial) {
+          setProperty("background-opacity-transition", backgroundOpacityTransition.value)
         }
-        if (backgroundPattern != BackgroundPattern.default) {
+        if (backgroundPattern.notInitial) {
           backgroundPattern.styleImage?.let {
             addImage(it)
           }
-          setProperty(BackgroundPattern.NAME, backgroundPattern.value)
+          setProperty("background-pattern", backgroundPattern.value)
         }
-        if (visibility != Visibility.default) {
-          setProperty(Visibility.NAME, visibility.value)
+        if (visibility.notInitial) {
+          setProperty("visibility", visibility.value)
         }
-        if (minZoom != MinZoom.default) {
-          setProperty(MinZoom.NAME, minZoom.value)
+        if (minZoom.notInitial) {
+          setProperty("min-zoom", minZoom.value)
         }
-        if (maxZoom != MaxZoom.default) {
-          setProperty(MaxZoom.NAME, maxZoom.value)
+        if (maxZoom.notInitial) {
+          setProperty("max-zoom", maxZoom.value)
         }
       }
       update(layerId) {
         updateLayerId(layerId)
       }
       update(backgroundColor) {
-        setProperty(BackgroundColor.NAME, backgroundColor.value)
+        setProperty("background-color", backgroundColor.value)
       }
       update(backgroundColorTransition) {
-        setProperty(BackgroundColor.TRANSITION_NAME, backgroundColorTransition.value)
+        setProperty("background-color-transition", backgroundColorTransition.value)
       }
       update(backgroundEmissiveStrength) {
-        setProperty(BackgroundEmissiveStrength.NAME, backgroundEmissiveStrength.value)
+        setProperty("background-emissive-strength", backgroundEmissiveStrength.value)
       }
       update(backgroundEmissiveStrengthTransition) {
-        setProperty(BackgroundEmissiveStrength.TRANSITION_NAME, backgroundEmissiveStrengthTransition.value)
+        setProperty("background-emissive-strength-transition", backgroundEmissiveStrengthTransition.value)
       }
       update(backgroundOpacity) {
-        setProperty(BackgroundOpacity.NAME, backgroundOpacity.value)
+        setProperty("background-opacity", backgroundOpacity.value)
       }
       update(backgroundOpacityTransition) {
-        setProperty(BackgroundOpacity.TRANSITION_NAME, backgroundOpacityTransition.value)
+        setProperty("background-opacity-transition", backgroundOpacityTransition.value)
       }
       update(backgroundPattern) {
         backgroundPattern.styleImage?.let {
           addImage(it)
         }
-        setProperty(BackgroundPattern.NAME, backgroundPattern.value)
+        setProperty("background-pattern", backgroundPattern.value)
       }
       update(visibility) {
-        setProperty(Visibility.NAME, visibility.value)
+        setProperty("visibility", visibility.value)
       }
       update(minZoom) {
-        setProperty(MinZoom.NAME, minZoom.value)
+        setProperty("min-zoom", minZoom.value)
       }
       update(maxZoom) {
-        setProperty(MaxZoom.NAME, maxZoom.value)
+        setProperty("max-zoom", maxZoom.value)
       }
     }
   )
