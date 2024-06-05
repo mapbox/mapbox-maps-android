@@ -14,7 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 * `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
 * Fix precision issues in `ColorUtils` methods.
 * Fix NPE when parsing `rgb(...)` strings with `ColorUtils` methods.
-
+* Fix `ScaleBar.useContinuousRendering` not being in sync with `ScaleBar.settings.useContinuousRendering`.
 
 # 11.4.1 June 03, 2024
 ## Bug fixes 🐞

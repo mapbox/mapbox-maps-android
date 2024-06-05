@@ -103,6 +103,7 @@ class ScaleBarImpl : ScaleBar, View {
       unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
       strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
       enable = value.enabled
+      useContinuousRendering = value.useContinuousRendering
       if (useContinuousRendering) {
         reusableCanvas = null
       } else {

@@ -114,6 +114,16 @@ class ScaleBarImplTest {
   }
 
   @Test
+  fun useContinuousRendering() {
+    assertEquals(false, scaleBarView.useContinuousRendering)
+    scaleBarView.useContinuousRendering = true
+    assertEquals(true, scaleBarView.useContinuousRendering)
+
+    scaleBarView.settings = ScaleBarSettings { useContinuousRendering = false }
+    assertEquals(false, scaleBarView.useContinuousRendering)
+  }
+
+  @Test
   @LooperMode(LooperMode.Mode.PAUSED)
   fun renderingOnDemandTest() {
     scaleBarView.useContinuousRendering = false
