@@ -8,7 +8,7 @@ import com.mapbox.maps.StyleDataLoadedType
 import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
-import com.mapbox.maps.extension.compose.style.projection.Projection
+import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW

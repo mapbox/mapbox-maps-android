@@ -44,7 +44,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.LineMetrics
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
-import com.mapbox.maps.extension.compose.style.standard.LightPreset
+import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.PuckBearing
@@ -81,7 +81,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
       }
 
       var lightPreset by remember {
-        mutableStateOf(LightPreset.DAY)
+        mutableStateOf(LightPresetValue.DAY)
       }
 
       LaunchedEffect(Unit) {
@@ -138,10 +138,10 @@ public class NavigationSimulationActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  lightPreset = if (lightPreset == LightPreset.DAY) {
-                    LightPreset.NIGHT
+                  lightPreset = if (lightPreset == LightPresetValue.DAY) {
+                    LightPresetValue.NIGHT
                   } else {
-                    LightPreset.DAY
+                    LightPresetValue.DAY
                   }
                 },
                 shape = RoundedCornerShape(16.dp),
@@ -188,7 +188,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
 
   @MapboxStyleComposable
   @Composable
-  public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: LightPreset) {
+  public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: LightPresetValue) {
     val geoJsonSource = rememberGeoJsonSourceState {
       lineMetrics = LineMetrics(true)
     }

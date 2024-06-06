@@ -16,7 +16,7 @@ import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.extension.compose.style.internal.StyleConfig
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
 import com.mapbox.maps.extension.compose.style.internal.StyleSlot
-import com.mapbox.maps.extension.compose.style.projection.Projection
+import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 
 /**
@@ -32,9 +32,9 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 @MapboxExperimental
 public fun MapStyle(
   style: String,
-  projection: Projection = Projection.default,
+  projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
-  terrainState: TerrainState = TerrainState.initial,
+  terrainState: TerrainState = TerrainState.INITIAL,
 ) {
   GenericStyle(
     style = style,
@@ -224,9 +224,9 @@ public fun GenericStyle(
   slotsContent: SlotsContent = SlotsContent(),
   layerPositionedContent: LayerPositionedContent = LayerPositionedContent(),
   styleImportsConfig: StyleImportsConfig = StyleImportsConfig(),
-  projection: Projection = Projection.default,
+  projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
-  terrainState: TerrainState = TerrainState.initial,
+  terrainState: TerrainState = TerrainState.INITIAL,
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -246,7 +246,9 @@ public fun GenericStyle(
       },
       update = {
         update(projection) {
-          updateProjection(projection)
+          if (projection.notInitial) {
+            updateProjection(projection)
+          }
         }
         update(atmosphereState) {
           updateAtmosphere(atmosphereState)

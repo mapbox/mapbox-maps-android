@@ -111,7 +111,7 @@ public class AtmosphereState private constructor(
   private fun UpdateColorTransition() {
     colorTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("color", value)
+        applier.setProperty("color-transition", value)
       }
     }
   }
@@ -143,7 +143,7 @@ public class AtmosphereState private constructor(
   private fun UpdateHighColorTransition() {
     highColorTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("high-color", value)
+        applier.setProperty("high-color-transition", value)
       }
     }
   }
@@ -179,7 +179,7 @@ public class AtmosphereState private constructor(
   private fun UpdateHorizonBlendTransition() {
     horizonBlendTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("horizon-blend", value)
+        applier.setProperty("horizon-blend-transition", value)
       }
     }
   }
@@ -215,7 +215,7 @@ public class AtmosphereState private constructor(
   private fun UpdateRangeTransition() {
     rangeTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("range", value)
+        applier.setProperty("range-transition", value)
       }
     }
   }
@@ -246,7 +246,7 @@ public class AtmosphereState private constructor(
   private fun UpdateSpaceColorTransition() {
     spaceColorTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("space-color", value)
+        applier.setProperty("space-color-transition", value)
       }
     }
   }
@@ -281,7 +281,7 @@ public class AtmosphereState private constructor(
   private fun UpdateStarIntensityTransition() {
     starIntensityTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("star-intensity", value)
+        applier.setProperty("star-intensity-transition", value)
       }
     }
   }
@@ -317,7 +317,7 @@ public class AtmosphereState private constructor(
   private fun UpdateVerticalRangeTransition() {
     verticalRangeTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("vertical-range", value)
+        applier.setProperty("vertical-range-transition", value)
       }
     }
   }
@@ -343,19 +343,19 @@ public class AtmosphereState private constructor(
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
       ("color" to color.value).takeIf { color.notInitial },
-      ("color" to colorTransition.value).takeIf { colorTransition.notInitial },
+      ("color-transition" to colorTransition.value).takeIf { colorTransition.notInitial },
       ("high-color" to highColor.value).takeIf { highColor.notInitial },
-      ("high-color" to highColorTransition.value).takeIf { highColorTransition.notInitial },
+      ("high-color-transition" to highColorTransition.value).takeIf { highColorTransition.notInitial },
       ("horizon-blend" to horizonBlend.value).takeIf { horizonBlend.notInitial },
-      ("horizon-blend" to horizonBlendTransition.value).takeIf { horizonBlendTransition.notInitial },
+      ("horizon-blend-transition" to horizonBlendTransition.value).takeIf { horizonBlendTransition.notInitial },
       ("range" to range.value).takeIf { range.notInitial },
-      ("range" to rangeTransition.value).takeIf { rangeTransition.notInitial },
+      ("range-transition" to rangeTransition.value).takeIf { rangeTransition.notInitial },
       ("space-color" to spaceColor.value).takeIf { spaceColor.notInitial },
-      ("space-color" to spaceColorTransition.value).takeIf { spaceColorTransition.notInitial },
+      ("space-color-transition" to spaceColorTransition.value).takeIf { spaceColorTransition.notInitial },
       ("star-intensity" to starIntensity.value).takeIf { starIntensity.notInitial },
-      ("star-intensity" to starIntensityTransition.value).takeIf { starIntensityTransition.notInitial },
+      ("star-intensity-transition" to starIntensityTransition.value).takeIf { starIntensityTransition.notInitial },
       ("vertical-range" to verticalRange.value).takeIf { verticalRange.notInitial },
-      ("vertical-range" to verticalRangeTransition.value).takeIf { verticalRangeTransition.notInitial },
+      ("vertical-range-transition" to verticalRangeTransition.value).takeIf { verticalRangeTransition.notInitial },
     ).toMap()
 
   /**
@@ -440,19 +440,19 @@ public class AtmosphereState private constructor(
         AtmosphereState(
           AtmosphereStateApplier(holder.savedProperties),
           color = holder.savedProperties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
-          colorTransition = holder.savedProperties["color"]?.let { Transition(it) } ?: Transition.INITIAL,
+          colorTransition = holder.savedProperties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           highColor = holder.savedProperties["high-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
-          highColorTransition = holder.savedProperties["high-color"]?.let { Transition(it) } ?: Transition.INITIAL,
+          highColorTransition = holder.savedProperties["high-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           horizonBlend = holder.savedProperties["horizon-blend"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
-          horizonBlendTransition = holder.savedProperties["horizon-blend"]?.let { Transition(it) } ?: Transition.INITIAL,
+          horizonBlendTransition = holder.savedProperties["horizon-blend-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           range = holder.savedProperties["range"]?.let { DoubleRangeValue(it) } ?: DoubleRangeValue.INITIAL,
-          rangeTransition = holder.savedProperties["range"]?.let { Transition(it) } ?: Transition.INITIAL,
+          rangeTransition = holder.savedProperties["range-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           spaceColor = holder.savedProperties["space-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
-          spaceColorTransition = holder.savedProperties["space-color"]?.let { Transition(it) } ?: Transition.INITIAL,
+          spaceColorTransition = holder.savedProperties["space-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           starIntensity = holder.savedProperties["star-intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
-          starIntensityTransition = holder.savedProperties["star-intensity"]?.let { Transition(it) } ?: Transition.INITIAL,
+          starIntensityTransition = holder.savedProperties["star-intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           verticalRange = holder.savedProperties["vertical-range"]?.let { DoubleRangeValue(it) } ?: DoubleRangeValue.INITIAL,
-          verticalRangeTransition = holder.savedProperties["vertical-range"]?.let { Transition(it) } ?: Transition.INITIAL,
+          verticalRangeTransition = holder.savedProperties["vertical-range-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )
       }
     )

@@ -7,6 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace terrain property `Exaggeration` with `DoubleValue`.
 * Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `RangeDoubleValue`.
 * Replace concrete Layer properties(e.g. `CircleColor`, `CircleOpacity`, `IconImage` etc) with generic ones: `ColorValue`, `DoubleValue`, `ImageValue` etc.
+* [compose] Move `Projection` to `generated` package and rename `default` values to `DEFAULT`.
+* [compose] Rename `LightPreset` to `LightPresetValue`.
+* [compose] Rename `TerrainState.disabled` to `TerrainState.DISABLED`.
 
 ## Features ✨ and improvements 🏁
 * Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.

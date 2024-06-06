@@ -29,7 +29,7 @@ import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.rememberAtmosphereState
-import com.mapbox.maps.extension.compose.style.projection.Projection
+import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import kotlin.math.round
 import kotlin.random.Random
 
@@ -42,7 +42,7 @@ public class StyleStatesActivity : ComponentActivity() {
   private val projections =
     // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
     // default so the map changes visually.
-    listOf(Projection.default, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR)
+    listOf(Projection.DEFAULT, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -131,7 +131,7 @@ public class StyleStatesActivity : ComponentActivity() {
                 shape = RoundedCornerShape(16.dp),
               ) {
                 val nextProjectionName =
-                  projections[(currentProjectionIdx + 1) % projections.size].friendlyName()
+                  projections[(currentProjectionIdx + 1) % projections.size].projectionNameOrNull
                 Text(
                   modifier = Modifier.padding(10.dp),
                   text = "Change projection to $nextProjectionName"
@@ -178,19 +178,6 @@ public class StyleStatesActivity : ComponentActivity() {
       Random.nextInt(255),
     )
   )
-
-  @OptIn(MapboxExperimental::class)
-  private fun Projection.friendlyName(): String {
-    return when (this) {
-      Projection.GLOBE -> "globe"
-
-      Projection.MERCATOR -> "mercator"
-
-      Projection.default -> "default"
-
-      else -> "Unknown"
-    }
-  }
 
   private companion object {
     private const val ZOOM: Double = 1.0

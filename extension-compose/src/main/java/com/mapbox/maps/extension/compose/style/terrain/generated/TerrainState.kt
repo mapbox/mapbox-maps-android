@@ -71,7 +71,7 @@ public class TerrainState private constructor(
   )
 
   /**
-   * Constructor used by [Companion.initial] and [Companion.disabled].
+   * Constructor used by [INITIAL] and [DISABLED].
    */
   private constructor(initial: Boolean) : this(
     TerrainStateApplier(
@@ -213,12 +213,14 @@ public class TerrainState private constructor(
     /**
      * Initial value for [TerrainState], meaning that no changes will be applied to the current style.
      */
-    internal val initial: TerrainState = TerrainState(initial = true)
+    @JvmField
+    internal val INITIAL: TerrainState = TerrainState(initial = true)
 
     /**
      * Disabled value for [TerrainState], setting disabled will result in removing terrain.
      */
-    public val disabled: TerrainState = TerrainState(initial = false)
+    @JvmField
+    public val DISABLED: TerrainState = TerrainState(initial = false)
   }
 }
 // End of generated file.

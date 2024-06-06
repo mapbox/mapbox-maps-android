@@ -61,9 +61,9 @@ public class TerrainActivity : ComponentActivity() {
             Column {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
-                backgroundColor = if (currentTerrainState == TerrainState.disabled) Color.LightGray else MaterialTheme.colors.secondary,
+                backgroundColor = if (currentTerrainState == TerrainState.DISABLED) Color.LightGray else MaterialTheme.colors.secondary,
                 onClick = {
-                  if (currentTerrainState != TerrainState.disabled) {
+                  if (currentTerrainState != TerrainState.DISABLED) {
                     var exaggeration = currentTerrainState.exaggeration.doubleOrNull!! + 0.2
                     exaggeration = (round(exaggeration * 100)) / 100.0
                     currentTerrainState.exaggeration = DoubleValue(exaggeration)
@@ -76,17 +76,17 @@ public class TerrainActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  currentTerrainState = if (currentTerrainState == TerrainState.disabled) {
+                  currentTerrainState = if (currentTerrainState == TerrainState.DISABLED) {
                     customTerrainState
                   } else {
-                    TerrainState.disabled
+                    TerrainState.DISABLED
                   }
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = if (currentTerrainState == TerrainState.disabled)
+                  text = if (currentTerrainState == TerrainState.DISABLED)
                     "Enable terrain"
                   else
                     "Disable terrain"
