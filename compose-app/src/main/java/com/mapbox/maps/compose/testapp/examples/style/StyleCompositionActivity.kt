@@ -178,7 +178,7 @@ public class StyleCompositionActivity : ComponentActivity() {
 
               val painter = painterResource(id = markerResource)
               // Every time `painter.drawToBitmap()` is called a new bitmap is created so we need to remember it
-              val imageBitmap: ImageBitmap = remember(painter) {
+              val imageBitmap: ImageBitmap = remember(markerResource) {
                 painter.drawToBitmap()
               }
               SymbolLayer(
