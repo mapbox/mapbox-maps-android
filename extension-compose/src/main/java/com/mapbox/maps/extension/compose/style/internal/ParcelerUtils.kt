@@ -44,7 +44,7 @@ internal object GeoJSONDataParceler : Parceler<GeoJSONData> {
 
   override fun GeoJSONData.write(parcel: Parcel, flags: Int) {
     val typeInfo = data.typeInfo.name
-    parcel.writeSerializable(typeInfo)
+    parcel.writeString(typeInfo)
     when (data.typeInfo) {
       GeoJSONSourceData.Type.FEATURE -> {
         parcel.writeString(data.feature.toJson())
