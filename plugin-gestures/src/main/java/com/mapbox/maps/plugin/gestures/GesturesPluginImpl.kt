@@ -1535,7 +1535,17 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is moved.
    */
   override fun addOnMoveListener(onMoveListener: OnMoveListener) {
-    onMoveListeners.add(onMoveListener)
+    if (onMoveListener is TopPriorityOnMoveListener) {
+      val (topPriority, normalPriority) = onMoveListeners.partition { it is TopPriorityOnMoveListener }
+      with(onMoveListeners) {
+        clear()
+        addAll(topPriority)
+        add(onMoveListener)
+        addAll(normalPriority)
+      }
+    } else {
+      onMoveListeners.add(onMoveListener)
+    }
   }
 
   /**

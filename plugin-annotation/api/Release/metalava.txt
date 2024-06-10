@@ -47,7 +47,7 @@ package com.mapbox.maps.plugin.annotation {
     method public boolean onMapLongClick(com.mapbox.geojson.Point point);
   }
 
-  public final class AnnotationManagerImpl.MapMove implements com.mapbox.maps.plugin.gestures.OnMoveListener {
+  public final class AnnotationManagerImpl.MapMove implements com.mapbox.maps.plugin.gestures.TopPriorityOnMoveListener {
     ctor public AnnotationManagerImpl.MapMove();
     method public boolean onMove(com.mapbox.android.gestures.MoveGestureDetector detector);
     method public void onMoveBegin(com.mapbox.android.gestures.MoveGestureDetector detector);

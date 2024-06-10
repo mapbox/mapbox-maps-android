@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
+* Remove explicit main thread locking when using `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` and dragging the map that could lead to an ANR.
 
 ## Bug fixes 🐞
 * `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.

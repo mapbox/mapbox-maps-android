@@ -1872,6 +1872,9 @@ public abstract interface class com/mapbox/maps/plugin/gestures/OnShoveListener 
 	public abstract fun onShoveEnd (Lcom/mapbox/android/gestures/ShoveGestureDetector;)V
 }
 
+public abstract interface class com/mapbox/maps/plugin/gestures/TopPriorityOnMoveListener : com/mapbox/maps/plugin/gestures/OnMoveListener {
+}
+
 public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public synthetic fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZLkotlin/jvm/internal/DefaultConstructorMarker;)V
