@@ -120,6 +120,7 @@ public class TerrainState private constructor(
 
   @Composable
   internal fun UpdateProperties() {
+    applier.rasterDemSourceState?.UpdateProperties()
     UpdateExaggeration()
     UpdateExaggerationTransition()
   }
@@ -196,10 +197,7 @@ public class TerrainState private constructor(
         TerrainState(
           TerrainStateApplier(
             holder.rasterDemSourceStateHolder?.let {
-              RasterDemSourceState(
-                sourceId = it.sourcedId,
-                initialProperties = holder.rasterDemSourceStateHolder.cachedProperties
-              )
+              RasterDemSourceState.Saver.restore(it)
             },
             holder.savedProperties,
             holder.initial

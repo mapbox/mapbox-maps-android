@@ -3,13 +3,25 @@
 package com.mapbox.maps.extension.compose.style.sources.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.BooleanValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringListValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.sources.PromoteIdValue
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import com.mapbox.maps.extension.compose.style.sources.TileCacheBudget
 import java.util.Objects
 
 /**
@@ -44,80 +56,162 @@ public inline fun rememberVectorSourceState(
  * @param initialProperties The initial mutable properties of the source.
  */
 @MapboxExperimental
-public class VectorSourceState(
-  override val sourceId: String = generateRandomSourceId("vector"),
-  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
+public class VectorSourceState private constructor(
+  sourceId: String,
+  sourceType: String,
+  initialProperties: Map<String, Pair<Boolean, Value>>,
+  url: StringValue,
+  tiles: StringListValue,
+  bounds: DoubleListValue,
+  scheme: SchemeValue,
+  minZoom: LongValue,
+  maxZoom: LongValue,
+  attribution: StringValue,
+  promoteId: PromoteIdValue,
+  volatile: BooleanValue,
+  prefetchZoomDelta: LongValue,
+  tileCacheBudget: TileCacheBudget,
+  minimumTileUpdateInterval: DoubleValue,
+  maxOverscaleFactorForParentTiles: LongValue,
+  tileRequestsDelay: DoubleValue,
+  tileNetworkRequestsDelay: DoubleValue,
 ) : SourceState(
   sourceId = sourceId,
-  sourceType = "vector",
+  sourceType = sourceType,
   initialProperties = initialProperties,
 ) {
+  public constructor(
+    sourceId: String = generateRandomSourceId("vector"),
+  ) : this(
+    sourceId = sourceId,
+    sourceType = "vector",
+    initialProperties = emptyMap(),
+    url = StringValue.INITIAL,
+    tiles = StringListValue.INITIAL,
+    bounds = DoubleListValue.INITIAL,
+    scheme = SchemeValue.INITIAL,
+    minZoom = LongValue.INITIAL,
+    maxZoom = LongValue.INITIAL,
+    attribution = StringValue.INITIAL,
+    promoteId = PromoteIdValue.INITIAL,
+    volatile = BooleanValue.INITIAL,
+    prefetchZoomDelta = LongValue.INITIAL,
+    tileCacheBudget = TileCacheBudget.INITIAL,
+    minimumTileUpdateInterval = DoubleValue.INITIAL,
+    maxOverscaleFactorForParentTiles = LongValue.INITIAL,
+    tileRequestsDelay = DoubleValue.INITIAL,
+    tileNetworkRequestsDelay = DoubleValue.INITIAL,
+  )
+
+  private val urlState: MutableState<StringValue> = mutableStateOf(url)
 
   /**
    * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
    */
-  public var url: Url
-    get() = Url(getProperty(Url.NAME) ?: Url.default.value)
-    set(value) {
-      setBuilderProperty(Url.NAME, value.value)
+  public var url: StringValue by urlState
+
+  @Composable
+  private fun UpdateUrl() {
+    urlState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("url", value)
+      }
     }
+  }
+  private val tilesState: MutableState<StringListValue> = mutableStateOf(tiles)
 
   /**
    * An array of one or more tile source URLs, as in the TileJSON spec.
    */
-  public var tiles: Tiles
-    get() = Tiles(getProperty(Tiles.NAME) ?: Tiles.default.value)
-    set(value) {
-      setBuilderProperty(Tiles.NAME, value.value)
+  public var tiles: StringListValue by tilesState
+
+  @Composable
+  private fun UpdateTiles() {
+    tilesState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("tiles", value)
+      }
     }
+  }
+  private val boundsState: MutableState<DoubleListValue> = mutableStateOf(bounds)
 
   /**
    * An array containing the longitude and latitude of the southwest and northeast corners of the source's
    * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
    * a source, no tiles outside of the given bounds are requested by Mapbox GL.
    */
-  public var bounds: Bounds
-    get() = Bounds(getProperty(Bounds.NAME) ?: Bounds.default.value)
-    set(value) {
-      setBuilderProperty(Bounds.NAME, value.value)
+  public var bounds: DoubleListValue by boundsState
+
+  @Composable
+  private fun UpdateBounds() {
+    boundsState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("bounds", value)
+      }
     }
+  }
+  private val schemeState: MutableState<SchemeValue> = mutableStateOf(scheme)
 
   /**
    * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
    */
-  public var scheme: Scheme
-    get() = Scheme(getProperty(Scheme.NAME) ?: Scheme.default.value)
-    set(value) {
-      setBuilderProperty(Scheme.NAME, value.value)
+  public var scheme: SchemeValue by schemeState
+
+  @Composable
+  private fun UpdateScheme() {
+    schemeState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("scheme", value)
+      }
     }
+  }
+  private val minZoomState: MutableState<LongValue> = mutableStateOf(minZoom)
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
    */
-  public var minZoom: MinZoom
-    get() = MinZoom(getProperty(MinZoom.NAME) ?: MinZoom.default.value)
-    set(value) {
-      setBuilderProperty(MinZoom.NAME, value.value)
+  public var minZoom: LongValue by minZoomState
+
+  @Composable
+  private fun UpdateMinZoom() {
+    minZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("minzoom", value)
+      }
     }
+  }
+  private val maxZoomState: MutableState<LongValue> = mutableStateOf(maxZoom)
 
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
    */
-  public var maxZoom: MaxZoom
-    get() = MaxZoom(getProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
-    set(value) {
-      setBuilderProperty(MaxZoom.NAME, value.value)
+  public var maxZoom: LongValue by maxZoomState
+
+  @Composable
+  private fun UpdateMaxZoom() {
+    maxZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("maxzoom", value)
+      }
     }
+  }
+  private val attributionState: MutableState<StringValue> = mutableStateOf(attribution)
 
   /**
    * Contains an attribution to be displayed when the map is shown to a user.
    */
-  public var attribution: Attribution
-    get() = Attribution(getProperty(Attribution.NAME) ?: Attribution.default.value)
-    set(value) {
-      setBuilderProperty(Attribution.NAME, value.value)
+  public var attribution: StringValue by attributionState
+
+  @Composable
+  private fun UpdateAttribution() {
+    attributionState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("attribution", value)
+      }
     }
+  }
+  private val promoteIdState: MutableState<PromoteIdValue> = mutableStateOf(promoteId)
 
   /**
    * A property to use as a feature id (for feature state). Either a property name, or
@@ -125,20 +219,32 @@ public class VectorSourceState(
    * source, the same property is used across all its source layers. If specified as an object
    * only specified source layers will have id overriden, others will fallback to original feature id
    */
-  public var promoteId: PromoteId
-    get() = PromoteId(getProperty(PromoteId.NAME) ?: PromoteId.default.value)
-    set(value) {
-      setBuilderProperty(PromoteId.NAME, value.value)
+  public var promoteId: PromoteIdValue by promoteIdState
+
+  @Composable
+  private fun UpdatePromoteId() {
+    promoteIdState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("promoteId", value)
+      }
     }
+  }
+  private val volatileState: MutableState<BooleanValue> = mutableStateOf(volatile)
 
   /**
    * A setting to determine whether a source's tiles are cached locally.
    */
-  public var volatile: Volatile
-    get() = Volatile(getProperty(Volatile.NAME) ?: Volatile.default.value)
-    set(value) {
-      setBuilderProperty(Volatile.NAME, value.value)
+  public var volatile: BooleanValue by volatileState
+
+  @Composable
+  private fun UpdateVolatile() {
+    volatileState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("volatile", value)
+      }
     }
+  }
+  private val prefetchZoomDeltaState: MutableState<LongValue> = mutableStateOf(prefetchZoomDelta)
 
   /**
    * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
@@ -147,11 +253,17 @@ public class VectorSourceState(
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
    * The default delta is 4.
    */
-  public var prefetchZoomDelta: PrefetchZoomDelta
-    get() = PrefetchZoomDelta(getProperty(PrefetchZoomDelta.NAME) ?: PrefetchZoomDelta.default.value)
-    set(value) {
-      setProperty(PrefetchZoomDelta.NAME, value.value)
+  public var prefetchZoomDelta: LongValue by prefetchZoomDeltaState
+
+  @Composable
+  private fun UpdatePrefetchZoomDelta() {
+    prefetchZoomDeltaState.value.apply {
+      if (notInitial) {
+        setProperty("prefetch-zoom-delta", value)
+      }
     }
+  }
+  private val tileCacheBudgetState: MutableState<TileCacheBudget> = mutableStateOf(tileCacheBudget)
 
   /**
    * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
@@ -159,22 +271,34 @@ public class VectorSourceState(
    * the in-memory cache. Note that the current implementation does not take into account resources allocated by
    * the visible tiles.
    */
-  public var tileCacheBudget: TileCacheBudget
-    get() = TileCacheBudget(getProperty(TileCacheBudget.NAME) ?: TileCacheBudget.default.value)
-    set(value) {
-      setProperty(TileCacheBudget.NAME, value.value)
+  public var tileCacheBudget: TileCacheBudget by tileCacheBudgetState
+
+  @Composable
+  private fun UpdateTileCacheBudget() {
+    tileCacheBudgetState.value.apply {
+      if (notInitial) {
+        setProperty("tile-cache-budget", value)
+      }
     }
+  }
+  private val minimumTileUpdateIntervalState: MutableState<DoubleValue> = mutableStateOf(minimumTileUpdateInterval)
 
   /**
    * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
    * If the given source supports loading tiles from a server, sets the minimum tile update interval.
    * Update network requests that are more frequent than the minimum tile update interval are suppressed.
    */
-  public var minimumTileUpdateInterval: MinimumTileUpdateInterval
-    get() = MinimumTileUpdateInterval(getProperty(MinimumTileUpdateInterval.NAME) ?: MinimumTileUpdateInterval.default.value)
-    set(value) {
-      setProperty(MinimumTileUpdateInterval.NAME, value.value)
+  public var minimumTileUpdateInterval: DoubleValue by minimumTileUpdateIntervalState
+
+  @Composable
+  private fun UpdateMinimumTileUpdateInterval() {
+    minimumTileUpdateIntervalState.value.apply {
+      if (notInitial) {
+        setProperty("minimum-tile-update-interval", value)
+      }
     }
+  }
+  private val maxOverscaleFactorForParentTilesState: MutableState<LongValue> = mutableStateOf(maxOverscaleFactorForParentTiles)
 
   /**
    * When a set of tiles for a current zoom level is being rendered and some of
@@ -182,22 +306,34 @@ public class VectorSourceState(
    * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
    * This property sets the maximum limit for how much a parent tile can be overscaled.
    */
-  public var maxOverscaleFactorForParentTiles: MaxOverscaleFactorForParentTiles
-    get() = MaxOverscaleFactorForParentTiles(getProperty(MaxOverscaleFactorForParentTiles.NAME) ?: MaxOverscaleFactorForParentTiles.default.value)
-    set(value) {
-      setProperty(MaxOverscaleFactorForParentTiles.NAME, value.value)
+  public var maxOverscaleFactorForParentTiles: LongValue by maxOverscaleFactorForParentTilesState
+
+  @Composable
+  private fun UpdateMaxOverscaleFactorForParentTiles() {
+    maxOverscaleFactorForParentTilesState.value.apply {
+      if (notInitial) {
+        setProperty("max-overscale-factor-for-parent-tiles", value)
+      }
     }
+  }
+  private val tileRequestsDelayState: MutableState<DoubleValue> = mutableStateOf(tileRequestsDelay)
 
   /**
    * For the tiled sources, this property sets the tile requests delay. The given delay comes in
    * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
    * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
    */
-  public var tileRequestsDelay: TileRequestsDelay
-    get() = TileRequestsDelay(getProperty(TileRequestsDelay.NAME) ?: TileRequestsDelay.default.value)
-    set(value) {
-      setProperty(TileRequestsDelay.NAME, value.value)
+  public var tileRequestsDelay: DoubleValue by tileRequestsDelayState
+
+  @Composable
+  private fun UpdateTileRequestsDelay() {
+    tileRequestsDelayState.value.apply {
+      if (notInitial) {
+        setProperty("tile-requests-delay", value)
+      }
     }
+  }
+  private val tileNetworkRequestsDelayState: MutableState<DoubleValue> = mutableStateOf(tileNetworkRequestsDelay)
 
   /**
    * For the tiled sources, this property sets the tile network requests delay. The given delay comes
@@ -205,11 +341,54 @@ public class VectorSourceState(
    * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
    * superseded with tile-requests-delay property value, if both are provided.
    */
-  public var tileNetworkRequestsDelay: TileNetworkRequestsDelay
-    get() = TileNetworkRequestsDelay(getProperty(TileNetworkRequestsDelay.NAME) ?: TileNetworkRequestsDelay.default.value)
-    set(value) {
-      setProperty(TileNetworkRequestsDelay.NAME, value.value)
+  public var tileNetworkRequestsDelay: DoubleValue by tileNetworkRequestsDelayState
+
+  @Composable
+  private fun UpdateTileNetworkRequestsDelay() {
+    tileNetworkRequestsDelayState.value.apply {
+      if (notInitial) {
+        setProperty("tile-network-requests-delay", value)
+      }
     }
+  }
+
+  @Composable
+  override fun UpdateProperties() {
+    UpdateUrl()
+    UpdateTiles()
+    UpdateBounds()
+    UpdateScheme()
+    UpdateMinZoom()
+    UpdateMaxZoom()
+    UpdateAttribution()
+    UpdatePromoteId()
+    UpdateVolatile()
+    UpdatePrefetchZoomDelta()
+    UpdateTileCacheBudget()
+    UpdateMinimumTileUpdateInterval()
+    UpdateMaxOverscaleFactorForParentTiles()
+    UpdateTileRequestsDelay()
+    UpdateTileNetworkRequestsDelay()
+  }
+
+  private fun getProperties(): Map<String, Value> =
+    listOfNotNull(
+      ("url" to url.value).takeIf { url.notInitial },
+      ("tiles" to tiles.value).takeIf { tiles.notInitial },
+      ("bounds" to bounds.value).takeIf { bounds.notInitial },
+      ("scheme" to scheme.value).takeIf { scheme.notInitial },
+      ("minzoom" to minZoom.value).takeIf { minZoom.notInitial },
+      ("maxzoom" to maxZoom.value).takeIf { maxZoom.notInitial },
+      ("attribution" to attribution.value).takeIf { attribution.notInitial },
+      ("promoteId" to promoteId.value).takeIf { promoteId.notInitial },
+      ("volatile" to volatile.value).takeIf { volatile.notInitial },
+      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.notInitial },
+      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.notInitial },
+      ("minimum-tile-update-interval" to minimumTileUpdateInterval.value).takeIf { minimumTileUpdateInterval.notInitial },
+      ("max-overscale-factor-for-parent-tiles" to maxOverscaleFactorForParentTiles.value).takeIf { maxOverscaleFactorForParentTiles.notInitial },
+      ("tile-requests-delay" to tileRequestsDelay.value).takeIf { tileRequestsDelay.notInitial },
+      ("tile-network-requests-delay" to tileNetworkRequestsDelay.value).takeIf { tileNetworkRequestsDelay.notInitial },
+    ).toMap()
 
   /**
    * See [Any.equals]
@@ -279,10 +458,26 @@ public class VectorSourceState(
      */
     public val Saver: Saver<VectorSourceState, Holder> = Saver(
       save = { it.save() },
-      restore = {
+      restore = { holder ->
         VectorSourceState(
-          sourceId = it.sourcedId,
-          initialProperties = it.cachedProperties,
+          sourceId = holder.sourcedId,
+          sourceType = "vector",
+          initialProperties = holder.savedProperties,
+          url = holder.savedProperties["url"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
+          tiles = holder.savedProperties["tiles"]?.let { StringListValue(it.second) } ?: StringListValue.INITIAL,
+          bounds = holder.savedProperties["bounds"]?.let { DoubleListValue(it.second) } ?: DoubleListValue.INITIAL,
+          scheme = holder.savedProperties["scheme"]?.let { SchemeValue(it.second) } ?: SchemeValue.INITIAL,
+          minZoom = holder.savedProperties["minzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          maxZoom = holder.savedProperties["maxzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          attribution = holder.savedProperties["attribution"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
+          promoteId = holder.savedProperties["promoteId"]?.let { PromoteIdValue(it.second) } ?: PromoteIdValue.INITIAL,
+          volatile = holder.savedProperties["volatile"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
+          prefetchZoomDelta = holder.savedProperties["prefetch-zoom-delta"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          tileCacheBudget = holder.savedProperties["tile-cache-budget"]?.let { TileCacheBudget(it.second) } ?: TileCacheBudget.INITIAL,
+          minimumTileUpdateInterval = holder.savedProperties["minimum-tile-update-interval"]?.let { DoubleValue(it.second) } ?: DoubleValue.INITIAL,
+          maxOverscaleFactorForParentTiles = holder.savedProperties["max-overscale-factor-for-parent-tiles"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          tileRequestsDelay = holder.savedProperties["tile-requests-delay"]?.let { DoubleValue(it.second) } ?: DoubleValue.INITIAL,
+          tileNetworkRequestsDelay = holder.savedProperties["tile-network-requests-delay"]?.let { DoubleValue(it.second) } ?: DoubleValue.INITIAL,
         )
       }
     )

@@ -167,5 +167,6 @@ public fun HeatmapLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

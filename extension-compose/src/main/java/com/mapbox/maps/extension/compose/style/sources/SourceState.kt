@@ -1,13 +1,13 @@
 package com.mapbox.maps.extension.compose.style.sources
 
 import android.os.Parcelable
+import androidx.compose.runtime.Composable
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.internal.GeoJSONDataParceler
-import com.mapbox.maps.extension.compose.style.internal.TripleParceler
+import com.mapbox.maps.extension.compose.style.internal.PairParceler
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
@@ -50,10 +50,10 @@ private data class PropertyDetails(
  */
 @MapboxExperimental
 public abstract class SourceState internal constructor(
-  public open val sourceId: String,
+  public val sourceId: String,
   private val sourceType: String,
-  initialProperties: List<Triple<String, Boolean, Value>>,
-  initialGeoJsonData: GeoJSONData = GeoJSONData.default
+  initialProperties: Map<String, Pair<Boolean, Value>>,
+  initialGeoJsonData: GeoJSONData = GeoJSONData.DEFAULT
 ) {
   private var mapboxMap: MapboxMap? = null
   private var associatedLayers: MutableSet<String> = mutableSetOf()
@@ -103,7 +103,9 @@ public abstract class SourceState internal constructor(
   private var sourceAddedExternally = false
 
   init {
-    initialProperties.forEach { (name, isBuilderProperty, value) ->
+    initialProperties.forEach { (name, pair) ->
+      val isBuilderProperty = pair.first
+      val value = pair.second
       if (isBuilderProperty) {
         setBuilderProperty(name, value)
       } else {
@@ -210,7 +212,7 @@ public abstract class SourceState internal constructor(
       },
       {
         logD(TAG, "Added source: $this")
-        if (isGeoJsonSource && geoJSONData != GeoJSONData.default) {
+        if (isGeoJsonSource && geoJSONData != GeoJSONData.DEFAULT) {
           // Set the GeoJSON data after the source is added
           // Note that if the source was a pre-existing one outside of compose we will override it
           geoJSONDataChannel.trySend(geoJSONData)
@@ -325,11 +327,11 @@ public abstract class SourceState internal constructor(
     }
   }
 
-  protected fun setProperty(name: String, value: Value) {
+  internal fun setProperty(name: String, value: Value) {
     setProperty(name, value, false)
   }
 
-  protected fun setBuilderProperty(name: String, value: Value) {
+  internal fun setBuilderProperty(name: String, value: Value) {
     setProperty(name, value, true)
   }
 
@@ -368,26 +370,26 @@ public abstract class SourceState internal constructor(
    * The data class that holds the source state to restore from a Savable.
    *
    * @param sourcedId The id of the source state.
-   * @param cachedProperties The initial mutable properties of the source.
+   * @param savedProperties The initial mutable properties of the source.
    * @param geoJSONData The initial [GeoJSONData] of the source(used only in [GeoJsonSourceState]).
    */
   @MapboxExperimental
   @Parcelize
   @TypeParceler<GeoJSONData, GeoJSONDataParceler>
   @TypeParceler<Value, ValueParceler>
-  @TypeParceler<Triple<String, Boolean, Value>, TripleParceler>
+  @TypeParceler<Pair<Boolean, Value>, PairParceler>
   public data class Holder(
     val sourcedId: String,
-    val cachedProperties: List<Triple<String, Boolean, Value>>,
+    val savedProperties: Map<String, Pair<Boolean, Value>>,
     val geoJSONData: GeoJSONData
   ) : Parcelable
 
   /**
-   * Save the current SourceState to the [Holder] class.
+   * Save the current [SourceState] to the [Holder] class.
    */
   internal fun save(): Holder = Holder(
     sourceId,
-    propertiesFlowsToCollect.replayCache.map { Triple(it.name, it.isBuilderProperty, it.valueFlow.value) },
+    propertiesFlowsToCollect.replayCache.associate { it.name to (it.isBuilderProperty to it.valueFlow.value) },
     geoJSONData
   )
 
@@ -397,6 +399,9 @@ public abstract class SourceState internal constructor(
   override fun toString(): String {
     return "SourceState(sourceType=$sourceType, sourceId=$sourceId)"
   }
+
+  @Composable
+  internal abstract fun UpdateProperties()
 
   private companion object {
     private const val TAG = "SourceState"

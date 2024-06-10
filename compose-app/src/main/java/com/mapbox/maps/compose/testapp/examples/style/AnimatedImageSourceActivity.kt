@@ -16,8 +16,8 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.PointListValue
 import com.mapbox.maps.extension.compose.style.layers.generated.RasterLayer
-import com.mapbox.maps.extension.compose.style.sources.generated.Coordinates
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberImageSourceState
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
@@ -53,8 +53,7 @@ public class AnimatedImageSourceActivity : ComponentActivity() {
               ImageBitmap.imageResource(R.drawable.southeast_radar_3).asAndroidBitmap(),
             )
             MapEffect(Unit) {
-              val imageSource: ImageSource =
-                it.mapboxMap.getSourceAs(ID_IMAGE_SOURCE)!!
+              val imageSource: ImageSource = it.mapboxMap.getSourceAs(ID_IMAGE_SOURCE)!!
               var index = 0
               while (true) {
                 imageSource.updateImage(bitmaps[index])
@@ -64,13 +63,11 @@ public class AnimatedImageSourceActivity : ComponentActivity() {
             }
             RasterLayer(
               sourceState = rememberImageSourceState(sourceId = ID_IMAGE_SOURCE) {
-                coordinates = Coordinates(
-                  listOf(
-                    listOf(-80.425, 46.437),
-                    listOf(-71.516, 46.437),
-                    listOf(-71.516, 37.936),
-                    listOf(-80.425, 37.936)
-                  )
+                coordinates = PointListValue(
+                  Point.fromLngLat(-80.425, 46.437),
+                  Point.fromLngLat(-71.516, 46.437),
+                  Point.fromLngLat(-71.516, 37.936),
+                  Point.fromLngLat(-80.425, 37.936)
                 )
               }
             )

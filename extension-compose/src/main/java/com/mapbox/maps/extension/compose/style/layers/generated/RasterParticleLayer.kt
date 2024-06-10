@@ -175,5 +175,6 @@ public fun RasterParticleLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

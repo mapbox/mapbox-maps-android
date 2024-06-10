@@ -5,7 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import kotlinx.parcelize.Parceler
 
 internal object ValueParceler : Parceler<Value> {
@@ -71,17 +71,15 @@ internal object GeoJSONDataParceler : Parceler<GeoJSONData> {
   }
 }
 
-internal object TripleParceler : Parceler<Triple<String, Boolean, Value>> {
-  override fun create(parcel: Parcel): Triple<String, Boolean, Value> {
-    val name = parcel.readString()!!
+internal object PairParceler : Parceler<Pair<Boolean, Value>> {
+  override fun create(parcel: Parcel): Pair<Boolean, Value> {
     val isBuilderProperty = parcel.readInt() == 1
     val value = Value.fromJson(parcel.readString()!!).value!!
-    return Triple(name, isBuilderProperty, value)
+    return Pair(isBuilderProperty, value)
   }
 
-  override fun Triple<String, Boolean, Value>.write(parcel: Parcel, flags: Int) {
-    parcel.writeString(first)
-    parcel.writeInt(if (second) 1 else 0)
-    parcel.writeString(third.toJson())
+  override fun Pair<Boolean, Value>.write(parcel: Parcel, flags: Int) {
+    parcel.writeInt(if (first) 1 else 0)
+    parcel.writeString(second.toJson())
   }
 }

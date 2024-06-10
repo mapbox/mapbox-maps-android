@@ -224,5 +224,6 @@ public fun FillLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

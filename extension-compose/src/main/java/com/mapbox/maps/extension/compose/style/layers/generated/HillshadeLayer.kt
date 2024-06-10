@@ -199,5 +199,6 @@ public fun HillshadeLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

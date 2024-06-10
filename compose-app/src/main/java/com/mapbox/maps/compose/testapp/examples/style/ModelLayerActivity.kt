@@ -29,7 +29,7 @@ import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.layers.ModelIdValue
 import com.mapbox.maps.extension.compose.style.layers.generated.ModelLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.ModelTypeValue
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.model.addModel

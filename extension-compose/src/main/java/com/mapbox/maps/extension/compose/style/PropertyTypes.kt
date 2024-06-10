@@ -4,6 +4,7 @@ import android.util.Range
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -22,6 +23,7 @@ public data class ColorValue(public val value: Value) {
    * Construct the Color with [Color].
    */
   public constructor(value: Color) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the Color with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -59,12 +61,14 @@ public data class ColorValue(public val value: Value) {
      * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
      * to differentiate them because they use [equals].
      */
+    @JvmField
     internal val INITIAL: ColorValue = ColorValue(Value.valueOf("ColorValue.INITIAL"))
 
     /**
      * Default value for [ColorValue], setting [DEFAULT] will result in setting the property value
      * defined by the rendering engine.
      */
+    @JvmField
     public val DEFAULT: ColorValue = ColorValue(Value.nullValue())
   }
 }
@@ -78,11 +82,12 @@ public data class ColorValue(public val value: Value) {
 @MapboxExperimental
 public data class DoubleValue(public val value: Value) {
   /**
-   * Create a [DoubleValue] that contains double [value].
+   * Create a [DoubleValue] that contains finite double [value].
    *
    * @param value the [Double] to store
    */
   public constructor(value: Double) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -137,14 +142,17 @@ public data class DoubleRangeValue(public val value: Value) {
    * @param lower the lower limit [Double] to store
    * @param upper the upper limit [Double] to store
    */
-  public constructor(lower: Double, upper: Double) : this(ComposeTypeUtils.wrapToValue(listOf(lower, upper)))
+  public constructor(lower: Double, upper: Double) : this(
+    ComposeTypeUtils.wrapToValue(listOf(lower, upper))
+  )
 
   /**
    * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
   public constructor(range: Range<Double>) : this(range.lower, range.upper)
+
   /**
-   * Construct the Color with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
   public constructor(expression: Expression) : this(expression as Value)
 
@@ -217,6 +225,7 @@ public data class LongValue(public val value: Value) {
    * @param value the [Long] to store
    */
   public constructor(value: Long) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -272,6 +281,7 @@ public data class BooleanValue(public val value: Value) {
    * @param value the [Boolean] to store
    */
   public constructor(value: Boolean) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -327,6 +337,7 @@ public data class StringValue(public val value: Value) {
    * @param value the [StringValue] to store
    */
   public constructor(value: String) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -389,6 +400,7 @@ public data class StringListValue(public val value: Value) {
    * @param value the [StringListValue] to store
    */
   public constructor(value: List<String>) : this(ComposeTypeUtils.wrapToValue(value))
+
   /**
    * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -586,5 +598,92 @@ public data class Transition internal constructor(public val value: Value) {
      */
     @JvmField
     public val DEFAULT: Transition = Transition(Value.nullValue())
+  }
+}
+
+/**
+ * Defines a primitive that can accommodate a list of [com.mapbox.geojson.Point]s.
+ *
+ * @param value a value representing an array of coordinates. See [Array](https://docs.mapbox.com/style-spec/reference/types/#array)
+ */
+public data class PointListValue(public val value: Value) {
+
+  /**
+   * Create a [PointListValue] that contains a list of [Point]s.
+   *
+   * @param point the [Point] to store
+   */
+  public constructor(vararg point: Point) : this(
+    point.map { listOf(it.longitude(), it.latitude()) }
+  )
+
+  /**
+   * Create a [PointListValue] that contains a list of longitude, latitude pairs .
+   *
+   * @param point the longitude, latitude pair to store
+   */
+  public constructor(vararg point: Pair<Double, Double>) : this(point.map { listOf(it.first, it.second) })
+
+  /**
+   * Create a [PointListValue] that contains a list of pairs of longitude, latitude as list.
+   *
+   * @param points the list of points to store
+   */
+  public constructor(points: List<List<Double>>) : this(ComposeTypeUtils.wrapToValue(points))
+
+  /**
+   * Construct the primitive with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * The list of [Point] represented by [value] or `null` if the stored [Value] is not a a list of [Point].
+   */
+  public val pointsOrNull: List<Point>?
+    get() {
+      @Suppress("UNCHECKED_CAST")
+      return (value.contents as? List<Value>)?.map { innerList ->
+        val innerListContents = innerList.contents
+        if (innerListContents is List<*> && innerListContents.size == 2) {
+          val longitudeValue = (innerListContents[0] as? Value)?.contents
+          val latitudeValue = (innerListContents[1] as? Value)?.contents
+          if (longitudeValue is Double && latitudeValue is Double) {
+            Point.fromLngLat(longitudeValue, latitudeValue)
+          } else {
+            return null
+          }
+        } else {
+          return null
+        }
+      }
+    }
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * [PointListValue]'s companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom Point to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: PointListValue = PointListValue(Value.valueOf("PointListValue.INITIAL"))
+
+    /**
+     * Default value for [PointListValue], setting [DEFAULT] will result in setting the property
+     * value defined by the rendering engine.
+     */
+    @JvmField
+    public val DEFAULT: PointListValue = PointListValue(Value.nullValue())
   }
 }

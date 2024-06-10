@@ -280,5 +280,6 @@ public fun CircleLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

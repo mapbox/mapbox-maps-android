@@ -722,5 +722,6 @@ public fun SymbolLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

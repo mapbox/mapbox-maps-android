@@ -432,5 +432,6 @@ public fun FillExtrusionLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

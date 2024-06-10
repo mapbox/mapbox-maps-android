@@ -3,13 +3,25 @@
 package com.mapbox.maps.extension.compose.style.sources.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.BooleanValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.sources.ClusterProperties
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.PromoteIdValue
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import com.mapbox.maps.extension.compose.style.sources.TileCacheBudget
 import java.util.Objects
 
 /**
@@ -47,16 +59,50 @@ public inline fun rememberGeoJsonSourceState(
  * @param initialData The initial [GeoJSONData] of the source.
  */
 @MapboxExperimental
-public class GeoJsonSourceState(
-  override val sourceId: String = generateRandomSourceId("geojson"),
-  initialData: GeoJSONData = GeoJSONData.default,
-  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
+public class GeoJsonSourceState private constructor(
+  sourceId: String,
+  sourceType: String,
+  initialProperties: Map<String, Pair<Boolean, Value>>,
+  initialData: GeoJSONData = GeoJSONData.DEFAULT,
+  maxZoom: LongValue,
+  attribution: StringValue,
+  buffer: LongValue,
+  tolerance: DoubleValue,
+  cluster: BooleanValue,
+  clusterRadius: LongValue,
+  clusterMaxZoom: LongValue,
+  clusterProperties: ClusterProperties,
+  lineMetrics: BooleanValue,
+  generateId: BooleanValue,
+  promoteId: PromoteIdValue,
+  prefetchZoomDelta: LongValue,
+  tileCacheBudget: TileCacheBudget,
 ) : SourceState(
   sourceId = sourceId,
-  sourceType = "geojson",
+  sourceType = sourceType,
   initialProperties = initialProperties,
-  initialGeoJsonData = initialData
+  initialGeoJsonData = initialData,
 ) {
+  public constructor(
+    sourceId: String = generateRandomSourceId("geojson"),
+  ) : this(
+    sourceId = sourceId,
+    sourceType = "geojson",
+    initialProperties = emptyMap(),
+    maxZoom = LongValue.INITIAL,
+    attribution = StringValue.INITIAL,
+    buffer = LongValue.INITIAL,
+    tolerance = DoubleValue.INITIAL,
+    cluster = BooleanValue.INITIAL,
+    clusterRadius = LongValue.INITIAL,
+    clusterMaxZoom = LongValue.INITIAL,
+    clusterProperties = ClusterProperties.INITIAL,
+    lineMetrics = BooleanValue.INITIAL,
+    generateId = BooleanValue.INITIAL,
+    promoteId = PromoteIdValue.INITIAL,
+    prefetchZoomDelta = LongValue.INITIAL,
+    tileCacheBudget = TileCacheBudget.INITIAL,
+  )
 
   /**
    * Sets GeoJson `data` property as [GeoJSONData].
@@ -70,44 +116,70 @@ public class GeoJsonSourceState(
       geoJSONData = value
     }
 
+  private val maxZoomState: MutableState<LongValue> = mutableStateOf(maxZoom)
+
   /**
    * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
    * levels).
    */
-  public var maxZoom: MaxZoom
-    get() = MaxZoom(getProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
-    set(value) {
-      setBuilderProperty(MaxZoom.NAME, value.value)
+  public var maxZoom: LongValue by maxZoomState
+
+  @Composable
+  private fun UpdateMaxZoom() {
+    maxZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("maxzoom", value)
+      }
     }
+  }
+  private val attributionState: MutableState<StringValue> = mutableStateOf(attribution)
 
   /**
    * Contains an attribution to be displayed when the map is shown to a user.
    */
-  public var attribution: Attribution
-    get() = Attribution(getProperty(Attribution.NAME) ?: Attribution.default.value)
-    set(value) {
-      setBuilderProperty(Attribution.NAME, value.value)
+  public var attribution: StringValue by attributionState
+
+  @Composable
+  private fun UpdateAttribution() {
+    attributionState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("attribution", value)
+      }
     }
+  }
+  private val bufferState: MutableState<LongValue> = mutableStateOf(buffer)
 
   /**
    * Size of the tile buffer on each side. A value of 0 produces no buffer. A
    * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
    * rendering artifacts near tile edges and slower performance.
    */
-  public var buffer: Buffer
-    get() = Buffer(getProperty(Buffer.NAME) ?: Buffer.default.value)
-    set(value) {
-      setBuilderProperty(Buffer.NAME, value.value)
+  public var buffer: LongValue by bufferState
+
+  @Composable
+  private fun UpdateBuffer() {
+    bufferState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("buffer", value)
+      }
     }
+  }
+  private val toleranceState: MutableState<DoubleValue> = mutableStateOf(tolerance)
 
   /**
    * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
    */
-  public var tolerance: Tolerance
-    get() = Tolerance(getProperty(Tolerance.NAME) ?: Tolerance.default.value)
-    set(value) {
-      setBuilderProperty(Tolerance.NAME, value.value)
+  public var tolerance: DoubleValue by toleranceState
+
+  @Composable
+  private fun UpdateTolerance() {
+    toleranceState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("tolerance", value)
+      }
     }
+  }
+  private val clusterState: MutableState<BooleanValue> = mutableStateOf(cluster)
 
   /**
    * If the data is a collection of point features, setting this to true clusters the points
@@ -118,32 +190,50 @@ public class GeoJsonSourceState(
    * - `point_count` Number of original points grouped into this cluster
    * - `point_count_abbreviated` An abbreviated point count
    */
-  public var cluster: Cluster
-    get() = Cluster(getProperty(Cluster.NAME) ?: Cluster.default.value)
-    set(value) {
-      setBuilderProperty(Cluster.NAME, value.value)
+  public var cluster: BooleanValue by clusterState
+
+  @Composable
+  private fun UpdateCluster() {
+    clusterState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("cluster", value)
+      }
     }
+  }
+  private val clusterRadiusState: MutableState<LongValue> = mutableStateOf(clusterRadius)
 
   /**
    * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
    * to the width of a tile.
    */
-  public var clusterRadius: ClusterRadius
-    get() = ClusterRadius(getProperty(ClusterRadius.NAME) ?: ClusterRadius.default.value)
-    set(value) {
-      setBuilderProperty(ClusterRadius.NAME, value.value)
+  public var clusterRadius: LongValue by clusterRadiusState
+
+  @Composable
+  private fun UpdateClusterRadius() {
+    clusterRadiusState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("clusterRadius", value)
+      }
     }
+  }
+  private val clusterMaxZoomState: MutableState<LongValue> = mutableStateOf(clusterMaxZoom)
 
   /**
    * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
    * than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom
    * levels so setting clusterMaxZoom to 14 means the clusters will be displayed until z15.
    */
-  public var clusterMaxZoom: ClusterMaxZoom
-    get() = ClusterMaxZoom(getProperty(ClusterMaxZoom.NAME) ?: ClusterMaxZoom.default.value)
-    set(value) {
-      setBuilderProperty(ClusterMaxZoom.NAME, value.value)
+  public var clusterMaxZoom: LongValue by clusterMaxZoomState
+
+  @Composable
+  private fun UpdateClusterMaxZoom() {
+    clusterMaxZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("clusterMaxZoom", value)
+      }
     }
+  }
+  private val clusterPropertiesState: MutableState<ClusterProperties> = mutableStateOf(clusterProperties)
 
   /**
    * An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from
@@ -157,40 +247,64 @@ public class GeoJsonSourceState(
    * that references a special `["accumulated"]` value, e.g.:
    * `{"sum": [["+", ["accumulated"], ["get", "sum"]], ["get", "scalerank"]]}`
    */
-  public var clusterProperties: ClusterProperties
-    get() = ClusterProperties(getProperty(ClusterProperties.NAME) ?: ClusterProperties.default.value)
-    set(value) {
-      setBuilderProperty(ClusterProperties.NAME, value.value)
+  public var clusterProperties: ClusterProperties by clusterPropertiesState
+
+  @Composable
+  private fun UpdateClusterProperties() {
+    clusterPropertiesState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("clusterProperties", value)
+      }
     }
+  }
+  private val lineMetricsState: MutableState<BooleanValue> = mutableStateOf(lineMetrics)
 
   /**
    * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
    */
-  public var lineMetrics: LineMetrics
-    get() = LineMetrics(getProperty(LineMetrics.NAME) ?: LineMetrics.default.value)
-    set(value) {
-      setBuilderProperty(LineMetrics.NAME, value.value)
+  public var lineMetrics: BooleanValue by lineMetricsState
+
+  @Composable
+  private fun UpdateLineMetrics() {
+    lineMetricsState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("lineMetrics", value)
+      }
     }
+  }
+  private val generateIdState: MutableState<BooleanValue> = mutableStateOf(generateId)
 
   /**
    * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
    * assigned based on its index in the `features` array, over-writing any previous values.
    */
-  public var generateId: GenerateId
-    get() = GenerateId(getProperty(GenerateId.NAME) ?: GenerateId.default.value)
-    set(value) {
-      setBuilderProperty(GenerateId.NAME, value.value)
+  public var generateId: BooleanValue by generateIdState
+
+  @Composable
+  private fun UpdateGenerateId() {
+    generateIdState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("generateId", value)
+      }
     }
+  }
+  private val promoteIdState: MutableState<PromoteIdValue> = mutableStateOf(promoteId)
 
   /**
    * A property to use as a feature id (for feature state). Either a property name, or
    * an object of the form `{<sourceLayer>: <propertyName>}`.
    */
-  public var promoteId: PromoteId
-    get() = PromoteId(getProperty(PromoteId.NAME) ?: PromoteId.default.value)
-    set(value) {
-      setBuilderProperty(PromoteId.NAME, value.value)
+  public var promoteId: PromoteIdValue by promoteIdState
+
+  @Composable
+  private fun UpdatePromoteId() {
+    promoteIdState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("promoteId", value)
+      }
     }
+  }
+  private val prefetchZoomDeltaState: MutableState<LongValue> = mutableStateOf(prefetchZoomDelta)
 
   /**
    * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
@@ -199,11 +313,17 @@ public class GeoJsonSourceState(
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
    * The default delta is 4.
    */
-  public var prefetchZoomDelta: PrefetchZoomDelta
-    get() = PrefetchZoomDelta(getProperty(PrefetchZoomDelta.NAME) ?: PrefetchZoomDelta.default.value)
-    set(value) {
-      setProperty(PrefetchZoomDelta.NAME, value.value)
+  public var prefetchZoomDelta: LongValue by prefetchZoomDeltaState
+
+  @Composable
+  private fun UpdatePrefetchZoomDelta() {
+    prefetchZoomDeltaState.value.apply {
+      if (notInitial) {
+        setProperty("prefetch-zoom-delta", value)
+      }
     }
+  }
+  private val tileCacheBudgetState: MutableState<TileCacheBudget> = mutableStateOf(tileCacheBudget)
 
   /**
    * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
@@ -211,11 +331,50 @@ public class GeoJsonSourceState(
    * the in-memory cache. Note that the current implementation does not take into account resources allocated by
    * the visible tiles.
    */
-  public var tileCacheBudget: TileCacheBudget
-    get() = TileCacheBudget(getProperty(TileCacheBudget.NAME) ?: TileCacheBudget.default.value)
-    set(value) {
-      setProperty(TileCacheBudget.NAME, value.value)
+  public var tileCacheBudget: TileCacheBudget by tileCacheBudgetState
+
+  @Composable
+  private fun UpdateTileCacheBudget() {
+    tileCacheBudgetState.value.apply {
+      if (notInitial) {
+        setProperty("tile-cache-budget", value)
+      }
     }
+  }
+
+  @Composable
+  override fun UpdateProperties() {
+    UpdateMaxZoom()
+    UpdateAttribution()
+    UpdateBuffer()
+    UpdateTolerance()
+    UpdateCluster()
+    UpdateClusterRadius()
+    UpdateClusterMaxZoom()
+    UpdateClusterProperties()
+    UpdateLineMetrics()
+    UpdateGenerateId()
+    UpdatePromoteId()
+    UpdatePrefetchZoomDelta()
+    UpdateTileCacheBudget()
+  }
+
+  private fun getProperties(): Map<String, Value> =
+    listOfNotNull(
+      ("maxzoom" to maxZoom.value).takeIf { maxZoom.notInitial },
+      ("attribution" to attribution.value).takeIf { attribution.notInitial },
+      ("buffer" to buffer.value).takeIf { buffer.notInitial },
+      ("tolerance" to tolerance.value).takeIf { tolerance.notInitial },
+      ("cluster" to cluster.value).takeIf { cluster.notInitial },
+      ("clusterRadius" to clusterRadius.value).takeIf { clusterRadius.notInitial },
+      ("clusterMaxZoom" to clusterMaxZoom.value).takeIf { clusterMaxZoom.notInitial },
+      ("clusterProperties" to clusterProperties.value).takeIf { clusterProperties.notInitial },
+      ("lineMetrics" to lineMetrics.value).takeIf { lineMetrics.notInitial },
+      ("generateId" to generateId.value).takeIf { generateId.notInitial },
+      ("promoteId" to promoteId.value).takeIf { promoteId.notInitial },
+      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.notInitial },
+      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.notInitial },
+    ).toMap()
 
   /**
    * See [Any.equals]
@@ -251,6 +410,7 @@ public class GeoJsonSourceState(
   override fun hashCode(): Int {
     return Objects.hash(
       sourceId,
+      data,
       maxZoom,
       attribution,
       buffer,
@@ -282,11 +442,25 @@ public class GeoJsonSourceState(
      */
     public val Saver: Saver<GeoJsonSourceState, Holder> = Saver(
       save = { it.save() },
-      restore = {
+      restore = { holder ->
         GeoJsonSourceState(
-          sourceId = it.sourcedId,
-          initialData = it.geoJSONData,
-          initialProperties = it.cachedProperties,
+          sourceId = holder.sourcedId,
+          sourceType = "geojson",
+          initialProperties = holder.savedProperties,
+          initialData = holder.geoJSONData,
+          maxZoom = holder.savedProperties["maxzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          attribution = holder.savedProperties["attribution"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
+          buffer = holder.savedProperties["buffer"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          tolerance = holder.savedProperties["tolerance"]?.let { DoubleValue(it.second) } ?: DoubleValue.INITIAL,
+          cluster = holder.savedProperties["cluster"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
+          clusterRadius = holder.savedProperties["clusterRadius"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          clusterMaxZoom = holder.savedProperties["clusterMaxZoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          clusterProperties = holder.savedProperties["clusterProperties"]?.let { ClusterProperties(it.second) } ?: ClusterProperties.INITIAL,
+          lineMetrics = holder.savedProperties["lineMetrics"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
+          generateId = holder.savedProperties["generateId"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
+          promoteId = holder.savedProperties["promoteId"]?.let { PromoteIdValue(it.second) } ?: PromoteIdValue.INITIAL,
+          prefetchZoomDelta = holder.savedProperties["prefetch-zoom-delta"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          tileCacheBudget = holder.savedProperties["tile-cache-budget"]?.let { TileCacheBudget(it.second) } ?: TileCacheBudget.INITIAL,
         )
       }
     )

@@ -26,8 +26,8 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
-import com.mapbox.maps.extension.compose.style.sources.generated.TileSize
-import com.mapbox.maps.extension.compose.style.sources.generated.Url
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberRasterDemSourceState
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.compose.style.terrain.generated.rememberTerrainState
@@ -43,8 +43,8 @@ public class TerrainActivity : ComponentActivity() {
     setContent {
 
       val rasterDemSourceState = rememberRasterDemSourceState().apply {
-        url = Url(TERRAIN_URL_TILE_RESOURCE)
-        tileSize = TileSize(TILE_SIZE)
+        url = StringValue(TERRAIN_URL_TILE_RESOURCE)
+        tileSize = LongValue(TILE_SIZE)
       }
 
       val customTerrainState = rememberTerrainState(rasterDemSourceState) {

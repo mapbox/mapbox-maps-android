@@ -66,7 +66,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue
 import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.plugin.LocationPuck2D

@@ -3,13 +3,23 @@
 package com.mapbox.maps.extension.compose.style.sources.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringListValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.sources.RasterLayers
 import com.mapbox.maps.extension.compose.style.sources.SourceState
+import com.mapbox.maps.extension.compose.style.sources.TileCacheBudget
 import java.util.Objects
 
 /**
@@ -44,89 +54,165 @@ public inline fun rememberRasterArraySourceState(
  * @param initialProperties The initial mutable properties of the source.
  */
 @MapboxExperimental
-public class RasterArraySourceState(
-  override val sourceId: String = generateRandomSourceId("raster-array"),
-  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
+public class RasterArraySourceState private constructor(
+  sourceId: String,
+  sourceType: String,
+  initialProperties: Map<String, Pair<Boolean, Value>>,
+  url: StringValue,
+  tiles: StringListValue,
+  bounds: DoubleListValue,
+  minZoom: LongValue,
+  maxZoom: LongValue,
+  tileSize: LongValue,
+  attribution: StringValue,
+  rasterLayers: RasterLayers,
+  tileCacheBudget: TileCacheBudget,
 ) : SourceState(
   sourceId = sourceId,
-  sourceType = "raster-array",
+  sourceType = sourceType,
   initialProperties = initialProperties,
 ) {
+  public constructor(
+    sourceId: String = generateRandomSourceId("raster-array"),
+  ) : this(
+    sourceId = sourceId,
+    sourceType = "raster-array",
+    initialProperties = emptyMap(),
+    url = StringValue.INITIAL,
+    tiles = StringListValue.INITIAL,
+    bounds = DoubleListValue.INITIAL,
+    minZoom = LongValue.INITIAL,
+    maxZoom = LongValue.INITIAL,
+    tileSize = LongValue.INITIAL,
+    attribution = StringValue.INITIAL,
+    rasterLayers = RasterLayers.INITIAL,
+    tileCacheBudget = TileCacheBudget.INITIAL,
+  )
+
+  private val urlState: MutableState<StringValue> = mutableStateOf(url)
 
   /**
    * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
    */
-  public var url: Url
-    get() = Url(getProperty(Url.NAME) ?: Url.default.value)
-    set(value) {
-      setBuilderProperty(Url.NAME, value.value)
+  public var url: StringValue by urlState
+
+  @Composable
+  private fun UpdateUrl() {
+    urlState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("url", value)
+      }
     }
+  }
+  private val tilesState: MutableState<StringListValue> = mutableStateOf(tiles)
 
   /**
    * An array of one or more tile source URLs, as in the TileJSON spec.
    */
-  public var tiles: Tiles
-    get() = Tiles(getProperty(Tiles.NAME) ?: Tiles.default.value)
-    set(value) {
-      setBuilderProperty(Tiles.NAME, value.value)
+  public var tiles: StringListValue by tilesState
+
+  @Composable
+  private fun UpdateTiles() {
+    tilesState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("tiles", value)
+      }
     }
+  }
+  private val boundsState: MutableState<DoubleListValue> = mutableStateOf(bounds)
 
   /**
    * An array containing the longitude and latitude of the southwest and northeast corners of the source's
    * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
    * a source, no tiles outside of the given bounds are requested by Mapbox GL.
    */
-  public var bounds: Bounds
-    get() = Bounds(getProperty(Bounds.NAME) ?: Bounds.default.value)
-    set(value) {
-      setBuilderProperty(Bounds.NAME, value.value)
+  public var bounds: DoubleListValue by boundsState
+
+  @Composable
+  private fun UpdateBounds() {
+    boundsState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("bounds", value)
+      }
     }
+  }
+  private val minZoomState: MutableState<LongValue> = mutableStateOf(minZoom)
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
    */
-  public var minZoom: MinZoom
-    get() = MinZoom(getProperty(MinZoom.NAME) ?: MinZoom.default.value)
-    set(value) {
-      setBuilderProperty(MinZoom.NAME, value.value)
+  public var minZoom: LongValue by minZoomState
+
+  @Composable
+  private fun UpdateMinZoom() {
+    minZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("minzoom", value)
+      }
     }
+  }
+  private val maxZoomState: MutableState<LongValue> = mutableStateOf(maxZoom)
 
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
    */
-  public var maxZoom: MaxZoom
-    get() = MaxZoom(getProperty(MaxZoom.NAME) ?: MaxZoom.default.value)
-    set(value) {
-      setBuilderProperty(MaxZoom.NAME, value.value)
+  public var maxZoom: LongValue by maxZoomState
+
+  @Composable
+  private fun UpdateMaxZoom() {
+    maxZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("maxzoom", value)
+      }
     }
+  }
+  private val tileSizeState: MutableState<LongValue> = mutableStateOf(tileSize)
 
   /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
    */
-  public var tileSize: TileSize
-    get() = TileSize(getProperty(TileSize.NAME) ?: TileSize.default.value)
-    set(value) {
-      setBuilderProperty(TileSize.NAME, value.value)
+  public var tileSize: LongValue by tileSizeState
+
+  @Composable
+  private fun UpdateTileSize() {
+    tileSizeState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("tileSize", value)
+      }
     }
+  }
+  private val attributionState: MutableState<StringValue> = mutableStateOf(attribution)
 
   /**
    * Contains an attribution to be displayed when the map is shown to a user.
    */
-  public var attribution: Attribution
-    get() = Attribution(getProperty(Attribution.NAME) ?: Attribution.default.value)
-    set(value) {
-      setBuilderProperty(Attribution.NAME, value.value)
+  public var attribution: StringValue by attributionState
+
+  @Composable
+  private fun UpdateAttribution() {
+    attributionState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("attribution", value)
+      }
     }
+  }
+  private val rasterLayersState: MutableState<RasterLayers> = mutableStateOf(rasterLayers)
 
   /**
    * Contains the description of the raster data layers and the bands contained within the tiles.
    */
-  public var rasterLayers: RasterLayers
-    get() = RasterLayers(getProperty(RasterLayers.NAME) ?: RasterLayers.default.value)
-    set(value) {
-      setBuilderProperty(RasterLayers.NAME, value.value)
+  public var rasterLayers: RasterLayers by rasterLayersState
+
+  @Composable
+  private fun UpdateRasterLayers() {
+    rasterLayersState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("rasterLayers", value)
+      }
     }
+  }
+  private val tileCacheBudgetState: MutableState<TileCacheBudget> = mutableStateOf(tileCacheBudget)
 
   /**
    * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
@@ -134,11 +220,42 @@ public class RasterArraySourceState(
    * the in-memory cache. Note that the current implementation does not take into account resources allocated by
    * the visible tiles.
    */
-  public var tileCacheBudget: TileCacheBudget
-    get() = TileCacheBudget(getProperty(TileCacheBudget.NAME) ?: TileCacheBudget.default.value)
-    set(value) {
-      setProperty(TileCacheBudget.NAME, value.value)
+  public var tileCacheBudget: TileCacheBudget by tileCacheBudgetState
+
+  @Composable
+  private fun UpdateTileCacheBudget() {
+    tileCacheBudgetState.value.apply {
+      if (notInitial) {
+        setProperty("tile-cache-budget", value)
+      }
     }
+  }
+
+  @Composable
+  override fun UpdateProperties() {
+    UpdateUrl()
+    UpdateTiles()
+    UpdateBounds()
+    UpdateMinZoom()
+    UpdateMaxZoom()
+    UpdateTileSize()
+    UpdateAttribution()
+    UpdateRasterLayers()
+    UpdateTileCacheBudget()
+  }
+
+  private fun getProperties(): Map<String, Value> =
+    listOfNotNull(
+      ("url" to url.value).takeIf { url.notInitial },
+      ("tiles" to tiles.value).takeIf { tiles.notInitial },
+      ("bounds" to bounds.value).takeIf { bounds.notInitial },
+      ("minzoom" to minZoom.value).takeIf { minZoom.notInitial },
+      ("maxzoom" to maxZoom.value).takeIf { maxZoom.notInitial },
+      ("tileSize" to tileSize.value).takeIf { tileSize.notInitial },
+      ("attribution" to attribution.value).takeIf { attribution.notInitial },
+      ("rasterLayers" to rasterLayers.value).takeIf { rasterLayers.notInitial },
+      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.notInitial },
+    ).toMap()
 
   /**
    * See [Any.equals]
@@ -196,10 +313,20 @@ public class RasterArraySourceState(
      */
     public val Saver: Saver<RasterArraySourceState, Holder> = Saver(
       save = { it.save() },
-      restore = {
+      restore = { holder ->
         RasterArraySourceState(
-          sourceId = it.sourcedId,
-          initialProperties = it.cachedProperties,
+          sourceId = holder.sourcedId,
+          sourceType = "raster-array",
+          initialProperties = holder.savedProperties,
+          url = holder.savedProperties["url"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
+          tiles = holder.savedProperties["tiles"]?.let { StringListValue(it.second) } ?: StringListValue.INITIAL,
+          bounds = holder.savedProperties["bounds"]?.let { DoubleListValue(it.second) } ?: DoubleListValue.INITIAL,
+          minZoom = holder.savedProperties["minzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          maxZoom = holder.savedProperties["maxzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          tileSize = holder.savedProperties["tileSize"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          attribution = holder.savedProperties["attribution"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
+          rasterLayers = holder.savedProperties["rasterLayers"]?.let { RasterLayers(it.second) } ?: RasterLayers.INITIAL,
+          tileCacheBudget = holder.savedProperties["tile-cache-budget"]?.let { TileCacheBudget(it.second) } ?: TileCacheBudget.INITIAL,
         )
       }
     )

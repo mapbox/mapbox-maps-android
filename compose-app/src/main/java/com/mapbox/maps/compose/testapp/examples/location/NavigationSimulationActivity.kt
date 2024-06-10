@@ -34,6 +34,7 @@ import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -41,8 +42,7 @@ import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue
 import com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue
 import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
-import com.mapbox.maps.extension.compose.style.sources.generated.LineMetrics
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
@@ -190,7 +190,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
   @Composable
   public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: LightPresetValue) {
     val geoJsonSource = rememberGeoJsonSourceState {
-      lineMetrics = LineMetrics(true)
+      lineMetrics = BooleanValue(true)
     }
     LaunchedEffect(routeLine) {
       routeLine?.let {

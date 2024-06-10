@@ -34,6 +34,7 @@ dependencies {
   dependencies {
     compileOnly(project(":sdk"))
     implementation(platform(libs.compose.bom))
+    implementation(libs.mapbox.javaGeoJSON)
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
     implementation(libs.bundles.base.dependencies)

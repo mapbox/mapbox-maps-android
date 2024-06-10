@@ -35,7 +35,7 @@ import com.mapbox.maps.extension.compose.style.layerPositionedContent
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.compose.style.slotsContent
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.compose.style.styleImportsConfig
 

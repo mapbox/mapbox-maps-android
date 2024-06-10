@@ -297,5 +297,6 @@ public fun RasterLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

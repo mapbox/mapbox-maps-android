@@ -47,7 +47,7 @@ import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue
 import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 

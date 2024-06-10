@@ -367,5 +367,6 @@ public fun LineLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

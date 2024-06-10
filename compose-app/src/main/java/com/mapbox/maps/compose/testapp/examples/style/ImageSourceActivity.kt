@@ -18,8 +18,8 @@ import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.extension.compose.style.PointListValue
 import com.mapbox.maps.extension.compose.style.layers.generated.RasterLayer
-import com.mapbox.maps.extension.compose.style.sources.generated.Coordinates
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberImageSourceState
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
@@ -57,13 +57,11 @@ public class ImageSourceActivity : ComponentActivity() {
             }
             RasterLayer(
               sourceState = rememberImageSourceState(sourceId = ID_IMAGE_SOURCE) {
-                coordinates = Coordinates(
-                  listOf(
-                    listOf(-80.11725, 25.7836),
-                    listOf(-80.1397431334, 25.783548),
-                    listOf(-80.13964, 25.7680),
-                    listOf(-80.11725, 25.76795)
-                  )
+                coordinates = PointListValue(
+                  Point.fromLngLat(-80.11725, 25.7836),
+                  Point.fromLngLat(-80.1397431334, 25.783548),
+                  Point.fromLngLat(-80.13964, 25.7680),
+                  Point.fromLngLat(-80.11725, 25.76795)
                 )
               }
             )

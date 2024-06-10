@@ -318,5 +318,6 @@ public fun ModelLayer(
       }
     }
   )
+  sourceState.UpdateProperties()
 }
 // End of generated file.

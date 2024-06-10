@@ -10,6 +10,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Replace terrain property `Exaggeration` with `DoubleValue`.
 * [compose] Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `DoubleRangeValue`.
 * [compose] Replace concrete Layer properties(e.g. `CircleColor`, `CircleOpacity`, `IconImage` etc) with generic ones: `ColorValue`, `DoubleValue`, `ImageValue` etc.
+* [compose] Replace concrete `GeoJsonSourceState`, `ImageSourceState`, `RasterArraySourceState`, `RasterDemSourceState`, `RasterSourceState`, `SourceProperties`, `VectorSourceState` properties with generic ones (e.g. `BooleanValue`, `StringValue`, `LongValue`...).
+* [compose] Move `GeoJSONData` outside of `generated` package.
 
 ## Features ✨ and improvements 🏁
 * Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.

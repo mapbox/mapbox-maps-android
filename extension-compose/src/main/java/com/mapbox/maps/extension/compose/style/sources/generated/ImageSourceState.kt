@@ -3,12 +3,19 @@
 package com.mapbox.maps.extension.compose.style.sources.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.PointListValue
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 import java.util.Objects
 
@@ -44,35 +51,63 @@ public inline fun rememberImageSourceState(
  * @param initialProperties The initial mutable properties of the source.
  */
 @MapboxExperimental
-public class ImageSourceState(
-  override val sourceId: String = generateRandomSourceId("image"),
-  initialProperties: List<Triple<String, Boolean, Value>> = emptyList(),
+public class ImageSourceState private constructor(
+  sourceId: String,
+  sourceType: String,
+  initialProperties: Map<String, Pair<Boolean, Value>>,
+  url: StringValue,
+  coordinates: PointListValue,
+  prefetchZoomDelta: LongValue,
 ) : SourceState(
   sourceId = sourceId,
-  sourceType = "image",
+  sourceType = sourceType,
   initialProperties = initialProperties,
 ) {
+  public constructor(
+    sourceId: String = generateRandomSourceId("image"),
+  ) : this(
+    sourceId = sourceId,
+    sourceType = "image",
+    initialProperties = emptyMap(),
+    url = StringValue.INITIAL,
+    coordinates = PointListValue.INITIAL,
+    prefetchZoomDelta = LongValue.INITIAL,
+  )
+
+  private val urlState: MutableState<StringValue> = mutableStateOf(url)
 
   /**
    * URL that points to an image. If the URL is not specified, the image is expected
    * to be loaded directly during runtime.
    */
-  public var url: Url
-    get() = Url(getProperty(Url.NAME) ?: Url.default.value)
-    set(value) {
-      setBuilderProperty(Url.NAME, value.value)
+  public var url: StringValue by urlState
+
+  @Composable
+  private fun UpdateUrl() {
+    urlState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("url", value)
+      }
     }
+  }
+  private val coordinatesState: MutableState<PointListValue> = mutableStateOf(coordinates)
 
   /**
    * Corners of image specified in longitude, latitude pairs. Note: When using globe projection, the image will
    * be centered at the North or South Pole in the respective hemisphere if the average latitude
    * value exceeds 85 degrees or falls below -85 degrees.
    */
-  public var coordinates: Coordinates
-    get() = Coordinates(getProperty(Coordinates.NAME) ?: Coordinates.default.value)
-    set(value) {
-      setBuilderProperty(Coordinates.NAME, value.value)
+  public var coordinates: PointListValue by coordinatesState
+
+  @Composable
+  private fun UpdateCoordinates() {
+    coordinatesState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("coordinates", value)
+      }
     }
+  }
+  private val prefetchZoomDeltaState: MutableState<LongValue> = mutableStateOf(prefetchZoomDelta)
 
   /**
    * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
@@ -81,11 +116,30 @@ public class ImageSourceState(
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
    * The default delta is 4.
    */
-  public var prefetchZoomDelta: PrefetchZoomDelta
-    get() = PrefetchZoomDelta(getProperty(PrefetchZoomDelta.NAME) ?: PrefetchZoomDelta.default.value)
-    set(value) {
-      setProperty(PrefetchZoomDelta.NAME, value.value)
+  public var prefetchZoomDelta: LongValue by prefetchZoomDeltaState
+
+  @Composable
+  private fun UpdatePrefetchZoomDelta() {
+    prefetchZoomDeltaState.value.apply {
+      if (notInitial) {
+        setProperty("prefetch-zoom-delta", value)
+      }
     }
+  }
+
+  @Composable
+  override fun UpdateProperties() {
+    UpdateUrl()
+    UpdateCoordinates()
+    UpdatePrefetchZoomDelta()
+  }
+
+  private fun getProperties(): Map<String, Value> =
+    listOfNotNull(
+      ("url" to url.value).takeIf { url.notInitial },
+      ("coordinates" to coordinates.value).takeIf { coordinates.notInitial },
+      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.notInitial },
+    ).toMap()
 
   /**
    * See [Any.equals]
@@ -131,10 +185,14 @@ public class ImageSourceState(
      */
     public val Saver: Saver<ImageSourceState, Holder> = Saver(
       save = { it.save() },
-      restore = {
+      restore = { holder ->
         ImageSourceState(
-          sourceId = it.sourcedId,
-          initialProperties = it.cachedProperties,
+          sourceId = holder.sourcedId,
+          sourceType = "image",
+          initialProperties = holder.savedProperties,
+          url = holder.savedProperties["url"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
+          coordinates = holder.savedProperties["coordinates"]?.let { PointListValue(it.second) } ?: PointListValue.INITIAL,
+          prefetchZoomDelta = holder.savedProperties["prefetch-zoom-delta"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
         )
       }
     )

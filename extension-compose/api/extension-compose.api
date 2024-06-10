@@ -233,6 +233,7 @@ public final class com/mapbox/maps/extension/compose/style/BooleanValue$Companio
 
 public final class com/mapbox/maps/extension/compose/style/ColorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/ColorValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
@@ -247,7 +248,6 @@ public final class com/mapbox/maps/extension/compose/style/ColorValue {
 }
 
 public final class com/mapbox/maps/extension/compose/style/ColorValue$Companion {
-	public final fun getDEFAULT ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 }
 
 public final class com/mapbox/maps/extension/compose/style/DoubleListValue {
@@ -362,6 +362,28 @@ public final class com/mapbox/maps/extension/compose/style/LongValue$Companion {
 }
 
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/maps/extension/compose/style/PointListValue {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/PointListValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/PointListValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lcom/mapbox/geojson/Point;)V
+	public fun <init> ([Lkotlin/Pair;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/PointListValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/PointListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/PointListValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPointsOrNull ()Ljava/util/List;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/PointListValue$Companion {
 }
 
 public final class com/mapbox/maps/extension/compose/style/SlotsContent {
@@ -1502,30 +1524,101 @@ public final class com/mapbox/maps/extension/compose/style/projection/generated/
 public final class com/mapbox/maps/extension/compose/style/projection/generated/Projection$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/sources/ClusterProperties {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/util/HashMap;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/ClusterProperties$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/GeoJSONData {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
+	public fun <init> (Lcom/mapbox/geojson/Feature;)V
+	public fun <init> (Lcom/mapbox/geojson/Geometry;)V
+	public fun <init> (Lcom/mapbox/maps/GeoJSONSourceData;)V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun copy (Lcom/mapbox/maps/GeoJSONSourceData;)Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;Lcom/mapbox/maps/GeoJSONSourceData;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/GeoJSONData$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValue$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/RasterLayers {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/RasterLayers$Companion {
+}
+
 public abstract class com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
-	protected final fun getGeoJSONData ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
+	protected final fun getGeoJSONData ()Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
 	protected final fun getProperty (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
-	public fun getSourceId ()Ljava/lang/String;
-	protected final fun setBuilderProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
-	protected final fun setGeoJSONData (Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)V
-	protected final fun setProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
+	public final fun getSourceId ()Ljava/lang/String;
+	protected final fun setGeoJSONData (Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;)V
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/SourceState$Holder : android/os/Parcelable {
 	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
-	public final fun copy (Ljava/lang/String;Ljava/util/List;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;Ljava/lang/String;Ljava/util/List;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCachedProperties ()Ljava/util/List;
-	public final fun getGeoJSONData ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
+	public final fun getGeoJSONData ()Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
+	public final fun getSavedProperties ()Ljava/util/Map;
 	public final fun getSourcedId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1540,242 +1633,80 @@ public final class com/mapbox/maps/extension/compose/style/sources/SourceState$H
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Attribution {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution$Companion;
+public final class com/mapbox/maps/extension/compose/style/sources/TileCacheBudget {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/TileCacheBudgetInMegabytes;)V
+	public fun <init> (Lcom/mapbox/maps/TileCacheBudgetInTiles;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Attribution$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+public final class com/mapbox/maps/extension/compose/style/sources/TileCacheBudget$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Bounds {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds$Companion;
+public final class com/mapbox/maps/extension/compose/style/sources/generated/EncodingValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
+	public static final field MAPBOX Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
+	public static final field TERRARIUM Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/List;)V
 	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Bounds$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Buffer {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Buffer$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Cluster {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Z)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Cluster$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/HashMap;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Coordinates {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Coordinates$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Encoding {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding$Companion;
-	public static final field MAPBOX Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
-	public static final field TERRARIUM Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Encoding$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/GenerateId {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Z)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/GenerateId$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData$Companion;
-	public fun <init> (Lcom/mapbox/geojson/Feature;)V
-	public fun <init> (Lcom/mapbox/geojson/Geometry;)V
-	public fun <init> (Lcom/mapbox/maps/GeoJSONSourceData;)V
-	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun copy (Lcom/mapbox/maps/GeoJSONSourceData;)Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Lcom/mapbox/maps/GeoJSONSourceData;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
+public final class com/mapbox/maps/extension/compose/style/sources/generated/EncodingValue$Companion {
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
-	public final fun getBuffer ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;
-	public final fun getCluster ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;
-	public final fun getClusterMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;
-	public final fun getClusterProperties ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;
-	public final fun getClusterRadius ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;
-	public final fun getData ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
-	public final fun getGenerateId ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;
-	public final fun getLineMetrics ()Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;
-	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public final fun getPromoteId ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
-	public fun getSourceId ()Ljava/lang/String;
-	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public final fun getTolerance ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getBuffer ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getCluster ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getClusterMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getClusterProperties ()Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
+	public final fun getClusterRadius ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getData ()Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
+	public final fun getGenerateId ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getLineMetrics ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getPromoteId ()Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
+	public final fun getTolerance ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public fun hashCode ()I
-	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
-	public final fun setBuffer (Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;)V
-	public final fun setCluster (Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;)V
-	public final fun setClusterMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;)V
-	public final fun setClusterProperties (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;)V
-	public final fun setClusterRadius (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;)V
-	public final fun setData (Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)V
-	public final fun setGenerateId (Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;)V
-	public final fun setLineMetrics (Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;)V
-	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
-	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
-	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;)V
-	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
-	public final fun setTolerance (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;)V
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setBuffer (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setCluster (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setClusterMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setClusterProperties (Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;)V
+	public final fun setClusterRadius (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setData (Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;)V
+	public final fun setGenerateId (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setLineMetrics (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;)V
+	public final fun setTolerance (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1790,18 +1721,17 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/PointListValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCoordinates ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;
-	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public fun getSourceId ()Ljava/lang/String;
-	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun getCoordinates ()Lcom/mapbox/maps/extension/compose/style/PointListValue;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public fun hashCode ()I
-	public final fun setCoordinates (Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;)V
-	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
-	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public final fun setCoordinates (Lcom/mapbox/maps/extension/compose/style/PointListValue;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1813,160 +1743,32 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ima
 	public static final fun rememberImageSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/LineMetrics {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Z)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/LineMetrics$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MaxZoom {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MaxZoom$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MinZoom {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MinZoom$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/PromoteId {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/PromoteId$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
-}
-
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
-	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
-	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-	public final fun getRasterLayers ()Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;
-	public fun getSourceId ()Ljava/lang/String;
-	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
-	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getRasterLayers ()Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
+	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public fun hashCode ()I
-	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
-	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
-	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
-	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
-	public final fun setRasterLayers (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;)V
-	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
-	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
-	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
-	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setRasterLayers (Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;)V
+	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1981,42 +1783,41 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
-	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
-	public final fun getEncoding ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
-	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
-	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
-	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public fun getSourceId ()Ljava/lang/String;
-	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
-	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
-	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
-	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
-	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getEncoding ()Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
+	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
+	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public fun hashCode ()I
-	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
-	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
-	public final fun setEncoding (Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;)V
-	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
-	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
-	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
-	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;)V
-	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
-	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
-	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;)V
-	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;)V
-	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
-	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
-	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
-	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setEncoding (Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;)V
+	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;)V
+	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2028,63 +1829,44 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public static final fun rememberRasterDemSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterLayers {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterLayers$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;
-}
-
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
-	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
-	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
-	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
-	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public final fun getScheme ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
-	public fun getSourceId ()Ljava/lang/String;
-	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
-	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
-	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
-	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
-	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getScheme ()Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
+	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public fun hashCode ()I
-	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
-	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
-	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
-	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
-	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
-	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;)V
-	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
-	public final fun setScheme (Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;)V
-	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
-	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;)V
-	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;)V
-	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
-	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
-	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
-	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setScheme (Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;)V
+	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2096,191 +1878,63 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public static final fun rememberRasterSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Scheme {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme$Companion;
-	public static final field TMS Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
-	public static final field XYZ Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
+public final class com/mapbox/maps/extension/compose/style/sources/generated/SchemeValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
+	public static final field TMS Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
+	public static final field XYZ Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Scheme$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/TileCacheBudgetInMegabytes;)V
-	public fun <init> (Lcom/mapbox/maps/TileCacheBudgetInTiles;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileSize {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize$Companion;
-	public fun <init> (J)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/TileSize$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Tiles {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Tiles$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Tolerance {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance$Companion;
-	public fun <init> (D)V
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Tolerance$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Url {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Url$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Url$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+public final class com/mapbox/maps/extension/compose/style/sources/generated/SchemeValue$Companion {
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
-	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
-	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
-	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
-	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
-	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
-	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
-	public final fun getPromoteId ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
-	public final fun getScheme ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
-	public fun getSourceId ()Ljava/lang/String;
-	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
-	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
-	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
-	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
-	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
-	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getPromoteId ()Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
+	public final fun getScheme ()Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
+	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public fun hashCode ()I
-	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
-	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
-	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
-	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
-	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
-	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;)V
-	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
-	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;)V
-	public final fun setScheme (Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;)V
-	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
-	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;)V
-	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;)V
-	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
-	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
-	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;)V
+	public final fun setScheme (Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;)V
+	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2290,24 +1944,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vec
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceStateKt {
 	public static final fun rememberVectorSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Volatile {
-	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile$Companion;
-	public fun <init> (Lcom/mapbox/bindgen/Value;)V
-	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
-	public fun <init> (Z)V
-	public final fun component1 ()Lcom/mapbox/bindgen/Value;
-	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/mapbox/bindgen/Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/extension/compose/style/sources/generated/Volatile$Companion {
-	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
 }
 
 public final class com/mapbox/maps/extension/compose/style/standard/LightPresetValue {
