@@ -10,6 +10,7 @@ import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
+import com.mapbox.maps.extension.compose.style.lights.LightsState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.styleImportsConfig
@@ -33,6 +34,12 @@ public data class LightPresetValue(public val value: Value) {
    * Construct the [LightPresetValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
   public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Get the name of the [LightPresetValue] as [String], or null if it's not a constant(e.g. an expression).
+   */
+  public val presetNameOrNull: String?
+    get() = value.contents as? String
 
   /**
    * True if the this value is not [INITIAL]
@@ -112,6 +119,7 @@ public fun MapboxStandardStyle(
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
+  lightsState: LightsState = LightsState.INITIAL
 ) {
   GenericStyle(
     style = Style.STANDARD,
@@ -130,5 +138,6 @@ public fun MapboxStandardStyle(
     projection = projection,
     atmosphereState = atmosphereState,
     terrainState = terrainState,
+    lightsState = lightsState
   )
 }

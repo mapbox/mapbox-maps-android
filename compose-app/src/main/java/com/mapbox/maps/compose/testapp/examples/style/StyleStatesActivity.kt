@@ -13,23 +13,29 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
-import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.rememberAtmosphereState
+import com.mapbox.maps.extension.compose.style.lights.LightsState
+import com.mapbox.maps.extension.compose.style.lights.generated.rememberAmbientLightState
+import com.mapbox.maps.extension.compose.style.lights.generated.rememberDirectionalLightState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
+import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import kotlin.math.round
 import kotlin.random.Random
 
@@ -40,7 +46,7 @@ import kotlin.random.Random
 public class StyleStatesActivity : ComponentActivity() {
 
   private val projections =
-    // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
+  // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
     // default so the map changes visually.
     listOf(Projection.DEFAULT, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR)
 
@@ -53,7 +59,15 @@ public class StyleStatesActivity : ComponentActivity() {
         mutableStateOf(true)
       }
 
-      var currentProjectionIdx by remember {
+      var currentProjectionIdx by rememberSaveable {
+        mutableStateOf(0)
+      }
+
+      var currentLightIdx by rememberSaveable {
+        mutableStateOf(0)
+      }
+
+      var currentLightPresetIdx by rememberSaveable {
         mutableStateOf(0)
       }
 
@@ -77,6 +91,31 @@ public class StyleStatesActivity : ComponentActivity() {
           zoom(ZOOM)
           center(CityLocations.HELSINKI)
         }
+      }
+
+      val directionalLightState = rememberDirectionalLightState {
+        color = ColorValue(Color.Yellow)
+        intensity = DoubleValue(0.9)
+        castShadows = BooleanValue(true)
+        direction = DoubleListValue(0.0, 15.0)
+      }
+      val ambientLightState = rememberAmbientLightState {
+        color = ColorValue(Color.White)
+        intensity = DoubleValue(0.5)
+      }
+
+      val dynamicLight = remember {
+        LightsState(directionalLightState, ambientLightState)
+      }
+
+      val lightsStates = remember {
+        listOf(LightsState.DEFAULT, dynamicLight)
+      }
+      val lightsStatesNames = remember {
+        listOf("default", "3d light")
+      }
+      val lightsPresets = remember {
+        listOf(LightPresetValue.DAY, LightPresetValue.NIGHT)
       }
 
       MapboxMapComposeTheme {
@@ -117,7 +156,44 @@ public class StyleStatesActivity : ComponentActivity() {
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Change to random color")
+                Text(modifier = Modifier.padding(10.dp), text = "Change atmosphere to random color")
+              }
+
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  currentLightIdx = (currentLightIdx + 1) % lightsStates.size
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Change Light to ${lightsStatesNames[(currentLightIdx + 1) % lightsStates.size]}")
+              }
+              val enableLightColorBtn = lightsStates[currentLightIdx] != LightsState.DEFAULT
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (enableLightColorBtn) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  if (enableLightColorBtn) {
+                    directionalLightState.color = randomColor()
+                    ambientLightState.color = randomColor()
+                  }
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Change Light to random color")
+              }
+              val enableLightPresetBtn = lightsStates[currentLightIdx] == LightsState.DEFAULT
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (enableLightPresetBtn) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  if (enableLightPresetBtn) {
+                    currentLightPresetIdx = (currentLightPresetIdx + 1) % lightsPresets.size
+                  }
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Change Light preset to ${lightsPresets[(currentLightPresetIdx + 1) % lightsPresets.size].presetNameOrNull}")
               }
               val enableProjectionBt = (mapViewportState.cameraState?.zoom ?: Double.NaN) < 6.0
               FloatingActionButton(
@@ -159,10 +235,11 @@ public class StyleStatesActivity : ComponentActivity() {
             Modifier.fillMaxSize(),
             mapViewportState = mapViewportState,
             style = {
-              GenericStyle(
-                style = Style.STANDARD,
+              MapboxStandardStyle(
                 projection = projections[currentProjectionIdx],
-                atmosphereState = currentAtmosphereState
+                atmosphereState = currentAtmosphereState,
+                lightsState = lightsStates[currentLightIdx],
+                lightPreset = lightsPresets[currentLightPresetIdx]
               )
             }
           )

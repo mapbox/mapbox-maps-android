@@ -315,6 +315,7 @@ public final class com/mapbox/maps/extension/compose/style/IdGenerator {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/style/IdGenerator;
 	public final fun generateRandomLayerId (Ljava/lang/String;)Ljava/lang/String;
+	public final fun generateRandomLightId (Ljava/lang/String;)Ljava/lang/String;
 	public final fun generateRandomSourceId (Ljava/lang/String;)Ljava/lang/String;
 }
 
@@ -448,8 +449,8 @@ public final class com/mapbox/maps/extension/compose/style/StyleImportsConfig {
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleKt {
-	public static final fun GenericStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Landroidx/compose/runtime/Composer;II)V
-	public static final fun MapStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GenericStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapStyle (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun layerPositionedContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;
 	public static final fun slotsContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/SlotsContent;
 	public static final fun styleImportsConfig (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
@@ -1285,6 +1286,202 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Visi
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/LightsState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/LightsState$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/lights/LightsState;
+	public fun <init> (Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState;Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState;)V
+	public fun <init> (Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/LightsState$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public fun hashCode ()I
+	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/Map;)V
+	public final fun component1 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSavedProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AmbientLightStateKt {
+	public static final fun rememberAmbientLightState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AnchorValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
+	public static final field MAP Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
+	public static final field VIEWPORT Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AnchorValue$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCastShadows ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getDirectionTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getShadowIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getShadowIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public fun hashCode ()I
+	public final fun setCastShadows (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setDirectionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setShadowIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setShadowIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/Map;)V
+	public final fun component1 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSavedProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightStateKt {
+	public static final fun rememberDirectionalLightState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/FlatLightState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnchor ()Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
+	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getPosition ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getPositionTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public fun hashCode ()I
+	public final fun setAnchor (Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;)V
+	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setPosition (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setPositionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/Map;)V
+	public final fun component1 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSavedProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/style/lights/generated/FlatLightStateKt {
+	public static final fun rememberFlatLightState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/projection/generated/Projection {
@@ -2127,6 +2324,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/LightPresetV
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPresetNameOrNull ()Ljava/lang/String;
 	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2136,7 +2334,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/LightPresetV
 }
 
 public final class com/mapbox/maps/extension/compose/style/standard/MapboxStandardStyleKt {
-	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/terrain/generated/TerrainState {

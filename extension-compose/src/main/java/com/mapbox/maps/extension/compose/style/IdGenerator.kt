@@ -10,6 +10,7 @@ import java.util.UUID
 public object IdGenerator {
   private const val SOURCE_ID_PREFIX = "COMPOSE_SOURCE_ID_"
   private const val LAYER_ID_PREFIX = "COMPOSE_LAYER_ID_"
+  private const val LIGHT_ID_PREFIX = "COMPOSE_LIGHT_ID_"
 
   private fun generateRandomId(prefix: String): String =
     prefix + "_" + UUID.randomUUID().toString()
@@ -28,5 +29,13 @@ public object IdGenerator {
   @MapboxExperimental
   public fun generateRandomLayerId(layerType: String): String {
     return generateRandomId(LAYER_ID_PREFIX + layerType)
+  }
+
+  /**
+   * Generate a random light id based on UUID.
+   */
+  @MapboxExperimental
+  public fun generateRandomLightId(lightType: String): String {
+    return generateRandomId(LIGHT_ID_PREFIX + lightType)
   }
 }

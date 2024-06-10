@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.extension.compose.style.internal.StyleConfig
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
 import com.mapbox.maps.extension.compose.style.internal.StyleSlot
+import com.mapbox.maps.extension.compose.style.lights.LightsState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 
@@ -23,8 +24,8 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  * A simple composable function to set the style to the map without slots or import configs.
  *
  * @param style The Style JSON or Style Uri to be set to the map.
- * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
-* @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
+ * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the [style] definition.
+ * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
  */
 @Composable
@@ -35,12 +36,14 @@ public fun MapStyle(
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
+  lightsState: LightsState = LightsState.INITIAL
 ) {
   GenericStyle(
     style = style,
     projection = projection,
     atmosphereState = atmosphereState,
-    terrainState = terrainState
+    terrainState = terrainState,
+    lightsState = lightsState
   )
 }
 
@@ -212,7 +215,7 @@ public data class ImportConfig internal constructor(
  * @param slotsContent The slots and their [MapboxMapComposable] that would be inserted to the corresponding slots in the style. You can use [slotsContent] to create it.
  * @param layerPositionedContent The [MapboxMapComposable] content to be placed at specific layer position in the style. You can use [layerPositionedContent] to create it.
  * @param styleImportsConfig The style import configurations for all the style imports in the style. You can use [styleImportsConfig] to create it.
- * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
+ * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the [style] definition.
  * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
  */
@@ -227,6 +230,7 @@ public fun GenericStyle(
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
+  lightsState: LightsState = LightsState.INITIAL
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -260,6 +264,7 @@ public fun GenericStyle(
     ) {
       atmosphereState.UpdateProperties()
       terrainState.UpdateProperties()
+      lightsState.BindToMap(mapboxMap = mapApplier.mapView.mapboxMap)
       slotsContent.entries.forEach {
         key(it.key) {
           StyleSlot(name = it.key, content = it.value)

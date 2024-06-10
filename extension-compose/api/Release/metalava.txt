@@ -321,6 +321,7 @@ package com.mapbox.maps.extension.compose.style {
 
   @com.mapbox.maps.MapboxExperimental public final class IdGenerator {
     method @com.mapbox.maps.MapboxExperimental public String generateRandomLayerId(String layerType);
+    method @com.mapbox.maps.MapboxExperimental public String generateRandomLightId(String lightType);
     method @com.mapbox.maps.MapboxExperimental public String generateRandomSourceId(String sourceType);
     field public static final com.mapbox.maps.extension.compose.style.IdGenerator INSTANCE;
   }
@@ -432,10 +433,10 @@ package com.mapbox.maps.extension.compose.style {
   public final class StyleKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = com.mapbox.maps.extension.compose.style.SlotsContent(), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = com.mapbox.maps.extension.compose.style.LayerPositionedContent(), com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig = com.mapbox.maps.extension.compose.style.StyleImportsConfig(), com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL);
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL);
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
@@ -1222,6 +1223,178 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public static final class VisibilityValue.Companion {
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.lights {
+
+  @com.mapbox.maps.MapboxExperimental public final class LightsState {
+    ctor public LightsState(com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState directionalLightState, com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState ambientLightState);
+    ctor public LightsState(com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState flatLightState);
+    field public static final com.mapbox.maps.extension.compose.style.lights.LightsState.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.lights.LightsState DEFAULT;
+  }
+
+  public static final class LightsState.Companion {
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.lights.generated {
+
+  @com.mapbox.maps.MapboxExperimental public final class AmbientLightState {
+    ctor public AmbientLightState(String id = generateRandomLightId("ambient"));
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public String getId();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
+    method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final String id;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
+    property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState.Companion Companion;
+  }
+
+  public static final class AmbientLightState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState,com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState,com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState.Holder> Saver;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class AmbientLightState.Holder implements android.os.Parcelable {
+    ctor public AmbientLightState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
+    method public com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
+  }
+
+  public final class AmbientLightStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState rememberAmbientLightState(String id = remember({ 
+    return generateRandomLightId("ambient")
+}), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState,kotlin.Unit> init = {});
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class AnchorValue {
+    ctor public AnchorValue(com.mapbox.bindgen.Value value);
+    ctor public AnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue MAP;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue VIEWPORT;
+  }
+
+  public static final class AnchorValue.Companion {
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class DirectionalLightState {
+    ctor public DirectionalLightState(String id = generateRandomLightId("directional"));
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getCastShadows();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
+    method public com.mapbox.maps.extension.compose.style.Transition getDirectionTransition();
+    method public String getId();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getShadowIntensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getShadowIntensityTransition();
+    method public void setCastShadows(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
+    method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setShadowIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setShadowIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue castShadows;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
+    property public final com.mapbox.maps.extension.compose.style.Transition directionTransition;
+    property public final String id;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
+    property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue shadowIntensity;
+    property public final com.mapbox.maps.extension.compose.style.Transition shadowIntensityTransition;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Companion Companion;
+  }
+
+  public static final class DirectionalLightState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState,com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState,com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Holder> Saver;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class DirectionalLightState.Holder implements android.os.Parcelable {
+    ctor public DirectionalLightState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
+    method public com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
+  }
+
+  public final class DirectionalLightStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState rememberDirectionalLightState(String id = remember({ 
+    return generateRandomLightId("directional")
+}), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState,kotlin.Unit> init = {});
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class FlatLightState {
+    ctor public FlatLightState(String id = generateRandomLightId("flat"));
+    method public com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue getAnchor();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public String getId();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue getPosition();
+    method public com.mapbox.maps.extension.compose.style.Transition getPositionTransition();
+    method public void setAnchor(com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue);
+    method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setPosition(com.mapbox.maps.extension.compose.style.DoubleListValue);
+    method public void setPositionTransition(com.mapbox.maps.extension.compose.style.Transition);
+    property public final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue anchor;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final String id;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
+    property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleListValue position;
+    property public final com.mapbox.maps.extension.compose.style.Transition positionTransition;
+    field public static final com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState.Companion Companion;
+  }
+
+  public static final class FlatLightState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState,com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState,com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState.Holder> Saver;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class FlatLightState.Holder implements android.os.Parcelable {
+    ctor public FlatLightState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
+    method public com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
+  }
+
+  public final class FlatLightStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState rememberFlatLightState(String id = remember({ 
+    return generateRandomLightId("flat")
+}), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState,kotlin.Unit> init = {});
   }
 
 }
@@ -2055,7 +2228,9 @@ package com.mapbox.maps.extension.compose.style.standard {
     ctor public LightPresetValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.standard.LightPresetValue copy(com.mapbox.bindgen.Value value);
+    method public String? getPresetNameOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    property public final String? presetNameOrNull;
     property public final com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.standard.LightPresetValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.standard.LightPresetValue DAWN;
@@ -2071,7 +2246,7 @@ package com.mapbox.maps.extension.compose.style.standard {
   public final class MapboxStandardStyleKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.LightPresetValue lightPreset = com.mapbox.maps.extension.compose.style.standard.LightPresetValue.INITIAL, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL);
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
   }
 
 }

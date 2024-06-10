@@ -4,16 +4,18 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Breaking changes ⚠️
-* Replace terrain property `Exaggeration` with `DoubleValue`.
-* Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `RangeDoubleValue`.
-* Replace concrete Layer properties(e.g. `CircleColor`, `CircleOpacity`, `IconImage` etc) with generic ones: `ColorValue`, `DoubleValue`, `ImageValue` etc.
 * [compose] Move `Projection` to `generated` package and rename `default` values to `DEFAULT`.
 * [compose] Rename `LightPreset` to `LightPresetValue`.
 * [compose] Rename `TerrainState.disabled` to `TerrainState.DISABLED`.
+* [compose] Replace terrain property `Exaggeration` with `DoubleValue`.
+* [compose] Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `DoubleRangeValue`.
+* [compose] Replace concrete Layer properties(e.g. `CircleColor`, `CircleOpacity`, `IconImage` etc) with generic ones: `ColorValue`, `DoubleValue`, `ImageValue` etc.
 
 ## Features ✨ and improvements 🏁
 * Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
 * Remove explicit main thread locking when using `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` and dragging the map that could lead to an ANR.
+* [compose] Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
+* [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
 
 ## Bug fixes 🐞
 * `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
