@@ -24,7 +24,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix precision issues in `ColorUtils` methods.
 * Fix NPE when parsing `rgb(...)` strings with `ColorUtils` methods.
 * Fix `ScaleBar.useContinuousRendering` not being in sync with `ScaleBar.settings.useContinuousRendering`.
-* [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background. 
+* [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.
+* Fix accuracy ring related location settings updates not being rendered immediately.
 
 # 11.4.1 June 03, 2024
 ## Bug fixes 🐞

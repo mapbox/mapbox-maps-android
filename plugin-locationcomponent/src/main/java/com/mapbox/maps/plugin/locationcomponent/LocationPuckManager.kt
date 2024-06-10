@@ -89,6 +89,9 @@ internal class LocationPuckManager(
       } else {
         hide()
       }
+      if (settings.showAccuracyRing) {
+        updateHorizontalAccuracyRadius(lastAccuracyRadius)
+      }
     }
   }
 

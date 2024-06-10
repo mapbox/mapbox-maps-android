@@ -109,10 +109,12 @@ class LocationPuckManagerTest {
 
   @Test
   fun testInitialiseWithLocation() {
+    every { settings.showAccuracyRing } returns true
     locationPuckManager.lastLocation = Point.fromLngLat(0.0, 0.0)
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
     verify { animationManager.setUpdateListeners(any(), any(), any()) }
+    verify { animationManager.animateAccuracyRadius(any(), any(), options = any()) }
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.show() }
