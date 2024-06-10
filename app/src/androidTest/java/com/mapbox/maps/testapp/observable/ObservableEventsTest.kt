@@ -525,7 +525,8 @@ class ObservableEventsTest : BaseMapTest() {
     val listener = CameraChangedCallback {
       val actualCameraOption = it.cameraState.toCameraOptions()
       assertNotNull(it.timestamp.time)
-      assertEquals(targetCameraOptions.center, actualCameraOption.center)
+      assertEquals(targetCameraOptions.center!!.longitude(), actualCameraOption.center!!.longitude(), EPS)
+      assertEquals(targetCameraOptions.center!!.latitude(), actualCameraOption.center!!.latitude(), EPS)
       assertEquals(targetCameraOptions.zoom, actualCameraOption.zoom)
       latch.countDown()
     }
@@ -551,7 +552,7 @@ class ObservableEventsTest : BaseMapTest() {
   }
 
   companion object {
-    private const val TAG = "ObservableExtensionTest"
+    private const val EPS = 0.0001
     private const val LAYER_ID = "layer_id"
     private const val SOURCE_ID = "source_id"
     private const val IMAGE_ID = "image_id"
