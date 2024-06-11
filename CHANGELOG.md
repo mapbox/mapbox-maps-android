@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.5.0-beta.1 June 11, 2024
 ## Breaking changes ⚠️
 * [compose] Move `Projection` to `generated` package and rename `default` values to `DEFAULT`.
 * [compose] Rename `LightPreset` to `LightPresetValue`.
@@ -30,11 +32,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix accuracy ring related location settings updates not being rendered immediately.
 * Fix a crash for Draco compressed 3D models whose geometry share indices.
 * Fix tile rendering errors when the composited source tile components are overscaled.
-* Fixed transparent areas in overlapped polygons of MultiPolygon feature.
+* Fix transparent areas in overlapped polygons of MultiPolygon feature.
 * Fix crash on multiple style pack loading operations.
 
 ## Dependencies
 * Update gl-native to v11.5.0-beta.1 and common to v24.5.0-beta.4.
+
 
 # 11.4.1 June 03, 2024
 ## Bug fixes 🐞
