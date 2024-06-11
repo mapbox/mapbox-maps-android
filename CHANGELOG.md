@@ -20,12 +20,19 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
 
 ## Bug fixes 🐞
+* [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.
 * `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
 * Fix precision issues in `ColorUtils` methods.
 * Fix NPE when parsing `rgb(...)` strings with `ColorUtils` methods.
 * Fix `ScaleBar.useContinuousRendering` not being in sync with `ScaleBar.settings.useContinuousRendering`.
-* [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.
 * Fix accuracy ring related location settings updates not being rendered immediately.
+* Fix a crash for Draco compressed 3D models whose geometry share indices.
+* Fix tile rendering errors when the composited source tile components are overscaled.
+* Fixed transparent areas in overlapped polygons of MultiPolygon feature.
+* Fix crash on multiple style pack loading operations.
+
+## Dependencies
+* Update gl-native to v11.5.0-beta.1 and common to v24.5.0-beta.4.
 
 # 11.4.1 June 03, 2024
 ## Bug fixes 🐞
