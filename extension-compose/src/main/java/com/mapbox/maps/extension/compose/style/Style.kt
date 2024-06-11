@@ -224,9 +224,9 @@ public data class ImportConfig internal constructor(
 @MapboxExperimental
 public fun GenericStyle(
   style: String,
-  slotsContent: SlotsContent = SlotsContent(),
-  layerPositionedContent: LayerPositionedContent = LayerPositionedContent(),
-  styleImportsConfig: StyleImportsConfig = StyleImportsConfig(),
+  slotsContent: SlotsContent = remember { SlotsContent() },
+  layerPositionedContent: LayerPositionedContent = remember { LayerPositionedContent() },
+  styleImportsConfig: StyleImportsConfig = remember { StyleImportsConfig() },
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
@@ -250,9 +250,7 @@ public fun GenericStyle(
       },
       update = {
         update(projection) {
-          if (projection.notInitial) {
-            updateProjection(projection)
-          }
+          updateProjection(projection)
         }
         update(atmosphereState) {
           updateAtmosphere(atmosphereState)

@@ -109,14 +109,16 @@ internal class MapStyleNode(
   }
 
   internal fun updateProjection(projection: Projection) {
-    coroutineScope.launch {
-      styleDataLoaded.collect {
-        mapboxMap.setStyleProjection(projection.value)
-          .onValue {
-            Log.d(TAG, "$projection projection applied")
-          }.onError {
-            Log.e(TAG, "Error $it when applying $projection projection")
-          }
+    if (projection.notInitial) {
+      coroutineScope.launch {
+        styleDataLoaded.collect {
+          mapboxMap.setStyleProjection(projection.value)
+            .onValue {
+              Log.d(TAG, "$projection projection applied")
+            }.onError {
+              Log.e(TAG, "Error $it when applying $projection projection")
+            }
+        }
       }
     }
   }

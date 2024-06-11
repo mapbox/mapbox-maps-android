@@ -19,6 +19,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Use dedicated thread for the tile store to increase performance.
 * [compose] Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
 * [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
+* [compose] Avoid recreation of objects during recomposition of `GenericStyle`.
 
 ## Bug fixes 🐞
 * [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.
