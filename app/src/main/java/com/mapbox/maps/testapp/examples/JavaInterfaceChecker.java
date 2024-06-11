@@ -255,8 +255,9 @@ public class JavaInterfaceChecker {
     clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0);
     clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression);
     clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L);
-    clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, colorLevels);
-    clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, colorLevels, clusterProperties);
+    clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, 2L);
+    clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, 2L, colorLevels);
+    clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, 2L, colorLevels, clusterProperties);
 
     AnnotationSourceOptions options = new AnnotationSourceOptions();
     options = new AnnotationSourceOptions(1L);

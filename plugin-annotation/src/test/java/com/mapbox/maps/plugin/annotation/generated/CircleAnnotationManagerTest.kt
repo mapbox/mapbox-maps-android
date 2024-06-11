@@ -211,6 +211,7 @@ class CircleAnnotationManagerTest {
           ClusterOptions(
             clusterRadius = 30,
             clusterMaxZoom = 15,
+            clusterMinPoints = 2,
             clusterProperties = hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
           )
         )
@@ -222,6 +223,7 @@ class CircleAnnotationManagerTest {
     assertTrue(sourceString.contains("cluster = true"))
     assertTrue(sourceString.contains("clusterRadius = 30"))
     assertTrue(sourceString.contains("clusterMaxZoom = 15"))
+    assertTrue(sourceString.contains("clusterMinPoints = 2"))
     assertTrue(sourceString.contains("clusterProperties = {key1=x, key2=y}"))
     assertTrue(sourceString.contains("lineMetrics = true"))
     assertTrue(sourceString.contains("buffer = 20"))

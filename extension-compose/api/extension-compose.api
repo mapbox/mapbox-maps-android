@@ -1676,12 +1676,13 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getBuffer ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getCluster ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getClusterMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getClusterMinPoints ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getClusterProperties ()Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
 	public final fun getClusterRadius ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getData ()Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
@@ -1697,6 +1698,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public final fun setBuffer (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setCluster (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setClusterMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setClusterMinPoints (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setClusterProperties (Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;)V
 	public final fun setClusterRadius (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setData (Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;)V

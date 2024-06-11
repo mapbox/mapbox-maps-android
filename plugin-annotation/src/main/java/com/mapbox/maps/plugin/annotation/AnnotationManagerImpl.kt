@@ -225,6 +225,7 @@ internal constructor(
       options.clusterOptions?.let { clusterOptions ->
         cluster(clusterOptions.cluster)
         clusterMaxZoom(clusterOptions.clusterMaxZoom)
+        clusterMinPoints(clusterOptions.clusterMinPoints)
         clusterRadius(clusterOptions.clusterRadius)
         clusterOptions.clusterProperties?.let {
           clusterProperties(it)

@@ -268,6 +268,19 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     get() = getPropertyValue("clusterMaxZoom")
 
   /**
+   * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+   */
+  val clusterMinPoints: Long?
+    /**
+     * Get the ClusterMinPoints property
+     *
+     * Use static method [GeoJsonSource.defaultClusterMinPoints] to get the default property.
+     *
+     * @return Long
+     */
+    get() = getPropertyValue("clusterMinPoints")
+
+  /**
    * An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from
    * clustered points. Has the form `{"property_name": [operator, map_expression]}`. `operator` is any expression function that accepts at
    * least 2 operands (e.g. `"+"` or `"max"`) — it accumulates the property value from clusters/points the
@@ -556,6 +569,14 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     }
 
     /**
+     * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+     */
+    fun clusterMinPoints(value: Long): Builder = apply {
+      val propertyValue = PropertyValue("clusterMinPoints", TypeUtils.wrapToValue(value))
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
      * An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from
      * clustered points. Has the form `{"property_name": [operator, map_expression]}`. `operator` is any expression function that accepts at
      * least 2 operands (e.g. `"+"` or `"max"`) — it accumulates the property value from clusters/points the
@@ -832,6 +853,17 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
        * @return Long
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom").silentUnwrap()
+
+    /**
+     * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+     */
+    val defaultClusterMinPoints: Long?
+      /**
+       * Get the ClusterMinPoints property
+       *
+       * @return Long
+       */
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMinPoints").silentUnwrap()
 
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.

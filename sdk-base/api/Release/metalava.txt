@@ -1121,8 +1121,9 @@ package com.mapbox.maps.plugin.annotation {
   }
 
   public final class ClusterOptions {
-    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)), java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties = null);
-    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)));
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, long clusterMinPoints = 2L, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)), java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties = null);
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, long clusterMinPoints = 2L, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)));
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, long clusterMinPoints = 2L);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0);
@@ -1136,8 +1137,9 @@ package com.mapbox.maps.plugin.annotation {
     ctor public ClusterOptions();
     method public boolean component1();
     method public long component10();
-    method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> component11();
-    method public java.util.HashMap<java.lang.String,java.lang.Object>? component12();
+    method public long component11();
+    method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> component12();
+    method public java.util.HashMap<java.lang.String,java.lang.Object>? component13();
     method public long component2();
     method public com.mapbox.bindgen.Value? component3();
     method public double component4();
@@ -1146,11 +1148,12 @@ package com.mapbox.maps.plugin.annotation {
     method public com.mapbox.bindgen.Value? component7();
     method public double component8();
     method public com.mapbox.bindgen.Value? component9();
-    method public com.mapbox.maps.plugin.annotation.ClusterOptions copy(boolean cluster, long clusterRadius, com.mapbox.bindgen.Value? circleRadiusExpression, double circleRadius, com.mapbox.bindgen.Value? textColorExpression, int textColor, com.mapbox.bindgen.Value? textSizeExpression, double textSize, com.mapbox.bindgen.Value? textField, long clusterMaxZoom, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels, java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties);
+    method public com.mapbox.maps.plugin.annotation.ClusterOptions copy(boolean cluster, long clusterRadius, com.mapbox.bindgen.Value? circleRadiusExpression, double circleRadius, com.mapbox.bindgen.Value? textColorExpression, int textColor, com.mapbox.bindgen.Value? textSizeExpression, double textSize, com.mapbox.bindgen.Value? textField, long clusterMaxZoom, long clusterMinPoints, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels, java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties);
     method public double getCircleRadius();
     method public com.mapbox.bindgen.Value? getCircleRadiusExpression();
     method public boolean getCluster();
     method public long getClusterMaxZoom();
+    method public long getClusterMinPoints();
     method public java.util.HashMap<java.lang.String,java.lang.Object>? getClusterProperties();
     method public long getClusterRadius();
     method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> getColorLevels();
@@ -1163,6 +1166,7 @@ package com.mapbox.maps.plugin.annotation {
     property public final com.mapbox.bindgen.Value? circleRadiusExpression;
     property public final boolean cluster;
     property public final long clusterMaxZoom;
+    property public final long clusterMinPoints;
     property public final java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties;
     property public final long clusterRadius;
     property public final java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels;

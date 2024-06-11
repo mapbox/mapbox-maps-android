@@ -71,6 +71,7 @@ public class GeoJsonSourceState private constructor(
   cluster: BooleanValue,
   clusterRadius: LongValue,
   clusterMaxZoom: LongValue,
+  clusterMinPoints: LongValue,
   clusterProperties: ClusterProperties,
   lineMetrics: BooleanValue,
   generateId: BooleanValue,
@@ -96,6 +97,7 @@ public class GeoJsonSourceState private constructor(
     cluster = BooleanValue.INITIAL,
     clusterRadius = LongValue.INITIAL,
     clusterMaxZoom = LongValue.INITIAL,
+    clusterMinPoints = LongValue.INITIAL,
     clusterProperties = ClusterProperties.INITIAL,
     lineMetrics = BooleanValue.INITIAL,
     generateId = BooleanValue.INITIAL,
@@ -233,6 +235,21 @@ public class GeoJsonSourceState private constructor(
       }
     }
   }
+  private val clusterMinPointsState: MutableState<LongValue> = mutableStateOf(clusterMinPoints)
+
+  /**
+   * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+   */
+  public var clusterMinPoints: LongValue by clusterMinPointsState
+
+  @Composable
+  private fun UpdateClusterMinPoints() {
+    clusterMinPointsState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("clusterMinPoints", value)
+      }
+    }
+  }
   private val clusterPropertiesState: MutableState<ClusterProperties> = mutableStateOf(clusterProperties)
 
   /**
@@ -351,6 +368,7 @@ public class GeoJsonSourceState private constructor(
     UpdateCluster()
     UpdateClusterRadius()
     UpdateClusterMaxZoom()
+    UpdateClusterMinPoints()
     UpdateClusterProperties()
     UpdateLineMetrics()
     UpdateGenerateId()
@@ -368,6 +386,7 @@ public class GeoJsonSourceState private constructor(
       ("cluster" to cluster.value).takeIf { cluster.notInitial },
       ("clusterRadius" to clusterRadius.value).takeIf { clusterRadius.notInitial },
       ("clusterMaxZoom" to clusterMaxZoom.value).takeIf { clusterMaxZoom.notInitial },
+      ("clusterMinPoints" to clusterMinPoints.value).takeIf { clusterMinPoints.notInitial },
       ("clusterProperties" to clusterProperties.value).takeIf { clusterProperties.notInitial },
       ("lineMetrics" to lineMetrics.value).takeIf { lineMetrics.notInitial },
       ("generateId" to generateId.value).takeIf { generateId.notInitial },
@@ -394,6 +413,7 @@ public class GeoJsonSourceState private constructor(
     if (cluster != other.cluster) return false
     if (clusterRadius != other.clusterRadius) return false
     if (clusterMaxZoom != other.clusterMaxZoom) return false
+    if (clusterMinPoints != other.clusterMinPoints) return false
     if (clusterProperties != other.clusterProperties) return false
     if (lineMetrics != other.lineMetrics) return false
     if (generateId != other.generateId) return false
@@ -418,6 +438,7 @@ public class GeoJsonSourceState private constructor(
       cluster,
       clusterRadius,
       clusterMaxZoom,
+      clusterMinPoints,
       clusterProperties,
       lineMetrics,
       generateId,
@@ -431,7 +452,7 @@ public class GeoJsonSourceState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "GeoJsonSourceState(sourceId=$sourceId,  data=$data, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
+    "GeoJsonSourceState(sourceId=$sourceId,  data=$data, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.
@@ -455,6 +476,7 @@ public class GeoJsonSourceState private constructor(
           cluster = holder.savedProperties["cluster"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
           clusterRadius = holder.savedProperties["clusterRadius"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
           clusterMaxZoom = holder.savedProperties["clusterMaxZoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          clusterMinPoints = holder.savedProperties["clusterMinPoints"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
           clusterProperties = holder.savedProperties["clusterProperties"]?.let { ClusterProperties(it.second) } ?: ClusterProperties.INITIAL,
           lineMetrics = holder.savedProperties["lineMetrics"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
           generateId = holder.savedProperties["generateId"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,

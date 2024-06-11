@@ -310,6 +310,27 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun clusterMinPointsSet() {
+    val testSource = geoJsonSource("testId") {
+      clusterMinPoints(1L)
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("clusterMinPoints=1"))
+  }
+
+  @Test
+  fun clusterMinPointsGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(1L.toString(), testSource.clusterMinPoints?.toString())
+    verify { style.getStyleSourceProperty("testId", "clusterMinPoints") }
+  }
+
+  @Test
   fun clusterPropertiesSet() {
     val testSource = geoJsonSource("testId") {
       clusterProperties((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>))
@@ -782,6 +803,14 @@ class GeoJsonSourceTest {
 
     assertEquals(1L.toString(), GeoJsonSource.defaultClusterMaxZoom?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom") }
+  }
+
+  @Test
+  fun defaultClusterMinPointsGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
+
+    assertEquals(1L.toString(), GeoJsonSource.defaultClusterMinPoints?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMinPoints") }
   }
 
   @Test

@@ -216,6 +216,17 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun clusterMinPointsTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+      clusterMinPoints(1L)
+    }
+    setupSource(testSource)
+    assertEquals(1L, testSource.clusterMinPoints)
+  }
+
+  @Test
+  @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun clusterPropertiesTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
@@ -594,6 +605,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultCluster should not be null", GeoJsonSource.defaultCluster)
     assertNotNull("defaultClusterRadius should not be null", GeoJsonSource.defaultClusterRadius)
     assertNotNull("defaultClusterMaxZoom should not be null", GeoJsonSource.defaultClusterMaxZoom)
+    assertNotNull("defaultClusterMinPoints should not be null", GeoJsonSource.defaultClusterMinPoints)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
     assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)

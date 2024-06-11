@@ -76,6 +76,11 @@ data class ClusterOptions @JvmOverloads constructor(
   val clusterMaxZoom: Long = 14,
 
   /**
+   * Minimum number of points necessary to form a cluster if clustering is enabled. literal(2) by default.
+    */
+  val clusterMinPoints: Long = 2L,
+
+  /**
    * The cluster color levels, which a pair constructed with amount of point and a int color value.
    */
   val colorLevels: List<Pair<Int, Int>> = listOf(Pair(0, Color.BLUE)),

@@ -1566,6 +1566,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public com.mapbox.maps.extension.compose.style.LongValue getBuffer();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getCluster();
     method public com.mapbox.maps.extension.compose.style.LongValue getClusterMaxZoom();
+    method public com.mapbox.maps.extension.compose.style.LongValue getClusterMinPoints();
     method public com.mapbox.maps.extension.compose.style.sources.ClusterProperties getClusterProperties();
     method public com.mapbox.maps.extension.compose.style.LongValue getClusterRadius();
     method public com.mapbox.maps.extension.compose.style.sources.GeoJSONData getData();
@@ -1580,6 +1581,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public void setBuffer(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setCluster(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setClusterMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setClusterMinPoints(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setClusterProperties(com.mapbox.maps.extension.compose.style.sources.ClusterProperties);
     method public void setClusterRadius(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setData(com.mapbox.maps.extension.compose.style.sources.GeoJSONData);
@@ -1594,6 +1596,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     property public final com.mapbox.maps.extension.compose.style.LongValue buffer;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue cluster;
     property public final com.mapbox.maps.extension.compose.style.LongValue clusterMaxZoom;
+    property public final com.mapbox.maps.extension.compose.style.LongValue clusterMinPoints;
     property public final com.mapbox.maps.extension.compose.style.sources.ClusterProperties clusterProperties;
     property public final com.mapbox.maps.extension.compose.style.LongValue clusterRadius;
     property public final com.mapbox.maps.extension.compose.style.sources.GeoJSONData data;

@@ -14,8 +14,9 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Move `GeoJSONData` outside of `generated` package.
 
 ## Features ✨ and improvements 🏁
-* Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
-* Remove explicit main thread locking when using `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` and dragging the map that could lead to an ANR.
+* Expose `clusterMinPoints` property for `GeoJSONSource` and for annotation's `ClusterOptions`.
+* Remove explicit main thread locking when using `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` and dragging the map that could lead to an ANR. 
+* Use dedicated thread for the tile store to increase performance.
 * [compose] Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
 * [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
 

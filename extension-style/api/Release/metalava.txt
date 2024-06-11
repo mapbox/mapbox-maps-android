@@ -6050,6 +6050,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getBuffer();
     method public Boolean? getCluster();
     method public Long? getClusterMaxZoom();
+    method public Long? getClusterMinPoints();
     method public java.util.HashMap<java.lang.String,java.lang.Object>? getClusterProperties();
     method public Long? getClusterRadius();
     method public String? getData();
@@ -6068,6 +6069,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Long? buffer;
     property public final Boolean? cluster;
     property public final Long? clusterMaxZoom;
+    property public final Long? clusterMinPoints;
     property public final java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties;
     property public final Long? clusterRadius;
     property public final String? data;
@@ -6088,6 +6090,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource build();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder cluster(boolean value = false);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMaxZoom(long value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMinPoints(long value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperties(java.util.HashMap<java.lang.String,java.lang.Object> value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression operatorExpr, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
@@ -6117,6 +6120,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getDefaultBuffer();
     method public Boolean? getDefaultCluster();
     method public Long? getDefaultClusterMaxZoom();
+    method public Long? getDefaultClusterMinPoints();
     method public Long? getDefaultClusterRadius();
     method public Boolean? getDefaultGenerateId();
     method public Boolean? getDefaultLineMetrics();
@@ -6126,6 +6130,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Long? defaultBuffer;
     property public final Boolean? defaultCluster;
     property public final Long? defaultClusterMaxZoom;
+    property public final Long? defaultClusterMinPoints;
     property public final Long? defaultClusterRadius;
     property public final Boolean? defaultGenerateId;
     property public final Boolean? defaultLineMetrics;

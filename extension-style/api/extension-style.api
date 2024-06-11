@@ -5137,6 +5137,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun getBuffer ()Ljava/lang/Long;
 	public final fun getCluster ()Ljava/lang/Boolean;
 	public final fun getClusterMaxZoom ()Ljava/lang/Long;
+	public final fun getClusterMinPoints ()Ljava/lang/Long;
 	public final fun getClusterProperties ()Ljava/util/HashMap;
 	public final fun getClusterRadius ()Ljava/lang/Long;
 	public final fun getData ()Ljava/lang/String;
@@ -5164,6 +5165,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun cluster (Z)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public static synthetic fun cluster$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterMaxZoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
+	public final fun clusterMinPoints (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperties (Ljava/util/HashMap;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperty (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperty (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
@@ -5203,6 +5205,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun getDefaultBuffer ()Ljava/lang/Long;
 	public final fun getDefaultCluster ()Ljava/lang/Boolean;
 	public final fun getDefaultClusterMaxZoom ()Ljava/lang/Long;
+	public final fun getDefaultClusterMinPoints ()Ljava/lang/Long;
 	public final fun getDefaultClusterRadius ()Ljava/lang/Long;
 	public final fun getDefaultGenerateId ()Ljava/lang/Boolean;
 	public final fun getDefaultLineMetrics ()Ljava/lang/Boolean;
