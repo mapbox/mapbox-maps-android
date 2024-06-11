@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>GenericStyle</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.compose.style//GenericStyle/#kotlin.String#com.mapbox.maps.extension.compose.style.SlotsContent#com.mapbox.maps.extension.compose.style.LayerPositionedContent#com.mapbox.maps.extension.compose.style.StyleImportsConfig#com.mapbox.maps.extension.compose.style.projection.generated.Projection#com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState#com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState#com.mapbox.maps.extension.compose.style.lights.LightsState/PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="index.html">com.mapbox.maps.extension.compose.style</a><span class="delimiter">/</span><span class="current">GenericStyle</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Generic</span><wbr></wbr><span><span>Style</span></span></h1>
+  </div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-generic-style.html"><span class="token function">GenericStyle</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">style<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">slotsContent<span class="token operator">: </span><a href="-slots-content/index.html">SlotsContent</a><span class="token operator"> = </span>remember { SlotsContent() }<span class="token punctuation">, </span></span><span class="parameter ">layerPositionedContent<span class="token operator">: </span><a href="-layer-positioned-content/index.html">LayerPositionedContent</a><span class="token operator"> = </span>remember { LayerPositionedContent() }<span class="token punctuation">, </span></span><span class="parameter ">styleImportsConfig<span class="token operator">: </span><a href="-style-imports-config/index.html">StyleImportsConfig</a><span class="token operator"> = </span>remember { StyleImportsConfig() }<span class="token punctuation">, </span></span><span class="parameter ">projection<span class="token operator">: </span><a href="../com.mapbox.maps.extension.compose.style.projection.generated/-projection/index.html">Projection</a><span class="token operator"> = </span>Projection.INITIAL<span class="token punctuation">, </span></span><span class="parameter ">atmosphereState<span class="token operator">: </span><a href="../com.mapbox.maps.extension.compose.style.atmosphere.generated/-atmosphere-state/index.html">AtmosphereState</a><span class="token operator"> = </span>remember { AtmosphereState() }<span class="token punctuation">, </span></span><span class="parameter ">terrainState<span class="token operator">: </span><a href="../com.mapbox.maps.extension.compose.style.terrain.generated/-terrain-state/index.html">TerrainState</a><span class="token operator"> = </span>TerrainState.INITIAL<span class="token punctuation">, </span></span><span class="parameter ">lightsState<span class="token operator">: </span><a href="../com.mapbox.maps.extension.compose.style.lights/-lights-state/index.html">LightsState</a><span class="token operator"> = </span>LightsState.INITIAL</span></span><span class="token punctuation">)</span></div><p class="paragraph">Generic Style that you can insert <a href="../com.mapbox.maps.extension.compose/-mapbox-map-composable/index.html">MapboxMapComposable</a> functions in any slot you defined as a plain string, or set any map import configs given as plain string and <a href="../com.mapbox.bindgen/-value/index.html">Value</a> pairs.</p><p class="paragraph">Please note it's your own responsibility to make sure the slots you provided exists in the style, and the import configs are valid within the style, otherwise it will result in unexpected behaviour.</p><p class="paragraph">Always prefer strongly typed <a href="-mapbox-style-composable/index.html">MapboxStyleComposable</a> over the <a href="-generic-style.html">GenericStyle</a>.</p><h4 class="">Parameters</h4><div data-togglable="Parameters"><div class="table" data-togglable="Parameters"><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>style</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The Style JSON or Style Uri to be set to the map.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>slots</span><wbr></wbr><span><span>Content</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The slots and their <a href="../com.mapbox.maps.extension.compose/-mapbox-map-composable/index.html">MapboxMapComposable</a> that would be inserted to the corresponding slots in the style. You can use <a href="-generic-style.html">slotsContent</a> to create it.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>layer</span><wbr></wbr><span>Positioned</span><wbr></wbr><span><span>Content</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The <a href="../com.mapbox.maps.extension.compose/-mapbox-map-composable/index.html">MapboxMapComposable</a> content to be placed at specific layer position in the style. You can use <a href="-generic-style.html">layerPositionedContent</a> to create it.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>style</span><wbr></wbr><span>Imports</span><wbr></wbr><span><span>Config</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The style import configurations for all the style imports in the style. You can use <a href="-generic-style.html">styleImportsConfig</a> to create it.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>projection</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The projection to be set to the map. Defaults to <a href="../com.mapbox.maps.extension.compose.style.projection.generated/-projection/-companion/-d-e-f-a-u-l-t.html">Projection.DEFAULT</a> meaning that projection value is taken from the <a href="-generic-style.html">style</a> definition.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>atmosphere</span><wbr></wbr><span><span>State</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The atmosphere to be set to the map. By default, no changes to the current atmosphere.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>terrain</span><wbr></wbr><span><span>State</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from <a href="-generic-style.html">style</a> definition.</p></div></div></div></div></div></div></div></div></div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
