@@ -1095,7 +1095,7 @@ class Expression : Value {
 
     /**
      * Retrieves a property value from the current feature's properties.
-     * Returns null if the requested property is missing.
+     * Expression evaluates to null if the requested property is missing.
      */
     fun get(key: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.get(key))
@@ -1103,7 +1103,7 @@ class Expression : Value {
 
     /**
      * Retrieves a property value from the current feature's properties, or from another object if a second
-     * argument is provided. Returns null if the requested property is missing.
+     * argument is provided. Expression evaluates to null if the requested property is missing.
      */
     fun get(key: String, expression: Expression): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.get(key, expression))
@@ -3824,7 +3824,7 @@ class Expression : Value {
 
     /**
      * Retrieves a property value from the current feature's properties.
-     * Returns null if the requested property is missing.
+     * Expression evaluates to null if the requested property is missing.
      */
     @JvmStatic
     fun get(key: String): Expression {
@@ -3833,7 +3833,7 @@ class Expression : Value {
 
     /**
      * Retrieves a property value from the current feature's properties, or from another object if a second
-     * argument is provided. Returns null if the requested property is missing.
+     * argument is provided. Expression evaluates to null if the requested property is missing.
      */
     @JvmStatic
     fun get(key: String, expression: Expression): Expression {

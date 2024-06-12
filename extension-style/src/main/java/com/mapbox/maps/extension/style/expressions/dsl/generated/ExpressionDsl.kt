@@ -527,13 +527,13 @@ fun color(@ColorInt intColor: Int): Expression = Expression.color(intColor)
 
 /**
  * Retrieves a property value from the current feature's properties.
- * Returns null if the requested property is missing.
+ * Expression evaluates to null if the requested property is missing.
  */
 fun get(key: String): Expression = Expression.get(key)
 
 /**
  * Retrieves a property value from the current feature's properties, or from another object if a second
- * argument is provided. Returns null if the requested property is missing.
+ * argument is provided. Expression evaluates to null if the requested property is missing.
  */
 fun get(key: String, expression: Expression): Expression = Expression.get(key, expression)
 
