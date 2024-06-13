@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
 import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
@@ -34,6 +35,7 @@ import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.gestures.TopPriorityOnMoveListener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CountDownLatch
@@ -638,21 +640,32 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   /**
-   * Class handle the map move event
+   * Class handle the map move event.
+   *
+   * It implements [TopPriorityOnMoveListener] to make sure that this listener
+   * is always invoked before any other added by the user. That assures user's [OnMoveListener.onMove]
+   * will not be called until async QRF is executed.
    */
-  inner class MapMove : OnMoveListener {
+  inner class MapMove : TopPriorityOnMoveListener {
+
+    private var asyncQrfCancelable: Cancelable? = null
+
     /**
      * Called when the move gesture is starting.
      */
     override fun onMoveBegin(detector: MoveGestureDetector) {
       if (detector.pointersCount == 1) {
-        queryMapForFeatures(
+        asyncQrfCancelable?.cancel()
+        asyncQrfCancelable = queryMapForFeaturesAsync(
           ScreenCoordinate(
             detector.focalPoint.x.toDouble(),
             detector.focalPoint.y.toDouble()
           )
-        )?.let {
-          startDragging(it)
+        ) { annotation ->
+          annotation?.let {
+            startDragging(it)
+          }
+          asyncQrfCancelable = null
         }
       }
     }
@@ -702,7 +715,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
          */
         updateDragSource()
       }
-      return false
+      // explicitly handle this `onMove` if QRF is in progress so that
+      // other registered OnMoveListener's do not get notified
+      return asyncQrfCancelable != null
     }
 
     /**
@@ -818,6 +833,42 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
     latch.await(QUERY_WAIT_TIME, TimeUnit.SECONDS)
     return annotation
+  }
+
+  private fun queryMapForFeaturesAsync(screenCoordinate: ScreenCoordinate, qrfResult: (T?) -> Unit): Cancelable {
+    val layerList = mutableListOf<String>()
+    layer?.let {
+      layerList.add(it.layerId)
+    }
+    dragLayer?.let {
+      layerList.add(it.layerId)
+    }
+    return mapFeatureQueryDelegate.queryRenderedFeatures(
+      RenderedQueryGeometry(screenCoordinate),
+      RenderedQueryOptions(
+        layerList,
+        literal(true)
+      )
+    ) { features ->
+      features.value?.firstOrNull()?.feature?.getProperty(getAnnotationIdKey())
+        ?.let { annotationId ->
+          val id = annotationId.asLong
+          when {
+            annotationMap.containsKey(id) -> {
+              qrfResult(annotationMap[id])
+            }
+            dragAnnotationMap.containsKey(id) -> {
+              qrfResult(dragAnnotationMap[id])
+            }
+            else -> {
+              logE(
+                TAG,
+                "The queried id: $id, doesn't belong to an active annotation."
+              )
+            }
+          }
+        } ?: qrfResult(null)
+    }
   }
 
   /**

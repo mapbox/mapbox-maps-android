@@ -2,6 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.18.2
+## Features ✨ and improvements 🏁
+* Remove explicit main thread locking when using `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` and dragging the map that could lead to an ANR.
 
 # 10.18.1 May 30, 2024
 ## Bug fixes 🐞
