@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.gestures
 
+import androidx.annotation.RestrictTo
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.android.gestures.RotateGestureDetector
 import com.mapbox.android.gestures.ShoveGestureDetector
@@ -43,6 +44,15 @@ fun interface OnMapLongClickListener {
    */
   fun onMapLongClick(point: Point): Boolean
 }
+
+/**
+ * Represents the top priority [OnMoveListener] which will be always added
+ * in front of the listener list via [GesturesPlugin.addOnMoveListener].
+ *
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+interface TopPriorityOnMoveListener : OnMoveListener
 
 /**
  * Interface definition for a callback to be invoked when the map is moved.
