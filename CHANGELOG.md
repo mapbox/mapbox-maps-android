@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.5.0-rc.1
+## Bug fixes 🐞
+* Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
+
 # 11.5.0-beta.1 June 11, 2024
 ## Breaking changes ⚠️
 * [compose] Move `Projection` to `generated` package and rename `default` values to `DEFAULT`.

@@ -355,7 +355,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * @return Long
      */
     get() {
-      return getPropertyValue("raster-particle-count")
+      return getPropertyValue<Number?>("raster-particle-count")?.toLong()
     }
 
   /**
@@ -888,7 +888,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
        * @return Long
        */
       get() {
-        return StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-count").silentUnwrap()
+        return StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-count").silentUnwrap<Number?>()?.toLong()
       }
 
     /**
