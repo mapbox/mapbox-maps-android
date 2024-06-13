@@ -325,7 +325,8 @@ class RasterParticleLayerTest {
   @Test
   fun rasterParticleCountGet() {
     val testValue = 1L
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    // Internally rasterParticleCount is not handled as Long type
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue.toDouble())
     val layer = rasterParticleLayer("id", "source") { }
     layer.bindTo(style)
     val expectedValue = 1L
@@ -371,7 +372,8 @@ class RasterParticleLayerTest {
 
   @Test
   fun rasterParticleCountAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
+    // Internally rasterParticleCount is not handled as Long type
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1L.toDouble())
     val layer = rasterParticleLayer("id", "source") { }
     layer.bindTo(style)
     assertEquals("1", layer.rasterParticleCountAsExpression.toString())
@@ -884,7 +886,8 @@ class RasterParticleLayerTest {
   @Test
   fun defaultRasterParticleCountTest() {
     val testValue = 1L
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    // Internally rasterParticleCount is not handled as Long type
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue.toDouble())
     val expectedValue = 1L
     assertEquals(expectedValue.toString(), RasterParticleLayer.defaultRasterParticleCount?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-count") }
@@ -906,7 +909,8 @@ class RasterParticleLayerTest {
 
   @Test
   fun defaultRasterParticleCountAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
+    // Internally rasterParticleCount is not handled as Long type
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1L.toDouble())
     assertEquals("1", RasterParticleLayer.defaultRasterParticleCountAsExpression.toString())
     val expectedValue = 1L
     assertEquals(expectedValue, RasterParticleLayer.defaultRasterParticleCount)
