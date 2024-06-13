@@ -30,6 +30,12 @@ android {
   }
 }
 
+mapboxLibrary {
+  // we skip verifying Java binary compatibility for Compose extension as it is pure Kotlin only
+  jApiCmpEnabled = false
+}
+
+
 dependencies {
   dependencies {
     compileOnly(project(":sdk"))

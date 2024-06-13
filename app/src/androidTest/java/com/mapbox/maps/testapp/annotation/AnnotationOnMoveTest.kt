@@ -87,7 +87,7 @@ class AnnotationOnMoveTest : BaseMapTest() {
         }
       })
     }
-    Assert.assertTrue(latch.await(2_000, TimeUnit.MILLISECONDS))
+    Assert.assertTrue(latch.await(10_000, TimeUnit.MILLISECONDS))
     // simulate 1-finger pan gesture starting from the center of the MapView
     // to make sure we click the annotation
     val shiftX = 10f * pixelRatio

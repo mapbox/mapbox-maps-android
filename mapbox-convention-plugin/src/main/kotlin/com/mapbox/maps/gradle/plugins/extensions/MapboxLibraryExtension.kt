@@ -6,9 +6,23 @@ import com.mapbox.maps.gradle.plugins.internal.newInstance
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
+import org.gradle.kotlin.dsl.property
 import javax.inject.Inject
 
 public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) {
+
+  private var jApiCmpEnabledProperty: Property<Boolean> = objects.property<Boolean>().convention(true)
+
+  /** Whether jApiCmpEnabled is enabled. Defaults to true. */
+  @Suppress("MemberVisibilityCanBePrivate")
+  public var jApiCmpEnabled: Boolean
+    get() = jApiCmpEnabledProperty.get()
+    set(value) {
+      jApiCmpEnabledProperty.set(value)
+      jApiCmpEnabledProperty.disallowChanges()
+    }
+
   private val dokka = objects.newInstance<MapboxDokkaExtension>()
   private val jApiCmp = objects.newInstance<MapboxJApiCmpExtension>()
 
@@ -28,7 +42,12 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
     libraryExtension.configurePublicResource(project)
     libraryExtension.setMinCompileSdkVersion(project)
     dokka.applyTo(project, libraryExtension)
-    jApiCmp.applyTo(project)
+    // we allow to disable jApiCmp so firstly we have to evaluate
+    project.afterEvaluate {
+      if (jApiCmpEnabledProperty.getOrElse(true)) {
+        jApiCmp.applyTo(project)
+      }
+    }
   }
 
   private fun Project.applyRequiredPlugins() {
