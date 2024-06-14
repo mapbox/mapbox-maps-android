@@ -104,4 +104,5 @@
     <string name="activity_model_layer">Display 3D model in a model layer</string>
     <string name="activity_custom_raster_source">Custom Raster Source</string>
     <string name="actvity_slot_layer">Slot layer example</string>
+    <string name="activity_raster_particles">Raster Particles</string>
 </resources>

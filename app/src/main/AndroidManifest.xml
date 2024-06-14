@@ -1327,5 +1327,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.style.RasterParticlesActivity"
+            android:description="@string/description_raster_particles"
+            android:exported="true"
+            android:label="@string/activity_raster_particles">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>
