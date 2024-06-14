@@ -55,7 +55,7 @@ abstract class BaseMapTest {
       rule.runOnUiThread {
         mapboxMap = mapView.mapboxMap
         mapboxMap.loadStyle(
-          Style.MAPBOX_STREETS
+          Style.DARK
         ) { style ->
           this@BaseMapTest.style = style
 

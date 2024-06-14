@@ -8,7 +8,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapIdleCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.gestures.gestures
@@ -119,21 +118,8 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
     // click on map
     onView(withId(com.mapbox.maps.R.id.mapView)).perform(GesturesUiTestUtils.click())
 
-    withLatch { latch ->
-      rule.scenario.onActivity {
-        val listener = MapIdleCallback {
-          latch.countDown()
-        }
-
-        rule.scenario.onActivity {
-          it.runOnUiThread {
-            mapboxMap.apply {
-              subscribeMapIdle(listener)
-            }
-          }
-        }
-      }
-    }
+    // sleep to make sure things settle down
+    Thread.sleep(2000)
 
     assertEquals(0, longClicks)
   }

@@ -25,6 +25,7 @@ import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 import kotlin.properties.Delegates
@@ -44,18 +45,18 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   /**
    * [ReentrantLock] to guarantee consistent behaviour of surface create / destroy events.
    */
-  private val surfaceProcessingLock = ReentrantLock()
+  private val surfaceProcessingLock: ReentrantLock
 
   /**
    * Condition used to lock the Android main thread until [EGLContext] is setup.
    */
-  private val createCondition = surfaceProcessingLock.newCondition()
+  private val createCondition: Condition
 
   /**
    * Condition used to lock the Android main thread until either [EGLContext] is destroyed
    * or we understand [EGLContext] was already destroyed before (checking [eglContextMadeCurrent] flag from render thread).
    */
-  private val destroyCondition = surfaceProcessingLock.newCondition()
+  private val destroyCondition: Condition
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
@@ -173,6 +174,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     renderHandlerThread = RenderHandlerThread(mapName)
     val handler = renderHandlerThread.start()
     fpsManager = FpsManager(handler, mapName)
+    surfaceProcessingLock = ReentrantLock()
+    createCondition = surfaceProcessingLock.newCondition()
+    destroyCondition = surfaceProcessingLock.newCondition()
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -183,6 +187,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     eglCore: EGLCore,
     fpsManager: FpsManager,
     widgetTextureRenderer: TextureRenderer,
+    surfaceProcessingLock: ReentrantLock,
+    createCondition: Condition,
+    destroyCondition: Condition,
   ) {
     this.translucentSurface = false
     this.mapboxRenderer = mapboxRenderer
@@ -193,6 +200,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.widgetTextureRenderer = widgetTextureRenderer
     this.eglSurface = eglCore.eglNoSurface
     this.contextMode = ContextMode.UNIQUE
+    this.surfaceProcessingLock = surfaceProcessingLock
+    this.createCondition = createCondition
+    this.destroyCondition = destroyCondition
     this.TAG = ""
   }
 
@@ -723,7 +733,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
               renderHandlerThread.clearRenderEventQueue()
               fpsManager.destroy()
               eglCore.clearRendererStateListeners()
-              surfaceProcessingLock.isLocked
               mapboxRenderer.map = null
               renderHandlerThread.stop()
             } finally {
