@@ -923,6 +923,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.markersandcallouts.PointAnnotationJavaActivity"
+            android:description="@string/description_annotation_symbol_java"
+            android:exported="true"
+            android:label="@string/activity_symbol_java">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_markers_and_callouts" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.annotation.AnimatePointAnnotationActivity"
             android:description="@string/description_animate_annotation_symbol"
             android:exported="true"

@@ -227,15 +227,18 @@ class PointAnnotationActivity : AppCompatActivity() {
     binding.deleteAll.setOnClickListener {
       pointAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
+        pointAnnotationManager = null
       }
     }
     binding.changeStyle.setOnClickListener {
       binding.mapView.mapboxMap.loadStyle(nextStyle)
     }
     binding.changeSlot.setOnClickListener {
-      val slot = nextSlot
-      showShortToast("Switching to $slot slot")
-      pointAnnotationManager?.slot = slot
+      pointAnnotationManager?.let {
+        val slot = nextSlot
+        showShortToast("Switching to $slot slot")
+        it.slot = slot
+      }
     }
   }
 
@@ -291,7 +294,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         pointAnnotation?.let {
           easeSymbol(
             it,
-            Point.fromLngLat(AIRPORT_LATITUDE, AIRPORT_LONGITUDE)
+            Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE)
           )
         }
         return true
