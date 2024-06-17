@@ -70,8 +70,8 @@ public fun MapboxMap(
   logo: (@Composable MapLogoScope.() -> Unit) = { Logo() },
   attribution: (@Composable MapAttributionScope.() -> Unit) = { Attribution() },
   mapViewportState: MapViewportState = rememberMapViewportState(),
-  onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,
-  onMapLongClickListener: OnMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener,
+  onMapClickListener: OnMapClickListener? = null,
+  onMapLongClickListener: OnMapLongClickListener? = null,
   style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
   content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null
 ) {

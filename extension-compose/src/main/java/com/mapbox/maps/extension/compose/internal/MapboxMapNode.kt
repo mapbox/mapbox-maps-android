@@ -19,10 +19,8 @@ import com.mapbox.maps.StyleDataLoadedCallback
 import com.mapbox.maps.StyleImageMissingCallback
 import com.mapbox.maps.StyleImageRemoveUnusedCallback
 import com.mapbox.maps.StyleLoadedCallback
-import com.mapbox.maps.extension.compose.DefaultSettingsProvider
 import com.mapbox.maps.extension.compose.MapEvents
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
-import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -34,12 +32,12 @@ import com.mapbox.maps.plugin.gestures.gestures
 @OptIn(MapboxExperimental::class)
 private class MapboxMapNode(
   val controller: MapView,
-  initialClickListener: OnMapClickListener,
-  initialLongClickListener: OnMapLongClickListener,
+  initialClickListener: OnMapClickListener?,
+  initialLongClickListener: OnMapLongClickListener?,
   initialMapViewportState: MapViewportState,
   mapEvents: MapEvents?,
 ) : MapNode() {
-  private var mapEventCancelableHolder: MapEventCancelableHolder
+  private var mapEventCancelableHolder: MapEventCancelableHolder = MapEventCancelableHolder(controller.mapboxMap)
 
   var mapViewportState = initialMapViewportState
     set(value) {
@@ -49,23 +47,27 @@ private class MapboxMapNode(
       value.setMap(controller)
     }
 
-  init {
-    mapEventCancelableHolder = MapEventCancelableHolder(controller.mapboxMap)
-  }
-
-  var clickListener: OnMapClickListener = initialClickListener
+  var clickListener: OnMapClickListener? = initialClickListener
     set(value) {
       controller.gestures.apply {
-        removeNonDefaultOnClickListener(field)
-        addNonDefaultOnClickListener(value)
+        field?.let {
+          removeOnMapClickListener(it)
+        }
+        value?.let {
+          addOnMapClickListener(it)
+        }
       }
       field = value
     }
-  var longClickListener: OnMapLongClickListener = initialLongClickListener
+  var longClickListener: OnMapLongClickListener? = initialLongClickListener
     set(value) {
       controller.gestures.apply {
-        removeNonDefaultOnLongClickListener(field)
-        addNonDefaultOnLongClickListener(value)
+        field?.let {
+          removeOnMapLongClickListener(it)
+        }
+        value?.let {
+          addOnMapLongClickListener(it)
+        }
       }
       field = value
     }
@@ -171,8 +173,12 @@ private class MapboxMapNode(
 
   override fun onAttached(parent: MapNode) {
     controller.gestures.apply {
-      addNonDefaultOnClickListener(clickListener)
-      addNonDefaultOnLongClickListener(longClickListener)
+      clickListener?.let {
+        addOnMapClickListener(it)
+      }
+      longClickListener?.let {
+        addOnMapLongClickListener(it)
+      }
     }
     mapViewportState.setMap(controller)
     mapEventCancelableHolder.apply {
@@ -203,8 +209,12 @@ private class MapboxMapNode(
 
   private fun cleanUp() {
     controller.gestures.apply {
-      removeNonDefaultOnClickListener(clickListener)
-      removeNonDefaultOnLongClickListener(longClickListener)
+      clickListener?.let {
+        removeOnMapClickListener(it)
+      }
+      longClickListener?.let {
+        removeOnMapLongClickListener(it)
+      }
     }
     mapViewportState.setMap(null)
     mapEventCancelableHolder.cancelAll()
@@ -221,8 +231,8 @@ private class MapboxMapNode(
 internal fun MapboxMapComposeNode(
   gesturesSettings: GesturesSettings,
   mapViewportState: MapViewportState,
-  onMapClickListener: OnMapClickListener,
-  onMapLongClickListener: OnMapLongClickListener,
+  onMapClickListener: OnMapClickListener?,
+  onMapLongClickListener: OnMapLongClickListener?,
   mapEvents: MapEvents?,
 ) {
   val mapApplier = currentComposer.applier as MapApplier
@@ -268,36 +278,4 @@ internal fun MapboxMapComposeNode(
       }
     }
   )
-}
-
-@OptIn(MapboxExperimental::class)
-private fun GesturesPlugin.addNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {
-  // Avoid addOnMapClickListener when the default instance is used.
-  if (onMapClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
-    addOnMapClickListener(onMapClickListener)
-  }
-}
-
-@OptIn(MapboxExperimental::class)
-private fun GesturesPlugin.removeNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {
-  // Avoid removeOnMapClickListener when the default instance is used.
-  if (onMapClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
-    removeOnMapClickListener(onMapClickListener)
-  }
-}
-
-@OptIn(MapboxExperimental::class)
-private fun GesturesPlugin.addNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-  // Avoid addOnMapLongClickListener when the default instance is used.
-  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnLongClickListener) {
-    addOnMapLongClickListener(onMapLongClickListener)
-  }
-}
-
-@OptIn(MapboxExperimental::class)
-private fun GesturesPlugin.removeNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-  // Avoid removeOnMapLongClickListener when the default instance is used.
-  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnLongClickListener) {
-    removeOnMapLongClickListener(onMapLongClickListener)
-  }
 }
