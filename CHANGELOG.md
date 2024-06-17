@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.5.0-rc.1
+## Breaking changes ⚠️
+* [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
+
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
 
