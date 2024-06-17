@@ -13,6 +13,7 @@ import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @OptIn(MapboxExperimental::class)
@@ -91,7 +92,7 @@ internal class LayerNode(
         // layer added within the style node, add as non-persistent layer
         logD(TAG, "Adding layer: $parameters, at slot: ${parent.slotName}")
         coroutineScope.launch {
-          parent.mapStyleNode.styleDataLoaded.collect {
+          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let {
             map.addStyleLayer(
               parameters = Value(parameters),
               position = null
@@ -110,7 +111,7 @@ internal class LayerNode(
         // layer added within the style node, add as non-persistent layer
         logD(TAG, "Adding layer: $parameters, at position: ${parent.layerPosition}")
         coroutineScope.launch {
-          parent.mapStyleNode.styleDataLoaded.collect {
+          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let {
             map.addStyleLayer(
               parameters = Value(parameters),
               position = parent.layerPosition

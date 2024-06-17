@@ -7,6 +7,10 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.5.0-rc.1
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
+* [compose] Rename `ImportConfig` to `ImportConfigs`.
+
+## Features ✨ and improvements 🏁
+* [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.

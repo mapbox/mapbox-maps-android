@@ -10,6 +10,8 @@ import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
+import com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable
+import com.mapbox.maps.extension.compose.style.imports.StyleImportsScope
 import com.mapbox.maps.extension.compose.style.lights.LightsState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.slotsContent
@@ -100,11 +102,12 @@ public data class LightPresetValue(public val value: Value) {
  * The convenient composable function to set a Mapbox Standard style to the map, with available slots
  * and config options.
  *
+ * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
  * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
  * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
  * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
  * @param lightPreset The [LightPresetValue] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk".
- * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the Standard style definition.
+ * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the Standard style definition.
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  */
@@ -112,6 +115,7 @@ public data class LightPresetValue(public val value: Value) {
 @MapboxStyleComposable
 @MapboxExperimental
 public fun MapboxStandardStyle(
+  styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
@@ -123,6 +127,7 @@ public fun MapboxStandardStyle(
 ) {
   GenericStyle(
     style = Style.STANDARD,
+    styleImportsContent = styleImportsContent,
     slotsContent = slotsContent {
       topSlot?.let { slot("top", it) }
       middleSlot?.let { slot("middle", it) }
@@ -138,6 +143,6 @@ public fun MapboxStandardStyle(
     projection = projection,
     atmosphereState = atmosphereState,
     terrainState = terrainState,
-    lightsState = lightsState
+    lightsState = lightsState,
   )
 }

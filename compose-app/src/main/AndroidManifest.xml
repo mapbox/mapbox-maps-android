@@ -246,6 +246,16 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.style.StyleImportsActivity"
+            android:description="@string/description_style_imports"
+            android:exported="true"
+            android:label="@string/activity_style_imports"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
     </application>
 
 </manifest>
