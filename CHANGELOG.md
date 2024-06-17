@@ -15,6 +15,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
 * Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
+* [compose] Rename `ImportConfig` to `ImportConfigs`.
+
+## Features ✨ and improvements 🏁
+* [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.

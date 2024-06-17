@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.compose.style
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.Stable
@@ -12,6 +13,8 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
+import com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable
+import com.mapbox.maps.extension.compose.style.imports.StyleImportsScope
 import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.extension.compose.style.internal.StyleConfig
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
@@ -24,6 +27,7 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  * A simple composable function to set the style to the map without slots or import configs.
  *
  * @param style The Style JSON or Style Uri to be set to the map.
+ * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the [style] definition.
  * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
@@ -31,19 +35,22 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 @Composable
 @MapboxStyleComposable
 @MapboxExperimental
+@SuppressLint("ComposableLambdaParameterNaming", "ComposableLambdaParameterPosition")
 public fun MapStyle(
   style: String,
+  styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
-  lightsState: LightsState = LightsState.INITIAL
+  lightsState: LightsState = LightsState.INITIAL,
 ) {
   GenericStyle(
     style = style,
+    styleImportsContent = styleImportsContent,
     projection = projection,
     atmosphereState = atmosphereState,
     terrainState = terrainState,
-    lightsState = lightsState
+    lightsState = lightsState,
   )
 }
 
@@ -148,26 +155,26 @@ public fun layerPositionedContent(init: LayerPositionedContent.() -> Unit): Laye
   LayerPositionedContent().apply(init)
 
 /**
- * Class that holds [ImportConfig] per each Import ID.
+ * Class that holds [ImportConfigs] per each Import ID.
  */
 @Stable
 @MapboxExperimental
 public data class StyleImportsConfig internal constructor(
-  internal val entries: MutableMap<String, ImportConfig> = mutableMapOf()
+  internal val entries: MutableMap<String, ImportConfigs> = mutableMapOf()
 ) {
   /**
-   * Assign a new [ImportConfig] to the given [importId].
+   * Assign a new [ImportConfigs] to the given [importId].
    *
    * @param importId The import ID to configure.
    * @param configs The configs to be applied to the import id.
    *
    * @throws IllegalArgumentException if [importId] already has [configs].
    */
-  public fun importConfig(importId: String, configs: ImportConfig.() -> Unit) {
+  public fun importConfig(importId: String, configs: ImportConfigs.() -> Unit) {
     if (entries.containsKey(importId)) {
       throw IllegalArgumentException("Configs for Import ID [$importId] already set.")
     }
-    entries[importId] = ImportConfig().apply(configs)
+    entries[importId] = ImportConfigs().apply(configs)
   }
 }
 
@@ -183,8 +190,8 @@ public fun styleImportsConfig(init: StyleImportsConfig.() -> Unit): StyleImports
  */
 @Stable
 @MapboxExperimental
-public data class ImportConfig internal constructor(
-  internal val configs: MutableMap<String, Value> = mutableMapOf()
+public data class ImportConfigs internal constructor(
+  internal val configs: HashMap<String, Value> = hashMapOf()
 ) {
   /**
    * Assign a new [Value] to the given config name.
@@ -203,6 +210,13 @@ public data class ImportConfig internal constructor(
 }
 
 /**
+ * Type-safe builder for [ImportConfigs].
+ */
+@MapboxExperimental
+public fun importConfigs(init: ImportConfigs.() -> Unit): ImportConfigs =
+  ImportConfigs().apply(init)
+
+/**
  * Generic Style that you can insert [MapboxMapComposable] functions in any slot you defined as a
  * plain string, or set any map import configs given as plain string and [Value] pairs.
  *
@@ -212,6 +226,7 @@ public data class ImportConfig internal constructor(
  * Always prefer strongly typed [MapboxStyleComposable] over the [GenericStyle].
  *
  * @param style The Style JSON or Style Uri to be set to the map.
+ * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
  * @param slotsContent The slots and their [MapboxMapComposable] that would be inserted to the corresponding slots in the style. You can use [slotsContent] to create it.
  * @param layerPositionedContent The [MapboxMapComposable] content to be placed at specific layer position in the style. You can use [layerPositionedContent] to create it.
  * @param styleImportsConfig The style import configurations for all the style imports in the style. You can use [styleImportsConfig] to create it.
@@ -222,15 +237,17 @@ public data class ImportConfig internal constructor(
 @Composable
 @MapboxStyleComposable
 @MapboxExperimental
+@SuppressLint("ComposableLambdaParameterNaming", "ComposableLambdaParameterPosition")
 public fun GenericStyle(
   style: String,
+  styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   slotsContent: SlotsContent = remember { SlotsContent() },
   layerPositionedContent: LayerPositionedContent = remember { LayerPositionedContent() },
   styleImportsConfig: StyleImportsConfig = remember { StyleImportsConfig() },
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
-  lightsState: LightsState = LightsState.INITIAL
+  lightsState: LightsState = LightsState.INITIAL,
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -263,6 +280,12 @@ public fun GenericStyle(
       atmosphereState.UpdateProperties()
       terrainState.UpdateProperties()
       lightsState.BindToMap(mapboxMap = mapApplier.mapView.mapboxMap)
+      val styleImportsScope = remember {
+        StyleImportsScope()
+      }
+      styleImportsContent?.let {
+        styleImportsScope.it()
+      }
       slotsContent.entries.forEach {
         key(it.key) {
           StyleSlot(name = it.key, content = it.value)
