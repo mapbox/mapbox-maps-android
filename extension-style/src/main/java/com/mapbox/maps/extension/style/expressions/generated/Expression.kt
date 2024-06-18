@@ -704,8 +704,8 @@ class Expression : Value {
      * Selects the output for which the label value matches the input value, or the fallback value
      * if no match is found. The input can be any expression (for example, `["get", "building_type"]`). Each
      * label must be unique, and must be either:
-     * - a single literal value; or
-     * - an array of literal values, the values of which must be all strings or
+     *  - a single literal value; or
+     *  - an array of literal values, the values of which must be all strings or
      * all numbers (for example `[100, 101]` or `["c", "b"]`).
      *
      * The input matches if any of the values in the array matches using strict equality, similar
@@ -2955,8 +2955,8 @@ class Expression : Value {
      * Selects the output for which the label value matches the input value, or the fallback value
      * if no match is found. The input can be any expression (for example, `["get", "building_type"]`). Each
      * label must be unique, and must be either:
-     * - a single literal value; or
-     * - an array of literal values, the values of which must be all strings or
+     *  - a single literal value; or
+     *  - an array of literal values, the values of which must be all strings or
      * all numbers (for example `[100, 101]` or `["c", "b"]`).
      *
      * The input matches if any of the values in the array matches using strict equality, similar

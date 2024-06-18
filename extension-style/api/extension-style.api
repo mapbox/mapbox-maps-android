@@ -5166,6 +5166,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public static synthetic fun cluster$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterMaxZoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterMinPoints (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
+	public static synthetic fun clusterMinPoints$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperties (Ljava/util/HashMap;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperty (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperty (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;

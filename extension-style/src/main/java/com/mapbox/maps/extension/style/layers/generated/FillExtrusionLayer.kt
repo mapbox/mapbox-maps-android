@@ -248,12 +248,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   // Property getters and setters
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val fillExtrusionEdgeRadius: Double?
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadius] to get the default property.
      *
@@ -264,7 +264,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadius] to set the default property.
    *
@@ -277,7 +277,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-edge-radius".
    *
@@ -285,7 +285,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionEdgeRadiusAsExpression: Expression?
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      *
      * Get the FillExtrusionEdgeRadius property as an Expression
      *
@@ -304,7 +304,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression] to set the default property.
    *
@@ -317,12 +317,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundAttenuation: Double?
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuation] to get the default property.
      *
@@ -333,7 +333,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuation] to set the default property.
    *
@@ -346,7 +346,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-attenuation".
    *
@@ -354,7 +354,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundAttenuationAsExpression: Expression?
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      *
      * Get the FillExtrusionAmbientOcclusionGroundAttenuation property as an Expression
      *
@@ -373,7 +373,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuationAsExpression] to set the default property.
    *
@@ -423,12 +423,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundRadius: Double?
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadius] to get the default property.
      *
@@ -439,7 +439,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadius] to set the default property.
    *
@@ -452,7 +452,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-radius".
    *
@@ -460,7 +460,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
      *
      * Get the FillExtrusionAmbientOcclusionGroundRadius property as an Expression
      *
@@ -479,7 +479,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadiusAsExpression] to set the default property.
    *
@@ -529,11 +529,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    */
   val fillExtrusionAmbientOcclusionIntensity: Double?
     /**
-     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensity] to get the default property.
      *
@@ -544,7 +544,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensity] to set the default property.
    *
@@ -556,14 +556,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-intensity".
    *
    */
   val fillExtrusionAmbientOcclusionIntensityAsExpression: Expression?
     /**
-     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
      *
      * Get the FillExtrusionAmbientOcclusionIntensity property as an Expression
      *
@@ -582,7 +582,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityAsExpression] to set the default property.
    *
@@ -628,11 +628,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    */
   val fillExtrusionAmbientOcclusionRadius: Double?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius] to get the default property.
      *
@@ -643,7 +643,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius] to set the default property.
    *
@@ -655,14 +655,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-radius".
    *
    */
   val fillExtrusionAmbientOcclusionRadiusAsExpression: Expression?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
      *
      * Get the FillExtrusionAmbientOcclusionRadius property as an Expression
      *
@@ -681,7 +681,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusAsExpression] to set the default property.
    *
@@ -727,12 +727,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionWallRadius: Double?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadius] to get the default property.
      *
@@ -743,7 +743,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadius] to set the default property.
    *
@@ -756,7 +756,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-wall-radius".
    *
@@ -764,7 +764,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionWallRadiusAsExpression: Expression?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
      *
      * Get the FillExtrusionAmbientOcclusionWallRadius property as an Expression
      *
@@ -783,7 +783,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadiusAsExpression] to set the default property.
    *
@@ -833,11 +833,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    */
   val fillExtrusionBase: Double?
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionBase] to get the default property.
      *
@@ -848,7 +848,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionBase] to set the default property.
    *
@@ -860,14 +860,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-base".
    *
    */
   val fillExtrusionBaseAsExpression: Expression?
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
      *
      * Get the FillExtrusionBase property as an Expression
      *
@@ -886,7 +886,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAsExpression] to set the default property.
    *
@@ -932,11 +932,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    */
   val fillExtrusionColor: String?
     /**
-     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionColor] to get the default property.
      *
@@ -950,7 +950,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionColor] to set the default property.
    *
@@ -962,14 +962,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * This is an Expression representation of "fill-extrusion-color".
    *
    */
   val fillExtrusionColorAsExpression: Expression?
     /**
-     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      *
      * Get the FillExtrusionColor property as an Expression
      *
@@ -985,7 +985,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionColorAsExpression] to set the default property.
    *
@@ -997,11 +997,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    */
   val fillExtrusionColorAsColorInt: Int?
     /**
-     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionColorAsColorInt] to get the default property.
      *
@@ -1016,7 +1016,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionColorAsColorInt] to set the default property.
    *
@@ -1062,11 +1062,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
   val fillExtrusionCutoffFadeRange: Double?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange] to get the default property.
      *
@@ -1077,7 +1077,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange] to set the default property.
    *
@@ -1089,14 +1089,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-cutoff-fade-range".
    *
    */
   val fillExtrusionCutoffFadeRangeAsExpression: Expression?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Get the FillExtrusionCutoffFadeRange property as an Expression
      *
@@ -1115,7 +1115,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression] to set the default property.
    *
@@ -1127,11 +1127,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    */
   val fillExtrusionEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrength] to get the default property.
      *
@@ -1142,7 +1142,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrength] to set the default property.
    *
@@ -1154,14 +1154,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-emissive-strength".
    *
    */
   val fillExtrusionEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Get the FillExtrusionEmissiveStrength property as an Expression
      *
@@ -1180,7 +1180,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1226,12 +1226,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    */
   @MapboxExperimental
   val fillExtrusionFloodLightColor: String?
     /**
-     * The color of the flood light effect on the walls of the extruded buildings.
+     * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColor] to get the default property.
      *
@@ -1245,7 +1245,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColor] to set the default property.
    *
@@ -1258,7 +1258,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * This is an Expression representation of "fill-extrusion-flood-light-color".
    *
@@ -1266,7 +1266,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightColorAsExpression: Expression?
     /**
-     * The color of the flood light effect on the walls of the extruded buildings.
+     * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
      *
      * Get the FillExtrusionFloodLightColor property as an Expression
      *
@@ -1282,7 +1282,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsExpression] to set the default property.
    *
@@ -1295,12 +1295,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    */
   @MapboxExperimental
   val fillExtrusionFloodLightColorAsColorInt: Int?
     /**
-     * The color of the flood light effect on the walls of the extruded buildings.
+     * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt] to get the default property.
      *
@@ -1315,7 +1315,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt] to set the default property.
    *
@@ -1365,12 +1365,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundAttenuation: Double?
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuation] to get the default property.
      *
@@ -1381,7 +1381,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuation] to set the default property.
    *
@@ -1394,7 +1394,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-attenuation".
    *
@@ -1402,7 +1402,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundAttenuationAsExpression: Expression?
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      *
      * Get the FillExtrusionFloodLightGroundAttenuation property as an Expression
      *
@@ -1421,7 +1421,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuationAsExpression] to set the default property.
    *
@@ -1471,12 +1471,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadius: Double?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to get the default property.
      *
@@ -1487,7 +1487,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to set the default property.
    *
@@ -1500,7 +1500,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
    *
@@ -1508,7 +1508,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
      *
      * Get the FillExtrusionFloodLightGroundRadius property as an Expression
      *
@@ -1527,7 +1527,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadiusAsExpression] to set the default property.
    *
@@ -1577,12 +1577,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val fillExtrusionFloodLightIntensity: Double?
     /**
-     * The intensity of the flood light color.
+     * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensity] to get the default property.
      *
@@ -1593,7 +1593,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensity] to set the default property.
    *
@@ -1606,7 +1606,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-flood-light-intensity".
    *
@@ -1614,7 +1614,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightIntensityAsExpression: Expression?
     /**
-     * The intensity of the flood light color.
+     * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
      *
      * Get the FillExtrusionFloodLightIntensity property as an Expression
      *
@@ -1633,7 +1633,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensityAsExpression] to set the default property.
    *
@@ -1683,12 +1683,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadius: Double?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to get the default property.
      *
@@ -1699,7 +1699,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to set the default property.
    *
@@ -1712,7 +1712,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
    *
@@ -1720,7 +1720,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
      *
      * Get the FillExtrusionFloodLightWallRadius property as an Expression
      *
@@ -1739,7 +1739,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadiusAsExpression] to set the default property.
    *
@@ -1789,11 +1789,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    */
   val fillExtrusionHeight: Double?
     /**
-     * The height with which to extrude this layer.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionHeight] to get the default property.
      *
@@ -1804,7 +1804,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionHeight] to set the default property.
    *
@@ -1816,14 +1816,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-height".
    *
    */
   val fillExtrusionHeightAsExpression: Expression?
     /**
-     * The height with which to extrude this layer.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
      *
      * Get the FillExtrusionHeight property as an Expression
      *
@@ -1842,7 +1842,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAsExpression] to set the default property.
    *
@@ -1888,11 +1888,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    */
   val fillExtrusionOpacity: Double?
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacity] to get the default property.
      *
@@ -1903,7 +1903,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacity] to set the default property.
    *
@@ -1915,14 +1915,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-opacity".
    *
    */
   val fillExtrusionOpacityAsExpression: Expression?
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
      *
      * Get the FillExtrusionOpacity property as an Expression
      *
@@ -1941,7 +1941,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacityAsExpression] to set the default property.
    *
@@ -2052,12 +2052,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    */
   @MapboxExperimental
   val fillExtrusionRoundedRoof: Boolean?
     /**
-     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoof] to get the default property.
      *
@@ -2068,7 +2068,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoof] to set the default property.
    *
@@ -2081,7 +2081,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    *
    * This is an Expression representation of "fill-extrusion-rounded-roof".
    *
@@ -2089,7 +2089,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionRoundedRoofAsExpression: Expression?
     /**
-     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
      *
      * Get the FillExtrusionRoundedRoof property as an Expression
      *
@@ -2108,7 +2108,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression] to set the default property.
    *
@@ -2121,11 +2121,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    */
   val fillExtrusionTranslate: List<Double>?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslate] to get the default property.
      *
@@ -2136,7 +2136,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslate] to set the default property.
    *
@@ -2148,14 +2148,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * This is an Expression representation of "fill-extrusion-translate".
    *
    */
   val fillExtrusionTranslateAsExpression: Expression?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
      *
      * Get the FillExtrusionTranslate property as an Expression
      *
@@ -2174,7 +2174,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAsExpression] to set the default property.
    *
@@ -2220,11 +2220,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the frame of reference for `fill-extrusion-translate`.
+   * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
    */
   val fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor?
     /**
-     * Controls the frame of reference for `fill-extrusion-translate`.
+     * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAnchor] to get the default property.
      *
@@ -2238,7 +2238,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the frame of reference for `fill-extrusion-translate`.
+   * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAnchor] to set the default property.
    *
@@ -2250,14 +2250,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the frame of reference for `fill-extrusion-translate`.
+   * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
    *
    * This is an Expression representation of "fill-extrusion-translate-anchor".
    *
    */
   val fillExtrusionTranslateAnchorAsExpression: Expression?
     /**
-     * Controls the frame of reference for `fill-extrusion-translate`.
+     * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
      *
      * Get the FillExtrusionTranslateAnchor property as an Expression
      *
@@ -2276,7 +2276,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the frame of reference for `fill-extrusion-translate`.
+   * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAnchorAsExpression] to set the default property.
    *
@@ -2288,11 +2288,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
    */
   val fillExtrusionVerticalGradient: Boolean?
     /**
-     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalGradient] to get the default property.
      *
@@ -2303,7 +2303,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalGradient] to set the default property.
    *
@@ -2315,14 +2315,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
    *
    * This is an Expression representation of "fill-extrusion-vertical-gradient".
    *
    */
   val fillExtrusionVerticalGradientAsExpression: Expression?
     /**
-     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
      *
      * Get the FillExtrusionVerticalGradient property as an Expression
      *
@@ -2341,7 +2341,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalGradientAsExpression] to set the default property.
    *
@@ -2353,12 +2353,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    */
   @MapboxExperimental
   val fillExtrusionVerticalScale: Double?
     /**
-     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalScale] to get the default property.
      *
@@ -2369,7 +2369,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalScale] to set the default property.
    *
@@ -2382,7 +2382,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * This is an Expression representation of "fill-extrusion-vertical-scale".
    *
@@ -2390,7 +2390,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionVerticalScaleAsExpression: Expression?
     /**
-     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
      *
      * Get the FillExtrusionVerticalScale property as an Expression
      *
@@ -2409,7 +2409,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalScaleAsExpression] to set the default property.
    *
@@ -2518,12 +2518,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "maxzoom").silentUnwrap()
 
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultFillExtrusionEdgeRadius: Double?
       /**
-       * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+       * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionEdgeRadius property
        *
@@ -2534,7 +2534,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-edge-radius".
      *
@@ -2557,12 +2557,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionGroundAttenuation: Double?
       /**
-       * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+       * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionAmbientOcclusionGroundAttenuation property
        *
@@ -2573,7 +2573,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-attenuation".
      *
@@ -2608,12 +2608,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionGroundRadius: Double?
       /**
-       * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+       * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
        *
        * Get the default value of FillExtrusionAmbientOcclusionGroundRadius property
        *
@@ -2624,7 +2624,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-radius".
      *
@@ -2659,11 +2659,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-ground-radius-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
      */
     val defaultFillExtrusionAmbientOcclusionIntensity: Double?
       /**
-       * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+       * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionAmbientOcclusionIntensity property
        *
@@ -2674,7 +2674,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-intensity".
      *
@@ -2707,11 +2707,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity-transition").silentUnwrap()
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
      */
     val defaultFillExtrusionAmbientOcclusionRadius: Double?
       /**
-       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
        *
        * Get the default value of FillExtrusionAmbientOcclusionRadius property
        *
@@ -2722,7 +2722,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-radius".
      *
@@ -2755,12 +2755,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius-transition").silentUnwrap()
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionWallRadius: Double?
       /**
-       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
        *
        * Get the default value of FillExtrusionAmbientOcclusionWallRadius property
        *
@@ -2771,7 +2771,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-wall-radius".
      *
@@ -2806,11 +2806,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-wall-radius-transition").silentUnwrap()
 
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
      */
     val defaultFillExtrusionBase: Double?
       /**
-       * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+       * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
        *
        * Get the default value of FillExtrusionBase property
        *
@@ -2821,7 +2821,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-base".
      *
@@ -2854,11 +2854,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-transition").silentUnwrap()
 
     /**
-     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      */
     val defaultFillExtrusionColor: String?
       /**
-       * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+       * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
        *
        * Get the default value of FillExtrusionColor property
        *
@@ -2872,7 +2872,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      *
      * This is an Expression representation of "fill-extrusion-color".
      *
@@ -2891,11 +2891,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      */
     val defaultFillExtrusionColorAsColorInt: Int?
       /**
-       * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+       * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
        *
        * Get the default value of FillExtrusionColor property as color int.
        *
@@ -2921,11 +2921,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-transition").silentUnwrap()
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      */
     val defaultFillExtrusionCutoffFadeRange: Double?
       /**
-       * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+       * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionCutoffFadeRange property
        *
@@ -2936,7 +2936,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-cutoff-fade-range".
      *
@@ -2958,11 +2958,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      */
     val defaultFillExtrusionEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
        *
        * Get the default value of FillExtrusionEmissiveStrength property
        *
@@ -2973,7 +2973,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-emissive-strength".
      *
@@ -3006,12 +3006,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength-transition").silentUnwrap()
 
     /**
-     * The color of the flood light effect on the walls of the extruded buildings.
+     * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightColor: String?
       /**
-       * The color of the flood light effect on the walls of the extruded buildings.
+       * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
        *
        * Get the default value of FillExtrusionFloodLightColor property
        *
@@ -3025,7 +3025,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The color of the flood light effect on the walls of the extruded buildings.
+     * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
      *
      * This is an Expression representation of "fill-extrusion-flood-light-color".
      *
@@ -3045,12 +3045,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The color of the flood light effect on the walls of the extruded buildings.
+     * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightColorAsColorInt: Int?
       /**
-       * The color of the flood light effect on the walls of the extruded buildings.
+       * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
        *
        * Get the default value of FillExtrusionFloodLightColor property as color int.
        *
@@ -3077,12 +3077,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-color-transition").silentUnwrap()
 
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundAttenuation: Double?
       /**
-       * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+       * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionFloodLightGroundAttenuation property
        *
@@ -3093,7 +3093,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-attenuation".
      *
@@ -3128,12 +3128,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundRadius: Double?
       /**
-       * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
        *
        * Get the default value of FillExtrusionFloodLightGroundRadius property
        *
@@ -3144,7 +3144,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
      *
@@ -3179,12 +3179,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-radius-transition").silentUnwrap()
 
     /**
-     * The intensity of the flood light color.
+     * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightIntensity: Double?
       /**
-       * The intensity of the flood light color.
+       * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionFloodLightIntensity property
        *
@@ -3195,7 +3195,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The intensity of the flood light color.
+     * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-flood-light-intensity".
      *
@@ -3230,12 +3230,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-intensity-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightWallRadius: Double?
       /**
-       * The extent of the flood light effect on the walls of the extruded buildings in meters.
+       * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
        *
        * Get the default value of FillExtrusionFloodLightWallRadius property
        *
@@ -3246,7 +3246,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
      *
@@ -3281,11 +3281,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-wall-radius-transition").silentUnwrap()
 
     /**
-     * The height with which to extrude this layer.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
      */
     val defaultFillExtrusionHeight: Double?
       /**
-       * The height with which to extrude this layer.
+       * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
        *
        * Get the default value of FillExtrusionHeight property
        *
@@ -3296,7 +3296,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The height with which to extrude this layer.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-height".
      *
@@ -3329,11 +3329,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-transition").silentUnwrap()
 
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
      */
     val defaultFillExtrusionOpacity: Double?
       /**
-       * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+       * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionOpacity property
        *
@@ -3344,7 +3344,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-opacity".
      *
@@ -3414,12 +3414,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
      */
     @MapboxExperimental
     val defaultFillExtrusionRoundedRoof: Boolean?
       /**
-       * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+       * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
        *
        * Get the default value of FillExtrusionRoundedRoof property
        *
@@ -3430,7 +3430,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
      *
      * This is an Expression representation of "fill-extrusion-rounded-roof".
      *
@@ -3453,11 +3453,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
      */
     val defaultFillExtrusionTranslate: List<Double>?
       /**
-       * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
        *
        * Get the default value of FillExtrusionTranslate property
        *
@@ -3468,7 +3468,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
      *
      * This is an Expression representation of "fill-extrusion-translate".
      *
@@ -3501,11 +3501,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-translate-transition").silentUnwrap()
 
     /**
-     * Controls the frame of reference for `fill-extrusion-translate`.
+     * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
      */
     val defaultFillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor?
       /**
-       * Controls the frame of reference for `fill-extrusion-translate`.
+       * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
        *
        * Get the default value of FillExtrusionTranslateAnchor property
        *
@@ -3519,7 +3519,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Controls the frame of reference for `fill-extrusion-translate`.
+     * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
      *
      * This is an Expression representation of "fill-extrusion-translate-anchor".
      *
@@ -3541,11 +3541,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
      */
     val defaultFillExtrusionVerticalGradient: Boolean?
       /**
-       * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+       * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
        *
        * Get the default value of FillExtrusionVerticalGradient property
        *
@@ -3556,7 +3556,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
      *
      * This is an Expression representation of "fill-extrusion-vertical-gradient".
      *
@@ -3578,12 +3578,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultFillExtrusionVerticalScale: Double?
       /**
-       * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+       * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
        *
        * Get the default value of FillExtrusionVerticalScale property
        *
@@ -3594,7 +3594,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+     * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
      *
      * This is an Expression representation of "fill-extrusion-vertical-scale".
      *
@@ -3706,7 +3706,7 @@ interface FillExtrusionLayerDsl {
   // Property getters and setters
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius
    */
@@ -3714,7 +3714,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius as Expression
    */
@@ -3722,7 +3722,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Expression): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * @param fillExtrusionAmbientOcclusionGroundAttenuation value of fillExtrusionAmbientOcclusionGroundAttenuation
    */
@@ -3730,7 +3730,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuation(fillExtrusionAmbientOcclusionGroundAttenuation: Double = 0.69): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * @param fillExtrusionAmbientOcclusionGroundAttenuation value of fillExtrusionAmbientOcclusionGroundAttenuation as Expression
    */
@@ -3738,7 +3738,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuation(fillExtrusionAmbientOcclusionGroundAttenuation: Expression): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * Set the FillExtrusionAmbientOcclusionGroundAttenuation property transition options
    *
@@ -3748,7 +3748,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuationTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * DSL for [fillExtrusionAmbientOcclusionGroundAttenuationTransition].
    */
@@ -3756,7 +3756,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * @param fillExtrusionAmbientOcclusionGroundRadius value of fillExtrusionAmbientOcclusionGroundRadius
    */
@@ -3764,7 +3764,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadius(fillExtrusionAmbientOcclusionGroundRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * @param fillExtrusionAmbientOcclusionGroundRadius value of fillExtrusionAmbientOcclusionGroundRadius as Expression
    */
@@ -3772,7 +3772,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadius(fillExtrusionAmbientOcclusionGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * Set the FillExtrusionAmbientOcclusionGroundRadius property transition options
    *
@@ -3782,7 +3782,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
    *
    * DSL for [fillExtrusionAmbientOcclusionGroundRadiusTransition].
    */
@@ -3790,21 +3790,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity
    */
   fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity as Expression
    */
   fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Expression): FillExtrusionLayer
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * Set the FillExtrusionAmbientOcclusionIntensity property transition options
    *
@@ -3813,28 +3813,28 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionIntensityTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
    *
    * DSL for [fillExtrusionAmbientOcclusionIntensityTransition].
    */
   fun fillExtrusionAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius
    */
   fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius as Expression
    */
   fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Expression): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * Set the FillExtrusionAmbientOcclusionRadius property transition options
    *
@@ -3843,14 +3843,14 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
    *
    * DSL for [fillExtrusionAmbientOcclusionRadiusTransition].
    */
   fun fillExtrusionAmbientOcclusionRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * @param fillExtrusionAmbientOcclusionWallRadius value of fillExtrusionAmbientOcclusionWallRadius
    */
@@ -3858,7 +3858,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadius(fillExtrusionAmbientOcclusionWallRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * @param fillExtrusionAmbientOcclusionWallRadius value of fillExtrusionAmbientOcclusionWallRadius as Expression
    */
@@ -3866,7 +3866,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadius(fillExtrusionAmbientOcclusionWallRadius: Expression): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * Set the FillExtrusionAmbientOcclusionWallRadius property transition options
    *
@@ -3876,7 +3876,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
    *
    * DSL for [fillExtrusionAmbientOcclusionWallRadiusTransition].
    */
@@ -3884,21 +3884,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionBase value of fillExtrusionBase
    */
   fun fillExtrusionBase(fillExtrusionBase: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionBase value of fillExtrusionBase as Expression
    */
   fun fillExtrusionBase(fillExtrusionBase: Expression): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * Set the FillExtrusionBase property transition options
    *
@@ -3907,35 +3907,35 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionBaseTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
    *
    * DSL for [fillExtrusionBaseTransition].
    */
   fun fillExtrusionBaseTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
   fun fillExtrusionColor(fillExtrusionColor: String = "#000000"): FillExtrusionLayer
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * @param fillExtrusionColor value of fillExtrusionColor as Expression
    */
   fun fillExtrusionColor(fillExtrusionColor: Expression): FillExtrusionLayer
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
   fun fillExtrusionColor(@ColorInt fillExtrusionColor: Int): FillExtrusionLayer
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * Set the FillExtrusionColor property transition options
    *
@@ -3944,42 +3944,42 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionColorTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * DSL for [fillExtrusionColorTransition].
    */
   fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange
    */
   fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Double = 0.0): FillExtrusionLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange as Expression
    */
   fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Expression): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength
    */
   fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength as Expression
    */
   fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Expression): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Set the FillExtrusionEmissiveStrength property transition options
    *
@@ -3988,14 +3988,14 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionEmissiveStrengthTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * DSL for [fillExtrusionEmissiveStrengthTransition].
    */
   fun fillExtrusionEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * @param fillExtrusionFloodLightColor value of fillExtrusionFloodLightColor
    */
@@ -4003,7 +4003,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColor(fillExtrusionFloodLightColor: String = "#ffffff"): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * @param fillExtrusionFloodLightColor value of fillExtrusionFloodLightColor as Expression
    */
@@ -4011,7 +4011,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColor(fillExtrusionFloodLightColor: Expression): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * @param fillExtrusionFloodLightColor value of fillExtrusionFloodLightColor
    */
@@ -4019,7 +4019,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColor(@ColorInt fillExtrusionFloodLightColor: Int): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * Set the FillExtrusionFloodLightColor property transition options
    *
@@ -4029,7 +4029,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColorTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings.
+   * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
    *
    * DSL for [fillExtrusionFloodLightColorTransition].
    */
@@ -4037,7 +4037,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * @param fillExtrusionFloodLightGroundAttenuation value of fillExtrusionFloodLightGroundAttenuation
    */
@@ -4045,7 +4045,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuation(fillExtrusionFloodLightGroundAttenuation: Double = 0.69): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * @param fillExtrusionFloodLightGroundAttenuation value of fillExtrusionFloodLightGroundAttenuation as Expression
    */
@@ -4053,7 +4053,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuation(fillExtrusionFloodLightGroundAttenuation: Expression): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * Set the FillExtrusionFloodLightGroundAttenuation property transition options
    *
@@ -4063,7 +4063,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
    *
    * DSL for [fillExtrusionFloodLightGroundAttenuationTransition].
    */
@@ -4071,7 +4071,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius
    */
@@ -4079,7 +4079,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius as Expression
    */
@@ -4087,7 +4087,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * Set the FillExtrusionFloodLightGroundRadius property transition options
    *
@@ -4097,7 +4097,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * DSL for [fillExtrusionFloodLightGroundRadiusTransition].
    */
@@ -4105,7 +4105,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionFloodLightIntensity value of fillExtrusionFloodLightIntensity
    */
@@ -4113,7 +4113,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensity: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionFloodLightIntensity value of fillExtrusionFloodLightIntensity as Expression
    */
@@ -4121,7 +4121,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensity: Expression): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * Set the FillExtrusionFloodLightIntensity property transition options
    *
@@ -4131,7 +4131,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensityTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color.
+   * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
    *
    * DSL for [fillExtrusionFloodLightIntensityTransition].
    */
@@ -4139,7 +4139,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius
    */
@@ -4147,7 +4147,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius as Expression
    */
@@ -4155,7 +4155,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * Set the FillExtrusionFloodLightWallRadius property transition options
    *
@@ -4165,7 +4165,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
    *
    * DSL for [fillExtrusionFloodLightWallRadiusTransition].
    */
@@ -4173,21 +4173,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight
    */
   fun fillExtrusionHeight(fillExtrusionHeight: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight as Expression
    */
   fun fillExtrusionHeight(fillExtrusionHeight: Expression): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * Set the FillExtrusionHeight property transition options
    *
@@ -4196,28 +4196,28 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionHeightTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
    *
    * DSL for [fillExtrusionHeightTransition].
    */
   fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity
    */
   fun fillExtrusionOpacity(fillExtrusionOpacity: Double = 1.0): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity as Expression
    */
   fun fillExtrusionOpacity(fillExtrusionOpacity: Expression): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * Set the FillExtrusionOpacity property transition options
    *
@@ -4226,7 +4226,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionOpacityTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    *
    * DSL for [fillExtrusionOpacityTransition].
    */
@@ -4247,7 +4247,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionPattern(fillExtrusionPattern: Expression): FillExtrusionLayer
 
   /**
-   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    *
    * @param fillExtrusionRoundedRoof value of fillExtrusionRoundedRoof
    */
@@ -4255,7 +4255,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Boolean = true): FillExtrusionLayer
 
   /**
-   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    *
    * @param fillExtrusionRoundedRoof value of fillExtrusionRoundedRoof as Expression
    */
@@ -4263,21 +4263,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Expression): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate
    */
   fun fillExtrusionTranslate(fillExtrusionTranslate: List<Double> = listOf(0.0, 0.0)): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate as Expression
    */
   fun fillExtrusionTranslate(fillExtrusionTranslate: Expression): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * Set the FillExtrusionTranslate property transition options
    *
@@ -4286,42 +4286,42 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionTranslateTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
    *
    * DSL for [fillExtrusionTranslateTransition].
    */
   fun fillExtrusionTranslateTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Controls the frame of reference for `fill-extrusion-translate`.
+   * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor
    */
   fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor = FillExtrusionTranslateAnchor.MAP): FillExtrusionLayer
 
   /**
-   * Controls the frame of reference for `fill-extrusion-translate`.
+   * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor as Expression
    */
   fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: Expression): FillExtrusionLayer
 
   /**
-   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient
    */
   fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Boolean = true): FillExtrusionLayer
 
   /**
-   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient as Expression
    */
   fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Expression): FillExtrusionLayer
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * @param fillExtrusionVerticalScale value of fillExtrusionVerticalScale
    */
@@ -4329,7 +4329,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionVerticalScale(fillExtrusionVerticalScale: Double = 1.0): FillExtrusionLayer
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * @param fillExtrusionVerticalScale value of fillExtrusionVerticalScale as Expression
    */
@@ -4337,7 +4337,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionVerticalScale(fillExtrusionVerticalScale: Expression): FillExtrusionLayer
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * Set the FillExtrusionVerticalScale property transition options
    *
@@ -4347,7 +4347,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionVerticalScaleTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
+   * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
    *
    * DSL for [fillExtrusionVerticalScaleTransition].
    */

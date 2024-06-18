@@ -38,7 +38,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
   }
 
   /**
-   * Whether the attribution icon is visible on the map.
+   * Whether the attribution icon is visible on the map. Default value: true.
    */
   override var enabled: Boolean
     get() {
@@ -52,7 +52,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Defines text color of the attribution icon.
+   * Defines text color of the attribution icon. Default value: "#FF1E8CAB".
    */
   override var iconColor: Int
     get() {
@@ -66,7 +66,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Defines where the attribution icon is positioned on the map
+   * Defines where the attribution icon is positioned on the map Default value: "bottom-left".
    */
   override var position: Int
     get() {
@@ -80,7 +80,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Defines the margin to the left that the attribution icon honors.
+   * Defines the margin to the left that the attribution icon honors. Default value: 92.
    */
   override var marginLeft: Float
     get() {
@@ -94,7 +94,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Defines the margin to the top that the attribution icon honors.
+   * Defines the margin to the top that the attribution icon honors. Default value: 4.
    */
   override var marginTop: Float
     get() {
@@ -108,7 +108,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Defines the margin to the right that the attribution icon honors.
+   * Defines the margin to the right that the attribution icon honors. Default value: 4.
    */
   override var marginRight: Float
     get() {
@@ -122,7 +122,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Defines the margin to the bottom that the attribution icon honors.
+   * Defines the margin to the bottom that the attribution icon honors. Default value: 4.
    */
   override var marginBottom: Float
     get() {
@@ -136,7 +136,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
 
   /**
-   * Whether the attribution can be clicked and click events can be registered.
+   * Whether the attribution can be clicked and click events can be registered. Default value: true.
    */
   override var clickable: Boolean
     get() {

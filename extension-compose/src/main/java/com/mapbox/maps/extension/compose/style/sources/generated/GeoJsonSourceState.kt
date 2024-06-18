@@ -123,6 +123,7 @@ public class GeoJsonSourceState private constructor(
   /**
    * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
    * levels).
+   * Default value: 18.
    */
   public var maxZoom: LongValue by maxZoomState
 
@@ -155,6 +156,7 @@ public class GeoJsonSourceState private constructor(
    * Size of the tile buffer on each side. A value of 0 produces no buffer. A
    * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
    * rendering artifacts near tile edges and slower performance.
+   * Default value: 128. Value range: [0, 512]
    */
   public var buffer: LongValue by bufferState
 
@@ -170,6 +172,7 @@ public class GeoJsonSourceState private constructor(
 
   /**
    * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
+   * Default value: 0.375.
    */
   public var tolerance: DoubleValue by toleranceState
 
@@ -186,11 +189,12 @@ public class GeoJsonSourceState private constructor(
   /**
    * If the data is a collection of point features, setting this to true clusters the points
    * by radius into groups. Cluster groups become new `Point` features in the source with additional properties:
-   * - `cluster` Is `true` if the point is a cluster
-   * - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
+   *  - `cluster` Is `true` if the point is a cluster
+   *  - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
    * [cluster inspection methods](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)
-   * - `point_count` Number of original points grouped into this cluster
-   * - `point_count_abbreviated` An abbreviated point count
+   *  - `point_count` Number of original points grouped into this cluster
+   *  - `point_count_abbreviated` An abbreviated point count
+   * Default value: false.
    */
   public var cluster: BooleanValue by clusterState
 
@@ -207,6 +211,7 @@ public class GeoJsonSourceState private constructor(
   /**
    * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
    * to the width of a tile.
+   * Default value: 50. Minimum value: 0.
    */
   public var clusterRadius: LongValue by clusterRadiusState
 
@@ -239,6 +244,7 @@ public class GeoJsonSourceState private constructor(
 
   /**
    * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+   * Default value: 2.
    */
   public var clusterMinPoints: LongValue by clusterMinPointsState
 
@@ -278,6 +284,7 @@ public class GeoJsonSourceState private constructor(
 
   /**
    * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
+   * Default value: false.
    */
   public var lineMetrics: BooleanValue by lineMetricsState
 
@@ -294,6 +301,7 @@ public class GeoJsonSourceState private constructor(
   /**
    * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
    * assigned based on its index in the `features` array, over-writing any previous values.
+   * Default value: false.
    */
   public var generateId: BooleanValue by generateIdState
 
@@ -328,7 +336,7 @@ public class GeoJsonSourceState private constructor(
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   public var prefetchZoomDelta: LongValue by prefetchZoomDeltaState
 

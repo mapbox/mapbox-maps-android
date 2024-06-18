@@ -21,37 +21,37 @@ import kotlinx.parcelize.Parcelize
 private data class LogoSettingsData(
 
   /**
-   * Whether the logo is visible on the map.
+   * Whether the logo is visible on the map. Default value: true.
    */
   @Default("true")
   var enabled: Boolean,
 
   /**
-   * Defines where the logo is positioned on the map
+   * Defines where the logo is positioned on the map Default value: "bottom-left".
    */
   @Default("Gravity.BOTTOM or Gravity.START")
   var position: Int,
 
   /**
-   * Defines the margin to the left that the attribution icon honors. This property is specified in pixels.
+   * Defines the margin to the left that the attribution icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginLeft: Float,
 
   /**
-   * Defines the margin to the top that the attribution icon honors. This property is specified in pixels.
+   * Defines the margin to the top that the attribution icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginTop: Float,
 
   /**
-   * Defines the margin to the right that the attribution icon honors. This property is specified in pixels.
+   * Defines the margin to the right that the attribution icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginRight: Float,
 
   /**
-   * Defines the margin to the bottom that the attribution icon honors. This property is specified in pixels.
+   * Defines the margin to the bottom that the attribution icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginBottom: Float,

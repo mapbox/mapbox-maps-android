@@ -22,11 +22,11 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorStr
 class DirectionalLight internal constructor(override val lightId: String) : DirectionalLightDslReceiver, Light() {
 
   /**
-   * Enable/Disable shadow casting for this light
+   * Enable/Disable shadow casting for this light Default value: false.
    */
   val castShadows: Boolean?
     /**
-     * Enable/Disable shadow casting for this light
+     * Enable/Disable shadow casting for this light Default value: false.
      *
      * @return castShadows as Boolean
      */
@@ -34,7 +34,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return getPropertyValue("cast-shadows")
     }
   /**
-   * Enable/Disable shadow casting for this light
+   * Enable/Disable shadow casting for this light Default value: false.
    *
    * @param castShadows as Boolean
    */
@@ -43,13 +43,13 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   }
 
   /**
-   * Enable/Disable shadow casting for this light
+   * Enable/Disable shadow casting for this light Default value: false.
    *
    * This is an Expression representation of "cast-shadows".
    */
   val castShadowsAsExpression: Expression?
     /**
-     * Enable/Disable shadow casting for this light
+     * Enable/Disable shadow casting for this light Default value: false.
      *
      * Get the CastShadows property as an Expression
      *
@@ -65,7 +65,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * Enable/Disable shadow casting for this light
+   * Enable/Disable shadow casting for this light Default value: false.
    *
    * @param castShadows value of castShadows as Expression
    */
@@ -74,11 +74,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
     setProperty(propertyValue)
   }
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    */
   val colorAsColorInt: Int?
     /**
-     * Color of the directional light.
+     * Color of the directional light. Default value: "#ffffff".
      *
      * @return color as int
      */
@@ -90,7 +90,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * @param color as int
    */
@@ -99,11 +99,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
     setProperty(propertyValue)
   }
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    */
   val color: String?
     /**
-     * Color of the directional light.
+     * Color of the directional light. Default value: "#ffffff".
      *
      * @return color as String
      */
@@ -114,7 +114,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * @param color as String
    */
@@ -123,13 +123,13 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   }
 
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * This is an Expression representation of "color".
    */
   val colorAsExpression: Expression?
     /**
-     * Color of the directional light.
+     * Color of the directional light. Default value: "#ffffff".
      *
      * Get the Color property as an Expression
      *
@@ -142,7 +142,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * @param color value of color as Expression
    */
@@ -179,11 +179,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    */
   val direction: List<Double>?
     /**
-     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
      *
      * @return direction as List<Double>
      */
@@ -191,7 +191,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return getPropertyValue("direction")
     }
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
    * @param direction as List<Double>
    */
@@ -200,13 +200,13 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   }
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
    * This is an Expression representation of "direction".
    */
   val directionAsExpression: Expression?
     /**
-     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
      *
      * Get the Direction property as an Expression
      *
@@ -222,7 +222,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
    * @param direction value of direction as Expression
    */
@@ -259,11 +259,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
     directionTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * A multiplier for the color of the directional light.
+   * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    */
   val intensity: Double?
     /**
-     * A multiplier for the color of the directional light.
+     * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
      *
      * @return intensity as Double
      */
@@ -271,7 +271,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return getPropertyValue("intensity")
     }
   /**
-   * A multiplier for the color of the directional light.
+   * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -280,13 +280,13 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   }
 
   /**
-   * A multiplier for the color of the directional light.
+   * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    *
    * This is an Expression representation of "intensity".
    */
   val intensityAsExpression: Expression?
     /**
-     * A multiplier for the color of the directional light.
+     * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
      *
      * Get the Intensity property as an Expression
      *
@@ -302,7 +302,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * A multiplier for the color of the directional light.
+   * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -339,11 +339,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
     intensityTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    */
   val shadowIntensity: Double?
     /**
-     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
      *
      * @return shadowIntensity as Double
      */
@@ -351,7 +351,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return getPropertyValue("shadow-intensity")
     }
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *
    * @param shadowIntensity as Double
    */
@@ -360,13 +360,13 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   }
 
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "shadow-intensity".
    */
   val shadowIntensityAsExpression: Expression?
     /**
-     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
      *
      * Get the ShadowIntensity property as an Expression
      *
@@ -382,7 +382,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
       return null
     }
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *
    * @param shadowIntensity value of shadowIntensity as Expression
    */
@@ -439,35 +439,35 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
 interface DirectionalLightDslReceiver {
 
   /**
-   * Enable/Disable shadow casting for this light
+   * Enable/Disable shadow casting for this light Default value: false.
    *
    * @param castShadows as Boolean
    */
   fun castShadows(castShadows: Boolean = false): DirectionalLight
 
   /**
-   * Enable/Disable shadow casting for this light
+   * Enable/Disable shadow casting for this light Default value: false.
    *
    * @param castShadows value of castShadows as Expression
    */
   fun castShadows(castShadows: Expression): DirectionalLight
 
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * @param color as int
    */
   fun color(@ColorInt color: Int): DirectionalLight
 
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * @param color as String
    */
   fun color(color: String = "#ffffff"): DirectionalLight
 
   /**
-   * Color of the directional light.
+   * Color of the directional light. Default value: "#ffffff".
    *
    * @param color value of color as Expression
    */
@@ -486,14 +486,14 @@ interface DirectionalLightDslReceiver {
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
    * @param direction as List<Double>
    */
   fun direction(direction: List<Double> = listOf(210.0, 30.0)): DirectionalLight
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
    * @param direction value of direction as Expression
    */
@@ -512,14 +512,14 @@ interface DirectionalLightDslReceiver {
   fun directionTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
 
   /**
-   * A multiplier for the color of the directional light.
+   * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity as Double
    */
   fun intensity(intensity: Double = 0.5): DirectionalLight
 
   /**
-   * A multiplier for the color of the directional light.
+   * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -538,14 +538,14 @@ interface DirectionalLightDslReceiver {
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
 
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *
    * @param shadowIntensity as Double
    */
   fun shadowIntensity(shadowIntensity: Double = 1.0): DirectionalLight
 
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *
    * @param shadowIntensity value of shadowIntensity as Expression
    */

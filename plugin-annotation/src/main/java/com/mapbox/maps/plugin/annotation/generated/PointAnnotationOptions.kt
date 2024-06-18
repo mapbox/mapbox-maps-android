@@ -43,7 +43,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    */
   var iconAnchor: IconAnchor? = null
 
@@ -79,7 +79,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    */
   var iconOffset: List<Double>? = null
 
@@ -97,7 +97,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    */
   var iconRotate: Double? = null
 
@@ -115,7 +115,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    */
   var iconSize: Double? = null
 
@@ -133,7 +133,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    */
   var iconTextFit: IconTextFit? = null
 
@@ -151,7 +151,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    */
   var iconTextFitPadding: List<Double>? = null
 
@@ -187,7 +187,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    */
   var textAnchor: TextAnchor? = null
 
@@ -205,7 +205,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    */
   var textField: String? = null
 
@@ -223,7 +223,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    */
   var textJustify: TextJustify? = null
 
@@ -241,7 +241,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    */
   var textLetterSpacing: Double? = null
 
@@ -259,7 +259,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    */
   var textLineHeight: Double? = null
 
@@ -277,7 +277,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    */
   var textMaxWidth: Double? = null
 
@@ -295,7 +295,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    */
   var textOffset: List<Double>? = null
 
@@ -313,7 +313,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    */
   var textRadialOffset: Double? = null
 
@@ -331,7 +331,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    */
   var textRotate: Double? = null
 
@@ -349,7 +349,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    */
   var textSize: Double? = null
 
@@ -367,7 +367,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    */
   var textTransform: TextTransform? = null
 
@@ -385,7 +385,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    */
   var iconColor: String? = null
 
@@ -416,7 +416,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    */
   var iconEmissiveStrength: Double? = null
 
@@ -434,7 +434,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    */
   var iconHaloBlur: Double? = null
 
@@ -452,7 +452,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   var iconHaloColor: String? = null
 
@@ -483,7 +483,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    */
   var iconHaloWidth: Double? = null
 
@@ -501,7 +501,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    */
   var iconImageCrossFade: Double? = null
 
@@ -519,7 +519,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    */
   var iconOpacity: Double? = null
 
@@ -537,7 +537,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    */
   var textColor: String? = null
 
@@ -568,7 +568,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    */
   var textEmissiveStrength: Double? = null
 
@@ -586,7 +586,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    */
   var textHaloBlur: Double? = null
 
@@ -604,7 +604,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   var textHaloColor: String? = null
 
@@ -635,7 +635,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    */
   var textHaloWidth: Double? = null
 
@@ -653,7 +653,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    */
   var textOpacity: Double? = null
 

@@ -40,7 +40,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
   }
 
   /**
-   * Whether the compass is visible on the map.
+   * Whether the compass is visible on the map. Default value: true.
    */
   override var enabled: Boolean
     get() {
@@ -54,7 +54,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Defines where the compass is positioned on the map
+   * Defines where the compass is positioned on the map Default value: "top-right".
    */
   override var position: Int
     get() {
@@ -68,7 +68,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Defines the margin to the left that the compass icon honors.
+   * Defines the margin to the left that the compass icon honors. Default value: 4.
    */
   override var marginLeft: Float
     get() {
@@ -82,7 +82,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Defines the margin to the top that the compass icon honors.
+   * Defines the margin to the top that the compass icon honors. Default value: 4.
    */
   override var marginTop: Float
     get() {
@@ -96,7 +96,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Defines the margin to the right that the compass icon honors.
+   * Defines the margin to the right that the compass icon honors. Default value: 4.
    */
   override var marginRight: Float
     get() {
@@ -110,7 +110,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Defines the margin to the bottom that the compass icon honors.
+   * Defines the margin to the bottom that the compass icon honors. Default value: 4.
    */
   override var marginBottom: Float
     get() {
@@ -124,7 +124,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * The alpha channel value of the compass image
+   * The alpha channel value of the compass image Default value: 1.
    */
   override var opacity: Float
     get() {
@@ -138,7 +138,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * The clockwise rotation value in degrees of the compass.
+   * The clockwise rotation value in degrees of the compass. Default value: 0.
    */
   override var rotation: Float
     get() {
@@ -152,7 +152,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Whether the compass is displayed.
+   * Whether the compass is displayed. Default value: true.
    */
   override var visibility: Boolean
     get() {
@@ -166,7 +166,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Whether the compass fades out to invisible when facing north direction.
+   * Whether the compass fades out to invisible when facing north direction. Default value: true.
    */
   override var fadeWhenFacingNorth: Boolean
     get() {
@@ -180,7 +180,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
 
   /**
-   * Whether the compass can be clicked and click events can be registered.
+   * Whether the compass can be clicked and click events can be registered. Default value: true.
    */
   override var clickable: Boolean
     get() {

@@ -343,12 +343,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines the amount of particles per tile.
+   * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    */
   @MapboxExperimental
   val rasterParticleCount: Long?
     /**
-     * Defines the amount of particles per tile.
+     * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleCount] to get the default property.
      *
@@ -359,7 +359,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines the amount of particles per tile.
+   * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleCount] to set the default property.
    *
@@ -372,7 +372,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines the amount of particles per tile.
+   * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    *
    * This is an Expression representation of "raster-particle-count".
    *
@@ -380,7 +380,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   @MapboxExperimental
   val rasterParticleCountAsExpression: Expression?
     /**
-     * Defines the amount of particles per tile.
+     * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
      *
      * Get the RasterParticleCount property as an Expression
      *
@@ -399,7 +399,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines the amount of particles per tile.
+   * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleCountAsExpression] to set the default property.
    *
@@ -412,12 +412,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    */
   @MapboxExperimental
   val rasterParticleFadeOpacityFactor: Double?
     /**
-     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleFadeOpacityFactor] to get the default property.
      *
@@ -428,7 +428,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleFadeOpacityFactor] to set the default property.
    *
@@ -441,7 +441,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * This is an Expression representation of "raster-particle-fade-opacity-factor".
    *
@@ -449,7 +449,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   @MapboxExperimental
   val rasterParticleFadeOpacityFactorAsExpression: Expression?
     /**
-     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
      *
      * Get the RasterParticleFadeOpacityFactor property as an Expression
      *
@@ -468,7 +468,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleFadeOpacityFactorAsExpression] to set the default property.
    *
@@ -518,12 +518,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
    */
   @MapboxExperimental
   val rasterParticleMaxSpeed: Double?
     /**
-     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleMaxSpeed] to get the default property.
      *
@@ -534,7 +534,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleMaxSpeed] to set the default property.
    *
@@ -547,7 +547,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
    *
    * This is an Expression representation of "raster-particle-max-speed".
    *
@@ -555,7 +555,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   @MapboxExperimental
   val rasterParticleMaxSpeedAsExpression: Expression?
     /**
-     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
      *
      * Get the RasterParticleMaxSpeed property as an Expression
      *
@@ -574,7 +574,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleMaxSpeedAsExpression] to set the default property.
    *
@@ -587,12 +587,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
    */
   @MapboxExperimental
   val rasterParticleResetRateFactor: Double?
     /**
-     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleResetRateFactor] to get the default property.
      *
@@ -603,7 +603,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleResetRateFactor] to set the default property.
    *
@@ -616,7 +616,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
    *
    * This is an Expression representation of "raster-particle-reset-rate-factor".
    *
@@ -624,7 +624,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   @MapboxExperimental
   val rasterParticleResetRateFactorAsExpression: Expression?
     /**
-     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
      *
      * Get the RasterParticleResetRateFactor property as an Expression
      *
@@ -643,7 +643,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleResetRateFactorAsExpression] to set the default property.
    *
@@ -656,12 +656,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    */
   @MapboxExperimental
   val rasterParticleSpeedFactor: Double?
     /**
-     * Defines a coefficient for the speed of particles’ motion.
+     * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleSpeedFactor] to get the default property.
      *
@@ -672,7 +672,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleSpeedFactor] to set the default property.
    *
@@ -685,7 +685,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * This is an Expression representation of "raster-particle-speed-factor".
    *
@@ -693,7 +693,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   @MapboxExperimental
   val rasterParticleSpeedFactorAsExpression: Expression?
     /**
-     * Defines a coefficient for the speed of particles’ motion.
+     * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
      *
      * Get the RasterParticleSpeedFactor property as an Expression
      *
@@ -712,7 +712,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
     }
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * Use static method [RasterParticleLayer.defaultRasterParticleSpeedFactorAsExpression] to set the default property.
    *
@@ -876,12 +876,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines the amount of particles per tile.
+     * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
      */
     @MapboxExperimental
     val defaultRasterParticleCount: Long?
       /**
-       * Defines the amount of particles per tile.
+       * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
        *
        * Get the default value of RasterParticleCount property
        *
@@ -892,7 +892,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines the amount of particles per tile.
+     * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
      *
      * This is an Expression representation of "raster-particle-count".
      *
@@ -915,12 +915,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultRasterParticleFadeOpacityFactor: Double?
       /**
-       * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+       * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
        *
        * Get the default value of RasterParticleFadeOpacityFactor property
        *
@@ -931,7 +931,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+     * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
      *
      * This is an Expression representation of "raster-particle-fade-opacity-factor".
      *
@@ -966,12 +966,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-fade-opacity-factor-transition").silentUnwrap()
 
     /**
-     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
      */
     @MapboxExperimental
     val defaultRasterParticleMaxSpeed: Double?
       /**
-       * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+       * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
        *
        * Get the default value of RasterParticleMaxSpeed property
        *
@@ -982,7 +982,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+     * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
      *
      * This is an Expression representation of "raster-particle-max-speed".
      *
@@ -1005,12 +1005,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultRasterParticleResetRateFactor: Double?
       /**
-       * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+       * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
        *
        * Get the default value of RasterParticleResetRateFactor property
        *
@@ -1021,7 +1021,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+     * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
      *
      * This is an Expression representation of "raster-particle-reset-rate-factor".
      *
@@ -1044,12 +1044,12 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines a coefficient for the speed of particles’ motion.
+     * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultRasterParticleSpeedFactor: Double?
       /**
-       * Defines a coefficient for the speed of particles’ motion.
+       * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
        *
        * Get the default value of RasterParticleSpeedFactor property
        *
@@ -1060,7 +1060,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       }
 
     /**
-     * Defines a coefficient for the speed of particles’ motion.
+     * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
      *
      * This is an Expression representation of "raster-particle-speed-factor".
      *
@@ -1197,7 +1197,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleColor(rasterParticleColor: Expression): RasterParticleLayer
 
   /**
-   * Defines the amount of particles per tile.
+   * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    *
    * @param rasterParticleCount value of rasterParticleCount
    */
@@ -1205,7 +1205,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleCount(rasterParticleCount: Long = 512L): RasterParticleLayer
 
   /**
-   * Defines the amount of particles per tile.
+   * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    *
    * @param rasterParticleCount value of rasterParticleCount as Expression
    */
@@ -1213,7 +1213,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleCount(rasterParticleCount: Expression): RasterParticleLayer
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * @param rasterParticleFadeOpacityFactor value of rasterParticleFadeOpacityFactor
    */
@@ -1221,7 +1221,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleFadeOpacityFactor(rasterParticleFadeOpacityFactor: Double = 0.98): RasterParticleLayer
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * @param rasterParticleFadeOpacityFactor value of rasterParticleFadeOpacityFactor as Expression
    */
@@ -1229,7 +1229,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleFadeOpacityFactor(rasterParticleFadeOpacityFactor: Expression): RasterParticleLayer
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * Set the RasterParticleFadeOpacityFactor property transition options
    *
@@ -1239,7 +1239,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleFadeOpacityFactorTransition(options: StyleTransition): RasterParticleLayer
 
   /**
-   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
+   * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
    *
    * DSL for [rasterParticleFadeOpacityFactorTransition].
    */
@@ -1247,7 +1247,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleFadeOpacityFactorTransition(block: StyleTransition.Builder.() -> Unit): RasterParticleLayer
 
   /**
-   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
    *
    * @param rasterParticleMaxSpeed value of rasterParticleMaxSpeed
    */
@@ -1255,7 +1255,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleMaxSpeed(rasterParticleMaxSpeed: Double = 1.0): RasterParticleLayer
 
   /**
-   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
+   * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
    *
    * @param rasterParticleMaxSpeed value of rasterParticleMaxSpeed as Expression
    */
@@ -1263,7 +1263,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleMaxSpeed(rasterParticleMaxSpeed: Expression): RasterParticleLayer
 
   /**
-   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
    *
    * @param rasterParticleResetRateFactor value of rasterParticleResetRateFactor
    */
@@ -1271,7 +1271,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleResetRateFactor(rasterParticleResetRateFactor: Double = 0.8): RasterParticleLayer
 
   /**
-   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
+   * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
    *
    * @param rasterParticleResetRateFactor value of rasterParticleResetRateFactor as Expression
    */
@@ -1279,7 +1279,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleResetRateFactor(rasterParticleResetRateFactor: Expression): RasterParticleLayer
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * @param rasterParticleSpeedFactor value of rasterParticleSpeedFactor
    */
@@ -1287,7 +1287,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleSpeedFactor(rasterParticleSpeedFactor: Double = 0.2): RasterParticleLayer
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * @param rasterParticleSpeedFactor value of rasterParticleSpeedFactor as Expression
    */
@@ -1295,7 +1295,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleSpeedFactor(rasterParticleSpeedFactor: Expression): RasterParticleLayer
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * Set the RasterParticleSpeedFactor property transition options
    *
@@ -1305,7 +1305,7 @@ interface RasterParticleLayerDsl {
   fun rasterParticleSpeedFactorTransition(options: StyleTransition): RasterParticleLayer
 
   /**
-   * Defines a coefficient for the speed of particles’ motion.
+   * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
    *
    * DSL for [rasterParticleSpeedFactorTransition].
    */

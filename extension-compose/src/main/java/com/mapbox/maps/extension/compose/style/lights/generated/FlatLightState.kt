@@ -89,42 +89,49 @@ public class FlatLightState internal constructor(
 
   /**
    * Whether extruded geometries are lit relative to the map or viewport.
+   * Default value: "viewport".
    */
   public var anchor: AnchorValue by anchorState
 
   /**
    * Color tint for lighting extruded geometries.
+   * Default value: "#ffffff".
    */
   public var color: ColorValue by colorState
 
   /**
    * Defines the transition of [color].
+   * Default value: "#ffffff".
    */
   public var colorTransition: Transition by colorTransitionState
 
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more
    * extreme contrast.
+   * Default value: 0.5. Value range: [0, 1]
    */
   public var intensity: DoubleValue by intensityState
 
   /**
    * Defines the transition of [intensity].
+   * Default value: 0.5. Value range: [0, 1]
    */
   public var intensityTransition: Transition by intensityTransitionState
 
   /**
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal
    * angle, p polar angle] where r indicates the distance from the center of the base of
-   * an object to its light, a indicates the position of the light relative to 0° (0°
-   * when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0° when
+   * an object to its light, a indicates the position of the light relative to 0 degree (0 degree
+   * when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when
    * `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates
-   * the height of the light (from 0°, directly above, to 180°, directly below).
+   * the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Default value: [1.15,210,30].
    */
   public var position: DoubleListValue by positionState
 
   /**
    * Defines the transition of [position].
+   * Default value: [1.15,210,30].
    */
   public var positionTransition: Transition by positionTransitionState
 

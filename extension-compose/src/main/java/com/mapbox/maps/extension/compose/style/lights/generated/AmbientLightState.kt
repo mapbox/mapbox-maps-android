@@ -79,21 +79,25 @@ public class AmbientLightState internal constructor(
 
   /**
    * Color of the ambient light.
+   * Default value: "#ffffff".
    */
   public var color: ColorValue by colorState
 
   /**
    * Defines the transition of [color].
+   * Default value: "#ffffff".
    */
   public var colorTransition: Transition by colorTransitionState
 
   /**
    * A multiplier for the color of the ambient light.
+   * Default value: 0.5. Value range: [0, 1]
    */
   public var intensity: DoubleValue by intensityState
 
   /**
    * Defines the transition of [intensity].
+   * Default value: 0.5. Value range: [0, 1]
    */
   public var intensityTransition: Transition by intensityTransitionState
 

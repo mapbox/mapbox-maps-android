@@ -20,39 +20,42 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class GesturesSettings private constructor(
   /**
-   * Whether the rotate gesture is enabled.
+   * Whether the rotate gesture is enabled. Default value: true.
    */
   public val rotateEnabled: Boolean,
   /**
-   * Whether the pinch to zoom gesture is enabled.
+   * Whether the pinch to zoom gesture is enabled. Default value: true.
    */
   public val pinchToZoomEnabled: Boolean,
   /**
-   * Whether the single-touch scroll gesture is enabled.
+   * Whether the single-touch scroll gesture is enabled. Default value: true.
    */
   public val scrollEnabled: Boolean,
   /**
-   * Whether rotation is enabled for the pinch to zoom gesture.
+   * Whether rotation is enabled for the pinch to zoom gesture. Default value: true.
    */
   public val simultaneousRotateAndPinchToZoomEnabled: Boolean,
   /**
-   * Whether the pitch gesture is enabled.
+   * Whether the pitch gesture is enabled. Default value: true.
    */
   public val pitchEnabled: Boolean,
   /**
-   * Configures the directions in which the map is allowed to move during a scroll gesture.
+   * Configures the directions in which the map is allowed to move during a scroll gesture. Default
+   * value: "horizontal-and-vertical".
    */
   public val scrollMode: ScrollMode,
   /**
-   * Whether double tapping the map with one touch results in a zoom-in animation.
+   * Whether double tapping the map with one touch results in a zoom-in animation. Default value:
+   * true.
    */
   public val doubleTapToZoomInEnabled: Boolean,
   /**
-   * Whether single tapping the map with two touches results in a zoom-out animation.
+   * Whether single tapping the map with two touches results in a zoom-out animation. Default value:
+   * true.
    */
   public val doubleTouchToZoomOutEnabled: Boolean,
   /**
-   * Whether the quick zoom gesture is enabled.
+   * Whether the quick zoom gesture is enabled. Default value: true.
    */
   public val quickZoomEnabled: Boolean,
   /**
@@ -62,31 +65,34 @@ public class GesturesSettings private constructor(
   public val focalPoint: ScreenCoordinate?,
   /**
    * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default.
+   * Default value: true.
    */
   public val pinchToZoomDecelerationEnabled: Boolean,
   /**
    * Whether a deceleration animation following a rotate gesture is enabled. True by default.
+   * Default value: true.
    */
   public val rotateDecelerationEnabled: Boolean,
   /**
    * Whether a deceleration animation following a scroll gesture is enabled. True by default.
+   * Default value: true.
    */
   public val scrollDecelerationEnabled: Boolean,
   /**
-   * Whether rotate threshold increases when pinching to zoom. true by default.
+   * Whether rotate threshold increases when pinching to zoom. true by default. Default value: true.
    */
   public val increaseRotateThresholdWhenPinchingToZoom: Boolean,
   /**
-   * Whether pinch to zoom threshold increases when rotating. true by default.
+   * Whether pinch to zoom threshold increases when rotating. true by default. Default value: true.
    */
   public val increasePinchToZoomThresholdWhenRotating: Boolean,
   /**
    * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or
-   * double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
+   * double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. Default value: 1.
    */
   public val zoomAnimationAmount: Float,
   /**
-   * Whether pan is enabled for the pinch gesture.
+   * Whether pan is enabled for the pinch gesture. Default value: true.
    */
   public val pinchScrollEnabled: Boolean
 ) : Parcelable {
@@ -164,55 +170,58 @@ public class GesturesSettings private constructor(
    */
   public class Builder {
     /**
-     * Whether the rotate gesture is enabled.
+     * Whether the rotate gesture is enabled. Default value: true.
      */
     @set:JvmSynthetic
     public var rotateEnabled: Boolean = true
 
     /**
-     * Whether the pinch to zoom gesture is enabled.
+     * Whether the pinch to zoom gesture is enabled. Default value: true.
      */
     @set:JvmSynthetic
     public var pinchToZoomEnabled: Boolean = true
 
     /**
-     * Whether the single-touch scroll gesture is enabled.
+     * Whether the single-touch scroll gesture is enabled. Default value: true.
      */
     @set:JvmSynthetic
     public var scrollEnabled: Boolean = true
 
     /**
-     * Whether rotation is enabled for the pinch to zoom gesture.
+     * Whether rotation is enabled for the pinch to zoom gesture. Default value: true.
      */
     @set:JvmSynthetic
     public var simultaneousRotateAndPinchToZoomEnabled: Boolean = true
 
     /**
-     * Whether the pitch gesture is enabled.
+     * Whether the pitch gesture is enabled. Default value: true.
      */
     @set:JvmSynthetic
     public var pitchEnabled: Boolean = true
 
     /**
      * Configures the directions in which the map is allowed to move during a scroll gesture.
+     * Default value: "horizontal-and-vertical".
      */
     @set:JvmSynthetic
     public var scrollMode: ScrollMode = ScrollMode.HORIZONTAL_AND_VERTICAL
 
     /**
-     * Whether double tapping the map with one touch results in a zoom-in animation.
+     * Whether double tapping the map with one touch results in a zoom-in animation. Default value:
+     * true.
      */
     @set:JvmSynthetic
     public var doubleTapToZoomInEnabled: Boolean = true
 
     /**
-     * Whether single tapping the map with two touches results in a zoom-out animation.
+     * Whether single tapping the map with two touches results in a zoom-out animation. Default
+     * value: true.
      */
     @set:JvmSynthetic
     public var doubleTouchToZoomOutEnabled: Boolean = true
 
     /**
-     * Whether the quick zoom gesture is enabled.
+     * Whether the quick zoom gesture is enabled. Default value: true.
      */
     @set:JvmSynthetic
     public var quickZoomEnabled: Boolean = true
@@ -226,50 +235,54 @@ public class GesturesSettings private constructor(
 
     /**
      * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by
-     * default.
+     * default. Default value: true.
      */
     @set:JvmSynthetic
     public var pinchToZoomDecelerationEnabled: Boolean = true
 
     /**
      * Whether a deceleration animation following a rotate gesture is enabled. True by default.
+     * Default value: true.
      */
     @set:JvmSynthetic
     public var rotateDecelerationEnabled: Boolean = true
 
     /**
      * Whether a deceleration animation following a scroll gesture is enabled. True by default.
+     * Default value: true.
      */
     @set:JvmSynthetic
     public var scrollDecelerationEnabled: Boolean = true
 
     /**
-     * Whether rotate threshold increases when pinching to zoom. true by default.
+     * Whether rotate threshold increases when pinching to zoom. true by default. Default value:
+     * true.
      */
     @set:JvmSynthetic
     public var increaseRotateThresholdWhenPinchingToZoom: Boolean = true
 
     /**
-     * Whether pinch to zoom threshold increases when rotating. true by default.
+     * Whether pinch to zoom threshold increases when rotating. true by default. Default value:
+     * true.
      */
     @set:JvmSynthetic
     public var increasePinchToZoomThresholdWhenRotating: Boolean = true
 
     /**
      * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or
-     * double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
+     * double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. Default value: 1.
      */
     @set:JvmSynthetic
     public var zoomAnimationAmount: Float = 1f
 
     /**
-     * Whether pan is enabled for the pinch gesture.
+     * Whether pan is enabled for the pinch gesture. Default value: true.
      */
     @set:JvmSynthetic
     public var pinchScrollEnabled: Boolean = true
 
     /**
-     * Setter for rotateEnabled: whether the rotate gesture is enabled.
+     * Setter for rotateEnabled: whether the rotate gesture is enabled. Default value: true.
      *
      * @param rotateEnabled
      * @return Builder
@@ -280,7 +293,8 @@ public class GesturesSettings private constructor(
     }
 
     /**
-     * Setter for pinchToZoomEnabled: whether the pinch to zoom gesture is enabled.
+     * Setter for pinchToZoomEnabled: whether the pinch to zoom gesture is enabled. Default value:
+     * true.
      *
      * @param pinchToZoomEnabled
      * @return Builder
@@ -291,7 +305,8 @@ public class GesturesSettings private constructor(
     }
 
     /**
-     * Setter for scrollEnabled: whether the single-touch scroll gesture is enabled.
+     * Setter for scrollEnabled: whether the single-touch scroll gesture is enabled. Default value:
+     * true.
      *
      * @param scrollEnabled
      * @return Builder
@@ -303,7 +318,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for simultaneousRotateAndPinchToZoomEnabled: whether rotation is enabled for the pinch
-     * to zoom gesture.
+     * to zoom gesture. Default value: true.
      *
      * @param simultaneousRotateAndPinchToZoomEnabled
      * @return Builder
@@ -316,7 +331,7 @@ public class GesturesSettings private constructor(
     }
 
     /**
-     * Setter for pitchEnabled: whether the pitch gesture is enabled.
+     * Setter for pitchEnabled: whether the pitch gesture is enabled. Default value: true.
      *
      * @param pitchEnabled
      * @return Builder
@@ -328,7 +343,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for scrollMode: configures the directions in which the map is allowed to move during a
-     * scroll gesture.
+     * scroll gesture. Default value: "horizontal-and-vertical".
      *
      * @param scrollMode
      * @return Builder
@@ -340,7 +355,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for doubleTapToZoomInEnabled: whether double tapping the map with one touch results in
-     * a zoom-in animation.
+     * a zoom-in animation. Default value: true.
      *
      * @param doubleTapToZoomInEnabled
      * @return Builder
@@ -352,7 +367,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for doubleTouchToZoomOutEnabled: whether single tapping the map with two touches
-     * results in a zoom-out animation.
+     * results in a zoom-out animation. Default value: true.
      *
      * @param doubleTouchToZoomOutEnabled
      * @return Builder
@@ -363,7 +378,7 @@ public class GesturesSettings private constructor(
     }
 
     /**
-     * Setter for quickZoomEnabled: whether the quick zoom gesture is enabled.
+     * Setter for quickZoomEnabled: whether the quick zoom gesture is enabled. Default value: true.
      *
      * @param quickZoomEnabled
      * @return Builder
@@ -387,7 +402,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for pinchToZoomDecelerationEnabled: whether a deceleration animation following a
-     * pinch-to-zoom gesture is enabled. True by default.
+     * pinch-to-zoom gesture is enabled. True by default. Default value: true.
      *
      * @param pinchToZoomDecelerationEnabled
      * @return Builder
@@ -399,7 +414,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for rotateDecelerationEnabled: whether a deceleration animation following a rotate
-     * gesture is enabled. True by default.
+     * gesture is enabled. True by default. Default value: true.
      *
      * @param rotateDecelerationEnabled
      * @return Builder
@@ -411,7 +426,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for scrollDecelerationEnabled: whether a deceleration animation following a scroll
-     * gesture is enabled. True by default.
+     * gesture is enabled. True by default. Default value: true.
      *
      * @param scrollDecelerationEnabled
      * @return Builder
@@ -423,7 +438,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for increaseRotateThresholdWhenPinchingToZoom: whether rotate threshold increases when
-     * pinching to zoom. true by default.
+     * pinching to zoom. true by default. Default value: true.
      *
      * @param increaseRotateThresholdWhenPinchingToZoom
      * @return Builder
@@ -437,7 +452,7 @@ public class GesturesSettings private constructor(
 
     /**
      * Setter for increasePinchToZoomThresholdWhenRotating: whether pinch to zoom threshold
-     * increases when rotating. true by default.
+     * increases when rotating. true by default. Default value: true.
      *
      * @param increasePinchToZoomThresholdWhenRotating
      * @return Builder
@@ -452,7 +467,7 @@ public class GesturesSettings private constructor(
     /**
      * Setter for zoomAnimationAmount: the amount by which the zoom level increases or decreases
      * during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be
-     * positive.
+     * positive. Default value: 1.
      *
      * @param zoomAnimationAmount
      * @return Builder
@@ -463,7 +478,8 @@ public class GesturesSettings private constructor(
     }
 
     /**
-     * Setter for pinchScrollEnabled: whether pan is enabled for the pinch gesture.
+     * Setter for pinchScrollEnabled: whether pan is enabled for the pinch gesture. Default value:
+     * true.
      *
      * @param pinchScrollEnabled
      * @return Builder

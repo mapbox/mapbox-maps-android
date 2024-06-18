@@ -96,38 +96,45 @@ public class DirectionalLightState internal constructor(
 
   /**
    * Enable/Disable shadow casting for this light
+   * Default value: false.
    */
   public var castShadows: BooleanValue by castShadowsState
 
   /**
    * Color of the directional light.
+   * Default value: "#ffffff".
    */
   public var color: ColorValue by colorState
 
   /**
    * Defines the transition of [color].
+   * Default value: "#ffffff".
    */
   public var colorTransition: Transition by colorTransitionState
 
   /**
    * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates
    * the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p
-   * indicates polar angle of the light (from 0°, directly above, to 180°, directly below).
+   * indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    */
   public var direction: DoubleListValue by directionState
 
   /**
    * Defines the transition of [direction].
+   * Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    */
   public var directionTransition: Transition by directionTransitionState
 
   /**
    * A multiplier for the color of the directional light.
+   * Default value: 0.5. Value range: [0, 1]
    */
   public var intensity: DoubleValue by intensityState
 
   /**
    * Defines the transition of [intensity].
+   * Default value: 0.5. Value range: [0, 1]
    */
   public var intensityTransition: Transition by intensityTransitionState
 
@@ -135,11 +142,13 @@ public class DirectionalLightState internal constructor(
    * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the
    * shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no
    * directional light. Designed to be used mostly for transitioning between values 0 and 1.
+   * Default value: 1. Value range: [0, 1]
    */
   public var shadowIntensity: DoubleValue by shadowIntensityState
 
   /**
    * Defines the transition of [shadowIntensity].
+   * Default value: 1. Value range: [0, 1]
    */
   public var shadowIntensityTransition: Transition by shadowIntensityTransitionState
 

@@ -9,7 +9,7 @@ import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
- * Controls the frame of reference for `fill-translate`.
+ * Controls the frame of reference for `fill-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -63,7 +63,7 @@ public data class FillTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * Whether this layer is displayed.
+ * Whether this layer is displayed. Default value: "visible".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -117,7 +117,7 @@ public data class VisibilityValue(public val value: Value) {
 }
 
 /**
- * The display of line endings.
+ * The display of line endings. Default value: "butt".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -177,7 +177,7 @@ public data class LineCapValue(public val value: Value) {
 }
 
 /**
- * The display of lines when joining.
+ * The display of lines when joining. Default value: "miter".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -237,7 +237,7 @@ public data class LineJoinValue(public val value: Value) {
 }
 
 /**
- * Controls the frame of reference for `line-translate`.
+ * Controls the frame of reference for `line-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -291,7 +291,7 @@ public data class LineTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * Part of the icon placed closest to the anchor.
+ * Part of the icon placed closest to the anchor. Default value: "center".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -387,7 +387,7 @@ public data class IconAnchorValue(public val value: Value) {
 }
 
 /**
- * Orientation of icon when map is pitched.
+ * Orientation of icon when map is pitched. Default value: "auto".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -447,7 +447,7 @@ public data class IconPitchAlignmentValue(public val value: Value) {
 }
 
 /**
- * In combination with `symbol-placement`, determines the rotation behavior of icons.
+ * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -507,7 +507,7 @@ public data class IconRotationAlignmentValue(public val value: Value) {
 }
 
 /**
- * Scales the icon to fit around the associated text.
+ * Scales the icon to fit around the associated text. Default value: "none".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -573,7 +573,7 @@ public data class IconTextFitValue(public val value: Value) {
 }
 
 /**
- * Label placement relative to its geometry.
+ * Label placement relative to its geometry. Default value: "point".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -633,7 +633,7 @@ public data class SymbolPlacementValue(public val value: Value) {
 }
 
 /**
- * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+ * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -693,7 +693,7 @@ public data class SymbolZOrderValue(public val value: Value) {
 }
 
 /**
- * Part of the text placed closest to the anchor.
+ * Part of the text placed closest to the anchor. Default value: "center".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -789,7 +789,7 @@ public data class TextAnchorValue(public val value: Value) {
 }
 
 /**
- * Text justification options.
+ * Text justification options. Default value: "center".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -855,7 +855,7 @@ public data class TextJustifyValue(public val value: Value) {
 }
 
 /**
- * Orientation of text when map is pitched.
+ * Orientation of text when map is pitched. Default value: "auto".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -915,7 +915,7 @@ public data class TextPitchAlignmentValue(public val value: Value) {
 }
 
 /**
- * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+ * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -975,7 +975,7 @@ public data class TextRotationAlignmentValue(public val value: Value) {
 }
 
 /**
- * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+ * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1082,7 +1082,7 @@ public data class TextVariableAnchorListValue(public val value: Value) {
 }
 
 /**
- * To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
+ *  To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1198,7 +1198,7 @@ public data class TextWritingModeListValue(public val value: Value) {
 }
 
 /**
- * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
+ *  The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1225,7 +1225,7 @@ public data class TextWritingMode internal constructor(public val value: Value) 
 }
 
 /**
- * Controls the frame of reference for `icon-translate`.
+ * Controls the frame of reference for `icon-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1279,7 +1279,7 @@ public data class IconTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * Controls the frame of reference for `text-translate`.
+ * Controls the frame of reference for `text-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1333,7 +1333,7 @@ public data class TextTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * Orientation of circle when map is pitched.
+ * Orientation of circle when map is pitched. Default value: "viewport".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1387,7 +1387,7 @@ public data class CirclePitchAlignmentValue(public val value: Value) {
 }
 
 /**
- * Controls the scaling behavior of the circle when the map is pitched.
+ * Controls the scaling behavior of the circle when the map is pitched. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1441,7 +1441,7 @@ public data class CirclePitchScaleValue(public val value: Value) {
 }
 
 /**
- * Controls the frame of reference for `circle-translate`.
+ * Controls the frame of reference for `circle-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1495,7 +1495,7 @@ public data class CircleTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * Controls the frame of reference for `fill-extrusion-translate`.
+ * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1549,7 +1549,7 @@ public data class FillExtrusionTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+ * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1603,7 +1603,7 @@ public data class RasterResamplingValue(public val value: Value) {
 }
 
 /**
- * Direction of light source when map is rotated.
+ * Direction of light source when map is rotated. Default value: "viewport".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1657,7 +1657,7 @@ public data class HillshadeIlluminationAnchorValue(public val value: Value) {
 }
 
 /**
- * Defines scaling mode. Only applies to location-indicator type layers.
+ * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1711,7 +1711,7 @@ public data class ModelScaleModeValue(public val value: Value) {
 }
 
 /**
- * Defines rendering behavior of model in respect to other 3D scene objects.
+ * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -1765,7 +1765,7 @@ public data class ModelTypeValue(public val value: Value) {
 }
 
 /**
- * The type of the sky
+ * The type of the sky Default value: "atmosphere".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */

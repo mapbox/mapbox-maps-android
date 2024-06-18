@@ -30,49 +30,49 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param fillExtrusionEdgeRadius Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
- * @param fillExtrusionAmbientOcclusionGroundAttenuation Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
- * @param fillExtrusionAmbientOcclusionGroundAttenuationTransition Defines the transition of [fillExtrusionAmbientOcclusionGroundAttenuation].
- * @param fillExtrusionAmbientOcclusionGroundRadius The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
- * @param fillExtrusionAmbientOcclusionGroundRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionGroundRadius].
- * @param fillExtrusionAmbientOcclusionIntensity Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
- * @param fillExtrusionAmbientOcclusionIntensityTransition Defines the transition of [fillExtrusionAmbientOcclusionIntensity].
- * @param fillExtrusionAmbientOcclusionRadius Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
- * @param fillExtrusionAmbientOcclusionRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionRadius].
- * @param fillExtrusionAmbientOcclusionWallRadius Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
- * @param fillExtrusionAmbientOcclusionWallRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionWallRadius].
- * @param fillExtrusionBase The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
- * @param fillExtrusionBaseTransition Defines the transition of [fillExtrusionBase].
- * @param fillExtrusionColor The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
- * @param fillExtrusionColorTransition Defines the transition of [fillExtrusionColor].
- * @param fillExtrusionCutoffFadeRange This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
- * @param fillExtrusionEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param fillExtrusionEmissiveStrengthTransition Defines the transition of [fillExtrusionEmissiveStrength].
- * @param fillExtrusionFloodLightColor The color of the flood light effect on the walls of the extruded buildings.
- * @param fillExtrusionFloodLightColorTransition Defines the transition of [fillExtrusionFloodLightColor].
- * @param fillExtrusionFloodLightGroundAttenuation Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
- * @param fillExtrusionFloodLightGroundAttenuationTransition Defines the transition of [fillExtrusionFloodLightGroundAttenuation].
- * @param fillExtrusionFloodLightGroundRadius The extent of the flood light effect on the ground beneath the extruded buildings in meters.
- * @param fillExtrusionFloodLightGroundRadiusTransition Defines the transition of [fillExtrusionFloodLightGroundRadius].
- * @param fillExtrusionFloodLightIntensity The intensity of the flood light color.
- * @param fillExtrusionFloodLightIntensityTransition Defines the transition of [fillExtrusionFloodLightIntensity].
- * @param fillExtrusionFloodLightWallRadius The extent of the flood light effect on the walls of the extruded buildings in meters.
- * @param fillExtrusionFloodLightWallRadiusTransition Defines the transition of [fillExtrusionFloodLightWallRadius].
- * @param fillExtrusionHeight The height with which to extrude this layer.
- * @param fillExtrusionHeightTransition Defines the transition of [fillExtrusionHeight].
- * @param fillExtrusionOpacity The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
- * @param fillExtrusionOpacityTransition Defines the transition of [fillExtrusionOpacity].
+ * @param fillExtrusionEdgeRadius Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+ * @param fillExtrusionAmbientOcclusionGroundAttenuation Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
+ * @param fillExtrusionAmbientOcclusionGroundAttenuationTransition Defines the transition of [fillExtrusionAmbientOcclusionGroundAttenuation]. Default value: 0.69. Value range: [0, 1]
+ * @param fillExtrusionAmbientOcclusionGroundRadius The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+ * @param fillExtrusionAmbientOcclusionGroundRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionGroundRadius]. Default value: 3. Minimum value: 0.
+ * @param fillExtrusionAmbientOcclusionIntensity Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
+ * @param fillExtrusionAmbientOcclusionIntensityTransition Defines the transition of [fillExtrusionAmbientOcclusionIntensity]. Default value: 0. Value range: [0, 1]
+ * @param fillExtrusionAmbientOcclusionRadius Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
+ * @param fillExtrusionAmbientOcclusionRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionRadius]. Default value: 3. Minimum value: 0.
+ * @param fillExtrusionAmbientOcclusionWallRadius Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
+ * @param fillExtrusionAmbientOcclusionWallRadiusTransition Defines the transition of [fillExtrusionAmbientOcclusionWallRadius]. Default value: 3. Minimum value: 0.
+ * @param fillExtrusionBase The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionBaseTransition Defines the transition of [fillExtrusionBase]. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionColor The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
+ * @param fillExtrusionColorTransition Defines the transition of [fillExtrusionColor]. Default value: "#000000".
+ * @param fillExtrusionCutoffFadeRange This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+ * @param fillExtrusionEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionEmissiveStrengthTransition Defines the transition of [fillExtrusionEmissiveStrength]. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionFloodLightColor The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
+ * @param fillExtrusionFloodLightColorTransition Defines the transition of [fillExtrusionFloodLightColor]. Default value: "#ffffff".
+ * @param fillExtrusionFloodLightGroundAttenuation Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
+ * @param fillExtrusionFloodLightGroundAttenuationTransition Defines the transition of [fillExtrusionFloodLightGroundAttenuation]. Default value: 0.69. Value range: [0, 1]
+ * @param fillExtrusionFloodLightGroundRadius The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionFloodLightGroundRadiusTransition Defines the transition of [fillExtrusionFloodLightGroundRadius]. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionFloodLightIntensity The intensity of the flood light color. Default value: 0. Value range: [0, 1]
+ * @param fillExtrusionFloodLightIntensityTransition Defines the transition of [fillExtrusionFloodLightIntensity]. Default value: 0. Value range: [0, 1]
+ * @param fillExtrusionFloodLightWallRadius The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionFloodLightWallRadiusTransition Defines the transition of [fillExtrusionFloodLightWallRadius]. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionHeight The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionHeightTransition Defines the transition of [fillExtrusionHeight]. Default value: 0. Minimum value: 0.
+ * @param fillExtrusionOpacity The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+ * @param fillExtrusionOpacityTransition Defines the transition of [fillExtrusionOpacity]. Default value: 1. Value range: [0, 1]
  * @param fillExtrusionPattern Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
- * @param fillExtrusionRoundedRoof Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
- * @param fillExtrusionTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
- * @param fillExtrusionTranslateTransition Defines the transition of [fillExtrusionTranslate].
- * @param fillExtrusionTranslateAnchor Controls the frame of reference for `fill-extrusion-translate`.
- * @param fillExtrusionVerticalGradient Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
- * @param fillExtrusionVerticalScale A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions.
- * @param fillExtrusionVerticalScaleTransition Defines the transition of [fillExtrusionVerticalScale].
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param fillExtrusionRoundedRoof Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
+ * @param fillExtrusionTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+ * @param fillExtrusionTranslateTransition Defines the transition of [fillExtrusionTranslate]. Default value: [0,0].
+ * @param fillExtrusionTranslateAnchor Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
+ * @param fillExtrusionVerticalGradient Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
+ * @param fillExtrusionVerticalScale A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.
+ * @param fillExtrusionVerticalScaleTransition Defines the transition of [fillExtrusionVerticalScale]. Default value: 1. Minimum value: 0.
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

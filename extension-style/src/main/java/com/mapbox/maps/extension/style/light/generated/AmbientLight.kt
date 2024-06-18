@@ -22,11 +22,11 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorStr
 class AmbientLight internal constructor(override val lightId: String) : AmbientLightDslReceiver, Light() {
 
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    */
   val colorAsColorInt: Int?
     /**
-     * Color of the ambient light.
+     * Color of the ambient light. Default value: "#ffffff".
      *
      * @return color as int
      */
@@ -38,7 +38,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
       return null
     }
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * @param color as int
    */
@@ -47,11 +47,11 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
     setProperty(propertyValue)
   }
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    */
   val color: String?
     /**
-     * Color of the ambient light.
+     * Color of the ambient light. Default value: "#ffffff".
      *
      * @return color as String
      */
@@ -62,7 +62,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
       return null
     }
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * @param color as String
    */
@@ -71,13 +71,13 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
   }
 
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * This is an Expression representation of "color".
    */
   val colorAsExpression: Expression?
     /**
-     * Color of the ambient light.
+     * Color of the ambient light. Default value: "#ffffff".
      *
      * Get the Color property as an Expression
      *
@@ -90,7 +90,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
       return null
     }
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * @param color value of color as Expression
    */
@@ -127,11 +127,11 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * A multiplier for the color of the ambient light.
+   * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    */
   val intensity: Double?
     /**
-     * A multiplier for the color of the ambient light.
+     * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
      *
      * @return intensity as Double
      */
@@ -139,7 +139,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
       return getPropertyValue("intensity")
     }
   /**
-   * A multiplier for the color of the ambient light.
+   * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -148,13 +148,13 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
   }
 
   /**
-   * A multiplier for the color of the ambient light.
+   * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
    * This is an Expression representation of "intensity".
    */
   val intensityAsExpression: Expression?
     /**
-     * A multiplier for the color of the ambient light.
+     * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
      *
      * Get the Intensity property as an Expression
      *
@@ -170,7 +170,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
       return null
     }
   /**
-   * A multiplier for the color of the ambient light.
+   * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -227,21 +227,21 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
 interface AmbientLightDslReceiver {
 
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * @param color as int
    */
   fun color(@ColorInt color: Int): AmbientLight
 
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * @param color as String
    */
   fun color(color: String = "#ffffff"): AmbientLight
 
   /**
-   * Color of the ambient light.
+   * Color of the ambient light. Default value: "#ffffff".
    *
    * @param color value of color as Expression
    */
@@ -260,14 +260,14 @@ interface AmbientLightDslReceiver {
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): AmbientLight
 
   /**
-   * A multiplier for the color of the ambient light.
+   * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity as Double
    */
   fun intensity(intensity: Double = 0.5): AmbientLight
 
   /**
-   * A multiplier for the color of the ambient light.
+   * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */

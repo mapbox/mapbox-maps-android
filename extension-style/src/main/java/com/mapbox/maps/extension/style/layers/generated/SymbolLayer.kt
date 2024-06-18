@@ -247,11 +247,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   // Property getters and setters
 
   /**
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    */
   val iconAllowOverlap: Boolean?
     /**
-     * If true, the icon will be visible even if it collides with other previously drawn symbols.
+     * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
      *
      * Use static method [SymbolLayer.defaultIconAllowOverlap] to get the default property.
      *
@@ -262,7 +262,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconAllowOverlap] to set the default property.
    *
@@ -274,14 +274,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * This is an Expression representation of "icon-allow-overlap".
    *
    */
   val iconAllowOverlapAsExpression: Expression?
     /**
-     * If true, the icon will be visible even if it collides with other previously drawn symbols.
+     * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
      *
      * Get the IconAllowOverlap property as an Expression
      *
@@ -300,7 +300,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconAllowOverlapAsExpression] to set the default property.
    *
@@ -312,11 +312,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    */
   val iconAnchor: IconAnchor?
     /**
-     * Part of the icon placed closest to the anchor.
+     * Part of the icon placed closest to the anchor. Default value: "center".
      *
      * Use static method [SymbolLayer.defaultIconAnchor] to get the default property.
      *
@@ -330,7 +330,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    *
    * Use static method [SymbolLayer.defaultIconAnchor] to set the default property.
    *
@@ -342,14 +342,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    *
    * This is an Expression representation of "icon-anchor".
    *
    */
   val iconAnchorAsExpression: Expression?
     /**
-     * Part of the icon placed closest to the anchor.
+     * Part of the icon placed closest to the anchor. Default value: "center".
      *
      * Get the IconAnchor property as an Expression
      *
@@ -368,7 +368,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    *
    * Use static method [SymbolLayer.defaultIconAnchorAsExpression] to set the default property.
    *
@@ -380,11 +380,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    */
   val iconIgnorePlacement: Boolean?
     /**
-     * If true, other symbols can be visible even if they collide with the icon.
+     * If true, other symbols can be visible even if they collide with the icon. Default value: false.
      *
      * Use static method [SymbolLayer.defaultIconIgnorePlacement] to get the default property.
      *
@@ -395,7 +395,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconIgnorePlacement] to set the default property.
    *
@@ -407,14 +407,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    *
    * This is an Expression representation of "icon-ignore-placement".
    *
    */
   val iconIgnorePlacementAsExpression: Expression?
     /**
-     * If true, other symbols can be visible even if they collide with the icon.
+     * If true, other symbols can be visible even if they collide with the icon. Default value: false.
      *
      * Get the IconIgnorePlacement property as an Expression
      *
@@ -433,7 +433,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconIgnorePlacementAsExpression] to set the default property.
    *
@@ -510,11 +510,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    */
   val iconKeepUpright: Boolean?
     /**
-     * If true, the icon may be flipped to prevent it from being rendered upside-down.
+     * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
      *
      * Use static method [SymbolLayer.defaultIconKeepUpright] to get the default property.
      *
@@ -525,7 +525,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconKeepUpright] to set the default property.
    *
@@ -537,14 +537,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    *
    * This is an Expression representation of "icon-keep-upright".
    *
    */
   val iconKeepUprightAsExpression: Expression?
     /**
-     * If true, the icon may be flipped to prevent it from being rendered upside-down.
+     * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
      *
      * Get the IconKeepUpright property as an Expression
      *
@@ -563,7 +563,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconKeepUprightAsExpression] to set the default property.
    *
@@ -575,11 +575,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    */
   val iconOffset: List<Double>?
     /**
-     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
      *
      * Use static method [SymbolLayer.defaultIconOffset] to get the default property.
      *
@@ -590,7 +590,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultIconOffset] to set the default property.
    *
@@ -602,14 +602,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    *
    * This is an Expression representation of "icon-offset".
    *
    */
   val iconOffsetAsExpression: Expression?
     /**
-     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
      *
      * Get the IconOffset property as an Expression
      *
@@ -628,7 +628,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultIconOffsetAsExpression] to set the default property.
    *
@@ -640,11 +640,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    */
   val iconOptional: Boolean?
     /**
-     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
      *
      * Use static method [SymbolLayer.defaultIconOptional] to get the default property.
      *
@@ -655,7 +655,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconOptional] to set the default property.
    *
@@ -667,14 +667,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    *
    * This is an Expression representation of "icon-optional".
    *
    */
   val iconOptionalAsExpression: Expression?
     /**
-     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
      *
      * Get the IconOptional property as an Expression
      *
@@ -693,7 +693,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    *
    * Use static method [SymbolLayer.defaultIconOptionalAsExpression] to set the default property.
    *
@@ -705,11 +705,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    */
   val iconPadding: Double?
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultIconPadding] to get the default property.
      *
@@ -720,7 +720,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconPadding] to set the default property.
    *
@@ -732,14 +732,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * This is an Expression representation of "icon-padding".
    *
    */
   val iconPaddingAsExpression: Expression?
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      *
      * Get the IconPadding property as an Expression
      *
@@ -758,7 +758,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconPaddingAsExpression] to set the default property.
    *
@@ -770,11 +770,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    */
   val iconPitchAlignment: IconPitchAlignment?
     /**
-     * Orientation of icon when map is pitched.
+     * Orientation of icon when map is pitched. Default value: "auto".
      *
      * Use static method [SymbolLayer.defaultIconPitchAlignment] to get the default property.
      *
@@ -788,7 +788,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultIconPitchAlignment] to set the default property.
    *
@@ -800,14 +800,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    *
    * This is an Expression representation of "icon-pitch-alignment".
    *
    */
   val iconPitchAlignmentAsExpression: Expression?
     /**
-     * Orientation of icon when map is pitched.
+     * Orientation of icon when map is pitched. Default value: "auto".
      *
      * Get the IconPitchAlignment property as an Expression
      *
@@ -826,7 +826,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultIconPitchAlignmentAsExpression] to set the default property.
    *
@@ -838,11 +838,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    */
   val iconRotate: Double?
     /**
-     * Rotates the icon clockwise.
+     * Rotates the icon clockwise. Default value: 0.
      *
      * Use static method [SymbolLayer.defaultIconRotate] to get the default property.
      *
@@ -853,7 +853,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultIconRotate] to set the default property.
    *
@@ -865,14 +865,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    *
    * This is an Expression representation of "icon-rotate".
    *
    */
   val iconRotateAsExpression: Expression?
     /**
-     * Rotates the icon clockwise.
+     * Rotates the icon clockwise. Default value: 0.
      *
      * Get the IconRotate property as an Expression
      *
@@ -891,7 +891,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultIconRotateAsExpression] to set the default property.
    *
@@ -903,11 +903,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    */
   val iconRotationAlignment: IconRotationAlignment?
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of icons.
+     * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
      *
      * Use static method [SymbolLayer.defaultIconRotationAlignment] to get the default property.
      *
@@ -921,7 +921,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultIconRotationAlignment] to set the default property.
    *
@@ -933,14 +933,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    *
    * This is an Expression representation of "icon-rotation-alignment".
    *
    */
   val iconRotationAlignmentAsExpression: Expression?
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of icons.
+     * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
      *
      * Get the IconRotationAlignment property as an Expression
      *
@@ -959,7 +959,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultIconRotationAlignmentAsExpression] to set the default property.
    *
@@ -971,11 +971,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    */
   val iconSize: Double?
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultIconSize] to get the default property.
      *
@@ -986,7 +986,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconSize] to set the default property.
    *
@@ -998,14 +998,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    *
    * This is an Expression representation of "icon-size".
    *
    */
   val iconSizeAsExpression: Expression?
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
      *
      * Get the IconSize property as an Expression
      *
@@ -1024,7 +1024,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconSizeAsExpression] to set the default property.
    *
@@ -1036,11 +1036,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    */
   val iconTextFit: IconTextFit?
     /**
-     * Scales the icon to fit around the associated text.
+     * Scales the icon to fit around the associated text. Default value: "none".
      *
      * Use static method [SymbolLayer.defaultIconTextFit] to get the default property.
      *
@@ -1054,7 +1054,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    *
    * Use static method [SymbolLayer.defaultIconTextFit] to set the default property.
    *
@@ -1066,14 +1066,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    *
    * This is an Expression representation of "icon-text-fit".
    *
    */
   val iconTextFitAsExpression: Expression?
     /**
-     * Scales the icon to fit around the associated text.
+     * Scales the icon to fit around the associated text. Default value: "none".
      *
      * Get the IconTextFit property as an Expression
      *
@@ -1092,7 +1092,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    *
    * Use static method [SymbolLayer.defaultIconTextFitAsExpression] to set the default property.
    *
@@ -1104,11 +1104,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    */
   val iconTextFitPadding: List<Double>?
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
      *
      * Use static method [SymbolLayer.defaultIconTextFitPadding] to get the default property.
      *
@@ -1119,7 +1119,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    *
    * Use static method [SymbolLayer.defaultIconTextFitPadding] to set the default property.
    *
@@ -1131,14 +1131,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    *
    * This is an Expression representation of "icon-text-fit-padding".
    *
    */
   val iconTextFitPaddingAsExpression: Expression?
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
      *
      * Get the IconTextFitPadding property as an Expression
      *
@@ -1157,7 +1157,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    *
    * Use static method [SymbolLayer.defaultIconTextFitPaddingAsExpression] to set the default property.
    *
@@ -1169,11 +1169,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    */
   val symbolAvoidEdges: Boolean?
     /**
-     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
      *
      * Use static method [SymbolLayer.defaultSymbolAvoidEdges] to get the default property.
      *
@@ -1184,7 +1184,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    *
    * Use static method [SymbolLayer.defaultSymbolAvoidEdges] to set the default property.
    *
@@ -1196,14 +1196,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    *
    * This is an Expression representation of "symbol-avoid-edges".
    *
    */
   val symbolAvoidEdgesAsExpression: Expression?
     /**
-     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
      *
      * Get the SymbolAvoidEdges property as an Expression
      *
@@ -1222,7 +1222,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    *
    * Use static method [SymbolLayer.defaultSymbolAvoidEdgesAsExpression] to set the default property.
    *
@@ -1234,11 +1234,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    */
   val symbolPlacement: SymbolPlacement?
     /**
-     * Label placement relative to its geometry.
+     * Label placement relative to its geometry. Default value: "point".
      *
      * Use static method [SymbolLayer.defaultSymbolPlacement] to get the default property.
      *
@@ -1252,7 +1252,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    *
    * Use static method [SymbolLayer.defaultSymbolPlacement] to set the default property.
    *
@@ -1264,14 +1264,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    *
    * This is an Expression representation of "symbol-placement".
    *
    */
   val symbolPlacementAsExpression: Expression?
     /**
-     * Label placement relative to its geometry.
+     * Label placement relative to its geometry. Default value: "point".
      *
      * Get the SymbolPlacement property as an Expression
      *
@@ -1290,7 +1290,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    *
    * Use static method [SymbolLayer.defaultSymbolPlacementAsExpression] to set the default property.
    *
@@ -1367,11 +1367,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
    */
   val symbolSpacing: Double?
     /**
-     * Distance between two symbol anchors.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
      *
      * Use static method [SymbolLayer.defaultSymbolSpacing] to get the default property.
      *
@@ -1382,7 +1382,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
    *
    * Use static method [SymbolLayer.defaultSymbolSpacing] to set the default property.
    *
@@ -1394,14 +1394,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
    *
    * This is an Expression representation of "symbol-spacing".
    *
    */
   val symbolSpacingAsExpression: Expression?
     /**
-     * Distance between two symbol anchors.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
      *
      * Get the SymbolSpacing property as an Expression
      *
@@ -1420,7 +1420,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
    *
    * Use static method [SymbolLayer.defaultSymbolSpacingAsExpression] to set the default property.
    *
@@ -1432,11 +1432,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    */
   val symbolZElevate: Boolean?
     /**
-     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
      *
      * Use static method [SymbolLayer.defaultSymbolZElevate] to get the default property.
      *
@@ -1447,7 +1447,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    *
    * Use static method [SymbolLayer.defaultSymbolZElevate] to set the default property.
    *
@@ -1459,14 +1459,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    *
    * This is an Expression representation of "symbol-z-elevate".
    *
    */
   val symbolZElevateAsExpression: Expression?
     /**
-     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
      *
      * Get the SymbolZElevate property as an Expression
      *
@@ -1485,7 +1485,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    *
    * Use static method [SymbolLayer.defaultSymbolZElevateAsExpression] to set the default property.
    *
@@ -1497,11 +1497,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    */
   val symbolZOrder: SymbolZOrder?
     /**
-     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
      *
      * Use static method [SymbolLayer.defaultSymbolZOrder] to get the default property.
      *
@@ -1515,7 +1515,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultSymbolZOrder] to set the default property.
    *
@@ -1527,14 +1527,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    *
    * This is an Expression representation of "symbol-z-order".
    *
    */
   val symbolZOrderAsExpression: Expression?
     /**
-     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
      *
      * Get the SymbolZOrder property as an Expression
      *
@@ -1553,7 +1553,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultSymbolZOrderAsExpression] to set the default property.
    *
@@ -1565,11 +1565,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    */
   val textAllowOverlap: Boolean?
     /**
-     * If true, the text will be visible even if it collides with other previously drawn symbols.
+     * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
      *
      * Use static method [SymbolLayer.defaultTextAllowOverlap] to get the default property.
      *
@@ -1580,7 +1580,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * Use static method [SymbolLayer.defaultTextAllowOverlap] to set the default property.
    *
@@ -1592,14 +1592,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * This is an Expression representation of "text-allow-overlap".
    *
    */
   val textAllowOverlapAsExpression: Expression?
     /**
-     * If true, the text will be visible even if it collides with other previously drawn symbols.
+     * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
      *
      * Get the TextAllowOverlap property as an Expression
      *
@@ -1618,7 +1618,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * Use static method [SymbolLayer.defaultTextAllowOverlapAsExpression] to set the default property.
    *
@@ -1630,11 +1630,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    */
   val textAnchor: TextAnchor?
     /**
-     * Part of the text placed closest to the anchor.
+     * Part of the text placed closest to the anchor. Default value: "center".
      *
      * Use static method [SymbolLayer.defaultTextAnchor] to get the default property.
      *
@@ -1648,7 +1648,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    *
    * Use static method [SymbolLayer.defaultTextAnchor] to set the default property.
    *
@@ -1660,14 +1660,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    *
    * This is an Expression representation of "text-anchor".
    *
    */
   val textAnchorAsExpression: Expression?
     /**
-     * Part of the text placed closest to the anchor.
+     * Part of the text placed closest to the anchor. Default value: "center".
      *
      * Get the TextAnchor property as an Expression
      *
@@ -1686,7 +1686,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    *
    * Use static method [SymbolLayer.defaultTextAnchorAsExpression] to set the default property.
    *
@@ -1698,11 +1698,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    */
   val textField: Formatted?
     /**
-     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
      *
      * Use static method [SymbolLayer.defaultTextField] to get the default property.
      *
@@ -1716,7 +1716,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * Use static method [SymbolLayer.defaultTextField] to set the default property.
    *
@@ -1728,14 +1728,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * This is an Expression representation of "text-field".
    *
    */
   val textFieldAsExpression: Expression?
     /**
-     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
      *
      * Get the TextField property as an Expression
      *
@@ -1751,7 +1751,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * Use static method [SymbolLayer.defaultTextFieldAsExpression] to set the default property.
    *
@@ -1763,11 +1763,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    */
   val textFieldAsString: String?
     /**
-     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
      *
      * Use static method [SymbolLayer.defaultTextFieldAsString] to get the default property.
      *
@@ -1781,7 +1781,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * Set the TextField property as String.
    *
@@ -1867,11 +1867,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    */
   val textIgnorePlacement: Boolean?
     /**
-     * If true, other symbols can be visible even if they collide with the text.
+     * If true, other symbols can be visible even if they collide with the text. Default value: false.
      *
      * Use static method [SymbolLayer.defaultTextIgnorePlacement] to get the default property.
      *
@@ -1882,7 +1882,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    *
    * Use static method [SymbolLayer.defaultTextIgnorePlacement] to set the default property.
    *
@@ -1894,14 +1894,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    *
    * This is an Expression representation of "text-ignore-placement".
    *
    */
   val textIgnorePlacementAsExpression: Expression?
     /**
-     * If true, other symbols can be visible even if they collide with the text.
+     * If true, other symbols can be visible even if they collide with the text. Default value: false.
      *
      * Get the TextIgnorePlacement property as an Expression
      *
@@ -1920,7 +1920,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    *
    * Use static method [SymbolLayer.defaultTextIgnorePlacementAsExpression] to set the default property.
    *
@@ -1932,11 +1932,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    */
   val textJustify: TextJustify?
     /**
-     * Text justification options.
+     * Text justification options. Default value: "center".
      *
      * Use static method [SymbolLayer.defaultTextJustify] to get the default property.
      *
@@ -1950,7 +1950,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    *
    * Use static method [SymbolLayer.defaultTextJustify] to set the default property.
    *
@@ -1962,14 +1962,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    *
    * This is an Expression representation of "text-justify".
    *
    */
   val textJustifyAsExpression: Expression?
     /**
-     * Text justification options.
+     * Text justification options. Default value: "center".
      *
      * Get the TextJustify property as an Expression
      *
@@ -1988,7 +1988,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    *
    * Use static method [SymbolLayer.defaultTextJustifyAsExpression] to set the default property.
    *
@@ -2000,11 +2000,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    */
   val textKeepUpright: Boolean?
     /**
-     * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+     * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
      *
      * Use static method [SymbolLayer.defaultTextKeepUpright] to get the default property.
      *
@@ -2015,7 +2015,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    *
    * Use static method [SymbolLayer.defaultTextKeepUpright] to set the default property.
    *
@@ -2027,14 +2027,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    *
    * This is an Expression representation of "text-keep-upright".
    *
    */
   val textKeepUprightAsExpression: Expression?
     /**
-     * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+     * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
      *
      * Get the TextKeepUpright property as an Expression
      *
@@ -2053,7 +2053,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    *
    * Use static method [SymbolLayer.defaultTextKeepUprightAsExpression] to set the default property.
    *
@@ -2065,11 +2065,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    */
   val textLetterSpacing: Double?
     /**
-     * Text tracking amount.
+     * Text tracking amount. Default value: 0.
      *
      * Use static method [SymbolLayer.defaultTextLetterSpacing] to get the default property.
      *
@@ -2080,7 +2080,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultTextLetterSpacing] to set the default property.
    *
@@ -2092,14 +2092,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    *
    * This is an Expression representation of "text-letter-spacing".
    *
    */
   val textLetterSpacingAsExpression: Expression?
     /**
-     * Text tracking amount.
+     * Text tracking amount. Default value: 0.
      *
      * Get the TextLetterSpacing property as an Expression
      *
@@ -2118,7 +2118,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultTextLetterSpacingAsExpression] to set the default property.
    *
@@ -2130,11 +2130,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    */
   val textLineHeight: Double?
     /**
-     * Text leading value for multi-line text.
+     * Text leading value for multi-line text. Default value: 1.2.
      *
      * Use static method [SymbolLayer.defaultTextLineHeight] to get the default property.
      *
@@ -2145,7 +2145,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    *
    * Use static method [SymbolLayer.defaultTextLineHeight] to set the default property.
    *
@@ -2157,14 +2157,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    *
    * This is an Expression representation of "text-line-height".
    *
    */
   val textLineHeightAsExpression: Expression?
     /**
-     * Text leading value for multi-line text.
+     * Text leading value for multi-line text. Default value: 1.2.
      *
      * Get the TextLineHeight property as an Expression
      *
@@ -2183,7 +2183,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    *
    * Use static method [SymbolLayer.defaultTextLineHeightAsExpression] to set the default property.
    *
@@ -2195,11 +2195,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. Default value: 45.
    */
   val textMaxAngle: Double?
     /**
-     * Maximum angle change between adjacent characters.
+     * Maximum angle change between adjacent characters. Default value: 45.
      *
      * Use static method [SymbolLayer.defaultTextMaxAngle] to get the default property.
      *
@@ -2210,7 +2210,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. Default value: 45.
    *
    * Use static method [SymbolLayer.defaultTextMaxAngle] to set the default property.
    *
@@ -2222,14 +2222,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. Default value: 45.
    *
    * This is an Expression representation of "text-max-angle".
    *
    */
   val textMaxAngleAsExpression: Expression?
     /**
-     * Maximum angle change between adjacent characters.
+     * Maximum angle change between adjacent characters. Default value: 45.
      *
      * Get the TextMaxAngle property as an Expression
      *
@@ -2248,7 +2248,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. Default value: 45.
    *
    * Use static method [SymbolLayer.defaultTextMaxAngleAsExpression] to set the default property.
    *
@@ -2260,11 +2260,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    */
   val textMaxWidth: Double?
     /**
-     * The maximum line width for text wrapping.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultTextMaxWidth] to get the default property.
      *
@@ -2275,7 +2275,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextMaxWidth] to set the default property.
    *
@@ -2287,14 +2287,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    *
    * This is an Expression representation of "text-max-width".
    *
    */
   val textMaxWidthAsExpression: Expression?
     /**
-     * The maximum line width for text wrapping.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
      *
      * Get the TextMaxWidth property as an Expression
      *
@@ -2313,7 +2313,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextMaxWidthAsExpression] to set the default property.
    *
@@ -2325,11 +2325,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    */
   val textOffset: List<Double>?
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
      *
      * Use static method [SymbolLayer.defaultTextOffset] to get the default property.
      *
@@ -2340,7 +2340,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultTextOffset] to set the default property.
    *
@@ -2352,14 +2352,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    *
    * This is an Expression representation of "text-offset".
    *
    */
   val textOffsetAsExpression: Expression?
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
      *
      * Get the TextOffset property as an Expression
      *
@@ -2378,7 +2378,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultTextOffsetAsExpression] to set the default property.
    *
@@ -2390,11 +2390,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    */
   val textOptional: Boolean?
     /**
-     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
      *
      * Use static method [SymbolLayer.defaultTextOptional] to get the default property.
      *
@@ -2405,7 +2405,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    *
    * Use static method [SymbolLayer.defaultTextOptional] to set the default property.
    *
@@ -2417,14 +2417,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    *
    * This is an Expression representation of "text-optional".
    *
    */
   val textOptionalAsExpression: Expression?
     /**
-     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
      *
      * Get the TextOptional property as an Expression
      *
@@ -2443,7 +2443,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    *
    * Use static method [SymbolLayer.defaultTextOptionalAsExpression] to set the default property.
    *
@@ -2455,11 +2455,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    */
   val textPadding: Double?
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultTextPadding] to get the default property.
      *
@@ -2470,7 +2470,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextPadding] to set the default property.
    *
@@ -2482,14 +2482,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * This is an Expression representation of "text-padding".
    *
    */
   val textPaddingAsExpression: Expression?
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      *
      * Get the TextPadding property as an Expression
      *
@@ -2508,7 +2508,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextPaddingAsExpression] to set the default property.
    *
@@ -2520,11 +2520,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    */
   val textPitchAlignment: TextPitchAlignment?
     /**
-     * Orientation of text when map is pitched.
+     * Orientation of text when map is pitched. Default value: "auto".
      *
      * Use static method [SymbolLayer.defaultTextPitchAlignment] to get the default property.
      *
@@ -2538,7 +2538,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultTextPitchAlignment] to set the default property.
    *
@@ -2550,14 +2550,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    *
    * This is an Expression representation of "text-pitch-alignment".
    *
    */
   val textPitchAlignmentAsExpression: Expression?
     /**
-     * Orientation of text when map is pitched.
+     * Orientation of text when map is pitched. Default value: "auto".
      *
      * Get the TextPitchAlignment property as an Expression
      *
@@ -2576,7 +2576,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultTextPitchAlignmentAsExpression] to set the default property.
    *
@@ -2588,11 +2588,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    */
   val textRadialOffset: Double?
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
      *
      * Use static method [SymbolLayer.defaultTextRadialOffset] to get the default property.
      *
@@ -2603,7 +2603,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultTextRadialOffset] to set the default property.
    *
@@ -2615,14 +2615,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    *
    * This is an Expression representation of "text-radial-offset".
    *
    */
   val textRadialOffsetAsExpression: Expression?
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
      *
      * Get the TextRadialOffset property as an Expression
      *
@@ -2641,7 +2641,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultTextRadialOffsetAsExpression] to set the default property.
    *
@@ -2653,11 +2653,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    */
   val textRotate: Double?
     /**
-     * Rotates the text clockwise.
+     * Rotates the text clockwise. Default value: 0.
      *
      * Use static method [SymbolLayer.defaultTextRotate] to get the default property.
      *
@@ -2668,7 +2668,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultTextRotate] to set the default property.
    *
@@ -2680,14 +2680,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    *
    * This is an Expression representation of "text-rotate".
    *
    */
   val textRotateAsExpression: Expression?
     /**
-     * Rotates the text clockwise.
+     * Rotates the text clockwise. Default value: 0.
      *
      * Get the TextRotate property as an Expression
      *
@@ -2706,7 +2706,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    *
    * Use static method [SymbolLayer.defaultTextRotateAsExpression] to set the default property.
    *
@@ -2718,11 +2718,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    */
   val textRotationAlignment: TextRotationAlignment?
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
      *
      * Use static method [SymbolLayer.defaultTextRotationAlignment] to get the default property.
      *
@@ -2736,7 +2736,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultTextRotationAlignment] to set the default property.
    *
@@ -2748,14 +2748,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    *
    * This is an Expression representation of "text-rotation-alignment".
    *
    */
   val textRotationAlignmentAsExpression: Expression?
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
      *
      * Get the TextRotationAlignment property as an Expression
      *
@@ -2774,7 +2774,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    *
    * Use static method [SymbolLayer.defaultTextRotationAlignmentAsExpression] to set the default property.
    *
@@ -2786,11 +2786,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    */
   val textSize: Double?
     /**
-     * Font size.
+     * Font size. Default value: 16. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultTextSize] to get the default property.
      *
@@ -2801,7 +2801,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextSize] to set the default property.
    *
@@ -2813,14 +2813,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    *
    * This is an Expression representation of "text-size".
    *
    */
   val textSizeAsExpression: Expression?
     /**
-     * Font size.
+     * Font size. Default value: 16. Minimum value: 0.
      *
      * Get the TextSize property as an Expression
      *
@@ -2839,7 +2839,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextSizeAsExpression] to set the default property.
    *
@@ -2851,11 +2851,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    */
   val textTransform: TextTransform?
     /**
-     * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+     * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
      *
      * Use static method [SymbolLayer.defaultTextTransform] to get the default property.
      *
@@ -2869,7 +2869,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    *
    * Use static method [SymbolLayer.defaultTextTransform] to set the default property.
    *
@@ -2881,14 +2881,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    *
    * This is an Expression representation of "text-transform".
    *
    */
   val textTransformAsExpression: Expression?
     /**
-     * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+     * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
      *
      * Get the TextTransform property as an Expression
      *
@@ -2907,7 +2907,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    *
    * Use static method [SymbolLayer.defaultTextTransformAsExpression] to set the default property.
    *
@@ -3049,11 +3049,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    */
   val iconColor: String?
     /**
-     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
      *
      * Use static method [SymbolLayer.defaultIconColor] to get the default property.
      *
@@ -3067,7 +3067,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * Use static method [SymbolLayer.defaultIconColor] to set the default property.
    *
@@ -3079,14 +3079,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * This is an Expression representation of "icon-color".
    *
    */
   val iconColorAsExpression: Expression?
     /**
-     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
      *
      * Get the IconColor property as an Expression
      *
@@ -3102,7 +3102,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * Use static method [SymbolLayer.defaultIconColorAsExpression] to set the default property.
    *
@@ -3114,11 +3114,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    */
   val iconColorAsColorInt: Int?
     /**
-     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
      *
      * Use static method [SymbolLayer.defaultIconColorAsColorInt] to get the default property.
      *
@@ -3133,7 +3133,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * Use static method [SymbolLayer.defaultIconColorAsColorInt] to set the default property.
    *
@@ -3179,11 +3179,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    */
   val iconColorSaturation: Double?
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
      *
      * Use static method [SymbolLayer.defaultIconColorSaturation] to get the default property.
      *
@@ -3194,7 +3194,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconColorSaturation] to set the default property.
    *
@@ -3206,14 +3206,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "icon-color-saturation".
    *
    */
   val iconColorSaturationAsExpression: Expression?
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
      *
      * Get the IconColorSaturation property as an Expression
      *
@@ -3232,7 +3232,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconColorSaturationAsExpression] to set the default property.
    *
@@ -3278,11 +3278,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    */
   val iconEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultIconEmissiveStrength] to get the default property.
      *
@@ -3293,7 +3293,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrength] to set the default property.
    *
@@ -3305,14 +3305,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * This is an Expression representation of "icon-emissive-strength".
    *
    */
   val iconEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      *
      * Get the IconEmissiveStrength property as an Expression
      *
@@ -3331,7 +3331,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to set the default property.
    *
@@ -3377,11 +3377,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    */
   val iconHaloBlur: Double?
     /**
-     * Fade out the halo towards the outside.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultIconHaloBlur] to get the default property.
      *
@@ -3392,7 +3392,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconHaloBlur] to set the default property.
    *
@@ -3404,14 +3404,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "icon-halo-blur".
    *
    */
   val iconHaloBlurAsExpression: Expression?
     /**
-     * Fade out the halo towards the outside.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
      *
      * Get the IconHaloBlur property as an Expression
      *
@@ -3430,7 +3430,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconHaloBlurAsExpression] to set the default property.
    *
@@ -3476,11 +3476,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   val iconHaloColor: String?
     /**
-     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
      *
      * Use static method [SymbolLayer.defaultIconHaloColor] to get the default property.
      *
@@ -3494,7 +3494,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [SymbolLayer.defaultIconHaloColor] to set the default property.
    *
@@ -3506,14 +3506,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * This is an Expression representation of "icon-halo-color".
    *
    */
   val iconHaloColorAsExpression: Expression?
     /**
-     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
      *
      * Get the IconHaloColor property as an Expression
      *
@@ -3529,7 +3529,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [SymbolLayer.defaultIconHaloColorAsExpression] to set the default property.
    *
@@ -3541,11 +3541,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   val iconHaloColorAsColorInt: Int?
     /**
-     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
      *
      * Use static method [SymbolLayer.defaultIconHaloColorAsColorInt] to get the default property.
      *
@@ -3560,7 +3560,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [SymbolLayer.defaultIconHaloColorAsColorInt] to set the default property.
    *
@@ -3606,11 +3606,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    */
   val iconHaloWidth: Double?
     /**
-     * Distance of halo to the icon outline.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultIconHaloWidth] to get the default property.
      *
@@ -3621,7 +3621,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconHaloWidth] to set the default property.
    *
@@ -3633,14 +3633,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "icon-halo-width".
    *
    */
   val iconHaloWidthAsExpression: Expression?
     /**
-     * Distance of halo to the icon outline.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
      *
      * Get the IconHaloWidth property as an Expression
      *
@@ -3659,7 +3659,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultIconHaloWidthAsExpression] to set the default property.
    *
@@ -3705,11 +3705,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    */
   val iconImageCrossFade: Double?
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
      *
      * Use static method [SymbolLayer.defaultIconImageCrossFade] to get the default property.
      *
@@ -3720,7 +3720,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconImageCrossFade] to set the default property.
    *
@@ -3732,14 +3732,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "icon-image-cross-fade".
    *
    */
   val iconImageCrossFadeAsExpression: Expression?
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
      *
      * Get the IconImageCrossFade property as an Expression
      *
@@ -3758,7 +3758,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconImageCrossFadeAsExpression] to set the default property.
    *
@@ -3804,11 +3804,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    */
   val iconOpacity: Double?
     /**
-     * The opacity at which the icon will be drawn.
+     * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Use static method [SymbolLayer.defaultIconOpacity] to get the default property.
      *
@@ -3819,7 +3819,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconOpacity] to set the default property.
    *
@@ -3831,14 +3831,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "icon-opacity".
    *
    */
   val iconOpacityAsExpression: Expression?
     /**
-     * The opacity at which the icon will be drawn.
+     * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Get the IconOpacity property as an Expression
      *
@@ -3857,7 +3857,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconOpacityAsExpression] to set the default property.
    *
@@ -3903,11 +3903,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    */
   val iconTranslate: List<Double>?
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      *
      * Use static method [SymbolLayer.defaultIconTranslate] to get the default property.
      *
@@ -3918,7 +3918,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultIconTranslate] to set the default property.
    *
@@ -3930,14 +3930,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * This is an Expression representation of "icon-translate".
    *
    */
   val iconTranslateAsExpression: Expression?
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      *
      * Get the IconTranslate property as an Expression
      *
@@ -3956,7 +3956,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultIconTranslateAsExpression] to set the default property.
    *
@@ -4002,11 +4002,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the frame of reference for `icon-translate`.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    */
   val iconTranslateAnchor: IconTranslateAnchor?
     /**
-     * Controls the frame of reference for `icon-translate`.
+     * Controls the frame of reference for `icon-translate`. Default value: "map".
      *
      * Use static method [SymbolLayer.defaultIconTranslateAnchor] to get the default property.
      *
@@ -4020,7 +4020,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the frame of reference for `icon-translate`.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    *
    * Use static method [SymbolLayer.defaultIconTranslateAnchor] to set the default property.
    *
@@ -4032,14 +4032,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the frame of reference for `icon-translate`.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    *
    * This is an Expression representation of "icon-translate-anchor".
    *
    */
   val iconTranslateAnchorAsExpression: Expression?
     /**
-     * Controls the frame of reference for `icon-translate`.
+     * Controls the frame of reference for `icon-translate`. Default value: "map".
      *
      * Get the IconTranslateAnchor property as an Expression
      *
@@ -4058,7 +4058,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the frame of reference for `icon-translate`.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    *
    * Use static method [SymbolLayer.defaultIconTranslateAnchorAsExpression] to set the default property.
    *
@@ -4070,11 +4070,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    */
   val textColor: String?
     /**
-     * The color with which the text will be drawn.
+     * The color with which the text will be drawn. Default value: "#000000".
      *
      * Use static method [SymbolLayer.defaultTextColor] to get the default property.
      *
@@ -4088,7 +4088,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * Use static method [SymbolLayer.defaultTextColor] to set the default property.
    *
@@ -4100,14 +4100,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * This is an Expression representation of "text-color".
    *
    */
   val textColorAsExpression: Expression?
     /**
-     * The color with which the text will be drawn.
+     * The color with which the text will be drawn. Default value: "#000000".
      *
      * Get the TextColor property as an Expression
      *
@@ -4123,7 +4123,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * Use static method [SymbolLayer.defaultTextColorAsExpression] to set the default property.
    *
@@ -4135,11 +4135,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    */
   val textColorAsColorInt: Int?
     /**
-     * The color with which the text will be drawn.
+     * The color with which the text will be drawn. Default value: "#000000".
      *
      * Use static method [SymbolLayer.defaultTextColorAsColorInt] to get the default property.
      *
@@ -4154,7 +4154,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * Use static method [SymbolLayer.defaultTextColorAsColorInt] to set the default property.
    *
@@ -4200,11 +4200,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    */
   val textEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultTextEmissiveStrength] to get the default property.
      *
@@ -4215,7 +4215,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrength] to set the default property.
    *
@@ -4227,14 +4227,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * This is an Expression representation of "text-emissive-strength".
    *
    */
   val textEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      *
      * Get the TextEmissiveStrength property as an Expression
      *
@@ -4253,7 +4253,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to set the default property.
    *
@@ -4299,11 +4299,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    */
   val textHaloBlur: Double?
     /**
-     * The halo's fadeout distance towards the outside.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultTextHaloBlur] to get the default property.
      *
@@ -4314,7 +4314,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextHaloBlur] to set the default property.
    *
@@ -4326,14 +4326,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "text-halo-blur".
    *
    */
   val textHaloBlurAsExpression: Expression?
     /**
-     * The halo's fadeout distance towards the outside.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
      *
      * Get the TextHaloBlur property as an Expression
      *
@@ -4352,7 +4352,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextHaloBlurAsExpression] to set the default property.
    *
@@ -4398,11 +4398,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   val textHaloColor: String?
     /**
-     * The color of the text's halo, which helps it stand out from backgrounds.
+     * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
      *
      * Use static method [SymbolLayer.defaultTextHaloColor] to get the default property.
      *
@@ -4416,7 +4416,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [SymbolLayer.defaultTextHaloColor] to set the default property.
    *
@@ -4428,14 +4428,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * This is an Expression representation of "text-halo-color".
    *
    */
   val textHaloColorAsExpression: Expression?
     /**
-     * The color of the text's halo, which helps it stand out from backgrounds.
+     * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
      *
      * Get the TextHaloColor property as an Expression
      *
@@ -4451,7 +4451,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [SymbolLayer.defaultTextHaloColorAsExpression] to set the default property.
    *
@@ -4463,11 +4463,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   val textHaloColorAsColorInt: Int?
     /**
-     * The color of the text's halo, which helps it stand out from backgrounds.
+     * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
      *
      * Use static method [SymbolLayer.defaultTextHaloColorAsColorInt] to get the default property.
      *
@@ -4482,7 +4482,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [SymbolLayer.defaultTextHaloColorAsColorInt] to set the default property.
    *
@@ -4528,11 +4528,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    */
   val textHaloWidth: Double?
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
      *
      * Use static method [SymbolLayer.defaultTextHaloWidth] to get the default property.
      *
@@ -4543,7 +4543,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextHaloWidth] to set the default property.
    *
@@ -4555,14 +4555,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "text-halo-width".
    *
    */
   val textHaloWidthAsExpression: Expression?
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
      *
      * Get the TextHaloWidth property as an Expression
      *
@@ -4581,7 +4581,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * Use static method [SymbolLayer.defaultTextHaloWidthAsExpression] to set the default property.
    *
@@ -4627,11 +4627,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    */
   val textOpacity: Double?
     /**
-     * The opacity at which the text will be drawn.
+     * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Use static method [SymbolLayer.defaultTextOpacity] to get the default property.
      *
@@ -4642,7 +4642,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultTextOpacity] to set the default property.
    *
@@ -4654,14 +4654,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "text-opacity".
    *
    */
   val textOpacityAsExpression: Expression?
     /**
-     * The opacity at which the text will be drawn.
+     * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Get the TextOpacity property as an Expression
      *
@@ -4680,7 +4680,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultTextOpacityAsExpression] to set the default property.
    *
@@ -4726,11 +4726,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    */
   val textTranslate: List<Double>?
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      *
      * Use static method [SymbolLayer.defaultTextTranslate] to get the default property.
      *
@@ -4741,7 +4741,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultTextTranslate] to set the default property.
    *
@@ -4753,14 +4753,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * This is an Expression representation of "text-translate".
    *
    */
   val textTranslateAsExpression: Expression?
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      *
      * Get the TextTranslate property as an Expression
      *
@@ -4779,7 +4779,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * Use static method [SymbolLayer.defaultTextTranslateAsExpression] to set the default property.
    *
@@ -4825,11 +4825,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the frame of reference for `text-translate`.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    */
   val textTranslateAnchor: TextTranslateAnchor?
     /**
-     * Controls the frame of reference for `text-translate`.
+     * Controls the frame of reference for `text-translate`. Default value: "map".
      *
      * Use static method [SymbolLayer.defaultTextTranslateAnchor] to get the default property.
      *
@@ -4843,7 +4843,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the frame of reference for `text-translate`.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    *
    * Use static method [SymbolLayer.defaultTextTranslateAnchor] to set the default property.
    *
@@ -4855,14 +4855,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the frame of reference for `text-translate`.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    *
    * This is an Expression representation of "text-translate-anchor".
    *
    */
   val textTranslateAnchorAsExpression: Expression?
     /**
-     * Controls the frame of reference for `text-translate`.
+     * Controls the frame of reference for `text-translate`. Default value: "map".
      *
      * Get the TextTranslateAnchor property as an Expression
      *
@@ -4881,7 +4881,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the frame of reference for `text-translate`.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    *
    * Use static method [SymbolLayer.defaultTextTranslateAnchorAsExpression] to set the default property.
    *
@@ -4952,11 +4952,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "maxzoom").silentUnwrap()
 
     /**
-     * If true, the icon will be visible even if it collides with other previously drawn symbols.
+     * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
      */
     val defaultIconAllowOverlap: Boolean?
       /**
-       * If true, the icon will be visible even if it collides with other previously drawn symbols.
+       * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
        *
        * Get the default value of IconAllowOverlap property
        *
@@ -4967,7 +4967,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the icon will be visible even if it collides with other previously drawn symbols.
+     * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
      *
      * This is an Expression representation of "icon-allow-overlap".
      *
@@ -4989,11 +4989,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Part of the icon placed closest to the anchor.
+     * Part of the icon placed closest to the anchor. Default value: "center".
      */
     val defaultIconAnchor: IconAnchor?
       /**
-       * Part of the icon placed closest to the anchor.
+       * Part of the icon placed closest to the anchor. Default value: "center".
        *
        * Get the default value of IconAnchor property
        *
@@ -5007,7 +5007,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Part of the icon placed closest to the anchor.
+     * Part of the icon placed closest to the anchor. Default value: "center".
      *
      * This is an Expression representation of "icon-anchor".
      *
@@ -5029,11 +5029,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, other symbols can be visible even if they collide with the icon.
+     * If true, other symbols can be visible even if they collide with the icon. Default value: false.
      */
     val defaultIconIgnorePlacement: Boolean?
       /**
-       * If true, other symbols can be visible even if they collide with the icon.
+       * If true, other symbols can be visible even if they collide with the icon. Default value: false.
        *
        * Get the default value of IconIgnorePlacement property
        *
@@ -5044,7 +5044,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, other symbols can be visible even if they collide with the icon.
+     * If true, other symbols can be visible even if they collide with the icon. Default value: false.
      *
      * This is an Expression representation of "icon-ignore-placement".
      *
@@ -5103,11 +5103,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the icon may be flipped to prevent it from being rendered upside-down.
+     * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
      */
     val defaultIconKeepUpright: Boolean?
       /**
-       * If true, the icon may be flipped to prevent it from being rendered upside-down.
+       * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
        *
        * Get the default value of IconKeepUpright property
        *
@@ -5118,7 +5118,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the icon may be flipped to prevent it from being rendered upside-down.
+     * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
      *
      * This is an Expression representation of "icon-keep-upright".
      *
@@ -5140,11 +5140,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
      */
     val defaultIconOffset: List<Double>?
       /**
-       * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+       * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
        *
        * Get the default value of IconOffset property
        *
@@ -5155,7 +5155,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+     * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
      *
      * This is an Expression representation of "icon-offset".
      *
@@ -5177,11 +5177,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
      */
     val defaultIconOptional: Boolean?
       /**
-       * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+       * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
        *
        * Get the default value of IconOptional property
        *
@@ -5192,7 +5192,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+     * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
      *
      * This is an Expression representation of "icon-optional".
      *
@@ -5214,11 +5214,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      */
     val defaultIconPadding: Double?
       /**
-       * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+       * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
        *
        * Get the default value of IconPadding property
        *
@@ -5229,7 +5229,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      *
      * This is an Expression representation of "icon-padding".
      *
@@ -5251,11 +5251,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Orientation of icon when map is pitched.
+     * Orientation of icon when map is pitched. Default value: "auto".
      */
     val defaultIconPitchAlignment: IconPitchAlignment?
       /**
-       * Orientation of icon when map is pitched.
+       * Orientation of icon when map is pitched. Default value: "auto".
        *
        * Get the default value of IconPitchAlignment property
        *
@@ -5269,7 +5269,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Orientation of icon when map is pitched.
+     * Orientation of icon when map is pitched. Default value: "auto".
      *
      * This is an Expression representation of "icon-pitch-alignment".
      *
@@ -5291,11 +5291,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the icon clockwise.
+     * Rotates the icon clockwise. Default value: 0.
      */
     val defaultIconRotate: Double?
       /**
-       * Rotates the icon clockwise.
+       * Rotates the icon clockwise. Default value: 0.
        *
        * Get the default value of IconRotate property
        *
@@ -5306,7 +5306,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the icon clockwise.
+     * Rotates the icon clockwise. Default value: 0.
      *
      * This is an Expression representation of "icon-rotate".
      *
@@ -5328,11 +5328,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of icons.
+     * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
      */
     val defaultIconRotationAlignment: IconRotationAlignment?
       /**
-       * In combination with `symbol-placement`, determines the rotation behavior of icons.
+       * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
        *
        * Get the default value of IconRotationAlignment property
        *
@@ -5346,7 +5346,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of icons.
+     * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
      *
      * This is an Expression representation of "icon-rotation-alignment".
      *
@@ -5368,11 +5368,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
      */
     val defaultIconSize: Double?
       /**
-       * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+       * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
        *
        * Get the default value of IconSize property
        *
@@ -5383,7 +5383,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
      *
      * This is an Expression representation of "icon-size".
      *
@@ -5405,11 +5405,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Scales the icon to fit around the associated text.
+     * Scales the icon to fit around the associated text. Default value: "none".
      */
     val defaultIconTextFit: IconTextFit?
       /**
-       * Scales the icon to fit around the associated text.
+       * Scales the icon to fit around the associated text. Default value: "none".
        *
        * Get the default value of IconTextFit property
        *
@@ -5423,7 +5423,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Scales the icon to fit around the associated text.
+     * Scales the icon to fit around the associated text. Default value: "none".
      *
      * This is an Expression representation of "icon-text-fit".
      *
@@ -5445,11 +5445,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
      */
     val defaultIconTextFitPadding: List<Double>?
       /**
-       * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+       * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
        *
        * Get the default value of IconTextFitPadding property
        *
@@ -5460,7 +5460,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
      *
      * This is an Expression representation of "icon-text-fit-padding".
      *
@@ -5482,11 +5482,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
      */
     val defaultSymbolAvoidEdges: Boolean?
       /**
-       * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+       * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
        *
        * Get the default value of SymbolAvoidEdges property
        *
@@ -5497,7 +5497,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+     * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
      *
      * This is an Expression representation of "symbol-avoid-edges".
      *
@@ -5519,11 +5519,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Label placement relative to its geometry.
+     * Label placement relative to its geometry. Default value: "point".
      */
     val defaultSymbolPlacement: SymbolPlacement?
       /**
-       * Label placement relative to its geometry.
+       * Label placement relative to its geometry. Default value: "point".
        *
        * Get the default value of SymbolPlacement property
        *
@@ -5537,7 +5537,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Label placement relative to its geometry.
+     * Label placement relative to its geometry. Default value: "point".
      *
      * This is an Expression representation of "symbol-placement".
      *
@@ -5596,11 +5596,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance between two symbol anchors.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
      */
     val defaultSymbolSpacing: Double?
       /**
-       * Distance between two symbol anchors.
+       * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
        *
        * Get the default value of SymbolSpacing property
        *
@@ -5611,7 +5611,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance between two symbol anchors.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
      *
      * This is an Expression representation of "symbol-spacing".
      *
@@ -5633,11 +5633,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
      */
     val defaultSymbolZElevate: Boolean?
       /**
-       * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+       * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
        *
        * Get the default value of SymbolZElevate property
        *
@@ -5648,7 +5648,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+     * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
      *
      * This is an Expression representation of "symbol-z-elevate".
      *
@@ -5670,11 +5670,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
      */
     val defaultSymbolZOrder: SymbolZOrder?
       /**
-       * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+       * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
        *
        * Get the default value of SymbolZOrder property
        *
@@ -5688,7 +5688,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+     * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
      *
      * This is an Expression representation of "symbol-z-order".
      *
@@ -5710,11 +5710,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the text will be visible even if it collides with other previously drawn symbols.
+     * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
      */
     val defaultTextAllowOverlap: Boolean?
       /**
-       * If true, the text will be visible even if it collides with other previously drawn symbols.
+       * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
        *
        * Get the default value of TextAllowOverlap property
        *
@@ -5725,7 +5725,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the text will be visible even if it collides with other previously drawn symbols.
+     * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
      *
      * This is an Expression representation of "text-allow-overlap".
      *
@@ -5747,11 +5747,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Part of the text placed closest to the anchor.
+     * Part of the text placed closest to the anchor. Default value: "center".
      */
     val defaultTextAnchor: TextAnchor?
       /**
-       * Part of the text placed closest to the anchor.
+       * Part of the text placed closest to the anchor. Default value: "center".
        *
        * Get the default value of TextAnchor property
        *
@@ -5765,7 +5765,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Part of the text placed closest to the anchor.
+     * Part of the text placed closest to the anchor. Default value: "center".
      *
      * This is an Expression representation of "text-anchor".
      *
@@ -5787,11 +5787,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
      */
     val defaultTextField: Formatted?
       /**
-       * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+       * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
        *
        * Get the default value of TextField property
        *
@@ -5805,7 +5805,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
      *
      * This is an Expression representation of "text-field".
      *
@@ -5824,11 +5824,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+     * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
      */
     val defaultTextFieldAsString: String?
       /**
-       * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+       * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
        *
        * Get the TextField property
        *
@@ -5879,11 +5879,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, other symbols can be visible even if they collide with the text.
+     * If true, other symbols can be visible even if they collide with the text. Default value: false.
      */
     val defaultTextIgnorePlacement: Boolean?
       /**
-       * If true, other symbols can be visible even if they collide with the text.
+       * If true, other symbols can be visible even if they collide with the text. Default value: false.
        *
        * Get the default value of TextIgnorePlacement property
        *
@@ -5894,7 +5894,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, other symbols can be visible even if they collide with the text.
+     * If true, other symbols can be visible even if they collide with the text. Default value: false.
      *
      * This is an Expression representation of "text-ignore-placement".
      *
@@ -5916,11 +5916,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text justification options.
+     * Text justification options. Default value: "center".
      */
     val defaultTextJustify: TextJustify?
       /**
-       * Text justification options.
+       * Text justification options. Default value: "center".
        *
        * Get the default value of TextJustify property
        *
@@ -5934,7 +5934,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text justification options.
+     * Text justification options. Default value: "center".
      *
      * This is an Expression representation of "text-justify".
      *
@@ -5956,11 +5956,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+     * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
      */
     val defaultTextKeepUpright: Boolean?
       /**
-       * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+       * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
        *
        * Get the default value of TextKeepUpright property
        *
@@ -5971,7 +5971,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+     * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
      *
      * This is an Expression representation of "text-keep-upright".
      *
@@ -5993,11 +5993,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text tracking amount.
+     * Text tracking amount. Default value: 0.
      */
     val defaultTextLetterSpacing: Double?
       /**
-       * Text tracking amount.
+       * Text tracking amount. Default value: 0.
        *
        * Get the default value of TextLetterSpacing property
        *
@@ -6008,7 +6008,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text tracking amount.
+     * Text tracking amount. Default value: 0.
      *
      * This is an Expression representation of "text-letter-spacing".
      *
@@ -6030,11 +6030,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text leading value for multi-line text.
+     * Text leading value for multi-line text. Default value: 1.2.
      */
     val defaultTextLineHeight: Double?
       /**
-       * Text leading value for multi-line text.
+       * Text leading value for multi-line text. Default value: 1.2.
        *
        * Get the default value of TextLineHeight property
        *
@@ -6045,7 +6045,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text leading value for multi-line text.
+     * Text leading value for multi-line text. Default value: 1.2.
      *
      * This is an Expression representation of "text-line-height".
      *
@@ -6067,11 +6067,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Maximum angle change between adjacent characters.
+     * Maximum angle change between adjacent characters. Default value: 45.
      */
     val defaultTextMaxAngle: Double?
       /**
-       * Maximum angle change between adjacent characters.
+       * Maximum angle change between adjacent characters. Default value: 45.
        *
        * Get the default value of TextMaxAngle property
        *
@@ -6082,7 +6082,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Maximum angle change between adjacent characters.
+     * Maximum angle change between adjacent characters. Default value: 45.
      *
      * This is an Expression representation of "text-max-angle".
      *
@@ -6104,11 +6104,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The maximum line width for text wrapping.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
      */
     val defaultTextMaxWidth: Double?
       /**
-       * The maximum line width for text wrapping.
+       * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
        *
        * Get the default value of TextMaxWidth property
        *
@@ -6119,7 +6119,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The maximum line width for text wrapping.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
      *
      * This is an Expression representation of "text-max-width".
      *
@@ -6141,11 +6141,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
      */
     val defaultTextOffset: List<Double>?
       /**
-       * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+       * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
        *
        * Get the default value of TextOffset property
        *
@@ -6156,7 +6156,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
      *
      * This is an Expression representation of "text-offset".
      *
@@ -6178,11 +6178,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
      */
     val defaultTextOptional: Boolean?
       /**
-       * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+       * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
        *
        * Get the default value of TextOptional property
        *
@@ -6193,7 +6193,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+     * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
      *
      * This is an Expression representation of "text-optional".
      *
@@ -6215,11 +6215,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      */
     val defaultTextPadding: Double?
       /**
-       * Size of the additional area around the text bounding box used for detecting symbol collisions.
+       * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
        *
        * Get the default value of TextPadding property
        *
@@ -6230,7 +6230,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
      *
      * This is an Expression representation of "text-padding".
      *
@@ -6252,11 +6252,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Orientation of text when map is pitched.
+     * Orientation of text when map is pitched. Default value: "auto".
      */
     val defaultTextPitchAlignment: TextPitchAlignment?
       /**
-       * Orientation of text when map is pitched.
+       * Orientation of text when map is pitched. Default value: "auto".
        *
        * Get the default value of TextPitchAlignment property
        *
@@ -6270,7 +6270,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Orientation of text when map is pitched.
+     * Orientation of text when map is pitched. Default value: "auto".
      *
      * This is an Expression representation of "text-pitch-alignment".
      *
@@ -6292,11 +6292,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
      */
     val defaultTextRadialOffset: Double?
       /**
-       * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+       * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
        *
        * Get the default value of TextRadialOffset property
        *
@@ -6307,7 +6307,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
      *
      * This is an Expression representation of "text-radial-offset".
      *
@@ -6329,11 +6329,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the text clockwise.
+     * Rotates the text clockwise. Default value: 0.
      */
     val defaultTextRotate: Double?
       /**
-       * Rotates the text clockwise.
+       * Rotates the text clockwise. Default value: 0.
        *
        * Get the default value of TextRotate property
        *
@@ -6344,7 +6344,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the text clockwise.
+     * Rotates the text clockwise. Default value: 0.
      *
      * This is an Expression representation of "text-rotate".
      *
@@ -6366,11 +6366,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
      */
     val defaultTextRotationAlignment: TextRotationAlignment?
       /**
-       * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+       * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
        *
        * Get the default value of TextRotationAlignment property
        *
@@ -6384,7 +6384,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+     * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
      *
      * This is an Expression representation of "text-rotation-alignment".
      *
@@ -6406,11 +6406,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Font size.
+     * Font size. Default value: 16. Minimum value: 0.
      */
     val defaultTextSize: Double?
       /**
-       * Font size.
+       * Font size. Default value: 16. Minimum value: 0.
        *
        * Get the default value of TextSize property
        *
@@ -6421,7 +6421,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Font size.
+     * Font size. Default value: 16. Minimum value: 0.
      *
      * This is an Expression representation of "text-size".
      *
@@ -6443,11 +6443,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+     * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
      */
     val defaultTextTransform: TextTransform?
       /**
-       * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+       * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
        *
        * Get the default value of TextTransform property
        *
@@ -6461,7 +6461,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+     * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
      *
      * This is an Expression representation of "text-transform".
      *
@@ -6557,11 +6557,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
      */
     val defaultIconColor: String?
       /**
-       * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+       * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
        *
        * Get the default value of IconColor property
        *
@@ -6575,7 +6575,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
      *
      * This is an Expression representation of "icon-color".
      *
@@ -6594,11 +6594,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
      */
     val defaultIconColorAsColorInt: Int?
       /**
-       * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+       * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
        *
        * Get the default value of IconColor property as color int.
        *
@@ -6624,11 +6624,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
      */
     val defaultIconColorSaturation: Double?
       /**
-       * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+       * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of IconColorSaturation property
        *
@@ -6639,7 +6639,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "icon-color-saturation".
      *
@@ -6672,11 +6672,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      */
     val defaultIconEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
        *
        * Get the default value of IconEmissiveStrength property
        *
@@ -6687,7 +6687,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      *
      * This is an Expression representation of "icon-emissive-strength".
      *
@@ -6720,11 +6720,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Fade out the halo towards the outside.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
      */
     val defaultIconHaloBlur: Double?
       /**
-       * Fade out the halo towards the outside.
+       * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
        *
        * Get the default value of IconHaloBlur property
        *
@@ -6735,7 +6735,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Fade out the halo towards the outside.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "icon-halo-blur".
      *
@@ -6768,11 +6768,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-blur-transition").silentUnwrap()
 
     /**
-     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
      */
     val defaultIconHaloColor: String?
       /**
-       * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+       * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
        *
        * Get the default value of IconHaloColor property
        *
@@ -6786,7 +6786,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
      *
      * This is an Expression representation of "icon-halo-color".
      *
@@ -6805,11 +6805,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+     * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
      */
     val defaultIconHaloColorAsColorInt: Int?
       /**
-       * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+       * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
        *
        * Get the default value of IconHaloColor property as color int.
        *
@@ -6835,11 +6835,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-color-transition").silentUnwrap()
 
     /**
-     * Distance of halo to the icon outline.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
      */
     val defaultIconHaloWidth: Double?
       /**
-       * Distance of halo to the icon outline.
+       * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
        *
        * Get the default value of IconHaloWidth property
        *
@@ -6850,7 +6850,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance of halo to the icon outline.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "icon-halo-width".
      *
@@ -6883,11 +6883,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-width-transition").silentUnwrap()
 
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
      */
     val defaultIconImageCrossFade: Double?
       /**
-       * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+       * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of IconImageCrossFade property
        *
@@ -6898,7 +6898,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "icon-image-cross-fade".
      *
@@ -6931,11 +6931,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade-transition").silentUnwrap()
 
     /**
-     * The opacity at which the icon will be drawn.
+     * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
      */
     val defaultIconOpacity: Double?
       /**
-       * The opacity at which the icon will be drawn.
+       * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of IconOpacity property
        *
@@ -6946,7 +6946,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The opacity at which the icon will be drawn.
+     * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "icon-opacity".
      *
@@ -6979,11 +6979,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-opacity-transition").silentUnwrap()
 
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      */
     val defaultIconTranslate: List<Double>?
       /**
-       * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+       * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
        *
        * Get the default value of IconTranslate property
        *
@@ -6994,7 +6994,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      *
      * This is an Expression representation of "icon-translate".
      *
@@ -7027,11 +7027,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-transition").silentUnwrap()
 
     /**
-     * Controls the frame of reference for `icon-translate`.
+     * Controls the frame of reference for `icon-translate`. Default value: "map".
      */
     val defaultIconTranslateAnchor: IconTranslateAnchor?
       /**
-       * Controls the frame of reference for `icon-translate`.
+       * Controls the frame of reference for `icon-translate`. Default value: "map".
        *
        * Get the default value of IconTranslateAnchor property
        *
@@ -7045,7 +7045,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the frame of reference for `icon-translate`.
+     * Controls the frame of reference for `icon-translate`. Default value: "map".
      *
      * This is an Expression representation of "icon-translate-anchor".
      *
@@ -7067,11 +7067,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color with which the text will be drawn.
+     * The color with which the text will be drawn. Default value: "#000000".
      */
     val defaultTextColor: String?
       /**
-       * The color with which the text will be drawn.
+       * The color with which the text will be drawn. Default value: "#000000".
        *
        * Get the default value of TextColor property
        *
@@ -7085,7 +7085,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color with which the text will be drawn.
+     * The color with which the text will be drawn. Default value: "#000000".
      *
      * This is an Expression representation of "text-color".
      *
@@ -7104,11 +7104,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color with which the text will be drawn.
+     * The color with which the text will be drawn. Default value: "#000000".
      */
     val defaultTextColorAsColorInt: Int?
       /**
-       * The color with which the text will be drawn.
+       * The color with which the text will be drawn. Default value: "#000000".
        *
        * Get the default value of TextColor property as color int.
        *
@@ -7134,11 +7134,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      */
     val defaultTextEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
        *
        * Get the default value of TextEmissiveStrength property
        *
@@ -7149,7 +7149,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
      *
      * This is an Expression representation of "text-emissive-strength".
      *
@@ -7182,11 +7182,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength-transition").silentUnwrap()
 
     /**
-     * The halo's fadeout distance towards the outside.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
      */
     val defaultTextHaloBlur: Double?
       /**
-       * The halo's fadeout distance towards the outside.
+       * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
        *
        * Get the default value of TextHaloBlur property
        *
@@ -7197,7 +7197,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The halo's fadeout distance towards the outside.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "text-halo-blur".
      *
@@ -7230,11 +7230,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-blur-transition").silentUnwrap()
 
     /**
-     * The color of the text's halo, which helps it stand out from backgrounds.
+     * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
      */
     val defaultTextHaloColor: String?
       /**
-       * The color of the text's halo, which helps it stand out from backgrounds.
+       * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
        *
        * Get the default value of TextHaloColor property
        *
@@ -7248,7 +7248,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the text's halo, which helps it stand out from backgrounds.
+     * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
      *
      * This is an Expression representation of "text-halo-color".
      *
@@ -7267,11 +7267,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The color of the text's halo, which helps it stand out from backgrounds.
+     * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
      */
     val defaultTextHaloColorAsColorInt: Int?
       /**
-       * The color of the text's halo, which helps it stand out from backgrounds.
+       * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
        *
        * Get the default value of TextHaloColor property as color int.
        *
@@ -7297,11 +7297,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-color-transition").silentUnwrap()
 
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
      */
     val defaultTextHaloWidth: Double?
       /**
-       * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+       * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
        *
        * Get the default value of TextHaloWidth property
        *
@@ -7312,7 +7312,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "text-halo-width".
      *
@@ -7345,11 +7345,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-width-transition").silentUnwrap()
 
     /**
-     * The opacity at which the text will be drawn.
+     * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
      */
     val defaultTextOpacity: Double?
       /**
-       * The opacity at which the text will be drawn.
+       * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of TextOpacity property
        *
@@ -7360,7 +7360,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The opacity at which the text will be drawn.
+     * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "text-opacity".
      *
@@ -7393,11 +7393,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-opacity-transition").silentUnwrap()
 
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      */
     val defaultTextTranslate: List<Double>?
       /**
-       * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+       * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
        *
        * Get the default value of TextTranslate property
        *
@@ -7408,7 +7408,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
      *
      * This is an Expression representation of "text-translate".
      *
@@ -7441,11 +7441,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-translate-transition").silentUnwrap()
 
     /**
-     * Controls the frame of reference for `text-translate`.
+     * Controls the frame of reference for `text-translate`. Default value: "map".
      */
     val defaultTextTranslateAnchor: TextTranslateAnchor?
       /**
-       * Controls the frame of reference for `text-translate`.
+       * Controls the frame of reference for `text-translate`. Default value: "map".
        *
        * Get the default value of TextTranslateAnchor property
        *
@@ -7459,7 +7459,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the frame of reference for `text-translate`.
+     * Controls the frame of reference for `text-translate`. Default value: "map".
      *
      * This is an Expression representation of "text-translate-anchor".
      *
@@ -7558,42 +7558,42 @@ interface SymbolLayerDsl {
   // Property getters and setters
 
   /**
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * @param iconAllowOverlap value of iconAllowOverlap
    */
   fun iconAllowOverlap(iconAllowOverlap: Boolean = false): SymbolLayer
 
   /**
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * @param iconAllowOverlap value of iconAllowOverlap as Expression
    */
   fun iconAllowOverlap(iconAllowOverlap: Expression): SymbolLayer
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    *
    * @param iconAnchor value of iconAnchor
    */
   fun iconAnchor(iconAnchor: IconAnchor = IconAnchor.CENTER): SymbolLayer
 
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    *
    * @param iconAnchor value of iconAnchor as Expression
    */
   fun iconAnchor(iconAnchor: Expression): SymbolLayer
 
   /**
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    *
    * @param iconIgnorePlacement value of iconIgnorePlacement
    */
   fun iconIgnorePlacement(iconIgnorePlacement: Boolean = false): SymbolLayer
 
   /**
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    *
    * @param iconIgnorePlacement value of iconIgnorePlacement as Expression
    */
@@ -7614,168 +7614,168 @@ interface SymbolLayerDsl {
   fun iconImage(iconImage: Expression): SymbolLayer
 
   /**
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    *
    * @param iconKeepUpright value of iconKeepUpright
    */
   fun iconKeepUpright(iconKeepUpright: Boolean = false): SymbolLayer
 
   /**
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    *
    * @param iconKeepUpright value of iconKeepUpright as Expression
    */
   fun iconKeepUpright(iconKeepUpright: Expression): SymbolLayer
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    *
    * @param iconOffset value of iconOffset
    */
   fun iconOffset(iconOffset: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    *
    * @param iconOffset value of iconOffset as Expression
    */
   fun iconOffset(iconOffset: Expression): SymbolLayer
 
   /**
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    *
    * @param iconOptional value of iconOptional
    */
   fun iconOptional(iconOptional: Boolean = false): SymbolLayer
 
   /**
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    *
    * @param iconOptional value of iconOptional as Expression
    */
   fun iconOptional(iconOptional: Expression): SymbolLayer
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * @param iconPadding value of iconPadding
    */
   fun iconPadding(iconPadding: Double = 2.0): SymbolLayer
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * @param iconPadding value of iconPadding as Expression
    */
   fun iconPadding(iconPadding: Expression): SymbolLayer
 
   /**
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    *
    * @param iconPitchAlignment value of iconPitchAlignment
    */
   fun iconPitchAlignment(iconPitchAlignment: IconPitchAlignment = IconPitchAlignment.AUTO): SymbolLayer
 
   /**
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    *
    * @param iconPitchAlignment value of iconPitchAlignment as Expression
    */
   fun iconPitchAlignment(iconPitchAlignment: Expression): SymbolLayer
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    *
    * @param iconRotate value of iconRotate
    */
   fun iconRotate(iconRotate: Double = 0.0): SymbolLayer
 
   /**
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. Default value: 0.
    *
    * @param iconRotate value of iconRotate as Expression
    */
   fun iconRotate(iconRotate: Expression): SymbolLayer
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    *
    * @param iconRotationAlignment value of iconRotationAlignment
    */
   fun iconRotationAlignment(iconRotationAlignment: IconRotationAlignment = IconRotationAlignment.AUTO): SymbolLayer
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    *
    * @param iconRotationAlignment value of iconRotationAlignment as Expression
    */
   fun iconRotationAlignment(iconRotationAlignment: Expression): SymbolLayer
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    *
    * @param iconSize value of iconSize
    */
   fun iconSize(iconSize: Double = 1.0): SymbolLayer
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
    *
    * @param iconSize value of iconSize as Expression
    */
   fun iconSize(iconSize: Expression): SymbolLayer
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    *
    * @param iconTextFit value of iconTextFit
    */
   fun iconTextFit(iconTextFit: IconTextFit = IconTextFit.NONE): SymbolLayer
 
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    *
    * @param iconTextFit value of iconTextFit as Expression
    */
   fun iconTextFit(iconTextFit: Expression): SymbolLayer
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    *
    * @param iconTextFitPadding value of iconTextFitPadding
    */
   fun iconTextFitPadding(iconTextFitPadding: List<Double> = listOf(0.0, 0.0, 0.0, 0.0)): SymbolLayer
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
    *
    * @param iconTextFitPadding value of iconTextFitPadding as Expression
    */
   fun iconTextFitPadding(iconTextFitPadding: Expression): SymbolLayer
 
   /**
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    *
    * @param symbolAvoidEdges value of symbolAvoidEdges
    */
   fun symbolAvoidEdges(symbolAvoidEdges: Boolean = false): SymbolLayer
 
   /**
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    *
    * @param symbolAvoidEdges value of symbolAvoidEdges as Expression
    */
   fun symbolAvoidEdges(symbolAvoidEdges: Expression): SymbolLayer
 
   /**
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    *
    * @param symbolPlacement value of symbolPlacement
    */
   fun symbolPlacement(symbolPlacement: SymbolPlacement = SymbolPlacement.POINT): SymbolLayer
 
   /**
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    *
    * @param symbolPlacement value of symbolPlacement as Expression
    */
@@ -7796,91 +7796,91 @@ interface SymbolLayerDsl {
   fun symbolSortKey(symbolSortKey: Expression): SymbolLayer
 
   /**
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
    *
    * @param symbolSpacing value of symbolSpacing
    */
   fun symbolSpacing(symbolSpacing: Double = 250.0): SymbolLayer
 
   /**
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
    *
    * @param symbolSpacing value of symbolSpacing as Expression
    */
   fun symbolSpacing(symbolSpacing: Expression): SymbolLayer
 
   /**
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    *
    * @param symbolZElevate value of symbolZElevate
    */
   fun symbolZElevate(symbolZElevate: Boolean = false): SymbolLayer
 
   /**
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    *
    * @param symbolZElevate value of symbolZElevate as Expression
    */
   fun symbolZElevate(symbolZElevate: Expression): SymbolLayer
 
   /**
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    *
    * @param symbolZOrder value of symbolZOrder
    */
   fun symbolZOrder(symbolZOrder: SymbolZOrder = SymbolZOrder.AUTO): SymbolLayer
 
   /**
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    *
    * @param symbolZOrder value of symbolZOrder as Expression
    */
   fun symbolZOrder(symbolZOrder: Expression): SymbolLayer
 
   /**
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * @param textAllowOverlap value of textAllowOverlap
    */
   fun textAllowOverlap(textAllowOverlap: Boolean = false): SymbolLayer
 
   /**
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    *
    * @param textAllowOverlap value of textAllowOverlap as Expression
    */
   fun textAllowOverlap(textAllowOverlap: Expression): SymbolLayer
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    *
    * @param textAnchor value of textAnchor
    */
   fun textAnchor(textAnchor: TextAnchor = TextAnchor.CENTER): SymbolLayer
 
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    *
    * @param textAnchor value of textAnchor as Expression
    */
   fun textAnchor(textAnchor: Expression): SymbolLayer
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * @param textField value of textField
    */
   fun textField(textField: Formatted): SymbolLayer
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * @param textField value of textField as Expression
    */
   fun textField(textField: Expression): SymbolLayer
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * Set the TextField property as String.
    *
@@ -7889,7 +7889,7 @@ interface SymbolLayerDsl {
   fun textField(textField: String): SymbolLayer
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    *
    * DSL for construct [Formatted] textField.
    */
@@ -7910,224 +7910,224 @@ interface SymbolLayerDsl {
   fun textFont(textFont: Expression): SymbolLayer
 
   /**
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    *
    * @param textIgnorePlacement value of textIgnorePlacement
    */
   fun textIgnorePlacement(textIgnorePlacement: Boolean = false): SymbolLayer
 
   /**
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    *
    * @param textIgnorePlacement value of textIgnorePlacement as Expression
    */
   fun textIgnorePlacement(textIgnorePlacement: Expression): SymbolLayer
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    *
    * @param textJustify value of textJustify
    */
   fun textJustify(textJustify: TextJustify = TextJustify.CENTER): SymbolLayer
 
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    *
    * @param textJustify value of textJustify as Expression
    */
   fun textJustify(textJustify: Expression): SymbolLayer
 
   /**
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    *
    * @param textKeepUpright value of textKeepUpright
    */
   fun textKeepUpright(textKeepUpright: Boolean = true): SymbolLayer
 
   /**
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    *
    * @param textKeepUpright value of textKeepUpright as Expression
    */
   fun textKeepUpright(textKeepUpright: Expression): SymbolLayer
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    *
    * @param textLetterSpacing value of textLetterSpacing
    */
   fun textLetterSpacing(textLetterSpacing: Double = 0.0): SymbolLayer
 
   /**
-   * Text tracking amount.
+   * Text tracking amount. Default value: 0.
    *
    * @param textLetterSpacing value of textLetterSpacing as Expression
    */
   fun textLetterSpacing(textLetterSpacing: Expression): SymbolLayer
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    *
    * @param textLineHeight value of textLineHeight
    */
   fun textLineHeight(textLineHeight: Double = 1.2): SymbolLayer
 
   /**
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. Default value: 1.2.
    *
    * @param textLineHeight value of textLineHeight as Expression
    */
   fun textLineHeight(textLineHeight: Expression): SymbolLayer
 
   /**
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. Default value: 45.
    *
    * @param textMaxAngle value of textMaxAngle
    */
   fun textMaxAngle(textMaxAngle: Double = 45.0): SymbolLayer
 
   /**
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. Default value: 45.
    *
    * @param textMaxAngle value of textMaxAngle as Expression
    */
   fun textMaxAngle(textMaxAngle: Expression): SymbolLayer
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    *
    * @param textMaxWidth value of textMaxWidth
    */
   fun textMaxWidth(textMaxWidth: Double = 10.0): SymbolLayer
 
   /**
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
    *
    * @param textMaxWidth value of textMaxWidth as Expression
    */
   fun textMaxWidth(textMaxWidth: Expression): SymbolLayer
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    *
    * @param textOffset value of textOffset
    */
   fun textOffset(textOffset: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
    *
    * @param textOffset value of textOffset as Expression
    */
   fun textOffset(textOffset: Expression): SymbolLayer
 
   /**
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    *
    * @param textOptional value of textOptional
    */
   fun textOptional(textOptional: Boolean = false): SymbolLayer
 
   /**
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    *
    * @param textOptional value of textOptional as Expression
    */
   fun textOptional(textOptional: Expression): SymbolLayer
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * @param textPadding value of textPadding
    */
   fun textPadding(textPadding: Double = 2.0): SymbolLayer
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
    *
    * @param textPadding value of textPadding as Expression
    */
   fun textPadding(textPadding: Expression): SymbolLayer
 
   /**
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    *
    * @param textPitchAlignment value of textPitchAlignment
    */
   fun textPitchAlignment(textPitchAlignment: TextPitchAlignment = TextPitchAlignment.AUTO): SymbolLayer
 
   /**
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    *
    * @param textPitchAlignment value of textPitchAlignment as Expression
    */
   fun textPitchAlignment(textPitchAlignment: Expression): SymbolLayer
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    *
    * @param textRadialOffset value of textRadialOffset
    */
   fun textRadialOffset(textRadialOffset: Double = 0.0): SymbolLayer
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
    *
    * @param textRadialOffset value of textRadialOffset as Expression
    */
   fun textRadialOffset(textRadialOffset: Expression): SymbolLayer
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    *
    * @param textRotate value of textRotate
    */
   fun textRotate(textRotate: Double = 0.0): SymbolLayer
 
   /**
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. Default value: 0.
    *
    * @param textRotate value of textRotate as Expression
    */
   fun textRotate(textRotate: Expression): SymbolLayer
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    *
    * @param textRotationAlignment value of textRotationAlignment
    */
   fun textRotationAlignment(textRotationAlignment: TextRotationAlignment = TextRotationAlignment.AUTO): SymbolLayer
 
   /**
-   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    *
    * @param textRotationAlignment value of textRotationAlignment as Expression
    */
   fun textRotationAlignment(textRotationAlignment: Expression): SymbolLayer
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    *
    * @param textSize value of textSize
    */
   fun textSize(textSize: Double = 16.0): SymbolLayer
 
   /**
-   * Font size.
+   * Font size. Default value: 16. Minimum value: 0.
    *
    * @param textSize value of textSize as Expression
    */
   fun textSize(textSize: Expression): SymbolLayer
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    *
    * @param textTransform value of textTransform
    */
   fun textTransform(textTransform: TextTransform = TextTransform.NONE): SymbolLayer
 
   /**
-   * Specifies how to capitalize text, similar to the CSS `text-transform` property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    *
    * @param textTransform value of textTransform as Expression
    */
@@ -8162,28 +8162,28 @@ interface SymbolLayerDsl {
   fun textWritingMode(textWritingMode: Expression): SymbolLayer
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * @param iconColor value of iconColor
    */
   fun iconColor(iconColor: String = "#000000"): SymbolLayer
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * @param iconColor value of iconColor as Expression
    */
   fun iconColor(iconColor: Expression): SymbolLayer
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * @param iconColor value of iconColor
    */
   fun iconColor(@ColorInt iconColor: Int): SymbolLayer
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * Set the IconColor property transition options
    *
@@ -8192,28 +8192,28 @@ interface SymbolLayerDsl {
   fun iconColorTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    *
    * DSL for [iconColorTransition].
    */
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * @param iconColorSaturation value of iconColorSaturation
    */
   fun iconColorSaturation(iconColorSaturation: Double = 1.0): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * @param iconColorSaturation value of iconColorSaturation as Expression
    */
   fun iconColorSaturation(iconColorSaturation: Expression): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * Set the IconColorSaturation property transition options
    *
@@ -8222,28 +8222,28 @@ interface SymbolLayerDsl {
   fun iconColorSaturationTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
    *
    * DSL for [iconColorSaturationTransition].
    */
   fun iconColorSaturationTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength
    */
   fun iconEmissiveStrength(iconEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
    */
   fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * Set the IconEmissiveStrength property transition options
    *
@@ -8252,28 +8252,28 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * DSL for [iconEmissiveStrengthTransition].
    */
   fun iconEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * @param iconHaloBlur value of iconHaloBlur
    */
   fun iconHaloBlur(iconHaloBlur: Double = 0.0): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * @param iconHaloBlur value of iconHaloBlur as Expression
    */
   fun iconHaloBlur(iconHaloBlur: Expression): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * Set the IconHaloBlur property transition options
    *
@@ -8282,35 +8282,35 @@ interface SymbolLayerDsl {
   fun iconHaloBlurTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
    *
    * DSL for [iconHaloBlurTransition].
    */
   fun iconHaloBlurTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * @param iconHaloColor value of iconHaloColor
    */
   fun iconHaloColor(iconHaloColor: String = "rgba(0, 0, 0, 0)"): SymbolLayer
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * @param iconHaloColor value of iconHaloColor as Expression
    */
   fun iconHaloColor(iconHaloColor: Expression): SymbolLayer
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * @param iconHaloColor value of iconHaloColor
    */
   fun iconHaloColor(@ColorInt iconHaloColor: Int): SymbolLayer
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * Set the IconHaloColor property transition options
    *
@@ -8319,28 +8319,28 @@ interface SymbolLayerDsl {
   fun iconHaloColorTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    *
    * DSL for [iconHaloColorTransition].
    */
   fun iconHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * @param iconHaloWidth value of iconHaloWidth
    */
   fun iconHaloWidth(iconHaloWidth: Double = 0.0): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * @param iconHaloWidth value of iconHaloWidth as Expression
    */
   fun iconHaloWidth(iconHaloWidth: Expression): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * Set the IconHaloWidth property transition options
    *
@@ -8349,28 +8349,28 @@ interface SymbolLayerDsl {
   fun iconHaloWidthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
    *
    * DSL for [iconHaloWidthTransition].
    */
   fun iconHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * @param iconImageCrossFade value of iconImageCrossFade
    */
   fun iconImageCrossFade(iconImageCrossFade: Double = 0.0): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * @param iconImageCrossFade value of iconImageCrossFade as Expression
    */
   fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * Set the IconImageCrossFade property transition options
    *
@@ -8379,28 +8379,28 @@ interface SymbolLayerDsl {
   fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    *
    * DSL for [iconImageCrossFadeTransition].
    */
   fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param iconOpacity value of iconOpacity
    */
   fun iconOpacity(iconOpacity: Double = 1.0): SymbolLayer
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param iconOpacity value of iconOpacity as Expression
    */
   fun iconOpacity(iconOpacity: Expression): SymbolLayer
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Set the IconOpacity property transition options
    *
@@ -8409,28 +8409,28 @@ interface SymbolLayerDsl {
   fun iconOpacityTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * DSL for [iconOpacityTransition].
    */
   fun iconOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * @param iconTranslate value of iconTranslate
    */
   fun iconTranslate(iconTranslate: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * @param iconTranslate value of iconTranslate as Expression
    */
   fun iconTranslate(iconTranslate: Expression): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * Set the IconTranslate property transition options
    *
@@ -8439,49 +8439,49 @@ interface SymbolLayerDsl {
   fun iconTranslateTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * DSL for [iconTranslateTransition].
    */
   fun iconTranslateTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the frame of reference for `icon-translate`.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    *
    * @param iconTranslateAnchor value of iconTranslateAnchor
    */
   fun iconTranslateAnchor(iconTranslateAnchor: IconTranslateAnchor = IconTranslateAnchor.MAP): SymbolLayer
 
   /**
-   * Controls the frame of reference for `icon-translate`.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    *
    * @param iconTranslateAnchor value of iconTranslateAnchor as Expression
    */
   fun iconTranslateAnchor(iconTranslateAnchor: Expression): SymbolLayer
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * @param textColor value of textColor
    */
   fun textColor(textColor: String = "#000000"): SymbolLayer
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * @param textColor value of textColor as Expression
    */
   fun textColor(textColor: Expression): SymbolLayer
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * @param textColor value of textColor
    */
   fun textColor(@ColorInt textColor: Int): SymbolLayer
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * Set the TextColor property transition options
    *
@@ -8490,28 +8490,28 @@ interface SymbolLayerDsl {
   fun textColorTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    *
    * DSL for [textColorTransition].
    */
   fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * @param textEmissiveStrength value of textEmissiveStrength
    */
   fun textEmissiveStrength(textEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * @param textEmissiveStrength value of textEmissiveStrength as Expression
    */
   fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * Set the TextEmissiveStrength property transition options
    *
@@ -8520,28 +8520,28 @@ interface SymbolLayerDsl {
   fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
    *
    * DSL for [textEmissiveStrengthTransition].
    */
   fun textEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * @param textHaloBlur value of textHaloBlur
    */
   fun textHaloBlur(textHaloBlur: Double = 0.0): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * @param textHaloBlur value of textHaloBlur as Expression
    */
   fun textHaloBlur(textHaloBlur: Expression): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * Set the TextHaloBlur property transition options
    *
@@ -8550,35 +8550,35 @@ interface SymbolLayerDsl {
   fun textHaloBlurTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
    *
    * DSL for [textHaloBlurTransition].
    */
   fun textHaloBlurTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param textHaloColor value of textHaloColor
    */
   fun textHaloColor(textHaloColor: String = "rgba(0, 0, 0, 0)"): SymbolLayer
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param textHaloColor value of textHaloColor as Expression
    */
   fun textHaloColor(textHaloColor: Expression): SymbolLayer
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param textHaloColor value of textHaloColor
    */
   fun textHaloColor(@ColorInt textHaloColor: Int): SymbolLayer
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * Set the TextHaloColor property transition options
    *
@@ -8587,28 +8587,28 @@ interface SymbolLayerDsl {
   fun textHaloColorTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    *
    * DSL for [textHaloColorTransition].
    */
   fun textHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * @param textHaloWidth value of textHaloWidth
    */
   fun textHaloWidth(textHaloWidth: Double = 0.0): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * @param textHaloWidth value of textHaloWidth as Expression
    */
   fun textHaloWidth(textHaloWidth: Expression): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * Set the TextHaloWidth property transition options
    *
@@ -8617,28 +8617,28 @@ interface SymbolLayerDsl {
   fun textHaloWidthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
    *
    * DSL for [textHaloWidthTransition].
    */
   fun textHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param textOpacity value of textOpacity
    */
   fun textOpacity(textOpacity: Double = 1.0): SymbolLayer
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param textOpacity value of textOpacity as Expression
    */
   fun textOpacity(textOpacity: Expression): SymbolLayer
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Set the TextOpacity property transition options
    *
@@ -8647,28 +8647,28 @@ interface SymbolLayerDsl {
   fun textOpacityTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    *
    * DSL for [textOpacityTransition].
    */
   fun textOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * @param textTranslate value of textTranslate
    */
   fun textTranslate(textTranslate: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * @param textTranslate value of textTranslate as Expression
    */
   fun textTranslate(textTranslate: Expression): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * Set the TextTranslate property transition options
    *
@@ -8677,21 +8677,21 @@ interface SymbolLayerDsl {
   fun textTranslateTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
    *
    * DSL for [textTranslateTransition].
    */
   fun textTranslateTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the frame of reference for `text-translate`.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    *
    * @param textTranslateAnchor value of textTranslateAnchor
    */
   fun textTranslateAnchor(textTranslateAnchor: TextTranslateAnchor = TextTranslateAnchor.MAP): SymbolLayer
 
   /**
-   * Controls the frame of reference for `text-translate`.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    *
    * @param textTranslateAnchor value of textTranslateAnchor as Expression
    */

@@ -169,6 +169,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
   /**
    * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
    * levels).
+   * Default value: 18.
    */
   val maxzoom: Long?
     /**
@@ -195,6 +196,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    * Size of the tile buffer on each side. A value of 0 produces no buffer. A
    * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
    * rendering artifacts near tile edges and slower performance.
+   * Default value: 128. Value range: [0, 512]
    */
   val buffer: Long?
     /**
@@ -208,6 +210,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
   /**
    * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
+   * Default value: 0.375.
    */
   val tolerance: Double?
     /**
@@ -222,11 +225,12 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
   /**
    * If the data is a collection of point features, setting this to true clusters the points
    * by radius into groups. Cluster groups become new `Point` features in the source with additional properties:
-   * - `cluster` Is `true` if the point is a cluster
-   * - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
+   *  - `cluster` Is `true` if the point is a cluster
+   *  - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
    * [cluster inspection methods](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)
-   * - `point_count` Number of original points grouped into this cluster
-   * - `point_count_abbreviated` An abbreviated point count
+   *  - `point_count` Number of original points grouped into this cluster
+   *  - `point_count_abbreviated` An abbreviated point count
+   * Default value: false.
    */
   val cluster: Boolean?
     /**
@@ -241,6 +245,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
   /**
    * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
    * to the width of a tile.
+   * Default value: 50. Minimum value: 0.
    */
   val clusterRadius: Long?
     /**
@@ -269,6 +274,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
   /**
    * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+   * Default value: 2.
    */
   val clusterMinPoints: Long?
     /**
@@ -302,6 +308,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
   /**
    * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
+   * Default value: false.
    */
   val lineMetrics: Boolean?
     /**
@@ -316,6 +323,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
   /**
    * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
    * assigned based on its index in the `features` array, over-writing any previous values.
+   * Default value: false.
    */
   val generateId: Boolean?
     /**
@@ -350,7 +358,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   fun prefetchZoomDelta(value: Long = 4L): GeoJsonSource = apply {
     setVolatileProperty(PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value)))
@@ -361,7 +369,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   val prefetchZoomDelta: Long?
     /**
@@ -503,6 +511,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
      * levels).
+     * Default value: 18.
      */
     fun maxzoom(value: Long = 18L): Builder = apply {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
@@ -521,6 +530,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * Size of the tile buffer on each side. A value of 0 produces no buffer. A
      * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
      * rendering artifacts near tile edges and slower performance.
+     * Default value: 128. Value range: [0, 512]
      */
     fun buffer(value: Long = 128L): Builder = apply {
       val propertyValue = PropertyValue("buffer", TypeUtils.wrapToValue(value))
@@ -529,6 +539,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
+     * Default value: 0.375.
      */
     fun tolerance(value: Double = 0.375): Builder = apply {
       val propertyValue = PropertyValue("tolerance", TypeUtils.wrapToValue(value))
@@ -538,11 +549,12 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * If the data is a collection of point features, setting this to true clusters the points
      * by radius into groups. Cluster groups become new `Point` features in the source with additional properties:
-     * - `cluster` Is `true` if the point is a cluster
-     * - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
+     *  - `cluster` Is `true` if the point is a cluster
+     *  - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
      * [cluster inspection methods](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)
-     * - `point_count` Number of original points grouped into this cluster
-     * - `point_count_abbreviated` An abbreviated point count
+     *  - `point_count` Number of original points grouped into this cluster
+     *  - `point_count_abbreviated` An abbreviated point count
+     * Default value: false.
      */
     fun cluster(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("cluster", TypeUtils.wrapToValue(value))
@@ -552,6 +564,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
      * to the width of a tile.
+     * Default value: 50. Minimum value: 0.
      */
     fun clusterRadius(value: Long = 50L): Builder = apply {
       val propertyValue = PropertyValue("clusterRadius", TypeUtils.wrapToValue(value))
@@ -570,8 +583,9 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+     * Default value: 2.
      */
-    fun clusterMinPoints(value: Long): Builder = apply {
+    fun clusterMinPoints(value: Long = 2L): Builder = apply {
       val propertyValue = PropertyValue("clusterMinPoints", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -655,6 +669,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
+     * Default value: false.
      */
     fun lineMetrics(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("lineMetrics", TypeUtils.wrapToValue(value))
@@ -664,6 +679,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
      * assigned based on its index in the `features` array, over-writing any previous values.
+     * Default value: false.
      */
     fun generateId(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("generateId", TypeUtils.wrapToValue(value))
@@ -684,7 +700,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
+     * Default value: 4.
      */
     fun prefetchZoomDelta(value: Long = 4L): Builder = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
@@ -779,6 +795,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
      * levels).
+     * Default value: 18.
      */
     val defaultMaxzoom: Long?
       /**
@@ -792,6 +809,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * Size of the tile buffer on each side. A value of 0 produces no buffer. A
      * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
      * rendering artifacts near tile edges and slower performance.
+     * Default value: 128. Value range: [0, 512]
      */
     val defaultBuffer: Long?
       /**
@@ -803,6 +821,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
+     * Default value: 0.375.
      */
     val defaultTolerance: Double?
       /**
@@ -815,11 +834,12 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * If the data is a collection of point features, setting this to true clusters the points
      * by radius into groups. Cluster groups become new `Point` features in the source with additional properties:
-     * - `cluster` Is `true` if the point is a cluster
-     * - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
+     *  - `cluster` Is `true` if the point is a cluster
+     *  - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
      * [cluster inspection methods](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)
-     * - `point_count` Number of original points grouped into this cluster
-     * - `point_count_abbreviated` An abbreviated point count
+     *  - `point_count` Number of original points grouped into this cluster
+     *  - `point_count_abbreviated` An abbreviated point count
+     * Default value: false.
      */
     val defaultCluster: Boolean?
       /**
@@ -832,6 +852,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
      * to the width of a tile.
+     * Default value: 50. Minimum value: 0.
      */
     val defaultClusterRadius: Long?
       /**
@@ -856,6 +877,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+     * Default value: 2.
      */
     val defaultClusterMinPoints: Long?
       /**
@@ -867,6 +889,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
+     * Default value: false.
      */
     val defaultLineMetrics: Boolean?
       /**
@@ -879,6 +902,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     /**
      * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
      * assigned based on its index in the `features` array, over-writing any previous values.
+     * Default value: false.
      */
     val defaultGenerateId: Boolean?
       /**
@@ -893,7 +917,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
+     * Default value: 4.
      */
     val defaultPrefetchZoomDelta: Long?
       /**

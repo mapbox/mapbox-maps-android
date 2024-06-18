@@ -247,11 +247,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   // Property getters and setters
 
   /**
-   * The display of line endings.
+   * The display of line endings. Default value: "butt".
    */
   val lineCap: LineCap?
     /**
-     * The display of line endings.
+     * The display of line endings. Default value: "butt".
      *
      * Use static method [LineLayer.defaultLineCap] to get the default property.
      *
@@ -265,7 +265,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The display of line endings.
+   * The display of line endings. Default value: "butt".
    *
    * Use static method [LineLayer.defaultLineCap] to set the default property.
    *
@@ -277,14 +277,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The display of line endings.
+   * The display of line endings. Default value: "butt".
    *
    * This is an Expression representation of "line-cap".
    *
    */
   val lineCapAsExpression: Expression?
     /**
-     * The display of line endings.
+     * The display of line endings. Default value: "butt".
      *
      * Get the LineCap property as an Expression
      *
@@ -303,7 +303,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The display of line endings.
+   * The display of line endings. Default value: "butt".
    *
    * Use static method [LineLayer.defaultLineCapAsExpression] to set the default property.
    *
@@ -315,11 +315,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    */
   val lineJoin: LineJoin?
     /**
-     * The display of lines when joining.
+     * The display of lines when joining. Default value: "miter".
      *
      * Use static method [LineLayer.defaultLineJoin] to get the default property.
      *
@@ -333,7 +333,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    *
    * Use static method [LineLayer.defaultLineJoin] to set the default property.
    *
@@ -345,14 +345,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    *
    * This is an Expression representation of "line-join".
    *
    */
   val lineJoinAsExpression: Expression?
     /**
-     * The display of lines when joining.
+     * The display of lines when joining. Default value: "miter".
      *
      * Get the LineJoin property as an Expression
      *
@@ -371,7 +371,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    *
    * Use static method [LineLayer.defaultLineJoinAsExpression] to set the default property.
    *
@@ -383,11 +383,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
+   * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
    */
   val lineMiterLimit: Double?
     /**
-     * Used to automatically convert miter joins to bevel joins for sharp angles.
+     * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
      *
      * Use static method [LineLayer.defaultLineMiterLimit] to get the default property.
      *
@@ -398,7 +398,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
+   * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
    *
    * Use static method [LineLayer.defaultLineMiterLimit] to set the default property.
    *
@@ -410,14 +410,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
+   * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
    *
    * This is an Expression representation of "line-miter-limit".
    *
    */
   val lineMiterLimitAsExpression: Expression?
     /**
-     * Used to automatically convert miter joins to bevel joins for sharp angles.
+     * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
      *
      * Get the LineMiterLimit property as an Expression
      *
@@ -436,7 +436,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
+   * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
    *
    * Use static method [LineLayer.defaultLineMiterLimitAsExpression] to set the default property.
    *
@@ -448,11 +448,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Used to automatically convert round joins to miter joins for shallow angles.
+   * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
    */
   val lineRoundLimit: Double?
     /**
-     * Used to automatically convert round joins to miter joins for shallow angles.
+     * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
      *
      * Use static method [LineLayer.defaultLineRoundLimit] to get the default property.
      *
@@ -463,7 +463,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Used to automatically convert round joins to miter joins for shallow angles.
+   * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
    *
    * Use static method [LineLayer.defaultLineRoundLimit] to set the default property.
    *
@@ -475,14 +475,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Used to automatically convert round joins to miter joins for shallow angles.
+   * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
    *
    * This is an Expression representation of "line-round-limit".
    *
    */
   val lineRoundLimitAsExpression: Expression?
     /**
-     * Used to automatically convert round joins to miter joins for shallow angles.
+     * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
      *
      * Get the LineRoundLimit property as an Expression
      *
@@ -501,7 +501,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Used to automatically convert round joins to miter joins for shallow angles.
+   * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
    *
    * Use static method [LineLayer.defaultLineRoundLimitAsExpression] to set the default property.
    *
@@ -578,11 +578,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    */
   val lineBlur: Double?
     /**
-     * Blur applied to the line, in pixels.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
      *
      * Use static method [LineLayer.defaultLineBlur] to get the default property.
      *
@@ -593,7 +593,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineBlur] to set the default property.
    *
@@ -605,14 +605,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "line-blur".
    *
    */
   val lineBlurAsExpression: Expression?
     /**
-     * Blur applied to the line, in pixels.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
      *
      * Get the LineBlur property as an Expression
      *
@@ -631,7 +631,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineBlurAsExpression] to set the default property.
    *
@@ -677,11 +677,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    */
   val lineBorderColor: String?
     /**
-     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
      *
      * Use static method [LineLayer.defaultLineBorderColor] to get the default property.
      *
@@ -695,7 +695,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [LineLayer.defaultLineBorderColor] to set the default property.
    *
@@ -707,14 +707,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * This is an Expression representation of "line-border-color".
    *
    */
   val lineBorderColorAsExpression: Expression?
     /**
-     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
      *
      * Get the LineBorderColor property as an Expression
      *
@@ -730,7 +730,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [LineLayer.defaultLineBorderColorAsExpression] to set the default property.
    *
@@ -742,11 +742,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    */
   val lineBorderColorAsColorInt: Int?
     /**
-     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
      *
      * Use static method [LineLayer.defaultLineBorderColorAsColorInt] to get the default property.
      *
@@ -761,7 +761,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * Use static method [LineLayer.defaultLineBorderColorAsColorInt] to set the default property.
    *
@@ -807,11 +807,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    */
   val lineBorderWidth: Double?
     /**
-     * The width of the line border. A value of zero means no border.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
      *
      * Use static method [LineLayer.defaultLineBorderWidth] to get the default property.
      *
@@ -822,7 +822,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineBorderWidth] to set the default property.
    *
@@ -834,14 +834,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "line-border-width".
    *
    */
   val lineBorderWidthAsExpression: Expression?
     /**
-     * The width of the line border. A value of zero means no border.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
      *
      * Get the LineBorderWidth property as an Expression
      *
@@ -860,7 +860,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineBorderWidthAsExpression] to set the default property.
    *
@@ -906,11 +906,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    */
   val lineColor: String?
     /**
-     * The color with which the line will be drawn.
+     * The color with which the line will be drawn. Default value: "#000000".
      *
      * Use static method [LineLayer.defaultLineColor] to get the default property.
      *
@@ -924,7 +924,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * Use static method [LineLayer.defaultLineColor] to set the default property.
    *
@@ -936,14 +936,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * This is an Expression representation of "line-color".
    *
    */
   val lineColorAsExpression: Expression?
     /**
-     * The color with which the line will be drawn.
+     * The color with which the line will be drawn. Default value: "#000000".
      *
      * Get the LineColor property as an Expression
      *
@@ -959,7 +959,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * Use static method [LineLayer.defaultLineColorAsExpression] to set the default property.
    *
@@ -971,11 +971,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    */
   val lineColorAsColorInt: Int?
     /**
-     * The color with which the line will be drawn.
+     * The color with which the line will be drawn. Default value: "#000000".
      *
      * Use static method [LineLayer.defaultLineColorAsColorInt] to get the default property.
      *
@@ -990,7 +990,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * Use static method [LineLayer.defaultLineColorAsColorInt] to set the default property.
    *
@@ -1036,11 +1036,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
    */
   val lineDasharray: List<Double>?
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
      *
      * Use static method [LineLayer.defaultLineDasharray] to get the default property.
      *
@@ -1051,7 +1051,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineDasharray] to set the default property.
    *
@@ -1063,14 +1063,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
    *
    * This is an Expression representation of "line-dasharray".
    *
    */
   val lineDasharrayAsExpression: Expression?
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
      *
      * Get the LineDasharray property as an Expression
      *
@@ -1089,7 +1089,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineDasharrayAsExpression] to set the default property.
    *
@@ -1101,11 +1101,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    */
   val lineDepthOcclusionFactor: Double?
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineDepthOcclusionFactor] to get the default property.
      *
@@ -1116,7 +1116,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineDepthOcclusionFactor] to set the default property.
    *
@@ -1128,14 +1128,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "line-depth-occlusion-factor".
    *
    */
   val lineDepthOcclusionFactorAsExpression: Expression?
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
      *
      * Get the LineDepthOcclusionFactor property as an Expression
      *
@@ -1154,7 +1154,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineDepthOcclusionFactorAsExpression] to set the default property.
    *
@@ -1200,11 +1200,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    */
   val lineEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Use static method [LineLayer.defaultLineEmissiveStrength] to get the default property.
      *
@@ -1215,7 +1215,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrength] to set the default property.
    *
@@ -1227,14 +1227,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "line-emissive-strength".
    *
    */
   val lineEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Get the LineEmissiveStrength property as an Expression
      *
@@ -1253,7 +1253,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1299,11 +1299,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    */
   val lineGapWidth: Double?
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
      *
      * Use static method [LineLayer.defaultLineGapWidth] to get the default property.
      *
@@ -1314,7 +1314,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineGapWidth] to set the default property.
    *
@@ -1326,14 +1326,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "line-gap-width".
    *
    */
   val lineGapWidthAsExpression: Expression?
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
      *
      * Get the LineGapWidth property as an Expression
      *
@@ -1352,7 +1352,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineGapWidthAsExpression] to set the default property.
    *
@@ -1425,11 +1425,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    */
   val lineOffset: Double?
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
      *
      * Use static method [LineLayer.defaultLineOffset] to get the default property.
      *
@@ -1440,7 +1440,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * Use static method [LineLayer.defaultLineOffset] to set the default property.
    *
@@ -1452,14 +1452,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * This is an Expression representation of "line-offset".
    *
    */
   val lineOffsetAsExpression: Expression?
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
      *
      * Get the LineOffset property as an Expression
      *
@@ -1478,7 +1478,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * Use static method [LineLayer.defaultLineOffsetAsExpression] to set the default property.
    *
@@ -1524,11 +1524,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    */
   val lineOpacity: Double?
     /**
-     * The opacity at which the line will be drawn.
+     * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineOpacity] to get the default property.
      *
@@ -1539,7 +1539,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineOpacity] to set the default property.
    *
@@ -1551,14 +1551,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "line-opacity".
    *
    */
   val lineOpacityAsExpression: Expression?
     /**
-     * The opacity at which the line will be drawn.
+     * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Get the LineOpacity property as an Expression
      *
@@ -1577,7 +1577,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineOpacityAsExpression] to set the default property.
    *
@@ -1688,11 +1688,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    */
   val lineTranslate: List<Double>?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      *
      * Use static method [LineLayer.defaultLineTranslate] to get the default property.
      *
@@ -1703,7 +1703,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * Use static method [LineLayer.defaultLineTranslate] to set the default property.
    *
@@ -1715,14 +1715,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * This is an Expression representation of "line-translate".
    *
    */
   val lineTranslateAsExpression: Expression?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      *
      * Get the LineTranslate property as an Expression
      *
@@ -1741,7 +1741,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * Use static method [LineLayer.defaultLineTranslateAsExpression] to set the default property.
    *
@@ -1787,11 +1787,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the frame of reference for `line-translate`.
+   * Controls the frame of reference for `line-translate`. Default value: "map".
    */
   val lineTranslateAnchor: LineTranslateAnchor?
     /**
-     * Controls the frame of reference for `line-translate`.
+     * Controls the frame of reference for `line-translate`. Default value: "map".
      *
      * Use static method [LineLayer.defaultLineTranslateAnchor] to get the default property.
      *
@@ -1805,7 +1805,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the frame of reference for `line-translate`.
+   * Controls the frame of reference for `line-translate`. Default value: "map".
    *
    * Use static method [LineLayer.defaultLineTranslateAnchor] to set the default property.
    *
@@ -1817,14 +1817,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the frame of reference for `line-translate`.
+   * Controls the frame of reference for `line-translate`. Default value: "map".
    *
    * This is an Expression representation of "line-translate-anchor".
    *
    */
   val lineTranslateAnchorAsExpression: Expression?
     /**
-     * Controls the frame of reference for `line-translate`.
+     * Controls the frame of reference for `line-translate`. Default value: "map".
      *
      * Get the LineTranslateAnchor property as an Expression
      *
@@ -1843,7 +1843,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the frame of reference for `line-translate`.
+   * Controls the frame of reference for `line-translate`. Default value: "map".
    *
    * Use static method [LineLayer.defaultLineTranslateAnchorAsExpression] to set the default property.
    *
@@ -1855,11 +1855,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    */
   val lineTrimOffset: List<Double>?
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      *
      * Use static method [LineLayer.defaultLineTrimOffset] to get the default property.
      *
@@ -1870,7 +1870,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * Use static method [LineLayer.defaultLineTrimOffset] to set the default property.
    *
@@ -1882,14 +1882,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * This is an Expression representation of "line-trim-offset".
    *
    */
   val lineTrimOffsetAsExpression: Expression?
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      *
      * Get the LineTrimOffset property as an Expression
      *
@@ -1908,7 +1908,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * Use static method [LineLayer.defaultLineTrimOffsetAsExpression] to set the default property.
    *
@@ -1920,11 +1920,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    */
   val lineWidth: Double?
     /**
-     * Stroke thickness.
+     * Stroke thickness. Default value: 1. Minimum value: 0.
      *
      * Use static method [LineLayer.defaultLineWidth] to get the default property.
      *
@@ -1935,7 +1935,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineWidth] to set the default property.
    *
@@ -1947,14 +1947,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * This is an Expression representation of "line-width".
    *
    */
   val lineWidthAsExpression: Expression?
     /**
-     * Stroke thickness.
+     * Stroke thickness. Default value: 1. Minimum value: 0.
      *
      * Get the LineWidth property as an Expression
      *
@@ -1973,7 +1973,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * Use static method [LineLayer.defaultLineWidthAsExpression] to set the default property.
    *
@@ -2078,11 +2078,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "maxzoom").silentUnwrap()
 
     /**
-     * The display of line endings.
+     * The display of line endings. Default value: "butt".
      */
     val defaultLineCap: LineCap?
       /**
-       * The display of line endings.
+       * The display of line endings. Default value: "butt".
        *
        * Get the default value of LineCap property
        *
@@ -2096,7 +2096,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The display of line endings.
+     * The display of line endings. Default value: "butt".
      *
      * This is an Expression representation of "line-cap".
      *
@@ -2118,11 +2118,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The display of lines when joining.
+     * The display of lines when joining. Default value: "miter".
      */
     val defaultLineJoin: LineJoin?
       /**
-       * The display of lines when joining.
+       * The display of lines when joining. Default value: "miter".
        *
        * Get the default value of LineJoin property
        *
@@ -2136,7 +2136,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The display of lines when joining.
+     * The display of lines when joining. Default value: "miter".
      *
      * This is an Expression representation of "line-join".
      *
@@ -2158,11 +2158,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Used to automatically convert miter joins to bevel joins for sharp angles.
+     * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
      */
     val defaultLineMiterLimit: Double?
       /**
-       * Used to automatically convert miter joins to bevel joins for sharp angles.
+       * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
        *
        * Get the default value of LineMiterLimit property
        *
@@ -2173,7 +2173,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Used to automatically convert miter joins to bevel joins for sharp angles.
+     * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
      *
      * This is an Expression representation of "line-miter-limit".
      *
@@ -2195,11 +2195,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Used to automatically convert round joins to miter joins for shallow angles.
+     * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
      */
     val defaultLineRoundLimit: Double?
       /**
-       * Used to automatically convert round joins to miter joins for shallow angles.
+       * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
        *
        * Get the default value of LineRoundLimit property
        *
@@ -2210,7 +2210,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Used to automatically convert round joins to miter joins for shallow angles.
+     * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
      *
      * This is an Expression representation of "line-round-limit".
      *
@@ -2269,11 +2269,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Blur applied to the line, in pixels.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
      */
     val defaultLineBlur: Double?
       /**
-       * Blur applied to the line, in pixels.
+       * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
        *
        * Get the default value of LineBlur property
        *
@@ -2284,7 +2284,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Blur applied to the line, in pixels.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "line-blur".
      *
@@ -2317,11 +2317,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-blur-transition").silentUnwrap()
 
     /**
-     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
      */
     val defaultLineBorderColor: String?
       /**
-       * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+       * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
        *
        * Get the default value of LineBorderColor property
        *
@@ -2335,7 +2335,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
      *
      * This is an Expression representation of "line-border-color".
      *
@@ -2354,11 +2354,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
      */
     val defaultLineBorderColorAsColorInt: Int?
       /**
-       * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+       * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
        *
        * Get the default value of LineBorderColor property as color int.
        *
@@ -2384,11 +2384,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color-transition").silentUnwrap()
 
     /**
-     * The width of the line border. A value of zero means no border.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
      */
     val defaultLineBorderWidth: Double?
       /**
-       * The width of the line border. A value of zero means no border.
+       * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
        *
        * Get the default value of LineBorderWidth property
        *
@@ -2399,7 +2399,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The width of the line border. A value of zero means no border.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "line-border-width".
      *
@@ -2432,11 +2432,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width-transition").silentUnwrap()
 
     /**
-     * The color with which the line will be drawn.
+     * The color with which the line will be drawn. Default value: "#000000".
      */
     val defaultLineColor: String?
       /**
-       * The color with which the line will be drawn.
+       * The color with which the line will be drawn. Default value: "#000000".
        *
        * Get the default value of LineColor property
        *
@@ -2450,7 +2450,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The color with which the line will be drawn.
+     * The color with which the line will be drawn. Default value: "#000000".
      *
      * This is an Expression representation of "line-color".
      *
@@ -2469,11 +2469,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The color with which the line will be drawn.
+     * The color with which the line will be drawn. Default value: "#000000".
      */
     val defaultLineColorAsColorInt: Int?
       /**
-       * The color with which the line will be drawn.
+       * The color with which the line will be drawn. Default value: "#000000".
        *
        * Get the default value of LineColor property as color int.
        *
@@ -2499,11 +2499,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-color-transition").silentUnwrap()
 
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
      */
     val defaultLineDasharray: List<Double>?
       /**
-       * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+       * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
        *
        * Get the default value of LineDasharray property
        *
@@ -2514,7 +2514,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
      *
      * This is an Expression representation of "line-dasharray".
      *
@@ -2536,11 +2536,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
      */
     val defaultLineDepthOcclusionFactor: Double?
       /**
-       * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+       * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of LineDepthOcclusionFactor property
        *
@@ -2551,7 +2551,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "line-depth-occlusion-factor".
      *
@@ -2584,11 +2584,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      */
     val defaultLineEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
        *
        * Get the default value of LineEmissiveStrength property
        *
@@ -2599,7 +2599,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "line-emissive-strength".
      *
@@ -2632,11 +2632,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
      */
     val defaultLineGapWidth: Double?
       /**
-       * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+       * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
        *
        * Get the default value of LineGapWidth property
        *
@@ -2647,7 +2647,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "line-gap-width".
      *
@@ -2680,11 +2680,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gap-width-transition").silentUnwrap()
 
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
      */
     val defaultLineOffset: Double?
       /**
-       * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+       * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
        *
        * Get the default value of LineOffset property
        *
@@ -2695,7 +2695,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
      *
      * This is an Expression representation of "line-offset".
      *
@@ -2728,11 +2728,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-offset-transition").silentUnwrap()
 
     /**
-     * The opacity at which the line will be drawn.
+     * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
      */
     val defaultLineOpacity: Double?
       /**
-       * The opacity at which the line will be drawn.
+       * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of LineOpacity property
        *
@@ -2743,7 +2743,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The opacity at which the line will be drawn.
+     * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "line-opacity".
      *
@@ -2813,11 +2813,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      */
     val defaultLineTranslate: List<Double>?
       /**
-       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
        *
        * Get the default value of LineTranslate property
        *
@@ -2828,7 +2828,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      *
      * This is an Expression representation of "line-translate".
      *
@@ -2861,11 +2861,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-transition").silentUnwrap()
 
     /**
-     * Controls the frame of reference for `line-translate`.
+     * Controls the frame of reference for `line-translate`. Default value: "map".
      */
     val defaultLineTranslateAnchor: LineTranslateAnchor?
       /**
-       * Controls the frame of reference for `line-translate`.
+       * Controls the frame of reference for `line-translate`. Default value: "map".
        *
        * Get the default value of LineTranslateAnchor property
        *
@@ -2879,7 +2879,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Controls the frame of reference for `line-translate`.
+     * Controls the frame of reference for `line-translate`. Default value: "map".
      *
      * This is an Expression representation of "line-translate-anchor".
      *
@@ -2901,11 +2901,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      */
     val defaultLineTrimOffset: List<Double>?
       /**
-       * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+       * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
        *
        * Get the default value of LineTrimOffset property
        *
@@ -2916,7 +2916,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      *
      * This is an Expression representation of "line-trim-offset".
      *
@@ -2938,11 +2938,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Stroke thickness.
+     * Stroke thickness. Default value: 1. Minimum value: 0.
      */
     val defaultLineWidth: Double?
       /**
-       * Stroke thickness.
+       * Stroke thickness. Default value: 1. Minimum value: 0.
        *
        * Get the default value of LineWidth property
        *
@@ -2953,7 +2953,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Stroke thickness.
+     * Stroke thickness. Default value: 1. Minimum value: 0.
      *
      * This is an Expression representation of "line-width".
      *
@@ -3063,56 +3063,56 @@ interface LineLayerDsl {
   // Property getters and setters
 
   /**
-   * The display of line endings.
+   * The display of line endings. Default value: "butt".
    *
    * @param lineCap value of lineCap
    */
   fun lineCap(lineCap: LineCap = LineCap.BUTT): LineLayer
 
   /**
-   * The display of line endings.
+   * The display of line endings. Default value: "butt".
    *
    * @param lineCap value of lineCap as Expression
    */
   fun lineCap(lineCap: Expression): LineLayer
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    *
    * @param lineJoin value of lineJoin
    */
   fun lineJoin(lineJoin: LineJoin = LineJoin.MITER): LineLayer
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    *
    * @param lineJoin value of lineJoin as Expression
    */
   fun lineJoin(lineJoin: Expression): LineLayer
 
   /**
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
+   * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
    *
    * @param lineMiterLimit value of lineMiterLimit
    */
   fun lineMiterLimit(lineMiterLimit: Double = 2.0): LineLayer
 
   /**
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
+   * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
    *
    * @param lineMiterLimit value of lineMiterLimit as Expression
    */
   fun lineMiterLimit(lineMiterLimit: Expression): LineLayer
 
   /**
-   * Used to automatically convert round joins to miter joins for shallow angles.
+   * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
    *
    * @param lineRoundLimit value of lineRoundLimit
    */
   fun lineRoundLimit(lineRoundLimit: Double = 1.05): LineLayer
 
   /**
-   * Used to automatically convert round joins to miter joins for shallow angles.
+   * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
    *
    * @param lineRoundLimit value of lineRoundLimit as Expression
    */
@@ -3133,21 +3133,21 @@ interface LineLayerDsl {
   fun lineSortKey(lineSortKey: Expression): LineLayer
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * @param lineBlur value of lineBlur
    */
   fun lineBlur(lineBlur: Double = 0.0): LineLayer
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * @param lineBlur value of lineBlur as Expression
    */
   fun lineBlur(lineBlur: Expression): LineLayer
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * Set the LineBlur property transition options
    *
@@ -3156,35 +3156,35 @@ interface LineLayerDsl {
   fun lineBlurTransition(options: StyleTransition): LineLayer
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * DSL for [lineBlurTransition].
    */
   fun lineBlurTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param lineBorderColor value of lineBorderColor
    */
   fun lineBorderColor(lineBorderColor: String = "rgba(0, 0, 0, 0)"): LineLayer
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param lineBorderColor value of lineBorderColor as Expression
    */
   fun lineBorderColor(lineBorderColor: Expression): LineLayer
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param lineBorderColor value of lineBorderColor
    */
   fun lineBorderColor(@ColorInt lineBorderColor: Int): LineLayer
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * Set the LineBorderColor property transition options
    *
@@ -3193,28 +3193,28 @@ interface LineLayerDsl {
   fun lineBorderColorTransition(options: StyleTransition): LineLayer
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * DSL for [lineBorderColorTransition].
    */
   fun lineBorderColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * @param lineBorderWidth value of lineBorderWidth
    */
   fun lineBorderWidth(lineBorderWidth: Double = 0.0): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * @param lineBorderWidth value of lineBorderWidth as Expression
    */
   fun lineBorderWidth(lineBorderWidth: Expression): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * Set the LineBorderWidth property transition options
    *
@@ -3223,35 +3223,35 @@ interface LineLayerDsl {
   fun lineBorderWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * DSL for [lineBorderWidthTransition].
    */
   fun lineBorderWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * @param lineColor value of lineColor
    */
   fun lineColor(lineColor: String = "#000000"): LineLayer
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * @param lineColor value of lineColor as Expression
    */
   fun lineColor(lineColor: Expression): LineLayer
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * @param lineColor value of lineColor
    */
   fun lineColor(@ColorInt lineColor: Int): LineLayer
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * Set the LineColor property transition options
    *
@@ -3260,42 +3260,42 @@ interface LineLayerDsl {
   fun lineColorTransition(options: StyleTransition): LineLayer
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * DSL for [lineColorTransition].
    */
   fun lineColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
    *
    * @param lineDasharray value of lineDasharray
    */
   fun lineDasharray(lineDasharray: List<Double>): LineLayer
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
    *
    * @param lineDasharray value of lineDasharray as Expression
    */
   fun lineDasharray(lineDasharray: Expression): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
    */
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double = 1.0): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
    */
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * Set the LineDepthOcclusionFactor property transition options
    *
@@ -3304,28 +3304,28 @@ interface LineLayerDsl {
   fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * DSL for [lineDepthOcclusionFactorTransition].
    */
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
   fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
   fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Set the LineEmissiveStrength property transition options
    *
@@ -3334,28 +3334,28 @@ interface LineLayerDsl {
   fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * DSL for [lineEmissiveStrengthTransition].
    */
   fun lineEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * @param lineGapWidth value of lineGapWidth
    */
   fun lineGapWidth(lineGapWidth: Double = 0.0): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * @param lineGapWidth value of lineGapWidth as Expression
    */
   fun lineGapWidth(lineGapWidth: Expression): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * Set the LineGapWidth property transition options
    *
@@ -3364,7 +3364,7 @@ interface LineLayerDsl {
   fun lineGapWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    *
    * DSL for [lineGapWidthTransition].
    */
@@ -3378,21 +3378,21 @@ interface LineLayerDsl {
   fun lineGradient(lineGradient: Expression): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * @param lineOffset value of lineOffset
    */
   fun lineOffset(lineOffset: Double = 0.0): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * @param lineOffset value of lineOffset as Expression
    */
   fun lineOffset(lineOffset: Expression): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * Set the LineOffset property transition options
    *
@@ -3401,28 +3401,28 @@ interface LineLayerDsl {
   fun lineOffsetTransition(options: StyleTransition): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    *
    * DSL for [lineOffsetTransition].
    */
   fun lineOffsetTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param lineOpacity value of lineOpacity
    */
   fun lineOpacity(lineOpacity: Double = 1.0): LineLayer
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param lineOpacity value of lineOpacity as Expression
    */
   fun lineOpacity(lineOpacity: Expression): LineLayer
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Set the LineOpacity property transition options
    *
@@ -3431,7 +3431,7 @@ interface LineLayerDsl {
   fun lineOpacityTransition(options: StyleTransition): LineLayer
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * DSL for [lineOpacityTransition].
    */
@@ -3452,21 +3452,21 @@ interface LineLayerDsl {
   fun linePattern(linePattern: Expression): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * @param lineTranslate value of lineTranslate
    */
   fun lineTranslate(lineTranslate: List<Double> = listOf(0.0, 0.0)): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * @param lineTranslate value of lineTranslate as Expression
    */
   fun lineTranslate(lineTranslate: Expression): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * Set the LineTranslate property transition options
    *
@@ -3475,56 +3475,56 @@ interface LineLayerDsl {
   fun lineTranslateTransition(options: StyleTransition): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * DSL for [lineTranslateTransition].
    */
   fun lineTranslateTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Controls the frame of reference for `line-translate`.
+   * Controls the frame of reference for `line-translate`. Default value: "map".
    *
    * @param lineTranslateAnchor value of lineTranslateAnchor
    */
   fun lineTranslateAnchor(lineTranslateAnchor: LineTranslateAnchor = LineTranslateAnchor.MAP): LineLayer
 
   /**
-   * Controls the frame of reference for `line-translate`.
+   * Controls the frame of reference for `line-translate`. Default value: "map".
    *
    * @param lineTranslateAnchor value of lineTranslateAnchor as Expression
    */
   fun lineTranslateAnchor(lineTranslateAnchor: Expression): LineLayer
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * @param lineTrimOffset value of lineTrimOffset
    */
   fun lineTrimOffset(lineTrimOffset: List<Double> = listOf(0.0, 0.0)): LineLayer
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * @param lineTrimOffset value of lineTrimOffset as Expression
    */
   fun lineTrimOffset(lineTrimOffset: Expression): LineLayer
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * @param lineWidth value of lineWidth
    */
   fun lineWidth(lineWidth: Double = 1.0): LineLayer
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * @param lineWidth value of lineWidth as Expression
    */
   fun lineWidth(lineWidth: Expression): LineLayer
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * Set the LineWidth property transition options
    *
@@ -3533,7 +3533,7 @@ interface LineLayerDsl {
   fun lineWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    *
    * DSL for [lineWidthTransition].
    */

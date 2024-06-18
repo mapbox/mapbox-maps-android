@@ -22,67 +22,67 @@ import kotlinx.parcelize.Parcelize
 private data class CompassSettingsData(
 
   /**
-   * Whether the compass is visible on the map.
+   * Whether the compass is visible on the map. Default value: true.
    */
   @Default("true")
   var enabled: Boolean,
 
   /**
-   * Defines where the compass is positioned on the map
+   * Defines where the compass is positioned on the map Default value: "top-right".
    */
   @Default("Gravity.TOP or Gravity.END")
   var position: Int,
 
   /**
-   * Defines the margin to the left that the compass icon honors. This property is specified in pixels.
+   * Defines the margin to the left that the compass icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginLeft: Float,
 
   /**
-   * Defines the margin to the top that the compass icon honors. This property is specified in pixels.
+   * Defines the margin to the top that the compass icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginTop: Float,
 
   /**
-   * Defines the margin to the right that the compass icon honors. This property is specified in pixels.
+   * Defines the margin to the right that the compass icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginRight: Float,
 
   /**
-   * Defines the margin to the bottom that the compass icon honors. This property is specified in pixels.
+   * Defines the margin to the bottom that the compass icon honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginBottom: Float,
 
   /**
-   * The alpha channel value of the compass image
+   * The alpha channel value of the compass image Default value: 1.
    */
   @Default("1f")
   var opacity: Float,
 
   /**
-   * The clockwise rotation value in degrees of the compass.
+   * The clockwise rotation value in degrees of the compass. Default value: 0.
    */
   @Default("0f")
   var rotation: Float,
 
   /**
-   * Whether the compass is displayed.
+   * Whether the compass is displayed. Default value: true.
    */
   @Default("true")
   var visibility: Boolean,
 
   /**
-   * Whether the compass fades out to invisible when facing north direction.
+   * Whether the compass fades out to invisible when facing north direction. Default value: true.
    */
   @Default("true")
   var fadeWhenFacingNorth: Boolean,
 
   /**
-   * Whether the compass can be clicked and click events can be registered.
+   * Whether the compass can be clicked and click events can be registered. Default value: true.
    */
   @Default("true")
   var clickable: Boolean,

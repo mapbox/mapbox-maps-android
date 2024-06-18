@@ -33,6 +33,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
 * [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
 * [compose] Avoid recreation of objects during recomposition of `GenericStyle`.
+* Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
+* Add min/max/defaulta values to the docs on the generated properties
 
 ## Bug fixes 🐞
 * [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.

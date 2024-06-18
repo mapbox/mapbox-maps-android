@@ -38,7 +38,7 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
   }
 
   /**
-   * Whether the logo is visible on the map.
+   * Whether the logo is visible on the map. Default value: true.
    */
   override var enabled: Boolean
     get() {
@@ -52,7 +52,7 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
     }
 
   /**
-   * Defines where the logo is positioned on the map
+   * Defines where the logo is positioned on the map Default value: "bottom-left".
    */
   override var position: Int
     get() {
@@ -66,7 +66,7 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
     }
 
   /**
-   * Defines the margin to the left that the attribution icon honors.
+   * Defines the margin to the left that the attribution icon honors. Default value: 4.
    */
   override var marginLeft: Float
     get() {
@@ -80,7 +80,7 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
     }
 
   /**
-   * Defines the margin to the top that the attribution icon honors.
+   * Defines the margin to the top that the attribution icon honors. Default value: 4.
    */
   override var marginTop: Float
     get() {
@@ -94,7 +94,7 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
     }
 
   /**
-   * Defines the margin to the right that the attribution icon honors.
+   * Defines the margin to the right that the attribution icon honors. Default value: 4.
    */
   override var marginRight: Float
     get() {
@@ -108,7 +108,7 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
     }
 
   /**
-   * Defines the margin to the bottom that the attribution icon honors.
+   * Defines the margin to the bottom that the attribution icon honors. Default value: 4.
    */
   override var marginBottom: Float
     get() {

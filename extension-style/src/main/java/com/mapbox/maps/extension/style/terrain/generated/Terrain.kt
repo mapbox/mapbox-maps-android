@@ -24,11 +24,11 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
    */
   val exaggeration: Double?
     /**
-     * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+     * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
      *
      * @return exaggeration as Double
      */
@@ -37,7 +37,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
     }
 
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
    *
    * @param exaggeration as Double
    */
@@ -75,13 +75,13 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
   }
 
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
    *
    * This is an Expression representation of "exaggeration".
    */
   val exaggerationAsExpression: Expression?
     /**
-     * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+     * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
      *
      * Get the Exaggeration property as an Expression
      *
@@ -97,7 +97,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
       return null
     }
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
    *
    * @param exaggeration value of exaggeration as Expression
    */
@@ -187,14 +187,14 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
 @TerrainDsl
 interface TerrainDslReceiver {
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
    *
    * @param exaggeration as Double
    */
   fun exaggeration(exaggeration: Double = 1.0): Terrain
 
   /**
-   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value. Default value: 1. Value range: [0, 1000]
    *
    * @param exaggeration value of exaggeration as Expression
    */

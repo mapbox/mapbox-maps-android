@@ -24,16 +24,16 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#background)
  *
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param backgroundColor The color with which the background will be drawn.
- * @param backgroundColorTransition Defines the transition of [backgroundColor].
- * @param backgroundEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param backgroundEmissiveStrengthTransition Defines the transition of [backgroundEmissiveStrength].
- * @param backgroundOpacity The opacity at which the background will be drawn.
- * @param backgroundOpacityTransition Defines the transition of [backgroundOpacity].
+ * @param backgroundColor The color with which the background will be drawn. Default value: "#000000".
+ * @param backgroundColorTransition Defines the transition of [backgroundColor]. Default value: "#000000".
+ * @param backgroundEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+ * @param backgroundEmissiveStrengthTransition Defines the transition of [backgroundEmissiveStrength]. Default value: 0. Minimum value: 0.
+ * @param backgroundOpacity The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
+ * @param backgroundOpacityTransition Defines the transition of [backgroundOpacity]. Default value: 1. Value range: [0, 1]
  * @param backgroundPattern Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  */
 @MapboxExperimental
 @Composable

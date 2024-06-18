@@ -30,33 +30,33 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @param bearingImage Name of image in sprite to use as the middle of the location indicator.
  * @param shadowImage Name of image in sprite to use as the background of the location indicator.
  * @param topImage Name of image in sprite to use as the top of the location indicator.
- * @param accuracyRadius The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
- * @param accuracyRadiusTransition Defines the transition of [accuracyRadius].
- * @param accuracyRadiusBorderColor The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
- * @param accuracyRadiusBorderColorTransition Defines the transition of [accuracyRadiusBorderColor].
- * @param accuracyRadiusColor The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
- * @param accuracyRadiusColorTransition Defines the transition of [accuracyRadiusColor].
- * @param bearing The bearing of the location indicator.
- * @param bearingTransition Defines the transition of [bearing].
- * @param bearingImageSize The size of the bearing image, as a scale factor applied to the size of the specified image.
- * @param bearingImageSizeTransition Defines the transition of [bearingImageSize].
- * @param emphasisCircleColor The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
- * @param emphasisCircleColorTransition Defines the transition of [emphasisCircleColor].
- * @param emphasisCircleRadius The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
- * @param emphasisCircleRadiusTransition Defines the transition of [emphasisCircleRadius].
- * @param imagePitchDisplacement The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
- * @param location An array of [latitude, longitude, altitude] position of the location indicator.
- * @param locationTransition Defines the transition of [location].
- * @param locationIndicatorOpacity The opacity of the entire location indicator layer.
- * @param locationIndicatorOpacityTransition Defines the transition of [locationIndicatorOpacity].
- * @param perspectiveCompensation The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
- * @param shadowImageSize The size of the shadow image, as a scale factor applied to the size of the specified image.
- * @param shadowImageSizeTransition Defines the transition of [shadowImageSize].
- * @param topImageSize The size of the top image, as a scale factor applied to the size of the specified image.
- * @param topImageSizeTransition Defines the transition of [topImageSize].
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param accuracyRadius The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+ * @param accuracyRadiusTransition Defines the transition of [accuracyRadius]. Default value: 0.
+ * @param accuracyRadiusBorderColor The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
+ * @param accuracyRadiusBorderColorTransition Defines the transition of [accuracyRadiusBorderColor]. Default value: "#ffffff".
+ * @param accuracyRadiusColor The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
+ * @param accuracyRadiusColorTransition Defines the transition of [accuracyRadiusColor]. Default value: "#ffffff".
+ * @param bearing The bearing of the location indicator. Default value: 0.
+ * @param bearingTransition Defines the transition of [bearing]. Default value: 0.
+ * @param bearingImageSize The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+ * @param bearingImageSizeTransition Defines the transition of [bearingImageSize]. Default value: 1.
+ * @param emphasisCircleColor The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
+ * @param emphasisCircleColorTransition Defines the transition of [emphasisCircleColor]. Default value: "#ffffff".
+ * @param emphasisCircleRadius The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+ * @param emphasisCircleRadiusTransition Defines the transition of [emphasisCircleRadius]. Default value: 0.
+ * @param imagePitchDisplacement The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+ * @param location An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+ * @param locationTransition Defines the transition of [location]. Default value: [0,0,0].
+ * @param locationIndicatorOpacity The opacity of the entire location indicator layer. Default value: 1. Value range: [0, 1]
+ * @param locationIndicatorOpacityTransition Defines the transition of [locationIndicatorOpacity]. Default value: 1. Value range: [0, 1]
+ * @param perspectiveCompensation The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection. Default value: "0.85".
+ * @param shadowImageSize The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+ * @param shadowImageSizeTransition Defines the transition of [shadowImageSize]. Default value: 1.
+ * @param topImageSize The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+ * @param topImageSizeTransition Defines the transition of [topImageSize]. Default value: 1.
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

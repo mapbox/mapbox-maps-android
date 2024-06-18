@@ -70,7 +70,7 @@ data class LocationPuck2D @JvmOverloads constructor(
    */
   var scaleExpression: String? = null,
   /**
-   * The opacity of the entire location puck
+   * The opacity of the entire location puck Default value: 1. Value range: [0, 1]
    */
   var opacity: Float = 1f,
 ) : LocationPuck()
@@ -81,19 +81,19 @@ data class LocationPuck2D @JvmOverloads constructor(
 @OptIn(MapboxExperimental::class)
 data class LocationPuck3D @JvmOverloads constructor(
   /**
-   * An URL for the model file in gltf format.
+   * An URL for the model file in gltf format. Default value: null.
    */
   var modelUri: String,
   /**
-   * The position of the model.
+   * The position of the model. Default value: [0,0].
    */
   var position: List<Float> = listOf(0f, 0f),
   /**
-   * The opacity of the model.
+   * The opacity of the model. Default value: 1. Value range: [0, 1]
    */
   var modelOpacity: Float = 1f,
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    */
   var modelScale: List<Float> = listOf(1f, 1f, 1f),
   /**
@@ -101,30 +101,30 @@ data class LocationPuck3D @JvmOverloads constructor(
    */
   var modelScaleExpression: String? = null,
   /**
-   * The translation of the model [lon, lat, z]
+   * The translation of the model [lon, lat, z] Default value: [0,0,0].
    */
   var modelTranslation: List<Float> = listOf(0f, 0f, 0f),
   /**
-   * The rotation of the model.
+   * The rotation of the model. Default value: [0,0,90].
    */
   var modelRotation: List<Float> = listOf(0f, 0f, 90f),
   /**
-   * Enable/Disable shadow casting for the 3D location puck.
+   * Enable/Disable shadow casting for the 3D location puck. Default value: true.
    */
   @MapboxExperimental
   var modelCastShadows: Boolean = true,
   /**
-   * Enable/Disable shadow receiving for the 3D location puck.
+   * Enable/Disable shadow receiving for the 3D location puck. Default value: true.
    */
   @MapboxExperimental
   var modelReceiveShadows: Boolean = true,
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    */
   @MapboxExperimental
   var modelScaleMode: ModelScaleMode = ModelScaleMode.VIEWPORT,
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors).
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Default value: 1. Value range: [0, 5]
    */
   var modelEmissiveStrength: Float = 1f,
   /**

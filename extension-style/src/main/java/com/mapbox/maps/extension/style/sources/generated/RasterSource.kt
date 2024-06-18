@@ -72,6 +72,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * An array containing the longitude and latitude of the southwest and northeast corners of the source's
    * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
    * a source, no tiles outside of the given bounds are requested by Mapbox GL.
+   * Default value: [-180,-85.051129,180,85.051129].
    */
   val bounds: List<Double>?
     /**
@@ -83,6 +84,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+   * Default value: 0.
    */
   fun minzoom(value: Long = 0L): RasterSource = apply {
     setProperty(PropertyValue("minzoom", TypeUtils.wrapToValue(value)))
@@ -90,6 +92,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+   * Default value: 0.
    */
   val minzoom: Long?
     /**
@@ -104,6 +107,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
+   * Default value: 22.
    */
   fun maxzoom(value: Long = 22L): RasterSource = apply {
     setProperty(PropertyValue("maxzoom", TypeUtils.wrapToValue(value)))
@@ -112,6 +116,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
+   * Default value: 22.
    */
   val maxzoom: Long?
     /**
@@ -125,6 +130,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
+   * Default value: 512.
    */
   val tileSize: Long?
     /**
@@ -136,6 +142,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
+   * Default value: "xyz".
    */
   val scheme: Scheme?
     /**
@@ -165,6 +172,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * A setting to determine whether a source's tiles are cached locally.
+   * Default value: false.
    */
   fun volatile(value: Boolean = false): RasterSource = apply {
     setProperty(PropertyValue("volatile", TypeUtils.wrapToValue(value)))
@@ -172,6 +180,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * A setting to determine whether a source's tiles are cached locally.
+   * Default value: false.
    */
   val volatile: Boolean?
     /**
@@ -188,7 +197,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   fun prefetchZoomDelta(value: Long = 4L): RasterSource = apply {
     setVolatileProperty(PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value)))
@@ -199,7 +208,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   val prefetchZoomDelta: Long?
     /**
@@ -239,6 +248,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
    * If the given source supports loading tiles from a server, sets the minimum tile update interval.
    * Update network requests that are more frequent than the minimum tile update interval are suppressed.
+   * Default value: 0.
    */
   fun minimumTileUpdateInterval(value: Double = 0.0): RasterSource = apply {
     setVolatileProperty(PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value)))
@@ -248,6 +258,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
    * If the given source supports loading tiles from a server, sets the minimum tile update interval.
    * Update network requests that are more frequent than the minimum tile update interval are suppressed.
+   * Default value: 0.
    */
   val minimumTileUpdateInterval: Double?
     /**
@@ -287,6 +298,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * For the tiled sources, this property sets the tile requests delay. The given delay comes in
    * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
    * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+   * Default value: 0.
    */
   fun tileRequestsDelay(value: Double = 0.0): RasterSource = apply {
     setVolatileProperty(PropertyValue("tile-requests-delay", TypeUtils.wrapToValue(value)))
@@ -296,6 +308,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * For the tiled sources, this property sets the tile requests delay. The given delay comes in
    * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
    * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+   * Default value: 0.
    */
   val tileRequestsDelay: Double?
     /**
@@ -312,6 +325,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
    * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
    * superseded with tile-requests-delay property value, if both are provided.
+   * Default value: 0.
    */
   fun tileNetworkRequestsDelay(value: Double = 0.0): RasterSource = apply {
     setVolatileProperty(PropertyValue("tile-network-requests-delay", TypeUtils.wrapToValue(value)))
@@ -322,6 +336,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
    * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
    * superseded with tile-requests-delay property value, if both are provided.
+   * Default value: 0.
    */
   val tileNetworkRequestsDelay: Double?
     /**
@@ -364,6 +379,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * An array containing the longitude and latitude of the southwest and northeast corners of the source's
      * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
      * a source, no tiles outside of the given bounds are requested by Mapbox GL.
+     * Default value: [-180,-85.051129,180,85.051129].
      */
     fun bounds(value: List<Double> = listOf(-180.0, -85.051129, 180.0, 85.051129)): Builder = apply {
       val propertyValue = PropertyValue("bounds", TypeUtils.wrapToValue(value))
@@ -372,6 +388,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+     * Default value: 0.
      */
     fun minzoom(value: Long = 0L): Builder = apply {
       val propertyValue = PropertyValue("minzoom", TypeUtils.wrapToValue(value))
@@ -381,6 +398,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
+     * Default value: 22.
      */
     fun maxzoom(value: Long = 22L): Builder = apply {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
@@ -389,6 +407,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
+     * Default value: 512.
      */
     fun tileSize(value: Long = 512L): Builder = apply {
       val propertyValue = PropertyValue("tileSize", TypeUtils.wrapToValue(value))
@@ -397,6 +416,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
+     * Default value: "xyz".
      */
     fun scheme(value: Scheme = Scheme.XYZ): Builder = apply {
       val propertyValue = PropertyValue("scheme", TypeUtils.wrapToValue(value.value))
@@ -413,6 +433,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * A setting to determine whether a source's tiles are cached locally.
+     * Default value: false.
      */
     fun volatile(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("volatile", TypeUtils.wrapToValue(value))
@@ -424,7 +445,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
+     * Default value: 4.
      */
     fun prefetchZoomDelta(value: Long = 4L): Builder = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
@@ -446,6 +467,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
      * If the given source supports loading tiles from a server, sets the minimum tile update interval.
      * Update network requests that are more frequent than the minimum tile update interval are suppressed.
+     * Default value: 0.
      */
     fun minimumTileUpdateInterval(value: Double = 0.0): Builder = apply {
       val propertyValue = PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value))
@@ -467,6 +489,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * For the tiled sources, this property sets the tile requests delay. The given delay comes in
      * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
      * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+     * Default value: 0.
      */
     fun tileRequestsDelay(value: Double = 0.0): Builder = apply {
       val propertyValue = PropertyValue("tile-requests-delay", TypeUtils.wrapToValue(value))
@@ -478,6 +501,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
      * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
      * superseded with tile-requests-delay property value, if both are provided.
+     * Default value: 0.
      */
     fun tileNetworkRequestsDelay(value: Double = 0.0): Builder = apply {
       val propertyValue = PropertyValue("tile-network-requests-delay", TypeUtils.wrapToValue(value))
@@ -525,6 +549,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+     * Default value: 0.
      */
     val defaultMinzoom: Long?
       /**
@@ -537,6 +562,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
+     * Default value: 22.
      */
     val defaultMaxzoom: Long?
       /**
@@ -548,6 +574,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
+     * Default value: "xyz".
      */
     val defaultScheme: Scheme?
       /**
@@ -564,6 +591,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * A setting to determine whether a source's tiles are cached locally.
+     * Default value: false.
      */
     val defaultVolatile: Boolean?
       /**
@@ -578,7 +606,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
+     * Default value: 4.
      */
     val defaultPrefetchZoomDelta: Long?
       /**
@@ -592,6 +620,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
      * If the given source supports loading tiles from a server, sets the minimum tile update interval.
      * Update network requests that are more frequent than the minimum tile update interval are suppressed.
+     * Default value: 0.
      */
     val defaultMinimumTileUpdateInterval: Double?
       /**
@@ -605,6 +634,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * For the tiled sources, this property sets the tile requests delay. The given delay comes in
      * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
      * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+     * Default value: 0.
      */
     val defaultTileRequestsDelay: Double?
       /**
@@ -619,6 +649,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
      * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
      * superseded with tile-requests-delay property value, if both are provided.
+     * Default value: 0.
      */
     val defaultTileNetworkRequestsDelay: Double?
       /**

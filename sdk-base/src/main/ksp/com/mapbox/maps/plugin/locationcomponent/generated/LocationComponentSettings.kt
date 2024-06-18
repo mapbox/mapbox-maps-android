@@ -22,34 +22,37 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class LocationComponentSettings private constructor(
   /**
-   * Whether the user location is visible on the map.
+   * Whether the user location is visible on the map. Default value: false.
    */
   public val enabled: Boolean,
   /**
-   * Whether the location puck is pulsing on the map. Works for 2D location puck only.
+   * Whether the location puck is pulsing on the map. Works for 2D location puck only. Default
+   * value: false.
    */
   public val pulsingEnabled: Boolean,
   /**
-   * The color of the pulsing circle. Works for 2D location puck only.
+   * The color of the pulsing circle. Works for 2D location puck only. Default value: "#4A90E2".
    */
   public val pulsingColor: Int,
   /**
    * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting
    * [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the
-   * pulsing circle's maximum radius to follow location accuracy circle. This property is specified in
-   * pixels.
+   * pulsing circle's maximum radius to follow location accuracy circle. Default value: 10. This
+   * property is specified in pixels.
    */
   public val pulsingMaxRadius: Float,
   /**
-   * Whether show accuracy ring with location puck. Works for 2D location puck only.
+   * Whether show accuracy ring with location puck. Works for 2D location puck only. Default value:
+   * false.
    */
   public val showAccuracyRing: Boolean,
   /**
-   * The color of the accuracy ring. Works for 2D location puck only.
+   * The color of the accuracy ring. Works for 2D location puck only. Default value: "#4d89cff0".
    */
   public val accuracyRingColor: Int,
   /**
-   * The color of the accuracy ring border. Works for 2D location puck only.
+   * The color of the accuracy ring border. Works for 2D location puck only. Default value:
+   * "#4d89cff0".
    */
   public val accuracyRingBorderColor: Int,
   /**
@@ -61,11 +64,11 @@ public class LocationComponentSettings private constructor(
    */
   public val layerBelow: String?,
   /**
-   * Whether the puck rotates to track the bearing source.
+   * Whether the puck rotates to track the bearing source. Default value: false.
    */
   public val puckBearingEnabled: Boolean,
   /**
-   * The enum controls how the puck is oriented
+   * The enum controls how the puck is oriented Default value: "heading".
    */
   public val puckBearing: PuckBearing,
   /**
@@ -139,19 +142,20 @@ public class LocationComponentSettings private constructor(
     public var locationPuck: LocationPuck
   ) {
     /**
-     * Whether the user location is visible on the map.
+     * Whether the user location is visible on the map. Default value: false.
      */
     @set:JvmSynthetic
     public var enabled: Boolean = false
 
     /**
-     * Whether the location puck is pulsing on the map. Works for 2D location puck only.
+     * Whether the location puck is pulsing on the map. Works for 2D location puck only. Default
+     * value: false.
      */
     @set:JvmSynthetic
     public var pulsingEnabled: Boolean = false
 
     /**
-     * The color of the pulsing circle. Works for 2D location puck only.
+     * The color of the pulsing circle. Works for 2D location puck only. Default value: "#4A90E2".
      */
     @set:JvmSynthetic
     public var pulsingColor: Int = Color.parseColor("#4A90E2")
@@ -159,26 +163,28 @@ public class LocationComponentSettings private constructor(
     /**
      * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting
      * [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the
-     * pulsing circle's maximum radius to follow location accuracy circle. This property is specified
-     * in pixels.
+     * pulsing circle's maximum radius to follow location accuracy circle. Default value: 10. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var pulsingMaxRadius: Float = 10f
 
     /**
-     * Whether show accuracy ring with location puck. Works for 2D location puck only.
+     * Whether show accuracy ring with location puck. Works for 2D location puck only. Default
+     * value: false.
      */
     @set:JvmSynthetic
     public var showAccuracyRing: Boolean = false
 
     /**
-     * The color of the accuracy ring. Works for 2D location puck only.
+     * The color of the accuracy ring. Works for 2D location puck only. Default value: "#4d89cff0".
      */
     @set:JvmSynthetic
     public var accuracyRingColor: Int = Color.parseColor("#4d89cff0")
 
     /**
-     * The color of the accuracy ring border. Works for 2D location puck only.
+     * The color of the accuracy ring border. Works for 2D location puck only. Default value:
+     * "#4d89cff0".
      */
     @set:JvmSynthetic
     public var accuracyRingBorderColor: Int = Color.parseColor("#4d89cff0")
@@ -196,13 +202,13 @@ public class LocationComponentSettings private constructor(
     public var layerBelow: String? = null
 
     /**
-     * Whether the puck rotates to track the bearing source.
+     * Whether the puck rotates to track the bearing source. Default value: false.
      */
     @set:JvmSynthetic
     public var puckBearingEnabled: Boolean = false
 
     /**
-     * The enum controls how the puck is oriented
+     * The enum controls how the puck is oriented Default value: "heading".
      */
     @set:JvmSynthetic
     public var puckBearing: PuckBearing = PuckBearing.HEADING
@@ -215,7 +221,7 @@ public class LocationComponentSettings private constructor(
     public var slot: String? = null
 
     /**
-     * Setter for enabled: whether the user location is visible on the map.
+     * Setter for enabled: whether the user location is visible on the map. Default value: false.
      *
      * @param enabled
      * @return Builder
@@ -227,7 +233,7 @@ public class LocationComponentSettings private constructor(
 
     /**
      * Setter for pulsingEnabled: whether the location puck is pulsing on the map. Works for 2D
-     * location puck only.
+     * location puck only. Default value: false.
      *
      * @param pulsingEnabled
      * @return Builder
@@ -239,6 +245,7 @@ public class LocationComponentSettings private constructor(
 
     /**
      * Setter for pulsingColor: the color of the pulsing circle. Works for 2D location puck only.
+     * Default value: "#4A90E2".
      *
      * @param pulsingColor
      * @return Builder
@@ -252,7 +259,8 @@ public class LocationComponentSettings private constructor(
      * Setter for pulsingMaxRadius: the maximum radius of the pulsing circle. Works for 2D location
      * puck only. Note: Setting [pulsingMaxRadius] to
      * LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle's
-     * maximum radius to follow location accuracy circle. This property is specified in pixels.
+     * maximum radius to follow location accuracy circle. Default value: 10. This property is specified
+     * in pixels.
      *
      * @param pulsingMaxRadius
      * @return Builder
@@ -264,7 +272,7 @@ public class LocationComponentSettings private constructor(
 
     /**
      * Setter for showAccuracyRing: whether show accuracy ring with location puck. Works for 2D
-     * location puck only.
+     * location puck only. Default value: false.
      *
      * @param showAccuracyRing
      * @return Builder
@@ -276,7 +284,7 @@ public class LocationComponentSettings private constructor(
 
     /**
      * Setter for accuracyRingColor: the color of the accuracy ring. Works for 2D location puck
-     * only.
+     * only. Default value: "#4d89cff0".
      *
      * @param accuracyRingColor
      * @return Builder
@@ -288,7 +296,7 @@ public class LocationComponentSettings private constructor(
 
     /**
      * Setter for accuracyRingBorderColor: the color of the accuracy ring border. Works for 2D
-     * location puck only.
+     * location puck only. Default value: "#4d89cff0".
      *
      * @param accuracyRingBorderColor
      * @return Builder
@@ -323,7 +331,8 @@ public class LocationComponentSettings private constructor(
     }
 
     /**
-     * Setter for puckBearingEnabled: whether the puck rotates to track the bearing source.
+     * Setter for puckBearingEnabled: whether the puck rotates to track the bearing source. Default
+     * value: false.
      *
      * @param puckBearingEnabled
      * @return Builder
@@ -334,7 +343,7 @@ public class LocationComponentSettings private constructor(
     }
 
     /**
-     * Setter for puckBearing: the enum controls how the puck is oriented.
+     * Setter for puckBearing: the enum controls how the puck is oriented Default value: "heading".
      *
      * @param puckBearing
      * @return Builder

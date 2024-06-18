@@ -29,16 +29,16 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param rasterParticleArrayBand Displayed band of raster array source layer
  * @param rasterParticleColor Defines a color map by which to colorize a raster particle layer, parameterized by the `["raster-particle-speed"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-particle-max-speed`.
- * @param rasterParticleCount Defines the amount of particles per tile.
- * @param rasterParticleFadeOpacityFactor Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail.
- * @param rasterParticleFadeOpacityFactorTransition Defines the transition of [rasterParticleFadeOpacityFactor].
- * @param rasterParticleMaxSpeed Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value.
- * @param rasterParticleResetRateFactor Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles).
- * @param rasterParticleSpeedFactor Defines a coefficient for the speed of particles’ motion.
- * @param rasterParticleSpeedFactorTransition Defines the transition of [rasterParticleSpeedFactor].
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param rasterParticleCount Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
+ * @param rasterParticleFadeOpacityFactor Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
+ * @param rasterParticleFadeOpacityFactorTransition Defines the transition of [rasterParticleFadeOpacityFactor]. Default value: 0.98. Value range: [0, 1]
+ * @param rasterParticleMaxSpeed Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
+ * @param rasterParticleResetRateFactor Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
+ * @param rasterParticleSpeedFactor Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
+ * @param rasterParticleSpeedFactorTransition Defines the transition of [rasterParticleSpeedFactor]. Default value: 0.2. Value range: [0, 1]
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

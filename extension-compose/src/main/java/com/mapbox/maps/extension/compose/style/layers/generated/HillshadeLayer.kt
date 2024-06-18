@@ -27,21 +27,21 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param hillshadeAccentColor The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
- * @param hillshadeAccentColorTransition Defines the transition of [hillshadeAccentColor].
- * @param hillshadeEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param hillshadeEmissiveStrengthTransition Defines the transition of [hillshadeEmissiveStrength].
- * @param hillshadeExaggeration Intensity of the hillshade
- * @param hillshadeExaggerationTransition Defines the transition of [hillshadeExaggeration].
- * @param hillshadeHighlightColor The shading color of areas that faces towards the light source.
- * @param hillshadeHighlightColorTransition Defines the transition of [hillshadeHighlightColor].
- * @param hillshadeIlluminationAnchor Direction of light source when map is rotated.
- * @param hillshadeIlluminationDirection The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
- * @param hillshadeShadowColor The shading color of areas that face away from the light source.
- * @param hillshadeShadowColorTransition Defines the transition of [hillshadeShadowColor].
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param hillshadeAccentColor The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
+ * @param hillshadeAccentColorTransition Defines the transition of [hillshadeAccentColor]. Default value: "#000000".
+ * @param hillshadeEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+ * @param hillshadeEmissiveStrengthTransition Defines the transition of [hillshadeEmissiveStrength]. Default value: 0. Minimum value: 0.
+ * @param hillshadeExaggeration Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
+ * @param hillshadeExaggerationTransition Defines the transition of [hillshadeExaggeration]. Default value: 0.5. Value range: [0, 1]
+ * @param hillshadeHighlightColor The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
+ * @param hillshadeHighlightColorTransition Defines the transition of [hillshadeHighlightColor]. Default value: "#FFFFFF".
+ * @param hillshadeIlluminationAnchor Direction of light source when map is rotated. Default value: "viewport".
+ * @param hillshadeIlluminationDirection The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
+ * @param hillshadeShadowColor The shading color of areas that face away from the light source. Default value: "#000000".
+ * @param hillshadeShadowColorTransition Defines the transition of [hillshadeShadowColor]. Default value: "#000000".
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

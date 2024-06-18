@@ -87,8 +87,7 @@ public class TerrainState private constructor(
 
   /**
    * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
-   *
-   * The minimum accepted value is `0` and the maximum is `1000`.
+   * Default value: 1. Value range: [0, 1000]
    */
   public var exaggeration: DoubleValue by exaggerationState
 
@@ -104,8 +103,7 @@ public class TerrainState private constructor(
 
   /**
    * Defines the transition of [exaggeration].
-   *
-   * The minimum accepted value is `0` and the maximum is `1000`.
+   * Default value: 1. Value range: [0, 1000]
    */
   public var exaggerationTransition: Transition by exaggerationTransitionState
 

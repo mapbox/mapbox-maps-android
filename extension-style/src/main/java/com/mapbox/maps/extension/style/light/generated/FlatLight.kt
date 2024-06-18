@@ -28,11 +28,11 @@ import java.util.Locale
 class FlatLight internal constructor(override val lightId: String) : FlatLightDslReceiver, StyleContract.StyleLightExtension, Light() {
 
   /**
-   * Whether extruded geometries are lit relative to the map or viewport.
+   * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
    */
   val anchor: Anchor?
     /**
-     * Whether extruded geometries are lit relative to the map or viewport.
+     * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
      *
      * @return anchor as Anchor
      */
@@ -43,7 +43,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Whether extruded geometries are lit relative to the map or viewport.
+   * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
    *
    * @param anchor as Anchor
    */
@@ -52,13 +52,13 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
   }
 
   /**
-   * Whether extruded geometries are lit relative to the map or viewport.
+   * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
    *
    * This is an Expression representation of "anchor".
    */
   val anchorAsExpression: Expression?
     /**
-     * Whether extruded geometries are lit relative to the map or viewport.
+     * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
      *
      * Get the Anchor property as an Expression
      *
@@ -74,7 +74,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Whether extruded geometries are lit relative to the map or viewport.
+   * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
    *
    * @param anchor value of anchor as Expression
    */
@@ -83,11 +83,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
     setProperty(propertyValue)
   }
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    */
   val colorAsColorInt: Int?
     /**
-     * Color tint for lighting extruded geometries.
+     * Color tint for lighting extruded geometries. Default value: "#ffffff".
      *
      * @return color as int
      */
@@ -99,7 +99,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * @param color as int
    */
@@ -108,11 +108,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
     setProperty(propertyValue)
   }
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    */
   val color: String?
     /**
-     * Color tint for lighting extruded geometries.
+     * Color tint for lighting extruded geometries. Default value: "#ffffff".
      *
      * @return color as String
      */
@@ -123,7 +123,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * @param color as String
    */
@@ -132,13 +132,13 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
   }
 
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * This is an Expression representation of "color".
    */
   val colorAsExpression: Expression?
     /**
-     * Color tint for lighting extruded geometries.
+     * Color tint for lighting extruded geometries. Default value: "#ffffff".
      *
      * Get the Color property as an Expression
      *
@@ -151,7 +151,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * @param color value of color as Expression
    */
@@ -188,11 +188,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    */
   val intensity: Double?
     /**
-     * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+     * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
      *
      * @return intensity as Double
      */
@@ -200,7 +200,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return getPropertyValue("intensity")
     }
   /**
-   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -209,13 +209,13 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
   }
 
   /**
-   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
    * This is an Expression representation of "intensity".
    */
   val intensityAsExpression: Expression?
     /**
-     * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+     * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
      *
      * Get the Intensity property as an Expression
      *
@@ -231,7 +231,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -268,11 +268,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
     intensityTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    */
   val position: LightPosition?
     /**
-     * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+     * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
      *
      * @return position as LightPosition
      */
@@ -284,7 +284,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
     }
 
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * DSL for setting [LightPosition].
    */
@@ -292,7 +292,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
     position(LightPosition(radialCoordinate, azimuthalAngle, polarAngle))
   }
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * @param position as LightPosition
    */
@@ -301,13 +301,13 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
   }
 
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * This is an Expression representation of "position".
    */
   val positionAsExpression: Expression?
     /**
-     * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+     * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
      *
      * Get the Position property as an Expression
      *
@@ -323,7 +323,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
       return null
     }
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * @param position value of position as Expression
    */
@@ -389,35 +389,35 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
 interface FlatLightDslReceiver {
 
   /**
-   * Whether extruded geometries are lit relative to the map or viewport.
+   * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
    *
    * @param anchor as Anchor
    */
   fun anchor(anchor: Anchor = Anchor.VIEWPORT): FlatLight
 
   /**
-   * Whether extruded geometries are lit relative to the map or viewport.
+   * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
    *
    * @param anchor value of anchor as Expression
    */
   fun anchor(anchor: Expression): FlatLight
 
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * @param color as int
    */
   fun color(@ColorInt color: Int): FlatLight
 
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * @param color as String
    */
   fun color(color: String = "#ffffff"): FlatLight
 
   /**
-   * Color tint for lighting extruded geometries.
+   * Color tint for lighting extruded geometries. Default value: "#ffffff".
    *
    * @param color value of color as Expression
    */
@@ -436,14 +436,14 @@ interface FlatLightDslReceiver {
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
 
   /**
-   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity as Double
    */
   fun intensity(intensity: Double = 0.5): FlatLight
 
   /**
-   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -462,21 +462,21 @@ interface FlatLightDslReceiver {
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
 
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * DSL for setting [LightPosition].
    */
   fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): FlatLight
 
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * @param position as LightPosition
    */
   fun position(position: LightPosition = LightPosition(1.15, 210.0, 30.0)): FlatLight
 
   /**
-   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [1.15,210,30].
    *
    * @param position value of position as Expression
    */

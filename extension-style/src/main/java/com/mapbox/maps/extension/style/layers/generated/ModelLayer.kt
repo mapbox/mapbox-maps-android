@@ -247,12 +247,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   // Property getters and setters
 
   /**
-   * Model to render.
+   * Model to render. Default value: "".
    */
   @MapboxExperimental
   val modelId: String?
     /**
-     * Model to render.
+     * Model to render. Default value: "".
      *
      * Use static method [ModelLayer.defaultModelId] to get the default property.
      *
@@ -263,7 +263,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Model to render.
+   * Model to render. Default value: "".
    *
    * Use static method [ModelLayer.defaultModelId] to set the default property.
    *
@@ -276,7 +276,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Model to render.
+   * Model to render. Default value: "".
    *
    * This is an Expression representation of "model-id".
    *
@@ -284,7 +284,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelIdAsExpression: Expression?
     /**
-     * Model to render.
+     * Model to render. Default value: "".
      *
      * Get the ModelId property as an Expression
      *
@@ -303,7 +303,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Model to render.
+   * Model to render. Default value: "".
    *
    * Use static method [ModelLayer.defaultModelIdAsExpression] to set the default property.
    *
@@ -316,12 +316,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelAmbientOcclusionIntensity: Double?
     /**
-     * Intensity of the ambient occlusion if present in the 3D model.
+     * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelAmbientOcclusionIntensity] to get the default property.
      *
@@ -332,7 +332,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelAmbientOcclusionIntensity] to set the default property.
    *
@@ -345,7 +345,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "model-ambient-occlusion-intensity".
    *
@@ -353,7 +353,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelAmbientOcclusionIntensityAsExpression: Expression?
     /**
-     * Intensity of the ambient occlusion if present in the 3D model.
+     * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
      *
      * Get the ModelAmbientOcclusionIntensity property as an Expression
      *
@@ -372,7 +372,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelAmbientOcclusionIntensityAsExpression] to set the default property.
    *
@@ -422,12 +422,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Enable/Disable shadow casting for this layer
+   * Enable/Disable shadow casting for this layer Default value: true.
    */
   @MapboxExperimental
   val modelCastShadows: Boolean?
     /**
-     * Enable/Disable shadow casting for this layer
+     * Enable/Disable shadow casting for this layer Default value: true.
      *
      * Use static method [ModelLayer.defaultModelCastShadows] to get the default property.
      *
@@ -438,7 +438,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Enable/Disable shadow casting for this layer
+   * Enable/Disable shadow casting for this layer Default value: true.
    *
    * Use static method [ModelLayer.defaultModelCastShadows] to set the default property.
    *
@@ -451,7 +451,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Enable/Disable shadow casting for this layer
+   * Enable/Disable shadow casting for this layer Default value: true.
    *
    * This is an Expression representation of "model-cast-shadows".
    *
@@ -459,7 +459,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelCastShadowsAsExpression: Expression?
     /**
-     * Enable/Disable shadow casting for this layer
+     * Enable/Disable shadow casting for this layer Default value: true.
      *
      * Get the ModelCastShadows property as an Expression
      *
@@ -478,7 +478,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Enable/Disable shadow casting for this layer
+   * Enable/Disable shadow casting for this layer Default value: true.
    *
    * Use static method [ModelLayer.defaultModelCastShadowsAsExpression] to set the default property.
    *
@@ -491,12 +491,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    */
   @MapboxExperimental
   val modelColor: String?
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
      *
      * Use static method [ModelLayer.defaultModelColor] to get the default property.
      *
@@ -510,7 +510,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * Use static method [ModelLayer.defaultModelColor] to set the default property.
    *
@@ -523,7 +523,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * This is an Expression representation of "model-color".
    *
@@ -531,7 +531,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelColorAsExpression: Expression?
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
      *
      * Get the ModelColor property as an Expression
      *
@@ -547,7 +547,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * Use static method [ModelLayer.defaultModelColorAsExpression] to set the default property.
    *
@@ -560,12 +560,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    */
   @MapboxExperimental
   val modelColorAsColorInt: Int?
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
      *
      * Use static method [ModelLayer.defaultModelColorAsColorInt] to get the default property.
      *
@@ -580,7 +580,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * Use static method [ModelLayer.defaultModelColorAsColorInt] to set the default property.
    *
@@ -630,12 +630,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelColorMixIntensity: Double?
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelColorMixIntensity] to get the default property.
      *
@@ -646,7 +646,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelColorMixIntensity] to set the default property.
    *
@@ -659,7 +659,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "model-color-mix-intensity".
    *
@@ -667,7 +667,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelColorMixIntensityAsExpression: Expression?
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
      *
      * Get the ModelColorMixIntensity property as an Expression
      *
@@ -686,7 +686,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelColorMixIntensityAsExpression] to set the default property.
    *
@@ -736,12 +736,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelCutoffFadeRange: Double?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelCutoffFadeRange] to get the default property.
      *
@@ -752,7 +752,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelCutoffFadeRange] to set the default property.
    *
@@ -765,7 +765,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "model-cutoff-fade-range".
    *
@@ -773,7 +773,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelCutoffFadeRangeAsExpression: Expression?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Get the ModelCutoffFadeRange property as an Expression
      *
@@ -792,7 +792,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelCutoffFadeRangeAsExpression] to set the default property.
    *
@@ -805,12 +805,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    */
   @MapboxExperimental
   val modelEmissiveStrength: Double?
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      *
      * Use static method [ModelLayer.defaultModelEmissiveStrength] to get the default property.
      *
@@ -821,7 +821,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * Use static method [ModelLayer.defaultModelEmissiveStrength] to set the default property.
    *
@@ -834,7 +834,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * This is an Expression representation of "model-emissive-strength".
    *
@@ -842,7 +842,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelEmissiveStrengthAsExpression: Expression?
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      *
      * Get the ModelEmissiveStrength property as an Expression
      *
@@ -861,7 +861,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * Use static method [ModelLayer.defaultModelEmissiveStrengthAsExpression] to set the default property.
    *
@@ -911,12 +911,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    */
   @MapboxExperimental
   val modelHeightBasedEmissiveStrengthMultiplier: List<Double>?
     /**
-     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
      *
      * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier] to get the default property.
      *
@@ -927,7 +927,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier] to set the default property.
    *
@@ -940,7 +940,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * This is an Expression representation of "model-height-based-emissive-strength-multiplier".
    *
@@ -948,7 +948,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelHeightBasedEmissiveStrengthMultiplierAsExpression: Expression?
     /**
-     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
      *
      * Get the ModelHeightBasedEmissiveStrengthMultiplier property as an Expression
      *
@@ -967,7 +967,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression] to set the default property.
    *
@@ -1017,12 +1017,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelOpacity: Double?
     /**
-     * The opacity of the model layer.
+     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelOpacity] to get the default property.
      *
@@ -1033,7 +1033,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelOpacity] to set the default property.
    *
@@ -1046,7 +1046,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "model-opacity".
    *
@@ -1054,7 +1054,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelOpacityAsExpression: Expression?
     /**
-     * The opacity of the model layer.
+     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
      *
      * Get the ModelOpacity property as an Expression
      *
@@ -1073,7 +1073,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelOpacityAsExpression] to set the default property.
    *
@@ -1123,12 +1123,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Enable/Disable shadow receiving for this layer
+   * Enable/Disable shadow receiving for this layer Default value: true.
    */
   @MapboxExperimental
   val modelReceiveShadows: Boolean?
     /**
-     * Enable/Disable shadow receiving for this layer
+     * Enable/Disable shadow receiving for this layer Default value: true.
      *
      * Use static method [ModelLayer.defaultModelReceiveShadows] to get the default property.
      *
@@ -1139,7 +1139,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Enable/Disable shadow receiving for this layer
+   * Enable/Disable shadow receiving for this layer Default value: true.
    *
    * Use static method [ModelLayer.defaultModelReceiveShadows] to set the default property.
    *
@@ -1152,7 +1152,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Enable/Disable shadow receiving for this layer
+   * Enable/Disable shadow receiving for this layer Default value: true.
    *
    * This is an Expression representation of "model-receive-shadows".
    *
@@ -1160,7 +1160,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelReceiveShadowsAsExpression: Expression?
     /**
-     * Enable/Disable shadow receiving for this layer
+     * Enable/Disable shadow receiving for this layer Default value: true.
      *
      * Get the ModelReceiveShadows property as an Expression
      *
@@ -1179,7 +1179,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Enable/Disable shadow receiving for this layer
+   * Enable/Disable shadow receiving for this layer Default value: true.
    *
    * Use static method [ModelLayer.defaultModelReceiveShadowsAsExpression] to set the default property.
    *
@@ -1192,12 +1192,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    */
   @MapboxExperimental
   val modelRotation: List<Double>?
     /**
-     * The rotation of the model in euler angles [lon, lat, z].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
      *
      * Use static method [ModelLayer.defaultModelRotation] to get the default property.
      *
@@ -1208,7 +1208,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * Use static method [ModelLayer.defaultModelRotation] to set the default property.
    *
@@ -1221,7 +1221,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * This is an Expression representation of "model-rotation".
    *
@@ -1229,7 +1229,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelRotationAsExpression: Expression?
     /**
-     * The rotation of the model in euler angles [lon, lat, z].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
      *
      * Get the ModelRotation property as an Expression
      *
@@ -1248,7 +1248,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * Use static method [ModelLayer.defaultModelRotationAsExpression] to set the default property.
    *
@@ -1298,12 +1298,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelRoughness: Double?
     /**
-     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelRoughness] to get the default property.
      *
@@ -1314,7 +1314,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelRoughness] to set the default property.
    *
@@ -1327,7 +1327,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "model-roughness".
    *
@@ -1335,7 +1335,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelRoughnessAsExpression: Expression?
     /**
-     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
      *
      * Get the ModelRoughness property as an Expression
      *
@@ -1354,7 +1354,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelRoughnessAsExpression] to set the default property.
    *
@@ -1404,12 +1404,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    */
   @MapboxExperimental
   val modelScale: List<Double>?
     /**
-     * The scale of the model.
+     * The scale of the model. Default value: [1,1,1].
      *
      * Use static method [ModelLayer.defaultModelScale] to get the default property.
      *
@@ -1420,7 +1420,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * Use static method [ModelLayer.defaultModelScale] to set the default property.
    *
@@ -1433,7 +1433,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * This is an Expression representation of "model-scale".
    *
@@ -1441,7 +1441,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelScaleAsExpression: Expression?
     /**
-     * The scale of the model.
+     * The scale of the model. Default value: [1,1,1].
      *
      * Get the ModelScale property as an Expression
      *
@@ -1460,7 +1460,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * Use static method [ModelLayer.defaultModelScaleAsExpression] to set the default property.
    *
@@ -1510,12 +1510,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    */
   @MapboxExperimental
   val modelScaleMode: ModelScaleMode?
     /**
-     * Defines scaling mode. Only applies to location-indicator type layers.
+     * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
      *
      * Use static method [ModelLayer.defaultModelScaleMode] to get the default property.
      *
@@ -1529,7 +1529,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    *
    * Use static method [ModelLayer.defaultModelScaleMode] to set the default property.
    *
@@ -1542,7 +1542,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    *
    * This is an Expression representation of "model-scale-mode".
    *
@@ -1550,7 +1550,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelScaleModeAsExpression: Expression?
     /**
-     * Defines scaling mode. Only applies to location-indicator type layers.
+     * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
      *
      * Get the ModelScaleMode property as an Expression
      *
@@ -1569,7 +1569,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    *
    * Use static method [ModelLayer.defaultModelScaleModeAsExpression] to set the default property.
    *
@@ -1582,12 +1582,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    */
   @MapboxExperimental
   val modelTranslation: List<Double>?
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
      *
      * Use static method [ModelLayer.defaultModelTranslation] to get the default property.
      *
@@ -1598,7 +1598,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * Use static method [ModelLayer.defaultModelTranslation] to set the default property.
    *
@@ -1611,7 +1611,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * This is an Expression representation of "model-translation".
    *
@@ -1619,7 +1619,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelTranslationAsExpression: Expression?
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
      *
      * Get the ModelTranslation property as an Expression
      *
@@ -1638,7 +1638,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * Use static method [ModelLayer.defaultModelTranslationAsExpression] to set the default property.
    *
@@ -1688,12 +1688,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Defines rendering behavior of model in respect to other 3D scene objects.
+   * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    */
   @MapboxExperimental
   val modelType: ModelType?
     /**
-     * Defines rendering behavior of model in respect to other 3D scene objects.
+     * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
      *
      * Use static method [ModelLayer.defaultModelType] to get the default property.
      *
@@ -1707,7 +1707,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Defines rendering behavior of model in respect to other 3D scene objects.
+   * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    *
    * Use static method [ModelLayer.defaultModelType] to set the default property.
    *
@@ -1720,7 +1720,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Defines rendering behavior of model in respect to other 3D scene objects.
+   * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    *
    * This is an Expression representation of "model-type".
    *
@@ -1728,7 +1728,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelTypeAsExpression: Expression?
     /**
-     * Defines rendering behavior of model in respect to other 3D scene objects.
+     * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
      *
      * Get the ModelType property as an Expression
      *
@@ -1747,7 +1747,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Defines rendering behavior of model in respect to other 3D scene objects.
+   * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    *
    * Use static method [ModelLayer.defaultModelTypeAsExpression] to set the default property.
    *
@@ -1819,12 +1819,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "maxzoom").silentUnwrap()
 
     /**
-     * Model to render.
+     * Model to render. Default value: "".
      */
     @MapboxExperimental
     val defaultModelId: String?
       /**
-       * Model to render.
+       * Model to render. Default value: "".
        *
        * Get the default value of ModelId property
        *
@@ -1835,7 +1835,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Model to render.
+     * Model to render. Default value: "".
      *
      * This is an Expression representation of "model-id".
      *
@@ -1858,12 +1858,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Intensity of the ambient occlusion if present in the 3D model.
+     * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelAmbientOcclusionIntensity: Double?
       /**
-       * Intensity of the ambient occlusion if present in the 3D model.
+       * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of ModelAmbientOcclusionIntensity property
        *
@@ -1874,7 +1874,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Intensity of the ambient occlusion if present in the 3D model.
+     * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "model-ambient-occlusion-intensity".
      *
@@ -1909,12 +1909,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-ambient-occlusion-intensity-transition").silentUnwrap()
 
     /**
-     * Enable/Disable shadow casting for this layer
+     * Enable/Disable shadow casting for this layer Default value: true.
      */
     @MapboxExperimental
     val defaultModelCastShadows: Boolean?
       /**
-       * Enable/Disable shadow casting for this layer
+       * Enable/Disable shadow casting for this layer Default value: true.
        *
        * Get the default value of ModelCastShadows property
        *
@@ -1925,7 +1925,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Enable/Disable shadow casting for this layer
+     * Enable/Disable shadow casting for this layer Default value: true.
      *
      * This is an Expression representation of "model-cast-shadows".
      *
@@ -1948,12 +1948,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
      */
     @MapboxExperimental
     val defaultModelColor: String?
       /**
-       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
        *
        * Get the default value of ModelColor property
        *
@@ -1967,7 +1967,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
      *
      * This is an Expression representation of "model-color".
      *
@@ -1987,12 +1987,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
      */
     @MapboxExperimental
     val defaultModelColorAsColorInt: Int?
       /**
-       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
        *
        * Get the default value of ModelColor property as color int.
        *
@@ -2019,12 +2019,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-transition").silentUnwrap()
 
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelColorMixIntensity: Double?
       /**
-       * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+       * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of ModelColorMixIntensity property
        *
@@ -2035,7 +2035,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "model-color-mix-intensity".
      *
@@ -2070,12 +2070,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-mix-intensity-transition").silentUnwrap()
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelCutoffFadeRange: Double?
       /**
-       * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+       * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of ModelCutoffFadeRange property
        *
@@ -2086,7 +2086,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "model-cutoff-fade-range".
      *
@@ -2109,12 +2109,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      */
     @MapboxExperimental
     val defaultModelEmissiveStrength: Double?
       /**
-       * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+       * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
        *
        * Get the default value of ModelEmissiveStrength property
        *
@@ -2125,7 +2125,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      *
      * This is an Expression representation of "model-emissive-strength".
      *
@@ -2160,12 +2160,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
      */
     @MapboxExperimental
     val defaultModelHeightBasedEmissiveStrengthMultiplier: List<Double>?
       /**
-       * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+       * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
        *
        * Get the default value of ModelHeightBasedEmissiveStrengthMultiplier property
        *
@@ -2176,7 +2176,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
      *
      * This is an Expression representation of "model-height-based-emissive-strength-multiplier".
      *
@@ -2211,12 +2211,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier-transition").silentUnwrap()
 
     /**
-     * The opacity of the model layer.
+     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelOpacity: Double?
       /**
-       * The opacity of the model layer.
+       * The opacity of the model layer. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of ModelOpacity property
        *
@@ -2227,7 +2227,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The opacity of the model layer.
+     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "model-opacity".
      *
@@ -2262,12 +2262,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-opacity-transition").silentUnwrap()
 
     /**
-     * Enable/Disable shadow receiving for this layer
+     * Enable/Disable shadow receiving for this layer Default value: true.
      */
     @MapboxExperimental
     val defaultModelReceiveShadows: Boolean?
       /**
-       * Enable/Disable shadow receiving for this layer
+       * Enable/Disable shadow receiving for this layer Default value: true.
        *
        * Get the default value of ModelReceiveShadows property
        *
@@ -2278,7 +2278,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Enable/Disable shadow receiving for this layer
+     * Enable/Disable shadow receiving for this layer Default value: true.
      *
      * This is an Expression representation of "model-receive-shadows".
      *
@@ -2301,12 +2301,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The rotation of the model in euler angles [lon, lat, z].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
      */
     @MapboxExperimental
     val defaultModelRotation: List<Double>?
       /**
-       * The rotation of the model in euler angles [lon, lat, z].
+       * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
        *
        * Get the default value of ModelRotation property
        *
@@ -2317,7 +2317,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The rotation of the model in euler angles [lon, lat, z].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
      *
      * This is an Expression representation of "model-rotation".
      *
@@ -2352,12 +2352,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-rotation-transition").silentUnwrap()
 
     /**
-     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelRoughness: Double?
       /**
-       * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+       * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of ModelRoughness property
        *
@@ -2368,7 +2368,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "model-roughness".
      *
@@ -2403,12 +2403,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness-transition").silentUnwrap()
 
     /**
-     * The scale of the model.
+     * The scale of the model. Default value: [1,1,1].
      */
     @MapboxExperimental
     val defaultModelScale: List<Double>?
       /**
-       * The scale of the model.
+       * The scale of the model. Default value: [1,1,1].
        *
        * Get the default value of ModelScale property
        *
@@ -2419,7 +2419,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The scale of the model.
+     * The scale of the model. Default value: [1,1,1].
      *
      * This is an Expression representation of "model-scale".
      *
@@ -2454,12 +2454,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-scale-transition").silentUnwrap()
 
     /**
-     * Defines scaling mode. Only applies to location-indicator type layers.
+     * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
      */
     @MapboxExperimental
     val defaultModelScaleMode: ModelScaleMode?
       /**
-       * Defines scaling mode. Only applies to location-indicator type layers.
+       * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
        *
        * Get the default value of ModelScaleMode property
        *
@@ -2473,7 +2473,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Defines scaling mode. Only applies to location-indicator type layers.
+     * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
      *
      * This is an Expression representation of "model-scale-mode".
      *
@@ -2496,12 +2496,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
      */
     @MapboxExperimental
     val defaultModelTranslation: List<Double>?
       /**
-       * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+       * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
        *
        * Get the default value of ModelTranslation property
        *
@@ -2512,7 +2512,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
      *
      * This is an Expression representation of "model-translation".
      *
@@ -2547,12 +2547,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-translation-transition").silentUnwrap()
 
     /**
-     * Defines rendering behavior of model in respect to other 3D scene objects.
+     * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
      */
     @MapboxExperimental
     val defaultModelType: ModelType?
       /**
-       * Defines rendering behavior of model in respect to other 3D scene objects.
+       * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
        *
        * Get the default value of ModelType property
        *
@@ -2566,7 +2566,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Defines rendering behavior of model in respect to other 3D scene objects.
+     * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
      *
      * This is an Expression representation of "model-type".
      *
@@ -2667,7 +2667,7 @@ interface ModelLayerDsl {
   // Property getters and setters
 
   /**
-   * Model to render.
+   * Model to render. Default value: "".
    *
    * @param modelId value of modelId
    */
@@ -2675,7 +2675,7 @@ interface ModelLayerDsl {
   fun modelId(modelId: String = ""): ModelLayer
 
   /**
-   * Model to render.
+   * Model to render. Default value: "".
    *
    * @param modelId value of modelId as Expression
    */
@@ -2683,7 +2683,7 @@ interface ModelLayerDsl {
   fun modelId(modelId: Expression): ModelLayer
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * @param modelAmbientOcclusionIntensity value of modelAmbientOcclusionIntensity
    */
@@ -2691,7 +2691,7 @@ interface ModelLayerDsl {
   fun modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensity: Double = 1.0): ModelLayer
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * @param modelAmbientOcclusionIntensity value of modelAmbientOcclusionIntensity as Expression
    */
@@ -2699,7 +2699,7 @@ interface ModelLayerDsl {
   fun modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensity: Expression): ModelLayer
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * Set the ModelAmbientOcclusionIntensity property transition options
    *
@@ -2709,7 +2709,7 @@ interface ModelLayerDsl {
   fun modelAmbientOcclusionIntensityTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Intensity of the ambient occlusion if present in the 3D model.
+   * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    *
    * DSL for [modelAmbientOcclusionIntensityTransition].
    */
@@ -2717,7 +2717,7 @@ interface ModelLayerDsl {
   fun modelAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Enable/Disable shadow casting for this layer
+   * Enable/Disable shadow casting for this layer Default value: true.
    *
    * @param modelCastShadows value of modelCastShadows
    */
@@ -2725,7 +2725,7 @@ interface ModelLayerDsl {
   fun modelCastShadows(modelCastShadows: Boolean = true): ModelLayer
 
   /**
-   * Enable/Disable shadow casting for this layer
+   * Enable/Disable shadow casting for this layer Default value: true.
    *
    * @param modelCastShadows value of modelCastShadows as Expression
    */
@@ -2733,7 +2733,7 @@ interface ModelLayerDsl {
   fun modelCastShadows(modelCastShadows: Expression): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * @param modelColor value of modelColor
    */
@@ -2741,7 +2741,7 @@ interface ModelLayerDsl {
   fun modelColor(modelColor: String = "#ffffff"): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * @param modelColor value of modelColor as Expression
    */
@@ -2749,7 +2749,7 @@ interface ModelLayerDsl {
   fun modelColor(modelColor: Expression): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * @param modelColor value of modelColor
    */
@@ -2757,7 +2757,7 @@ interface ModelLayerDsl {
   fun modelColor(@ColorInt modelColor: Int): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * Set the ModelColor property transition options
    *
@@ -2767,7 +2767,7 @@ interface ModelLayerDsl {
   fun modelColorTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
    *
    * DSL for [modelColorTransition].
    */
@@ -2775,7 +2775,7 @@ interface ModelLayerDsl {
   fun modelColorTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity
    */
@@ -2783,7 +2783,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensity(modelColorMixIntensity: Double = 0.0): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity as Expression
    */
@@ -2791,7 +2791,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensity(modelColorMixIntensity: Expression): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * Set the ModelColorMixIntensity property transition options
    *
@@ -2801,7 +2801,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensityTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    *
    * DSL for [modelColorMixIntensityTransition].
    */
@@ -2809,7 +2809,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange
    */
@@ -2817,7 +2817,7 @@ interface ModelLayerDsl {
   fun modelCutoffFadeRange(modelCutoffFadeRange: Double = 0.0): ModelLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange as Expression
    */
@@ -2825,7 +2825,7 @@ interface ModelLayerDsl {
   fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength
    */
@@ -2833,7 +2833,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrength(modelEmissiveStrength: Double = 0.0): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength as Expression
    */
@@ -2841,7 +2841,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrength(modelEmissiveStrength: Expression): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * Set the ModelEmissiveStrength property transition options
    *
@@ -2851,7 +2851,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrengthTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * DSL for [modelEmissiveStrengthTransition].
    */
@@ -2859,7 +2859,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier
    */
@@ -2867,7 +2867,7 @@ interface ModelLayerDsl {
   fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: List<Double> = listOf(1.0, 1.0, 1.0, 1.0, 0.0)): ModelLayer
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier as Expression
    */
@@ -2875,7 +2875,7 @@ interface ModelLayerDsl {
   fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: Expression): ModelLayer
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * Set the ModelHeightBasedEmissiveStrengthMultiplier property transition options
    *
@@ -2885,7 +2885,7 @@ interface ModelLayerDsl {
   fun modelHeightBasedEmissiveStrengthMultiplierTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    *
    * DSL for [modelHeightBasedEmissiveStrengthMultiplierTransition].
    */
@@ -2893,7 +2893,7 @@ interface ModelLayerDsl {
   fun modelHeightBasedEmissiveStrengthMultiplierTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * @param modelOpacity value of modelOpacity
    */
@@ -2901,7 +2901,7 @@ interface ModelLayerDsl {
   fun modelOpacity(modelOpacity: Double = 1.0): ModelLayer
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * @param modelOpacity value of modelOpacity as Expression
    */
@@ -2909,7 +2909,7 @@ interface ModelLayerDsl {
   fun modelOpacity(modelOpacity: Expression): ModelLayer
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * Set the ModelOpacity property transition options
    *
@@ -2919,7 +2919,7 @@ interface ModelLayerDsl {
   fun modelOpacityTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The opacity of the model layer.
+   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
    *
    * DSL for [modelOpacityTransition].
    */
@@ -2927,7 +2927,7 @@ interface ModelLayerDsl {
   fun modelOpacityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Enable/Disable shadow receiving for this layer
+   * Enable/Disable shadow receiving for this layer Default value: true.
    *
    * @param modelReceiveShadows value of modelReceiveShadows
    */
@@ -2935,7 +2935,7 @@ interface ModelLayerDsl {
   fun modelReceiveShadows(modelReceiveShadows: Boolean = true): ModelLayer
 
   /**
-   * Enable/Disable shadow receiving for this layer
+   * Enable/Disable shadow receiving for this layer Default value: true.
    *
    * @param modelReceiveShadows value of modelReceiveShadows as Expression
    */
@@ -2943,7 +2943,7 @@ interface ModelLayerDsl {
   fun modelReceiveShadows(modelReceiveShadows: Expression): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * @param modelRotation value of modelRotation
    */
@@ -2951,7 +2951,7 @@ interface ModelLayerDsl {
   fun modelRotation(modelRotation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * @param modelRotation value of modelRotation as Expression
    */
@@ -2959,7 +2959,7 @@ interface ModelLayerDsl {
   fun modelRotation(modelRotation: Expression): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * Set the ModelRotation property transition options
    *
@@ -2969,7 +2969,7 @@ interface ModelLayerDsl {
   fun modelRotationTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
    *
    * DSL for [modelRotationTransition].
    */
@@ -2977,7 +2977,7 @@ interface ModelLayerDsl {
   fun modelRotationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * @param modelRoughness value of modelRoughness
    */
@@ -2985,7 +2985,7 @@ interface ModelLayerDsl {
   fun modelRoughness(modelRoughness: Double = 1.0): ModelLayer
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * @param modelRoughness value of modelRoughness as Expression
    */
@@ -2993,7 +2993,7 @@ interface ModelLayerDsl {
   fun modelRoughness(modelRoughness: Expression): ModelLayer
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * Set the ModelRoughness property transition options
    *
@@ -3003,7 +3003,7 @@ interface ModelLayerDsl {
   fun modelRoughnessTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    *
    * DSL for [modelRoughnessTransition].
    */
@@ -3011,7 +3011,7 @@ interface ModelLayerDsl {
   fun modelRoughnessTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * @param modelScale value of modelScale
    */
@@ -3019,7 +3019,7 @@ interface ModelLayerDsl {
   fun modelScale(modelScale: List<Double> = listOf(1.0, 1.0, 1.0)): ModelLayer
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * @param modelScale value of modelScale as Expression
    */
@@ -3027,7 +3027,7 @@ interface ModelLayerDsl {
   fun modelScale(modelScale: Expression): ModelLayer
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * Set the ModelScale property transition options
    *
@@ -3037,7 +3037,7 @@ interface ModelLayerDsl {
   fun modelScaleTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The scale of the model.
+   * The scale of the model. Default value: [1,1,1].
    *
    * DSL for [modelScaleTransition].
    */
@@ -3045,7 +3045,7 @@ interface ModelLayerDsl {
   fun modelScaleTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    *
    * @param modelScaleMode value of modelScaleMode
    */
@@ -3053,7 +3053,7 @@ interface ModelLayerDsl {
   fun modelScaleMode(modelScaleMode: ModelScaleMode = ModelScaleMode.MAP): ModelLayer
 
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers.
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    *
    * @param modelScaleMode value of modelScaleMode as Expression
    */
@@ -3061,7 +3061,7 @@ interface ModelLayerDsl {
   fun modelScaleMode(modelScaleMode: Expression): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * @param modelTranslation value of modelTranslation
    */
@@ -3069,7 +3069,7 @@ interface ModelLayerDsl {
   fun modelTranslation(modelTranslation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * @param modelTranslation value of modelTranslation as Expression
    */
@@ -3077,7 +3077,7 @@ interface ModelLayerDsl {
   fun modelTranslation(modelTranslation: Expression): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * Set the ModelTranslation property transition options
    *
@@ -3087,7 +3087,7 @@ interface ModelLayerDsl {
   fun modelTranslationTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    *
    * DSL for [modelTranslationTransition].
    */
@@ -3095,7 +3095,7 @@ interface ModelLayerDsl {
   fun modelTranslationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Defines rendering behavior of model in respect to other 3D scene objects.
+   * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    *
    * @param modelType value of modelType
    */
@@ -3103,7 +3103,7 @@ interface ModelLayerDsl {
   fun modelType(modelType: ModelType = ModelType.COMMON_3D): ModelLayer
 
   /**
-   * Defines rendering behavior of model in respect to other 3D scene objects.
+   * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    *
    * @param modelType value of modelType as Expression
    */

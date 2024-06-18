@@ -20,51 +20,51 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class CompassSettings private constructor(
   /**
-   * Whether the compass is visible on the map.
+   * Whether the compass is visible on the map. Default value: true.
    */
   public val enabled: Boolean,
   /**
-   * Defines where the compass is positioned on the map
+   * Defines where the compass is positioned on the map Default value: "top-right".
    */
   public val position: Int,
   /**
-   * Defines the margin to the left that the compass icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the left that the compass icon honors. Default value: 4. This property is
+   * specified in pixels.
    */
   public val marginLeft: Float,
   /**
-   * Defines the margin to the top that the compass icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the top that the compass icon honors. Default value: 4. This property is
+   * specified in pixels.
    */
   public val marginTop: Float,
   /**
-   * Defines the margin to the right that the compass icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the right that the compass icon honors. Default value: 4. This property
+   * is specified in pixels.
    */
   public val marginRight: Float,
   /**
-   * Defines the margin to the bottom that the compass icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the bottom that the compass icon honors. Default value: 4. This property
+   * is specified in pixels.
    */
   public val marginBottom: Float,
   /**
-   * The alpha channel value of the compass image
+   * The alpha channel value of the compass image Default value: 1.
    */
   public val opacity: Float,
   /**
-   * The clockwise rotation value in degrees of the compass.
+   * The clockwise rotation value in degrees of the compass. Default value: 0.
    */
   public val rotation: Float,
   /**
-   * Whether the compass is displayed.
+   * Whether the compass is displayed. Default value: true.
    */
   public val visibility: Boolean,
   /**
-   * Whether the compass fades out to invisible when facing north direction.
+   * Whether the compass fades out to invisible when facing north direction. Default value: true.
    */
   public val fadeWhenFacingNorth: Boolean,
   /**
-   * Whether the compass can be clicked and click events can be registered.
+   * Whether the compass can be clicked and click events can be registered. Default value: true.
    */
   public val clickable: Boolean,
   /**
@@ -119,71 +119,71 @@ public class CompassSettings private constructor(
    */
   public class Builder {
     /**
-     * Whether the compass is visible on the map.
+     * Whether the compass is visible on the map. Default value: true.
      */
     @set:JvmSynthetic
     public var enabled: Boolean = true
 
     /**
-     * Defines where the compass is positioned on the map
+     * Defines where the compass is positioned on the map Default value: "top-right".
      */
     @set:JvmSynthetic
     public var position: Int = Gravity.TOP or Gravity.END
 
     /**
-     * Defines the margin to the left that the compass icon honors. This property is specified in
-     * pixels.
+     * Defines the margin to the left that the compass icon honors. Default value: 4. This property
+     * is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginLeft: Float = 4f
 
     /**
-     * Defines the margin to the top that the compass icon honors. This property is specified in
-     * pixels.
+     * Defines the margin to the top that the compass icon honors. Default value: 4. This property
+     * is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginTop: Float = 4f
 
     /**
-     * Defines the margin to the right that the compass icon honors. This property is specified in
-     * pixels.
+     * Defines the margin to the right that the compass icon honors. Default value: 4. This property
+     * is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginRight: Float = 4f
 
     /**
-     * Defines the margin to the bottom that the compass icon honors. This property is specified in
-     * pixels.
+     * Defines the margin to the bottom that the compass icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginBottom: Float = 4f
 
     /**
-     * The alpha channel value of the compass image
+     * The alpha channel value of the compass image Default value: 1.
      */
     @set:JvmSynthetic
     public var opacity: Float = 1f
 
     /**
-     * The clockwise rotation value in degrees of the compass.
+     * The clockwise rotation value in degrees of the compass. Default value: 0.
      */
     @set:JvmSynthetic
     public var rotation: Float = 0f
 
     /**
-     * Whether the compass is displayed.
+     * Whether the compass is displayed. Default value: true.
      */
     @set:JvmSynthetic
     public var visibility: Boolean = true
 
     /**
-     * Whether the compass fades out to invisible when facing north direction.
+     * Whether the compass fades out to invisible when facing north direction. Default value: true.
      */
     @set:JvmSynthetic
     public var fadeWhenFacingNorth: Boolean = true
 
     /**
-     * Whether the compass can be clicked and click events can be registered.
+     * Whether the compass can be clicked and click events can be registered. Default value: true.
      */
     @set:JvmSynthetic
     public var clickable: Boolean = true
@@ -195,7 +195,7 @@ public class CompassSettings private constructor(
     public var image: ImageHolder? = null
 
     /**
-     * Setter for enabled: whether the compass is visible on the map.
+     * Setter for enabled: whether the compass is visible on the map. Default value: true.
      *
      * @param enabled
      * @return Builder
@@ -206,7 +206,8 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for position: defines where the compass is positioned on the map.
+     * Setter for position: defines where the compass is positioned on the map Default value:
+     * "top-right".
      *
      * @param position
      * @return Builder
@@ -217,8 +218,8 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for marginLeft: defines the margin to the left that the compass icon honors. This
-     * property is specified in pixels.
+     * Setter for marginLeft: defines the margin to the left that the compass icon honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginLeft
      * @return Builder
@@ -229,8 +230,8 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for marginTop: defines the margin to the top that the compass icon honors. This
-     * property is specified in pixels.
+     * Setter for marginTop: defines the margin to the top that the compass icon honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginTop
      * @return Builder
@@ -241,8 +242,8 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for marginRight: defines the margin to the right that the compass icon honors. This
-     * property is specified in pixels.
+     * Setter for marginRight: defines the margin to the right that the compass icon honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginRight
      * @return Builder
@@ -253,8 +254,8 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for marginBottom: defines the margin to the bottom that the compass icon honors. This
-     * property is specified in pixels.
+     * Setter for marginBottom: defines the margin to the bottom that the compass icon honors.
+     * Default value: 4. This property is specified in pixels.
      *
      * @param marginBottom
      * @return Builder
@@ -265,7 +266,7 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for opacity: the alpha channel value of the compass image.
+     * Setter for opacity: the alpha channel value of the compass image Default value: 1.
      *
      * @param opacity
      * @return Builder
@@ -276,7 +277,8 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for rotation: the clockwise rotation value in degrees of the compass.
+     * Setter for rotation: the clockwise rotation value in degrees of the compass. Default value:
+     * 0.
      *
      * @param rotation
      * @return Builder
@@ -287,7 +289,7 @@ public class CompassSettings private constructor(
     }
 
     /**
-     * Setter for visibility: whether the compass is displayed.
+     * Setter for visibility: whether the compass is displayed. Default value: true.
      *
      * @param visibility
      * @return Builder
@@ -299,7 +301,7 @@ public class CompassSettings private constructor(
 
     /**
      * Setter for fadeWhenFacingNorth: whether the compass fades out to invisible when facing north
-     * direction.
+     * direction. Default value: true.
      *
      * @param fadeWhenFacingNorth
      * @return Builder
@@ -311,6 +313,7 @@ public class CompassSettings private constructor(
 
     /**
      * Setter for clickable: whether the compass can be clicked and click events can be registered.
+     * Default value: true.
      *
      * @param clickable
      * @return Builder

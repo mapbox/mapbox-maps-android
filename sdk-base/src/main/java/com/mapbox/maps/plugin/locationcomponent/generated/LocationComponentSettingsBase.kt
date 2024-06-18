@@ -41,7 +41,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
   }
 
   /**
-   * Whether the user location is visible on the map.
+   * Whether the user location is visible on the map. Default value: false.
    */
   override var enabled: Boolean
     get() {
@@ -55,7 +55,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * Whether the location puck is pulsing on the map. Works for 2D location puck only.
+   * Whether the location puck is pulsing on the map. Works for 2D location puck only. Default value: false.
    */
   override var pulsingEnabled: Boolean
     get() {
@@ -69,7 +69,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The color of the pulsing circle. Works for 2D location puck only.
+   * The color of the pulsing circle. Works for 2D location puck only. Default value: "#4A90E2".
    */
   override var pulsingColor: Int
     get() {
@@ -83,7 +83,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle's maximum radius to follow location accuracy circle.
+   * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle's maximum radius to follow location accuracy circle. Default value: 10.
    */
   override var pulsingMaxRadius: Float
     get() {
@@ -97,7 +97,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * Whether show accuracy ring with location puck. Works for 2D location puck only.
+   * Whether show accuracy ring with location puck. Works for 2D location puck only. Default value: false.
    */
   override var showAccuracyRing: Boolean
     get() {
@@ -111,7 +111,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The color of the accuracy ring. Works for 2D location puck only.
+   * The color of the accuracy ring. Works for 2D location puck only. Default value: "#4d89cff0".
    */
   override var accuracyRingColor: Int
     get() {
@@ -125,7 +125,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The color of the accuracy ring border. Works for 2D location puck only.
+   * The color of the accuracy ring border. Works for 2D location puck only. Default value: "#4d89cff0".
    */
   override var accuracyRingBorderColor: Int
     get() {
@@ -167,7 +167,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * Whether the puck rotates to track the bearing source.
+   * Whether the puck rotates to track the bearing source. Default value: false.
    */
   override var puckBearingEnabled: Boolean
     get() {
@@ -181,7 +181,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The enum controls how the puck is oriented
+   * The enum controls how the puck is oriented Default value: "heading".
    */
   override var puckBearing: PuckBearing
     get() {

@@ -21,85 +21,92 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class ScaleBarSettings private constructor(
   /**
-   * Whether the scale is visible on the map.
+   * Whether the scale is visible on the map. Default value: true.
    */
   public val enabled: Boolean,
   /**
-   * Defines where the scale bar is positioned on the map
+   * Defines where the scale bar is positioned on the map Default value: "top-left".
    */
   public val position: Int,
   /**
-   * Defines the margin to the left that the scale bar honors. This property is specified in pixels.
+   * Defines the margin to the left that the scale bar honors. Default value: 4. This property is
+   * specified in pixels.
    */
   public val marginLeft: Float,
   /**
-   * Defines the margin to the top that the scale bar honors. This property is specified in pixels.
+   * Defines the margin to the top that the scale bar honors. Default value: 4. This property is
+   * specified in pixels.
    */
   public val marginTop: Float,
   /**
-   * Defines the margin to the right that the scale bar honors. This property is specified in
-   * pixels.
+   * Defines the margin to the right that the scale bar honors. Default value: 4. This property is
+   * specified in pixels.
    */
   public val marginRight: Float,
   /**
-   * Defines the margin to the bottom that the scale bar honors. This property is specified in
-   * pixels.
+   * Defines the margin to the bottom that the scale bar honors. Default value: 4. This property is
+   * specified in pixels.
    */
   public val marginBottom: Float,
   /**
-   * Defines text color of the scale bar.
+   * Defines text color of the scale bar. Default value: "black".
    */
   public val textColor: Int,
   /**
-   * Defines primary color of the scale bar.
+   * Defines primary color of the scale bar. Default value: "black".
    */
   public val primaryColor: Int,
   /**
-   * Defines secondary color of the scale bar.
+   * Defines secondary color of the scale bar. Default value: "white".
    */
   public val secondaryColor: Int,
   /**
-   * Defines width of the border for the scale bar. This property is specified in pixels.
+   * Defines width of the border for the scale bar. Default value: 2. This property is specified in
+   * pixels.
    */
   public val borderWidth: Float,
   /**
-   * Defines height of the scale bar. This property is specified in pixels.
+   * Defines height of the scale bar. Default value: 2. This property is specified in pixels.
    */
   public val height: Float,
   /**
-   * Defines margin of the text bar of the scale bar. This property is specified in pixels.
+   * Defines margin of the text bar of the scale bar. Default value: 8. This property is specified
+   * in pixels.
    */
   public val textBarMargin: Float,
   /**
-   * Defines text border width of the scale bar. This property is specified in pixels.
+   * Defines text border width of the scale bar. Default value: 2. This property is specified in
+   * pixels.
    */
   public val textBorderWidth: Float,
   /**
-   * Defines text size of the scale bar. This property is specified in pixels.
+   * Defines text size of the scale bar. Default value: 8. This property is specified in pixels.
    */
   public val textSize: Float,
   /**
    * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false
-   * if the scale bar is using imperial units.
+   * if the scale bar is using imperial units. Default value: true.
    */
   public val isMetricUnits: Boolean,
   /**
-   * Configures minimum refresh interval, in millisecond, default is 15.
+   * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.
    */
   public val refreshInterval: Long,
   /**
-   * Configures whether to show the text border or not, default is true.
+   * Configures whether to show the text border or not, default is true. Default value: true.
    */
   public val showTextBorder: Boolean,
   /**
-   * configures ratio of scale bar max width compared with MapView width, default is 0.5.
+   * configures ratio of scale bar max width compared with MapView width, default is 0.5. Default
+   * value: 0.5.
    */
   public val ratio: Float,
   /**
    * If set to True scale bar will be triggering onDraw depending on
    * [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar
    * will redraw only on demand. Defaults to False and should not be changed explicitly in most cases.
-   * Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   * Could be set to True to produce correct GPU frame metrics when running gfxinfo command. Default
+   * value: false.
    */
   public val useContinuousRendering: Boolean
 ) : Parcelable {
@@ -162,114 +169,118 @@ public class ScaleBarSettings private constructor(
    */
   public class Builder {
     /**
-     * Whether the scale is visible on the map.
+     * Whether the scale is visible on the map. Default value: true.
      */
     @set:JvmSynthetic
     public var enabled: Boolean = true
 
     /**
-     * Defines where the scale bar is positioned on the map
+     * Defines where the scale bar is positioned on the map Default value: "top-left".
      */
     @set:JvmSynthetic
     public var position: Int = Gravity.TOP or Gravity.START
 
     /**
-     * Defines the margin to the left that the scale bar honors. This property is specified in
-     * pixels.
+     * Defines the margin to the left that the scale bar honors. Default value: 4. This property is
+     * specified in pixels.
      */
     @set:JvmSynthetic
     public var marginLeft: Float = 4f
 
     /**
-     * Defines the margin to the top that the scale bar honors. This property is specified in
-     * pixels.
+     * Defines the margin to the top that the scale bar honors. Default value: 4. This property is
+     * specified in pixels.
      */
     @set:JvmSynthetic
     public var marginTop: Float = 4f
 
     /**
-     * Defines the margin to the right that the scale bar honors. This property is specified in
-     * pixels.
+     * Defines the margin to the right that the scale bar honors. Default value: 4. This property is
+     * specified in pixels.
      */
     @set:JvmSynthetic
     public var marginRight: Float = 4f
 
     /**
-     * Defines the margin to the bottom that the scale bar honors. This property is specified in
-     * pixels.
+     * Defines the margin to the bottom that the scale bar honors. Default value: 4. This property
+     * is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginBottom: Float = 4f
 
     /**
-     * Defines text color of the scale bar.
+     * Defines text color of the scale bar. Default value: "black".
      */
     @set:JvmSynthetic
     public var textColor: Int = Color.BLACK
 
     /**
-     * Defines primary color of the scale bar.
+     * Defines primary color of the scale bar. Default value: "black".
      */
     @set:JvmSynthetic
     public var primaryColor: Int = Color.BLACK
 
     /**
-     * Defines secondary color of the scale bar.
+     * Defines secondary color of the scale bar. Default value: "white".
      */
     @set:JvmSynthetic
     public var secondaryColor: Int = Color.WHITE
 
     /**
-     * Defines width of the border for the scale bar. This property is specified in pixels.
+     * Defines width of the border for the scale bar. Default value: 2. This property is specified
+     * in pixels.
      */
     @set:JvmSynthetic
     public var borderWidth: Float = 2f
 
     /**
-     * Defines height of the scale bar. This property is specified in pixels.
+     * Defines height of the scale bar. Default value: 2. This property is specified in pixels.
      */
     @set:JvmSynthetic
     public var height: Float = 2f
 
     /**
-     * Defines margin of the text bar of the scale bar. This property is specified in pixels.
+     * Defines margin of the text bar of the scale bar. Default value: 8. This property is specified
+     * in pixels.
      */
     @set:JvmSynthetic
     public var textBarMargin: Float = 8f
 
     /**
-     * Defines text border width of the scale bar. This property is specified in pixels.
+     * Defines text border width of the scale bar. Default value: 2. This property is specified in
+     * pixels.
      */
     @set:JvmSynthetic
     public var textBorderWidth: Float = 2f
 
     /**
-     * Defines text size of the scale bar. This property is specified in pixels.
+     * Defines text size of the scale bar. Default value: 8. This property is specified in pixels.
      */
     @set:JvmSynthetic
     public var textSize: Float = 8f
 
     /**
      * Whether the scale bar is using metric unit. True if the scale bar is using metric system,
-     * false if the scale bar is using imperial units.
+     * false if the scale bar is using imperial units. Default value: true.
      */
     @set:JvmSynthetic
     public var isMetricUnits: Boolean = true
 
     /**
-     * Configures minimum refresh interval, in millisecond, default is 15.
+     * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.
      */
     @set:JvmSynthetic
     public var refreshInterval: Long = 15
 
     /**
-     * Configures whether to show the text border or not, default is true.
+     * Configures whether to show the text border or not, default is true. Default value: true.
      */
     @set:JvmSynthetic
     public var showTextBorder: Boolean = true
 
     /**
-     * configures ratio of scale bar max width compared with MapView width, default is 0.5.
+     * configures ratio of scale bar max width compared with MapView width, default is 0.5. Default
+     * value: 0.5.
      */
     @set:JvmSynthetic
     public var ratio: Float = 0.5f
@@ -279,12 +290,13 @@ public class ScaleBarSettings private constructor(
      * [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar
      * will redraw only on demand. Defaults to False and should not be changed explicitly in most
      * cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+     * Default value: false.
      */
     @set:JvmSynthetic
     public var useContinuousRendering: Boolean = false
 
     /**
-     * Setter for enabled: whether the scale is visible on the map.
+     * Setter for enabled: whether the scale is visible on the map. Default value: true.
      *
      * @param enabled
      * @return Builder
@@ -295,7 +307,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for position: defines where the scale bar is positioned on the map.
+     * Setter for position: defines where the scale bar is positioned on the map Default value:
+     * "top-left".
      *
      * @param position
      * @return Builder
@@ -306,8 +319,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for marginLeft: defines the margin to the left that the scale bar honors. This
-     * property is specified in pixels.
+     * Setter for marginLeft: defines the margin to the left that the scale bar honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginLeft
      * @return Builder
@@ -318,8 +331,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for marginTop: defines the margin to the top that the scale bar honors. This property
-     * is specified in pixels.
+     * Setter for marginTop: defines the margin to the top that the scale bar honors. Default value:
+     * 4. This property is specified in pixels.
      *
      * @param marginTop
      * @return Builder
@@ -330,8 +343,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for marginRight: defines the margin to the right that the scale bar honors. This
-     * property is specified in pixels.
+     * Setter for marginRight: defines the margin to the right that the scale bar honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginRight
      * @return Builder
@@ -342,8 +355,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for marginBottom: defines the margin to the bottom that the scale bar honors. This
-     * property is specified in pixels.
+     * Setter for marginBottom: defines the margin to the bottom that the scale bar honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginBottom
      * @return Builder
@@ -354,7 +367,7 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for textColor: defines text color of the scale bar.
+     * Setter for textColor: defines text color of the scale bar. Default value: "black".
      *
      * @param textColor
      * @return Builder
@@ -365,7 +378,7 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for primaryColor: defines primary color of the scale bar.
+     * Setter for primaryColor: defines primary color of the scale bar. Default value: "black".
      *
      * @param primaryColor
      * @return Builder
@@ -376,7 +389,7 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for secondaryColor: defines secondary color of the scale bar.
+     * Setter for secondaryColor: defines secondary color of the scale bar. Default value: "white".
      *
      * @param secondaryColor
      * @return Builder
@@ -387,8 +400,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for borderWidth: defines width of the border for the scale bar. This property is
-     * specified in pixels.
+     * Setter for borderWidth: defines width of the border for the scale bar. Default value: 2. This
+     * property is specified in pixels.
      *
      * @param borderWidth
      * @return Builder
@@ -399,7 +412,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for height: defines height of the scale bar. This property is specified in pixels.
+     * Setter for height: defines height of the scale bar. Default value: 2. This property is
+     * specified in pixels.
      *
      * @param height
      * @return Builder
@@ -410,8 +424,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for textBarMargin: defines margin of the text bar of the scale bar. This property is
-     * specified in pixels.
+     * Setter for textBarMargin: defines margin of the text bar of the scale bar. Default value: 8.
+     * This property is specified in pixels.
      *
      * @param textBarMargin
      * @return Builder
@@ -422,8 +436,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for textBorderWidth: defines text border width of the scale bar. This property is
-     * specified in pixels.
+     * Setter for textBorderWidth: defines text border width of the scale bar. Default value: 2.
+     * This property is specified in pixels.
      *
      * @param textBorderWidth
      * @return Builder
@@ -434,8 +448,8 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * Setter for textSize: defines text size of the scale bar. This property is specified in
-     * pixels.
+     * Setter for textSize: defines text size of the scale bar. Default value: 8. This property is
+     * specified in pixels.
      *
      * @param textSize
      * @return Builder
@@ -447,7 +461,7 @@ public class ScaleBarSettings private constructor(
 
     /**
      * Setter for isMetricUnits: whether the scale bar is using metric unit. True if the scale bar
-     * is using metric system, false if the scale bar is using imperial units.
+     * is using metric system, false if the scale bar is using imperial units. Default value: true.
      *
      * @param isMetricUnits
      * @return Builder
@@ -459,7 +473,7 @@ public class ScaleBarSettings private constructor(
 
     /**
      * Setter for refreshInterval: configures minimum refresh interval, in millisecond, default is
-     * 15.
+     * 15. Default value: 15.
      *
      * @param refreshInterval
      * @return Builder
@@ -471,7 +485,7 @@ public class ScaleBarSettings private constructor(
 
     /**
      * Setter for showTextBorder: configures whether to show the text border or not, default is
-     * true.
+     * true. Default value: true.
      *
      * @param showTextBorder
      * @return Builder
@@ -483,7 +497,7 @@ public class ScaleBarSettings private constructor(
 
     /**
      * Setter for ratio: configures ratio of scale bar max width compared with MapView width,
-     * default is 0.5.
+     * default is 0.5. Default value: 0.5.
      *
      * @param ratio
      * @return Builder
@@ -498,7 +512,7 @@ public class ScaleBarSettings private constructor(
      * depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to
      * False scale bar will redraw only on demand. Defaults to False and should not be changed
      * explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running
-     * gfxinfo command.
+     * gfxinfo command. Default value: false.
      *
      * @param useContinuousRendering
      * @return Builder
