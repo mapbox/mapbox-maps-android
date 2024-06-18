@@ -227,11 +227,15 @@ abstract class Layer : StyleContract.StyleLayerExtension {
       return try {
         it.getStyleLayerProperty(layerId, propertyName).unwrap()
       } catch (e: RuntimeException) {
-        Log.e(
-          TAG,
-          "Get layer property=$propertyName for layerId=$layerId failed: ${e.message}. " +
-            "Value obtained: ${it.getStyleLayerProperty(layerId, propertyName)}"
-        )
+        // logging an error is misleading as it is valid to set a property
+        // with a concrete value (e.g. Double) and then read it as an expression
+        if (T::class != Expression::class) {
+          Log.e(
+            TAG,
+            "Get layer property=$propertyName for layerId=$layerId failed: ${e.message}. " +
+              "Value obtained: ${it.getStyleLayerProperty(layerId, propertyName)}"
+          )
+        }
         null
       }
     }
