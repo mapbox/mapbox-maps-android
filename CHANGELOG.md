@@ -8,6 +8,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
 * [compose] Rename `ImportConfig` to `ImportConfigs`.
+* Remove experimental `CustomRasterSource.invalidateRegion` and `CustomRasterSource.invalidateTile` methods and change signature of `CustomRasterSource.setTileData`.
+* Remove experimental `CustomRasterSource.tileCacheBudget` getter and setter. If needed, caching should be implemented on user's side.
+* Remove experimental `MapboxMap` and `Style` methods: `invalidateStyleCustomRasterSourceTile`, `invalidateStyleCustomRasterSourceRegion`; change signature of `setStyleCustomRasterSourceTileData` method in `MapboxMap` and `Style`.
 
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.

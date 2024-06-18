@@ -1157,67 +1157,22 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   /**
    * Note! This is an experimental feature. It can be changed or removed in future versions.
    *
-   * Set tile data for a raster tile.
+   * Set tile data for raster tiles.
    *
-   * By default, the provided data is not cached, and the implementation will call the fetch callback each time the tile reappears.
-   * Use the MapboxMap.setTileCacheBudget API to establish an internal cache for the source.
+   * The provided data is not cached, and the implementation will call the fetch callback each time the tile reappears.
    *
    * @param sourceId A style source identifier.
-   * @param tileId A `canonical tile id` of the tile.
-   * @param image `Image` content of the tile. If an empty image is provided then the tile gets removed from the map.
+   * @param tiles List with new tile data.
    */
   @MapboxExperimental
   @CallSuper
   @MainThread
   open fun setStyleCustomRasterSourceTileData(
     sourceId: String,
-    tileId: CanonicalTileID,
-    image: Image?
+    tiles: List<CustomRasterSourceTileData>,
   ): Expected<String, None> {
     ThreadChecker.throwIfNotMainThread()
-    return styleManager.setStyleCustomRasterSourceTileData(sourceId, tileId, image)
-  }
-
-  /**
-   * Note! This is an experimental feature. It can be changed or removed in future versions.
-   *
-   * Invalidate tile for provided custom raster source.
-   *
-   * @param sourceId A style source identifier,.
-   * @param tileId A `canonical tile id` of the tile.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  @MapboxExperimental
-  @CallSuper
-  @MainThread
-  open fun invalidateStyleCustomRasterSourceTile(
-    sourceId: String,
-    tileId: CanonicalTileID
-  ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
-    return styleManager.invalidateStyleCustomRasterSourceTile(sourceId, tileId)
-  }
-
-  /**
-   * Note! This is an experimental feature. It can be changed or removed in future versions.
-   *
-   * Invalidate region for provided custom raster source.
-   *
-   * @param sourceId A style source identifier
-   * @param bounds A `coordinate bounds` object.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  @MapboxExperimental
-  @CallSuper
-  @MainThread
-  open fun invalidateStyleCustomRasterSourceRegion(
-    sourceId: String,
-    bounds: CoordinateBounds
-  ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
-    return styleManager.invalidateStyleCustomRasterSourceRegion(sourceId, bounds)
+    return styleManager.setStyleCustomRasterSourceTileData(sourceId, tiles)
   }
 
   /**

@@ -1262,64 +1262,21 @@ class Style internal constructor(
   /**
    * Note! This is an experimental feature. It can be changed or removed in future versions.
    *
-   * Set tile data for a raster tile.
+   * Set tile data for raster tiles.
    *
-   * By default, the provided data is not cached, and the implementation will call the fetch callback each time the tile reappears.
-   * Use the [MapboxMap.setTileCacheBudget] API to establish an internal cache for the source.
+   * The provided data is not cached, and the implementation will call the fetch callback each time the tile reappears.
    *
    * @param sourceId A style source identifier.
-   * @param tileId A `canonical tile id` of the tile.
-   * @param image `Image` content of the tile. If an empty image is provided then the tile gets removed from the map.
+   * @param tiles Array with new tile data.
    */
   @MapboxExperimental
   @MainThread
   override fun setStyleCustomRasterSourceTileData(
     sourceId: String,
-    tileId: CanonicalTileID,
-    image: Image?
+    tiles: List<CustomRasterSourceTileData>,
   ): Expected<String, None> {
     checkNativeStyle("setStyleCustomRasterSourceTileData")
-    return super.setStyleCustomRasterSourceTileData(sourceId, tileId, image)
-  }
-
-  /**
-   * Note! This is an experimental feature. It can be changed or removed in future versions.
-   *
-   * Invalidate tile for provided custom raster source.
-   *
-   * @param sourceId A style source identifier,.
-   * @param tileId A `canonical tile id` of the tile.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  @MapboxExperimental
-  @MainThread
-  override fun invalidateStyleCustomRasterSourceTile(
-    sourceId: String,
-    tileId: CanonicalTileID
-  ): Expected<String, None> {
-    checkNativeStyle("invalidateStyleCustomRasterSourceTile")
-    return super.invalidateStyleCustomRasterSourceTile(sourceId, tileId)
-  }
-
-  /**
-   * Note! This is an experimental feature. It can be changed or removed in future versions.
-   *
-   * Invalidate region for provided custom raster source.
-   *
-   * @param sourceId A style source identifier
-   * @param bounds A `coordinate bounds` object.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  @MapboxExperimental
-  @MainThread
-  override fun invalidateStyleCustomRasterSourceRegion(
-    sourceId: String,
-    bounds: CoordinateBounds
-  ): Expected<String, None> {
-    checkNativeStyle("invalidateStyleCustomRasterSourceRegion")
-    return super.invalidateStyleCustomRasterSourceRegion(sourceId, bounds)
+    return super.setStyleCustomRasterSourceTileData(sourceId, tiles)
   }
 
   private fun checkNativeStyle(methodName: String) {
