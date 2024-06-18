@@ -13,7 +13,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.util.isEmpty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
@@ -464,8 +463,43 @@ fun MapboxMap.genericEvents(eventName: String): Flow<GenericEvent> {
  *
  * @return the [CameraOptions] object representing the provided parameters. Empty [CameraOptions] (see [CameraOptions.isEmpty]) could be returned only if an internal error occurred.
  */
+@Deprecated(
+  message = "Deprecated because extension is shadowed by non-suspend method",
+  replaceWith = ReplaceWith("awaitCameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset)"),
+  level = DeprecationLevel.WARNING
+)
 @JvmSynthetic
 suspend fun MapboxMap.cameraForCoordinates(
+  coordinates: List<Point>,
+  camera: CameraOptions,
+  coordinatesPadding: EdgeInsets? = null,
+  maxZoom: Double? = null,
+  offset: ScreenCoordinate? = null,
+): CameraOptions = suspendCoroutine { continuation ->
+  cameraForCoordinates(
+    coordinates = coordinates,
+    camera = camera,
+    coordinatesPadding = coordinatesPadding,
+    maxZoom = maxZoom,
+    offset = offset,
+    result = continuation::resume
+  )
+}
+
+/**
+ * Convenience method that returns the [CameraOptions] object for given parameters.
+ *
+ * @param coordinates The `coordinates` representing the bounds of the camera.
+ * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
+ * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
+ *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
+ * @param maxZoom The maximum zoom level allowed in the returned camera options.
+ * @param offset The center of the given bounds relative to map center in pixels.
+ *
+ * @return the [CameraOptions] object representing the provided parameters. Empty [CameraOptions] (see [CameraOptions.isEmpty]) could be returned only if an internal error occurred.
+ */
+@JvmSynthetic
+suspend fun MapboxMap.awaitCameraForCoordinates(
   coordinates: List<Point>,
   camera: CameraOptions,
   coordinatesPadding: EdgeInsets? = null,
