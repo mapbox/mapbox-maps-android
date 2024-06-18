@@ -5,6 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.5.0-rc.1
+## Breaking changes ⚠️
+* Remove experimental `CustomRasterSource.invalidateRegion` and `CustomRasterSource.invalidateTile` methods and change signature of `CustomRasterSource.setTileData`.
+* Remove experimental `CustomRasterSource.tileCacheBudget` getter and setter. If needed, caching should be implemented on user's side.
+* Remove experimental `MapboxMap` and `Style` methods: `invalidateStyleCustomRasterSourceTile`, `invalidateStyleCustomRasterSourceRegion`; change signature of `setStyleCustomRasterSourceTileData` method in `MapboxMap` and `Style`.
+
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
 

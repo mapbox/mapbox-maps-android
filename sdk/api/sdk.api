@@ -482,8 +482,6 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun hasStyleModel (Ljava/lang/String;)Z
 	public fun invalidateStyleCustomGeometrySourceRegion (Ljava/lang/String;Lcom/mapbox/maps/CoordinateBounds;)Lcom/mapbox/bindgen/Expected;
 	public fun invalidateStyleCustomGeometrySourceTile (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;)Lcom/mapbox/bindgen/Expected;
-	public fun invalidateStyleCustomRasterSourceRegion (Ljava/lang/String;Lcom/mapbox/maps/CoordinateBounds;)Lcom/mapbox/bindgen/Expected;
-	public fun invalidateStyleCustomRasterSourceTile (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLayerPersistent (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLoaded ()Z
 	public final fun isValid ()Z
@@ -498,7 +496,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
-	public fun setStyleCustomRasterSourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Lcom/mapbox/maps/Image;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleCustomRasterSourceTileData (Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleGeoJSONSourceData (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/GeoJSONSourceData;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleImportConfigProperties (Ljava/lang/String;Ljava/util/HashMap;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleImportConfigProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;

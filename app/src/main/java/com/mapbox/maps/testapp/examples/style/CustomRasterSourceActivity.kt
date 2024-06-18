@@ -8,22 +8,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CanonicalTileID
-import com.mapbox.maps.Image
+import com.mapbox.maps.CustomRasterSourceTileData
+import com.mapbox.maps.CustomRasterSourceTileStatus
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.TileCoverOptions
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.sources.CustomRasterSource
 import com.mapbox.maps.extension.style.sources.customRasterSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.databinding.ActivityCustomRasterSourceBinding
+import com.mapbox.maps.toMapboxImage
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -31,6 +30,8 @@ import kotlinx.coroutines.launch
  */
 @OptIn(MapboxExperimental::class)
 class CustomRasterSourceActivity : AppCompatActivity() {
+
+  private lateinit var customRasterSource: CustomRasterSource
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,10 +48,21 @@ class CustomRasterSourceActivity : AppCompatActivity() {
       rotateEnabled = false
       scrollEnabled = false
     }
-    val customRasterSource = customRasterSource(CUSTOM_RASTER_SOURCE_ID) {
+    val requiredTiles = mutableListOf<CanonicalTileID>()
+    customRasterSource = customRasterSource(CUSTOM_RASTER_SOURCE_ID) {
       tileSize(TILE_SIZE.toShort())
-      cancelTileFunction { _ -> }
-      fetchTileFunction { _ -> }
+      tileStatusChangedFunction { tileId: CanonicalTileID, status: CustomRasterSourceTileStatus ->
+        logI(TAG, "tileStatusChangedFunction called: status=${status.name}, tileId=[x=${tileId.x}, y=${tileId.y}, z=${tileId.z}]")
+        if (status == CustomRasterSourceTileStatus.REQUIRED) {
+          requiredTiles.add(tileId)
+          refresh(requiredTiles)
+        } else {
+          if (requiredTiles.contains(tileId)) {
+            requiredTiles.remove(tileId)
+            customRasterSource.setTileData(listOf(CustomRasterSourceTileData(tileId, null)))
+          }
+        }
+      }
     }
     binding.mapView.mapboxMap.apply {
       setCamera(INITIAL_CAMERA)
@@ -60,41 +72,29 @@ class CustomRasterSourceActivity : AppCompatActivity() {
           +rasterLayer(RASTER_LAYER_ID, CUSTOM_RASTER_SOURCE_ID) { }
         }
       ) {
-        refresh(this@apply, customRasterSource)
+        refresh(requiredTiles)
         binding.refreshBtn.setOnClickListener {
-          refresh(this@apply, customRasterSource)
+          refresh(requiredTiles)
         }
       }
     }
   }
 
-  private fun refresh(mapboxMap: MapboxMap, source: CustomRasterSource) {
+  private fun refresh(requiredTiles: List<CanonicalTileID>) {
     lifecycleScope.launch {
-      val coveringTiles = mapboxMap.tileCover(
-        TileCoverOptions.Builder()
-          .tileSize(TILE_SIZE.toShort())
-          .roundZoom(true)
-          .build(),
-        cameraOptions = null
-      )
-      coveringTiles.forEach { source.setTileData(it, null as Image?) }
       RasterTileProvider.createTiles(
-        coveringTiles,
+        requiredTiles,
         nextColor,
         TILE_SIZE,
         TILE_SIZE
       ) { tiles ->
-        tiles.forEach {
-          source.setTileData(
-            it.tileID,
-            it.image
-          )
-        }
+        customRasterSource.setTileData(tiles)
       }
     }
   }
 
   companion object {
+    private const val TAG = "CRSActivity"
     private val INITIAL_CAMERA = cameraOptions {
       center(Point.fromLngLat(24.945389069265598, 60.17195694011002))
       zoom(5.0)
@@ -127,26 +127,19 @@ object RasterTileProvider {
     color: Int,
     width: Int,
     height: Int,
-    callback: (List<RasterTile>) -> Unit
+    callback: (List<CustomRasterSourceTileData>) -> Unit
   ) {
-    val image = createBitmap(color, width, height)
+    val image = createBitmap(color, width, height).toMapboxImage()
     coroutineScope {
-      requiredTiles.map {
-        async {
-          // simulate slow network
-          delay(200)
-          RasterTile(it, image)
+      async {
+        requiredTiles.map {
+          CustomRasterSourceTileData(it, image)
         }
-      }.awaitAll().also {
+      }.await().also {
         callback(it)
       }
     }
   }
-
-  data class RasterTile(
-    val tileID: CanonicalTileID,
-    val image: Bitmap
-  )
 
   private fun createBitmap(
     color: Int,
@@ -156,7 +149,6 @@ object RasterTileProvider {
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     canvas.drawColor(color)
-
     return bitmap
   }
 }

@@ -5000,12 +5000,7 @@ public final class com/mapbox/maps/extension/style/sources/CustomGeometrySourceK
 
 public final class com/mapbox/maps/extension/style/sources/CustomRasterSource : com/mapbox/maps/extension/style/sources/Source {
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/CustomRasterSourceOptions;)V
-	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
-	public final fun invalidateRegion (Lcom/mapbox/maps/CoordinateBounds;)V
-	public final fun invalidateTile (Lcom/mapbox/maps/CanonicalTileID;)V
-	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
-	public final fun setTileData (Lcom/mapbox/maps/CanonicalTileID;Landroid/graphics/Bitmap;)V
-	public final fun setTileData (Lcom/mapbox/maps/CanonicalTileID;Lcom/mapbox/maps/Image;)V
+	public final fun setTileData (Ljava/util/List;)V
 }
 
 public final class com/mapbox/maps/extension/style/sources/CustomRasterSourceKt {
