@@ -3878,7 +3878,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMix(com.mapbox.maps.extension.style.expressions.generated.Expression rasterColorMix);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMixTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMixTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRange(java.util.List<java.lang.Double> rasterColorRange = listOf(0.0, 1.0));
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRange(java.util.List<java.lang.Double> rasterColorRange);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRange(com.mapbox.maps.extension.style.expressions.generated.Expression rasterColorRange);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRangeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRangeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -5035,7 +5035,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(String iconColor = "#000000");
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(com.mapbox.maps.extension.style.expressions.generated.Expression iconColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(@ColorInt int iconColor);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(double iconColorSaturation = 1.0);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(double iconColorSaturation = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(com.mapbox.maps.extension.style.expressions.generated.Expression iconColorSaturation);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -6084,7 +6084,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource build();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder cluster(boolean value = false);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMaxZoom(long value);
-    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMinPoints(long value = 2L);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMinPoints(long value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperties(java.util.HashMap<java.lang.String,java.lang.Object> value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression operatorExpr, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);

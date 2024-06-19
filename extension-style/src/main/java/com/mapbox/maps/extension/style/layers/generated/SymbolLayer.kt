@@ -3179,11 +3179,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    */
   val iconColorSaturation: Double?
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+     * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
      *
      * Use static method [SymbolLayer.defaultIconColorSaturation] to get the default property.
      *
@@ -3194,7 +3194,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * Use static method [SymbolLayer.defaultIconColorSaturation] to set the default property.
    *
@@ -3206,14 +3206,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * This is an Expression representation of "icon-color-saturation".
    *
    */
   val iconColorSaturationAsExpression: Expression?
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+     * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
      *
      * Get the IconColorSaturation property as an Expression
      *
@@ -3232,7 +3232,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * Use static method [SymbolLayer.defaultIconColorSaturationAsExpression] to set the default property.
    *
@@ -6624,11 +6624,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+     * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
      */
     val defaultIconColorSaturation: Double?
       /**
-       * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+       * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
        *
        * Get the default value of IconColorSaturation property
        *
@@ -6639,7 +6639,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+     * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
      *
      * This is an Expression representation of "icon-color-saturation".
      *
@@ -8199,21 +8199,21 @@ interface SymbolLayerDsl {
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * @param iconColorSaturation value of iconColorSaturation
    */
-  fun iconColorSaturation(iconColorSaturation: Double = 1.0): SymbolLayer
+  fun iconColorSaturation(iconColorSaturation: Double = 0.0): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * @param iconColorSaturation value of iconColorSaturation as Expression
    */
   fun iconColorSaturation(iconColorSaturation: Expression): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * Set the IconColorSaturation property transition options
    *
@@ -8222,7 +8222,7 @@ interface SymbolLayerDsl {
   fun iconColorSaturationTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * DSL for [iconColorSaturationTransition].
    */

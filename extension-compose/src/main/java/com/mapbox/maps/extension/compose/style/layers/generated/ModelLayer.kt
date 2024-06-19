@@ -28,7 +28,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param modelId Model to render. Default value: "".
+ * @param modelId Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
  * @param modelAmbientOcclusionIntensity Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
  * @param modelAmbientOcclusionIntensityTransition Defines the transition of [modelAmbientOcclusionIntensity]. Default value: 1. Value range: [0, 1]
  * @param modelCastShadows Enable/Disable shadow casting for this layer Default value: true.

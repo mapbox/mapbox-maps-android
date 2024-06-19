@@ -247,12 +247,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   // Property getters and setters
 
   /**
-   * Model to render. Default value: "".
+   * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    */
   @MapboxExperimental
   val modelId: String?
     /**
-     * Model to render. Default value: "".
+     * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
      *
      * Use static method [ModelLayer.defaultModelId] to get the default property.
      *
@@ -263,7 +263,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Model to render. Default value: "".
+   * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    *
    * Use static method [ModelLayer.defaultModelId] to set the default property.
    *
@@ -276,7 +276,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Model to render. Default value: "".
+   * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    *
    * This is an Expression representation of "model-id".
    *
@@ -284,7 +284,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelIdAsExpression: Expression?
     /**
-     * Model to render. Default value: "".
+     * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
      *
      * Get the ModelId property as an Expression
      *
@@ -303,7 +303,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Model to render. Default value: "".
+   * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    *
    * Use static method [ModelLayer.defaultModelIdAsExpression] to set the default property.
    *
@@ -1819,12 +1819,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "maxzoom").silentUnwrap()
 
     /**
-     * Model to render. Default value: "".
+     * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
      */
     @MapboxExperimental
     val defaultModelId: String?
       /**
-       * Model to render. Default value: "".
+       * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
        *
        * Get the default value of ModelId property
        *
@@ -1835,7 +1835,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Model to render. Default value: "".
+     * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
      *
      * This is an Expression representation of "model-id".
      *
@@ -2667,7 +2667,7 @@ interface ModelLayerDsl {
   // Property getters and setters
 
   /**
-   * Model to render. Default value: "".
+   * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    *
    * @param modelId value of modelId
    */
@@ -2675,7 +2675,7 @@ interface ModelLayerDsl {
   fun modelId(modelId: String = ""): ModelLayer
 
   /**
-   * Model to render. Default value: "".
+   * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    *
    * @param modelId value of modelId as Expression
    */

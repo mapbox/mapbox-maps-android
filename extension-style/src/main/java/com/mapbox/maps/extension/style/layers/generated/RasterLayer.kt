@@ -211,12 +211,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   // Property getters and setters
 
   /**
-   * Displayed band of raster array source layer
+   * Displayed band of raster array source layer. Defaults to the first band if not set.
    */
   @MapboxExperimental
   val rasterArrayBand: String?
     /**
-     * Displayed band of raster array source layer
+     * Displayed band of raster array source layer. Defaults to the first band if not set.
      *
      * Use static method [RasterLayer.defaultRasterArrayBand] to get the default property.
      *
@@ -227,7 +227,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Displayed band of raster array source layer
+   * Displayed band of raster array source layer. Defaults to the first band if not set.
    *
    * Use static method [RasterLayer.defaultRasterArrayBand] to set the default property.
    *
@@ -240,7 +240,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Displayed band of raster array source layer
+   * Displayed band of raster array source layer. Defaults to the first band if not set.
    *
    * This is an Expression representation of "raster-array-band".
    *
@@ -248,7 +248,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   @MapboxExperimental
   val rasterArrayBandAsExpression: Expression?
     /**
-     * Displayed band of raster array source layer
+     * Displayed band of raster array source layer. Defaults to the first band if not set.
      *
      * Get the RasterArrayBand property as an Expression
      *
@@ -267,7 +267,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Displayed band of raster array source layer
+   * Displayed band of raster array source layer. Defaults to the first band if not set.
    *
    * Use static method [RasterLayer.defaultRasterArrayBandAsExpression] to set the default property.
    *
@@ -604,11 +604,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    */
   val rasterColorRange: List<Double>?
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
      *
      * Use static method [RasterLayer.defaultRasterColorRange] to get the default property.
      *
@@ -619,7 +619,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * Use static method [RasterLayer.defaultRasterColorRange] to set the default property.
    *
@@ -631,14 +631,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * This is an Expression representation of "raster-color-range".
    *
    */
   val rasterColorRangeAsExpression: Expression?
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
      *
      * Get the RasterColorRange property as an Expression
      *
@@ -657,7 +657,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * Use static method [RasterLayer.defaultRasterColorRangeAsExpression] to set the default property.
    *
@@ -802,12 +802,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   val rasterElevation: Double?
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
      *
      * Use static method [RasterLayer.defaultRasterElevation] to get the default property.
      *
@@ -818,7 +818,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterElevation] to set the default property.
    *
@@ -831,7 +831,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "raster-elevation".
    *
@@ -839,7 +839,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   @MapboxExperimental
   val rasterElevationAsExpression: Expression?
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
      *
      * Get the RasterElevation property as an Expression
      *
@@ -858,7 +858,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterElevationAsExpression] to set the default property.
    *
@@ -1496,12 +1496,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "maxzoom").silentUnwrap()
 
     /**
-     * Displayed band of raster array source layer
+     * Displayed band of raster array source layer. Defaults to the first band if not set.
      */
     @MapboxExperimental
     val defaultRasterArrayBand: String?
       /**
-       * Displayed band of raster array source layer
+       * Displayed band of raster array source layer. Defaults to the first band if not set.
        *
        * Get the default value of RasterArrayBand property
        *
@@ -1512,7 +1512,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Displayed band of raster array source layer
+     * Displayed band of raster array source layer. Defaults to the first band if not set.
      *
      * This is an Expression representation of "raster-array-band".
      *
@@ -1679,11 +1679,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-mix-transition").silentUnwrap()
 
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
      */
     val defaultRasterColorRange: List<Double>?
       /**
-       * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+       * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
        *
        * Get the default value of RasterColorRange property
        *
@@ -1694,7 +1694,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
      *
      * This is an Expression representation of "raster-color-range".
      *
@@ -1775,12 +1775,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition").silentUnwrap()
 
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultRasterElevation: Double?
       /**
-       * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+       * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
        *
        * Get the default value of RasterElevation property
        *
@@ -1791,7 +1791,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "raster-elevation".
      *
@@ -2159,7 +2159,7 @@ interface RasterLayerDsl {
   // Property getters and setters
 
   /**
-   * Displayed band of raster array source layer
+   * Displayed band of raster array source layer. Defaults to the first band if not set.
    *
    * @param rasterArrayBand value of rasterArrayBand
    */
@@ -2167,7 +2167,7 @@ interface RasterLayerDsl {
   fun rasterArrayBand(rasterArrayBand: String): RasterLayer
 
   /**
-   * Displayed band of raster array source layer
+   * Displayed band of raster array source layer. Defaults to the first band if not set.
    *
    * @param rasterArrayBand value of rasterArrayBand as Expression
    */
@@ -2272,21 +2272,21 @@ interface RasterLayerDsl {
   fun rasterColorMixTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * @param rasterColorRange value of rasterColorRange
    */
-  fun rasterColorRange(rasterColorRange: List<Double> = listOf(0.0, 1.0)): RasterLayer
+  fun rasterColorRange(rasterColorRange: List<Double>): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * @param rasterColorRange value of rasterColorRange as Expression
    */
   fun rasterColorRange(rasterColorRange: Expression): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * Set the RasterColorRange property transition options
    *
@@ -2295,7 +2295,7 @@ interface RasterLayerDsl {
   fun rasterColorRangeTransition(options: StyleTransition): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    *
    * DSL for [rasterColorRangeTransition].
    */
@@ -2332,7 +2332,7 @@ interface RasterLayerDsl {
   fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * @param rasterElevation value of rasterElevation
    */
@@ -2340,7 +2340,7 @@ interface RasterLayerDsl {
   fun rasterElevation(rasterElevation: Double = 0.0): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * @param rasterElevation value of rasterElevation as Expression
    */
@@ -2348,7 +2348,7 @@ interface RasterLayerDsl {
   fun rasterElevation(rasterElevation: Expression): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * Set the RasterElevation property transition options
    *
@@ -2358,7 +2358,7 @@ interface RasterLayerDsl {
   fun rasterElevationTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    *
    * DSL for [rasterElevationTransition].
    */
