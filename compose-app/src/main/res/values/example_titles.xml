@@ -22,4 +22,5 @@
     <string name="activity_animated_image_source">Add animated weather data</string>
     <string name="activity_terrain">Terrain</string>
     <string name="activity_style_imports">Style imports</string>
+    <string name="activity_query_rendered_feature">Query rendered feature</string>
 </resources>

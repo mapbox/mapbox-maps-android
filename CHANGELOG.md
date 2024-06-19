@@ -6,11 +6,18 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.5.0-rc.1
 ## Breaking changes ⚠️
+* [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
+* [compose] Rename `ImportConfig` to `ImportConfigs`.
+* [compose] Move `MapboxMap.mapEvents` to events flows in `MapState`.
+* [compose] Move `MapboxMap.gesturesSettings` to `MapState`.
 * Remove experimental `CustomRasterSource.invalidateRegion` and `CustomRasterSource.invalidateTile` methods and change signature of `CustomRasterSource.setTileData`.
 * Remove experimental `CustomRasterSource.tileCacheBudget` getter and setter. If needed, caching should be implemented on user's side.
 * Remove experimental `MapboxMap` and `Style` methods: `invalidateStyleCustomRasterSourceTile`, `invalidateStyleCustomRasterSourceRegion`; change signature of `setStyleCustomRasterSourceTileData` method in `MapboxMap` and `Style`.
 
 ## Features ✨ and improvements 🏁
+* [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
+* [compose] Introduce `MapState` that can be hoisted to interact with map states, such as query rendered features, subscribe to map events and configure gestures settings.
+* Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
 * Add min/max/default values to the docs for the generated properties.
 * Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
 * Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.

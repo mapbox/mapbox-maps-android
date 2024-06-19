@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.compose.annotation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.hasText
@@ -18,14 +19,15 @@ import com.mapbox.maps.MapIdle
 import com.mapbox.maps.MapIdleCallback
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
-import com.mapbox.maps.extension.compose.MapEvents
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.MINSK
+import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.viewannotation.annotationAnchor
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import kotlinx.coroutines.launch
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -116,6 +118,7 @@ public class ViewAnnotationTest {
     viewAnnotationBlock: @Composable () -> Unit,
   ) {
     composeTestRule.setContent {
+      val coroutineScope = rememberCoroutineScope()
       MapboxMap(
         Modifier
           .fillMaxSize()
@@ -126,7 +129,15 @@ public class ViewAnnotationTest {
             center(cameraCenter)
           }
         },
-        mapEvents = idleCallback?.let { MapEvents(onMapIdle = idleCallback) }
+        mapState = rememberMapState {
+          coroutineScope.launch {
+            idleCallback?.let { callback ->
+              mapIdleEvents.collect {
+                callback.run(it)
+              }
+            }
+          }
+        },
       ) {
         ViewAnnotation(
           options = viewAnnotationOptions {

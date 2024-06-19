@@ -70,19 +70,71 @@ package com.mapbox.maps.extension.compose {
     property public final com.mapbox.maps.StyleLoadedCallback? onStyleLoaded;
   }
 
+  @com.mapbox.maps.MapboxExperimental public final class MapState {
+    ctor public MapState();
+    method @com.mapbox.maps.MapboxExperimental public kotlinx.coroutines.flow.Flow<com.mapbox.maps.GenericEvent> genericEvents(String eventName);
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
+    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getGesturesSettings();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapIdle> getMapIdleEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoaded> getMapLoadedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoadingError> getMapLoadingErrorEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.RenderFrameFinished> getRenderFrameFinishedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.RenderFrameStarted> getRenderFrameStartedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.ResourceRequest> getResourceRequestEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.SourceAdded> getSourceAddedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.SourceDataLoaded> getSourceDataLoadedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.SourceRemoved> getSourceRemovedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleDataLoaded> getStyleDataLoadedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageMissing> getStyleImageMissingEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageRemoveUnused> getStyleImageRemoveUnusedEvents();
+    method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleLoaded> getStyleLoadedEvents();
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? pixelForCoordinate(com.mapbox.geojson.Point coordinate, kotlin.coroutines.Continuation<? super com.mapbox.maps.ScreenCoordinate>);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>>);
+    method public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
+    property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapIdle> mapIdleEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoaded> mapLoadedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoadingError> mapLoadingErrorEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.RenderFrameFinished> renderFrameFinishedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.RenderFrameStarted> renderFrameStartedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.ResourceRequest> resourceRequestEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.SourceAdded> sourceAddedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.SourceDataLoaded> sourceDataLoadedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.SourceRemoved> sourceRemovedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleDataLoaded> styleDataLoadedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageMissing> styleImageMissingEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageRemoveUnused> styleImageRemoveUnusedEvents;
+    property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleLoaded> styleLoadedEvents;
+    field public static final com.mapbox.maps.extension.compose.MapState.Companion Companion;
+  }
+
+  public static final class MapState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.MapState,com.mapbox.maps.extension.compose.MapState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.MapState,com.mapbox.maps.extension.compose.MapState.Holder> Saver;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public static final class MapState.Holder implements android.os.Parcelable {
+    ctor public MapState.Holder(java.util.Map<java.lang.String,? extends android.os.Parcelable> savedProperties);
+    method public java.util.Map<java.lang.String,android.os.Parcelable> component1();
+    method public com.mapbox.maps.extension.compose.MapState.Holder copy(java.util.Map<java.lang.String,? extends android.os.Parcelable> savedProperties);
+    method public java.util.Map<java.lang.String,android.os.Parcelable> getSavedProperties();
+    property public final java.util.Map<java.lang.String,android.os.Parcelable> savedProperties;
+  }
+
+  public final class MapStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.MapState rememberMapState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapState,kotlin.Unit> init = {});
+  }
+
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Map Composable") @com.mapbox.maps.MapboxExperimental @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxMapComposable {
   }
 
   public final class MapboxMapKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.MapEvents? mapEvents = null, com.mapbox.maps.extension.compose.ComposeMapInitOptions composeMapInitOptions = with(LocalDensity.current, { 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.ComposeMapInitOptions composeMapInitOptions = with(LocalDensity.current, { 
     return remember({ 
         return <init>(density)
     })
-}), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = remember({ 
-    return GesturesSettings({ 
-    
-    })
-}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope,kotlin.Unit> compass = { Compass() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope,kotlin.Unit> scaleBar = { ScaleBar() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope,kotlin.Unit> logo = { Logo() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope,kotlin.Unit> attribution = { Attribution() }, com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.plugin.gestures.OnMapClickListener? onMapClickListener = null, com.mapbox.maps.plugin.gestures.OnMapLongClickListener? onMapLongClickListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> style = { MapboxStandardStyle() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
+}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope,kotlin.Unit> compass = { Compass() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope,kotlin.Unit> scaleBar = { ScaleBar() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope,kotlin.Unit> logo = { Logo() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope,kotlin.Unit> attribution = { Attribution() }, com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.extension.compose.MapState mapState = rememberMapState(), com.mapbox.maps.plugin.gestures.OnMapClickListener? onMapClickListener = null, com.mapbox.maps.plugin.gestures.OnMapLongClickListener? onMapLongClickListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> style = { MapboxStandardStyle() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapboxMapScope {

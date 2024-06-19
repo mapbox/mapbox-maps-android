@@ -80,11 +80,67 @@ public final class com/mapbox/maps/extension/compose/MapEvents {
 	public final fun getOnStyleLoaded ()Lcom/mapbox/maps/StyleLoadedCallback;
 }
 
+public final class com/mapbox/maps/extension/compose/MapState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/MapState$Companion;
+	public fun <init> ()V
+	public final fun genericEvents (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public final fun getCameraChangedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getGesturesSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public final fun getMapIdleEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getMapLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getMapLoadingErrorEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getRenderFrameFinishedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getRenderFrameStartedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getResourceRequestEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getSourceAddedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getSourceDataLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getSourceRemovedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getStyleDataLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getStyleImageMissingEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getStyleImageRemoveUnusedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getStyleLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun pixelForCoordinate (Lcom/mapbox/geojson/Point;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun setGesturesSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
+}
+
+public final class com/mapbox/maps/extension/compose/MapState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/MapState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/Map;)V
+	public final fun component1 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/Map;)Lcom/mapbox/maps/extension/compose/MapState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/MapState$Holder;Ljava/util/Map;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/MapState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSavedProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/MapState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/MapState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/MapState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/MapStateKt {
+	public static final fun rememberMapState (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/MapState;
+}
+
 public abstract interface annotation class com/mapbox/maps/extension/compose/MapboxMapComposable : java/lang/annotation/Annotation {
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapKt {
-	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/MapEvents;Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapScope {

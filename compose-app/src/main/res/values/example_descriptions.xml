@@ -22,4 +22,5 @@
     <string name="description_animated_image_source">Load a raster image to a style using ImageSource and display it on a map as animated weather data using RasterLayer.</string>
     <string name="description_terrain">Add terrain on top of raster-dem source</string>
     <string name="description_style_imports">Showcase usage of style imports</string>
+    <string name="description_query_rendered_feature">Showcase usage of query rendered features</string>
 </resources>
