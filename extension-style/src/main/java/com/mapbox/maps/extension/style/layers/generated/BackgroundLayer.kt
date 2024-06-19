@@ -185,11 +185,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   // Property getters and setters
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    */
   val backgroundColor: String?
     /**
-     * The color with which the background will be drawn.
+     * The color with which the background will be drawn. Default value: "#000000".
      *
      * Use static method [BackgroundLayer.defaultBackgroundColor] to get the default property.
      *
@@ -203,7 +203,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * Use static method [BackgroundLayer.defaultBackgroundColor] to set the default property.
    *
@@ -215,14 +215,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * This is an Expression representation of "background-color".
    *
    */
   val backgroundColorAsExpression: Expression?
     /**
-     * The color with which the background will be drawn.
+     * The color with which the background will be drawn. Default value: "#000000".
      *
      * Get the BackgroundColor property as an Expression
      *
@@ -238,7 +238,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * Use static method [BackgroundLayer.defaultBackgroundColorAsExpression] to set the default property.
    *
@@ -250,11 +250,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    */
   val backgroundColorAsColorInt: Int?
     /**
-     * The color with which the background will be drawn.
+     * The color with which the background will be drawn. Default value: "#000000".
      *
      * Use static method [BackgroundLayer.defaultBackgroundColorAsColorInt] to get the default property.
      *
@@ -269,7 +269,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * Use static method [BackgroundLayer.defaultBackgroundColorAsColorInt] to set the default property.
    *
@@ -315,11 +315,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    */
   val backgroundEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to get the default property.
      *
@@ -330,7 +330,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to set the default property.
    *
@@ -342,14 +342,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "background-emissive-strength".
    *
    */
   val backgroundEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Get the BackgroundEmissiveStrength property as an Expression
      *
@@ -368,7 +368,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to set the default property.
    *
@@ -414,11 +414,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    */
   val backgroundOpacity: Double?
     /**
-     * The opacity at which the background will be drawn.
+     * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Use static method [BackgroundLayer.defaultBackgroundOpacity] to get the default property.
      *
@@ -429,7 +429,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [BackgroundLayer.defaultBackgroundOpacity] to set the default property.
    *
@@ -441,14 +441,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "background-opacity".
    *
    */
   val backgroundOpacityAsExpression: Expression?
     /**
-     * The opacity at which the background will be drawn.
+     * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Get the BackgroundOpacity property as an Expression
      *
@@ -467,7 +467,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [BackgroundLayer.defaultBackgroundOpacityAsExpression] to set the default property.
    *
@@ -637,11 +637,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "maxzoom").silentUnwrap()
 
     /**
-     * The color with which the background will be drawn.
+     * The color with which the background will be drawn. Default value: "#000000".
      */
     val defaultBackgroundColor: String?
       /**
-       * The color with which the background will be drawn.
+       * The color with which the background will be drawn. Default value: "#000000".
        *
        * Get the default value of BackgroundColor property
        *
@@ -655,7 +655,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * The color with which the background will be drawn.
+     * The color with which the background will be drawn. Default value: "#000000".
      *
      * This is an Expression representation of "background-color".
      *
@@ -674,11 +674,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * The color with which the background will be drawn.
+     * The color with which the background will be drawn. Default value: "#000000".
      */
     val defaultBackgroundColorAsColorInt: Int?
       /**
-       * The color with which the background will be drawn.
+       * The color with which the background will be drawn. Default value: "#000000".
        *
        * Get the default value of BackgroundColor property as color int.
        *
@@ -704,11 +704,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      */
     val defaultBackgroundEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
        *
        * Get the default value of BackgroundEmissiveStrength property
        *
@@ -719,7 +719,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "background-emissive-strength".
      *
@@ -752,11 +752,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength-transition").silentUnwrap()
 
     /**
-     * The opacity at which the background will be drawn.
+     * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
      */
     val defaultBackgroundOpacity: Double?
       /**
-       * The opacity at which the background will be drawn.
+       * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of BackgroundOpacity property
        *
@@ -767,7 +767,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * The opacity at which the background will be drawn.
+     * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "background-opacity".
      *
@@ -894,28 +894,28 @@ interface BackgroundLayerDsl {
   // Property getters and setters
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * @param backgroundColor value of backgroundColor
    */
   fun backgroundColor(backgroundColor: String = "#000000"): BackgroundLayer
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * @param backgroundColor value of backgroundColor as Expression
    */
   fun backgroundColor(backgroundColor: Expression): BackgroundLayer
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * @param backgroundColor value of backgroundColor
    */
   fun backgroundColor(@ColorInt backgroundColor: Int): BackgroundLayer
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * Set the BackgroundColor property transition options
    *
@@ -924,28 +924,28 @@ interface BackgroundLayerDsl {
   fun backgroundColorTransition(options: StyleTransition): BackgroundLayer
 
   /**
-   * The color with which the background will be drawn.
+   * The color with which the background will be drawn. Default value: "#000000".
    *
    * DSL for [backgroundColorTransition].
    */
   fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
    */
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double = 0.0): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
    */
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Set the BackgroundEmissiveStrength property transition options
    *
@@ -954,28 +954,28 @@ interface BackgroundLayerDsl {
   fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * DSL for [backgroundEmissiveStrengthTransition].
    */
   fun backgroundEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param backgroundOpacity value of backgroundOpacity
    */
   fun backgroundOpacity(backgroundOpacity: Double = 1.0): BackgroundLayer
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param backgroundOpacity value of backgroundOpacity as Expression
    */
   fun backgroundOpacity(backgroundOpacity: Expression): BackgroundLayer
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Set the BackgroundOpacity property transition options
    *
@@ -984,7 +984,7 @@ interface BackgroundLayerDsl {
   fun backgroundOpacityTransition(options: StyleTransition): BackgroundLayer
 
   /**
-   * The opacity at which the background will be drawn.
+   * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    *
    * DSL for [backgroundOpacityTransition].
    */

@@ -22,115 +22,115 @@ import kotlinx.parcelize.Parcelize
 private data class ScaleBarSettingsData(
 
   /**
-   * Whether the scale is visible on the map.
+   * Whether the scale is visible on the map. Default value: true.
    */
   @Default("true")
   var enabled: Boolean,
 
   /**
-   * Defines where the scale bar is positioned on the map
+   * Defines where the scale bar is positioned on the map Default value: "top-left".
    */
   @Default("Gravity.TOP or Gravity.START")
   var position: Int,
 
   /**
-   * Defines the margin to the left that the scale bar honors. This property is specified in pixels.
+   * Defines the margin to the left that the scale bar honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginLeft: Float,
 
   /**
-   * Defines the margin to the top that the scale bar honors. This property is specified in pixels.
+   * Defines the margin to the top that the scale bar honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginTop: Float,
 
   /**
-   * Defines the margin to the right that the scale bar honors. This property is specified in pixels.
+   * Defines the margin to the right that the scale bar honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginRight: Float,
 
   /**
-   * Defines the margin to the bottom that the scale bar honors. This property is specified in pixels.
+   * Defines the margin to the bottom that the scale bar honors. Default value: 4. This property is specified in pixels.
    */
   @Default("4f")
   var marginBottom: Float,
 
   /**
-   * Defines text color of the scale bar.
+   * Defines text color of the scale bar. Default value: "black".
    */
   @Default("Color.BLACK")
   var textColor: Int,
 
   /**
-   * Defines primary color of the scale bar.
+   * Defines primary color of the scale bar. Default value: "black".
    */
   @Default("Color.BLACK")
   var primaryColor: Int,
 
   /**
-   * Defines secondary color of the scale bar.
+   * Defines secondary color of the scale bar. Default value: "white".
    */
   @Default("Color.WHITE")
   var secondaryColor: Int,
 
   /**
-   * Defines width of the border for the scale bar. This property is specified in pixels.
+   * Defines width of the border for the scale bar. Default value: 2. This property is specified in pixels.
    */
   @Default("2f")
   var borderWidth: Float,
 
   /**
-   * Defines height of the scale bar. This property is specified in pixels.
+   * Defines height of the scale bar. Default value: 2. This property is specified in pixels.
    */
   @Default("2f")
   var height: Float,
 
   /**
-   * Defines margin of the text bar of the scale bar. This property is specified in pixels.
+   * Defines margin of the text bar of the scale bar. Default value: 8. This property is specified in pixels.
    */
   @Default("8f")
   var textBarMargin: Float,
 
   /**
-   * Defines text border width of the scale bar. This property is specified in pixels.
+   * Defines text border width of the scale bar. Default value: 2. This property is specified in pixels.
    */
   @Default("2f")
   var textBorderWidth: Float,
 
   /**
-   * Defines text size of the scale bar. This property is specified in pixels.
+   * Defines text size of the scale bar. Default value: 8. This property is specified in pixels.
    */
   @Default("8f")
   var textSize: Float,
 
   /**
-   * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units.
+   * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. Default value: true.
    */
   @Default("true")
   var isMetricUnits: Boolean,
 
   /**
-   * Configures minimum refresh interval, in millisecond, default is 15.
+   * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.
    */
   @Default("15")
   var refreshInterval: Long,
 
   /**
-   * Configures whether to show the text border or not, default is true.
+   * Configures whether to show the text border or not, default is true. Default value: true.
    */
   @Default("true")
   var showTextBorder: Boolean,
 
   /**
-   * configures ratio of scale bar max width compared with MapView width, default is 0.5.
+   * configures ratio of scale bar max width compared with MapView width, default is 0.5. Default value: 0.5.
    */
   @Default("0.5f")
   var ratio: Float,
 
   /**
-   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command. Default value: false.
    */
   @Default("false")
   var useContinuousRendering: Boolean,

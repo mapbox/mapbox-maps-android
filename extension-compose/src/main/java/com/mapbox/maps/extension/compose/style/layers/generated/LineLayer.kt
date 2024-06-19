@@ -29,41 +29,41 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param lineCap The display of line endings.
- * @param lineJoin The display of lines when joining.
- * @param lineMiterLimit Used to automatically convert miter joins to bevel joins for sharp angles.
- * @param lineRoundLimit Used to automatically convert round joins to miter joins for shallow angles.
+ * @param lineCap The display of line endings. Default value: "butt".
+ * @param lineJoin The display of lines when joining. Default value: "miter".
+ * @param lineMiterLimit Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
+ * @param lineRoundLimit Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
  * @param lineSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
- * @param lineBlur Blur applied to the line, in pixels.
- * @param lineBlurTransition Defines the transition of [lineBlur].
- * @param lineBorderColor The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
- * @param lineBorderColorTransition Defines the transition of [lineBorderColor].
- * @param lineBorderWidth The width of the line border. A value of zero means no border.
- * @param lineBorderWidthTransition Defines the transition of [lineBorderWidth].
- * @param lineColor The color with which the line will be drawn.
- * @param lineColorTransition Defines the transition of [lineColor].
- * @param lineDasharray Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
- * @param lineDepthOcclusionFactor Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
- * @param lineDepthOcclusionFactorTransition Defines the transition of [lineDepthOcclusionFactor].
- * @param lineEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param lineEmissiveStrengthTransition Defines the transition of [lineEmissiveStrength].
- * @param lineGapWidth Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
- * @param lineGapWidthTransition Defines the transition of [lineGapWidth].
+ * @param lineBlur Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+ * @param lineBlurTransition Defines the transition of [lineBlur]. Default value: 0. Minimum value: 0.
+ * @param lineBorderColor The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
+ * @param lineBorderColorTransition Defines the transition of [lineBorderColor]. Default value: "rgba(0, 0, 0, 0)".
+ * @param lineBorderWidth The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+ * @param lineBorderWidthTransition Defines the transition of [lineBorderWidth]. Default value: 0. Minimum value: 0.
+ * @param lineColor The color with which the line will be drawn. Default value: "#000000".
+ * @param lineColorTransition Defines the transition of [lineColor]. Default value: "#000000".
+ * @param lineDasharray Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+ * @param lineDepthOcclusionFactor Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+ * @param lineDepthOcclusionFactorTransition Defines the transition of [lineDepthOcclusionFactor]. Default value: 1. Value range: [0, 1]
+ * @param lineEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+ * @param lineEmissiveStrengthTransition Defines the transition of [lineEmissiveStrength]. Default value: 0. Minimum value: 0.
+ * @param lineGapWidth Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+ * @param lineGapWidthTransition Defines the transition of [lineGapWidth]. Default value: 0. Minimum value: 0.
  * @param lineGradient A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
- * @param lineOffset The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
- * @param lineOffsetTransition Defines the transition of [lineOffset].
- * @param lineOpacity The opacity at which the line will be drawn.
- * @param lineOpacityTransition Defines the transition of [lineOpacity].
+ * @param lineOffset The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+ * @param lineOffsetTransition Defines the transition of [lineOffset]. Default value: 0.
+ * @param lineOpacity The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
+ * @param lineOpacityTransition Defines the transition of [lineOpacity]. Default value: 1. Value range: [0, 1]
  * @param linePattern Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
- * @param lineTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
- * @param lineTranslateTransition Defines the transition of [lineTranslate].
- * @param lineTranslateAnchor Controls the frame of reference for `line-translate`.
- * @param lineTrimOffset The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
- * @param lineWidth Stroke thickness.
- * @param lineWidthTransition Defines the transition of [lineWidth].
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param lineTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+ * @param lineTranslateTransition Defines the transition of [lineTranslate]. Default value: [0,0].
+ * @param lineTranslateAnchor Controls the frame of reference for `line-translate`. Default value: "map".
+ * @param lineTrimOffset The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+ * @param lineWidth Stroke thickness. Default value: 1. Minimum value: 0.
+ * @param lineWidthTransition Defines the transition of [lineWidth]. Default value: 1. Minimum value: 0.
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

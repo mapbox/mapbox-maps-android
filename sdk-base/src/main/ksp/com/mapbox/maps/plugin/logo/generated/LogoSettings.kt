@@ -19,31 +19,31 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class LogoSettings private constructor(
   /**
-   * Whether the logo is visible on the map.
+   * Whether the logo is visible on the map. Default value: true.
    */
   public val enabled: Boolean,
   /**
-   * Defines where the logo is positioned on the map
+   * Defines where the logo is positioned on the map Default value: "bottom-left".
    */
   public val position: Int,
   /**
-   * Defines the margin to the left that the attribution icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the left that the attribution icon honors. Default value: 4. This
+   * property is specified in pixels.
    */
   public val marginLeft: Float,
   /**
-   * Defines the margin to the top that the attribution icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the top that the attribution icon honors. Default value: 4. This property
+   * is specified in pixels.
    */
   public val marginTop: Float,
   /**
-   * Defines the margin to the right that the attribution icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the right that the attribution icon honors. Default value: 4. This
+   * property is specified in pixels.
    */
   public val marginRight: Float,
   /**
-   * Defines the margin to the bottom that the attribution icon honors. This property is specified
-   * in pixels.
+   * Defines the margin to the bottom that the attribution icon honors. Default value: 4. This
+   * property is specified in pixels.
    */
   public val marginBottom: Float
 ) : Parcelable {
@@ -87,47 +87,47 @@ public class LogoSettings private constructor(
    */
   public class Builder {
     /**
-     * Whether the logo is visible on the map.
+     * Whether the logo is visible on the map. Default value: true.
      */
     @set:JvmSynthetic
     public var enabled: Boolean = true
 
     /**
-     * Defines where the logo is positioned on the map
+     * Defines where the logo is positioned on the map Default value: "bottom-left".
      */
     @set:JvmSynthetic
     public var position: Int = Gravity.BOTTOM or Gravity.START
 
     /**
-     * Defines the margin to the left that the attribution icon honors. This property is specified
-     * in pixels.
+     * Defines the margin to the left that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginLeft: Float = 4f
 
     /**
-     * Defines the margin to the top that the attribution icon honors. This property is specified in
-     * pixels.
+     * Defines the margin to the top that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginTop: Float = 4f
 
     /**
-     * Defines the margin to the right that the attribution icon honors. This property is specified
-     * in pixels.
+     * Defines the margin to the right that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginRight: Float = 4f
 
     /**
-     * Defines the margin to the bottom that the attribution icon honors. This property is specified
-     * in pixels.
+     * Defines the margin to the bottom that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginBottom: Float = 4f
 
     /**
-     * Setter for enabled: whether the logo is visible on the map.
+     * Setter for enabled: whether the logo is visible on the map. Default value: true.
      *
      * @param enabled
      * @return Builder
@@ -138,7 +138,8 @@ public class LogoSettings private constructor(
     }
 
     /**
-     * Setter for position: defines where the logo is positioned on the map.
+     * Setter for position: defines where the logo is positioned on the map Default value:
+     * "bottom-left".
      *
      * @param position
      * @return Builder
@@ -149,8 +150,8 @@ public class LogoSettings private constructor(
     }
 
     /**
-     * Setter for marginLeft: defines the margin to the left that the attribution icon honors. This
-     * property is specified in pixels.
+     * Setter for marginLeft: defines the margin to the left that the attribution icon honors.
+     * Default value: 4. This property is specified in pixels.
      *
      * @param marginLeft
      * @return Builder
@@ -161,8 +162,8 @@ public class LogoSettings private constructor(
     }
 
     /**
-     * Setter for marginTop: defines the margin to the top that the attribution icon honors. This
-     * property is specified in pixels.
+     * Setter for marginTop: defines the margin to the top that the attribution icon honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginTop
      * @return Builder
@@ -174,7 +175,7 @@ public class LogoSettings private constructor(
 
     /**
      * Setter for marginRight: defines the margin to the right that the attribution icon honors.
-     * This property is specified in pixels.
+     * Default value: 4. This property is specified in pixels.
      *
      * @param marginRight
      * @return Builder
@@ -186,7 +187,7 @@ public class LogoSettings private constructor(
 
     /**
      * Setter for marginBottom: defines the margin to the bottom that the attribution icon honors.
-     * This property is specified in pixels.
+     * Default value: 4. This property is specified in pixels.
      *
      * @param marginBottom
      * @return Builder

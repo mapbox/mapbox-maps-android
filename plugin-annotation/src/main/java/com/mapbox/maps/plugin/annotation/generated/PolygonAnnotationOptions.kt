@@ -40,7 +40,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    */
   var fillColor: String? = null
 
@@ -71,7 +71,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   }
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    */
   var fillOpacity: Double? = null
 

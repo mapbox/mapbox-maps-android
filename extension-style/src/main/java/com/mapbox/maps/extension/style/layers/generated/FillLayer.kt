@@ -312,11 +312,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    */
   val fillAntialias: Boolean?
     /**
-     * Whether or not the fill should be antialiased.
+     * Whether or not the fill should be antialiased. Default value: true.
      *
      * Use static method [FillLayer.defaultFillAntialias] to get the default property.
      *
@@ -327,7 +327,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    *
    * Use static method [FillLayer.defaultFillAntialias] to set the default property.
    *
@@ -339,14 +339,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    *
    * This is an Expression representation of "fill-antialias".
    *
    */
   val fillAntialiasAsExpression: Expression?
     /**
-     * Whether or not the fill should be antialiased.
+     * Whether or not the fill should be antialiased. Default value: true.
      *
      * Get the FillAntialias property as an Expression
      *
@@ -365,7 +365,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    *
    * Use static method [FillLayer.defaultFillAntialiasAsExpression] to set the default property.
    *
@@ -377,11 +377,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    */
   val fillColor: String?
     /**
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
      *
      * Use static method [FillLayer.defaultFillColor] to get the default property.
      *
@@ -395,7 +395,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * Use static method [FillLayer.defaultFillColor] to set the default property.
    *
@@ -407,14 +407,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * This is an Expression representation of "fill-color".
    *
    */
   val fillColorAsExpression: Expression?
     /**
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
      *
      * Get the FillColor property as an Expression
      *
@@ -430,7 +430,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * Use static method [FillLayer.defaultFillColorAsExpression] to set the default property.
    *
@@ -442,11 +442,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    */
   val fillColorAsColorInt: Int?
     /**
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
      *
      * Use static method [FillLayer.defaultFillColorAsColorInt] to get the default property.
      *
@@ -461,7 +461,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * Use static method [FillLayer.defaultFillColorAsColorInt] to set the default property.
    *
@@ -507,11 +507,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    */
   val fillEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Use static method [FillLayer.defaultFillEmissiveStrength] to get the default property.
      *
@@ -522,7 +522,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillLayer.defaultFillEmissiveStrength] to set the default property.
    *
@@ -534,14 +534,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "fill-emissive-strength".
    *
    */
   val fillEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Get the FillEmissiveStrength property as an Expression
      *
@@ -560,7 +560,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [FillLayer.defaultFillEmissiveStrengthAsExpression] to set the default property.
    *
@@ -606,11 +606,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    */
   val fillOpacity: Double?
     /**
-     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
      *
      * Use static method [FillLayer.defaultFillOpacity] to get the default property.
      *
@@ -621,7 +621,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * Use static method [FillLayer.defaultFillOpacity] to set the default property.
    *
@@ -633,14 +633,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-opacity".
    *
    */
   val fillOpacityAsExpression: Expression?
     /**
-     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
      *
      * Get the FillOpacity property as an Expression
      *
@@ -659,7 +659,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * Use static method [FillLayer.defaultFillOpacityAsExpression] to set the default property.
    *
@@ -900,11 +900,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    */
   val fillTranslate: List<Double>?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      *
      * Use static method [FillLayer.defaultFillTranslate] to get the default property.
      *
@@ -915,7 +915,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * Use static method [FillLayer.defaultFillTranslate] to set the default property.
    *
@@ -927,14 +927,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * This is an Expression representation of "fill-translate".
    *
    */
   val fillTranslateAsExpression: Expression?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      *
      * Get the FillTranslate property as an Expression
      *
@@ -953,7 +953,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * Use static method [FillLayer.defaultFillTranslateAsExpression] to set the default property.
    *
@@ -999,11 +999,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Controls the frame of reference for `fill-translate`.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    */
   val fillTranslateAnchor: FillTranslateAnchor?
     /**
-     * Controls the frame of reference for `fill-translate`.
+     * Controls the frame of reference for `fill-translate`. Default value: "map".
      *
      * Use static method [FillLayer.defaultFillTranslateAnchor] to get the default property.
      *
@@ -1017,7 +1017,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Controls the frame of reference for `fill-translate`.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    *
    * Use static method [FillLayer.defaultFillTranslateAnchor] to set the default property.
    *
@@ -1029,14 +1029,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Controls the frame of reference for `fill-translate`.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    *
    * This is an Expression representation of "fill-translate-anchor".
    *
    */
   val fillTranslateAnchorAsExpression: Expression?
     /**
-     * Controls the frame of reference for `fill-translate`.
+     * Controls the frame of reference for `fill-translate`. Default value: "map".
      *
      * Get the FillTranslateAnchor property as an Expression
      *
@@ -1055,7 +1055,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Controls the frame of reference for `fill-translate`.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    *
    * Use static method [FillLayer.defaultFillTranslateAnchorAsExpression] to set the default property.
    *
@@ -1163,11 +1163,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Whether or not the fill should be antialiased.
+     * Whether or not the fill should be antialiased. Default value: true.
      */
     val defaultFillAntialias: Boolean?
       /**
-       * Whether or not the fill should be antialiased.
+       * Whether or not the fill should be antialiased. Default value: true.
        *
        * Get the default value of FillAntialias property
        *
@@ -1178,7 +1178,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Whether or not the fill should be antialiased.
+     * Whether or not the fill should be antialiased. Default value: true.
      *
      * This is an Expression representation of "fill-antialias".
      *
@@ -1200,11 +1200,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
      */
     val defaultFillColor: String?
       /**
-       * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+       * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
        *
        * Get the default value of FillColor property
        *
@@ -1218,7 +1218,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
      *
      * This is an Expression representation of "fill-color".
      *
@@ -1237,11 +1237,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
      */
     val defaultFillColorAsColorInt: Int?
       /**
-       * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+       * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
        *
        * Get the default value of FillColor property as color int.
        *
@@ -1267,11 +1267,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      */
     val defaultFillEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
        *
        * Get the default value of FillEmissiveStrength property
        *
@@ -1282,7 +1282,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "fill-emissive-strength".
      *
@@ -1315,11 +1315,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength-transition").silentUnwrap()
 
     /**
-     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
      */
     val defaultFillOpacity: Double?
       /**
-       * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+       * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of FillOpacity property
        *
@@ -1330,7 +1330,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-opacity".
      *
@@ -1467,11 +1467,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      */
     val defaultFillTranslate: List<Double>?
       /**
-       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
        *
        * Get the default value of FillTranslate property
        *
@@ -1482,7 +1482,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
      *
      * This is an Expression representation of "fill-translate".
      *
@@ -1515,11 +1515,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-transition").silentUnwrap()
 
     /**
-     * Controls the frame of reference for `fill-translate`.
+     * Controls the frame of reference for `fill-translate`. Default value: "map".
      */
     val defaultFillTranslateAnchor: FillTranslateAnchor?
       /**
-       * Controls the frame of reference for `fill-translate`.
+       * Controls the frame of reference for `fill-translate`. Default value: "map".
        *
        * Get the default value of FillTranslateAnchor property
        *
@@ -1533,7 +1533,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Controls the frame of reference for `fill-translate`.
+     * Controls the frame of reference for `fill-translate`. Default value: "map".
      *
      * This is an Expression representation of "fill-translate-anchor".
      *
@@ -1646,42 +1646,42 @@ interface FillLayerDsl {
   fun fillSortKey(fillSortKey: Expression): FillLayer
 
   /**
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    *
    * @param fillAntialias value of fillAntialias
    */
   fun fillAntialias(fillAntialias: Boolean = true): FillLayer
 
   /**
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    *
    * @param fillAntialias value of fillAntialias as Expression
    */
   fun fillAntialias(fillAntialias: Expression): FillLayer
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * @param fillColor value of fillColor
    */
   fun fillColor(fillColor: String = "#000000"): FillLayer
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * @param fillColor value of fillColor as Expression
    */
   fun fillColor(fillColor: Expression): FillLayer
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * @param fillColor value of fillColor
    */
   fun fillColor(@ColorInt fillColor: Int): FillLayer
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * Set the FillColor property transition options
    *
@@ -1690,28 +1690,28 @@ interface FillLayerDsl {
   fun fillColorTransition(options: StyleTransition): FillLayer
 
   /**
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * DSL for [fillColorTransition].
    */
   fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength
    */
   fun fillEmissiveStrength(fillEmissiveStrength: Double = 0.0): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
    */
   fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Set the FillEmissiveStrength property transition options
    *
@@ -1720,28 +1720,28 @@ interface FillLayerDsl {
   fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * DSL for [fillEmissiveStrengthTransition].
    */
   fun fillEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * @param fillOpacity value of fillOpacity
    */
   fun fillOpacity(fillOpacity: Double = 1.0): FillLayer
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * @param fillOpacity value of fillOpacity as Expression
    */
   fun fillOpacity(fillOpacity: Expression): FillLayer
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * Set the FillOpacity property transition options
    *
@@ -1750,7 +1750,7 @@ interface FillLayerDsl {
   fun fillOpacityTransition(options: StyleTransition): FillLayer
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * DSL for [fillOpacityTransition].
    */
@@ -1808,21 +1808,21 @@ interface FillLayerDsl {
   fun fillPattern(fillPattern: Expression): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * @param fillTranslate value of fillTranslate
    */
   fun fillTranslate(fillTranslate: List<Double> = listOf(0.0, 0.0)): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * @param fillTranslate value of fillTranslate as Expression
    */
   fun fillTranslate(fillTranslate: Expression): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * Set the FillTranslate property transition options
    *
@@ -1831,21 +1831,21 @@ interface FillLayerDsl {
   fun fillTranslateTransition(options: StyleTransition): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
    *
    * DSL for [fillTranslateTransition].
    */
   fun fillTranslateTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Controls the frame of reference for `fill-translate`.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor
    */
   fun fillTranslateAnchor(fillTranslateAnchor: FillTranslateAnchor = FillTranslateAnchor.MAP): FillLayer
 
   /**
-   * Controls the frame of reference for `fill-translate`.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor as Expression
    */

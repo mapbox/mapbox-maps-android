@@ -39,7 +39,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
    */
   var circleBlur: Double? = null
 
@@ -57,7 +57,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * The fill color of the circle.
+   * The fill color of the circle. Default value: "#000000".
    */
   var circleColor: String? = null
 
@@ -88,7 +88,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * The opacity at which the circle will be drawn.
+   * The opacity at which the circle will be drawn. Default value: 1. Value range: [0, 1]
    */
   var circleOpacity: Double? = null
 
@@ -106,7 +106,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * Circle radius.
+   * Circle radius. Default value: 5. Minimum value: 0.
    */
   var circleRadius: Double? = null
 
@@ -124,7 +124,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * The stroke color of the circle.
+   * The stroke color of the circle. Default value: "#000000".
    */
   var circleStrokeColor: String? = null
 
@@ -155,7 +155,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * The opacity of the circle's stroke.
+   * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
    */
   var circleStrokeOpacity: Double? = null
 
@@ -173,7 +173,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
+   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0.
    */
   var circleStrokeWidth: Double? = null
 

@@ -6084,7 +6084,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource build();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder cluster(boolean value = false);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMaxZoom(long value);
-    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMinPoints(long value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterMinPoints(long value = 2L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperties(java.util.HashMap<java.lang.String,java.lang.Object> value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression operatorExpr, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);

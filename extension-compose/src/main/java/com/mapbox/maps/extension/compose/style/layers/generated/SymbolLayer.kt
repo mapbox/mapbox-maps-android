@@ -32,85 +32,85 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param iconAllowOverlap If true, the icon will be visible even if it collides with other previously drawn symbols.
- * @param iconAnchor Part of the icon placed closest to the anchor.
- * @param iconIgnorePlacement If true, other symbols can be visible even if they collide with the icon.
+ * @param iconAllowOverlap If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
+ * @param iconAnchor Part of the icon placed closest to the anchor. Default value: "center".
+ * @param iconIgnorePlacement If true, other symbols can be visible even if they collide with the icon. Default value: false.
  * @param iconImage Name of image in sprite to use for drawing an image background.
- * @param iconKeepUpright If true, the icon may be flipped to prevent it from being rendered upside-down.
- * @param iconOffset Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
- * @param iconOptional If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
- * @param iconPadding Size of the additional area around the icon bounding box used for detecting symbol collisions.
- * @param iconPitchAlignment Orientation of icon when map is pitched.
- * @param iconRotate Rotates the icon clockwise.
- * @param iconRotationAlignment In combination with `symbol-placement`, determines the rotation behavior of icons.
- * @param iconSize Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
- * @param iconTextFit Scales the icon to fit around the associated text.
- * @param iconTextFitPadding Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
- * @param symbolAvoidEdges If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
- * @param symbolPlacement Label placement relative to its geometry.
+ * @param iconKeepUpright If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
+ * @param iconOffset Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
+ * @param iconOptional If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
+ * @param iconPadding Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+ * @param iconPitchAlignment Orientation of icon when map is pitched. Default value: "auto".
+ * @param iconRotate Rotates the icon clockwise. Default value: 0.
+ * @param iconRotationAlignment In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
+ * @param iconSize Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+ * @param iconTextFit Scales the icon to fit around the associated text. Default value: "none".
+ * @param iconTextFitPadding Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+ * @param symbolAvoidEdges If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
+ * @param symbolPlacement Label placement relative to its geometry. Default value: "point".
  * @param symbolSortKey Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
- * @param symbolSpacing Distance between two symbol anchors.
- * @param symbolZElevate Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied.
- * @param symbolZOrder Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
- * @param textAllowOverlap If true, the text will be visible even if it collides with other previously drawn symbols.
- * @param textAnchor Part of the text placed closest to the anchor.
- * @param textField Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+ * @param symbolSpacing Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+ * @param symbolZElevate Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
+ * @param symbolZOrder Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
+ * @param textAllowOverlap If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
+ * @param textAnchor Part of the text placed closest to the anchor. Default value: "center".
+ * @param textField Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
  * @param textFont Font stack to use for displaying text.
- * @param textIgnorePlacement If true, other symbols can be visible even if they collide with the text.
- * @param textJustify Text justification options.
- * @param textKeepUpright If true, the text may be flipped vertically to prevent it from being rendered upside-down.
- * @param textLetterSpacing Text tracking amount.
- * @param textLineHeight Text leading value for multi-line text.
- * @param textMaxAngle Maximum angle change between adjacent characters.
- * @param textMaxWidth The maximum line width for text wrapping.
- * @param textOffset Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
- * @param textOptional If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
- * @param textPadding Size of the additional area around the text bounding box used for detecting symbol collisions.
- * @param textPitchAlignment Orientation of text when map is pitched.
- * @param textRadialOffset Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
- * @param textRotate Rotates the text clockwise.
- * @param textRotationAlignment In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
- * @param textSize Font size.
- * @param textTransform Specifies how to capitalize text, similar to the CSS `text-transform` property.
+ * @param textIgnorePlacement If true, other symbols can be visible even if they collide with the text. Default value: false.
+ * @param textJustify Text justification options. Default value: "center".
+ * @param textKeepUpright If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
+ * @param textLetterSpacing Text tracking amount. Default value: 0.
+ * @param textLineHeight Text leading value for multi-line text. Default value: 1.2.
+ * @param textMaxAngle Maximum angle change between adjacent characters. Default value: 45.
+ * @param textMaxWidth The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+ * @param textOffset Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+ * @param textOptional If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
+ * @param textPadding Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+ * @param textPitchAlignment Orientation of text when map is pitched. Default value: "auto".
+ * @param textRadialOffset Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+ * @param textRotate Rotates the text clockwise. Default value: 0.
+ * @param textRotationAlignment In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
+ * @param textSize Font size. Default value: 16. Minimum value: 0.
+ * @param textTransform Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
  * @param textVariableAnchor To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
  * @param textWritingMode The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
- * @param iconColor The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
- * @param iconColorTransition Defines the transition of [iconColor].
- * @param iconColorSaturation Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
- * @param iconColorSaturationTransition Defines the transition of [iconColorSaturation].
- * @param iconEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param iconEmissiveStrengthTransition Defines the transition of [iconEmissiveStrength].
- * @param iconHaloBlur Fade out the halo towards the outside.
- * @param iconHaloBlurTransition Defines the transition of [iconHaloBlur].
- * @param iconHaloColor The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
- * @param iconHaloColorTransition Defines the transition of [iconHaloColor].
- * @param iconHaloWidth Distance of halo to the icon outline.
- * @param iconHaloWidthTransition Defines the transition of [iconHaloWidth].
- * @param iconImageCrossFade Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
- * @param iconImageCrossFadeTransition Defines the transition of [iconImageCrossFade].
- * @param iconOpacity The opacity at which the icon will be drawn.
- * @param iconOpacityTransition Defines the transition of [iconOpacity].
- * @param iconTranslate Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
- * @param iconTranslateTransition Defines the transition of [iconTranslate].
- * @param iconTranslateAnchor Controls the frame of reference for `icon-translate`.
- * @param textColor The color with which the text will be drawn.
- * @param textColorTransition Defines the transition of [textColor].
- * @param textEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param textEmissiveStrengthTransition Defines the transition of [textEmissiveStrength].
- * @param textHaloBlur The halo's fadeout distance towards the outside.
- * @param textHaloBlurTransition Defines the transition of [textHaloBlur].
- * @param textHaloColor The color of the text's halo, which helps it stand out from backgrounds.
- * @param textHaloColorTransition Defines the transition of [textHaloColor].
- * @param textHaloWidth Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
- * @param textHaloWidthTransition Defines the transition of [textHaloWidth].
- * @param textOpacity The opacity at which the text will be drawn.
- * @param textOpacityTransition Defines the transition of [textOpacity].
- * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
- * @param textTranslateTransition Defines the transition of [textTranslate].
- * @param textTranslateAnchor Controls the frame of reference for `text-translate`.
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param iconColor The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
+ * @param iconColorTransition Defines the transition of [iconColor]. Default value: "#000000".
+ * @param iconColorSaturation Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
+ * @param iconColorSaturationTransition Defines the transition of [iconColorSaturation]. Default value: 1. Value range: [0, 1]
+ * @param iconEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+ * @param iconEmissiveStrengthTransition Defines the transition of [iconEmissiveStrength]. Default value: 1. Minimum value: 0.
+ * @param iconHaloBlur Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+ * @param iconHaloBlurTransition Defines the transition of [iconHaloBlur]. Default value: 0. Minimum value: 0.
+ * @param iconHaloColor The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
+ * @param iconHaloColorTransition Defines the transition of [iconHaloColor]. Default value: "rgba(0, 0, 0, 0)".
+ * @param iconHaloWidth Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+ * @param iconHaloWidthTransition Defines the transition of [iconHaloWidth]. Default value: 0. Minimum value: 0.
+ * @param iconImageCrossFade Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+ * @param iconImageCrossFadeTransition Defines the transition of [iconImageCrossFade]. Default value: 0. Value range: [0, 1]
+ * @param iconOpacity The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
+ * @param iconOpacityTransition Defines the transition of [iconOpacity]. Default value: 1. Value range: [0, 1]
+ * @param iconTranslate Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+ * @param iconTranslateTransition Defines the transition of [iconTranslate]. Default value: [0,0].
+ * @param iconTranslateAnchor Controls the frame of reference for `icon-translate`. Default value: "map".
+ * @param textColor The color with which the text will be drawn. Default value: "#000000".
+ * @param textColorTransition Defines the transition of [textColor]. Default value: "#000000".
+ * @param textEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+ * @param textEmissiveStrengthTransition Defines the transition of [textEmissiveStrength]. Default value: 1. Minimum value: 0.
+ * @param textHaloBlur The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+ * @param textHaloBlurTransition Defines the transition of [textHaloBlur]. Default value: 0. Minimum value: 0.
+ * @param textHaloColor The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
+ * @param textHaloColorTransition Defines the transition of [textHaloColor]. Default value: "rgba(0, 0, 0, 0)".
+ * @param textHaloWidth Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+ * @param textHaloWidthTransition Defines the transition of [textHaloWidth]. Default value: 0. Minimum value: 0.
+ * @param textOpacity The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
+ * @param textOpacityTransition Defines the transition of [textOpacity]. Default value: 1. Value range: [0, 1]
+ * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+ * @param textTranslateTransition Defines the transition of [textTranslate]. Default value: [0,0].
+ * @param textTranslateAnchor Controls the frame of reference for `text-translate`. Default value: "map".
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

@@ -125,6 +125,7 @@ public class RasterArraySourceState private constructor(
    * An array containing the longitude and latitude of the southwest and northeast corners of the source's
    * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
    * a source, no tiles outside of the given bounds are requested by Mapbox GL.
+   * Default value: [-180,-85.051129,180,85.051129].
    */
   public var bounds: DoubleListValue by boundsState
 
@@ -140,6 +141,7 @@ public class RasterArraySourceState private constructor(
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+   * Default value: 0.
    */
   public var minZoom: LongValue by minZoomState
 
@@ -156,6 +158,7 @@ public class RasterArraySourceState private constructor(
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
+   * Default value: 22.
    */
   public var maxZoom: LongValue by maxZoomState
 
@@ -171,6 +174,7 @@ public class RasterArraySourceState private constructor(
 
   /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
+   * Default value: 512.
    */
   public var tileSize: LongValue by tileSizeState
 

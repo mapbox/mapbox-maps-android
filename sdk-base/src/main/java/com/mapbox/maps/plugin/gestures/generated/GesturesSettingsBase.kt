@@ -41,7 +41,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
   }
 
   /**
-   * Whether the rotate gesture is enabled.
+   * Whether the rotate gesture is enabled. Default value: true.
    */
   override var rotateEnabled: Boolean
     get() {
@@ -55,7 +55,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether the pinch to zoom gesture is enabled.
+   * Whether the pinch to zoom gesture is enabled. Default value: true.
    */
   override var pinchToZoomEnabled: Boolean
     get() {
@@ -69,7 +69,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether the single-touch scroll gesture is enabled.
+   * Whether the single-touch scroll gesture is enabled. Default value: true.
    */
   override var scrollEnabled: Boolean
     get() {
@@ -83,7 +83,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether rotation is enabled for the pinch to zoom gesture.
+   * Whether rotation is enabled for the pinch to zoom gesture. Default value: true.
    */
   override var simultaneousRotateAndPinchToZoomEnabled: Boolean
     get() {
@@ -97,7 +97,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether the pitch gesture is enabled.
+   * Whether the pitch gesture is enabled. Default value: true.
    */
   override var pitchEnabled: Boolean
     get() {
@@ -111,7 +111,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Configures the directions in which the map is allowed to move during a scroll gesture.
+   * Configures the directions in which the map is allowed to move during a scroll gesture. Default value: "horizontal-and-vertical".
    */
   override var scrollMode: ScrollMode
     get() {
@@ -125,7 +125,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether double tapping the map with one touch results in a zoom-in animation.
+   * Whether double tapping the map with one touch results in a zoom-in animation. Default value: true.
    */
   override var doubleTapToZoomInEnabled: Boolean
     get() {
@@ -139,7 +139,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether single tapping the map with two touches results in a zoom-out animation.
+   * Whether single tapping the map with two touches results in a zoom-out animation. Default value: true.
    */
   override var doubleTouchToZoomOutEnabled: Boolean
     get() {
@@ -153,7 +153,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether the quick zoom gesture is enabled.
+   * Whether the quick zoom gesture is enabled. Default value: true.
    */
   override var quickZoomEnabled: Boolean
     get() {
@@ -181,7 +181,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default.
+   * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default. Default value: true.
    */
   override var pinchToZoomDecelerationEnabled: Boolean
     get() {
@@ -195,7 +195,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether a deceleration animation following a rotate gesture is enabled. True by default.
+   * Whether a deceleration animation following a rotate gesture is enabled. True by default. Default value: true.
    */
   override var rotateDecelerationEnabled: Boolean
     get() {
@@ -209,7 +209,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether a deceleration animation following a scroll gesture is enabled. True by default.
+   * Whether a deceleration animation following a scroll gesture is enabled. True by default. Default value: true.
    */
   override var scrollDecelerationEnabled: Boolean
     get() {
@@ -223,7 +223,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether rotate threshold increases when pinching to zoom. true by default.
+   * Whether rotate threshold increases when pinching to zoom. true by default. Default value: true.
    */
   @Deprecated(message = "This property has no effect")
   override var increaseRotateThresholdWhenPinchingToZoom: Boolean
@@ -238,7 +238,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether pinch to zoom threshold increases when rotating. true by default.
+   * Whether pinch to zoom threshold increases when rotating. true by default. Default value: true.
    */
   override var increasePinchToZoomThresholdWhenRotating: Boolean
     get() {
@@ -252,7 +252,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
+   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. Default value: 1.
    */
   override var zoomAnimationAmount: Float
     get() {
@@ -266,7 +266,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether pan is enabled for the pinch gesture.
+   * Whether pan is enabled for the pinch gesture. Default value: true.
    */
   override var pinchScrollEnabled: Boolean
     get() {

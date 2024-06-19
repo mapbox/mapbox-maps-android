@@ -74,6 +74,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
    * An array containing the longitude and latitude of the southwest and northeast corners of the source's
    * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
    * a source, no tiles outside of the given bounds are requested by Mapbox GL.
+   * Default value: [-180,-85.051129,180,85.051129].
    */
   val bounds: List<Double>?
     /**
@@ -85,6 +86,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+   * Default value: 0.
    */
   fun minzoom(value: Long = 0L): RasterArraySource = apply {
     setProperty(PropertyValue("minzoom", TypeUtils.wrapToValue(value)))
@@ -92,6 +94,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+   * Default value: 0.
    */
   val minzoom: Long?
     /**
@@ -106,6 +109,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
+   * Default value: 22.
    */
   fun maxzoom(value: Long = 22L): RasterArraySource = apply {
     setProperty(PropertyValue("maxzoom", TypeUtils.wrapToValue(value)))
@@ -114,6 +118,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
   /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
+   * Default value: 22.
    */
   val maxzoom: Long?
     /**
@@ -127,6 +132,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
+   * Default value: 512.
    */
   val tileSize: Long?
     /**
@@ -213,6 +219,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
      * An array containing the longitude and latitude of the southwest and northeast corners of the source's
      * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
      * a source, no tiles outside of the given bounds are requested by Mapbox GL.
+     * Default value: [-180,-85.051129,180,85.051129].
      */
     fun bounds(value: List<Double> = listOf(-180.0, -85.051129, 180.0, 85.051129)): Builder = apply {
       val propertyValue = PropertyValue("bounds", TypeUtils.wrapToValue(value))
@@ -221,6 +228,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+     * Default value: 0.
      */
     fun minzoom(value: Long = 0L): Builder = apply {
       val propertyValue = PropertyValue("minzoom", TypeUtils.wrapToValue(value))
@@ -230,6 +238,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
+     * Default value: 22.
      */
     fun maxzoom(value: Long = 22L): Builder = apply {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
@@ -238,6 +247,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
+     * Default value: 512.
      */
     fun tileSize(value: Long = 512L): Builder = apply {
       val propertyValue = PropertyValue("tileSize", TypeUtils.wrapToValue(value))
@@ -345,6 +355,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
+     * Default value: 0.
      */
     val defaultMinzoom: Long?
       /**
@@ -357,6 +368,7 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
+     * Default value: 22.
      */
     val defaultMaxzoom: Long?
       /**

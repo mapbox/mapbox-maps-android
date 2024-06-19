@@ -38,7 +38,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
   }
 
   /**
-   * Whether the scale is visible on the map.
+   * Whether the scale is visible on the map. Default value: true.
    */
   override var enabled: Boolean
     get() {
@@ -52,7 +52,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines where the scale bar is positioned on the map
+   * Defines where the scale bar is positioned on the map Default value: "top-left".
    */
   override var position: Int
     get() {
@@ -66,7 +66,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines the margin to the left that the scale bar honors.
+   * Defines the margin to the left that the scale bar honors. Default value: 4.
    */
   override var marginLeft: Float
     get() {
@@ -80,7 +80,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines the margin to the top that the scale bar honors.
+   * Defines the margin to the top that the scale bar honors. Default value: 4.
    */
   override var marginTop: Float
     get() {
@@ -94,7 +94,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines the margin to the right that the scale bar honors.
+   * Defines the margin to the right that the scale bar honors. Default value: 4.
    */
   override var marginRight: Float
     get() {
@@ -108,7 +108,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines the margin to the bottom that the scale bar honors.
+   * Defines the margin to the bottom that the scale bar honors. Default value: 4.
    */
   override var marginBottom: Float
     get() {
@@ -122,7 +122,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines text color of the scale bar.
+   * Defines text color of the scale bar. Default value: "black".
    */
   override var textColor: Int
     get() {
@@ -136,7 +136,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines primary color of the scale bar.
+   * Defines primary color of the scale bar. Default value: "black".
    */
   override var primaryColor: Int
     get() {
@@ -150,7 +150,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines secondary color of the scale bar.
+   * Defines secondary color of the scale bar. Default value: "white".
    */
   override var secondaryColor: Int
     get() {
@@ -164,7 +164,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines width of the border for the scale bar.
+   * Defines width of the border for the scale bar. Default value: 2.
    */
   override var borderWidth: Float
     get() {
@@ -178,7 +178,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines height of the scale bar.
+   * Defines height of the scale bar. Default value: 2.
    */
   override var height: Float
     get() {
@@ -192,7 +192,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines margin of the text bar of the scale bar.
+   * Defines margin of the text bar of the scale bar. Default value: 8.
    */
   override var textBarMargin: Float
     get() {
@@ -206,7 +206,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines text border width of the scale bar.
+   * Defines text border width of the scale bar. Default value: 2.
    */
   override var textBorderWidth: Float
     get() {
@@ -220,7 +220,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Defines text size of the scale bar.
+   * Defines text size of the scale bar. Default value: 8.
    */
   override var textSize: Float
     get() {
@@ -234,7 +234,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units.
+   * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. Default value: true.
    */
   override var isMetricUnits: Boolean
     get() {
@@ -248,7 +248,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Configures minimum refresh interval, in millisecond, default is 15.
+   * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.
    */
   override var refreshInterval: Long
     get() {
@@ -262,7 +262,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * Configures whether to show the text border or not, default is true.
+   * Configures whether to show the text border or not, default is true. Default value: true.
    */
   override var showTextBorder: Boolean
     get() {
@@ -276,7 +276,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * configures ratio of scale bar max width compared with MapView width, default is 0.5.
+   * configures ratio of scale bar max width compared with MapView width, default is 0.5. Default value: 0.5.
    */
   override var ratio: Float
     get() {
@@ -290,7 +290,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command. Default value: false.
    */
   override var useContinuousRendering: Boolean
     get() {

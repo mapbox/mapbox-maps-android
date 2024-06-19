@@ -24,47 +24,47 @@ interface GesturesSettingsInterface {
   fun updateSettings(block: GesturesSettings.Builder.() -> Unit)
 
   /**
-   * Whether the rotate gesture is enabled.
+   * Whether the rotate gesture is enabled. Default value: true.
    */
   var rotateEnabled: Boolean
 
   /**
-   * Whether the pinch to zoom gesture is enabled.
+   * Whether the pinch to zoom gesture is enabled. Default value: true.
    */
   var pinchToZoomEnabled: Boolean
 
   /**
-   * Whether the single-touch scroll gesture is enabled.
+   * Whether the single-touch scroll gesture is enabled. Default value: true.
    */
   var scrollEnabled: Boolean
 
   /**
-   * Whether rotation is enabled for the pinch to zoom gesture.
+   * Whether rotation is enabled for the pinch to zoom gesture. Default value: true.
    */
   var simultaneousRotateAndPinchToZoomEnabled: Boolean
 
   /**
-   * Whether the pitch gesture is enabled.
+   * Whether the pitch gesture is enabled. Default value: true.
    */
   var pitchEnabled: Boolean
 
   /**
-   * Configures the directions in which the map is allowed to move during a scroll gesture.
+   * Configures the directions in which the map is allowed to move during a scroll gesture. Default value: "horizontal-and-vertical".
    */
   var scrollMode: ScrollMode
 
   /**
-   * Whether double tapping the map with one touch results in a zoom-in animation.
+   * Whether double tapping the map with one touch results in a zoom-in animation. Default value: true.
    */
   var doubleTapToZoomInEnabled: Boolean
 
   /**
-   * Whether single tapping the map with two touches results in a zoom-out animation.
+   * Whether single tapping the map with two touches results in a zoom-out animation. Default value: true.
    */
   var doubleTouchToZoomOutEnabled: Boolean
 
   /**
-   * Whether the quick zoom gesture is enabled.
+   * Whether the quick zoom gesture is enabled. Default value: true.
    */
   var quickZoomEnabled: Boolean
 
@@ -74,38 +74,38 @@ interface GesturesSettingsInterface {
   var focalPoint: ScreenCoordinate?
 
   /**
-   * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default.
+   * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default. Default value: true.
    */
   var pinchToZoomDecelerationEnabled: Boolean
 
   /**
-   * Whether a deceleration animation following a rotate gesture is enabled. True by default.
+   * Whether a deceleration animation following a rotate gesture is enabled. True by default. Default value: true.
    */
   var rotateDecelerationEnabled: Boolean
 
   /**
-   * Whether a deceleration animation following a scroll gesture is enabled. True by default.
+   * Whether a deceleration animation following a scroll gesture is enabled. True by default. Default value: true.
    */
   var scrollDecelerationEnabled: Boolean
 
   /**
-   * Whether rotate threshold increases when pinching to zoom. true by default.
+   * Whether rotate threshold increases when pinching to zoom. true by default. Default value: true.
    */
   @Deprecated(message = "This property has no effect")
   var increaseRotateThresholdWhenPinchingToZoom: Boolean
 
   /**
-   * Whether pinch to zoom threshold increases when rotating. true by default.
+   * Whether pinch to zoom threshold increases when rotating. true by default. Default value: true.
    */
   var increasePinchToZoomThresholdWhenRotating: Boolean
 
   /**
-   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
+   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. Default value: 1.
    */
   var zoomAnimationAmount: Float
 
   /**
-   * Whether pan is enabled for the pinch gesture.
+   * Whether pan is enabled for the pinch gesture. Default value: true.
    */
   var pinchScrollEnabled: Boolean
 }

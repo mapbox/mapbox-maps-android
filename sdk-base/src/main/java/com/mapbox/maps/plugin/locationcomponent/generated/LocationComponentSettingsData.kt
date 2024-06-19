@@ -23,43 +23,43 @@ import kotlinx.parcelize.Parcelize
 private data class LocationComponentSettingsData(
 
   /**
-   * Whether the user location is visible on the map.
+   * Whether the user location is visible on the map. Default value: false.
    */
   @Default("false")
   var enabled: Boolean,
 
   /**
-   * Whether the location puck is pulsing on the map. Works for 2D location puck only.
+   * Whether the location puck is pulsing on the map. Works for 2D location puck only. Default value: false.
    */
   @Default("false")
   var pulsingEnabled: Boolean,
 
   /**
-   * The color of the pulsing circle. Works for 2D location puck only.
+   * The color of the pulsing circle. Works for 2D location puck only. Default value: "#4A90E2".
    */
   @Default("Color.parseColor(\"#4A90E2\")")
   var pulsingColor: Int,
 
   /**
-   * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle's maximum radius to follow location accuracy circle. This property is specified in pixels.
+   * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle's maximum radius to follow location accuracy circle. Default value: 10. This property is specified in pixels.
    */
   @Default("10f")
   var pulsingMaxRadius: Float,
 
   /**
-   * Whether show accuracy ring with location puck. Works for 2D location puck only.
+   * Whether show accuracy ring with location puck. Works for 2D location puck only. Default value: false.
    */
   @Default("false")
   var showAccuracyRing: Boolean,
 
   /**
-   * The color of the accuracy ring. Works for 2D location puck only.
+   * The color of the accuracy ring. Works for 2D location puck only. Default value: "#4d89cff0".
    */
   @Default("Color.parseColor(\"#4d89cff0\")")
   var accuracyRingColor: Int,
 
   /**
-   * The color of the accuracy ring border. Works for 2D location puck only.
+   * The color of the accuracy ring border. Works for 2D location puck only. Default value: "#4d89cff0".
    */
   @Default("Color.parseColor(\"#4d89cff0\")")
   var accuracyRingBorderColor: Int,
@@ -75,13 +75,13 @@ private data class LocationComponentSettingsData(
   var layerBelow: String? = null,
 
   /**
-   * Whether the puck rotates to track the bearing source.
+   * Whether the puck rotates to track the bearing source. Default value: false.
    */
   @Default("false")
   var puckBearingEnabled: Boolean,
 
   /**
-   * The enum controls how the puck is oriented
+   * The enum controls how the puck is oriented Default value: "heading".
    */
   @Default("PuckBearing.HEADING")
   var puckBearing: PuckBearing,

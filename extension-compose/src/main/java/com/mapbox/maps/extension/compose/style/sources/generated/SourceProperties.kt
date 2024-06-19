@@ -8,7 +8,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
- * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
+ * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed. Default value: "xyz".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
@@ -63,7 +63,7 @@ public data class SchemeValue(public val value: Value) {
 }
 
 /**
- * The encoding used by this source. Mapbox Terrain RGB is used by default
+ * The encoding used by this source. Mapbox Terrain RGB is used by default Default value: "mapbox".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */

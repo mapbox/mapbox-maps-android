@@ -29,30 +29,30 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param circleSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
- * @param circleBlur Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
- * @param circleBlurTransition Defines the transition of [circleBlur].
- * @param circleColor The fill color of the circle.
- * @param circleColorTransition Defines the transition of [circleColor].
- * @param circleEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param circleEmissiveStrengthTransition Defines the transition of [circleEmissiveStrength].
- * @param circleOpacity The opacity at which the circle will be drawn.
- * @param circleOpacityTransition Defines the transition of [circleOpacity].
- * @param circlePitchAlignment Orientation of circle when map is pitched.
- * @param circlePitchScale Controls the scaling behavior of the circle when the map is pitched.
- * @param circleRadius Circle radius.
- * @param circleRadiusTransition Defines the transition of [circleRadius].
- * @param circleStrokeColor The stroke color of the circle.
- * @param circleStrokeColorTransition Defines the transition of [circleStrokeColor].
- * @param circleStrokeOpacity The opacity of the circle's stroke.
- * @param circleStrokeOpacityTransition Defines the transition of [circleStrokeOpacity].
- * @param circleStrokeWidth The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
- * @param circleStrokeWidthTransition Defines the transition of [circleStrokeWidth].
- * @param circleTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
- * @param circleTranslateTransition Defines the transition of [circleTranslate].
- * @param circleTranslateAnchor Controls the frame of reference for `circle-translate`.
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param circleBlur Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+ * @param circleBlurTransition Defines the transition of [circleBlur]. Default value: 0.
+ * @param circleColor The fill color of the circle. Default value: "#000000".
+ * @param circleColorTransition Defines the transition of [circleColor]. Default value: "#000000".
+ * @param circleEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+ * @param circleEmissiveStrengthTransition Defines the transition of [circleEmissiveStrength]. Default value: 0. Minimum value: 0.
+ * @param circleOpacity The opacity at which the circle will be drawn. Default value: 1. Value range: [0, 1]
+ * @param circleOpacityTransition Defines the transition of [circleOpacity]. Default value: 1. Value range: [0, 1]
+ * @param circlePitchAlignment Orientation of circle when map is pitched. Default value: "viewport".
+ * @param circlePitchScale Controls the scaling behavior of the circle when the map is pitched. Default value: "map".
+ * @param circleRadius Circle radius. Default value: 5. Minimum value: 0.
+ * @param circleRadiusTransition Defines the transition of [circleRadius]. Default value: 5. Minimum value: 0.
+ * @param circleStrokeColor The stroke color of the circle. Default value: "#000000".
+ * @param circleStrokeColorTransition Defines the transition of [circleStrokeColor]. Default value: "#000000".
+ * @param circleStrokeOpacity The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
+ * @param circleStrokeOpacityTransition Defines the transition of [circleStrokeOpacity]. Default value: 1. Value range: [0, 1]
+ * @param circleStrokeWidth The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0.
+ * @param circleStrokeWidthTransition Defines the transition of [circleStrokeWidth]. Default value: 0. Minimum value: 0.
+ * @param circleTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+ * @param circleTranslateTransition Defines the transition of [circleTranslate]. Default value: [0,0].
+ * @param circleTranslateAnchor Controls the frame of reference for `circle-translate`. Default value: "map".
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

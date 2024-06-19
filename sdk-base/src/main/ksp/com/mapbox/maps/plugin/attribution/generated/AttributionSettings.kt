@@ -20,39 +20,39 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class AttributionSettings private constructor(
   /**
-   * Whether the attribution icon is visible on the map.
+   * Whether the attribution icon is visible on the map. Default value: true.
    */
   public val enabled: Boolean,
   /**
-   * Defines text color of the attribution icon.
+   * Defines text color of the attribution icon. Default value: "#FF1E8CAB".
    */
   public val iconColor: Int,
   /**
-   * Defines where the attribution icon is positioned on the map
+   * Defines where the attribution icon is positioned on the map Default value: "bottom-left".
    */
   public val position: Int,
   /**
-   * Defines the margin to the left that the attribution icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the left that the attribution icon honors. Default value: 92. This
+   * property is specified in pixels.
    */
   public val marginLeft: Float,
   /**
-   * Defines the margin to the top that the attribution icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the top that the attribution icon honors. Default value: 4. This property
+   * is specified in pixels.
    */
   public val marginTop: Float,
   /**
-   * Defines the margin to the right that the attribution icon honors. This property is specified in
-   * pixels.
+   * Defines the margin to the right that the attribution icon honors. Default value: 4. This
+   * property is specified in pixels.
    */
   public val marginRight: Float,
   /**
-   * Defines the margin to the bottom that the attribution icon honors. This property is specified
-   * in pixels.
+   * Defines the margin to the bottom that the attribution icon honors. Default value: 4. This
+   * property is specified in pixels.
    */
   public val marginBottom: Float,
   /**
-   * Whether the attribution can be clicked and click events can be registered.
+   * Whether the attribution can be clicked and click events can be registered. Default value: true.
    */
   public val clickable: Boolean
 ) : Parcelable {
@@ -96,59 +96,60 @@ public class AttributionSettings private constructor(
    */
   public class Builder {
     /**
-     * Whether the attribution icon is visible on the map.
+     * Whether the attribution icon is visible on the map. Default value: true.
      */
     @set:JvmSynthetic
     public var enabled: Boolean = true
 
     /**
-     * Defines text color of the attribution icon.
+     * Defines text color of the attribution icon. Default value: "#FF1E8CAB".
      */
     @set:JvmSynthetic
     public var iconColor: Int = Color.parseColor("#FF1E8CAB")
 
     /**
-     * Defines where the attribution icon is positioned on the map
+     * Defines where the attribution icon is positioned on the map Default value: "bottom-left".
      */
     @set:JvmSynthetic
     public var position: Int = Gravity.BOTTOM or Gravity.START
 
     /**
-     * Defines the margin to the left that the attribution icon honors. This property is specified
-     * in pixels.
+     * Defines the margin to the left that the attribution icon honors. Default value: 92. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginLeft: Float = 92f
 
     /**
-     * Defines the margin to the top that the attribution icon honors. This property is specified in
-     * pixels.
+     * Defines the margin to the top that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginTop: Float = 4f
 
     /**
-     * Defines the margin to the right that the attribution icon honors. This property is specified
-     * in pixels.
+     * Defines the margin to the right that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginRight: Float = 4f
 
     /**
-     * Defines the margin to the bottom that the attribution icon honors. This property is specified
-     * in pixels.
+     * Defines the margin to the bottom that the attribution icon honors. Default value: 4. This
+     * property is specified in pixels.
      */
     @set:JvmSynthetic
     public var marginBottom: Float = 4f
 
     /**
-     * Whether the attribution can be clicked and click events can be registered.
+     * Whether the attribution can be clicked and click events can be registered. Default value:
+     * true.
      */
     @set:JvmSynthetic
     public var clickable: Boolean = true
 
     /**
-     * Setter for enabled: whether the attribution icon is visible on the map.
+     * Setter for enabled: whether the attribution icon is visible on the map. Default value: true.
      *
      * @param enabled
      * @return Builder
@@ -159,7 +160,7 @@ public class AttributionSettings private constructor(
     }
 
     /**
-     * Setter for iconColor: defines text color of the attribution icon.
+     * Setter for iconColor: defines text color of the attribution icon. Default value: "#FF1E8CAB".
      *
      * @param iconColor
      * @return Builder
@@ -170,7 +171,8 @@ public class AttributionSettings private constructor(
     }
 
     /**
-     * Setter for position: defines where the attribution icon is positioned on the map.
+     * Setter for position: defines where the attribution icon is positioned on the map Default
+     * value: "bottom-left".
      *
      * @param position
      * @return Builder
@@ -181,8 +183,8 @@ public class AttributionSettings private constructor(
     }
 
     /**
-     * Setter for marginLeft: defines the margin to the left that the attribution icon honors. This
-     * property is specified in pixels.
+     * Setter for marginLeft: defines the margin to the left that the attribution icon honors.
+     * Default value: 92. This property is specified in pixels.
      *
      * @param marginLeft
      * @return Builder
@@ -193,8 +195,8 @@ public class AttributionSettings private constructor(
     }
 
     /**
-     * Setter for marginTop: defines the margin to the top that the attribution icon honors. This
-     * property is specified in pixels.
+     * Setter for marginTop: defines the margin to the top that the attribution icon honors. Default
+     * value: 4. This property is specified in pixels.
      *
      * @param marginTop
      * @return Builder
@@ -206,7 +208,7 @@ public class AttributionSettings private constructor(
 
     /**
      * Setter for marginRight: defines the margin to the right that the attribution icon honors.
-     * This property is specified in pixels.
+     * Default value: 4. This property is specified in pixels.
      *
      * @param marginRight
      * @return Builder
@@ -218,7 +220,7 @@ public class AttributionSettings private constructor(
 
     /**
      * Setter for marginBottom: defines the margin to the bottom that the attribution icon honors.
-     * This property is specified in pixels.
+     * Default value: 4. This property is specified in pixels.
      *
      * @param marginBottom
      * @return Builder
@@ -230,7 +232,7 @@ public class AttributionSettings private constructor(
 
     /**
      * Setter for clickable: whether the attribution can be clicked and click events can be
-     * registered.
+     * registered. Default value: true.
      *
      * @param clickable
      * @return Builder

@@ -31,22 +31,22 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param fillSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
- * @param fillAntialias Whether or not the fill should be antialiased.
- * @param fillColor The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
- * @param fillColorTransition Defines the transition of [fillColor].
- * @param fillEmissiveStrength Controls the intensity of light emitted on the source features.
- * @param fillEmissiveStrengthTransition Defines the transition of [fillEmissiveStrength].
- * @param fillOpacity The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
- * @param fillOpacityTransition Defines the transition of [fillOpacity].
+ * @param fillAntialias Whether or not the fill should be antialiased. Default value: true.
+ * @param fillColor The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
+ * @param fillColorTransition Defines the transition of [fillColor]. Default value: "#000000".
+ * @param fillEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+ * @param fillEmissiveStrengthTransition Defines the transition of [fillEmissiveStrength]. Default value: 0. Minimum value: 0.
+ * @param fillOpacity The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
+ * @param fillOpacityTransition Defines the transition of [fillOpacity]. Default value: 1. Value range: [0, 1]
  * @param fillOutlineColor The outline color of the fill. Matches the value of `fill-color` if unspecified.
  * @param fillOutlineColorTransition Defines the transition of [fillOutlineColor].
  * @param fillPattern Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
- * @param fillTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
- * @param fillTranslateTransition Defines the transition of [fillTranslate].
- * @param fillTranslateAnchor Controls the frame of reference for `fill-translate`.
- * @param visibility Whether this layer is displayed.
- * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
- * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+ * @param fillTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+ * @param fillTranslateTransition Defines the transition of [fillTranslate]. Default value: [0,0].
+ * @param fillTranslateAnchor Controls the frame of reference for `fill-translate`. Default value: "map".
+ * @param visibility Whether this layer is displayed. Default value: "visible".
+ * @param minZoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+ * @param maxZoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
  * @param sourceLayer Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
  * @param filter An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
  */

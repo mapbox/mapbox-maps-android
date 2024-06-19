@@ -77,7 +77,7 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   fun prefetchZoomDelta(value: Long = 4L): ImageSource = apply {
     setVolatileProperty(PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value)))
@@ -88,7 +88,7 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
    * will first request a tile at zoom level lower than zoom - delta, but so that
    * the zoom level is multiple of delta, in an attempt to display a full map at
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
+   * Default value: 4.
    */
   val prefetchZoomDelta: Long?
     /**
@@ -135,7 +135,7 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
+     * Default value: 4.
      */
     fun prefetchZoomDelta(value: Long = 4L): Builder = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
@@ -159,7 +159,7 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
+     * Default value: 4.
      */
     val defaultPrefetchZoomDelta: Long?
       /**

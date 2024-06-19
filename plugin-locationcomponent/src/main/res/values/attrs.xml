@@ -49,39 +49,39 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" format="reference"/>
         <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" format="string"/>
-        <!-- The opacity of the entire location puck -->
+        <!-- The opacity of the entire location puck Default value: 1. Value range: [0, 1] -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DOpacity" format="float"/>
 
         <!-- Location puck definitions for location_puck_3_d.  -->
 
-        <!-- An URL for the model file in gltf format. -->
+        <!-- An URL for the model file in gltf format. Default value: null. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelUri" format="string"/>
-        <!-- The position of the model. -->
+        <!-- The position of the model. Default value: [0,0]. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat" format="float"/>
-        <!-- The opacity of the model. -->
+        <!-- The opacity of the model. Default value: 1. Value range: [0, 1] -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelOpacity" format="float"/>
-        <!-- The scale of the model. -->
+        <!-- The scale of the model. Default value: [1,1,1]. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_x" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_y" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_z" format="float"/>
         <!-- The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleExpression" format="string"/>
-        <!-- The translation of the model [lon, lat, z] -->
+        <!-- The translation of the model [lon, lat, z] Default value: [0,0,0]. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelTranslation_lon" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelTranslation_lat" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelTranslation_z" format="float"/>
-        <!-- The rotation of the model. -->
+        <!-- The rotation of the model. Default value: [0,0,90]. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" format="float"/>
-        <!-- Enable/Disable shadow casting for the 3D location puck. -->
+        <!-- Enable/Disable shadow casting for the 3D location puck. Default value: true. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows" format="boolean"/>
-        <!-- Enable/Disable shadow receiving for the 3D location puck. -->
+        <!-- Enable/Disable shadow receiving for the 3D location puck. Default value: true. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows" format="boolean"/>
-        <!-- Defines scaling mode. Only applies to location-indicator type layers. -->
+        <!-- Defines scaling mode. Only applies to location-indicator type layers. Default value: "map". -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode" format="enum"/>
-        <!-- Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). -->
+        <!-- Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Default value: 1. Value range: [0, 5] -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrength" format="float"/>
         <!-- Strength of the emission as Expression string, note that when [modelEmissiveStrengthExpression] is specified, it will overwrite the [modelEmissiveStrength] property. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrengthExpression" format="string"/>

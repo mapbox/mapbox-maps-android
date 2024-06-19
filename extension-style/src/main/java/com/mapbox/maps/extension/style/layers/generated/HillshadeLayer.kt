@@ -214,11 +214,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   // Property getters and setters
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    */
   val hillshadeAccentColor: String?
     /**
-     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
      *
      * Use static method [HillshadeLayer.defaultHillshadeAccentColor] to get the default property.
      *
@@ -232,7 +232,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * Use static method [HillshadeLayer.defaultHillshadeAccentColor] to set the default property.
    *
@@ -244,14 +244,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * This is an Expression representation of "hillshade-accent-color".
    *
    */
   val hillshadeAccentColorAsExpression: Expression?
     /**
-     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
      *
      * Get the HillshadeAccentColor property as an Expression
      *
@@ -267,7 +267,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * Use static method [HillshadeLayer.defaultHillshadeAccentColorAsExpression] to set the default property.
    *
@@ -279,11 +279,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    */
   val hillshadeAccentColorAsColorInt: Int?
     /**
-     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
      *
      * Use static method [HillshadeLayer.defaultHillshadeAccentColorAsColorInt] to get the default property.
      *
@@ -298,7 +298,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * Use static method [HillshadeLayer.defaultHillshadeAccentColorAsColorInt] to set the default property.
    *
@@ -344,11 +344,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    */
   val hillshadeEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrength] to get the default property.
      *
@@ -359,7 +359,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrength] to set the default property.
    *
@@ -371,14 +371,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "hillshade-emissive-strength".
    *
    */
   val hillshadeEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Get the HillshadeEmissiveStrength property as an Expression
      *
@@ -397,7 +397,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression] to set the default property.
    *
@@ -443,11 +443,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    */
   val hillshadeExaggeration: Double?
     /**
-     * Intensity of the hillshade
+     * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
      *
      * Use static method [HillshadeLayer.defaultHillshadeExaggeration] to get the default property.
      *
@@ -458,7 +458,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * Use static method [HillshadeLayer.defaultHillshadeExaggeration] to set the default property.
    *
@@ -470,14 +470,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * This is an Expression representation of "hillshade-exaggeration".
    *
    */
   val hillshadeExaggerationAsExpression: Expression?
     /**
-     * Intensity of the hillshade
+     * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
      *
      * Get the HillshadeExaggeration property as an Expression
      *
@@ -496,7 +496,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * Use static method [HillshadeLayer.defaultHillshadeExaggerationAsExpression] to set the default property.
    *
@@ -542,11 +542,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    */
   val hillshadeHighlightColor: String?
     /**
-     * The shading color of areas that faces towards the light source.
+     * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
      *
      * Use static method [HillshadeLayer.defaultHillshadeHighlightColor] to get the default property.
      *
@@ -560,7 +560,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * Use static method [HillshadeLayer.defaultHillshadeHighlightColor] to set the default property.
    *
@@ -572,14 +572,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * This is an Expression representation of "hillshade-highlight-color".
    *
    */
   val hillshadeHighlightColorAsExpression: Expression?
     /**
-     * The shading color of areas that faces towards the light source.
+     * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
      *
      * Get the HillshadeHighlightColor property as an Expression
      *
@@ -595,7 +595,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * Use static method [HillshadeLayer.defaultHillshadeHighlightColorAsExpression] to set the default property.
    *
@@ -607,11 +607,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    */
   val hillshadeHighlightColorAsColorInt: Int?
     /**
-     * The shading color of areas that faces towards the light source.
+     * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
      *
      * Use static method [HillshadeLayer.defaultHillshadeHighlightColorAsColorInt] to get the default property.
      *
@@ -626,7 +626,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * Use static method [HillshadeLayer.defaultHillshadeHighlightColorAsColorInt] to set the default property.
    *
@@ -672,11 +672,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Direction of light source when map is rotated.
+   * Direction of light source when map is rotated. Default value: "viewport".
    */
   val hillshadeIlluminationAnchor: HillshadeIlluminationAnchor?
     /**
-     * Direction of light source when map is rotated.
+     * Direction of light source when map is rotated. Default value: "viewport".
      *
      * Use static method [HillshadeLayer.defaultHillshadeIlluminationAnchor] to get the default property.
      *
@@ -690,7 +690,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Direction of light source when map is rotated.
+   * Direction of light source when map is rotated. Default value: "viewport".
    *
    * Use static method [HillshadeLayer.defaultHillshadeIlluminationAnchor] to set the default property.
    *
@@ -702,14 +702,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Direction of light source when map is rotated.
+   * Direction of light source when map is rotated. Default value: "viewport".
    *
    * This is an Expression representation of "hillshade-illumination-anchor".
    *
    */
   val hillshadeIlluminationAnchorAsExpression: Expression?
     /**
-     * Direction of light source when map is rotated.
+     * Direction of light source when map is rotated. Default value: "viewport".
      *
      * Get the HillshadeIlluminationAnchor property as an Expression
      *
@@ -728,7 +728,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Direction of light source when map is rotated.
+   * Direction of light source when map is rotated. Default value: "viewport".
    *
    * Use static method [HillshadeLayer.defaultHillshadeIlluminationAnchorAsExpression] to set the default property.
    *
@@ -740,11 +740,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
    */
   val hillshadeIlluminationDirection: Double?
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
      *
      * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirection] to get the default property.
      *
@@ -755,7 +755,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
    *
    * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirection] to set the default property.
    *
@@ -767,14 +767,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
    *
    * This is an Expression representation of "hillshade-illumination-direction".
    *
    */
   val hillshadeIlluminationDirectionAsExpression: Expression?
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
      *
      * Get the HillshadeIlluminationDirection property as an Expression
      *
@@ -793,7 +793,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
    *
    * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirectionAsExpression] to set the default property.
    *
@@ -805,11 +805,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    */
   val hillshadeShadowColor: String?
     /**
-     * The shading color of areas that face away from the light source.
+     * The shading color of areas that face away from the light source. Default value: "#000000".
      *
      * Use static method [HillshadeLayer.defaultHillshadeShadowColor] to get the default property.
      *
@@ -823,7 +823,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * Use static method [HillshadeLayer.defaultHillshadeShadowColor] to set the default property.
    *
@@ -835,14 +835,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * This is an Expression representation of "hillshade-shadow-color".
    *
    */
   val hillshadeShadowColorAsExpression: Expression?
     /**
-     * The shading color of areas that face away from the light source.
+     * The shading color of areas that face away from the light source. Default value: "#000000".
      *
      * Get the HillshadeShadowColor property as an Expression
      *
@@ -858,7 +858,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * Use static method [HillshadeLayer.defaultHillshadeShadowColorAsExpression] to set the default property.
    *
@@ -870,11 +870,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    */
   val hillshadeShadowColorAsColorInt: Int?
     /**
-     * The shading color of areas that face away from the light source.
+     * The shading color of areas that face away from the light source. Default value: "#000000".
      *
      * Use static method [HillshadeLayer.defaultHillshadeShadowColorAsColorInt] to get the default property.
      *
@@ -889,7 +889,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * Use static method [HillshadeLayer.defaultHillshadeShadowColorAsColorInt] to set the default property.
    *
@@ -994,11 +994,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "maxzoom").silentUnwrap()
 
     /**
-     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
      */
     val defaultHillshadeAccentColor: String?
       /**
-       * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+       * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
        *
        * Get the default value of HillshadeAccentColor property
        *
@@ -1012,7 +1012,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
      *
      * This is an Expression representation of "hillshade-accent-color".
      *
@@ -1031,11 +1031,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+     * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
      */
     val defaultHillshadeAccentColorAsColorInt: Int?
       /**
-       * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+       * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
        *
        * Get the default value of HillshadeAccentColor property as color int.
        *
@@ -1061,11 +1061,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      */
     val defaultHillshadeEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
        *
        * Get the default value of HillshadeEmissiveStrength property
        *
@@ -1076,7 +1076,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "hillshade-emissive-strength".
      *
@@ -1109,11 +1109,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Intensity of the hillshade
+     * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
      */
     val defaultHillshadeExaggeration: Double?
       /**
-       * Intensity of the hillshade
+       * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
        *
        * Get the default value of HillshadeExaggeration property
        *
@@ -1124,7 +1124,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * Intensity of the hillshade
+     * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
      *
      * This is an Expression representation of "hillshade-exaggeration".
      *
@@ -1157,11 +1157,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-exaggeration-transition").silentUnwrap()
 
     /**
-     * The shading color of areas that faces towards the light source.
+     * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
      */
     val defaultHillshadeHighlightColor: String?
       /**
-       * The shading color of areas that faces towards the light source.
+       * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
        *
        * Get the default value of HillshadeHighlightColor property
        *
@@ -1175,7 +1175,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color of areas that faces towards the light source.
+     * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
      *
      * This is an Expression representation of "hillshade-highlight-color".
      *
@@ -1194,11 +1194,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color of areas that faces towards the light source.
+     * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
      */
     val defaultHillshadeHighlightColorAsColorInt: Int?
       /**
-       * The shading color of areas that faces towards the light source.
+       * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
        *
        * Get the default value of HillshadeHighlightColor property as color int.
        *
@@ -1224,11 +1224,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-highlight-color-transition").silentUnwrap()
 
     /**
-     * Direction of light source when map is rotated.
+     * Direction of light source when map is rotated. Default value: "viewport".
      */
     val defaultHillshadeIlluminationAnchor: HillshadeIlluminationAnchor?
       /**
-       * Direction of light source when map is rotated.
+       * Direction of light source when map is rotated. Default value: "viewport".
        *
        * Get the default value of HillshadeIlluminationAnchor property
        *
@@ -1242,7 +1242,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * Direction of light source when map is rotated.
+     * Direction of light source when map is rotated. Default value: "viewport".
      *
      * This is an Expression representation of "hillshade-illumination-anchor".
      *
@@ -1264,11 +1264,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
      */
     val defaultHillshadeIlluminationDirection: Double?
       /**
-       * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+       * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
        *
        * Get the default value of HillshadeIlluminationDirection property
        *
@@ -1279,7 +1279,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
      *
      * This is an Expression representation of "hillshade-illumination-direction".
      *
@@ -1301,11 +1301,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color of areas that face away from the light source.
+     * The shading color of areas that face away from the light source. Default value: "#000000".
      */
     val defaultHillshadeShadowColor: String?
       /**
-       * The shading color of areas that face away from the light source.
+       * The shading color of areas that face away from the light source. Default value: "#000000".
        *
        * Get the default value of HillshadeShadowColor property
        *
@@ -1319,7 +1319,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color of areas that face away from the light source.
+     * The shading color of areas that face away from the light source. Default value: "#000000".
      *
      * This is an Expression representation of "hillshade-shadow-color".
      *
@@ -1338,11 +1338,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The shading color of areas that face away from the light source.
+     * The shading color of areas that face away from the light source. Default value: "#000000".
      */
     val defaultHillshadeShadowColorAsColorInt: Int?
       /**
-       * The shading color of areas that face away from the light source.
+       * The shading color of areas that face away from the light source. Default value: "#000000".
        *
        * Get the default value of HillshadeShadowColor property as color int.
        *
@@ -1432,28 +1432,28 @@ interface HillshadeLayerDsl {
   // Property getters and setters
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * @param hillshadeAccentColor value of hillshadeAccentColor
    */
   fun hillshadeAccentColor(hillshadeAccentColor: String = "#000000"): HillshadeLayer
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * @param hillshadeAccentColor value of hillshadeAccentColor as Expression
    */
   fun hillshadeAccentColor(hillshadeAccentColor: Expression): HillshadeLayer
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * @param hillshadeAccentColor value of hillshadeAccentColor
    */
   fun hillshadeAccentColor(@ColorInt hillshadeAccentColor: Int): HillshadeLayer
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * Set the HillshadeAccentColor property transition options
    *
@@ -1462,28 +1462,28 @@ interface HillshadeLayerDsl {
   fun hillshadeAccentColorTransition(options: StyleTransition): HillshadeLayer
 
   /**
-   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+   * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    *
    * DSL for [hillshadeAccentColorTransition].
    */
   fun hillshadeAccentColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength
    */
   fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Double = 0.0): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength as Expression
    */
   fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Expression): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Set the HillshadeEmissiveStrength property transition options
    *
@@ -1492,28 +1492,28 @@ interface HillshadeLayerDsl {
   fun hillshadeEmissiveStrengthTransition(options: StyleTransition): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * DSL for [hillshadeEmissiveStrengthTransition].
    */
   fun hillshadeEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * @param hillshadeExaggeration value of hillshadeExaggeration
    */
   fun hillshadeExaggeration(hillshadeExaggeration: Double = 0.5): HillshadeLayer
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * @param hillshadeExaggeration value of hillshadeExaggeration as Expression
    */
   fun hillshadeExaggeration(hillshadeExaggeration: Expression): HillshadeLayer
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * Set the HillshadeExaggeration property transition options
    *
@@ -1522,35 +1522,35 @@ interface HillshadeLayerDsl {
   fun hillshadeExaggerationTransition(options: StyleTransition): HillshadeLayer
 
   /**
-   * Intensity of the hillshade
+   * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
    *
    * DSL for [hillshadeExaggerationTransition].
    */
   fun hillshadeExaggerationTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * @param hillshadeHighlightColor value of hillshadeHighlightColor
    */
   fun hillshadeHighlightColor(hillshadeHighlightColor: String = "#FFFFFF"): HillshadeLayer
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * @param hillshadeHighlightColor value of hillshadeHighlightColor as Expression
    */
   fun hillshadeHighlightColor(hillshadeHighlightColor: Expression): HillshadeLayer
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * @param hillshadeHighlightColor value of hillshadeHighlightColor
    */
   fun hillshadeHighlightColor(@ColorInt hillshadeHighlightColor: Int): HillshadeLayer
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * Set the HillshadeHighlightColor property transition options
    *
@@ -1559,63 +1559,63 @@ interface HillshadeLayerDsl {
   fun hillshadeHighlightColorTransition(options: StyleTransition): HillshadeLayer
 
   /**
-   * The shading color of areas that faces towards the light source.
+   * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
    *
    * DSL for [hillshadeHighlightColorTransition].
    */
   fun hillshadeHighlightColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
-   * Direction of light source when map is rotated.
+   * Direction of light source when map is rotated. Default value: "viewport".
    *
    * @param hillshadeIlluminationAnchor value of hillshadeIlluminationAnchor
    */
   fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: HillshadeIlluminationAnchor = HillshadeIlluminationAnchor.VIEWPORT): HillshadeLayer
 
   /**
-   * Direction of light source when map is rotated.
+   * Direction of light source when map is rotated. Default value: "viewport".
    *
    * @param hillshadeIlluminationAnchor value of hillshadeIlluminationAnchor as Expression
    */
   fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: Expression): HillshadeLayer
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
    *
    * @param hillshadeIlluminationDirection value of hillshadeIlluminationDirection
    */
   fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Double = 335.0): HillshadeLayer
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
    *
    * @param hillshadeIlluminationDirection value of hillshadeIlluminationDirection as Expression
    */
   fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Expression): HillshadeLayer
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * @param hillshadeShadowColor value of hillshadeShadowColor
    */
   fun hillshadeShadowColor(hillshadeShadowColor: String = "#000000"): HillshadeLayer
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * @param hillshadeShadowColor value of hillshadeShadowColor as Expression
    */
   fun hillshadeShadowColor(hillshadeShadowColor: Expression): HillshadeLayer
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * @param hillshadeShadowColor value of hillshadeShadowColor
    */
   fun hillshadeShadowColor(@ColorInt hillshadeShadowColor: Int): HillshadeLayer
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * Set the HillshadeShadowColor property transition options
    *
@@ -1624,7 +1624,7 @@ interface HillshadeLayerDsl {
   fun hillshadeShadowColorTransition(options: StyleTransition): HillshadeLayer
 
   /**
-   * The shading color of areas that face away from the light source.
+   * The shading color of areas that face away from the light source. Default value: "#000000".
    *
    * DSL for [hillshadeShadowColorTransition].
    */

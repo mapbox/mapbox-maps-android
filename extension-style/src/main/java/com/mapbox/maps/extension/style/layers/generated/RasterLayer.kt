@@ -280,11 +280,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    */
   val rasterBrightnessMax: Double?
     /**
-     * Increase or reduce the brightness of the image. The value is the maximum brightness.
+     * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
      *
      * Use static method [RasterLayer.defaultRasterBrightnessMax] to get the default property.
      *
@@ -295,7 +295,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * Use static method [RasterLayer.defaultRasterBrightnessMax] to set the default property.
    *
@@ -307,14 +307,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "raster-brightness-max".
    *
    */
   val rasterBrightnessMaxAsExpression: Expression?
     /**
-     * Increase or reduce the brightness of the image. The value is the maximum brightness.
+     * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
      *
      * Get the RasterBrightnessMax property as an Expression
      *
@@ -333,7 +333,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * Use static method [RasterLayer.defaultRasterBrightnessMaxAsExpression] to set the default property.
    *
@@ -379,11 +379,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    */
   val rasterBrightnessMin: Double?
     /**
-     * Increase or reduce the brightness of the image. The value is the minimum brightness.
+     * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
      *
      * Use static method [RasterLayer.defaultRasterBrightnessMin] to get the default property.
      *
@@ -394,7 +394,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * Use static method [RasterLayer.defaultRasterBrightnessMin] to set the default property.
    *
@@ -406,14 +406,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "raster-brightness-min".
    *
    */
   val rasterBrightnessMinAsExpression: Expression?
     /**
-     * Increase or reduce the brightness of the image. The value is the minimum brightness.
+     * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
      *
      * Get the RasterBrightnessMin property as an Expression
      *
@@ -432,7 +432,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * Use static method [RasterLayer.defaultRasterBrightnessMinAsExpression] to set the default property.
    *
@@ -505,11 +505,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    */
   val rasterColorMix: List<Double>?
     /**
-     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
      *
      * Use static method [RasterLayer.defaultRasterColorMix] to get the default property.
      *
@@ -520,7 +520,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * Use static method [RasterLayer.defaultRasterColorMix] to set the default property.
    *
@@ -532,14 +532,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * This is an Expression representation of "raster-color-mix".
    *
    */
   val rasterColorMixAsExpression: Expression?
     /**
-     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
      *
      * Get the RasterColorMix property as an Expression
      *
@@ -558,7 +558,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * Use static method [RasterLayer.defaultRasterColorMixAsExpression] to set the default property.
    *
@@ -604,11 +604,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    */
   val rasterColorRange: List<Double>?
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
      *
      * Use static method [RasterLayer.defaultRasterColorRange] to get the default property.
      *
@@ -619,7 +619,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * Use static method [RasterLayer.defaultRasterColorRange] to set the default property.
    *
@@ -631,14 +631,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * This is an Expression representation of "raster-color-range".
    *
    */
   val rasterColorRangeAsExpression: Expression?
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
      *
      * Get the RasterColorRange property as an Expression
      *
@@ -657,7 +657,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * Use static method [RasterLayer.defaultRasterColorRangeAsExpression] to set the default property.
    *
@@ -703,11 +703,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    */
   val rasterContrast: Double?
     /**
-     * Increase or reduce the contrast of the image.
+     * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
      *
      * Use static method [RasterLayer.defaultRasterContrast] to get the default property.
      *
@@ -718,7 +718,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * Use static method [RasterLayer.defaultRasterContrast] to set the default property.
    *
@@ -730,14 +730,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * This is an Expression representation of "raster-contrast".
    *
    */
   val rasterContrastAsExpression: Expression?
     /**
-     * Increase or reduce the contrast of the image.
+     * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
      *
      * Get the RasterContrast property as an Expression
      *
@@ -756,7 +756,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * Use static method [RasterLayer.defaultRasterContrastAsExpression] to set the default property.
    *
@@ -802,12 +802,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   val rasterElevation: Double?
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
      *
      * Use static method [RasterLayer.defaultRasterElevation] to get the default property.
      *
@@ -818,7 +818,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterElevation] to set the default property.
    *
@@ -831,7 +831,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "raster-elevation".
    *
@@ -839,7 +839,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   @MapboxExperimental
   val rasterElevationAsExpression: Expression?
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
      *
      * Get the RasterElevation property as an Expression
      *
@@ -858,7 +858,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterElevationAsExpression] to set the default property.
    *
@@ -908,11 +908,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    */
   val rasterEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Use static method [RasterLayer.defaultRasterEmissiveStrength] to get the default property.
      *
@@ -923,7 +923,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterEmissiveStrength] to set the default property.
    *
@@ -935,14 +935,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * This is an Expression representation of "raster-emissive-strength".
    *
    */
   val rasterEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * Get the RasterEmissiveStrength property as an Expression
      *
@@ -961,7 +961,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1007,11 +1007,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Fade duration when a new tile is added.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
    */
   val rasterFadeDuration: Double?
     /**
-     * Fade duration when a new tile is added.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
      *
      * Use static method [RasterLayer.defaultRasterFadeDuration] to get the default property.
      *
@@ -1022,7 +1022,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Fade duration when a new tile is added.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterFadeDuration] to set the default property.
    *
@@ -1034,14 +1034,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Fade duration when a new tile is added.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
    *
    * This is an Expression representation of "raster-fade-duration".
    *
    */
   val rasterFadeDurationAsExpression: Expression?
     /**
-     * Fade duration when a new tile is added.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
      *
      * Get the RasterFadeDuration property as an Expression
      *
@@ -1060,7 +1060,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Fade duration when a new tile is added.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
    *
    * Use static method [RasterLayer.defaultRasterFadeDurationAsExpression] to set the default property.
    *
@@ -1072,11 +1072,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    */
   val rasterHueRotate: Double?
     /**
-     * Rotates hues around the color wheel.
+     * Rotates hues around the color wheel. Default value: 0.
      *
      * Use static method [RasterLayer.defaultRasterHueRotate] to get the default property.
      *
@@ -1087,7 +1087,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * Use static method [RasterLayer.defaultRasterHueRotate] to set the default property.
    *
@@ -1099,14 +1099,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * This is an Expression representation of "raster-hue-rotate".
    *
    */
   val rasterHueRotateAsExpression: Expression?
     /**
-     * Rotates hues around the color wheel.
+     * Rotates hues around the color wheel. Default value: 0.
      *
      * Get the RasterHueRotate property as an Expression
      *
@@ -1125,7 +1125,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * Use static method [RasterLayer.defaultRasterHueRotateAsExpression] to set the default property.
    *
@@ -1171,11 +1171,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    */
   val rasterOpacity: Double?
     /**
-     * The opacity at which the image will be drawn.
+     * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Use static method [RasterLayer.defaultRasterOpacity] to get the default property.
      *
@@ -1186,7 +1186,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [RasterLayer.defaultRasterOpacity] to set the default property.
    *
@@ -1198,14 +1198,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "raster-opacity".
    *
    */
   val rasterOpacityAsExpression: Expression?
     /**
-     * The opacity at which the image will be drawn.
+     * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
      *
      * Get the RasterOpacity property as an Expression
      *
@@ -1224,7 +1224,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Use static method [RasterLayer.defaultRasterOpacityAsExpression] to set the default property.
    *
@@ -1270,11 +1270,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    */
   val rasterResampling: RasterResampling?
     /**
-     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
      *
      * Use static method [RasterLayer.defaultRasterResampling] to get the default property.
      *
@@ -1288,7 +1288,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    *
    * Use static method [RasterLayer.defaultRasterResampling] to set the default property.
    *
@@ -1300,14 +1300,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    *
    * This is an Expression representation of "raster-resampling".
    *
    */
   val rasterResamplingAsExpression: Expression?
     /**
-     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
      *
      * Get the RasterResampling property as an Expression
      *
@@ -1326,7 +1326,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    *
    * Use static method [RasterLayer.defaultRasterResamplingAsExpression] to set the default property.
    *
@@ -1338,11 +1338,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    */
   val rasterSaturation: Double?
     /**
-     * Increase or reduce the saturation of the image.
+     * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
      *
      * Use static method [RasterLayer.defaultRasterSaturation] to get the default property.
      *
@@ -1353,7 +1353,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * Use static method [RasterLayer.defaultRasterSaturation] to set the default property.
    *
@@ -1365,14 +1365,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * This is an Expression representation of "raster-saturation".
    *
    */
   val rasterSaturationAsExpression: Expression?
     /**
-     * Increase or reduce the saturation of the image.
+     * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
      *
      * Get the RasterSaturation property as an Expression
      *
@@ -1391,7 +1391,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * Use static method [RasterLayer.defaultRasterSaturationAsExpression] to set the default property.
    *
@@ -1535,11 +1535,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Increase or reduce the brightness of the image. The value is the maximum brightness.
+     * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
      */
     val defaultRasterBrightnessMax: Double?
       /**
-       * Increase or reduce the brightness of the image. The value is the maximum brightness.
+       * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of RasterBrightnessMax property
        *
@@ -1550,7 +1550,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Increase or reduce the brightness of the image. The value is the maximum brightness.
+     * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "raster-brightness-max".
      *
@@ -1583,11 +1583,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-brightness-max-transition").silentUnwrap()
 
     /**
-     * Increase or reduce the brightness of the image. The value is the minimum brightness.
+     * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
      */
     val defaultRasterBrightnessMin: Double?
       /**
-       * Increase or reduce the brightness of the image. The value is the minimum brightness.
+       * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of RasterBrightnessMin property
        *
@@ -1598,7 +1598,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Increase or reduce the brightness of the image. The value is the minimum brightness.
+     * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "raster-brightness-min".
      *
@@ -1631,11 +1631,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-brightness-min-transition").silentUnwrap()
 
     /**
-     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
      */
     val defaultRasterColorMix: List<Double>?
       /**
-       * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+       * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
        *
        * Get the default value of RasterColorMix property
        *
@@ -1646,7 +1646,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
      *
      * This is an Expression representation of "raster-color-mix".
      *
@@ -1679,11 +1679,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-mix-transition").silentUnwrap()
 
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
      */
     val defaultRasterColorRange: List<Double>?
       /**
-       * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+       * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
        *
        * Get the default value of RasterColorRange property
        *
@@ -1694,7 +1694,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
      *
      * This is an Expression representation of "raster-color-range".
      *
@@ -1727,11 +1727,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-range-transition").silentUnwrap()
 
     /**
-     * Increase or reduce the contrast of the image.
+     * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
      */
     val defaultRasterContrast: Double?
       /**
-       * Increase or reduce the contrast of the image.
+       * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
        *
        * Get the default value of RasterContrast property
        *
@@ -1742,7 +1742,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Increase or reduce the contrast of the image.
+     * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
      *
      * This is an Expression representation of "raster-contrast".
      *
@@ -1775,12 +1775,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition").silentUnwrap()
 
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
      */
     @MapboxExperimental
     val defaultRasterElevation: Double?
       /**
-       * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+       * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
        *
        * Get the default value of RasterElevation property
        *
@@ -1791,7 +1791,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "raster-elevation".
      *
@@ -1826,11 +1826,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      */
     val defaultRasterEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
        *
        * Get the default value of RasterEmissiveStrength property
        *
@@ -1841,7 +1841,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Controls the intensity of light emitted on the source features.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
      *
      * This is an Expression representation of "raster-emissive-strength".
      *
@@ -1874,11 +1874,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Fade duration when a new tile is added.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
      */
     val defaultRasterFadeDuration: Double?
       /**
-       * Fade duration when a new tile is added.
+       * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
        *
        * Get the default value of RasterFadeDuration property
        *
@@ -1889,7 +1889,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Fade duration when a new tile is added.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
      *
      * This is an Expression representation of "raster-fade-duration".
      *
@@ -1911,11 +1911,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Rotates hues around the color wheel.
+     * Rotates hues around the color wheel. Default value: 0.
      */
     val defaultRasterHueRotate: Double?
       /**
-       * Rotates hues around the color wheel.
+       * Rotates hues around the color wheel. Default value: 0.
        *
        * Get the default value of RasterHueRotate property
        *
@@ -1926,7 +1926,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Rotates hues around the color wheel.
+     * Rotates hues around the color wheel. Default value: 0.
      *
      * This is an Expression representation of "raster-hue-rotate".
      *
@@ -1959,11 +1959,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-hue-rotate-transition").silentUnwrap()
 
     /**
-     * The opacity at which the image will be drawn.
+     * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
      */
     val defaultRasterOpacity: Double?
       /**
-       * The opacity at which the image will be drawn.
+       * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of RasterOpacity property
        *
@@ -1974,7 +1974,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * The opacity at which the image will be drawn.
+     * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "raster-opacity".
      *
@@ -2007,11 +2007,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-opacity-transition").silentUnwrap()
 
     /**
-     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
      */
     val defaultRasterResampling: RasterResampling?
       /**
-       * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+       * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
        *
        * Get the default value of RasterResampling property
        *
@@ -2025,7 +2025,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
      *
      * This is an Expression representation of "raster-resampling".
      *
@@ -2047,11 +2047,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Increase or reduce the saturation of the image.
+     * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
      */
     val defaultRasterSaturation: Double?
       /**
-       * Increase or reduce the saturation of the image.
+       * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
        *
        * Get the default value of RasterSaturation property
        *
@@ -2062,7 +2062,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Increase or reduce the saturation of the image.
+     * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
      *
      * This is an Expression representation of "raster-saturation".
      *
@@ -2175,21 +2175,21 @@ interface RasterLayerDsl {
   fun rasterArrayBand(rasterArrayBand: Expression): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax
    */
   fun rasterBrightnessMax(rasterBrightnessMax: Double = 1.0): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax as Expression
    */
   fun rasterBrightnessMax(rasterBrightnessMax: Expression): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * Set the RasterBrightnessMax property transition options
    *
@@ -2198,28 +2198,28 @@ interface RasterLayerDsl {
   fun rasterBrightnessMaxTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    *
    * DSL for [rasterBrightnessMaxTransition].
    */
   fun rasterBrightnessMaxTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin
    */
   fun rasterBrightnessMin(rasterBrightnessMin: Double = 0.0): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin as Expression
    */
   fun rasterBrightnessMin(rasterBrightnessMin: Expression): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * Set the RasterBrightnessMin property transition options
    *
@@ -2228,7 +2228,7 @@ interface RasterLayerDsl {
   fun rasterBrightnessMinTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    *
    * DSL for [rasterBrightnessMinTransition].
    */
@@ -2242,21 +2242,21 @@ interface RasterLayerDsl {
   fun rasterColor(rasterColor: Expression): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * @param rasterColorMix value of rasterColorMix
    */
   fun rasterColorMix(rasterColorMix: List<Double> = listOf(0.2126, 0.7152, 0.0722, 0.0)): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * @param rasterColorMix value of rasterColorMix as Expression
    */
   fun rasterColorMix(rasterColorMix: Expression): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * Set the RasterColorMix property transition options
    *
@@ -2265,28 +2265,28 @@ interface RasterLayerDsl {
   fun rasterColorMixTransition(options: StyleTransition): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    *
    * DSL for [rasterColorMixTransition].
    */
   fun rasterColorMixTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * @param rasterColorRange value of rasterColorRange
    */
   fun rasterColorRange(rasterColorRange: List<Double> = listOf(0.0, 1.0)): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * @param rasterColorRange value of rasterColorRange as Expression
    */
   fun rasterColorRange(rasterColorRange: Expression): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * Set the RasterColorRange property transition options
    *
@@ -2295,28 +2295,28 @@ interface RasterLayerDsl {
   fun rasterColorRangeTransition(options: StyleTransition): RasterLayer
 
   /**
-   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
    *
    * DSL for [rasterColorRangeTransition].
    */
   fun rasterColorRangeTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * @param rasterContrast value of rasterContrast
    */
   fun rasterContrast(rasterContrast: Double = 0.0): RasterLayer
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * @param rasterContrast value of rasterContrast as Expression
    */
   fun rasterContrast(rasterContrast: Expression): RasterLayer
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * Set the RasterContrast property transition options
    *
@@ -2325,14 +2325,14 @@ interface RasterLayerDsl {
   fun rasterContrastTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Increase or reduce the contrast of the image.
+   * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    *
    * DSL for [rasterContrastTransition].
    */
   fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * @param rasterElevation value of rasterElevation
    */
@@ -2340,7 +2340,7 @@ interface RasterLayerDsl {
   fun rasterElevation(rasterElevation: Double = 0.0): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * @param rasterElevation value of rasterElevation as Expression
    */
@@ -2348,7 +2348,7 @@ interface RasterLayerDsl {
   fun rasterElevation(rasterElevation: Expression): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * Set the RasterElevation property transition options
    *
@@ -2358,7 +2358,7 @@ interface RasterLayerDsl {
   fun rasterElevationTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
    *
    * DSL for [rasterElevationTransition].
    */
@@ -2366,21 +2366,21 @@ interface RasterLayerDsl {
   fun rasterElevationTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param rasterEmissiveStrength value of rasterEmissiveStrength
    */
   fun rasterEmissiveStrength(rasterEmissiveStrength: Double = 0.0): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * @param rasterEmissiveStrength value of rasterEmissiveStrength as Expression
    */
   fun rasterEmissiveStrength(rasterEmissiveStrength: Expression): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * Set the RasterEmissiveStrength property transition options
    *
@@ -2389,42 +2389,42 @@ interface RasterLayerDsl {
   fun rasterEmissiveStrengthTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
    *
    * DSL for [rasterEmissiveStrengthTransition].
    */
   fun rasterEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Fade duration when a new tile is added.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
    *
    * @param rasterFadeDuration value of rasterFadeDuration
    */
   fun rasterFadeDuration(rasterFadeDuration: Double = 300.0): RasterLayer
 
   /**
-   * Fade duration when a new tile is added.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
    *
    * @param rasterFadeDuration value of rasterFadeDuration as Expression
    */
   fun rasterFadeDuration(rasterFadeDuration: Expression): RasterLayer
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * @param rasterHueRotate value of rasterHueRotate
    */
   fun rasterHueRotate(rasterHueRotate: Double = 0.0): RasterLayer
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * @param rasterHueRotate value of rasterHueRotate as Expression
    */
   fun rasterHueRotate(rasterHueRotate: Expression): RasterLayer
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * Set the RasterHueRotate property transition options
    *
@@ -2433,28 +2433,28 @@ interface RasterLayerDsl {
   fun rasterHueRotateTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Rotates hues around the color wheel.
+   * Rotates hues around the color wheel. Default value: 0.
    *
    * DSL for [rasterHueRotateTransition].
    */
   fun rasterHueRotateTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param rasterOpacity value of rasterOpacity
    */
   fun rasterOpacity(rasterOpacity: Double = 1.0): RasterLayer
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param rasterOpacity value of rasterOpacity as Expression
    */
   fun rasterOpacity(rasterOpacity: Expression): RasterLayer
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * Set the RasterOpacity property transition options
    *
@@ -2463,42 +2463,42 @@ interface RasterLayerDsl {
   fun rasterOpacityTransition(options: StyleTransition): RasterLayer
 
   /**
-   * The opacity at which the image will be drawn.
+   * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    *
    * DSL for [rasterOpacityTransition].
    */
   fun rasterOpacityTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    *
    * @param rasterResampling value of rasterResampling
    */
   fun rasterResampling(rasterResampling: RasterResampling = RasterResampling.LINEAR): RasterLayer
 
   /**
-   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    *
    * @param rasterResampling value of rasterResampling as Expression
    */
   fun rasterResampling(rasterResampling: Expression): RasterLayer
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * @param rasterSaturation value of rasterSaturation
    */
   fun rasterSaturation(rasterSaturation: Double = 0.0): RasterLayer
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * @param rasterSaturation value of rasterSaturation as Expression
    */
   fun rasterSaturation(rasterSaturation: Expression): RasterLayer
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * Set the RasterSaturation property transition options
    *
@@ -2507,7 +2507,7 @@ interface RasterLayerDsl {
   fun rasterSaturationTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Increase or reduce the saturation of the image.
+   * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    *
    * DSL for [rasterSaturationTransition].
    */

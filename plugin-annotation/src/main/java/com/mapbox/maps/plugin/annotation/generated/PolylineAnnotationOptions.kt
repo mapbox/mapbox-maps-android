@@ -23,7 +23,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   private var geometry: LineString? = null
 
   /**
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    */
   var lineJoin: LineJoin? = null
 
@@ -59,7 +59,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Blur applied to the line, in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    */
   var lineBlur: Double? = null
 
@@ -77,7 +77,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    */
   var lineBorderColor: String? = null
 
@@ -108,7 +108,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    */
   var lineBorderWidth: Double? = null
 
@@ -126,7 +126,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    */
   var lineColor: String? = null
 
@@ -157,7 +157,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
    */
   var lineGapWidth: Double? = null
 
@@ -175,7 +175,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    */
   var lineOffset: Double? = null
 
@@ -193,7 +193,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    */
   var lineOpacity: Double? = null
 
@@ -229,7 +229,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Stroke thickness.
+   * Stroke thickness. Default value: 1. Minimum value: 0.
    */
   var lineWidth: Double? = null
 

@@ -9,7 +9,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
- * Whether extruded geometries are lit relative to the map or viewport.
+ *  Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
