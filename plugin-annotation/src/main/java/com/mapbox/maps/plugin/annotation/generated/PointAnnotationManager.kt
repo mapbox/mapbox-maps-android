@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import com.mapbox.geojson.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -925,6 +926,34 @@ class PointAnnotationManager(
     }
 
   /**
+   * The IconOcclusionOpacity property
+   *
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels.
+   */
+  @MapboxExperimental
+  var iconOcclusionOpacity: Double?
+    /**
+     * Get the IconOcclusionOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.iconOcclusionOpacity
+    }
+    /**
+     * Set the IconOcclusionOpacity property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity").value
+      }
+      setLayerProperty(wrappedValue, "icon-occlusion-opacity")
+    }
+
+  /**
    * The IconTranslate property
    *
    * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.
@@ -976,6 +1005,34 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").value
       }
       setLayerProperty(wrappedValue, "icon-translate-anchor")
+    }
+
+  /**
+   * The TextOcclusionOpacity property
+   *
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels.
+   */
+  @MapboxExperimental
+  var textOcclusionOpacity: Double?
+    /**
+     * Get the TextOcclusionOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.textOcclusionOpacity
+    }
+    /**
+     * Set the TextOcclusionOpacity property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity").value
+      }
+      setLayerProperty(wrappedValue, "text-occlusion-opacity")
     }
 
   /**

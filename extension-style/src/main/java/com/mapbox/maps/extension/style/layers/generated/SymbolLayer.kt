@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -3804,6 +3805,112 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  val iconOcclusionOpacity: Double?
+    /**
+     * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     *
+     * Use static method [SymbolLayer.defaultIconOcclusionOpacity] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("icon-occlusion-opacity")
+    }
+
+  /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * Use static method [SymbolLayer.defaultIconOcclusionOpacity] to set the default property.
+   *
+   * @param iconOcclusionOpacity value of iconOcclusionOpacity
+   */
+  @MapboxExperimental
+  override fun iconOcclusionOpacity(iconOcclusionOpacity: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-occlusion-opacity", iconOcclusionOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * This is an Expression representation of "icon-occlusion-opacity".
+   *
+   */
+  @MapboxExperimental
+  val iconOcclusionOpacityAsExpression: Expression?
+    /**
+     * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     *
+     * Get the IconOcclusionOpacity property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultIconOcclusionOpacityAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("icon-occlusion-opacity")?.let {
+        return it
+      }
+      iconOcclusionOpacity?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * Use static method [SymbolLayer.defaultIconOcclusionOpacityAsExpression] to set the default property.
+   *
+   * @param iconOcclusionOpacity value of iconOcclusionOpacity as Expression
+   */
+  @MapboxExperimental
+  override fun iconOcclusionOpacity(iconOcclusionOpacity: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-occlusion-opacity", iconOcclusionOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for IconOcclusionOpacity.
+   */
+  @MapboxExperimental
+  val iconOcclusionOpacityTransition: StyleTransition?
+    /**
+     * Get the IconOcclusionOpacity property transition options
+     *
+     * Use static method [SymbolLayer.defaultIconOcclusionOpacityTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("icon-occlusion-opacity-transition")
+    }
+
+  /**
+   * Set the IconOcclusionOpacity property transition options
+   *
+   * Use static method [SymbolLayer.defaultIconOcclusionOpacityTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun iconOcclusionOpacityTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-occlusion-opacity-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [iconOcclusionOpacityTransition].
+   */
+  @MapboxExperimental
+  override fun iconOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    iconOcclusionOpacityTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    */
   val iconOpacity: Double?
@@ -4624,6 +4731,112 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun textHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textHaloWidthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  val textOcclusionOpacity: Double?
+    /**
+     * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     *
+     * Use static method [SymbolLayer.defaultTextOcclusionOpacity] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("text-occlusion-opacity")
+    }
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * Use static method [SymbolLayer.defaultTextOcclusionOpacity] to set the default property.
+   *
+   * @param textOcclusionOpacity value of textOcclusionOpacity
+   */
+  @MapboxExperimental
+  override fun textOcclusionOpacity(textOcclusionOpacity: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-occlusion-opacity", textOcclusionOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * This is an Expression representation of "text-occlusion-opacity".
+   *
+   */
+  @MapboxExperimental
+  val textOcclusionOpacityAsExpression: Expression?
+    /**
+     * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     *
+     * Get the TextOcclusionOpacity property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultTextOcclusionOpacityAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("text-occlusion-opacity")?.let {
+        return it
+      }
+      textOcclusionOpacity?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * Use static method [SymbolLayer.defaultTextOcclusionOpacityAsExpression] to set the default property.
+   *
+   * @param textOcclusionOpacity value of textOcclusionOpacity as Expression
+   */
+  @MapboxExperimental
+  override fun textOcclusionOpacity(textOcclusionOpacity: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-occlusion-opacity", textOcclusionOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for TextOcclusionOpacity.
+   */
+  @MapboxExperimental
+  val textOcclusionOpacityTransition: StyleTransition?
+    /**
+     * Get the TextOcclusionOpacity property transition options
+     *
+     * Use static method [SymbolLayer.defaultTextOcclusionOpacityTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("text-occlusion-opacity-transition")
+    }
+
+  /**
+   * Set the TextOcclusionOpacity property transition options
+   *
+   * Use static method [SymbolLayer.defaultTextOcclusionOpacityTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun textOcclusionOpacityTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-occlusion-opacity-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [textOcclusionOpacityTransition].
+   */
+  @MapboxExperimental
+  override fun textOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    textOcclusionOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -6931,6 +7144,57 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade-transition").silentUnwrap()
 
     /**
+     * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     */
+    @MapboxExperimental
+    val defaultIconOcclusionOpacity: Double?
+      /**
+       * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+       *
+       * Get the default value of IconOcclusionOpacity property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity").silentUnwrap()
+      }
+
+    /**
+     * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     *
+     * This is an Expression representation of "icon-occlusion-opacity".
+     *
+     */
+    @MapboxExperimental
+    val defaultIconOcclusionOpacityAsExpression: Expression?
+      /**
+       * Get default value of the IconOcclusionOpacity property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultIconOcclusionOpacity?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for IconOcclusionOpacity.
+     */
+    @MapboxExperimental
+    val defaultIconOcclusionOpacityTransition: StyleTransition?
+      /**
+       * Get the IconOcclusionOpacity property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity-transition").silentUnwrap()
+
+    /**
      * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
      */
     val defaultIconOpacity: Double?
@@ -7343,6 +7607,57 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-width-transition").silentUnwrap()
+
+    /**
+     * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     */
+    @MapboxExperimental
+    val defaultTextOcclusionOpacity: Double?
+      /**
+       * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+       *
+       * Get the default value of TextOcclusionOpacity property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity").silentUnwrap()
+      }
+
+    /**
+     * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+     *
+     * This is an Expression representation of "text-occlusion-opacity".
+     *
+     */
+    @MapboxExperimental
+    val defaultTextOcclusionOpacityAsExpression: Expression?
+      /**
+       * Get default value of the TextOcclusionOpacity property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultTextOcclusionOpacity?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for TextOcclusionOpacity.
+     */
+    @MapboxExperimental
+    val defaultTextOcclusionOpacityTransition: StyleTransition?
+      /**
+       * Get the TextOcclusionOpacity property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity-transition").silentUnwrap()
 
     /**
      * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
@@ -8386,6 +8701,40 @@ interface SymbolLayerDsl {
   fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * @param iconOcclusionOpacity value of iconOcclusionOpacity
+   */
+  @MapboxExperimental
+  fun iconOcclusionOpacity(iconOcclusionOpacity: Double = 1.0): SymbolLayer
+
+  /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * @param iconOcclusionOpacity value of iconOcclusionOpacity as Expression
+   */
+  @MapboxExperimental
+  fun iconOcclusionOpacity(iconOcclusionOpacity: Expression): SymbolLayer
+
+  /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * Set the IconOcclusionOpacity property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun iconOcclusionOpacityTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * DSL for [iconOcclusionOpacityTransition].
+   */
+  @MapboxExperimental
+  fun iconOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
    * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param iconOpacity value of iconOpacity
@@ -8622,6 +8971,40 @@ interface SymbolLayerDsl {
    * DSL for [textHaloWidthTransition].
    */
   fun textHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * @param textOcclusionOpacity value of textOcclusionOpacity
+   */
+  @MapboxExperimental
+  fun textOcclusionOpacity(textOcclusionOpacity: Double = 1.0): SymbolLayer
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * @param textOcclusionOpacity value of textOcclusionOpacity as Expression
+   */
+  @MapboxExperimental
+  fun textOcclusionOpacity(textOcclusionOpacity: Expression): SymbolLayer
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * Set the TextOcclusionOpacity property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun textOcclusionOpacityTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *
+   * DSL for [textOcclusionOpacityTransition].
+   */
+  @MapboxExperimental
+  fun textOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
    * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]

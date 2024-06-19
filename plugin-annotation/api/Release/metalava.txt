@@ -405,6 +405,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getIconColorSaturation();
     method public Boolean? getIconIgnorePlacement();
     method public Boolean? getIconKeepUpright();
+    method public Double? getIconOcclusionOpacity();
     method public Boolean? getIconOptional();
     method public Double? getIconPadding();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? getIconPitchAlignment();
@@ -426,6 +427,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Boolean? getTextKeepUpright();
     method @Deprecated public Double? getTextLineHeight();
     method public Double? getTextMaxAngle();
+    method public Double? getTextOcclusionOpacity();
     method public Boolean? getTextOptional();
     method public Double? getTextPadding();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment? getTextPitchAlignment();
@@ -439,6 +441,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconColorSaturation(Double?);
     method public void setIconIgnorePlacement(Boolean?);
     method public void setIconKeepUpright(Boolean?);
+    method public void setIconOcclusionOpacity(Double?);
     method public void setIconOptional(Boolean?);
     method public void setIconPadding(Double?);
     method public void setIconPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment?);
@@ -460,6 +463,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextKeepUpright(Boolean?);
     method @Deprecated public void setTextLineHeight(Double?);
     method public void setTextMaxAngle(Double?);
+    method public void setTextOcclusionOpacity(Double?);
     method public void setTextOptional(Boolean?);
     method public void setTextPadding(Double?);
     method public void setTextPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment?);
@@ -472,6 +476,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? iconColorSaturation;
     property public final Boolean? iconIgnorePlacement;
     property public final Boolean? iconKeepUpright;
+    property public final Double? iconOcclusionOpacity;
     property public final Boolean? iconOptional;
     property public final Double? iconPadding;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? iconPitchAlignment;
@@ -493,6 +498,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Boolean? textKeepUpright;
     property @Deprecated public final Double? textLineHeight;
     property public final Double? textMaxAngle;
+    property public final Double? textOcclusionOpacity;
     property public final Boolean? textOptional;
     property public final Double? textPadding;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment? textPitchAlignment;
@@ -830,6 +836,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getLinePattern();
     method public Double? getLineSortKey();
     method public Double? getLineWidth();
+    method public Double? getLineZOffset();
     method public com.mapbox.geojson.LineString? getOffsetGeometry(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate, com.mapbox.android.gestures.MoveDistancesObject moveDistancesObject);
     method public java.util.List<com.mapbox.geojson.Point> getPoints();
     method public com.mapbox.maps.plugin.annotation.AnnotationType getType();
@@ -846,6 +853,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLinePattern(String?);
     method public void setLineSortKey(Double?);
     method public void setLineWidth(Double?);
+    method public void setLineZOffset(Double?);
     method public void setPoints(java.util.List<com.mapbox.geojson.Point>);
     method public void setUsedDataDrivenProperties();
     property public final Double? lineBlur;
@@ -861,6 +869,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? linePattern;
     property public final Double? lineSortKey;
     property public final Double? lineWidth;
+    property public final Double? lineZOffset;
     property public final java.util.List<com.mapbox.geojson.Point> points;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation.Companion Companion;
     field public static final String ID_KEY = "PolylineAnnotation";
@@ -880,6 +889,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineDepthOcclusionFactor();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineMiterLimit();
+    method public Double? getLineOcclusionOpacity();
     method public Double? getLineRoundLimit();
     method public java.util.List<java.lang.Double>? getLineTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
@@ -892,6 +902,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineDepthOcclusionFactor(Double?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineMiterLimit(Double?);
+    method public void setLineOcclusionOpacity(Double?);
     method public void setLineRoundLimit(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
@@ -903,6 +914,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineDepthOcclusionFactor;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineMiterLimit;
+    property public final Double? lineOcclusionOpacity;
     property public final Double? lineRoundLimit;
     property public final java.util.List<java.lang.Double>? lineTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
@@ -938,6 +950,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getLinePattern();
     method public Double? getLineSortKey();
     method public Double? getLineWidth();
+    method public Double? getLineZOffset();
     method public java.util.List<com.mapbox.geojson.Point> getPoints();
     method public void setLineBlur(Double?);
     method public void setLineBorderColor(String?);
@@ -950,6 +963,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLinePattern(String?);
     method public void setLineSortKey(Double?);
     method public void setLineWidth(Double?);
+    method public void setLineZOffset(Double?);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withData(com.google.gson.JsonElement jsonElement);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withDraggable(boolean draggable);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withGeometry(com.mapbox.geojson.LineString geometry);
@@ -966,6 +980,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLinePattern(String linePattern);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineSortKey(double lineSortKey);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineWidth(double lineWidth);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineZOffset(double lineZOffset);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withPoints(java.util.List<com.mapbox.geojson.Point> points);
     property public final Double? lineBlur;
     property public final String? lineBorderColor;
@@ -978,6 +993,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? linePattern;
     property public final Double? lineSortKey;
     property public final Double? lineWidth;
+    property public final Double? lineZOffset;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions.Companion Companion;
     field public static final String PROPERTY_LINE_BLUR = "line-blur";
     field public static final String PROPERTY_LINE_BORDER_COLOR = "line-border-color";
@@ -990,6 +1006,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_LINE_PATTERN = "line-pattern";
     field public static final String PROPERTY_LINE_SORT_KEY = "line-sort-key";
     field public static final String PROPERTY_LINE_WIDTH = "line-width";
+    field public static final String PROPERTY_LINE_Z_OFFSET = "line-z-offset";
   }
 
   public static final class PolylineAnnotationOptions.Companion {

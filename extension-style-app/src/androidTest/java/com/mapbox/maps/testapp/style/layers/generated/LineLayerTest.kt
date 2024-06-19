@@ -5,6 +5,7 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for LineLayer
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class LineLayerTest : BaseStyleTest() {
 
@@ -192,6 +194,34 @@ class LineLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.lineSortKeyAsExpression.toString())
     assertEquals(null, layer.lineSortKey)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineZOffsetTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineZOffset(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineZOffset!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineZOffsetAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = lineLayer("id", "source") {
+      lineZOffset(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineZOffsetAsExpression.toString())
+    assertEquals(null, layer.lineZOffset)
   }
 
   @Test
@@ -677,6 +707,61 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineOcclusionOpacityTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineOcclusionOpacity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineOcclusionOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineOcclusionOpacityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineOcclusionOpacity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineOcclusionOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineOcclusionOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineOcclusionOpacityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineOcclusionOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineOcclusionOpacityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineOcclusionOpacityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineOcclusionOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineOffsetTest() {
     val testValue = 1.0
     val layer = lineLayer("id", "source") {
@@ -1027,6 +1112,8 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineRoundLimitAsExpression should not be null", LineLayer.defaultLineRoundLimitAsExpression)
     assertNotNull("defaultLineSortKey should not be null", LineLayer.defaultLineSortKey)
     assertNotNull("defaultLineSortKeyAsExpression should not be null", LineLayer.defaultLineSortKeyAsExpression)
+    assertNotNull("defaultLineZOffset should not be null", LineLayer.defaultLineZOffset)
+    assertNotNull("defaultLineZOffsetAsExpression should not be null", LineLayer.defaultLineZOffsetAsExpression)
     assertNotNull("defaultLineBlur should not be null", LineLayer.defaultLineBlur)
     assertNotNull("defaultLineBlurAsExpression should not be null", LineLayer.defaultLineBlurAsExpression)
     assertNotNull("defaultLineBlurTransition should not be null", LineLayer.defaultLineBlurTransition)
@@ -1052,6 +1139,9 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineGapWidth should not be null", LineLayer.defaultLineGapWidth)
     assertNotNull("defaultLineGapWidthAsExpression should not be null", LineLayer.defaultLineGapWidthAsExpression)
     assertNotNull("defaultLineGapWidthTransition should not be null", LineLayer.defaultLineGapWidthTransition)
+    assertNotNull("defaultLineOcclusionOpacity should not be null", LineLayer.defaultLineOcclusionOpacity)
+    assertNotNull("defaultLineOcclusionOpacityAsExpression should not be null", LineLayer.defaultLineOcclusionOpacityAsExpression)
+    assertNotNull("defaultLineOcclusionOpacityTransition should not be null", LineLayer.defaultLineOcclusionOpacityTransition)
     assertNotNull("defaultLineOffset should not be null", LineLayer.defaultLineOffset)
     assertNotNull("defaultLineOffsetAsExpression should not be null", LineLayer.defaultLineOffsetAsExpression)
     assertNotNull("defaultLineOffsetTransition should not be null", LineLayer.defaultLineOffsetTransition)
@@ -1086,6 +1176,7 @@ class LineLayerTest : BaseStyleTest() {
     val lineMiterLimitTestValue = 1.0
     val lineRoundLimitTestValue = 1.0
     val lineSortKeyTestValue = 1.0
+    val lineZOffsetTestValue = 1.0
     val lineBlurTestValue = 1.0
     val lineBorderColorTestValue = "rgba(0, 0, 0, 1)"
     val lineBorderWidthTestValue = 1.0
@@ -1116,6 +1207,7 @@ class LineLayerTest : BaseStyleTest() {
         }
       }
     }
+    val lineOcclusionOpacityTestValue = 1.0
     val lineOffsetTestValue = 1.0
     val lineOpacityTestValue = 1.0
     val linePatternTestValue = "abc"
@@ -1136,6 +1228,7 @@ class LineLayerTest : BaseStyleTest() {
       lineMiterLimit(lineMiterLimitTestValue)
       lineRoundLimit(lineRoundLimitTestValue)
       lineSortKey(lineSortKeyTestValue)
+      lineZOffset(lineZOffsetTestValue)
       lineBlur(lineBlurTestValue)
       lineBorderColor(lineBorderColorTestValue)
       lineBorderWidth(lineBorderWidthTestValue)
@@ -1145,6 +1238,7 @@ class LineLayerTest : BaseStyleTest() {
       lineEmissiveStrength(lineEmissiveStrengthTestValue)
       lineGapWidth(lineGapWidthTestValue)
       lineGradient(lineGradientTestValue)
+      lineOcclusionOpacity(lineOcclusionOpacityTestValue)
       lineOffset(lineOffsetTestValue)
       lineOpacity(lineOpacityTestValue)
       linePattern(linePatternTestValue)
@@ -1170,6 +1264,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineMiterLimitTestValue, cachedLayer.lineMiterLimit)
     assertEquals(lineRoundLimitTestValue, cachedLayer.lineRoundLimit)
     assertEquals(lineSortKeyTestValue, cachedLayer.lineSortKey)
+    assertEquals(lineZOffsetTestValue, cachedLayer.lineZOffset)
     assertEquals(lineBlurTestValue, cachedLayer.lineBlur)
     assertEquals(lineBorderColorTestValue, cachedLayer.lineBorderColor)
     assertEquals(lineBorderWidthTestValue, cachedLayer.lineBorderWidth)
@@ -1179,6 +1274,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineEmissiveStrengthTestValue, cachedLayer.lineEmissiveStrength)
     assertEquals(lineGapWidthTestValue, cachedLayer.lineGapWidth)
     assertEquals(lineGradientTestValue, cachedLayer.lineGradient)
+    assertEquals(lineOcclusionOpacityTestValue, cachedLayer.lineOcclusionOpacity)
     assertEquals(lineOffsetTestValue, cachedLayer.lineOffset)
     assertEquals(lineOpacityTestValue, cachedLayer.lineOpacity)
     assertEquals(linePatternTestValue, cachedLayer.linePattern)

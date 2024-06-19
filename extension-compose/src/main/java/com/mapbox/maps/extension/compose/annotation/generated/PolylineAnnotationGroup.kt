@@ -32,6 +32,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  * @param lineDasharray Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to density-independent pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. The unit of lineDasharray is in line widths.
  * @param lineDepthOcclusionFactor Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
  * @param lineEmissiveStrength Controls the intensity of light emitted on the source features. The unit of lineEmissiveStrength is in intensity.
+ * @param lineOcclusionOpacity Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when {@link PropertyFactory#lineOpacity} has data-driven styling.
  * @param lineTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of lineTranslate is in density-independent pixels.
  * @param lineTranslateAnchor Controls the frame of reference for {@link PropertyFactory#lineTranslate}.
  * @param lineTrimOffset The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
@@ -49,6 +50,7 @@ public fun PolylineAnnotationGroup(
   lineDasharray: List<Double>? = null,
   lineDepthOcclusionFactor: Double? = null,
   lineEmissiveStrength: Double? = null,
+  lineOcclusionOpacity: Double? = null,
   lineTranslate: List<Double>? = null,
   lineTranslateAnchor: LineTranslateAnchor? = null,
   lineTrimOffset: List<Double>? = null,
@@ -85,6 +87,9 @@ public fun PolylineAnnotationGroup(
       }
       set(lineEmissiveStrength) {
         annotationManager.lineEmissiveStrength = it
+      }
+      set(lineOcclusionOpacity) {
+        annotationManager.lineOcclusionOpacity = it
       }
       set(lineTranslate) {
         annotationManager.lineTranslate = it

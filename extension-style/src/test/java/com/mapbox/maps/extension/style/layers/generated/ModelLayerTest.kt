@@ -833,6 +833,73 @@ class ModelLayerTest {
   }
 
   @Test
+  fun modelFrontCutoffSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = listOf(0.0, 1.0, 2.0)
+    layer.bindTo(style)
+    layer.modelFrontCutoff(testValue)
+    verify { style.setStyleLayerProperty("id", "model-front-cutoff", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0, 2.0]")
+  }
+
+  @Test
+  fun modelFrontCutoffGet() {
+    val testValue = listOf(0.0, 1.0, 2.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = listOf(0.0, 1.0, 2.0)
+    assertEquals(expectedValue.toString(), layer.modelFrontCutoff?.toString())
+    verify { style.getStyleLayerProperty("id", "model-front-cutoff") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelFrontCutoffAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelFrontCutoff(expression)
+    verify { style.setStyleLayerProperty("id", "model-front-cutoff", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelFrontCutoffAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelFrontCutoffAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-front-cutoff") }
+  }
+
+  @Test
+  fun modelFrontCutoffAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelFrontCutoffAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-front-cutoff") }
+  }
+
+  @Test
+  fun modelFrontCutoffAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0, 2.0))
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("[literal, [0.0, 1.0, 2.0]]", layer.modelFrontCutoffAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0, 2.0), layer.modelFrontCutoff!!)
+    verify { style.getStyleLayerProperty("id", "model-front-cutoff") }
+  }
+
+  @Test
   fun modelHeightBasedEmissiveStrengthMultiplierSet() {
     val layer = modelLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
@@ -2046,6 +2113,37 @@ class ModelLayerTest {
 
     assertEquals(transition.toValue().toString(), ModelLayer.defaultModelEmissiveStrengthTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength-transition") }
+  }
+
+  @Test
+  fun defaultModelFrontCutoffTest() {
+    val testValue = listOf(0.0, 1.0, 2.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = listOf(0.0, 1.0, 2.0)
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelFrontCutoff?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-front-cutoff") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelFrontCutoffAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelFrontCutoffAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-front-cutoff") }
+  }
+
+  @Test
+  fun defaultModelFrontCutoffAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0, 2.0))
+    assertEquals("[literal, [0.0, 1.0, 2.0]]", ModelLayer.defaultModelFrontCutoffAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0, 2.0), ModelLayer.defaultModelFrontCutoff!!)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-front-cutoff") }
   }
 
   @Test

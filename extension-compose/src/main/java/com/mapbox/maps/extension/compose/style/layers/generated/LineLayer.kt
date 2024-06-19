@@ -34,6 +34,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param lineMiterLimit Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
  * @param lineRoundLimit Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
  * @param lineSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+ * @param lineZOffset Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
  * @param lineBlur Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
  * @param lineBlurTransition Defines the transition of [lineBlur]. Default value: 0. Minimum value: 0.
  * @param lineBorderColor The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
@@ -50,6 +51,8 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param lineGapWidth Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
  * @param lineGapWidthTransition Defines the transition of [lineGapWidth]. Default value: 0. Minimum value: 0.
  * @param lineGradient A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+ * @param lineOcclusionOpacity Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+ * @param lineOcclusionOpacityTransition Defines the transition of [lineOcclusionOpacity]. Default value: 0. Value range: [0, 1]
  * @param lineOffset The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
  * @param lineOffsetTransition Defines the transition of [lineOffset]. Default value: 0.
  * @param lineOpacity The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
@@ -80,6 +83,7 @@ public fun LineLayer(
   lineMiterLimit: DoubleValue = DoubleValue.INITIAL,
   lineRoundLimit: DoubleValue = DoubleValue.INITIAL,
   lineSortKey: DoubleValue = DoubleValue.INITIAL,
+  lineZOffset: DoubleValue = DoubleValue.INITIAL,
   lineBlur: DoubleValue = DoubleValue.INITIAL,
   lineBlurTransition: Transition = Transition.INITIAL,
   lineBorderColor: ColorValue = ColorValue.INITIAL,
@@ -96,6 +100,8 @@ public fun LineLayer(
   lineGapWidth: DoubleValue = DoubleValue.INITIAL,
   lineGapWidthTransition: Transition = Transition.INITIAL,
   lineGradient: ColorValue = ColorValue.INITIAL,
+  lineOcclusionOpacity: DoubleValue = DoubleValue.INITIAL,
+  lineOcclusionOpacityTransition: Transition = Transition.INITIAL,
   lineOffset: DoubleValue = DoubleValue.INITIAL,
   lineOffsetTransition: Transition = Transition.INITIAL,
   lineOpacity: DoubleValue = DoubleValue.INITIAL,
@@ -145,6 +151,9 @@ public fun LineLayer(
         if (lineSortKey.notInitial) {
           setProperty("line-sort-key", lineSortKey.value)
         }
+        if (lineZOffset.notInitial) {
+          setProperty("line-z-offset", lineZOffset.value)
+        }
         if (lineBlur.notInitial) {
           setProperty("line-blur", lineBlur.value)
         }
@@ -192,6 +201,12 @@ public fun LineLayer(
         }
         if (lineGradient.notInitial) {
           setProperty("line-gradient", lineGradient.value)
+        }
+        if (lineOcclusionOpacity.notInitial) {
+          setProperty("line-occlusion-opacity", lineOcclusionOpacity.value)
+        }
+        if (lineOcclusionOpacityTransition.notInitial) {
+          setProperty("line-occlusion-opacity-transition", lineOcclusionOpacityTransition.value)
         }
         if (lineOffset.notInitial) {
           setProperty("line-offset", lineOffset.value)
@@ -266,6 +281,9 @@ public fun LineLayer(
       update(lineSortKey) {
         setProperty("line-sort-key", lineSortKey.value)
       }
+      update(lineZOffset) {
+        setProperty("line-z-offset", lineZOffset.value)
+      }
       update(lineBlur) {
         setProperty("line-blur", lineBlur.value)
       }
@@ -313,6 +331,12 @@ public fun LineLayer(
       }
       update(lineGradient) {
         setProperty("line-gradient", lineGradient.value)
+      }
+      update(lineOcclusionOpacity) {
+        setProperty("line-occlusion-opacity", lineOcclusionOpacity.value)
+      }
+      update(lineOcclusionOpacityTransition) {
+        setProperty("line-occlusion-opacity-transition", lineOcclusionOpacityTransition.value)
       }
       update(lineOffset) {
         setProperty("line-offset", lineOffset.value)

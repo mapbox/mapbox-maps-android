@@ -88,6 +88,8 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param iconHaloWidthTransition Defines the transition of [iconHaloWidth]. Default value: 0. Minimum value: 0.
  * @param iconImageCrossFade Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
  * @param iconImageCrossFadeTransition Defines the transition of [iconImageCrossFade]. Default value: 0. Value range: [0, 1]
+ * @param iconOcclusionOpacity The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+ * @param iconOcclusionOpacityTransition Defines the transition of [iconOcclusionOpacity]. Default value: 1. Value range: [0, 1]
  * @param iconOpacity The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
  * @param iconOpacityTransition Defines the transition of [iconOpacity]. Default value: 1. Value range: [0, 1]
  * @param iconTranslate Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
@@ -103,6 +105,8 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param textHaloColorTransition Defines the transition of [textHaloColor]. Default value: "rgba(0, 0, 0, 0)".
  * @param textHaloWidth Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
  * @param textHaloWidthTransition Defines the transition of [textHaloWidth]. Default value: 0. Minimum value: 0.
+ * @param textOcclusionOpacity The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+ * @param textOcclusionOpacityTransition Defines the transition of [textOcclusionOpacity]. Default value: 1. Value range: [0, 1]
  * @param textOpacity The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
  * @param textOpacityTransition Defines the transition of [textOpacity]. Default value: 1. Value range: [0, 1]
  * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
@@ -178,6 +182,8 @@ public fun SymbolLayer(
   iconHaloWidthTransition: Transition = Transition.INITIAL,
   iconImageCrossFade: DoubleValue = DoubleValue.INITIAL,
   iconImageCrossFadeTransition: Transition = Transition.INITIAL,
+  iconOcclusionOpacity: DoubleValue = DoubleValue.INITIAL,
+  iconOcclusionOpacityTransition: Transition = Transition.INITIAL,
   iconOpacity: DoubleValue = DoubleValue.INITIAL,
   iconOpacityTransition: Transition = Transition.INITIAL,
   iconTranslate: DoubleListValue = DoubleListValue.INITIAL,
@@ -193,6 +199,8 @@ public fun SymbolLayer(
   textHaloColorTransition: Transition = Transition.INITIAL,
   textHaloWidth: DoubleValue = DoubleValue.INITIAL,
   textHaloWidthTransition: Transition = Transition.INITIAL,
+  textOcclusionOpacity: DoubleValue = DoubleValue.INITIAL,
+  textOcclusionOpacityTransition: Transition = Transition.INITIAL,
   textOpacity: DoubleValue = DoubleValue.INITIAL,
   textOpacityTransition: Transition = Transition.INITIAL,
   textTranslate: DoubleListValue = DoubleListValue.INITIAL,
@@ -392,6 +400,12 @@ public fun SymbolLayer(
         if (iconImageCrossFadeTransition.notInitial) {
           setProperty("icon-image-cross-fade-transition", iconImageCrossFadeTransition.value)
         }
+        if (iconOcclusionOpacity.notInitial) {
+          setProperty("icon-occlusion-opacity", iconOcclusionOpacity.value)
+        }
+        if (iconOcclusionOpacityTransition.notInitial) {
+          setProperty("icon-occlusion-opacity-transition", iconOcclusionOpacityTransition.value)
+        }
         if (iconOpacity.notInitial) {
           setProperty("icon-opacity", iconOpacity.value)
         }
@@ -436,6 +450,12 @@ public fun SymbolLayer(
         }
         if (textHaloWidthTransition.notInitial) {
           setProperty("text-halo-width-transition", textHaloWidthTransition.value)
+        }
+        if (textOcclusionOpacity.notInitial) {
+          setProperty("text-occlusion-opacity", textOcclusionOpacity.value)
+        }
+        if (textOcclusionOpacityTransition.notInitial) {
+          setProperty("text-occlusion-opacity-transition", textOcclusionOpacityTransition.value)
         }
         if (textOpacity.notInitial) {
           setProperty("text-opacity", textOpacity.value)
@@ -645,6 +665,12 @@ public fun SymbolLayer(
       update(iconImageCrossFadeTransition) {
         setProperty("icon-image-cross-fade-transition", iconImageCrossFadeTransition.value)
       }
+      update(iconOcclusionOpacity) {
+        setProperty("icon-occlusion-opacity", iconOcclusionOpacity.value)
+      }
+      update(iconOcclusionOpacityTransition) {
+        setProperty("icon-occlusion-opacity-transition", iconOcclusionOpacityTransition.value)
+      }
       update(iconOpacity) {
         setProperty("icon-opacity", iconOpacity.value)
       }
@@ -689,6 +715,12 @@ public fun SymbolLayer(
       }
       update(textHaloWidthTransition) {
         setProperty("text-halo-width-transition", textHaloWidthTransition.value)
+      }
+      update(textOcclusionOpacity) {
+        setProperty("text-occlusion-opacity", textOcclusionOpacity.value)
+      }
+      update(textOcclusionOpacityTransition) {
+        setProperty("text-occlusion-opacity-transition", textOcclusionOpacityTransition.value)
       }
       update(textOpacity) {
         setProperty("text-opacity", textOpacity.value)

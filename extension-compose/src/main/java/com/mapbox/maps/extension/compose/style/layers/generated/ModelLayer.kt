@@ -39,6 +39,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param modelCutoffFadeRange This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
  * @param modelEmissiveStrength Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
  * @param modelEmissiveStrengthTransition Defines the transition of [modelEmissiveStrength]. Default value: 0. Value range: [0, 5]
+ * @param modelFrontCutoff An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
  * @param modelHeightBasedEmissiveStrengthMultiplier Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
  * @param modelHeightBasedEmissiveStrengthMultiplierTransition Defines the transition of [modelHeightBasedEmissiveStrengthMultiplier]. Default value: [1,1,1,1,0].
  * @param modelOpacity The opacity of the model layer. Default value: 1. Value range: [0, 1]
@@ -79,6 +80,7 @@ public fun ModelLayer(
   modelCutoffFadeRange: DoubleValue = DoubleValue.INITIAL,
   modelEmissiveStrength: DoubleValue = DoubleValue.INITIAL,
   modelEmissiveStrengthTransition: Transition = Transition.INITIAL,
+  modelFrontCutoff: DoubleListValue = DoubleListValue.INITIAL,
   modelHeightBasedEmissiveStrengthMultiplier: DoubleListValue = DoubleListValue.INITIAL,
   modelHeightBasedEmissiveStrengthMultiplierTransition: Transition = Transition.INITIAL,
   modelOpacity: DoubleValue = DoubleValue.INITIAL,
@@ -152,6 +154,9 @@ public fun ModelLayer(
         }
         if (modelEmissiveStrengthTransition.notInitial) {
           setProperty("model-emissive-strength-transition", modelEmissiveStrengthTransition.value)
+        }
+        if (modelFrontCutoff.notInitial) {
+          setProperty("model-front-cutoff", modelFrontCutoff.value)
         }
         if (modelHeightBasedEmissiveStrengthMultiplier.notInitial) {
           setProperty("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier.value)
@@ -255,6 +260,9 @@ public fun ModelLayer(
       }
       update(modelEmissiveStrengthTransition) {
         setProperty("model-emissive-strength-transition", modelEmissiveStrengthTransition.value)
+      }
+      update(modelFrontCutoff) {
+        setProperty("model-front-cutoff", modelFrontCutoff.value)
       }
       update(modelHeightBasedEmissiveStrengthMultiplier) {
         setProperty("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier.value)

@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class LineLayerTest {
@@ -492,6 +494,73 @@ class LineLayerTest {
     assertEquals(1.0, layer.lineSortKeyAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, layer.lineSortKey!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "line-sort-key") }
+  }
+
+  @Test
+  fun lineZOffsetSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineZOffset(testValue)
+    verify { style.setStyleLayerProperty("id", "line-z-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineZOffsetGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineZOffset?.toString())
+    verify { style.getStyleLayerProperty("id", "line-z-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineZOffsetAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineZOffset(expression)
+    verify { style.setStyleLayerProperty("id", "line-z-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineZOffsetAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineZOffsetAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-z-offset") }
+  }
+
+  @Test
+  fun lineZOffsetAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineZOffsetAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-z-offset") }
+  }
+
+  @Test
+  fun lineZOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineZOffsetAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineZOffset!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-z-offset") }
   }
 
   @Test
@@ -1481,6 +1550,113 @@ class LineLayerTest {
   // Expression Tests
 
   @Test
+  fun lineOcclusionOpacitySet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineOcclusionOpacity(testValue)
+    verify { style.setStyleLayerProperty("id", "line-occlusion-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineOcclusionOpacityGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineOcclusionOpacity?.toString())
+    verify { style.getStyleLayerProperty("id", "line-occlusion-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineOcclusionOpacityAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineOcclusionOpacity(expression)
+    verify { style.setStyleLayerProperty("id", "line-occlusion-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineOcclusionOpacityAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineOcclusionOpacityAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-occlusion-opacity") }
+  }
+
+  @Test
+  fun lineOcclusionOpacityAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineOcclusionOpacityAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-occlusion-opacity") }
+  }
+
+  @Test
+  fun lineOcclusionOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineOcclusionOpacity!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-occlusion-opacity") }
+  }
+
+  @Test
+  fun lineOcclusionOpacityTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineOcclusionOpacityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-occlusion-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineOcclusionOpacityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineOcclusionOpacityTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-occlusion-opacity-transition") }
+  }
+
+  @Test
+  fun lineOcclusionOpacityTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineOcclusionOpacityTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-occlusion-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun lineOffsetSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = 1.0
@@ -2337,6 +2513,37 @@ class LineLayerTest {
   }
 
   @Test
+  fun defaultLineZOffsetTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineZOffset?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-z-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineZOffsetAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineZOffsetAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-z-offset") }
+  }
+
+  @Test
+  fun defaultLineZOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineZOffsetAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineZOffset!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-z-offset") }
+  }
+
+  @Test
   fun defaultLineBlurTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -2737,6 +2944,50 @@ class LineLayerTest {
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gap-width-transition") }
   }
   // Expression Tests
+
+  @Test
+  fun defaultLineOcclusionOpacityTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineOcclusionOpacity?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineOcclusionOpacityAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineOcclusionOpacityAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity") }
+  }
+
+  @Test
+  fun defaultLineOcclusionOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineOcclusionOpacity!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity") }
+  }
+
+  @Test
+  fun defaultLineOcclusionOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineOcclusionOpacityTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity-transition") }
+  }
 
   @Test
   fun defaultLineOffsetTest() {

@@ -50,8 +50,10 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param textVariableAnchor To increase the chance of placing high-priority labels on the map, you can provide an array of {@link Property.TEXT_ANCHOR} locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the {@link PropertyFactory#textRadialOffset} or the two-dimensional {@link PropertyFactory#textOffset}.
  * @param textWritingMode The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
  * @param iconColorSaturation Increase or reduce the saturation of the symbol icon.
+ * @param iconOcclusionOpacity The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels.
  * @param iconTranslate Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.
  * @param iconTranslateAnchor Controls the frame of reference for {@link PropertyFactory#iconTranslate}.
+ * @param textOcclusionOpacity The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels.
  * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of textTranslate is in density-independent pixels.
  * @param textTranslateAnchor Controls the frame of reference for {@link PropertyFactory#textTranslate}.
  * @param onClick Callback to be invoked when one of the [PointAnnotation] in the cluster is clicked. The clicked [PointAnnotation] will be passed as parameter.
@@ -86,8 +88,10 @@ public fun PointAnnotationGroup(
   textVariableAnchor: List<String>? = null,
   textWritingMode: List<String>? = null,
   iconColorSaturation: Double? = null,
+  iconOcclusionOpacity: Double? = null,
   iconTranslate: List<Double>? = null,
   iconTranslateAnchor: IconTranslateAnchor? = null,
+  textOcclusionOpacity: Double? = null,
   textTranslate: List<Double>? = null,
   textTranslateAnchor: TextTranslateAnchor? = null,
   onClick: (PointAnnotation) -> Boolean = { false },
@@ -178,11 +182,17 @@ public fun PointAnnotationGroup(
       set(iconColorSaturation) {
         annotationManager.iconColorSaturation = it
       }
+      set(iconOcclusionOpacity) {
+        annotationManager.iconOcclusionOpacity = it
+      }
       set(iconTranslate) {
         annotationManager.iconTranslate = it
       }
       set(iconTranslateAnchor) {
         annotationManager.iconTranslateAnchor = it
+      }
+      set(textOcclusionOpacity) {
+        annotationManager.textOcclusionOpacity = it
       }
       set(textTranslate) {
         annotationManager.textTranslate = it

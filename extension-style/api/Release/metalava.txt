@@ -2599,6 +2599,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineJoinAsExpression();
     method public Double? getLineMiterLimit();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineMiterLimitAsExpression();
+    method public Double? getLineOcclusionOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineOcclusionOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getLineOcclusionOpacityTransition();
     method public Double? getLineOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineOffsetAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineOffsetTransition();
@@ -2621,6 +2624,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getLineWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineWidthTransition();
+    method public Double? getLineZOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineZOffsetAsExpression();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
     method public String? getSlot();
@@ -2667,6 +2672,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineJoin(com.mapbox.maps.extension.style.expressions.generated.Expression lineJoin);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineMiterLimit(double lineMiterLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineMiterLimit(com.mapbox.maps.extension.style.expressions.generated.Expression lineMiterLimit);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacity(double lineOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression lineOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOffset(double lineOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2693,6 +2702,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(double lineZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineZOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
@@ -2733,6 +2744,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineJoinAsExpression;
     property public final Double? lineMiterLimit;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineMiterLimitAsExpression;
+    property public final Double? lineOcclusionOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineOcclusionOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? lineOcclusionOpacityTransition;
     property public final Double? lineOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineOffsetAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineOffsetTransition;
@@ -2755,6 +2769,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? lineWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineWidthTransition;
+    property public final Double? lineZOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineZOffsetAsExpression;
     property public Double? maxZoom;
     property public Double? minZoom;
     property public String? slot;
@@ -2797,6 +2813,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineJoinAsExpression();
     method public Double? getDefaultLineMiterLimit();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineMiterLimitAsExpression();
+    method public Double? getDefaultLineOcclusionOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineOcclusionOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineOcclusionOpacityTransition();
     method public Double? getDefaultLineOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineOffsetAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineOffsetTransition();
@@ -2819,6 +2838,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultLineWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineWidthTransition();
+    method public Double? getDefaultLineZOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineZOffsetAsExpression();
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
@@ -2853,6 +2874,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineJoinAsExpression;
     property public final Double? defaultLineMiterLimit;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineMiterLimitAsExpression;
+    property public final Double? defaultLineOcclusionOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineOcclusionOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineOcclusionOpacityTransition;
     property public final Double? defaultLineOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineOffsetAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineOffsetTransition;
@@ -2875,6 +2899,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultLineWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineWidthTransition;
+    property public final Double? defaultLineZOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineZOffsetAsExpression;
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
@@ -2921,6 +2947,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineJoin(com.mapbox.maps.extension.style.expressions.generated.Expression lineJoin);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineMiterLimit(double lineMiterLimit = 2.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineMiterLimit(com.mapbox.maps.extension.style.expressions.generated.Expression lineMiterLimit);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacity(double lineOcclusionOpacity = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression lineOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOcclusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOffset(double lineOffset = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2947,6 +2977,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(double lineZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineZOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
@@ -3324,6 +3356,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getModelEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelEmissiveStrengthTransition();
+    method public java.util.List<java.lang.Double>? getModelFrontCutoff();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelFrontCutoffAsExpression();
     method public java.util.List<java.lang.Double>? getModelHeightBasedEmissiveStrengthMultiplier();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelHeightBasedEmissiveStrengthMultiplierAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelHeightBasedEmissiveStrengthMultiplierTransition();
@@ -3378,6 +3412,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(java.util.List<java.lang.Double> modelFrontCutoff);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(com.mapbox.maps.extension.style.expressions.generated.Expression modelFrontCutoff);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(java.util.List<java.lang.Double> modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.style.expressions.generated.Expression modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3435,6 +3471,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? modelEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelEmissiveStrengthTransition;
+    property public final java.util.List<java.lang.Double>? modelFrontCutoff;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelFrontCutoffAsExpression;
     property public final java.util.List<java.lang.Double>? modelHeightBasedEmissiveStrengthMultiplier;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelHeightBasedEmissiveStrengthMultiplierAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelHeightBasedEmissiveStrengthMultiplierTransition;
@@ -3489,6 +3527,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultModelEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelEmissiveStrengthTransition();
+    method public java.util.List<java.lang.Double>? getDefaultModelFrontCutoff();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelFrontCutoffAsExpression();
     method public java.util.List<java.lang.Double>? getDefaultModelHeightBasedEmissiveStrengthMultiplier();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelHeightBasedEmissiveStrengthMultiplierAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelHeightBasedEmissiveStrengthMultiplierTransition();
@@ -3535,6 +3575,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultModelEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelEmissiveStrengthTransition;
+    property public final java.util.List<java.lang.Double>? defaultModelFrontCutoff;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelFrontCutoffAsExpression;
     property public final java.util.List<java.lang.Double>? defaultModelHeightBasedEmissiveStrengthMultiplier;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelHeightBasedEmissiveStrengthMultiplierTransition;
@@ -3589,6 +3631,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(java.util.List<java.lang.Double> modelFrontCutoff = listOf(0.0, 0.0, 1.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(com.mapbox.maps.extension.style.expressions.generated.Expression modelFrontCutoff);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(java.util.List<java.lang.Double> modelHeightBasedEmissiveStrengthMultiplier = listOf(1.0, 1.0, 1.0, 1.0, 0.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.style.expressions.generated.Expression modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4302,6 +4346,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getIconImageCrossFadeTransition();
     method public Boolean? getIconKeepUpright();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIconKeepUprightAsExpression();
+    method public Double? getIconOcclusionOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIconOcclusionOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getIconOcclusionOpacityTransition();
     method public java.util.List<java.lang.Double>? getIconOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIconOffsetAsExpression();
     method public Double? getIconOpacity();
@@ -4386,6 +4433,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getTextMaxAngleAsExpression();
     method public Double? getTextMaxWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getTextMaxWidthAsExpression();
+    method public Double? getTextOcclusionOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getTextOcclusionOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getTextOcclusionOpacityTransition();
     method public java.util.List<java.lang.Double>? getTextOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getTextOffsetAsExpression();
     method public Double? getTextOpacity();
@@ -4458,6 +4508,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(boolean iconKeepUpright);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(com.mapbox.maps.extension.style.expressions.generated.Expression iconKeepUpright);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacity(double iconOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression iconOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(java.util.List<java.lang.Double> iconOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(com.mapbox.maps.extension.style.expressions.generated.Expression iconOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOpacity(double iconOpacity);
@@ -4548,6 +4602,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxAngle(com.mapbox.maps.extension.style.expressions.generated.Expression textMaxAngle);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxWidth(double textMaxWidth);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxWidth(com.mapbox.maps.extension.style.expressions.generated.Expression textMaxWidth);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacity(double textOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression textOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(java.util.List<java.lang.Double> textOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(com.mapbox.maps.extension.style.expressions.generated.Expression textOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOpacity(double textOpacity);
@@ -4616,6 +4674,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? iconImageCrossFadeTransition;
     property public final Boolean? iconKeepUpright;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? iconKeepUprightAsExpression;
+    property public final Double? iconOcclusionOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? iconOcclusionOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? iconOcclusionOpacityTransition;
     property public final java.util.List<java.lang.Double>? iconOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? iconOffsetAsExpression;
     property public final Double? iconOpacity;
@@ -4700,6 +4761,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? textMaxAngleAsExpression;
     property public final Double? textMaxWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? textMaxWidthAsExpression;
+    property public final Double? textOcclusionOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? textOcclusionOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? textOcclusionOpacityTransition;
     property public final java.util.List<java.lang.Double>? textOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? textOffsetAsExpression;
     property public final Double? textOpacity;
@@ -4769,6 +4833,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultIconImageCrossFadeTransition();
     method public Boolean? getDefaultIconKeepUpright();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultIconKeepUprightAsExpression();
+    method public Double? getDefaultIconOcclusionOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultIconOcclusionOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultIconOcclusionOpacityTransition();
     method public java.util.List<java.lang.Double>? getDefaultIconOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultIconOffsetAsExpression();
     method public Double? getDefaultIconOpacity();
@@ -4849,6 +4916,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultTextMaxAngleAsExpression();
     method public Double? getDefaultTextMaxWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultTextMaxWidthAsExpression();
+    method public Double? getDefaultTextOcclusionOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultTextOcclusionOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultTextOcclusionOpacityTransition();
     method public java.util.List<java.lang.Double>? getDefaultTextOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultTextOffsetAsExpression();
     method public Double? getDefaultTextOpacity();
@@ -4913,6 +4983,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultIconImageCrossFadeTransition;
     property public final Boolean? defaultIconKeepUpright;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultIconKeepUprightAsExpression;
+    property public final Double? defaultIconOcclusionOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultIconOcclusionOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultIconOcclusionOpacityTransition;
     property public final java.util.List<java.lang.Double>? defaultIconOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultIconOffsetAsExpression;
     property public final Double? defaultIconOpacity;
@@ -4993,6 +5066,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultTextMaxAngleAsExpression;
     property public final Double? defaultTextMaxWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultTextMaxWidthAsExpression;
+    property public final Double? defaultTextOcclusionOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultTextOcclusionOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultTextOcclusionOpacityTransition;
     property public final java.util.List<java.lang.Double>? defaultTextOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultTextOffsetAsExpression;
     property public final Double? defaultTextOpacity;
@@ -5068,6 +5144,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(boolean iconKeepUpright = false);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(com.mapbox.maps.extension.style.expressions.generated.Expression iconKeepUpright);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacity(double iconOcclusionOpacity = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression iconOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOcclusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(java.util.List<java.lang.Double> iconOffset = listOf(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(com.mapbox.maps.extension.style.expressions.generated.Expression iconOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOpacity(double iconOpacity = 1.0);
@@ -5158,6 +5238,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxAngle(com.mapbox.maps.extension.style.expressions.generated.Expression textMaxAngle);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxWidth(double textMaxWidth = 10.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxWidth(com.mapbox.maps.extension.style.expressions.generated.Expression textMaxWidth);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacity(double textOcclusionOpacity = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression textOcclusionOpacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOcclusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(java.util.List<java.lang.Double> textOffset = listOf(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(com.mapbox.maps.extension.style.expressions.generated.Expression textOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOpacity(double textOpacity = 1.0);

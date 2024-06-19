@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import com.mapbox.geojson.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -27,6 +28,7 @@ class PolylineAnnotationManager(
     delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "polylineAnnotation", ::LineLayer
   ) {
 
+  @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       PolylineAnnotationOptions.PROPERTY_LINE_JOIN -> {
@@ -36,6 +38,10 @@ class PolylineAnnotationManager(
       PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY -> {
         layer.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
         dragLayer.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET -> {
+        layer.lineZOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET))
+        dragLayer.lineZOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_BLUR -> {
         layer.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
@@ -84,6 +90,7 @@ class PolylineAnnotationManager(
    * All supported properties are:
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
    * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
@@ -113,6 +120,7 @@ class PolylineAnnotationManager(
    * All supported properties are:
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
    * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
@@ -313,6 +321,34 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineOcclusionOpacity property
+   *
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when {@link PropertyFactory#lineOpacity} has data-driven styling.
+   */
+  @MapboxExperimental
+  var lineOcclusionOpacity: Double?
+    /**
+     * Get the LineOcclusionOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineOcclusionOpacity
+    }
+    /**
+     * Set the LineOcclusionOpacity property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity").value
+      }
+      setLayerProperty(wrappedValue, "line-occlusion-opacity")
+    }
+
+  /**
    * The LineTranslate property
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of lineTranslate is in density-independent pixels.
@@ -445,6 +481,7 @@ class PolylineAnnotationManager(
   init {
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_JOIN] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BLUR] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH] = false

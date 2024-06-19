@@ -23,6 +23,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  *
  * @param points A list of Point for the line, which represents the locations of the line on the map.
  * @param lineJoin The display of lines when joining.
+ * @param lineZOffset Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
  * @param lineBlur Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
  * @param lineBorderColorInt The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. The property is set as Color Int.
  * @param lineBorderColorString The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. The property is set as Color String.
@@ -42,6 +43,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
 public fun PolylineAnnotation(
   points: List<Point>,
   lineJoin: LineJoin? = null,
+  lineZOffset: Double? = null,
   lineBlur: Double? = null,
   lineBorderColorInt: Int? = null,
   lineBorderColorString: String? = null,
@@ -69,6 +71,9 @@ public fun PolylineAnnotation(
         .withPoints(points)
       lineJoin?.let {
         annotationOptions.withLineJoin(it)
+      }
+      lineZOffset?.let {
+        annotationOptions.withLineZOffset(it)
       }
       lineBlur?.let {
         annotationOptions.withLineBlur(it)
@@ -117,6 +122,10 @@ public fun PolylineAnnotation(
       }
       update(lineJoin) {
         annotation.lineJoin = it
+        annotationManager.update(annotation)
+      }
+      update(lineZOffset) {
+        annotation.lineZOffset = it
         annotationManager.update(annotation)
       }
       update(lineBlur) {
