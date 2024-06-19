@@ -234,7 +234,7 @@ commands:
       - run:
           name: Generate sanity test
           command: |
-            npm install
+            npm install ejs@3.1.7 -D
             make generate-sanity-test
 
   run-firebase-instrumentation:
