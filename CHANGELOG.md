@@ -15,9 +15,17 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 * Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
+* Add min/max/default values to the docs for the generated properties.
+* Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
 
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
+* Fix the rotated icon position during the globe transition.
+* Fix Dynamic View Annotation (DVA) placement to place DVA in the center of the line geometry point, and try to avoid placing DVA near the lines' intersection point.
+* Reduce the max raster-particle animation speed. It prevents particles from moving too fast, causing a visible clipping artifact at tile boundaries.
+
+## Dependencies
+* Update gl-native to v11.5.0-rc.1 and common to v24.5.0-rc.1.
 
 # 11.5.0-beta.1 June 11, 2024
 ## Breaking changes ⚠️
@@ -38,7 +46,6 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
 * [compose] Avoid recreation of objects during recomposition of `GenericStyle`.
 * Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
-* Add min/max/defaulta values to the docs on the generated properties
 
 ## Bug fixes 🐞
 * [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.

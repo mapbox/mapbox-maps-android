@@ -15,15 +15,28 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mapbox.bindgen.Value
-import com.mapbox.common.*
+import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxOptions
+import com.mapbox.common.NetworkRestriction
+import com.mapbox.common.OfflineSwitch
+import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.GlyphsRasterizationMode
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.OfflineManager
+import com.mapbox.maps.Style
+import com.mapbox.maps.StylePackLoadOptions
+import com.mapbox.maps.TileStoreUsageMode
+import com.mapbox.maps.TilesetDescriptorOptions
+import com.mapbox.maps.mapsOptions
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityOfflineBinding
-import java.util.*
 
 /**
  * Example app that shows how to use OfflineManager and TileStore to
@@ -283,12 +296,6 @@ class OfflineActivity : AppCompatActivity() {
     // not a part of a tile region. The tiles still exists as a predictive cache in TileStore.
     tileStore.removeTileRegion(TILE_REGION_ID)
 
-    // Set the disk quota to zero, so that tile regions are fully evicted
-    // when removed. The TileStore is also used when `ResourceOptions.isLoadTilePacksFromNetwork`
-    // is `true`, and also by the Navigation SDK.
-    // This removes the tiles that do not belong to any tile regions.
-    tileStore.setOption(TileStoreOptions.DISK_QUOTA, Value(0))
-
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
     // not a part of the existing style pack. The resources still exists as disk cache.
@@ -297,6 +304,15 @@ class OfflineActivity : AppCompatActivity() {
     MapboxMap.clearData {
       it.error?.let { error ->
         logErrorMessage(error)
+      }
+    }
+
+    // Explicitly clear ambient cache data (so that if we try to download tile store regions again - it would actually truly download it from network).
+    // Ambient cache data is anything not associated with an offline region or a style pack, including predictively cached data.
+    // Note that it is advisable to rely on internal TileStore implementation to clear cache when needed.
+    tileStore.clearAmbientCache {
+      it.error?.let { error ->
+        logErrorMessage(error.message)
       }
     }
 
