@@ -10,8 +10,18 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove experimental `CustomRasterSource.tileCacheBudget` getter and setter. If needed, caching should be implemented on user's side.
 * Remove experimental `MapboxMap` and `Style` methods: `invalidateStyleCustomRasterSourceTile`, `invalidateStyleCustomRasterSourceRegion`; change signature of `setStyleCustomRasterSourceTileData` method in `MapboxMap` and `Style`.
 
+## Features ✨ and improvements 🏁
+* Add min/max/default values to the docs for the generated properties.
+* Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
+
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
+* Fix the rotated icon position during the globe transition.
+* Fix Dynamic View Annotation (DVA) placement to place DVA in the center of the line geometry point, and try to avoid placing DVA near the lines' intersection point.
+* Reduce the max raster-particle animation speed. It prevents particles from moving too fast, causing a visible clipping artifact at tile boundaries.
+
+## Dependencies
+* Update gl-native to v11.5.0-rc.1 and common to v24.5.0-rc.1.
 
 # 11.5.0-beta.1 June 11, 2024
 ## Breaking changes ⚠️

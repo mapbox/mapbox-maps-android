@@ -58,7 +58,6 @@ class GestureActivityTest : BaseMapTest() {
     }
 
     onView(withId(R.id.mapView)).perform(quickScale(maxHeight / 2f, withVelocity = false))
-
     val resultLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
