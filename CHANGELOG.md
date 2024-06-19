@@ -17,15 +17,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 * [compose] Introduce `MapState` that can be hoisted to interact with map states, such as query rendered features, subscribe to map events and configure gestures settings.
-* Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
 * Add min/max/default values to the docs for the generated properties.
 * Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
 * Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
-* [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
-* [compose] Rename `ImportConfig` to `ImportConfigs`.
-
-## Features ✨ and improvements 🏁
-* [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
