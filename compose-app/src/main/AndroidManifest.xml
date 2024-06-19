@@ -256,6 +256,16 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.basic.QueryRenderedFeatureActivity"
+            android:description="@string/description_query_rendered_feature"
+            android:exported="true"
+            android:label="@string/activity_query_rendered_feature"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+        </activity>
     </application>
 
 </manifest>
