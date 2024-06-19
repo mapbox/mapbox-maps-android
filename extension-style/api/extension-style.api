@@ -3242,7 +3242,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayerD
 	public static synthetic fun rasterBrightnessMax$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterBrightnessMin$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterColorMix$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
-	public static synthetic fun rasterColorRange$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterContrast$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterElevation$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -5161,7 +5160,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public static synthetic fun cluster$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterMaxZoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterMinPoints (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
-	public static synthetic fun clusterMinPoints$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperties (Ljava/util/HashMap;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperty (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun clusterProperty (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;

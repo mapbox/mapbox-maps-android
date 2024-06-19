@@ -244,7 +244,6 @@ public class GeoJsonSourceState private constructor(
 
   /**
    * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
-   * Default value: 2.
    */
   public var clusterMinPoints: LongValue by clusterMinPointsState
 
@@ -299,7 +298,7 @@ public class GeoJsonSourceState private constructor(
   private val generateIdState: MutableState<BooleanValue> = mutableStateOf(generateId)
 
   /**
-   * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+   * Whether to generate ids for the GeoJSON features. When enabled, the `feature.id` property will be auto
    * assigned based on its index in the `features` array, over-writing any previous values.
    * Default value: false.
    */

@@ -106,7 +106,8 @@ public class VectorSourceState private constructor(
   private val urlState: MutableState<StringValue> = mutableStateOf(url)
 
   /**
-   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
+   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`. Required if
+   * `tiles` is not provided.
    */
   public var url: StringValue by urlState
 
@@ -121,7 +122,8 @@ public class VectorSourceState private constructor(
   private val tilesState: MutableState<StringListValue> = mutableStateOf(tiles)
 
   /**
-   * An array of one or more tile source URLs, as in the TileJSON spec.
+   * An array of one or more tile source URLs, as in the TileJSON spec. Required if
+   * `url` is not provided.
    */
   public var tiles: StringListValue by tilesState
 

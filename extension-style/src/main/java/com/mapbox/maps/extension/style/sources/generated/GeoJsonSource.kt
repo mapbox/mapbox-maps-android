@@ -274,7 +274,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
   /**
    * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
-   * Default value: 2.
    */
   val clusterMinPoints: Long?
     /**
@@ -321,7 +320,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     get() = getPropertyValue("lineMetrics")
 
   /**
-   * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+   * Whether to generate ids for the GeoJSON features. When enabled, the `feature.id` property will be auto
    * assigned based on its index in the `features` array, over-writing any previous values.
    * Default value: false.
    */
@@ -583,9 +582,8 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
-     * Default value: 2.
      */
-    fun clusterMinPoints(value: Long = 2L): Builder = apply {
+    fun clusterMinPoints(value: Long): Builder = apply {
       val propertyValue = PropertyValue("clusterMinPoints", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -677,7 +675,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     }
 
     /**
-     * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+     * Whether to generate ids for the GeoJSON features. When enabled, the `feature.id` property will be auto
      * assigned based on its index in the `features` array, over-writing any previous values.
      * Default value: false.
      */
@@ -877,7 +875,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
-     * Default value: 2.
      */
     val defaultClusterMinPoints: Long?
       /**
@@ -900,7 +897,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics").silentUnwrap()
 
     /**
-     * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+     * Whether to generate ids for the GeoJSON features. When enabled, the `feature.id` property will be auto
      * assigned based on its index in the `features` array, over-writing any previous values.
      * Default value: false.
      */

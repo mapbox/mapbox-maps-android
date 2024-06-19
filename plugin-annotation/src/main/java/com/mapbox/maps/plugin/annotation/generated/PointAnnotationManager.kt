@@ -900,7 +900,7 @@ class PointAnnotationManager(
   /**
    * The IconColorSaturation property
    *
-   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. The unit of iconColorSaturation is in intensity.
+   * Increase or reduce the saturation of the symbol icon.
    */
   var iconColorSaturation: Double?
     /**

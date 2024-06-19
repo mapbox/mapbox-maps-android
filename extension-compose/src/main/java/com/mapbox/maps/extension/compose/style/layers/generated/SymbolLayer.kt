@@ -76,8 +76,8 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param textWritingMode The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
  * @param iconColor The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
  * @param iconColorTransition Defines the transition of [iconColor]. Default value: "#000000".
- * @param iconColorSaturation Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. Default value: 1. Value range: [0, 1]
- * @param iconColorSaturationTransition Defines the transition of [iconColorSaturation]. Default value: 1. Value range: [0, 1]
+ * @param iconColorSaturation Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
+ * @param iconColorSaturationTransition Defines the transition of [iconColorSaturation]. Default value: 0. Value range: [-1, 1]
  * @param iconEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
  * @param iconEmissiveStrengthTransition Defines the transition of [iconEmissiveStrength]. Default value: 1. Minimum value: 0.
  * @param iconHaloBlur Fade out the halo towards the outside. Default value: 0. Minimum value: 0.

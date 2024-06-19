@@ -1062,11 +1062,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
   val fillExtrusionCutoffFadeRange: Double?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange] to get the default property.
      *
@@ -1077,7 +1077,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange] to set the default property.
    *
@@ -1089,14 +1089,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-cutoff-fade-range".
    *
    */
   val fillExtrusionCutoffFadeRangeAsExpression: Expression?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Get the FillExtrusionCutoffFadeRange property as an Expression
      *
@@ -1115,7 +1115,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression] to set the default property.
    *
@@ -1471,12 +1471,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadius: Double?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to get the default property.
      *
@@ -1487,7 +1487,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to set the default property.
    *
@@ -1500,7 +1500,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
    *
@@ -1508,7 +1508,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
      *
      * Get the FillExtrusionFloodLightGroundRadius property as an Expression
      *
@@ -1527,7 +1527,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadiusAsExpression] to set the default property.
    *
@@ -2921,11 +2921,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-transition").silentUnwrap()
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      */
     val defaultFillExtrusionCutoffFadeRange: Double?
       /**
-       * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+       * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionCutoffFadeRange property
        *
@@ -2936,7 +2936,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-cutoff-fade-range".
      *
@@ -3128,12 +3128,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundRadius: Double?
       /**
-       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
        *
        * Get the default value of FillExtrusionFloodLightGroundRadius property
        *
@@ -3144,7 +3144,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
      *
@@ -3951,14 +3951,14 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange
    */
   fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Double = 0.0): FillExtrusionLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange as Expression
    */
@@ -4071,7 +4071,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius
    */
@@ -4079,7 +4079,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius as Expression
    */
@@ -4087,7 +4087,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * Set the FillExtrusionFloodLightGroundRadius property transition options
    *
@@ -4097,7 +4097,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
    *
    * DSL for [fillExtrusionFloodLightGroundRadiusTransition].
    */

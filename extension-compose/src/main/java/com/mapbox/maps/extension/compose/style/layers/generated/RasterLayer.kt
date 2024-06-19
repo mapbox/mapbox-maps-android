@@ -29,7 +29,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
- * @param rasterArrayBand Displayed band of raster array source layer
+ * @param rasterArrayBand Displayed band of raster array source layer. Defaults to the first band if not set.
  * @param rasterBrightnessMax Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
  * @param rasterBrightnessMaxTransition Defines the transition of [rasterBrightnessMax]. Default value: 1. Value range: [0, 1]
  * @param rasterBrightnessMin Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
@@ -37,11 +37,11 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param rasterColor Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
  * @param rasterColorMix When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
  * @param rasterColorMixTransition Defines the transition of [rasterColorMix]. Default value: [0.2126,0.7152,0.0722,0].
- * @param rasterColorRange When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. Default value: [0,1].
- * @param rasterColorRangeTransition Defines the transition of [rasterColorRange]. Default value: [0,1].
+ * @param rasterColorRange When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
+ * @param rasterColorRangeTransition Defines the transition of [rasterColorRange].
  * @param rasterContrast Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
  * @param rasterContrastTransition Defines the transition of [rasterContrast]. Default value: 0. Value range: [-1, 1]
- * @param rasterElevation Specifies an uniform elevation from the ground, in meters. Only supported with image sources. Default value: 0. Minimum value: 0.
+ * @param rasterElevation Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
  * @param rasterElevationTransition Defines the transition of [rasterElevation]. Default value: 0. Minimum value: 0.
  * @param rasterEmissiveStrength Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
  * @param rasterEmissiveStrengthTransition Defines the transition of [rasterEmissiveStrength]. Default value: 0. Minimum value: 0.

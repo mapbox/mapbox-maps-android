@@ -33,14 +33,16 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
   }
 
   /**
-   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
+   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`. Required if
+   * `tiles` is not provided.
    */
   fun url(value: String): RasterDemSource = apply {
     setProperty(PropertyValue("url", TypeUtils.wrapToValue(value)))
   }
 
   /**
-   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
+   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`. Required if
+   * `tiles` is not provided.
    */
   val url: String?
     /**
@@ -51,14 +53,16 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("url")
 
   /**
-   * An array of one or more tile source URLs, as in the TileJSON spec.
+   * An array of one or more tile source URLs, as in the TileJSON spec. Required if
+   * `url` is not provided.
    */
   fun tiles(value: List<String>): RasterDemSource = apply {
     setProperty(PropertyValue("tiles", TypeUtils.wrapToValue(value)))
   }
 
   /**
-   * An array of one or more tile source URLs, as in the TileJSON spec.
+   * An array of one or more tile source URLs, as in the TileJSON spec. Required if
+   * `url` is not provided.
    */
   val tiles: List<String>?
     /**
@@ -360,7 +364,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
     /**
-     * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
+     * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`. Required if
+     * `tiles` is not provided.
      */
     fun url(value: String): Builder = apply {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))
@@ -368,7 +373,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * An array of one or more tile source URLs, as in the TileJSON spec.
+     * An array of one or more tile source URLs, as in the TileJSON spec. Required if
+     * `url` is not provided.
      */
     fun tiles(value: List<String>): Builder = apply {
       val propertyValue = PropertyValue("tiles", TypeUtils.wrapToValue(value))
