@@ -16,7 +16,6 @@ public abstract class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl : 
 	public final fun getDelegateProvider ()Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;
 	public fun getDragListeners ()Ljava/util/List;
 	public fun getInteractionListener ()Ljava/util/List;
-	public final fun getLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public abstract fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public fun getLongClickListeners ()Ljava/util/List;
 	public fun onDestroy ()V

@@ -9,9 +9,3 @@ internal object CityLocations {
   val WASHINGTON = Point.fromLngLat(-77.00897, 38.87031)
   val NULLISLAND = Point.fromLngLat(0.0, 0.0)
 }
-
-/**
- * Produce a new [Point] that offsets [offset] in both latitude and longitude.
- */
-internal fun Point.offset(offset: Double = 0.01) =
-  Point.fromLngLat(longitude() + offset, latitude() + offset)

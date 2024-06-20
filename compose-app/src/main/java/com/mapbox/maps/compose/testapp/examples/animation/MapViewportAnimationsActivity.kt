@@ -20,11 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.MultiPoint
+import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
-import com.mapbox.maps.compose.testapp.examples.utils.offset
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -36,7 +36,7 @@ import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 
 /**
- * Showcase the basic camera animations based on [MapViewportState] API.
+ * Showcase the basic camera animations based on [MapViewport] API.
  */
 @OptIn(MapboxExperimental::class)
 public class MapViewportAnimationsActivity : ComponentActivity() {
@@ -159,6 +159,12 @@ public class MapViewportAnimationsActivity : ComponentActivity() {
       }
     }
   }
+
+  /**
+   * Produce a new [Point] that offsets [offset] in both latitude and longitude.
+   */
+  private fun Point.offset(offset: Double = 0.01) =
+    Point.fromLngLat(longitude() + offset, latitude() + offset)
 
   private companion object {
     const val ZOOM = 15.7

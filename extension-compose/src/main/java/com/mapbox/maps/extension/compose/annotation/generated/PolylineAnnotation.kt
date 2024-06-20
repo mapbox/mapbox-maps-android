@@ -110,7 +110,7 @@ public fun PolylineAnnotation(
       }
 
       val annotation = annotationManager.create(annotationOptions)
-      PolylineAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick)
+      PolylineAnnotationNode(annotationManager, annotation, onClick)
     },
     update = {
       update(onClick) {

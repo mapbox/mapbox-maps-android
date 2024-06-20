@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
 import androidx.annotation.MainThread
-import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Value
@@ -84,11 +83,10 @@ internal constructor(
   )
 
   /** The layer created by this manager. Annotations will be added to this layer.*/
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
-  var layer: L
+  internal var layer: L
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     @JvmSynthetic
-    internal set
+    set
 
   /** The source created by this manager. Feature data will be added to this source.*/
   internal var source: GeoJsonSource
