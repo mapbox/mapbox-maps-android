@@ -10,10 +10,7 @@
         android:id="@+id/menu_action_consume_click"
         android:title="@string/consume_click_event"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_action_icon"
-        android:title="@string/change_icon_to_coffee"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/menu_action_bitmap_blue"
         android:title="@string/change_icon_to_bitmap_blue"

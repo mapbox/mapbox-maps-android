@@ -151,10 +151,11 @@ class PointAnnotationActivity : AppCompatActivity() {
           }
         })
 
-        bitmapFromDrawableRes(
+        val airplaneBitmap = bitmapFromDrawableRes(
           this@PointAnnotationActivity,
           R.drawable.ic_airplanemode_active_black_24dp
-        )?.let {
+        )
+        airplaneBitmap?.let {
           // create a symbol
           val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
             .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
@@ -197,14 +198,15 @@ class PointAnnotationActivity : AppCompatActivity() {
           create(nearbyOptions)
         }
         // random add symbols across the globe
-        val pointAnnotationOptionsList = List(20) {
-          PointAnnotationOptions()
-            .withPoint(AnnotationUtils.createRandomPoint())
-            .withIconImage(MAKI_ICON_CAR)
-            .withDraggable(true)
+        airplaneBitmap?.let {
+          val pointAnnotationOptionsList = List(20) {
+            PointAnnotationOptions()
+              .withPoint(AnnotationUtils.createRandomPoint())
+              .withIconImage(airplaneBitmap)
+              .withDraggable(true)
+          }
+          create(pointAnnotationOptionsList)
         }
-        create(pointAnnotationOptionsList)
-
         lifecycleScope.launch {
           val featureCollection = withContext(Dispatchers.Default) {
             FeatureCollection.fromJson(
@@ -269,7 +271,7 @@ class PointAnnotationActivity : AppCompatActivity() {
           }
         }
       }
-      R.id.menu_action_icon -> pointAnnotation?.iconImage = MAKI_ICON_CAFE
+
       R.id.menu_action_bitmap_blue -> pointAnnotation?.iconImageBitmap = blueBitmap
       R.id.menu_action_rotation -> pointAnnotation?.iconRotate = 45.0
       R.id.menu_action_text -> pointAnnotation?.textField = "Hello world!"
@@ -357,8 +359,6 @@ class PointAnnotationActivity : AppCompatActivity() {
 
   companion object {
     private const val ID_ICON_AIRPORT = "airport"
-    private const val MAKI_ICON_CAR = "car-15"
-    private const val MAKI_ICON_CAFE = "cafe-15"
     private const val AIRPORT_LONGITUDE = 0.381457
     private const val AIRPORT_LATITUDE = 6.687337
     private const val NEARBY_LONGITUDE = 0.367099
