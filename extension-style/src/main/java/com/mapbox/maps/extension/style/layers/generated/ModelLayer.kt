@@ -911,6 +911,75 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+   */
+  @MapboxExperimental
+  val modelFrontCutoff: List<Double>?
+    /**
+     * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+     *
+     * Use static method [ModelLayer.defaultModelFrontCutoff] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("model-front-cutoff")
+    }
+
+  /**
+   * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+   *
+   * Use static method [ModelLayer.defaultModelFrontCutoff] to set the default property.
+   *
+   * @param modelFrontCutoff value of modelFrontCutoff
+   */
+  @MapboxExperimental
+  override fun modelFrontCutoff(modelFrontCutoff: List<Double>): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-front-cutoff", modelFrontCutoff)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+   *
+   * This is an Expression representation of "model-front-cutoff".
+   *
+   */
+  @MapboxExperimental
+  val modelFrontCutoffAsExpression: Expression?
+    /**
+     * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+     *
+     * Get the ModelFrontCutoff property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelFrontCutoffAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("model-front-cutoff")?.let {
+        return it
+      }
+      modelFrontCutoff?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+   *
+   * Use static method [ModelLayer.defaultModelFrontCutoffAsExpression] to set the default property.
+   *
+   * @param modelFrontCutoff value of modelFrontCutoff as Expression
+   */
+  @MapboxExperimental
+  override fun modelFrontCutoff(modelFrontCutoff: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-front-cutoff", modelFrontCutoff)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    */
   @MapboxExperimental
@@ -2160,6 +2229,45 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength-transition").silentUnwrap()
 
     /**
+     * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+     */
+    @MapboxExperimental
+    val defaultModelFrontCutoff: List<Double>?
+      /**
+       * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+       *
+       * Get the default value of ModelFrontCutoff property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-front-cutoff").silentUnwrap()
+      }
+
+    /**
+     * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+     *
+     * This is an Expression representation of "model-front-cutoff".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelFrontCutoffAsExpression: Expression?
+      /**
+       * Get default value of the ModelFrontCutoff property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-front-cutoff").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelFrontCutoff?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
      */
     @MapboxExperimental
@@ -2857,6 +2965,22 @@ interface ModelLayerDsl {
    */
   @MapboxExperimental
   fun modelEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
+
+  /**
+   * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+   *
+   * @param modelFrontCutoff value of modelFrontCutoff
+   */
+  @MapboxExperimental
+  fun modelFrontCutoff(modelFrontCutoff: List<Double> = listOf(0.0, 0.0, 1.0)): ModelLayer
+
+  /**
+   * An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
+   *
+   * @param modelFrontCutoff value of modelFrontCutoff as Expression
+   */
+  @MapboxExperimental
+  fun modelFrontCutoff(modelFrontCutoff: Expression): ModelLayer
 
   /**
    * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].

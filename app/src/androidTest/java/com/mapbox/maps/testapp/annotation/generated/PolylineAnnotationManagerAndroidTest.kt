@@ -112,6 +112,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineOcclusionOpacity() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineOcclusionOpacity = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineOcclusionOpacity)
+      polylineAnnotationManager.lineOcclusionOpacity = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity").silentUnwrap(), polylineAnnotationManager.lineOcclusionOpacity)
+    }
+  }
+
+  @Test
   fun testLineTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)

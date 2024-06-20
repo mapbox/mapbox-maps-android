@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class SymbolLayerTest {
@@ -3973,6 +3975,113 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun iconOcclusionOpacitySet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconOcclusionOpacity(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-occlusion-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconOcclusionOpacityGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconOcclusionOpacity?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-occlusion-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconOcclusionOpacityAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconOcclusionOpacity(expression)
+    verify { style.setStyleLayerProperty("id", "icon-occlusion-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconOcclusionOpacityAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconOcclusionOpacityAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-occlusion-opacity") }
+  }
+
+  @Test
+  fun iconOcclusionOpacityAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconOcclusionOpacityAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-occlusion-opacity") }
+  }
+
+  @Test
+  fun iconOcclusionOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconOcclusionOpacity!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-occlusion-opacity") }
+  }
+
+  @Test
+  fun iconOcclusionOpacityTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconOcclusionOpacityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "icon-occlusion-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun iconOcclusionOpacityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.iconOcclusionOpacityTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "icon-occlusion-opacity-transition") }
+  }
+
+  @Test
+  fun iconOcclusionOpacityTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconOcclusionOpacityTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "icon-occlusion-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun iconOpacitySet() {
     val layer = symbolLayer("id", "source") {}
     val testValue = 1.0
@@ -4870,6 +4979,113 @@ class SymbolLayerTest {
       delay(200)
     }
     verify { style.setStyleLayerProperty("id", "text-halo-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun textOcclusionOpacitySet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.textOcclusionOpacity(testValue)
+    verify { style.setStyleLayerProperty("id", "text-occlusion-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun textOcclusionOpacityGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.textOcclusionOpacity?.toString())
+    verify { style.getStyleLayerProperty("id", "text-occlusion-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun textOcclusionOpacityAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textOcclusionOpacity(expression)
+    verify { style.setStyleLayerProperty("id", "text-occlusion-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun textOcclusionOpacityAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.textOcclusionOpacityAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-occlusion-opacity") }
+  }
+
+  @Test
+  fun textOcclusionOpacityAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.textOcclusionOpacityAsExpression)
+    verify { style.getStyleLayerProperty("id", "text-occlusion-opacity") }
+  }
+
+  @Test
+  fun textOcclusionOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.textOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.textOcclusionOpacity!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "text-occlusion-opacity") }
+  }
+
+  @Test
+  fun textOcclusionOpacityTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textOcclusionOpacityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "text-occlusion-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun textOcclusionOpacityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.textOcclusionOpacityTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "text-occlusion-opacity-transition") }
+  }
+
+  @Test
+  fun textOcclusionOpacityTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textOcclusionOpacityTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "text-occlusion-opacity-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
@@ -7023,6 +7239,50 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun defaultIconOcclusionOpacityTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconOcclusionOpacity?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconOcclusionOpacityAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconOcclusionOpacityAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity") }
+  }
+
+  @Test
+  fun defaultIconOcclusionOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconOcclusionOpacity!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity") }
+  }
+
+  @Test
+  fun defaultIconOcclusionOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultIconOcclusionOpacityTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity-transition") }
+  }
+
+  @Test
   fun defaultIconOpacityTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -7423,6 +7683,50 @@ class SymbolLayerTest {
 
     assertEquals(transition.toValue().toString(), SymbolLayer.defaultTextHaloWidthTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-width-transition") }
+  }
+
+  @Test
+  fun defaultTextOcclusionOpacityTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultTextOcclusionOpacity?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultTextOcclusionOpacityAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultTextOcclusionOpacityAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity") }
+  }
+
+  @Test
+  fun defaultTextOcclusionOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultTextOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultTextOcclusionOpacity!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity") }
+  }
+
+  @Test
+  fun defaultTextOcclusionOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultTextOcclusionOpacityTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity-transition") }
   }
 
   @Test

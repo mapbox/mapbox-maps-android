@@ -119,6 +119,39 @@ class PolylineAnnotation(
     }
 
   /**
+   * The lineZOffset property
+   *
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   */
+  var lineZOffset: Double?
+    /**
+     * Get the lineZOffset property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineZOffset property
+     *
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)
+      }
+    }
+
+  /**
    * The lineBlur property
    *
    * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
@@ -518,6 +551,9 @@ class PolylineAnnotation(
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)
+    }
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)

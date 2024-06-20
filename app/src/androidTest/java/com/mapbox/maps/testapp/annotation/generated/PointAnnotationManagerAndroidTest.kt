@@ -332,6 +332,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testIconOcclusionOpacity() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconOcclusionOpacity = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconOcclusionOpacity)
+      pointAnnotationManager.iconOcclusionOpacity = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity").silentUnwrap(), pointAnnotationManager.iconOcclusionOpacity)
+    }
+  }
+
+  @Test
   fun testIconTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)
@@ -353,6 +365,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconTranslateAnchor = null
       val expectedDefaultValue = IconTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconTranslateAnchor)
+    }
+  }
+
+  @Test
+  fun testTextOcclusionOpacity() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.textOcclusionOpacity = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.textOcclusionOpacity)
+      pointAnnotationManager.textOcclusionOpacity = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity").silentUnwrap(), pointAnnotationManager.textOcclusionOpacity)
     }
   }
 

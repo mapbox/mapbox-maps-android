@@ -59,6 +59,24 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   */
+  var lineZOffset: Double? = null
+
+  /**
+   * Set line-z-offset to initialise the polylineAnnotation with.
+   *
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *
+   * @param lineZOffset the line-z-offset value
+   * @return this
+   */
+  fun withLineZOffset(lineZOffset: Double): PolylineAnnotationOptions {
+    this.lineZOffset = lineZOffset
+    return this
+  }
+
+  /**
    * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    */
   var lineBlur: Double? = null
@@ -347,6 +365,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
     lineSortKey?.let {
       jsonObject.addProperty(PROPERTY_LINE_SORT_KEY, it)
     }
+    lineZOffset?.let {
+      jsonObject.addProperty(PROPERTY_LINE_Z_OFFSET, it)
+    }
     lineBlur?.let {
       jsonObject.addProperty(PROPERTY_LINE_BLUR, it)
     }
@@ -390,6 +411,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
     /** The property for line-sort-key */
     const val PROPERTY_LINE_SORT_KEY = "line-sort-key"
+
+    /** The property for line-z-offset */
+    const val PROPERTY_LINE_Z_OFFSET = "line-z-offset"
 
     /** The property for line-blur */
     const val PROPERTY_LINE_BLUR = "line-blur"
@@ -442,6 +466,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
       }
       if (feature.hasProperty(PROPERTY_LINE_SORT_KEY)) {
         options.lineSortKey = feature.getProperty(PROPERTY_LINE_SORT_KEY).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_LINE_Z_OFFSET)) {
+        options.lineZOffset = feature.getProperty(PROPERTY_LINE_Z_OFFSET).asDouble
       }
       if (feature.hasProperty(PROPERTY_LINE_BLUR)) {
         options.lineBlur = feature.getProperty(PROPERTY_LINE_BLUR).asDouble

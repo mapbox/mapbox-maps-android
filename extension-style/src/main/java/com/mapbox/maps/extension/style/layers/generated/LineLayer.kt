@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -574,6 +575,75 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    */
   override fun lineSortKey(lineSortKey: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-sort-key", lineSortKey)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   */
+  @MapboxExperimental
+  val lineZOffset: Double?
+    /**
+     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     *
+     * Use static method [LineLayer.defaultLineZOffset] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-z-offset")
+    }
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *
+   * Use static method [LineLayer.defaultLineZOffset] to set the default property.
+   *
+   * @param lineZOffset value of lineZOffset
+   */
+  @MapboxExperimental
+  override fun lineZOffset(lineZOffset: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-z-offset", lineZOffset)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *
+   * This is an Expression representation of "line-z-offset".
+   *
+   */
+  @MapboxExperimental
+  val lineZOffsetAsExpression: Expression?
+    /**
+     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     *
+     * Get the LineZOffset property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineZOffsetAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("line-z-offset")?.let {
+        return it
+      }
+      lineZOffset?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *
+   * Use static method [LineLayer.defaultLineZOffsetAsExpression] to set the default property.
+   *
+   * @param lineZOffset value of lineZOffset as Expression
+   */
+  @MapboxExperimental
+  override fun lineZOffset(lineZOffset: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-z-offset", lineZOffset)
     setProperty(propertyValue)
   }
 
@@ -1425,6 +1495,112 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  val lineOcclusionOpacity: Double?
+    /**
+     * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+     *
+     * Use static method [LineLayer.defaultLineOcclusionOpacity] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-occlusion-opacity")
+    }
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [LineLayer.defaultLineOcclusionOpacity] to set the default property.
+   *
+   * @param lineOcclusionOpacity value of lineOcclusionOpacity
+   */
+  @MapboxExperimental
+  override fun lineOcclusionOpacity(lineOcclusionOpacity: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-occlusion-opacity", lineOcclusionOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * This is an Expression representation of "line-occlusion-opacity".
+   *
+   */
+  @MapboxExperimental
+  val lineOcclusionOpacityAsExpression: Expression?
+    /**
+     * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+     *
+     * Get the LineOcclusionOpacity property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineOcclusionOpacityAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("line-occlusion-opacity")?.let {
+        return it
+      }
+      lineOcclusionOpacity?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [LineLayer.defaultLineOcclusionOpacityAsExpression] to set the default property.
+   *
+   * @param lineOcclusionOpacity value of lineOcclusionOpacity as Expression
+   */
+  @MapboxExperimental
+  override fun lineOcclusionOpacity(lineOcclusionOpacity: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-occlusion-opacity", lineOcclusionOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineOcclusionOpacity.
+   */
+  @MapboxExperimental
+  val lineOcclusionOpacityTransition: StyleTransition?
+    /**
+     * Get the LineOcclusionOpacity property transition options
+     *
+     * Use static method [LineLayer.defaultLineOcclusionOpacityTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("line-occlusion-opacity-transition")
+    }
+
+  /**
+   * Set the LineOcclusionOpacity property transition options
+   *
+   * Use static method [LineLayer.defaultLineOcclusionOpacityTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun lineOcclusionOpacityTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-occlusion-opacity-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineOcclusionOpacityTransition].
+   */
+  @MapboxExperimental
+  override fun lineOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineOcclusionOpacityTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
    */
   val lineOffset: Double?
@@ -2269,6 +2445,45 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
+     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     */
+    @MapboxExperimental
+    val defaultLineZOffset: Double?
+      /**
+       * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+       *
+       * Get the default value of LineZOffset property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-z-offset").silentUnwrap()
+      }
+
+    /**
+     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     *
+     * This is an Expression representation of "line-z-offset".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineZOffsetAsExpression: Expression?
+      /**
+       * Get default value of the LineZOffset property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-z-offset").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineZOffset?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
      */
     val defaultLineBlur: Double?
@@ -2678,6 +2893,57 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gap-width-transition").silentUnwrap()
+
+    /**
+     * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+     */
+    @MapboxExperimental
+    val defaultLineOcclusionOpacity: Double?
+      /**
+       * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+       *
+       * Get the default value of LineOcclusionOpacity property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity").silentUnwrap()
+      }
+
+    /**
+     * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+     *
+     * This is an Expression representation of "line-occlusion-opacity".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineOcclusionOpacityAsExpression: Expression?
+      /**
+       * Get default value of the LineOcclusionOpacity property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineOcclusionOpacity?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineOcclusionOpacity.
+     */
+    @MapboxExperimental
+    val defaultLineOcclusionOpacityTransition: StyleTransition?
+      /**
+       * Get the LineOcclusionOpacity property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity-transition").silentUnwrap()
 
     /**
      * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
@@ -3133,6 +3399,22 @@ interface LineLayerDsl {
   fun lineSortKey(lineSortKey: Expression): LineLayer
 
   /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *
+   * @param lineZOffset value of lineZOffset
+   */
+  @MapboxExperimental
+  fun lineZOffset(lineZOffset: Double): LineLayer
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *
+   * @param lineZOffset value of lineZOffset as Expression
+   */
+  @MapboxExperimental
+  fun lineZOffset(lineZOffset: Expression): LineLayer
+
+  /**
    * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
    *
    * @param lineBlur value of lineBlur
@@ -3376,6 +3658,40 @@ interface LineLayerDsl {
    * @param lineGradient value of lineGradient
    */
   fun lineGradient(lineGradient: Expression): LineLayer
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * @param lineOcclusionOpacity value of lineOcclusionOpacity
+   */
+  @MapboxExperimental
+  fun lineOcclusionOpacity(lineOcclusionOpacity: Double = 0.0): LineLayer
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * @param lineOcclusionOpacity value of lineOcclusionOpacity as Expression
+   */
+  @MapboxExperimental
+  fun lineOcclusionOpacity(lineOcclusionOpacity: Expression): LineLayer
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * Set the LineOcclusionOpacity property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun lineOcclusionOpacityTransition(options: StyleTransition): LineLayer
+
+  /**
+   * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
+   *
+   * DSL for [lineOcclusionOpacityTransition].
+   */
+  @MapboxExperimental
+  fun lineOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.

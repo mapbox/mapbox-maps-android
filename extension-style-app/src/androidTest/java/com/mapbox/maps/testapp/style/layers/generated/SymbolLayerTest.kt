@@ -5,6 +5,7 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -18,6 +19,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for SymbolLayer
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class SymbolLayerTest : BaseStyleTest() {
 
@@ -1665,6 +1667,61 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun iconOcclusionOpacityTest() {
+    val testValue = 1.0
+    val layer = symbolLayer("id", "source") {
+      iconOcclusionOpacity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.iconOcclusionOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconOcclusionOpacityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = symbolLayer("id", "source") {
+      iconOcclusionOpacity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.iconOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconOcclusionOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconOcclusionOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      iconOcclusionOpacityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.iconOcclusionOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconOcclusionOpacityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      iconOcclusionOpacityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.iconOcclusionOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun iconOpacityTest() {
     val testValue = 1.0
     val layer = symbolLayer("id", "source") {
@@ -2117,6 +2174,61 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun textOcclusionOpacityTest() {
+    val testValue = 1.0
+    val layer = symbolLayer("id", "source") {
+      textOcclusionOpacity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.textOcclusionOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun textOcclusionOpacityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = symbolLayer("id", "source") {
+      textOcclusionOpacity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.textOcclusionOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.textOcclusionOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun textOcclusionOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      textOcclusionOpacityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.textOcclusionOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun textOcclusionOpacityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      textOcclusionOpacityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.textOcclusionOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun textOpacityTest() {
     val testValue = 1.0
     val layer = symbolLayer("id", "source") {
@@ -2394,6 +2506,9 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconImageCrossFade should not be null", SymbolLayer.defaultIconImageCrossFade)
     assertNotNull("defaultIconImageCrossFadeAsExpression should not be null", SymbolLayer.defaultIconImageCrossFadeAsExpression)
     assertNotNull("defaultIconImageCrossFadeTransition should not be null", SymbolLayer.defaultIconImageCrossFadeTransition)
+    assertNotNull("defaultIconOcclusionOpacity should not be null", SymbolLayer.defaultIconOcclusionOpacity)
+    assertNotNull("defaultIconOcclusionOpacityAsExpression should not be null", SymbolLayer.defaultIconOcclusionOpacityAsExpression)
+    assertNotNull("defaultIconOcclusionOpacityTransition should not be null", SymbolLayer.defaultIconOcclusionOpacityTransition)
     assertNotNull("defaultIconOpacity should not be null", SymbolLayer.defaultIconOpacity)
     assertNotNull("defaultIconOpacityAsExpression should not be null", SymbolLayer.defaultIconOpacityAsExpression)
     assertNotNull("defaultIconOpacityTransition should not be null", SymbolLayer.defaultIconOpacityTransition)
@@ -2419,6 +2534,9 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultTextHaloWidth should not be null", SymbolLayer.defaultTextHaloWidth)
     assertNotNull("defaultTextHaloWidthAsExpression should not be null", SymbolLayer.defaultTextHaloWidthAsExpression)
     assertNotNull("defaultTextHaloWidthTransition should not be null", SymbolLayer.defaultTextHaloWidthTransition)
+    assertNotNull("defaultTextOcclusionOpacity should not be null", SymbolLayer.defaultTextOcclusionOpacity)
+    assertNotNull("defaultTextOcclusionOpacityAsExpression should not be null", SymbolLayer.defaultTextOcclusionOpacityAsExpression)
+    assertNotNull("defaultTextOcclusionOpacityTransition should not be null", SymbolLayer.defaultTextOcclusionOpacityTransition)
     assertNotNull("defaultTextOpacity should not be null", SymbolLayer.defaultTextOpacity)
     assertNotNull("defaultTextOpacityAsExpression should not be null", SymbolLayer.defaultTextOpacityAsExpression)
     assertNotNull("defaultTextOpacityTransition should not be null", SymbolLayer.defaultTextOpacityTransition)
@@ -2504,6 +2622,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconHaloColorTestValue = "rgba(0, 0, 0, 1)"
     val iconHaloWidthTestValue = 1.0
     val iconImageCrossFadeTestValue = 1.0
+    val iconOcclusionOpacityTestValue = 1.0
     val iconOpacityTestValue = 1.0
     val iconTranslateTestValue = listOf(0.0, 1.0)
     val iconTranslateAnchorTestValue = IconTranslateAnchor.MAP
@@ -2512,6 +2631,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val textHaloBlurTestValue = 1.0
     val textHaloColorTestValue = "rgba(0, 0, 0, 1)"
     val textHaloWidthTestValue = 1.0
+    val textOcclusionOpacityTestValue = 1.0
     val textOpacityTestValue = 1.0
     val textTranslateTestValue = listOf(0.0, 1.0)
     val textTranslateAnchorTestValue = TextTranslateAnchor.MAP
@@ -2572,6 +2692,7 @@ class SymbolLayerTest : BaseStyleTest() {
       iconHaloColor(iconHaloColorTestValue)
       iconHaloWidth(iconHaloWidthTestValue)
       iconImageCrossFade(iconImageCrossFadeTestValue)
+      iconOcclusionOpacity(iconOcclusionOpacityTestValue)
       iconOpacity(iconOpacityTestValue)
       iconTranslate(iconTranslateTestValue)
       iconTranslateAnchor(iconTranslateAnchorTestValue)
@@ -2580,6 +2701,7 @@ class SymbolLayerTest : BaseStyleTest() {
       textHaloBlur(textHaloBlurTestValue)
       textHaloColor(textHaloColorTestValue)
       textHaloWidth(textHaloWidthTestValue)
+      textOcclusionOpacity(textOcclusionOpacityTestValue)
       textOpacity(textOpacityTestValue)
       textTranslate(textTranslateTestValue)
       textTranslateAnchor(textTranslateAnchorTestValue)
@@ -2645,6 +2767,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(iconHaloColorTestValue, cachedLayer.iconHaloColor)
     assertEquals(iconHaloWidthTestValue, cachedLayer.iconHaloWidth)
     assertEquals(iconImageCrossFadeTestValue, cachedLayer.iconImageCrossFade)
+    assertEquals(iconOcclusionOpacityTestValue, cachedLayer.iconOcclusionOpacity)
     assertEquals(iconOpacityTestValue, cachedLayer.iconOpacity)
     assertEquals(iconTranslateTestValue, cachedLayer.iconTranslate)
     assertEquals(iconTranslateAnchorTestValue, cachedLayer.iconTranslateAnchor)
@@ -2653,6 +2776,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(textHaloBlurTestValue, cachedLayer.textHaloBlur)
     assertEquals(textHaloColorTestValue, cachedLayer.textHaloColor)
     assertEquals(textHaloWidthTestValue, cachedLayer.textHaloWidth)
+    assertEquals(textOcclusionOpacityTestValue, cachedLayer.textOcclusionOpacity)
     assertEquals(textOpacityTestValue, cachedLayer.textOpacity)
     assertEquals(textTranslateTestValue, cachedLayer.textTranslate)
     assertEquals(textTranslateAnchorTestValue, cachedLayer.textTranslateAnchor)

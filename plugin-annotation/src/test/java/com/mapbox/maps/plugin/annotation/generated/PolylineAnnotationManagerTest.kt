@@ -120,6 +120,8 @@ class PolylineAnnotationManagerTest {
     every { dragLayer.lineJoin(any<Expression>()) } answers { dragLayer }
     every { layer.lineSortKey(any<Expression>()) } answers { layer }
     every { dragLayer.lineSortKey(any<Expression>()) } answers { dragLayer }
+    every { layer.lineZOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.lineZOffset(any<Expression>()) } answers { dragLayer }
     every { layer.lineBlur(any<Expression>()) } answers { layer }
     every { dragLayer.lineBlur(any<Expression>()) } answers { dragLayer }
     every { layer.lineBorderColor(any<Expression>()) } answers { layer }
@@ -265,6 +267,11 @@ class PolylineAnnotationManagerTest {
     assertEquals(1.0, annotation.lineSortKey)
     annotation.lineSortKey = null
     assertNull(annotation.lineSortKey)
+
+    annotation.lineZOffset = 1.0
+    assertEquals(1.0, annotation.lineZOffset)
+    annotation.lineZOffset = null
+    assertNull(annotation.lineZOffset)
 
     annotation.lineBlur = 0.0
     assertEquals(0.0, annotation.lineBlur)
@@ -532,6 +539,22 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
     verify(exactly = 1) { manager.dragLayer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+  }
+
+  @Test
+  fun testLineZOffsetLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineZOffset(1.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
   }
 
   @Test

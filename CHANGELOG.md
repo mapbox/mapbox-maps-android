@@ -20,6 +20,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Add min/max/default values to the docs for the generated properties.
 * Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
 * Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
+* Expose experimental `lineZOffset` and `lineOcclusionOpacity` for `LineLayer`.
+* Expose experimental `modelFrontCutoff` for `ModelLayer`.
+* Expose experimental `iconOcclusionOpacity` and `textOcclusionOpacity` for `SymbolLayer` and `PointAnnotationManager`.
+* Expose experimental `lineOcclusionOpacity` for `PolylineAnnotationManager`.
+* Expose experimental `lineZOffset` for `PolylineAnnotation` and `PolylineAnnotationOptions`.
 
 ## Bug fixes 🐞
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
