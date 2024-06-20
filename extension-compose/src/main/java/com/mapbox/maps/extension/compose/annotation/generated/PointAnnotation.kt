@@ -226,7 +226,7 @@ public fun PointAnnotation(
       }
 
       val annotation = annotationManager.create(annotationOptions)
-      PointAnnotationNode(annotationManager, annotation, onClick)
+      PointAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick)
     },
     update = {
       update(onClick) {

@@ -64,7 +64,7 @@ public fun PolylineAnnotationGroup(
     factory = {
       val annotationManager =
         mapApplier.mapView.annotations.createPolylineAnnotationManager(annotationConfig)
-      PolylineAnnotationManagerNode(annotationManager, onClick)
+      PolylineAnnotationManagerNode(mapApplier.mapView.mapboxMap, annotationManager, onClick)
     },
     update = {
       set(annotations) {

@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.compose.style.layers.internal
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.compose.internal.LayerPositionAwareNode
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.internal.PausingDispatcherNode
@@ -23,7 +24,7 @@ internal class LayerNode(
   private var layerId: String,
   private var sourceState: SourceState? = null,
   private val coroutineScope: CoroutineScope,
-) : PausingDispatcherNode() {
+) : LayerPositionAwareNode, PausingDispatcherNode() {
   private val parameters = hashMapOf(
     "id" to Value(layerId),
     "type" to Value(layerType)
@@ -47,6 +48,11 @@ internal class LayerNode(
     }
     parentNode = parent
     addLayer()
+  }
+
+  override fun onMoved(parent: MapNode, from: Int, to: Int) {
+    logD(TAG, "onMoved: from $from to $to")
+    map.moveStyleLayer(layerId, getRelativePositionInfo(parent))
   }
 
   private fun attachSource() {
@@ -95,7 +101,7 @@ internal class LayerNode(
           parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let {
             map.addStyleLayer(
               parameters = Value(parameters),
-              position = null
+              position = getRelativePositionInfo(parent)
             ).error?.let {
               logE(TAG, "Failed to add layer: $it")
             } ?: run {
@@ -133,7 +139,7 @@ internal class LayerNode(
         logD(TAG, "Adding persistent layer: $parameters")
         map.addPersistentStyleLayer(
           properties = Value(parameters),
-          layerPosition = null
+          layerPosition = getRelativePositionInfo(parent)
         ).error?.let {
           logE(TAG, "Failed to add persistent layer: $it")
         } ?: run {
@@ -220,6 +226,10 @@ internal class LayerNode(
         logD(TAG, "[$layerType] setProperty: property=$name, value=$value executed")
       }
     }
+  }
+
+  override fun getLayerId(): String {
+    return layerId
   }
 
   override fun toString(): String {

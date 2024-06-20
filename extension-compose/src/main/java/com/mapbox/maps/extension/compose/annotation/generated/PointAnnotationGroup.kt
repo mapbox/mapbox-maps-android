@@ -104,7 +104,7 @@ public fun PointAnnotationGroup(
     factory = {
       val annotationManager =
         mapApplier.mapView.annotations.createPointAnnotationManager(annotationConfig)
-      PointAnnotationManagerNode(annotationManager, onClick)
+      PointAnnotationManagerNode(mapApplier.mapView.mapboxMap, annotationManager, onClick)
     },
     update = {
       set(annotations) {
