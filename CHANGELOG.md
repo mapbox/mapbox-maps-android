@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.5.0-rc.1
+
+# 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
 * [compose] Rename `ImportConfig` to `ImportConfigs`.
@@ -17,9 +18,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 * [compose] Introduce `MapState` that can be hoisted to interact with map states, such as query rendered features, subscribe to map events and configure gestures settings.
+* Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
 * Add min/max/default values to the docs for the generated properties.
 * Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
-* Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
 * Expose experimental `lineZOffset` and `lineOcclusionOpacity` for `LineLayer`.
 * Expose experimental `modelFrontCutoff` for `ModelLayer`.
 * Expose experimental `iconOcclusionOpacity` and `textOcclusionOpacity` for `SymbolLayer` and `PointAnnotationManager`.
@@ -34,6 +35,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.5.0-rc.1 and common to v24.5.0-rc.1.
+
 
 # 11.5.0-beta.1 June 11, 2024
 ## Breaking changes ⚠️
