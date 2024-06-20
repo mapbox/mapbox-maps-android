@@ -54,7 +54,7 @@ public fun CircleAnnotationGroup(
     factory = {
       val annotationManager =
         mapApplier.mapView.annotations.createCircleAnnotationManager(annotationConfig)
-      CircleAnnotationManagerNode(mapApplier.mapView.mapboxMap, annotationManager, onClick)
+      CircleAnnotationManagerNode(annotationManager, onClick)
     },
     update = {
       set(annotations) {

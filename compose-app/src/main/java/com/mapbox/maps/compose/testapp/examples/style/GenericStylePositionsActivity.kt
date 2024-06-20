@@ -23,11 +23,9 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
-import com.mapbox.maps.compose.testapp.examples.utils.offset
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
@@ -71,14 +69,6 @@ public class GenericStylePositionsActivity : ComponentActivity() {
         mutableStateOf("day")
       }
 
-      var showBottomAnnotation by remember {
-        mutableStateOf(true)
-      }
-
-      var showMiddleCircleLayer by remember {
-        mutableStateOf(true)
-      }
-
       val mapViewportState = rememberMapViewportState {
         setCameraOptions {
           zoom(ZOOM)
@@ -90,60 +80,57 @@ public class GenericStylePositionsActivity : ComponentActivity() {
         ExampleScaffold(
           floatingActionButton = {
             Column {
-              if (styleUri == Style.STANDARD) {
-                FloatingActionButton(
-                  modifier = Modifier.padding(bottom = 10.dp),
-                  backgroundColor = if (styleUri == Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
-                  onClick = {
-                    showTopSlotContent = !showTopSlotContent
-                  },
-                  shape = RoundedCornerShape(16.dp),
-                ) {
-                  Text(
-                    modifier = Modifier.padding(10.dp),
-                    text = "Toggle top slot content - current: $showTopSlotContent"
-                  )
-                }
-                FloatingActionButton(
-                  modifier = Modifier.padding(bottom = 10.dp),
-                  backgroundColor = if (styleUri == Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
-                  onClick = {
-                    showMiddleSlotContent = !showMiddleSlotContent
-                  },
-                  shape = RoundedCornerShape(16.dp),
-                ) {
-                  Text(
-                    modifier = Modifier.padding(10.dp),
-                    text = "Toggle middle slot content - current: $showMiddleSlotContent"
-                  )
-                }
-                FloatingActionButton(
-                  modifier = Modifier.padding(bottom = 10.dp),
-                  backgroundColor = if (styleUri == Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
-                  onClick = {
-                    lightPresetConfig = if (lightPresetConfig == "day") "night" else "day"
-                  },
-                  shape = RoundedCornerShape(16.dp),
-                ) {
-                  Text(
-                    modifier = Modifier.padding(10.dp),
-                    text = "Toggle light preset - current: $lightPresetConfig"
-                  )
-                }
-              } else {
-                FloatingActionButton(
-                  modifier = Modifier.padding(bottom = 10.dp),
-                  backgroundColor = if (styleUri != Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
-                  onClick = {
-                    showLayerPositionedContent = !showLayerPositionedContent
-                  },
-                  shape = RoundedCornerShape(16.dp),
-                ) {
-                  Text(
-                    modifier = Modifier.padding(10.dp),
-                    text = "Toggle positioned layer content - current $showLayerPositionedContent"
-                  )
-                }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (styleUri == Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  showTopSlotContent = !showTopSlotContent
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Toggle top slot content - current: $showTopSlotContent"
+                )
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (styleUri == Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  showMiddleSlotContent = !showMiddleSlotContent
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Toggle middle slot content - current: $showMiddleSlotContent"
+                )
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (styleUri == Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  lightPresetConfig = if (lightPresetConfig == "day") "night" else "day"
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Toggle light preset - current: $lightPresetConfig"
+                )
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (styleUri != Style.STANDARD) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  showLayerPositionedContent = !showLayerPositionedContent
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Toggle positioned layer content - current $showLayerPositionedContent"
+                )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
@@ -161,30 +148,6 @@ public class GenericStylePositionsActivity : ComponentActivity() {
                   text = "Toggle Style - current: ${styleUri.substringAfterLast('/')}"
                 )
               }
-              FloatingActionButton(
-                modifier = Modifier.padding(bottom = 10.dp),
-                onClick = {
-                  showBottomAnnotation = !showBottomAnnotation
-                },
-                shape = RoundedCornerShape(16.dp),
-              ) {
-                Text(
-                  modifier = Modifier.padding(10.dp),
-                  text = "Toggle bottom annotation - current: $showBottomAnnotation"
-                )
-              }
-              FloatingActionButton(
-                modifier = Modifier.padding(bottom = 10.dp),
-                onClick = {
-                  showMiddleCircleLayer = !showMiddleCircleLayer
-                },
-                shape = RoundedCornerShape(16.dp),
-              ) {
-                Text(
-                  modifier = Modifier.padding(10.dp),
-                  text = "Toggle middle annotation - current: $showMiddleCircleLayer"
-                )
-              }
             }
           }
         ) {
@@ -200,29 +163,7 @@ public class GenericStylePositionsActivity : ComponentActivity() {
                 lightPresetConfig = lightPresetConfig,
               )
             }
-          ) {
-            if (showBottomAnnotation) {
-              CircleAnnotation(
-                point = CityLocations.HELSINKI.offset(0.005),
-                circleRadius = 30.0,
-                circleColorString = "red"
-              )
-            }
-            if (showMiddleCircleLayer) {
-              CircleLayer(
-                sourceState = rememberGeoJsonSourceState {
-                  data = GeoJSONData(CityLocations.HELSINKI)
-                },
-                circleRadius = DoubleValue(30.0),
-                circleColor = ColorValue(Color.Yellow)
-              )
-            }
-            CircleAnnotation(
-              point = CityLocations.HELSINKI.offset(-0.005),
-              circleRadius = 30.0,
-              circleColorString = "blue"
-            )
-          }
+          )
         }
       }
     }
