@@ -27,6 +27,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose experimental `lineZOffset` for `PolylineAnnotation` and `PolylineAnnotationOptions`.
 
 ## Bug fixes 🐞
+* [compose] Fix the layer and annotation order by inserting the annotations according to the relative position in the node tree.
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
 * Fix the rotated icon position during the globe transition.
 * Fix Dynamic View Annotation (DVA) placement to place DVA in the center of the line geometry point, and try to avoid placing DVA near the lines' intersection point.

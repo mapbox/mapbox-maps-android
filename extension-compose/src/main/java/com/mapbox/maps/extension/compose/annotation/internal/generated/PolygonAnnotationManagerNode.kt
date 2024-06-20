@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.extension.compose.annotation.internal.generated
 
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener
@@ -10,14 +11,16 @@ import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 
 internal class PolygonAnnotationManagerNode(
+  mapboxStyleManager: MapboxStyleManager,
   val annotationManager: PolygonAnnotationManager,
   var onClicked: (PolygonAnnotation) -> Boolean
-) : BaseAnnotationNode() {
+) : BaseAnnotationNode(mapboxStyleManager) {
   private val onClickedListener: OnPolygonAnnotationClickListener = OnPolygonAnnotationClickListener {
     onClicked.invoke(it)
   }
 
   override fun onAttached(parent: MapNode) {
+    super.onAttached(parent)
     annotationManager.addClickListener(onClickedListener)
   }
 
@@ -36,5 +39,13 @@ internal class PolygonAnnotationManagerNode(
     annotationManager.removeClickListener(onClickedListener)
     currentAnnotations.clear()
     annotationManager.deleteAll()
+  }
+
+  override fun getLayerId(): String {
+    return annotationManager.layer.layerId
+  }
+
+  override fun toString(): String {
+    return "PolygonAnnotationManagerNode(#${hashCode()})"
   }
 }

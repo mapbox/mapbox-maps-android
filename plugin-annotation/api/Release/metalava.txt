@@ -15,6 +15,7 @@ package com.mapbox.maps.plugin.annotation {
     method public final com.mapbox.maps.plugin.delegates.MapDelegateProvider getDelegateProvider();
     method public java.util.List<D> getDragListeners();
     method public java.util.List<I> getInteractionListener();
+    method public final L getLayer();
     method public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method public java.util.List<V> getLongClickListeners();
     method public void onDestroy();
@@ -33,6 +34,7 @@ package com.mapbox.maps.plugin.annotation {
     property public final com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider;
     property public java.util.List<D> dragListeners;
     property public java.util.List<I> interactionListener;
+    property public final L layer;
     property public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public java.util.List<V> longClickListeners;
   }

@@ -74,7 +74,7 @@ public fun PolygonAnnotation(
       }
 
       val annotation = annotationManager.create(annotationOptions)
-      PolygonAnnotationNode(annotationManager, annotation, onClick)
+      PolygonAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick)
     },
     update = {
       update(onClick) {

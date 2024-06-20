@@ -52,7 +52,7 @@ public fun PolygonAnnotationGroup(
     factory = {
       val annotationManager =
         mapApplier.mapView.annotations.createPolygonAnnotationManager(annotationConfig)
-      PolygonAnnotationManagerNode(annotationManager, onClick)
+      PolygonAnnotationManagerNode(mapApplier.mapView.mapboxMap, annotationManager, onClick)
     },
     update = {
       set(annotations) {
