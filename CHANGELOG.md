@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.5.0-rc.1
+
+# 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
 * [compose] Rename `ImportConfig` to `ImportConfigs`.
@@ -27,7 +28,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose experimental `lineZOffset` for `PolylineAnnotation` and `PolylineAnnotationOptions`.
 
 ## Bug fixes 🐞
-* [compose] Fix the layer and annotation order by inserting the annotations according to the relative position in the node tree.
 * Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
 * Fix the rotated icon position during the globe transition.
 * Fix Dynamic View Annotation (DVA) placement to place DVA in the center of the line geometry point, and try to avoid placing DVA near the lines' intersection point.
@@ -35,6 +35,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.5.0-rc.1 and common to v24.5.0-rc.1.
+
 
 # 11.5.0-beta.1 June 11, 2024
 ## Breaking changes ⚠️
