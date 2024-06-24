@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.viewport
 import android.os.Handler
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
-import com.mapbox.maps.module.TelemetryEvent
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -21,12 +20,10 @@ import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.runs
 import io.mockk.slot
 import io.mockk.unmockkAll
-import io.mockk.unmockkObject
 import io.mockk.unmockkStatic
 import io.mockk.verify
 import io.mockk.verifyOrder
@@ -76,8 +73,6 @@ class ViewportPluginImplTest {
     every { handler.post(any()) } returns true
     every { statusObserver.onViewportStatusChanged(any(), any(), any()) } just runs
     every { transitionUpdateCancelable.cancel() } just runs
-    mockkObject(TelemetryEvent)
-    every { TelemetryEvent.create(any()) } returns mockk<TelemetryEvent>(relaxed = true)
     viewportPlugin = ViewportPluginImpl(handler)
     viewportPlugin.onDelegateProvider(delegateProvider)
     viewportPlugin.addStatusObserver(statusObserver)
@@ -85,7 +80,6 @@ class ViewportPluginImplTest {
 
   @After
   fun cleanUp() {
-    unmockkObject(TelemetryEvent)
     unmockkStatic(CAMERA_ANIMATIONS_UTILS)
     unmockkStatic(LOCATION_COMPONENT_UTILS)
     unmockkAll()
