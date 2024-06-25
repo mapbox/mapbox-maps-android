@@ -956,6 +956,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue MITER;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue NONE;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue ROUND;
   }
 

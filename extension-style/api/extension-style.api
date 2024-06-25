@@ -4527,6 +4527,7 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/L
 	public static final field BEVEL Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin$Companion;
 	public static final field MITER Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
+	public static final field NONE Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public static final field ROUND Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getValue ()Ljava/lang/String;

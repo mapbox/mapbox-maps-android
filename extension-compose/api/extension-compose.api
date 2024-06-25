@@ -969,6 +969,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
 	public static final field MITER Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
+	public static final field NONE Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
 	public static final field ROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V

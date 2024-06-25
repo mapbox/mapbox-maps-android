@@ -5500,6 +5500,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin BEVEL;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin.Companion Companion;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin MITER;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin NONE;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin ROUND;
   }
 
