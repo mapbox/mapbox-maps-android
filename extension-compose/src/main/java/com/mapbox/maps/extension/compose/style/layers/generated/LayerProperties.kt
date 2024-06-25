@@ -233,6 +233,12 @@ public data class LineJoinValue(public val value: Value) {
      */
     @JvmField
     public val MITER: LineJoinValue = LineJoinValue(Value("miter"))
+
+    /**
+     * Line segments are not joined together, each one creates a separate line. Useful in combination with line-pattern. Line-cap property is not respected. Can't be used with data-driven styling.
+     */
+    @JvmField
+    public val NONE: LineJoinValue = LineJoinValue(Value("none"))
   }
 }
 

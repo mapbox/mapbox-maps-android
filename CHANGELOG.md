@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.5.0
+## Features ✨ and improvements 🏁
+* Expose `LineJoin.NONE` which in conjunction with e.g. `linePattern` image allows to display repeated series of images along a line (e.g. dotted route line).
 
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️

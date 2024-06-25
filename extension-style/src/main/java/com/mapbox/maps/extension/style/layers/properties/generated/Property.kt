@@ -165,6 +165,11 @@ class LineJoin private constructor(override val value: String) : LayerProperty {
      */
     @JvmField
     val MITER = LineJoin("miter")
+    /**
+     * Line segments are not joined together, each one creates a separate line. Useful in combination with line-pattern. Line-cap property is not respected. Can't be used with data-driven styling.
+     */
+    @JvmField
+    val NONE = LineJoin("none")
 
     /**
      * Utility function to get [LineJoin] instance from given [value].
@@ -175,6 +180,7 @@ class LineJoin private constructor(override val value: String) : LayerProperty {
         "BEVEL" -> BEVEL
         "ROUND" -> ROUND
         "MITER" -> MITER
+        "NONE" -> NONE
         else -> throw RuntimeException("LineJoin.valueOf does not support [$value]")
       }
     }
