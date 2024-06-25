@@ -62,4 +62,24 @@
         android:title="@string/course"
         app:showAsAction="never" />
     </group>
+
+    <group
+        android:id="@+id/location_animation_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/location_1s_animation"
+            android:checked="true"
+            android:title="@string/location_1s_animation"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/location_300ms_animation"
+            android:checked="false"
+            android:title="@string/location_300ms_animation"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/location_no_animation"
+            android:checked="false"
+            android:title="@string/location_no_animation"
+            app:showAsAction="never" />
+    </group>
 </menu>

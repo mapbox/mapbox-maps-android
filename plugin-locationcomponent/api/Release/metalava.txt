@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.locationcomponent {
   public final class DefaultLocationProvider implements com.mapbox.maps.plugin.locationcomponent.LocationProvider {
     ctor public DefaultLocationProvider(android.content.Context context);
     method public void addOnCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
+    method public void locationAnimatorOptions(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
     method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
     method public void removeCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
     method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);

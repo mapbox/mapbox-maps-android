@@ -1,6 +1,7 @@
 public final class com/mapbox/maps/plugin/locationcomponent/DefaultLocationProvider : com/mapbox/maps/plugin/locationcomponent/LocationProvider {
 	public fun <init> (Landroid/content/Context;)V
 	public final fun addOnCompassCalibrationListener (Lcom/mapbox/maps/plugin/locationcomponent/LocationCompassCalibrationListener;)V
+	public final fun locationAnimatorOptions (Lkotlin/jvm/functions/Function1;)V
 	public fun registerLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
 	public final fun removeCompassCalibrationListener (Lcom/mapbox/maps/plugin/locationcomponent/LocationCompassCalibrationListener;)V
 	public fun unRegisterLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V

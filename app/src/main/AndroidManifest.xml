@@ -15,6 +15,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+
+        <profileable android:shell="true"/>
+
         <activity
             android:name=".ExampleOverviewActivity"
             android:exported="true"
