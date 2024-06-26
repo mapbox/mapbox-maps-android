@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.VisibleForTesting
@@ -59,6 +60,16 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     LocationServiceFactory.getOrCreate(),
     Dispatchers.Main.immediate,
   )
+
+  private var _locationAnimatorOptions: (ValueAnimator.() -> Unit)? = null
+
+  /**
+   * On each location received [locationAnimatorOptions] will be called giving the opportunity to
+   * change the [ValueAnimator] properties.
+   */
+  fun locationAnimatorOptions(options: (ValueAnimator.() -> Unit)?) {
+    _locationAnimatorOptions = options
+  }
 
   private var locationProviderNotAvailable: LocationError? = null
 
@@ -218,7 +229,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
               ?: Point.fromLngLat(longitude, latitude)
           }
         }.collect {
-          locationConsumer.onLocationUpdated(it)
+          locationConsumer.onLocationUpdated(
+            it,
+            options = _locationAnimatorOptions
+          )
         }
       }
 

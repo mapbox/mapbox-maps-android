@@ -143,6 +143,27 @@ class LocationComponentActivity : AppCompatActivity() {
         item.isChecked = true
         return true
       }
+      R.id.location_no_animation -> {
+        (binding.mapView.location.getLocationProvider() as DefaultLocationProvider).locationAnimatorOptions {
+            duration = 0
+          }
+        item.isChecked = true
+        return true
+      }
+      R.id.location_1s_animation -> {
+        (binding.mapView.location.getLocationProvider() as DefaultLocationProvider).locationAnimatorOptions {
+          duration = 1000
+        }
+        item.isChecked = true
+        return true
+      }
+      R.id.location_300ms_animation -> {
+        (binding.mapView.location.getLocationProvider() as DefaultLocationProvider).locationAnimatorOptions {
+            duration = 300
+          }
+        item.isChecked = true
+        return true
+      }
       R.id.action_accuracy_enabled -> {
         binding.mapView.location.showAccuracyRing = true
         item.isChecked = true

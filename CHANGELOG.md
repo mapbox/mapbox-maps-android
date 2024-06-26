@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.5.0
 ## Features ✨ and improvements 🏁
 * Expose `LineJoin.NONE` which in conjunction with e.g. `linePattern` image allows to display repeated series of images along a line (e.g. dotted route line).
+* Expose new function `DefaultLocationProvider.locationAnimatorOptions` to allow changing the value animator properties for puck position animation.
 
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
