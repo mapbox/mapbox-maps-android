@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.compose.style.layers.internal
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.compose.internal.LayerPositionAwareNode
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.internal.PausingDispatcherNode
@@ -23,7 +24,7 @@ internal class LayerNode(
   private var layerId: String,
   private var sourceState: SourceState? = null,
   private val coroutineScope: CoroutineScope,
-) : PausingDispatcherNode() {
+) : LayerPositionAwareNode, PausingDispatcherNode() {
   private val parameters = hashMapOf(
     "id" to Value(layerId),
     "type" to Value(layerType)
@@ -47,6 +48,11 @@ internal class LayerNode(
     }
     parentNode = parent
     addLayer()
+  }
+
+  override fun onMoved(parent: MapNode, from: Int, to: Int) {
+    logD(TAG, "onMoved: from $from to $to")
+    map.repositionCurrentNode(parent)
   }
 
   private fun attachSource() {
@@ -91,14 +97,17 @@ internal class LayerNode(
       is StyleSlotNode -> {
         // layer added within the style node, add as non-persistent layer
         logD(TAG, "Adding layer: $parameters, at slot: ${parent.slotName}")
+        // fetch the relative position info synchronously as the add layer can be done
+        // async, and the relative position can change later.
+        val layerPosition = getRelativePositionInfo(parent)
         coroutineScope.launch {
-          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let {
+          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let { _ ->
             map.addStyleLayer(
               parameters = Value(parameters),
-              position = null
-            ).error?.let {
+              position = layerPosition
+            ).onError {
               logE(TAG, "Failed to add layer: $it")
-            } ?: run {
+            }.onValue {
               logD(TAG, "Added layer: $parameters")
               attachSource()
               onNodeReady()
@@ -110,16 +119,19 @@ internal class LayerNode(
       is StyleLayerPositionNode -> {
         // layer added within the style node, add as non-persistent layer
         logD(TAG, "Adding layer: $parameters, at position: ${parent.layerPosition}")
+        // Add layer to the position defined in [StyleLayerPositionNode] if it's the last [LayerPositionAwareNode]
+        // under the [StyleLayerPositionNode], otherwise, we insert with relative position.
+        val layerPosition = getRelativePositionInfo(parent, parent.layerPosition)
         coroutineScope.launch {
-          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let {
+          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let { _ ->
             map.addStyleLayer(
               parameters = Value(parameters),
-              position = parent.layerPosition
-            ).error?.let { error ->
-              logE(TAG, "Failed to add layer $parameters at ${parent.layerPosition}: $error")
+              position = layerPosition
+            ).onError {
+              logE(TAG, "Failed to add layer $parameters at $layerPosition: $it")
               logE(TAG, "Available layers in style:")
               map.styleLayers.forEach { logE(TAG, "\t ${it.id}") }
-            } ?: run {
+            }.onValue {
               logD(TAG, "Added layer: $parameters")
               attachSource()
               onNodeReady()
@@ -131,12 +143,15 @@ internal class LayerNode(
       else -> {
         // layer added outside of the style node, add as persistent layer
         logD(TAG, "Adding persistent layer: $parameters")
+        // fetch the relative position info synchronously as the add layer can be done
+        // async, and the relative position can change later.
+        val layerPosition = getRelativePositionInfo(parent)
         map.addPersistentStyleLayer(
           properties = Value(parameters),
-          layerPosition = null
-        ).error?.let {
+          layerPosition = layerPosition
+        ).onError {
           logE(TAG, "Failed to add persistent layer: $it")
-        } ?: run {
+        }.onValue {
           logD(TAG, "Added persistent layer: $parameters")
           attachSource()
           onNodeReady()
@@ -220,6 +235,10 @@ internal class LayerNode(
         logD(TAG, "[$layerType] setProperty: property=$name, value=$value executed")
       }
     }
+  }
+
+  override fun getLayerIds(): List<String> {
+    return listOf(layerId)
   }
 
   override fun toString(): String {
