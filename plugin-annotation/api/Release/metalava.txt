@@ -10,6 +10,7 @@ package com.mapbox.maps.plugin.annotation {
     method public void enableDataDrivenProperty(String property);
     method public abstract String getAnnotationIdKey();
     method public java.util.List<T> getAnnotations();
+    method public final java.util.List<java.lang.String> getAssociatedLayers();
     method public java.util.List<U> getClickListeners();
     method protected final java.util.Map<java.lang.String,java.lang.Boolean> getDataDrivenPropertyUsageMap();
     method public final com.mapbox.maps.plugin.delegates.MapDelegateProvider getDelegateProvider();
@@ -28,6 +29,7 @@ package com.mapbox.maps.plugin.annotation {
     method public void update(T annotation);
     method public void update(java.util.List<? extends T> annotations);
     property public java.util.List<T> annotations;
+    property public final java.util.List<java.lang.String> associatedLayers;
     property public java.util.List<U> clickListeners;
     property protected final java.util.Map<java.lang.String,java.lang.Boolean> dataDrivenPropertyUsageMap;
     property public final com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider;

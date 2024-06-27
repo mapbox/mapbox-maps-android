@@ -11,6 +11,7 @@ public abstract class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl : 
 	public fun enableDataDrivenProperty (Ljava/lang/String;)V
 	public abstract fun getAnnotationIdKey ()Ljava/lang/String;
 	public fun getAnnotations ()Ljava/util/List;
+	public final fun getAssociatedLayers ()Ljava/util/List;
 	public fun getClickListeners ()Ljava/util/List;
 	protected final fun getDataDrivenPropertyUsageMap ()Ljava/util/Map;
 	public final fun getDelegateProvider ()Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;

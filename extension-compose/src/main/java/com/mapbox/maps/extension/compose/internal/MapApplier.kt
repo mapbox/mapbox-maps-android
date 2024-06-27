@@ -24,7 +24,7 @@ internal abstract class MapNode {
    * @param from original position
    * @param to the target position
    */
-  open fun onMoved(from: Int, to: Int) {}
+  open fun onMoved(parent: MapNode, from: Int, to: Int) {}
 
   /**
    * Invoked when the [MapNode] is removed from the node tree.
@@ -42,7 +42,7 @@ internal abstract class MapNode {
  */
 internal class RootMapNode : MapNode() {
   override fun toString(): String {
-    return "RootMapNode(${hashCode()})"
+    return "RootMapNode(#${hashCode()})"
   }
 }
 
@@ -61,13 +61,14 @@ internal class MapApplier(
     logD(TAG, "onClear: current=$current")
     root.children.forEach { it.onClear() }
     root.children.clear()
+    printNodesTree("MapNodeCleared")
   }
 
   override fun insertBottomUp(index: Int, instance: MapNode) {
     logD(TAG, "insertBottomUp: $index, $instance")
     current.children.add(index, instance)
     instance.onAttached(parent = current)
-    printNodesTree()
+    printNodesTree("MapNodeInserted")
   }
 
   override fun insertTopDown(index: Int, instance: MapNode) {
@@ -80,11 +81,25 @@ internal class MapApplier(
     // nodes inserted.
   }
 
+  /**
+   * Indicates that [count] children of [current] should be moved from index [from] to index [to].
+   *
+   * The [to] index is relative to the position before the change, so, for example, to move an
+   * element at position 1 to after the element at position 2, [from] should be `1` and [to]
+   * should be `3`. If the elements were A B C D E, calling `move(1, 3, 1)` would result in the
+   * elements being reordered to A C B D E.
+   */
   override fun move(from: Int, to: Int, count: Int) {
     logD(TAG, "move: $from, $to, $count")
-    // TODO: Notify the nodes that has been moved
     current.children.move(from, to, count)
-    printNodesTree()
+    repeat(count) { offset ->
+      current.children[to + offset - if (to > from) count else 0].onMoved(
+        parent = current,
+        from = from + offset,
+        to = to + offset - if (to > from) count else 0
+      )
+    }
+    printNodesTree("MapNodeMoved")
   }
 
   override fun remove(index: Int, count: Int) {
@@ -93,19 +108,19 @@ internal class MapApplier(
       current.children[index + offset].onRemoved(parent = current)
     }
     current.children.remove(index, count)
-    printNodesTree()
+    printNodesTree("MapNodeRemoved")
   }
 
-  private fun printNodesTree() {
+  private fun printNodesTree(tag: String = TAG) {
     if (BuildConfig.DEBUG) {
-      walkChildren(node = root)
+      walkChildren(tag = tag, node = root)
     }
   }
 
-  private fun walkChildren(prefix: String = "\t", node: MapNode) {
-    logW(TAG, "$prefix - $node")
+  private fun walkChildren(tag: String = TAG, prefix: String = "\t", node: MapNode) {
+    logW(tag, "$prefix - $node")
     node.children.forEach {
-      walkChildren("$prefix\t", it)
+      walkChildren(tag = tag, prefix = "$prefix\t", node = it)
     }
   }
 

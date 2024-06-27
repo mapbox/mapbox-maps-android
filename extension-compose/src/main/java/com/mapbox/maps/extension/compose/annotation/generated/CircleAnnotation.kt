@@ -89,7 +89,7 @@ public fun CircleAnnotation(
       }
 
       val annotation = annotationManager.create(annotationOptions)
-      CircleAnnotationNode(annotationManager, annotation, onClick)
+      CircleAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick)
     },
     update = {
       update(onClick) {

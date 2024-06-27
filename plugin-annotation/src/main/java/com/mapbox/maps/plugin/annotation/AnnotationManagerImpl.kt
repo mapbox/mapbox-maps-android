@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
 import androidx.annotation.MainThread
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Value
@@ -75,6 +76,13 @@ internal constructor(
   private var draggingAnnotation: T? = null
   private val annotationMap = LinkedHashMap<String, T>()
   private val dragAnnotationMap = LinkedHashMap<String, T>()
+
+  /**
+   * The list of layer ids that's associated with the annotation manager.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val associatedLayers = mutableListOf<String>()
+  private val associatedSources = mutableListOf<String>()
 
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     MAPBOX_GESTURES_PLUGIN_ID
@@ -150,6 +158,7 @@ internal constructor(
     dragLayer = createLayerFunction(dragLayerId, dragSourceId)
     if (!styleManager.styleSourceExists(source.sourceId)) {
       styleManager.addSource(source)
+      associatedSources.add(source.sourceId)
     }
     if (!styleManager.styleLayerExists(layer.layerId)) {
       var layerAdded = false
@@ -171,9 +180,11 @@ internal constructor(
       if (!layerAdded) {
         styleManager.addPersistentLayer(layer)
       }
+      associatedLayers.add(layer.layerId)
     }
     if (!styleManager.styleSourceExists(dragSource.sourceId)) {
       styleManager.addSource(dragSource)
+      associatedSources.add(dragSource.sourceId)
     }
     if (!styleManager.styleLayerExists(dragLayer.layerId)) {
       // Add drag layer above the annotation layer
@@ -181,10 +192,11 @@ internal constructor(
         dragLayer,
         LayerPosition(layer.layerId, null, null)
       )
+      associatedLayers.add(dragLayer.layerId)
     }
     if (layer is SymbolLayer || layer is CircleLayer) {
       // Only apply cluster for PointAnnotations or CircleAnnotations
-      initClusterLayers(styleManager, annotationSourceOptions)
+      initClusterLayers(styleManager, annotationSourceOptions, typeName, id)
     }
     updateSource()
 
@@ -256,19 +268,37 @@ internal constructor(
 
   private fun initClusterLayers(
     style: MapboxStyleManager,
-    annotationSourceOptions: AnnotationSourceOptions?
+    annotationSourceOptions: AnnotationSourceOptions?,
+    typeName: String,
+    id: Long
   ) {
     annotationSourceOptions?.clusterOptions?.let {
       it.colorLevels.forEachIndexed { level, _ ->
         val clusterLevelLayer =
-          createClusterLevelLayer(level, it.colorLevels, annotationSourceOptions)
+          createClusterLevelLayer(level, it.colorLevels, annotationSourceOptions, typeName, id)
         if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
-          style.addPersistentLayer(clusterLevelLayer)
+          style.addPersistentLayer(
+            clusterLevelLayer,
+              LayerPosition(
+              /* above = */ associatedLayers.lastOrNull(),
+              /* below = */ null,
+              /* at = */ null
+            )
+          )
+          associatedLayers.add(clusterLevelLayer.layerId)
         }
       }
-      val clusterTextLayer = createClusterTextLayer(annotationSourceOptions)
+      val clusterTextLayer = createClusterTextLayer(annotationSourceOptions, typeName, id)
       if (!style.styleLayerExists(clusterTextLayer.layerId)) {
-        style.addPersistentLayer(clusterTextLayer)
+        style.addPersistentLayer(
+          clusterTextLayer,
+            LayerPosition(
+            /* above = */ associatedLayers.lastOrNull(),
+            /* below = */ null,
+            /* at = */ null
+          )
+        )
+        associatedLayers.add(clusterTextLayer.layerId)
       }
     }
   }
@@ -276,9 +306,11 @@ internal constructor(
   private fun createClusterLevelLayer(
     level: Int,
     colorLevels: List<Pair<Int, Int>>,
-                                      annotationSourceOptions: AnnotationSourceOptions?
+    annotationSourceOptions: AnnotationSourceOptions?,
+    typeName: String,
+    id: Long
   ) =
-    circleLayer("mapbox-android-cluster-circle-layer-$level", source.sourceId) {
+    circleLayer("mapbox-android-$typeName-cluster-circle-layer-$level-$id", source.sourceId) {
       circleColor(colorLevels[level].second)
       annotationSourceOptions?.clusterOptions?.let {
         if (it.circleRadiusExpression == null) {
@@ -300,23 +332,24 @@ internal constructor(
       )
     }
 
-  private fun createClusterTextLayer(annotationSourceOptions: AnnotationSourceOptions?) = symbolLayer(CLUSTER_TEXT_LAYER_ID, source.sourceId) {
-    annotationSourceOptions?.clusterOptions?.let {
-      textField(if (it.textField == null) DEFAULT_TEXT_FIELD else it.textField as Expression)
-      if (it.textSizeExpression == null) {
-        textSize(it.textSize)
-      } else {
-        textSize(it.textSizeExpression as Expression)
+  private fun createClusterTextLayer(annotationSourceOptions: AnnotationSourceOptions?, typeName: String, id: Long) =
+    symbolLayer("mapbox-android-$typeName-cluster-text-layer-$id", source.sourceId) {
+      annotationSourceOptions?.clusterOptions?.let {
+        textField(if (it.textField == null) DEFAULT_TEXT_FIELD else it.textField as Expression)
+        if (it.textSizeExpression == null) {
+          textSize(it.textSize)
+        } else {
+          textSize(it.textSizeExpression as Expression)
+        }
+        if (it.textColorExpression == null) {
+          textColor(it.textColor)
+        } else {
+          textColor(it.textColorExpression as Expression)
+        }
+        textIgnorePlacement(true)
+        textAllowOverlap(true)
       }
-      if (it.textColorExpression == null) {
-        textColor(it.textColor)
-      } else {
-        textColor(it.textColorExpression as Expression)
-      }
-      textIgnorePlacement(true)
-      textAllowOverlap(true)
     }
-  }
 
   /**
    * Create an annotation with the option
@@ -506,17 +539,15 @@ internal constructor(
    */
   override fun onDestroy() {
     val style = delegateProvider.mapStyleManagerDelegate
-    if (style.styleLayerExists(layer.layerId)) {
-      style.removeStyleLayer(layer.layerId)
+    associatedLayers.forEach {
+      if (style.styleLayerExists(it)) {
+        style.removeStyleLayer(it)
+      }
     }
-    if (style.styleSourceExists(source.sourceId)) {
-      style.removeStyleSource(source.sourceId)
-    }
-    if (style.styleLayerExists(dragLayer.layerId)) {
-      style.removeStyleLayer(dragLayer.layerId)
-    }
-    if (style.styleSourceExists(dragSource.sourceId)) {
-      style.removeStyleSource(dragSource.sourceId)
+    associatedSources.forEach {
+      if (style.styleSourceExists(it)) {
+        style.removeStyleSource(it)
+      }
     }
 
     gesturesPlugin.removeOnMapClickListener(mapClickResolver)
@@ -809,7 +840,10 @@ internal constructor(
     return annotation
   }
 
-  private fun queryMapForFeaturesAsync(screenCoordinate: ScreenCoordinate, qrfResult: (T?) -> (Unit)): Cancelable =
+  private fun queryMapForFeaturesAsync(
+    screenCoordinate: ScreenCoordinate,
+    qrfResult: (T?) -> (Unit)
+  ): Cancelable =
     mapFeatureQueryDelegate.queryRenderedFeatures(
       RenderedQueryGeometry(screenCoordinate),
       RenderedQueryOptions(
@@ -865,7 +899,6 @@ internal constructor(
 
     /** At most wait 2 seconds to prevent ANR */
     private const val QUERY_WAIT_TIME = 2L
-    private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
   }
 }

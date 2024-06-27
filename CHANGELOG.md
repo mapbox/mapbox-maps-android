@@ -9,6 +9,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose `LineJoin.NONE` which in conjunction with e.g. `linePattern` image allows to display repeated series of images along a line (e.g. dotted route line).
 * Expose new function `DefaultLocationProvider.locationAnimatorOptions` to allow changing the value animator properties for puck position animation.
 
+## Bug fixes 🐞
+* [compose] Fix the layer and annotation ordering by moving the annotations/layers according to the relative position in the node tree.
+* Fix AnnotationManager cluster layer id collision issue, so that multiple AnnotationManager clusters can work at the same time.
+
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
