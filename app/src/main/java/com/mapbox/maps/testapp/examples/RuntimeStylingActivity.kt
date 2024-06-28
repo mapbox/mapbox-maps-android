@@ -31,13 +31,11 @@ class RuntimeStylingActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    val mapView = MapView(this, MapInitOptions(context = this, styleUri = Style.MAPBOX_STREETS))
     setContentView(mapView)
 
     mapboxMap = mapView.mapboxMap
-    mapboxMap.loadStyle(
-      Style.MAPBOX_STREETS
-    ) { setupStyle(it) }
+    mapboxMap.getStyle { setupStyle(it) }
   }
 
   private fun setupStyle(style: Style) {

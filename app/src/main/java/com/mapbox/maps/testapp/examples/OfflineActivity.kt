@@ -24,6 +24,7 @@ import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.GlyphsRasterizationMode
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.OfflineManager
@@ -37,6 +38,7 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityOfflineBinding
+import org.intellij.lang.annotations.Language
 
 /**
  * Example app that shows how to use OfflineManager and TileStore to
@@ -77,6 +79,12 @@ class OfflineActivity : AppCompatActivity() {
     binding.recycler.adapter = offlineLogsAdapter
 
     prepareDownloadButton()
+
+    mapView = MapView(
+      this,
+      MapInitOptions(context = this, styleUri = BLANK_STYLE)
+    )
+    binding.container.addView(mapView)
   }
 
   private fun prepareDownloadButton() {
@@ -107,20 +115,17 @@ class OfflineActivity : AppCompatActivity() {
         // If user did not assign the tile store path specifically during the tile region download
         // and the map initialisation period, the default tile store path will be used and
         // no extra action is needed.
-        mapView = MapView(this@OfflineActivity).also { mapview ->
-          val mapboxMap = mapview.mapboxMap
-          mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
-          mapboxMap.loadStyle(Style.SATELLITE_STREETS) {
+        mapView?.run {
+          mapboxMap.loadStyle(Style.SATELLITE_STREETS) { _ ->
+            mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
             // Add a circle annotation to the offline geometry.
-            mapview.annotations.createCircleAnnotationManager().create(
+            annotations.createCircleAnnotationManager().create(
               CircleAnnotationOptions()
                 .withPoint(TOKYO)
                 .withCircleColor(Color.RED)
             )
           }
         }
-        binding.container.addView(mapView)
-        mapView?.onStart()
         prepareShowDownloadedRegionButton()
       }
     }
@@ -432,5 +437,17 @@ class OfflineActivity : AppCompatActivity() {
     private const val TILE_REGION_ID = "myTileRegion"
     private const val STYLE_PACK_METADATA = "my-satellite-street-style-pack"
     private const val TILE_REGION_METADATA = "my-satellite-street-region"
+    @Language("JSON")
+    private const val BLANK_STYLE = """
+{
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {"background-color": "hsl(100, 50%, 50%)"}
+    }
+  ]
+}
+"""
   }
 }

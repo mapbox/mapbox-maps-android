@@ -21,6 +21,7 @@ class StyleSwitchActivity : AppCompatActivity() {
 
     mapboxMap = binding.mapView.mapboxMap
 
+    // Instead of this you can add your default style to the map layout with xml attribute `app:mapbox_styleUri="mapbox://styles/streets-v12"`
     mapboxMap.loadStyle(Style.MAPBOX_STREETS)
 
     binding.streetsButton.setOnClickListener {

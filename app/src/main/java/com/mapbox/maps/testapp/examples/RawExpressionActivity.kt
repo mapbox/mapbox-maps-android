@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -35,9 +36,9 @@ class RawExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    val mapView = MapView(this, MapInitOptions(context = this, styleUri = Style.MAPBOX_STREETS))
     setContentView(mapView)
-    mapView.mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
+    mapView.mapboxMap.getStyle {
       addExpressionToStyle(it)
     }
   }

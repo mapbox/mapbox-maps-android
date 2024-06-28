@@ -39,12 +39,10 @@ class SpaceStationLocationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    val mapView = MapView(this, MapInitOptions(context = this, styleUri = Style.SATELLITE_STREETS))
     setContentView(mapView)
     mapboxMap = mapView.mapboxMap
-    mapboxMap.loadStyle(
-      Style.SATELLITE_STREETS
-    ) {
+    mapboxMap.getStyle {
       initSpaceStationSymbolLayer(it)
       callApi()
       showHintToast()

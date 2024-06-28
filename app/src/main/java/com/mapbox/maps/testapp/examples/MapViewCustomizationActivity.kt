@@ -37,6 +37,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     // all options provided in xml file - so we just load style
+    // But you can also add your style to the map layout with xml attribute `app:mapbox_styleUri="mapbox://styles/mapbox/dark-v11"`
     binding.mapView.mapboxMap.loadStyle(Style.DARK)
     configureMapViewFromCode()
   }
@@ -72,8 +73,9 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       .bearing(120.0)
       .build()
 
+    // set MapInitOptions together with desired style
     val mapInitOptions =
-      MapInitOptions(this, mapOptions, plugins, initialCameraOptions, true)
+      MapInitOptions(this, mapOptions, plugins, initialCameraOptions, true, Style.SATELLITE)
 
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapInitOptions)
@@ -83,8 +85,6 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       1.0f
     )
     binding.rootLayout.addView(customMapView, params)
-    // load style to map view
-    customMapView.mapboxMap.loadStyle(Style.SATELLITE)
   }
 
   override fun onStart() {
