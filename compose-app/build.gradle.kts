@@ -21,6 +21,20 @@ android {
     }
   }
 
+  buildTypes {
+    getByName("release") {
+      isMinifyEnabled = true
+      // For local testing only, should use a different keystore if used besides testing.
+      signingConfig = signingConfigs.getByName("debug")
+      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+    }
+    getByName("debug") {
+      isMinifyEnabled = false
+      signingConfig = signingConfigs.getByName("debug")
+      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+    }
+  }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
