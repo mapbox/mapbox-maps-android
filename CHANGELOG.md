@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expose `LineJoin.NONE` which in conjunction with e.g. `linePattern` image allows to display repeated series of images along a line (e.g. dotted route line).
 * Expose new function `DefaultLocationProvider.locationAnimatorOptions` to allow changing the value animator properties for puck position animation.
+* [compose] Enable r8 optimisations of compose extension in consumer proguard file, the optimisation will apply when minify is enabled in app's build settings.
 
 ## Bug fixes 🐞
 * [compose] Fix the layer and annotation ordering by moving the annotations/layers according to the relative position in the node tree.

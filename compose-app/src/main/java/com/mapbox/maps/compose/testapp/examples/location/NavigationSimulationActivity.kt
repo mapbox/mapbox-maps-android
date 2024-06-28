@@ -30,6 +30,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.examples.utils.SimulateRouteLocationProvider
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
+import com.mapbox.maps.compose.testapp.utils.RecordFrameStats
 import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -158,6 +159,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
               NavigationStyle(routeLine = routeLine, progress = progress, lightPreset = lightPreset)
             }
           ) {
+            RecordFrameStats()
             MapEffect(routeLine) { map ->
               routeLine?.let {
                 map.location.setLocationProvider(SimulateRouteLocationProvider(it))
