@@ -7,11 +7,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.logD
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 internal class StyleConfigNode(
@@ -19,22 +23,29 @@ internal class StyleConfigNode(
   private val configName: String,
   private val mapboxMap: MapboxMap,
   private val coroutineScope: CoroutineScope,
-) : PausingDispatcherNode() {
+) : MapNode() {
+
+  private val styleManagerFlow: MutableStateFlow<MapboxStyleManager?> = MutableStateFlow(null)
+
   override fun onAttached(parent: MapNode) {
     val mapStyleNode = parent as MapStyleNode
     coroutineScope.launch {
       mapStyleNode.styleDataLoaded.collect {
-        onNodeReady()
+        styleManagerFlow.value = mapboxMap
       }
     }
   }
 
-  fun setProperty(value: Value) {
+  private fun dispatchWhenStyleDataLoaded(action: (MapboxStyleManager) -> Unit) {
     coroutineScope.launch {
-      whenNodeReady {
-        logD(TAG, "Setting style import config property $value for $this")
-        mapboxMap.setStyleImportConfigProperty(importId = importId, config = configName, value)
-      }
+      styleManagerFlow.filterNotNull().first().apply(action)
+    }
+  }
+
+  fun setProperty(value: Value) {
+    dispatchWhenStyleDataLoaded {
+      logD(TAG, "Setting style import config property $value for $this")
+      mapboxMap.setStyleImportConfigProperty(importId = importId, config = configName, value)
     }
   }
 

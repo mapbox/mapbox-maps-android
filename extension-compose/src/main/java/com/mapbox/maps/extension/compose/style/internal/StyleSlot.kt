@@ -11,8 +11,8 @@ import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 
 internal class StyleSlotNode(
   internal val slotName: String,
-) : MapNode() {
-  lateinit var mapStyleNode: MapStyleNode
+) : StyleAwareNode() {
+  override lateinit var mapStyleNode: MapStyleNode
   override fun onAttached(parent: MapNode) {
     mapStyleNode = parent as MapStyleNode
   }

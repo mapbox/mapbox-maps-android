@@ -3,10 +3,11 @@ package com.mapbox.maps.extension.compose.style.layers.internal
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.internal.LayerPositionAwareNode
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.StyleImage
-import com.mapbox.maps.extension.compose.style.internal.PausingDispatcherNode
+import com.mapbox.maps.extension.compose.style.internal.StyleAwareNode
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.extension.compose.style.internal.StyleSlotNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
@@ -14,6 +15,9 @@ import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
@@ -24,7 +28,7 @@ internal class LayerNode(
   private var layerId: String,
   private var sourceState: SourceState? = null,
   private val coroutineScope: CoroutineScope,
-) : LayerPositionAwareNode, PausingDispatcherNode() {
+) : LayerPositionAwareNode, MapNode() {
   private val parameters = hashMapOf(
     "id" to Value(layerId),
     "type" to Value(layerType)
@@ -33,6 +37,8 @@ internal class LayerNode(
       this["source"] = Value(it)
     }
   }
+
+  private val styleManagerFlow: MutableStateFlow<MapboxStyleManager?> = MutableStateFlow(null)
 
   private val addedImages = mutableListOf<String>()
   private val addedModels = mutableListOf<String>()
@@ -47,12 +53,35 @@ internal class LayerNode(
       }
     }
     parentNode = parent
+    updateStyleManagerState(parent)
     addLayer()
+  }
+
+  private fun updateStyleManagerState(parent: MapNode) {
+    when (parent) {
+      is StyleAwareNode -> {
+        coroutineScope.launch {
+          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let {
+            styleManagerFlow.value = map
+          }
+        }
+      }
+
+      else -> styleManagerFlow.value = map
+    }
+  }
+
+  private fun dispatchWhenStyleDataLoaded(action: (MapboxStyleManager) -> Unit) {
+    coroutineScope.launch {
+      styleManagerFlow.filterNotNull().first().apply(action)
+    }
   }
 
   override fun onMoved(parent: MapNode, from: Int, to: Int) {
     logD(TAG, "onMoved: from $from to $to")
-    map.repositionCurrentNode(parent)
+    dispatchWhenStyleDataLoaded {
+      it.repositionCurrentNode(parent)
+    }
   }
 
   private fun attachSource() {
@@ -100,18 +129,15 @@ internal class LayerNode(
         // fetch the relative position info synchronously as the add layer can be done
         // async, and the relative position can change later.
         val layerPosition = getRelativePositionInfo(parent)
-        coroutineScope.launch {
-          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let { _ ->
-            map.addStyleLayer(
-              parameters = Value(parameters),
-              position = layerPosition
-            ).onError {
-              logE(TAG, "Failed to add layer: $it")
-            }.onValue {
-              logD(TAG, "Added layer: $parameters")
-              attachSource()
-              onNodeReady()
-            }
+        dispatchWhenStyleDataLoaded {
+          it.addStyleLayer(
+            parameters = Value(parameters),
+            position = layerPosition
+          ).onError {
+            logE(TAG, "Failed to add layer: $it")
+          }.onValue {
+            logD(TAG, "Added layer: $parameters")
+            attachSource()
           }
         }
       }
@@ -122,20 +148,17 @@ internal class LayerNode(
         // Add layer to the position defined in [StyleLayerPositionNode] if it's the last [LayerPositionAwareNode]
         // under the [StyleLayerPositionNode], otherwise, we insert with relative position.
         val layerPosition = getRelativePositionInfo(parent, parent.layerPosition)
-        coroutineScope.launch {
-          parent.mapStyleNode.styleDataLoaded.firstOrNull()?.let { _ ->
-            map.addStyleLayer(
-              parameters = Value(parameters),
-              position = layerPosition
-            ).onError {
-              logE(TAG, "Failed to add layer $parameters at $layerPosition: $it")
-              logE(TAG, "Available layers in style:")
-              map.styleLayers.forEach { logE(TAG, "\t ${it.id}") }
-            }.onValue {
-              logD(TAG, "Added layer: $parameters")
-              attachSource()
-              onNodeReady()
-            }
+        dispatchWhenStyleDataLoaded { styleManager ->
+          styleManager.addStyleLayer(
+            parameters = Value(parameters),
+            position = layerPosition
+          ).onError {
+            logE(TAG, "Failed to add layer $parameters at $layerPosition: $it")
+            logE(TAG, "Available layers in style:")
+            styleManager.styleLayers.forEach { logE(TAG, "\t ${it.id}") }
+          }.onValue {
+            logD(TAG, "Added layer: $parameters")
+            attachSource()
           }
         }
       }
@@ -154,7 +177,6 @@ internal class LayerNode(
         }.onValue {
           logD(TAG, "Added persistent layer: $parameters")
           attachSource()
-          onNodeReady()
         }
       }
     }
@@ -189,51 +211,45 @@ internal class LayerNode(
   }
 
   internal fun addModel(modelInfo: Pair<String, String>) {
-    coroutineScope.launch {
-      whenNodeReady {
-        map.addStyleModel(modelInfo.first, modelInfo.second)
-          .onError {
-            logW(TAG, "Failed to add style model $modelInfo: $it")
-          }.onValue {
-            addedModels.add(modelInfo.first)
-          }
-      }
+    dispatchWhenStyleDataLoaded {
+      it.addStyleModel(modelInfo.first, modelInfo.second)
+        .onError {
+          logW(TAG, "Failed to add style model $modelInfo: $it")
+        }.onValue {
+          addedModels.add(modelInfo.first)
+        }
     }
   }
 
   internal fun addImage(styleImage: StyleImage) {
-    coroutineScope.launch {
-      whenNodeReady {
-        map.addStyleImage(
-          imageId = styleImage.imageId,
-          scale = styleImage.scale ?: map.pixelRatio,
-          image = styleImage.image,
-          sdf = styleImage.sdf,
-          stretchX = styleImage.stretchX,
-          stretchY = styleImage.stretchY,
-          content = styleImage.content
-        ).onError {
-          logW(TAG, "Failed to add style image $styleImage: $it")
-        }.onValue {
-          addedImages.add(styleImage.imageId)
-        }
+    dispatchWhenStyleDataLoaded {
+      it.addStyleImage(
+        imageId = styleImage.imageId,
+        scale = styleImage.scale ?: it.pixelRatio,
+        image = styleImage.image,
+        sdf = styleImage.sdf,
+        stretchX = styleImage.stretchX,
+        stretchY = styleImage.stretchY,
+        content = styleImage.content
+      ).onError {
+        logW(TAG, "Failed to add style image $styleImage: $it")
+      }.onValue {
+        addedImages.add(styleImage.imageId)
       }
     }
   }
 
   internal fun setProperty(name: String, value: Value) {
     logD(TAG, "[$layerType] settingProperty: property=$name, value=$value ...")
-    coroutineScope.launch {
-      whenNodeReady {
-        parameters[name] = value
-        map.setStyleLayerProperty(layerId, name, value).error?.let {
-          logW(
-            TAG,
-            "Failed to set $name property as $value on $layerType layer $layerId: $it"
-          )
-        }
-        logD(TAG, "[$layerType] setProperty: property=$name, value=$value executed")
+    dispatchWhenStyleDataLoaded {
+      parameters[name] = value
+      it.setStyleLayerProperty(layerId, name, value).error?.let {
+        logW(
+          TAG,
+          "Failed to set $name property as $value on $layerType layer $layerId: $it"
+        )
       }
+      logD(TAG, "[$layerType] setProperty: property=$name, value=$value executed")
     }
   }
 
