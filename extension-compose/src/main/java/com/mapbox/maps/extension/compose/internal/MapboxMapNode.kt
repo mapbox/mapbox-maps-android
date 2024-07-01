@@ -5,7 +5,6 @@ import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.gestures
@@ -13,21 +12,11 @@ import com.mapbox.maps.plugin.gestures.gestures
 /**
  * MapboxMapNode to observe/update the input arguments of MapboxMap.
  */
-@OptIn(MapboxExperimental::class)
 private class MapboxMapNode(
   val controller: MapView,
   initialClickListener: OnMapClickListener?,
   initialLongClickListener: OnMapLongClickListener?,
-  initialMapViewportState: MapViewportState,
 ) : MapNode() {
-  var mapViewportState = initialMapViewportState
-    set(value) {
-      if (value == field) return
-      field.setMap(null)
-      field = value
-      value.setMap(controller)
-    }
-
   var clickListener: OnMapClickListener? = initialClickListener
     set(value) {
       controller.gestures.apply {
@@ -62,7 +51,6 @@ private class MapboxMapNode(
         addOnMapLongClickListener(it)
       }
     }
-    mapViewportState.setMap(controller)
   }
 
   override fun onRemoved(parent: MapNode) {
@@ -82,7 +70,6 @@ private class MapboxMapNode(
         removeOnMapLongClickListener(it)
       }
     }
-    mapViewportState.setMap(null)
   }
 
   override fun toString(): String {
@@ -94,7 +81,6 @@ private class MapboxMapNode(
 @JvmSynthetic
 @Composable
 internal fun MapboxMapComposeNode(
-  mapViewportState: MapViewportState,
   onMapClickListener: OnMapClickListener?,
   onMapLongClickListener: OnMapLongClickListener?,
 ) {
@@ -105,14 +91,10 @@ internal fun MapboxMapComposeNode(
         mapApplier.mapView,
         onMapClickListener,
         onMapLongClickListener,
-        mapViewportState,
       )
     },
     update = {
       // input arguments updater
-      update(mapViewportState) {
-        this.mapViewportState = mapViewportState
-      }
       update(onMapClickListener) { listener ->
         this.clickListener = listener
       }

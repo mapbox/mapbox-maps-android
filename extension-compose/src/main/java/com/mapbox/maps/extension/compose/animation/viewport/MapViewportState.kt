@@ -4,23 +4,23 @@ import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import androidx.annotation.UiThread
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.compose.internal.StateDispatcher
-import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
@@ -39,11 +39,7 @@ import com.mapbox.maps.plugin.viewport.state.ViewportStateDataObserver
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.toCameraOptions
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.Channel
 
 /**
  * Create and [rememberSaveable] a [MapViewportState] using [MapViewportState.Saver].
@@ -70,38 +66,82 @@ public inline fun rememberMapViewportState(
 public class MapViewportState(
   initialCameraState: CameraState = INIT_CAMERA_STATE
 ) {
-  private var controller: MapView? = null
+  private val viewportActionChannel: Channel<(MapView) -> Unit> =
+    Channel(capacity = Channel.Factory.UNLIMITED)
 
-  private val coroutineScope =
-    CoroutineScope(Dispatchers.Main.immediate + SupervisorJob() + CoroutineName("MapViewportStateScope"))
-  private var cameraChangedCancelable: Cancelable? = null
+  private var mapView: MapView? = null
 
-  private val cameraChangedCallback = CameraChangedCallback {
-    cameraState = it.cameraState
+  private val _cameraState: MutableState<CameraState?> =
+    mutableStateOf(if (initialCameraState == INIT_CAMERA_STATE) null else initialCameraState)
+  private val _mapViewportStatus: MutableState<ViewportStatus?> = mutableStateOf(null)
+  private val _mapViewportStatusChangedReason: MutableState<ViewportStatusChangeReason?> =
+    mutableStateOf(null)
+
+  @Composable
+  private fun UpdateCameraState(mapView: MapView) {
+    LaunchedEffect(Unit) {
+      // If the user has provided a specific camera state then we need to enqueue it
+      cameraState?.let {
+        setCameraOptions(it.toCameraOptions())
+      }
+      mapView.mapboxMap.cameraChangedEvents.collect {
+        _cameraState.value = it.cameraState
+      }
+    }
   }
 
-  private val viewportStatusObserver = ViewportStatusObserver { _, to, reason ->
-    mapViewportStatus = to
-    mapViewportStatusChangedReason = reason
+  @Composable
+  private fun UpdateViewportStatus(mapView: MapView) {
+    DisposableEffect(Unit) {
+      val viewportStatusObserver = ViewportStatusObserver { _, to, reason ->
+        _mapViewportStatus.value = to
+        _mapViewportStatusChangedReason.value = reason
+      }
+      mapView.viewport.addStatusObserver(viewportStatusObserver)
+      onDispose {
+        mapView.viewport.removeStatusObserver(viewportStatusObserver)
+        _mapViewportStatus.value = null
+        _mapViewportStatusChangedReason.value = null
+      }
+    }
   }
 
-  private var stateDispatcher = StateDispatcher()
+  @Composable
+  private fun DrainActionQueue(mapView: MapView) {
+    LaunchedEffect(Unit) {
+      for (action in viewportActionChannel) {
+        action(mapView)
+      }
+    }
+  }
+
+  @Composable
+  internal fun BindToMap(mapView: MapView) {
+    UpdateCameraState(mapView)
+    UpdateViewportStatus(mapView)
+    DrainActionQueue(mapView)
+    DisposableEffect(Unit) {
+      this@MapViewportState.mapView = mapView
+      onDispose {
+        mapView.viewport.idle()
+        this@MapViewportState.mapView = null
+      }
+    }
+  }
 
   /**
    * The current [CameraState] of the map or null if this [MapViewportState] is not yet associated
    * with a map.
    */
   @MapboxExperimental
-  public var cameraState: CameraState? by mutableStateOf(null)
-    internal set
+  public val cameraState: CameraState? by _cameraState
 
   /**
    * The reason why the [ViewportStatus] has been changed or null if this [MapViewportState] is not
    * yet associated with a map.
    */
   @MapboxExperimental
-  public var mapViewportStatusChangedReason: ViewportStatusChangeReason? by mutableStateOf(null)
-    internal set
+  public val mapViewportStatusChangedReason: ViewportStatusChangeReason? by _mapViewportStatusChangedReason
 
   /**
    * The current [ViewportStatus] that represents the status of the viewport or null if this
@@ -111,60 +151,7 @@ public class MapViewportState(
    * [ViewportStatus.Idle].
    */
   @MapboxExperimental
-  public var mapViewportStatus: ViewportStatus? by mutableStateOf(null)
-    internal set
-
-  init {
-    // If the user has provided a specific camera state then we need to enqueue it
-    if (initialCameraState != INIT_CAMERA_STATE) {
-      setCameraOptions(initialCameraState.toCameraOptions())
-    }
-  }
-
-  internal fun setMap(mapView: MapView?) {
-    // If the MapViewportState is set to another map with different reference, we log a warning message that we don't support multiple map instances.
-    if (controller != null && mapView != null && mapView !== this.controller) {
-      logW(
-        TAG,
-        "The map viewport state should not be used across multiple map instances! The previous map instance will lose updates."
-      )
-    }
-
-    // Setting same map instance will be a no-op
-    if (mapView === this.controller) {
-      return
-    }
-
-    // clear up previous observers
-    controller?.viewport?.removeStatusObserver(viewportStatusObserver)
-    cameraChangedCancelable?.cancel()
-
-    // update controller
-    this.controller = mapView
-
-    // Resume or pause the dispatching based on current validness of mapview
-    if (mapView != null) {
-      // Manually retrieve the current camera state, so we don't need to wait for the first callback.
-      cameraState = mapView.mapboxMap.cameraState
-      // start observing the camera updates from the new mapview
-      cameraChangedCancelable = mapView.mapboxMap.subscribeCameraChanged(cameraChangedCallback)
-
-      // Manually retrieve the current viewport state, so we don't need to wait for the first callback.
-      val viewport = mapView.viewport
-      mapViewportStatus = viewport.status
-      // TODO: we don't expose the reason as public API in viewport plugin so for now we reset to null
-      mapViewportStatusChangedReason = null
-      viewport.addStatusObserver(viewportStatusObserver)
-
-      stateDispatcher.resumeDispatching()
-    } else {
-      // We lost the mapview so let's reset the current state to unknown
-      cameraState = null
-      mapViewportStatus = null
-      mapViewportStatusChangedReason = null
-      stateDispatcher.pauseDispatching()
-    }
-  }
+  public val mapViewportStatus: ViewportStatus? by _mapViewportStatus
 
   /**
    * Move the camera instantaneously as specified by [cameraOptions]. Any camera animation in progress
@@ -175,7 +162,7 @@ public class MapViewportState(
   @UiThread
   @MapboxExperimental
   public fun setCameraOptions(cameraOptions: CameraOptions) {
-    dispatchMapViewOperation { mapView ->
+    viewportActionChannel.trySend { mapView ->
       mapView.apply {
         viewport.transitionTo(
           CameraViewportState(cameraOptions) {
@@ -205,7 +192,7 @@ public class MapViewportState(
    */
   @MapboxExperimental
   public val styleDefaultCameraOptions: CameraOptions?
-    get() = controller?.mapboxMap?.style?.styleDefaultCamera
+    get() = mapView?.mapboxMap?.style?.styleDefaultCamera
 
   /**
    * Ease the map camera to a given camera options.
@@ -220,7 +207,7 @@ public class MapViewportState(
     animationOptions: MapAnimationOptions? = null,
     completionListener: CompletionListener? = null
   ) {
-    dispatchMapViewOperation { mapView ->
+    viewportActionChannel.trySend { mapView ->
       mapView.apply {
         viewport.transitionTo(
           targetState = CameraViewportState(cameraOptions) {
@@ -260,7 +247,7 @@ public class MapViewportState(
     animationOptions: MapAnimationOptions? = null,
     completionListener: CompletionListener? = null
   ) {
-    dispatchMapViewOperation { mapView ->
+    viewportActionChannel.trySend { mapView ->
       mapView.apply {
         viewport.transitionTo(
           targetState = CameraViewportState(cameraOptions) {
@@ -291,7 +278,7 @@ public class MapViewportState(
       .build(),
     completionListener: CompletionListener? = null
   ) {
-    dispatchMapViewOperation { mapView ->
+    viewportActionChannel.trySend { mapView ->
       mapView.viewport.apply {
         transitionTo(
           targetState = makeOverviewViewportState(overviewViewportStateOptions),
@@ -317,7 +304,7 @@ public class MapViewportState(
       .build(),
     completionListener: CompletionListener? = null
   ) {
-    dispatchMapViewOperation { mapView ->
+    viewportActionChannel.trySend { mapView ->
       mapView.viewport.apply {
         transitionTo(
           targetState = makeFollowPuckViewportState(followPuckViewportStateOptions),
@@ -335,17 +322,8 @@ public class MapViewportState(
    */
   @MapboxExperimental
   public fun idle() {
-    dispatchMapViewOperation { mapView ->
+    viewportActionChannel.trySend { mapView ->
       mapView.viewport.idle()
-    }
-  }
-
-  private fun dispatchMapViewOperation(operation: (MapView) -> Unit) {
-    coroutineScope.launch {
-      val block: suspend CoroutineScope.() -> Unit = {
-        controller!!.apply(operation)
-      }
-      stateDispatcher.dispatch(block = block)
     }
   }
 

@@ -100,12 +100,14 @@ public fun MapboxMap(
       MapAttributionScope(mapView, this).attribution()
     }
 
+    key(mapViewportState) {
+      mapViewportState.BindToMap(mapView = mapView)
+    }
     key(mapState) {
       mapState.BindToMap(mapboxMap = mapView.mapboxMap)
     }
 
     val parentComposition = rememberCompositionContext()
-    val currentMapViewportState by rememberUpdatedState(mapViewportState)
     val currentOnMapClickListener by rememberUpdatedState(onMapClickListener)
     val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
     val currentContent by rememberUpdatedState(content)
@@ -117,7 +119,6 @@ public fun MapboxMap(
         ).apply {
           setContent {
             MapboxMapComposeNode(
-              currentMapViewportState,
               currentOnMapClickListener,
               currentOnMapLongClickListener,
             )
