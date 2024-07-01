@@ -82,6 +82,7 @@ dependencies {
   implementation(libs.androidx.appCompat)
   implementation(libs.androidx.coreKtx)
   implementation(libs.androidx.multidex)
+  implementation(libs.googlePlayServicesLocation)
   androidTestUtil(libs.androidx.orchestrator)
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
   androidTestImplementation(libs.androidx.testJUnit)

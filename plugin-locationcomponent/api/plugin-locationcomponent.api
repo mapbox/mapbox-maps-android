@@ -18,6 +18,7 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentCon
 	public static final field COMPASS_UPDATE_RATE_MS J
 	public static final field DEFAULT_FASTEST_INTERVAL_MILLIS J
 	public static final field DEFAULT_INTERVAL_MILLIS J
+	public static final field DEFAULT_MINIMUM_DISPLACEMENT_METERS F
 	public static final field DEFAULT_TRACKING_PADDING_ANIM_DURATION J
 	public static final field DEFAULT_TRACKING_TILT_ANIM_DURATION J
 	public static final field DEFAULT_TRACKING_ZOOM_ANIM_DURATION J

@@ -21,6 +21,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     field public static final long COMPASS_UPDATE_RATE_MS = 500L; // 0x1f4L
     field public static final long DEFAULT_FASTEST_INTERVAL_MILLIS = 1000L; // 0x3e8L
     field public static final long DEFAULT_INTERVAL_MILLIS = 1000L; // 0x3e8L
+    field public static final float DEFAULT_MINIMUM_DISPLACEMENT_METERS = 0.1f;
     field public static final long DEFAULT_TRACKING_PADDING_ANIM_DURATION = 750L; // 0x2eeL
     field public static final long DEFAULT_TRACKING_TILT_ANIM_DURATION = 1250L; // 0x4e2L
     field public static final long DEFAULT_TRACKING_ZOOM_ANIM_DURATION = 750L; // 0x2eeL
