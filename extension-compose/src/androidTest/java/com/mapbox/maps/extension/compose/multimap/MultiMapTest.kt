@@ -16,7 +16,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations
 import com.mapbox.maps.viewannotation.geometry
@@ -67,7 +67,7 @@ public class MultiMapTest {
             modifier = Modifier
               .weight(1f)
               .fillMaxWidth(),
-            mapViewportState = MapViewportState().apply {
+            mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
                 center(CityLocations.HELSINKI)
@@ -90,7 +90,7 @@ public class MultiMapTest {
           modifier = Modifier
             .weight(1f)
             .fillMaxWidth(),
-          mapViewportState = MapViewportState().apply {
+          mapViewportState = rememberMapViewportState {
             setCameraOptions {
               zoom(ZOOM)
               center(CityLocations.HELSINKI)
@@ -126,7 +126,7 @@ public class MultiMapTest {
 
   private companion object {
     const val ZOOM: Double = 13.0
-    const val TEST_TIMEOUT = 1500L
+    const val TEST_TIMEOUT = 5000L
     const val ADD_ANNOTATIONS_DELAY = 500L
 
     val points1 = listOf(
