@@ -73,6 +73,7 @@ class ViewportPluginImplTest {
     every { handler.post(any()) } returns true
     every { statusObserver.onViewportStatusChanged(any(), any(), any()) } just runs
     every { transitionUpdateCancelable.cancel() } just runs
+    every { mapCameraManagerDelegate.cameraForCoordinates(any(), any(), any(), any(), any(), any()) } just runs
     viewportPlugin = ViewportPluginImpl(handler)
     viewportPlugin.onDelegateProvider(delegateProvider)
     viewportPlugin.addStatusObserver(statusObserver)

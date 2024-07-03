@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Fix the layer and annotation ordering by moving the annotations/layers according to the relative position in the node tree.
 * Fix AnnotationManager cluster layer id collision issue, so that multiple AnnotationManager clusters can work at the same time.
+* Fix transitioning to `OverviewViewportState` in corner cases when the map is not yet ready for rendering(e.g. immediately after `MapView` is created).
 
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
