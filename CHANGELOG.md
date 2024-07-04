@@ -5,16 +5,69 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.5.0
+## Breaking changes ⚠️
+* [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
+* [compose] Rename `ImportConfig` to `ImportConfigs`.
+* [compose] Move `MapboxMap.mapEvents` to events flows in `MapState`.
+* [compose] Move `MapboxMap.gesturesSettings` to `MapState`.
+* [compose] Move `Projection` to `generated` package and rename `default` values to `DEFAULT`.
+* [compose] Rename `LightPreset` to `LightPresetValue`.
+* [compose] Rename `TerrainState.disabled` to `TerrainState.DISABLED`.
+* [compose] Replace terrain property `Exaggeration` with `DoubleValue`.
+* [compose] Replace concrete `AtmosphereState` properties (e.g. `HighColor`, `HorizonBlend`, `SpaceColor`, etc) with generic ones: `ColorValue`, `DoubleValue`, `DoubleRangeValue`.
+* [compose] Replace concrete Layer properties(e.g. `CircleColor`, `CircleOpacity`, `IconImage` etc) with generic ones: `ColorValue`, `DoubleValue`, `ImageValue` etc.
+* [compose] Replace concrete `GeoJsonSourceState`, `ImageSourceState`, `RasterArraySourceState`, `RasterDemSourceState`, `RasterSourceState`, `SourceProperties`, `VectorSourceState` properties with generic ones (e.g. `BooleanValue`, `StringValue`, `LongValue`...).
+* [compose] Move `GeoJSONData` outside of `generated` package.
+* Remove experimental `CustomRasterSource.invalidateRegion` and `CustomRasterSource.invalidateTile` methods and change signature of `CustomRasterSource.setTileData`.
+* Remove experimental `CustomRasterSource.tileCacheBudget` getter and setter. If needed, caching should be implemented on user's side.
+* Remove experimental `MapboxMap` and `Style` methods: `invalidateStyleCustomRasterSourceTile`, `invalidateStyleCustomRasterSourceRegion`; change signature of `setStyleCustomRasterSourceTileData` method in `MapboxMap` and `Style`.
+
 ## Features ✨ and improvements 🏁
+* [compose] Enable r8 optimisations of compose extension in consumer proguard file, the optimisation will apply when minify is enabled in app's build settings.
+* [compose] Introduce `StyleImport` composable API to be used in the `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
+* [compose] Introduce `MapState` that can be hoisted to interact with map states, such as query rendered features, subscribe to map events and configure gestures settings.
+* [compose] Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
+* [compose] Introduce `AmbientLightState`, `DirectionalLightState`, `FlatLightState` as separate states; `LightsState` can be constructed by combination of `DirectionalLightState` and `AmbientLightState` or with `FlatLightState` to be set to the style.
+* [compose] Avoid recreation of objects during recomposition of `GenericStyle`.
 * Expose `LineJoin.NONE` which in conjunction with e.g. `linePattern` image allows to display repeated series of images along a line (e.g. dotted route line).
 * Expose new function `DefaultLocationProvider.locationAnimatorOptions` to allow changing the value animator properties for puck position animation.
-* [compose] Enable r8 optimisations of compose extension in consumer proguard file, the optimisation will apply when minify is enabled in app's build settings.
+* Deprecate `MapboxMap.cameraForCoordinates` suspending extension function in favour of suspend `MapboxMap.awaitCameraForCoordinates`.
+* Add min/max/default values to the docs for the generated properties.
+* Add asynchronous `TileStore.create().clearAmbientCache()` API that can be used for clearing all ambient cache data.
+* Expose experimental `lineZOffset` and `lineOcclusionOpacity` for `LineLayer`.
+* Expose experimental `modelFrontCutoff` for `ModelLayer`.
+* Expose experimental `iconOcclusionOpacity` and `textOcclusionOpacity` for `SymbolLayer` and `PointAnnotationManager`.
+* Expose experimental `lineOcclusionOpacity` for `PolylineAnnotationManager`.
+* Expose experimental `lineZOffset` for `PolylineAnnotation` and `PolylineAnnotationOptions`.
+* Expose `clusterMinPoints` property for `GeoJSONSource` and for annotation's `ClusterOptions`.
+* Remove explicit main thread locking when using `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` and dragging the map that could lead to an ANR.
+* Use dedicated thread for the tile store to increase performance.
+* [compose] Expose `TerrainState` and `AtmosphereState` properties as `MutableState`.
 
 ## Bug fixes 🐞
 * [compose] Fix the layer and annotation ordering by moving the annotations/layers according to the relative position in the node tree.
-* Fix AnnotationManager cluster layer id collision issue, so that multiple AnnotationManager clusters can work at the same time.
+* [compose] Fix `No enum constant com.mapbox.maps.GeoJSONSourceData` crash when restoring app from background.
 * Fix transitioning to `OverviewViewportState` in corner cases when the map is not yet ready for rendering(e.g. immediately after `MapView` is created).
 * Set default minimum displacement between location updates to 0.1 meters in `DefaultLocationProvider`. Now this value is the same regardless of application using Google Play Services location library or not.
+* Fix `PointAnnotationManager` and `CircleAnnotationManager` cluster layer id collision issue, so that multiple clusters can work at the same time.
+* Fix `RasterParticleLayer.rasterParticleCount` and `RasterParticleLayer.defaultRasterParticleCount` returning `null`.
+* Fix an issue allowing view annotation to be added even if its associated layer does not exist. Now, view annotation will function correctly once the layer is added. 
+* Fix feature queries for symbols above the horizon.
+* Fix the rotated icon position during the globe transition.
+* Fix Dynamic View Annotation (DVA) placement to place DVA in the center of the line geometry point, and try to avoid placing DVA near the lines' intersection point.
+* Reduce the max raster-particle animation speed. It prevents particles from moving too fast, causing a visible clipping artifact at tile boundaries.
+* `Snapshotter` methods throw `SnapshotterDestroyedException` if `destroy` was already called.
+* Fix precision issues in `ColorUtils` methods.
+* Fix NPE when parsing `rgb(...)` strings with `ColorUtils` methods.
+* Fix `ScaleBar.useContinuousRendering` not being in sync with `ScaleBar.settings.useContinuousRendering`.
+* Fix accuracy ring related location settings updates not being rendered immediately.
+* Fix a crash for Draco compressed 3D models whose geometry share indices.
+* Fix tile rendering errors when the composited source tile components are overscaled.
+* Fix transparent areas in overlapped polygons of MultiPolygon feature.
+* Fix crash on multiple style pack loading operations.
+
+## Dependencies
+* Update gl-native to v11.5.0 and common to v24.5.0.
 
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
