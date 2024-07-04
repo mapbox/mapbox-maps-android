@@ -4,7 +4,6 @@ import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
 import com.mapbox.maps.*
-import com.mapbox.maps.module.TelemetryEvent
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -13,7 +12,6 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
-import io.mockk.unmockkObject
 import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
@@ -45,13 +43,10 @@ class MapboxCarMapTest {
     every { logI(any(), any()) } just Runs
     mockkObject(MapSurfaceProvider)
     every { MapSurfaceProvider.create(any(), any(), any()) } returns testMapSurface
-    mockkObject(TelemetryEvent)
-    every { TelemetryEvent.create(any()) } returns mockk<TelemetryEvent>(relaxed = true)
   }
 
   @After
   fun teardown() {
-    unmockkObject(TelemetryEvent)
     unmockkAll()
   }
 

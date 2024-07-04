@@ -53,6 +53,11 @@ object LocationComponentConstants {
    * Default fastest acceptable interval between location updates
    */
   const val DEFAULT_FASTEST_INTERVAL_MILLIS: Long = 1000
+
+  /**
+   * Default minimum displacement between location updates in meters.
+   */
+  const val DEFAULT_MINIMUM_DISPLACEMENT_METERS: Float = 0.1f
   // Layers
   /**
    * Layer ID of the location indicator layer.

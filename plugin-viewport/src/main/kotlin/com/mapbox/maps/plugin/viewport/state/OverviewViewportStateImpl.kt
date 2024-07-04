@@ -22,7 +22,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import com.mapbox.maps.threading.AnimationThreadController
-import java.util.concurrent.*
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * The actual implementation of [OverviewViewportState] that shows the overview of a given geometry.
@@ -37,11 +37,17 @@ internal class OverviewViewportStateImpl(
 ) : OverviewViewportState {
   private val cameraPlugin = mapDelegateProvider.mapPluginProviderDelegate.camera
   private val cameraDelegate = mapDelegateProvider.mapCameraManagerDelegate
-  private val dataSourceUpdateObservers = CopyOnWriteArraySet<ViewportStateDataObserver>()
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val dataSourceUpdateObservers = CopyOnWriteArraySet<ViewportStateDataObserver>()
   private var runningAnimation: AnimatorSet? = null
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var isOverviewStateRunning = false
+
+  private var evaluateViewportDataCancelable: Cancelable? = null
+
+  private var latestViewportData: CameraOptions? = null
 
   /**
    * Describes the configuration options of the state.
@@ -52,21 +58,29 @@ internal class OverviewViewportStateImpl(
       handleNewData()
     }
 
+  init {
+    handleNewData()
+  }
+
   private fun handleNewData() {
-    val cameraOptions = evaluateViewportData()
-    if (isOverviewStateRunning) {
-      updateFrame(cameraOptions, false)
-    }
-    dataSourceUpdateObservers.forEach {
-      if (!it.onNewData(cameraOptions)
-      ) {
-        dataSourceUpdateObservers.remove(it)
+    latestViewportData = null
+    evaluateViewportDataCancelable?.cancel()
+    evaluateViewportDataCancelable = evaluateViewportData { cameraOptions ->
+      latestViewportData = cameraOptions
+      if (isOverviewStateRunning) {
+        updateFrame(cameraOptions, false)
+      }
+      dataSourceUpdateObservers.forEach {
+        if (!it.onNewData(cameraOptions)) {
+          dataSourceUpdateObservers.remove(it)
+        }
       }
     }
   }
 
-  private fun evaluateViewportData(): CameraOptions {
-    return cameraDelegate.cameraForCoordinates(
+  private fun evaluateViewportData(callback: (CameraOptions) -> Unit): Cancelable {
+    var cancelled = false
+    cameraDelegate.cameraForCoordinates(
       coordinates = options.geometry.extractCoordinates(),
       camera = cameraOptions {
         padding(options.padding)
@@ -76,7 +90,14 @@ internal class OverviewViewportStateImpl(
       coordinatesPadding = options.geometryPadding,
       maxZoom = options.maxZoom,
       offset = options.offset
-    )
+    ) {
+      if (!cancelled) {
+        callback.invoke(it)
+      }
+    }
+    return Cancelable {
+      cancelled = true
+    }
   }
 
   /**
@@ -87,9 +108,11 @@ internal class OverviewViewportStateImpl(
    * @return a handle that cancels current observation.
    */
   override fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable {
-    if (viewportStateDataObserver.onNewData(evaluateViewportData())) {
-      dataSourceUpdateObservers.add(viewportStateDataObserver)
-    }
+    latestViewportData?.let {
+      if (viewportStateDataObserver.onNewData(it)) {
+        dataSourceUpdateObservers.add(viewportStateDataObserver)
+      }
+    } ?: dataSourceUpdateObservers.add(viewportStateDataObserver)
 
     return Cancelable {
       dataSourceUpdateObservers.remove(viewportStateDataObserver)

@@ -7,6 +7,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -42,6 +43,8 @@ class OverviewViewportStateImplTest {
   private val cameraOptions = mockk<CameraOptions>()
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
   private lateinit var overviewState: OverviewViewportStateImpl
+  private val cameraForCoordinateSlot: MutableList<(CameraOptions) -> Unit> = mutableListOf()
+  private val initialGeometry = Point.fromLngLat(0.0, 0.0)
 
   @Before
   fun setup() {
@@ -55,14 +58,15 @@ class OverviewViewportStateImplTest {
         any(),
         any(),
         any(),
+        any(),
         any()
       )
-    } returns cameraOptions
+    } just runs
     every { cameraPlugin.registerAnimators(any()) } just runs
     every { cameraPlugin.unregisterAnimators(any()) } just runs
     overviewState = OverviewViewportStateImpl(
       delegateProvider,
-      initialOptions = OverviewViewportStateOptions.Builder().geometry(Point.fromLngLat(0.0, 0.0))
+      initialOptions = OverviewViewportStateOptions.Builder().geometry(initialGeometry)
         .build(),
       transitionFactory
     )
@@ -72,27 +76,31 @@ class OverviewViewportStateImplTest {
   fun cleanUp() {
     unmockkStatic(CAMERA_ANIMATIONS_UTILS)
     unmockkAll()
+    cameraForCoordinateSlot.clear()
   }
 
   @Test
   fun testObserveDataSourceForFirstDataPoint() {
     val dataObserver = mockk<ViewportStateDataObserver>()
-    val testGeometry = Point.fromLngLat(0.0, 0.0)
 
     // stop observing after the first data point
     every { dataObserver.onNewData(any()) } returns false
 
-    overviewState.observeDataSource(dataObserver)
-    verify {
+    verify(exactly = 1) {
       mapCameraDelegate.cameraForCoordinates(
-        coordinates = listOf(testGeometry),
+        coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
           .bearing(0.0).pitch(0.0).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
-        offset = ScreenCoordinate(0.0, 0.0)
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
       )
     }
+
+    overviewState.observeDataSource(dataObserver)
+
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
     verify(exactly = 1) {
       dataObserver.onNewData(cameraOptions)
     }
@@ -100,33 +108,166 @@ class OverviewViewportStateImplTest {
       overviewState.options.toBuilder().geometry(Point.fromLngLat(1.0, 1.0)).build()
     verify(exactly = 1) {
       dataObserver.onNewData(cameraOptions)
+    }
+  }
+
+  @Test
+  fun testObserveDataSourceForFirstDataPointWithCachedCamera() {
+    val dataObserver = mockk<ViewportStateDataObserver>()
+
+    // stop observing after the first data point
+    every { dataObserver.onNewData(any()) } returns false
+
+    verify(exactly = 1) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(initialGeometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
+
+    overviewState.observeDataSource(dataObserver)
+
+    verify(exactly = 1) {
+      dataObserver.onNewData(cameraOptions)
+    }
+    overviewState.options =
+      overviewState.options.toBuilder().geometry(Point.fromLngLat(1.0, 1.0)).build()
+    verify(exactly = 1) {
+      dataObserver.onNewData(cameraOptions)
+    }
+  }
+
+  @Test
+  fun testObserveDataSourceForFirstDataPointCancelBeforeEvaluateViewportDataResult() {
+    val dataObserver = mockk<ViewportStateDataObserver>()
+
+    // stop observing after the first data point
+    every { dataObserver.onNewData(any()) } returns false
+
+    verify {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(initialGeometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+
+    val cancelable = overviewState.observeDataSource(dataObserver)
+    cancelable.cancel()
+
+    assertTrue(overviewState.dataSourceUpdateObservers.isEmpty())
+
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
+    verify(exactly = 0) {
+      dataObserver.onNewData(cameraOptions)
+    }
+    overviewState.options =
+      overviewState.options.toBuilder().geometry(Point.fromLngLat(1.0, 1.0)).build()
+    verify(exactly = 0) {
+      dataObserver.onNewData(cameraOptions)
+    }
+  }
+
+  @Test
+  fun testObserveDataSourceForFirstDataPointNewGeometryBeforeEvaluateViewportDataResult() {
+    val dataObserver = mockk<ViewportStateDataObserver>()
+    val testCameraOptions = cameraOptions { center(initialGeometry) }
+
+    // stop observing after the first data point
+    every { dataObserver.onNewData(any()) } returns false
+    verify(exactly = 1) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(initialGeometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+    overviewState.observeDataSource(dataObserver)
+
+    verify(exactly = 0) {
+      dataObserver.onNewData(cameraOptions)
+    }
+
+    // new geometry set before the async cameraForCoordinates return
+    val newGeometry = Point.fromLngLat(1.0, 1.0)
+    val newCameraOptions = cameraOptions { center(Point.fromLngLat(1.0, 1.0)) }
+    overviewState.options = overviewState.options.toBuilder().geometry(newGeometry).build()
+
+    verify(exactly = 1) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(newGeometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+    // now assuming map is ready and the cameraForCoordinates calls the result callback in sequence:
+    cameraForCoordinateSlot.first().invoke(testCameraOptions)
+    cameraForCoordinateSlot.last().invoke(newCameraOptions)
+
+    // we should only get one viewport data, which is the new camera options
+    verify(exactly = 0) {
+      dataObserver.onNewData(testCameraOptions)
+    }
+    verify(exactly = 1) {
+      dataObserver.onNewData(newCameraOptions)
     }
   }
 
   @Test
   fun testObserveDataSourceContinuously() {
     val dataObserver = mockk<ViewportStateDataObserver>()
-    val testGeometry = Point.fromLngLat(0.0, 0.0)
 
     // keep observing after the first data point
     every { dataObserver.onNewData(any()) } returns true
-
-    overviewState.observeDataSource(dataObserver)
-    verify {
+    verify(exactly = 1) {
       mapCameraDelegate.cameraForCoordinates(
-        coordinates = listOf(testGeometry),
+        coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
           .bearing(0.0).pitch(0.0).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
-        offset = ScreenCoordinate(0.0, 0.0)
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
       )
     }
+    overviewState.observeDataSource(dataObserver)
+
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
     verify(exactly = 1) {
       dataObserver.onNewData(cameraOptions)
     }
     overviewState.options =
       overviewState.options.toBuilder().geometry(Point.fromLngLat(1.0, 1.0)).build()
+    verify(exactly = 1) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(Point.fromLngLat(1.0, 1.0)),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
     verify(exactly = 2) {
       dataObserver.onNewData(cameraOptions)
     }
@@ -151,6 +292,19 @@ class OverviewViewportStateImplTest {
     // test updating overview state option to trigger an animation
     overviewState.options =
       overviewState.options.toBuilder().geometry(Point.fromLngLat(1.0, 1.0)).build()
+
+    verify(exactly = 1) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(Point.fromLngLat(1.0, 1.0)),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
 
     verifySequence {
       animatorSet.addListener(capture(animatorListenerSlot))
@@ -185,6 +339,19 @@ class OverviewViewportStateImplTest {
     // test updating overview state option to trigger an animation
     overviewState.options =
       overviewState.options.toBuilder().geometry(Point.fromLngLat(1.0, 1.0)).build()
+
+    verify(exactly = 1) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(Point.fromLngLat(1.0, 1.0)),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
 
     verifySequence {
       animatorSet.addListener(capture(animatorListenerSlot))

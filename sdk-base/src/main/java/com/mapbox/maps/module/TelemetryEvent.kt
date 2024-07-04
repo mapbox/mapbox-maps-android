@@ -8,8 +8,12 @@ import com.mapbox.common.FeatureTelemetryCounter
  * @suppress
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
-class TelemetryEvent private constructor(name: String) {
-  private val counter: FeatureTelemetryCounter = FeatureTelemetryCounter.create(name)
+class TelemetryEvent private constructor(private val name: String) {
+  private val counter: FeatureTelemetryCounter? = try {
+    FeatureTelemetryCounter.create(name)
+  } catch (e: Throwable) {
+    null
+  }
 
   /**
    * Static methods.
@@ -23,6 +27,6 @@ class TelemetryEvent private constructor(name: String) {
    * @suppress
    */
   fun increment() {
-    counter.increment()
+    counter?.increment()
   }
 }

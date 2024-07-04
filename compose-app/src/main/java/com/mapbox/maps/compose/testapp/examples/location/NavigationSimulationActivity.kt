@@ -95,7 +95,14 @@ public class NavigationSimulationActivity : ComponentActivity() {
               )
             ).routes()[0].geometry()!!,
             Constants.PRECISION_6
-          )
+          ).also {
+            // immediately transition to overview viewport state after route line is available
+            mapViewportState.transitionToOverviewState(
+              OverviewViewportStateOptions.Builder().geometry(it)
+                .padding(EdgeInsets(50.0, 50.0, 50.0, 50.0))
+                .build()
+            )
+          }
         }
       }
 
@@ -114,7 +121,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
                         mapViewportState.transitionToOverviewState(
                           overviewViewportStateOptions = OverviewViewportStateOptions.Builder()
                             .geometry(it)
-                            .padding(EdgeInsets(10.0, 10.0, 10.0, 10.0))
+                            .padding(EdgeInsets(50.0, 50.0, 50.0, 50.0))
                             .build()
                         )
                       }
@@ -164,7 +171,6 @@ public class NavigationSimulationActivity : ComponentActivity() {
               routeLine?.let {
                 map.location.setLocationProvider(SimulateRouteLocationProvider(it))
                 map.location.enabled = true
-                mapViewportState.transitionToFollowPuckState()
               }
             }
             DisposableMapEffect(Unit) { map ->
@@ -190,7 +196,11 @@ public class NavigationSimulationActivity : ComponentActivity() {
 
   @MapboxStyleComposable
   @Composable
-  public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: LightPresetValue) {
+  public fun NavigationStyle(
+    routeLine: LineString?,
+    progress: Double,
+    lightPreset: LightPresetValue
+  ) {
     val geoJsonSource = rememberGeoJsonSourceState {
       lineMetrics = BooleanValue(true)
     }

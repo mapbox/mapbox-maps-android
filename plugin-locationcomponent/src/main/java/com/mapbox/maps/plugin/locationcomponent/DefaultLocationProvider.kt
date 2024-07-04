@@ -114,6 +114,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
           .minimumInterval(LocationComponentConstants.DEFAULT_FASTEST_INTERVAL_MILLIS)
           .interval(LocationComponentConstants.DEFAULT_INTERVAL_MILLIS).build()
       )
+      .displacement(LocationComponentConstants.DEFAULT_MINIMUM_DISPLACEMENT_METERS)
       .build()
     val result = locationService.getDeviceLocationProvider(request)
     // Depending on the result we either create a flow that will subscribe to the live tracking
