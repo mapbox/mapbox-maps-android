@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.5.0
+
+# 11.5.0 July 05, 2024
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
 * [compose] Rename `ImportConfig` to `ImportConfigs`.
@@ -68,6 +69,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.5.1 and common to v24.5.0.
+
 
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
