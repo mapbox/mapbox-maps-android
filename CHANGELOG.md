@@ -67,7 +67,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix crash on multiple style pack loading operations.
 
 ## Dependencies
-* Update gl-native to v11.5.0 and common to v24.5.0.
+* Update gl-native to v11.5.1 and common to v24.5.0.
 
 # 11.5.0-rc.1 June 20, 2024
 ## Breaking changes ⚠️
