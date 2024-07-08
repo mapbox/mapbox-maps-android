@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.compose.style.terrain.generated
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -49,6 +50,7 @@ public inline fun rememberTerrainState(
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/terrain/)
  */
 @MapboxExperimental
+@Stable
 public class TerrainState private constructor(
   internal val applier: TerrainStateApplier,
   exaggeration: DoubleValue,

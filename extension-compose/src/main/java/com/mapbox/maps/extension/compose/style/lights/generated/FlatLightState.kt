@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,6 +56,7 @@ public inline fun rememberFlatLightState(
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/light)
  */
 @MapboxExperimental
+@Stable
 public class FlatLightState internal constructor(
   /**
    * The id of the [FlatLightState].

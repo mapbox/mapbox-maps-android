@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -82,6 +83,7 @@ public inline fun rememberMapState(
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @MapboxExperimental
+@Stable
 public class MapState internal constructor(initialGesturesSettings: GesturesSettings) {
 
   /**

@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +55,7 @@ public inline fun rememberRasterArraySourceState(
  * @param initialProperties The initial mutable properties of the source.
  */
 @MapboxExperimental
+@Stable
 public class RasterArraySourceState private constructor(
   sourceId: String,
   sourceType: String,

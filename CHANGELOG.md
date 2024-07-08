@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* [compose] Mark `MapState`, `MapViewportState`, `TerrainState`, light states and source states as `Stable` as they are internally backed by `MutableState`.
 
 # 11.5.0 July 05, 2024
 ## Breaking changes ⚠️

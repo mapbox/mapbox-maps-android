@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.compose.style.atmosphere.generated
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -47,6 +48,7 @@ public inline fun rememberAtmosphereState(
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/)
  */
 @MapboxExperimental
+@Stable
 public class AtmosphereState private constructor(
   internal val applier: AtmosphereStateApplier,
   color: ColorValue,

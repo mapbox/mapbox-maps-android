@@ -70,7 +70,7 @@ package com.mapbox.maps.extension.compose {
     property public final com.mapbox.maps.StyleLoadedCallback? onStyleLoaded;
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class MapState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class MapState {
     ctor public MapState();
     method @com.mapbox.maps.MapboxExperimental public kotlinx.coroutines.flow.Flow<com.mapbox.maps.GenericEvent> genericEvents(String eventName);
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
@@ -148,7 +148,7 @@ package com.mapbox.maps.extension.compose {
 
 package com.mapbox.maps.extension.compose.animation.viewport {
 
-  @com.mapbox.maps.MapboxExperimental public final class MapViewportState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class MapViewportState {
     ctor public MapViewportState(com.mapbox.maps.CameraState initialCameraState = com.mapbox.maps.extension.compose.animation.viewport.MapViewportState.INIT_CAMERA_STATE);
     method @com.mapbox.maps.MapboxExperimental public void easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     method @com.mapbox.maps.MapboxExperimental public void flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
@@ -539,7 +539,7 @@ package com.mapbox.maps.extension.compose.style.atmosphere {
 
 package com.mapbox.maps.extension.compose.style.atmosphere.generated {
 
-  @com.mapbox.maps.MapboxExperimental public final class AtmosphereState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class AtmosphereState {
     ctor public AtmosphereState();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
@@ -1324,7 +1324,7 @@ package com.mapbox.maps.extension.compose.style.lights {
 
 package com.mapbox.maps.extension.compose.style.lights.generated {
 
-  @com.mapbox.maps.MapboxExperimental public final class AmbientLightState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class AmbientLightState {
     ctor public AmbientLightState(String id = generateRandomLightId("ambient"));
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
@@ -1378,7 +1378,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
   public static final class AnchorValue.Companion {
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class DirectionalLightState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class DirectionalLightState {
     ctor public DirectionalLightState(String id = generateRandomLightId("directional"));
     method public com.mapbox.maps.extension.compose.style.BooleanValue getCastShadows();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
@@ -1431,7 +1431,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
 }), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState,kotlin.Unit> init = {});
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class FlatLightState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class FlatLightState {
     ctor public FlatLightState(String id = generateRandomLightId("flat"));
     method public com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue getAnchor();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
@@ -1623,7 +1623,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   public static final class EncodingValue.Companion {
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class GeoJsonSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class GeoJsonSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public GeoJsonSourceState(String sourceId = generateRandomSourceId("geojson"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.LongValue getBuffer();
@@ -1684,7 +1684,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState,kotlin.Unit> init = {});
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class ImageSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ImageSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public ImageSourceState(String sourceId = generateRandomSourceId("image"));
     method public com.mapbox.maps.extension.compose.style.PointListValue getCoordinates();
     method public com.mapbox.maps.extension.compose.style.LongValue getPrefetchZoomDelta();
@@ -1709,7 +1709,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.ImageSourceState,kotlin.Unit> init = {});
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class RasterArraySourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterArraySourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public RasterArraySourceState(String sourceId = generateRandomSourceId("raster-array"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -1752,7 +1752,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.RasterArraySourceState,kotlin.Unit> init = {});
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class RasterDemSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterDemSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public RasterDemSourceState(String sourceId = generateRandomSourceId("raster-dem"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -1813,7 +1813,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState,kotlin.Unit> init = {});
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class RasterSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public RasterSourceState(String sourceId = generateRandomSourceId("raster"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -1890,7 +1890,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   public static final class SchemeValue.Companion {
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class VectorSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class VectorSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public VectorSourceState(String sourceId = generateRandomSourceId("vector"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -1993,7 +1993,7 @@ package com.mapbox.maps.extension.compose.style.terrain {
 
 package com.mapbox.maps.extension.compose.style.terrain.generated {
 
-  @com.mapbox.maps.MapboxExperimental public final class TerrainState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class TerrainState {
     ctor public TerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState);
     method public com.mapbox.maps.extension.compose.style.DoubleValue getExaggeration();
     method public com.mapbox.maps.extension.compose.style.Transition getExaggerationTransition();

@@ -81,7 +81,6 @@ public final class com/mapbox/maps/extension/compose/MapEvents {
 }
 
 public final class com/mapbox/maps/extension/compose/MapState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/MapState$Companion;
 	public fun <init> ()V
 	public final fun genericEvents (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
@@ -151,7 +150,6 @@ public abstract interface annotation class com/mapbox/maps/extension/compose/Map
 }
 
 public final class com/mapbox/maps/extension/compose/animation/viewport/MapViewportState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState$Companion;
 	public fun <init> ()V
 	public fun <init> (Lcom/mapbox/maps/CameraState;)V
@@ -549,7 +547,6 @@ public final class com/mapbox/maps/extension/compose/style/Transition$Companion 
 }
 
 public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState$Companion;
 	public fun <init> ()V
 	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/atmosphere/AtmosphereStateApplier;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1380,7 +1377,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/LightsState$Co
 }
 
 public final class com/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1449,7 +1445,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Anch
 }
 
 public final class com/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/DirectionalLightState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1509,7 +1504,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 }
 
 public final class com/mapbox/maps/extension/compose/style/lights/generated/FlatLightState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1730,7 +1724,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Enc
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1779,7 +1772,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1804,7 +1796,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ima
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1841,7 +1832,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1890,7 +1880,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1958,7 +1947,6 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Sch
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -2034,7 +2022,6 @@ public final class com/mapbox/maps/extension/compose/style/standard/MapboxStanda
 }
 
 public final class com/mapbox/maps/extension/compose/style/terrain/generated/TerrainState {
-	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState$Companion;
 	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;
 	public fun <init> (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState;)V

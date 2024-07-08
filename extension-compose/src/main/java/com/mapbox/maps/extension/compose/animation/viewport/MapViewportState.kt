@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -63,6 +64,7 @@ public inline fun rememberMapViewportState(
  * @param initialCameraState the initial camera position
  */
 @MapboxExperimental
+@Stable
 public class MapViewportState(
   initialCameraState: CameraState = INIT_CAMERA_STATE
 ) {
