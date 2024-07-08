@@ -5,13 +5,12 @@ import android.os.Parcelable
 
 data class SpecificExample(
   val name: String,
-  private val label: String? = null,
-  private val description: String? = null,
+  private val _label: String? = null,
+  private val _description: String? = null,
   val category: String
 ) : Parcelable {
 
-  val simpleName: String
-    get() = buildSimpleName()
+  val simpleName: String = buildSimpleName()
 
   constructor(parcel: Parcel) : this(
     parcel.readString()!!,
@@ -26,18 +25,14 @@ data class SpecificExample(
     return split[split.size - 1]
   }
 
-  fun getLabel(): String {
-    return label ?: simpleName
-  }
+  val label: String = _label ?: simpleName
 
-  fun getDescription(): String {
-    return description ?: "-"
-  }
+  val description: String = _description ?: "-"
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeString(name)
-    parcel.writeString(getLabel())
-    parcel.writeString(getDescription())
+    parcel.writeString(label)
+    parcel.writeString(description)
     parcel.writeString(category)
   }
 

@@ -133,12 +133,20 @@
             android:name=".examples.java.DSLStylingJavaActivity"
             android:description="@string/description_dsl_styling"
             android:exported="true"
-            android:label="@string/activity_dsl_styling"></activity>
+            android:label="@string/activity_java_dsl_styling">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
         <activity
             android:name=".examples.java.RuntimeStylingJavaActivity"
             android:description="@string/description_dsl_styling"
             android:exported="true"
-            android:label="@string/activity_dsl_styling"></activity>
+            android:label="@string/activity_java_runtime_dsl_styling"  >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
         <activity
             android:name=".examples.globe.HeatmapLayerGlobeActivity"
             android:description="@string/description_heatmap_layer"

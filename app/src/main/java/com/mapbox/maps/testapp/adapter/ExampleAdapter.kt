@@ -18,8 +18,8 @@ class ExampleAdapter(private val specificExampleList: List<SpecificExample>) :
   RecyclerView.Adapter<ExampleAdapter.ViewHolder>() {
 
   open class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var labelView: TextView = view.findViewById(R.id.nameView) as TextView
-    var descriptionView: TextView = view.findViewById(R.id.descriptionView) as TextView
+    var labelView: TextView = view.findViewById(R.id.nameView)
+    var descriptionView: TextView = view.findViewById(R.id.descriptionView)
   }
 
   override fun getItemCount(): Int {
@@ -33,7 +33,7 @@ class ExampleAdapter(private val specificExampleList: List<SpecificExample>) :
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.labelView.text = specificExampleList[position].getLabel()
-    holder.descriptionView.text = specificExampleList[position].getDescription()
+    holder.labelView.text = specificExampleList[position].label
+    holder.descriptionView.text = specificExampleList[position].description
   }
 }

@@ -1,12 +1,23 @@
 package com.mapbox.maps.testapp.examples.java;
 
+import static com.mapbox.maps.MapboxLogger.logD;
+import static com.mapbox.maps.MapboxLogger.logE;
+import static com.mapbox.maps.MapboxLogger.logI;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.eq;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.image;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableKt;
+
 import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.None;
 import com.mapbox.bindgen.Value;
@@ -33,16 +44,9 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
 import com.mapbox.maps.extension.style.sources.generated.VectorSource;
 import com.mapbox.maps.testapp.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import static com.mapbox.maps.MapboxLogger.logD;
-import static com.mapbox.maps.MapboxLogger.logE;
-import static com.mapbox.maps.MapboxLogger.logI;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.eq;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.image;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
 
 /**
  * Example showcasing usage of creating runtime style with java codes.
@@ -202,7 +206,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         mapView = new MapView(this);
         setContentView(mapView);
         mapboxMap = mapView.getMapboxMap();
-        mapboxMap.loadStyle(Style.STANDARD, this::setUpStyle);
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS, this::setUpStyle);
     }
 
     private void setUpStyle(Style style) {

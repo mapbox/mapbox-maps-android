@@ -1,30 +1,35 @@
 package com.mapbox.maps.testapp
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.mapbox.maps.Version
 import com.mapbox.maps.testapp.adapter.ExampleAdapter
 import com.mapbox.maps.testapp.adapter.ExampleSectionAdapter
 import com.mapbox.maps.testapp.databinding.ActivityExampleOverviewBinding
 import com.mapbox.maps.testapp.model.SpecificExample
 import com.mapbox.maps.testapp.utils.ItemClickSupport
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.Comparator
-import kotlin.collections.ArrayList
+import kotlinx.coroutines.withContext
 
 /**
  * Activity shown when application is started
@@ -33,14 +38,11 @@ import kotlin.collections.ArrayList
  * It uses tags as category and description to order the different entries.
  *
  */
-class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
+class ExampleOverviewActivity : AppCompatActivity() {
 
   private lateinit var sectionAdapter: ExampleSectionAdapter
   private var currentlyDisplayedExampleList: List<SpecificExample> = ArrayList()
   private var allExampleList: List<SpecificExample> = ArrayList()
-  private val job = Job()
-
-  override val coroutineContext = job + Dispatchers.IO
 
   private lateinit var binding: ActivityExampleOverviewBinding
 
@@ -48,6 +50,15 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
     super.onCreate(savedInstanceState)
     binding = ActivityExampleOverviewBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    @SuppressLint("RestrictedApi")
+    val glNativeVersion =
+      "Maps: ${Version.getVersionString()} (${Version.getRevisionString()})"
+    @SuppressLint("RestrictedApi")
+    val commonVersion =
+      "Common: ${com.mapbox.common.Version.getCommonSDKVersionString()} (${com.mapbox.common.Version.getCommonSDKRevisionString()})"
+    @SuppressLint("SetTextI18n")
+    binding.sdkVersions.text = "$glNativeVersion; $commonVersion"
 
     binding.recyclerView.apply {
       layoutManager = LinearLayoutManager(this@ExampleOverviewActivity)
@@ -66,55 +77,63 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    if (savedInstanceState == null || !savedInstanceState.containsKey(KEY_STATE_EXAMPLES)) {
-      launch {
-        loadExamples()
+    lifecycleScope.launch {
+      // Always load the examples list. Otherwise, filtering will not work.
+      allExampleList = loadExamples()
+      if (savedInstanceState == null || !savedInstanceState.containsKey(KEY_STATE_EXAMPLES)) {
+        displayExampleList(allExampleList)
+      } else {
+        @Suppress("DEPRECATION")
+        displayExampleList(savedInstanceState.getParcelableArrayList(KEY_STATE_EXAMPLES)!!)
       }
-    } else {
-      @Suppress("DEPRECATION")
-      displayExampleList(savedInstanceState.getParcelableArrayList(KEY_STATE_EXAMPLES)!!)
     }
 
-    binding.exampleSearchEdittext.addTextChangedListener(object : TextWatcher {
+    lifecycleScope.launch {
+      callbackFlow {
+        val callback = object : TextWatcher {
+          override fun afterTextChanged(s: Editable) {
+            // Empty because this callback isn't useful for the app
+          }
 
-      override fun afterTextChanged(s: Editable) {
-        // Empty because this callback isn't useful for the app
-      }
+          override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            // Empty because this callback isn't useful for the app
+          }
 
-      override fun beforeTextChanged(
-        s: CharSequence,
-        start: Int,
-        count: Int,
-        after: Int
-      ) {
-        // Empty because this callback isn't useful for the app
-      }
-
-      override fun onTextChanged(
-        currentTextInEditText: CharSequence,
-        start: Int,
-        before: Int,
-        count: Int
-      ) {
-        if (currentTextInEditText.isEmpty()) {
-          displayExampleList(allExampleList)
-          binding.clearSearchImageview.visibility = View.INVISIBLE
-        } else {
-          if (binding.clearSearchImageview.visibility == View.INVISIBLE) {
+          override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+            trySendBlocking(text.toString())
+          }
+        }
+        binding.exampleSearchEdittext.addTextChangedListener(callback)
+        awaitClose {
+          binding.exampleSearchEdittext.removeTextChangedListener(callback)
+        }
+      }.conflate()
+        .onEach {
+          if (it.isEmpty()) {
+            binding.clearSearchImageview.visibility = View.INVISIBLE
+          } else {
             binding.clearSearchImageview.visibility = View.VISIBLE
           }
-          val lowercaseSearchText =
-            currentTextInEditText.toString().lowercase(Locale.getDefault())
-          val filteredList = allExampleList.filter {
-            // Set search criteria
-            it.simpleName.lowercase(Locale.getDefault()).contains(lowercaseSearchText) ||
-              it.category.lowercase(Locale.getDefault()).contains(lowercaseSearchText) ||
-              it.getDescription().lowercase(Locale.getDefault()).contains(lowercaseSearchText) ||
-              it.getLabel().lowercase(Locale.getDefault()).contains(lowercaseSearchText)
-          }
-          if (filteredList.isNotEmpty()) {
-            displayExampleList(filteredList)
+        }
+        .flowOn(Dispatchers.Main)
+        .map { textFilter ->
+          if (textFilter.isEmpty()) {
+            allExampleList
           } else {
+            allExampleList.filter { example ->
+              with(example) {
+                simpleName.contains(textFilter, true) ||
+                  category.contains(textFilter, true) ||
+                  description.contains(textFilter, true) ||
+                  label.contains(textFilter, true)
+              }
+            }
+          }
+        }
+        .flowOn(Dispatchers.Default)
+        .collectLatest { filteredExamples ->
+          displayExampleList(filteredExamples)
+          if (filteredExamples.isEmpty() && allExampleList.isNotEmpty()) {
             Snackbar.make(
               binding.rootLayout,
               getString(R.string.no_results_for_search_query),
@@ -122,19 +141,16 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
             ).show()
           }
         }
-      }
-    })
+    }
 
     binding.clearSearchImageview.setOnClickListener {
       binding.exampleSearchEdittext.text.clear()
-      binding.clearSearchImageview.visibility = View.INVISIBLE
-      currentlyDisplayedExampleList = allExampleList
     }
   }
 
-  private fun displayExampleList(specificExamplesList: List<SpecificExample>) {
+  private suspend fun displayExampleList(specificExamplesList: List<SpecificExample>) = withContext(Dispatchers.Default) {
     if (specificExamplesList.isEmpty()) {
-      return
+      return@withContext
     }
     val sections = arrayListOf<ExampleSectionAdapter.Section>()
     var currentCat = ""
@@ -146,12 +162,12 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
       }
     }
     sectionAdapter = ExampleSectionAdapter(
-      this,
+      this@ExampleOverviewActivity,
       R.layout.section_main_layout,
       R.id.section_text, ExampleAdapter(specificExamplesList)
     )
-    runOnUiThread {
-      sectionAdapter.setSections(sections.toTypedArray())
+    sectionAdapter.setSections(sections.toTypedArray())
+    withContext(Dispatchers.Main.immediate) {
       binding.recyclerView.adapter = sectionAdapter
     }
     currentlyDisplayedExampleList = specificExamplesList
@@ -178,58 +194,45 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
     }
   }
 
-  private fun loadExamples() {
-    val exampleListFromManifest = ArrayList<SpecificExample>()
+  private suspend fun loadExamples(): List<SpecificExample> = withContext(Dispatchers.Default) {
+    val categorizedExamples = mutableListOf<SpecificExample>()
+    val nonCategorizedExamples = mutableListOf<SpecificExample>()
     @Suppress("DEPRECATION")
     val appPackageInfo = packageManager.getPackageInfo(
       packageName,
       PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
     )
-    val packageName = applicationContext.packageName
-    val metaDataKey = getString(R.string.category)
+    // We use this activity package name in case the `applicationId`/`packageName` is different
+    val packageName = ExampleOverviewActivity::class.java.`package`!!.name
+    val categoryKey = getString(R.string.category)
     for (info in appPackageInfo.activities) {
       if (info.labelRes != 0 && info.name.startsWith(packageName) &&
         info.name != ExampleOverviewActivity::class.java.name
       ) {
         val label = getString(info.labelRes)
-        val description = resolveString(info.descriptionRes)
-        val category = resolveMetaData(info.metaData, metaDataKey)
-        category?.let {
-          exampleListFromManifest.add(SpecificExample(info.name, label, description, it))
+        val description = runCatching { getString(info.descriptionRes) }.getOrDefault("-")
+        val category = info.metaData?.getString(categoryKey)
+        if (category != null) {
+          categorizedExamples.add(SpecificExample(info.name, label, description, category))
+        } else {
+          nonCategorizedExamples.add(SpecificExample(info.name, label, description, "Other"))
         }
       }
     }
 
-    if (exampleListFromManifest.isNotEmpty()) {
+    if (categorizedExamples.isNotEmpty()) {
       val comparator =
         Comparator<SpecificExample> { lhs, rhs ->
           var result = lhs.category.compareTo(rhs.category, true)
 
           if (result == 0) {
-            result = lhs.getLabel().compareTo(rhs.getLabel(), true)
+            result = lhs.label.compareTo(rhs.label, true)
           }
           result
         }
-      Collections.sort(exampleListFromManifest, comparator)
-      this.allExampleList = exampleListFromManifest
-      displayExampleList(exampleListFromManifest)
+      categorizedExamples.sortWith(comparator)
     }
-  }
-
-  private fun resolveMetaData(bundle: Bundle?, key: String): String? {
-    var category: String? = null
-    if (bundle != null) {
-      category = bundle.getString(key)
-    }
-    return category
-  }
-
-  private fun resolveString(@StringRes stringRes: Int): String {
-    return try {
-      getString(stringRes)
-    } catch (exception: Resources.NotFoundException) {
-      "-"
-    }
+    return@withContext categorizedExamples + nonCategorizedExamples
   }
 
   companion object {
