@@ -1,8 +1,11 @@
 package com.mapbox.maps.compose.testapp
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +23,16 @@ internal fun ExampleCategoryItem(
 ) {
   Card(
     modifier = modifier
-      .padding(8.dp)
-      .fillMaxSize(),
-    elevation = 0.dp
+        .padding(8.dp)
+        .fillMaxWidth(),
+    backgroundColor = MaterialTheme.colors.secondary,
+
+    shape = RoundedCornerShape(corner = CornerSize(16.dp))
   ) {
-    Text(text = category.category, style = typography.h4)
+    Text(
+      modifier = Modifier.padding(horizontal = 8.dp),
+      text = category.category,
+      style = typography.h4,
+    )
   }
 }
