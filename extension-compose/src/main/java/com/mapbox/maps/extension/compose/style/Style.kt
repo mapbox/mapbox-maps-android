@@ -31,6 +31,7 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the [style] definition.
  * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
+ * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
  */
 @Composable
 @MapboxStyleComposable
@@ -233,6 +234,7 @@ public fun importConfigs(init: ImportConfigs.() -> Unit): ImportConfigs =
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the [style] definition.
  * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
+ * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
  */
 @Composable
 @MapboxStyleComposable

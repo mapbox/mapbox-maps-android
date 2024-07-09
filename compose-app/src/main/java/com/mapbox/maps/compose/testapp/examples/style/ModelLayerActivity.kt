@@ -133,7 +133,7 @@ public class ModelLayerActivity : ComponentActivity() {
   }
 
   private companion object {
-    const val CAMERA_ZOOM = 16.0
+    const val CAMERA_ZOOM = 15.0
     const val CAMERA_PITCH = 45.0
     const val MODEL_ID_KEY = "model-id-key"
     const val MODEL_ID_1 = "model-id-1"

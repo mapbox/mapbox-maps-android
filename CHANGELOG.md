@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * [compose] Mark `MapState`, `MapViewportState`, `TerrainState`, light states and source states as `Stable` as they are internally backed by `MutableState`.
+* [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `MapboxStandardStyle`.
 
 # 11.5.0 July 05, 2024
 ## Breaking changes ⚠️

@@ -7,8 +7,10 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMapComposable
+import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable
 import com.mapbox.maps.extension.compose.style.imports.StyleImportsScope
@@ -64,7 +66,8 @@ public data class LightPresetValue(public val value: Value) {
      * to differentiate them because they use [equals].
      */
     @JvmField
-    internal val INITIAL: LightPresetValue = LightPresetValue(Value.valueOf("LightPresetValue.INITIAL"))
+    internal val INITIAL: LightPresetValue =
+      LightPresetValue(Value.valueOf("LightPresetValue.INITIAL"))
 
     /**
      * Default value for [LightPresetValue], setting default will result in restoring the property value defined in the style.
@@ -106,10 +109,16 @@ public data class LightPresetValue(public val value: Value) {
  * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
  * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
  * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
- * @param lightPreset The [LightPresetValue] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk".
+ * @param showPlaceLabels Whether or not to show the place labels, default to true.
+ * @param showRoadLabels Whether or not to show the road labels, default to true.
+ * @param showPointOfInterestLabels Whether or not to show the point of interest labels, default to true.
+ * @param showTransitLabels Whether or not to show the transit labels, default to true.
+ * @param lightPreset The [LightPresetValue] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk", defaults to "day".
+ * @param font The font to be used with the standard style.
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the Standard style definition.
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
+ * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
  */
 @Composable
 @MapboxStyleComposable
@@ -119,7 +128,12 @@ public fun MapboxStandardStyle(
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  showPlaceLabels: BooleanValue = BooleanValue.INITIAL,
+  showRoadLabels: BooleanValue = BooleanValue.INITIAL,
+  showPointOfInterestLabels: BooleanValue = BooleanValue.INITIAL,
+  showTransitLabels: BooleanValue = BooleanValue.INITIAL,
   lightPreset: LightPresetValue = LightPresetValue.INITIAL,
+  font: StringValue = StringValue.INITIAL,
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
@@ -134,9 +148,24 @@ public fun MapboxStandardStyle(
       bottomSlot?.let { slot("bottom", it) }
     },
     styleImportsConfig = styleImportsConfig {
-      if (lightPreset.notInitial) {
-        importConfig(importId = "basemap") {
+      importConfig(importId = "basemap") {
+        if (showPlaceLabels.notInitial) {
+          config("showPlaceLabels", showPlaceLabels.value)
+        }
+        if (showRoadLabels.notInitial) {
+          config("showRoadLabels", showRoadLabels.value)
+        }
+        if (showPointOfInterestLabels.notInitial) {
+          config("showPointOfInterestLabels", showPointOfInterestLabels.value)
+        }
+        if (showTransitLabels.notInitial) {
+          config("showTransitLabels", showTransitLabels.value)
+        }
+        if (lightPreset.notInitial) {
           config(LightPresetValue.NAME, lightPreset.value)
+        }
+        if (font.notInitial) {
+          config("font", font.value)
         }
       }
     },
