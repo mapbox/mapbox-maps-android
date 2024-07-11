@@ -66,43 +66,6 @@ suspend fun MapboxMap.awaitLoadStyle(
 }
 
 /**
- * Queries the map for rendered features.
- *
- * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
- * @param options The `render query options` for querying rendered features.
- *
- * @return a list of [QueriedRenderedFeature] or a string describing an error.
- */
-@JvmSynthetic
-suspend fun MapboxMap.queryRenderedFeatures(
-  geometry: RenderedQueryGeometry,
-  options: RenderedQueryOptions,
-): Expected<String, List<QueriedRenderedFeature>> =
-  suspendMapboxCancellableCoroutine { continuation ->
-    queryRenderedFeatures(geometry, options, continuation::resume)
-  }
-
-/**
- * Queries the map for source features.
- *
- * @param sourceId The style source identifier used to query for source features.
- * @param options The `source query options` for querying source features.
- *
- * @return a list of [QueriedSourceFeature] or a string describing an error.
- *
- * Note: In order to get expected results, the corresponding source needs to be in use and
- * the query shall be made after the corresponding source data is loaded.
- */
-@JvmSynthetic
-suspend fun MapboxMap.querySourceFeatures(
-  sourceId: String,
-  options: SourceQueryOptions,
-): Expected<String, List<QueriedSourceFeature>> =
-  suspendMapboxCancellableCoroutine { continuation ->
-    querySourceFeatures(sourceId, options, continuation::resume)
-  }
-
-/**
  * Returns all the leaves (original points) of a cluster (given its cluster_id) from a GeoJsonSource, with pagination support: limit is the number of leaves
  * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
  *
@@ -470,36 +433,6 @@ fun MapboxMap.genericEvents(eventName: String): Flow<GenericEvent> {
 )
 @JvmSynthetic
 suspend fun MapboxMap.cameraForCoordinates(
-  coordinates: List<Point>,
-  camera: CameraOptions,
-  coordinatesPadding: EdgeInsets? = null,
-  maxZoom: Double? = null,
-  offset: ScreenCoordinate? = null,
-): CameraOptions = suspendCoroutine { continuation ->
-  cameraForCoordinates(
-    coordinates = coordinates,
-    camera = camera,
-    coordinatesPadding = coordinatesPadding,
-    maxZoom = maxZoom,
-    offset = offset,
-    result = continuation::resume
-  )
-}
-
-/**
- * Convenience method that returns the [CameraOptions] object for given parameters.
- *
- * @param coordinates The `coordinates` representing the bounds of the camera.
- * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
- * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
- *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
- * @param maxZoom The maximum zoom level allowed in the returned camera options.
- * @param offset The center of the given bounds relative to map center in pixels.
- *
- * @return the [CameraOptions] object representing the provided parameters. Empty [CameraOptions] (see [CameraOptions.isEmpty]) could be returned only if an internal error occurred.
- */
-@JvmSynthetic
-suspend fun MapboxMap.awaitCameraForCoordinates(
   coordinates: List<Point>,
   camera: CameraOptions,
   coordinatesPadding: EdgeInsets? = null,

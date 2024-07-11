@@ -575,9 +575,17 @@ public final class com/mapbox/maps/attribution/AttributionParser$Options {
 	public final fun withTelemetryAttribution (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 }
 
+public final class com/mapbox/maps/coroutine/MapCameraManagerDelegateExtKt {
+	public static final synthetic fun awaitCameraForCoordinates (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun awaitCameraForCoordinates$default (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/coroutine/MapFeatureQueryDelegateExtKt {
+	public static final synthetic fun queryRenderedFeatures (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final synthetic fun querySourceFeatures (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/mapbox/maps/coroutine/MapboxMapExtKt {
-	public static final synthetic fun awaitCameraForCoordinates (Lcom/mapbox/maps/MapboxMap;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun awaitCameraForCoordinates$default (Lcom/mapbox/maps/MapboxMap;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final synthetic fun awaitLoadStyle (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final synthetic fun awaitLoadStyle (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final synthetic fun awaitStyle (Lcom/mapbox/maps/MapboxMap;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -603,8 +611,6 @@ public final class com/mapbox/maps/coroutine/MapboxMapExtKt {
 	public static final synthetic fun getStyleImageMissingEvents (Lcom/mapbox/maps/MapboxMap;)Lkotlinx/coroutines/flow/Flow;
 	public static final synthetic fun getStyleImageRemoveUnusedEvents (Lcom/mapbox/maps/MapboxMap;)Lkotlinx/coroutines/flow/Flow;
 	public static final synthetic fun getStyleLoadedEvents (Lcom/mapbox/maps/MapboxMap;)Lkotlinx/coroutines/flow/Flow;
-	public static final synthetic fun queryRenderedFeatures (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final synthetic fun querySourceFeatures (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final synthetic fun removeFeatureState (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final synthetic fun resetFeatureStates (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

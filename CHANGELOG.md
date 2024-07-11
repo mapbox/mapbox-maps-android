@@ -7,6 +7,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Mark `MapState`, `MapViewportState`, `TerrainState`, light states and source states as `Stable` as they are internally backed by `MutableState`.
 * [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `MapboxStandardStyle`.
+* Modified `awaitCameraForCoordinates` extension function to use `MapCameraManagerDelegate` as receiver type.
+* Modified `queryRenderedFeatures` and `querySourceFeatures` extension functions to use `MapFeatureQueryDelegate` as receiver type.
 
 # 11.5.0 July 05, 2024
 ## Breaking changes ⚠️

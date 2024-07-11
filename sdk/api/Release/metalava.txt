@@ -507,8 +507,16 @@ package com.mapbox.maps.attribution {
 
 package com.mapbox.maps.coroutine {
 
+  public final class MapCameraManagerDelegateExtKt {
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.CameraOptions! awaitCameraForCoordinates(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate, java.util.List<? extends com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding = null, double maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
+  }
+
+  public final class MapFeatureQueryDelegateExtKt {
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>! queryRenderedFeatures(com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate, com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedSourceFeature>>! querySourceFeatures(com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate, String sourceId, com.mapbox.maps.SourceQueryOptions options);
+  }
+
   public final class MapboxMapExtKt {
-    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.CameraOptions! awaitCameraForCoordinates(com.mapbox.maps.MapboxMap, java.util.List<? extends com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding = null, double maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, String style);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
@@ -532,8 +540,6 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageMissing> getStyleImageMissingEvents(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageRemoveUnused> getStyleImageRemoveUnusedEvents(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleLoaded> getStyleLoadedEvents(com.mapbox.maps.MapboxMap);
-    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>! queryRenderedFeatures(com.mapbox.maps.MapboxMap, com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options);
-    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedSourceFeature>>! querySourceFeatures(com.mapbox.maps.MapboxMap, String sourceId, com.mapbox.maps.SourceQueryOptions options);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! removeFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, String stateKey = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! resetFeatureStates(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! setFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
