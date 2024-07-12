@@ -178,7 +178,7 @@ package com.mapbox.maps {
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding, Double? bearing, Double? pitch, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? bearing, Double? pitch);
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method public void cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions,kotlin.Unit> result);
     method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding, Double? bearing, Double? pitch);
@@ -674,7 +674,8 @@ package com.mapbox.maps.viewannotation {
     method public android.view.View addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options);
     method public void addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options, androidx.asynclayoutinflater.view.AsyncLayoutInflater asyncInflater, kotlin.jvm.functions.Function1<? super android.view.View,kotlin.Unit> asyncInflateCallback);
     method public void addViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
-    method public com.mapbox.maps.CameraOptions? cameraForAnnotations(java.util.List<? extends android.view.View> annotations, com.mapbox.maps.EdgeInsets? edgeInsets = null, Double? bearing = null, Double? pitch = null);
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.CameraOptions? cameraForAnnotations(java.util.List<? extends android.view.View> annotations, com.mapbox.maps.EdgeInsets? edgeInsets = null, Double? bearing = null, Double? pitch = null);
+    method public void cameraForAnnotations(java.util.List<? extends android.view.View> annotations, com.mapbox.maps.EdgeInsets? edgeInsets = null, Double? bearing = null, Double? pitch = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions,kotlin.Unit> result);
     method public java.util.Map<android.view.View,com.mapbox.maps.ViewAnnotationOptions> getAnnotations();
     method public android.view.View? getViewAnnotation(com.mapbox.maps.AnnotatedLayerFeature annotatedLayerFeature);
     method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptions(com.mapbox.maps.AnnotatedLayerFeature annotatedLayerFeature);

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -20,6 +21,8 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.Style
+import com.mapbox.maps.coroutine.awaitCameraForCoordinates
+import com.mapbox.maps.coroutine.awaitStyle
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
@@ -36,6 +39,7 @@ import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDdsMovingIconWithTrailingLineBinding
 import com.mapbox.turf.TurfMeasurement
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -151,26 +155,24 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
           }
 
           val currentRoute = body.routes()[0]
-          binding.mapView.mapboxMap.getStyle { style ->
-            binding.mapView.mapboxMap.let { mapboxMap ->
-              val cameraOptionsForCoordinates = mapboxMap.cameraForCoordinates(
-                coordinates = listOf(originPoint, destinationPoint),
-                camera = cameraOptions { },
-                coordinatesPadding = EdgeInsets(50.0, 50.0, 50.0, 50.0),
-                maxZoom = null,
-                offset = null
-              )
-
-              mapboxMap.easeTo(
-                cameraOptionsForCoordinates,
-                mapAnimationOptions {
-                  duration(5000L)
-                }
-              )
-            }
+          lifecycleScope.launch {
+            val map = binding.mapView.mapboxMap
+            val cameraOptionsForCoordinates = map.awaitCameraForCoordinates(
+              coordinates = listOf(originPoint, destinationPoint),
+              camera = cameraOptions { },
+              coordinatesPadding = EdgeInsets(50.0, 50.0, 50.0, 50.0),
+              maxZoom = null,
+              offset = null
+            )
+            map.easeTo(
+              cameraOptionsForCoordinates,
+              mapAnimationOptions {
+                duration(5000L)
+              }
+            )
             currentRoute.geometry()?.let {
               initData(
-                style,
+                binding.mapView.mapboxMap.awaitStyle(),
                 FeatureCollection.fromFeature(
                   Feature.fromGeometry(
                     LineString.fromPolyline(
@@ -235,7 +237,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
    */
   private fun initDotLinePath(style: Style) {
     style.addLayerBelow(
-      lineLayer(LINE_Layer_ID, LINE_SOURCE_ID) {
+      lineLayer(LINE_LAYER_ID, LINE_SOURCE_ID) {
         lineColor("#F13C6E")
         lineCap(LineCap.ROUND)
         lineJoin(LineJoin.ROUND)
@@ -258,7 +260,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     private const val TAG = "MovingIconWithTrailingLineActivity"
     private const val DOT_SOURCE_ID = "dot-source-id"
     private const val LINE_SOURCE_ID = "line-source-id"
-    private const val LINE_Layer_ID = "line-layer-id"
+    private const val LINE_LAYER_ID = "line-layer-id"
     private const val MARKER_ID = "moving-red-marker"
     private const val SYMBOL_LAYER_ID = "symbol-layer-id"
     private val originPoint = Point.fromLngLat(38.7508, 9.0309)

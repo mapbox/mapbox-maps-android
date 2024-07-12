@@ -52,8 +52,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
 
     binding.fabReframe.setOnClickListener {
       if (viewAnnotationViews.isNotEmpty()) {
-        val cameraOptions = viewAnnotationManager.cameraForAnnotations(viewAnnotationViews)
-        cameraOptions?.let {
+        viewAnnotationManager.cameraForAnnotations(viewAnnotationViews) {
           mapboxMap.flyTo(it)
         }
       } else {

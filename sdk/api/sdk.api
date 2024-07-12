@@ -773,6 +773,7 @@ public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationMan
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;Landroidx/asynclayoutinflater/view/AsyncLayoutInflater;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun addViewAnnotation (Landroid/view/View;Lcom/mapbox/maps/ViewAnnotationOptions;)V
 	public abstract fun cameraForAnnotations (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun cameraForAnnotations (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun getAnnotations ()Ljava/util/Map;
 	public abstract fun getViewAnnotation (Lcom/mapbox/maps/AnnotatedLayerFeature;)Landroid/view/View;
 	public abstract fun getViewAnnotationOptions (Landroid/view/View;)Lcom/mapbox/maps/ViewAnnotationOptions;
@@ -790,6 +791,7 @@ public final class com/mapbox/maps/viewannotation/ViewAnnotationManager$Companio
 
 public final class com/mapbox/maps/viewannotation/ViewAnnotationManager$DefaultImpls {
 	public static synthetic fun cameraForAnnotations$default (Lcom/mapbox/maps/viewannotation/ViewAnnotationManager;Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/maps/CameraOptions;
+	public static synthetic fun cameraForAnnotations$default (Lcom/mapbox/maps/viewannotation/ViewAnnotationManager;Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public final class com/mapbox/maps/viewannotation/ViewAnnotationOptionsKtxKt {

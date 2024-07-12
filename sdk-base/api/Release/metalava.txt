@@ -38,6 +38,9 @@ package com.mapbox.maps {
     ctor public MapboxConcurrentGeometryModificationException(String exceptionText, String sourceId);
   }
 
+  @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level.WARNING, message="This is a delicate API and its use requires care." + " Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.") @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) public @interface MapboxDelicateApi {
+  }
+
   @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level.WARNING, message="This API is experimental. It may be changed in the future without notice.") @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.CLASS, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY}) public @interface MapboxExperimental {
   }
 
@@ -1602,7 +1605,7 @@ package com.mapbox.maps.plugin.delegates {
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding = null, Double? bearing = null, Double? pitch = null, Double? maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding = null, Double? bearing = null, Double? pitch = null);
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method public void cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions,kotlin.Unit> result);
     method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method @Deprecated public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding = null, Double? bearing = null, Double? pitch = null);

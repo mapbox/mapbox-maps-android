@@ -2,25 +2,21 @@ package com.mapbox.maps.testapp.overlay
 
 import android.view.View
 import android.widget.FrameLayout
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
 import com.mapbox.maps.plugin.overlay.mapboxOverlay
 import com.mapbox.maps.testapp.BaseMapTest
 import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /**
  * Instrumented test, which will execute on an Android device.
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(AndroidJUnit4::class)
 @LargeTest
 class MapOverlayPluginTest : BaseMapTest() {
 
@@ -121,21 +117,18 @@ class MapOverlayPluginTest : BaseMapTest() {
   fun getReframeCameraOption() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapOverlayPlugin.reframe {
-          assertNull(it)
+        mapOverlayPlugin.reframe { reframedCamera ->
+          assertNull(reframedCamera)
         }
-        mapOverlayPlugin.registerMapOverlayCoordinatesProvider(object :
-            MapOverlayCoordinatesProvider {
-            override fun getShownCoordinates(): List<Point> {
-              return listOf(
-                Point.fromLngLat(0.0, 0.0),
-                Point.fromLngLat(10.0, 20.0)
-              )
-            }
-          })
+        mapOverlayPlugin.registerMapOverlayCoordinatesProvider {
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(10.0, 20.0)
+          )
+        }
 
-        mapOverlayPlugin.reframe {
-          assertNotNull(it)
+        mapOverlayPlugin.reframe { reframedCamera ->
+          assertNotNull(reframedCamera)
         }
       }
     }
@@ -143,30 +136,28 @@ class MapOverlayPluginTest : BaseMapTest() {
 
   @Test
   fun reframe() {
-    mapOverlayPlugin.registerMapOverlayCoordinatesProvider(object : MapOverlayCoordinatesProvider {
-      override fun getShownCoordinates(): List<Point> {
-        return listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(10.0, 20.0)
-        )
-      }
-    })
+    mapOverlayPlugin.registerMapOverlayCoordinatesProvider {
+      listOf(
+        Point.fromLngLat(0.0, 0.0),
+        Point.fromLngLat(10.0, 20.0)
+      )
+    }
     val leftTop = View(context)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
         mapView.addView(leftTop)
         val leftTopParams = FrameLayout.LayoutParams(leftTop.layoutParams)
         leftTopParams.setMargins(0, 0, 300, (mapView.height - 50.0).toInt())
         leftTop.layoutParams = leftTopParams
       }
 
-      it.runOnUiThread {
-        mapOverlayPlugin.reframe {
-          assertNotNull(it)
-          mapboxMap.setCamera(it!!)
+      activity.runOnUiThread {
+        mapOverlayPlugin.reframe { reframedCamera ->
+          assertNotNull(reframedCamera)
+          mapboxMap.setCamera(reframedCamera!!)
           val currentCameraOptions = mapboxMap.cameraState
-          assertEquals(currentCameraOptions.center.latitude(), it.center!!.latitude(), 0.01)
-          assertEquals(currentCameraOptions.center.longitude(), it.center!!.longitude(), 0.01)
+          assertEquals(currentCameraOptions.center.latitude(), reframedCamera.center!!.latitude(), 0.01)
+          assertEquals(currentCameraOptions.center.longitude(), reframedCamera.center!!.longitude(), 0.01)
         }
       }
     }

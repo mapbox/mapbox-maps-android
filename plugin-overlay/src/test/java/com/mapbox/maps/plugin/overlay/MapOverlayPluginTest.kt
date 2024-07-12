@@ -135,11 +135,7 @@ class MapOverlayPluginTest {
     mapOverlayPlugin.reframe {
       assertNull(it)
     }
-    mapOverlayPlugin.registerMapOverlayCoordinatesProvider(object : MapOverlayCoordinatesProvider {
-      override fun getShownCoordinates(): List<Point> {
-        return listOf(point)
-      }
-    })
+    mapOverlayPlugin.registerMapOverlayCoordinatesProvider { listOf(point) }
 
     val slot = slot<List<Point>>()
     val cameraOptionsSlot = slot<CameraOptions>()
@@ -150,9 +146,10 @@ class MapOverlayPluginTest {
         capture(cameraOptionsSlot),
         capture(paddingSlot),
         any(),
+        any(),
         any()
       )
-    } answers { CameraOptions.Builder().center(point).build() }
+    } just Runs
     mapOverlayPlugin.reframe {
       assertNotNull(it)
       assertEquals(point, it!!.center)
@@ -162,7 +159,7 @@ class MapOverlayPluginTest {
       listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)),
       slot.captured
     )
-    assertEquals(EdgeInsets(0.0, .00, 0.0, 0.0), paddingSlot.captured)
+    assertEquals(EdgeInsets(0.0, 0.0, 0.0, 0.0), paddingSlot.captured)
     assertTrue(cameraOptionsSlot.captured.isEmpty)
 
     val cameraSlot = slot<CameraOptions>()

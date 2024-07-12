@@ -8,7 +8,9 @@ import com.mapbox.maps.AnnotatedLayerFeature
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.ViewAnnotationOptions
+import com.mapbox.maps.util.isEmpty
 
 /**
  * Manager API to control View Annotations.
@@ -167,14 +169,24 @@ interface ViewAnnotationManager {
   /**
    * Return camera options bound to given view annotation list, padding, bearing and pitch values.
    * Annotations with [ViewAnnotationOptions.visible] set to false will be excluded from the calculations of [CameraOptions].
-   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions]
+   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions].
    *
-   * Note: This API isn't supported by Globe projection and will return NULL.
+   * Important: if the render thread did not yet calculate the size of the map (due to initialization or map resizing) - empty [CameraOptions] will be returned.
+   * Emptiness could be checked with [CameraOptions.isEmpty]. Consider using asynchronous overloaded method:
+   *    ```
+   *    fun cameraForAnnotations(
+   *      annotations: List<View>,
+   *      edgeInsets: EdgeInsets? = null,
+   *      bearing: Double? = null,
+   *      pitch: Double? = null,
+   *      result: (CameraOptions) -> Unit
+   *    )
+   *    ```
+   * Consider using this synchronous method ONLY when you are absolutely sure that map is fully ready.
+   *
    * Calling this API immediately after adding the view is a no-op.
    * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
    * view annotation is positioned.
-   *
-   * If the render thread did not yet calculate the size of the map (due to initialization or map resizing), it will return NULL.
    *
    * @param annotations view annotation list to be shown. Annotations should be added beforehand
    * with [ViewAnnotationManager.addViewAnnotation] API.
@@ -182,15 +194,40 @@ interface ViewAnnotationManager {
    * @param bearing camera bearing to apply.
    * @param pitch camera pitch to apply.
    *
-   * @return [CameraOptions] object or NULL if [annotations] list is empty.
-   *
+   * @return [CameraOptions] object or NULL if [annotations] list is empty or map size is not yet known.
    */
+  @MapboxDelicateApi
   fun cameraForAnnotations(
     annotations: List<View>,
     edgeInsets: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null
   ): CameraOptions?
+
+  /**
+   * Return camera options bound to given view annotation list, padding, bearing and pitch values.
+   * Annotations with [ViewAnnotationOptions.visible] set to false will be excluded from the calculations of [CameraOptions].
+   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions]
+   *
+   * Calling this API immediately after adding the view is a no-op.
+   * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
+   * view annotation is positioned.
+   *
+   * @param annotations view annotation list to be shown. Annotations should be added beforehand
+   * with [ViewAnnotationManager.addViewAnnotation] API.
+   * @param edgeInsets paddings to apply.
+   * @param bearing camera bearing to apply.
+   * @param pitch camera pitch to apply.
+   * @param result [CameraOptions] bound to given view annotation list.
+   *  Empty camera (could be checked with [CameraOptions.isEmpty]) is returned when [annotations] is an empty list.
+   */
+  fun cameraForAnnotations(
+    annotations: List<View>,
+    edgeInsets: EdgeInsets? = null,
+    bearing: Double? = null,
+    pitch: Double? = null,
+    result: (CameraOptions) -> Unit
+  )
 
   /**
    * Static methods and variables.

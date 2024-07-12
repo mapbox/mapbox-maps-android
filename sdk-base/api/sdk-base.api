@@ -49,6 +49,9 @@ public final class com/mapbox/maps/MapboxConcurrentGeometryModificationException
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 }
 
+public abstract interface annotation class com/mapbox/maps/MapboxDelicateApi : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class com/mapbox/maps/MapboxExperimental : java/lang/annotation/Annotation {
 }
 

@@ -13,8 +13,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.renderer.RenderThread
 import com.mapbox.maps.util.isEmpty
 import java.util.UUID
@@ -199,14 +197,24 @@ internal class ViewAnnotationManagerImpl(
   /**
    * Return camera options bound to given view annotation list, padding, bearing and pitch values.
    * Annotations with [ViewAnnotationOptions.visible] set to false will be excluded from the calculations of [CameraOptions].
-   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions]
+   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions].
    *
-   * Note: This API isn't supported by Globe projection and will return NULL.
+   * Important: if the render thread did not yet calculate the size of the map (due to initialization or map resizing) - empty [CameraOptions] will be returned.
+   * Emptiness could be checked with [CameraOptions.isEmpty]. Consider using asynchronous overloaded method:
+   *    ```
+   *    fun cameraForAnnotations(
+   *      annotations: List<View>,
+   *      edgeInsets: EdgeInsets? = null,
+   *      bearing: Double? = null,
+   *      pitch: Double? = null,
+   *      result: (CameraOptions) -> Unit
+   *    )
+   *    ```
+   * Consider using this synchronous method ONLY when you are absolutely sure that map is fully ready.
+   *
    * Calling this API immediately after adding the view is a no-op.
    * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
    * view annotation is positioned.
-   *
-   * If the render thread did not yet calculate the size of the map (due to initialization or map resizing), it will return NULL.
    *
    * @param annotations view annotation list to be shown. Annotations should be added beforehand
    * with [ViewAnnotationManager.addViewAnnotation] API.
@@ -214,42 +222,135 @@ internal class ViewAnnotationManagerImpl(
    * @param bearing camera bearing to apply.
    * @param pitch camera pitch to apply.
    *
-   * @return [CameraOptions] object or NULL if [annotations] list is empty.
+   * @return [CameraOptions] object or NULL if [annotations] list is empty or map size is not yet known.
    */
+  @MapboxDelicateApi
   override fun cameraForAnnotations(
     annotations: List<View>,
     edgeInsets: EdgeInsets?,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions? {
-    if (mapboxMap.style?.getProjection()?.name == ProjectionName.GLOBE || annotations.isEmpty()) {
-      return null
-    }
+    return cameraForAnnotationsImpl(
+      annotations = annotations,
+      edgeInsets = edgeInsets,
+      bearing = bearing,
+      pitch = pitch,
+      resultCallback = null,
+    )
+  }
+
+  /**
+   * Return camera options bound to given view annotation list, padding, bearing and pitch values.
+   * Annotations with [ViewAnnotationOptions.visible] set to false will be excluded from the calculations of [CameraOptions].
+   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions]
+   *
+   * Calling this API immediately after adding the view is a no-op.
+   * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
+   * view annotation is positioned.
+   *
+   * @param annotations view annotation list to be shown. Annotations should be added beforehand
+   * with [ViewAnnotationManager.addViewAnnotation] API.
+   * @param edgeInsets paddings to apply.
+   * @param bearing camera bearing to apply.
+   * @param pitch camera pitch to apply.
+   * @param result [CameraOptions] bound to given view annotation list.
+   *  Empty camera (could be checked with [CameraOptions.isEmpty]) is returned when [annotations] is an empty list.
+   */
+  override fun cameraForAnnotations(
+    annotations: List<View>,
+    edgeInsets: EdgeInsets?,
+    bearing: Double?,
+    pitch: Double?,
+    result: (CameraOptions) -> Unit
+  ) {
+    cameraForAnnotationsImpl(
+      annotations = annotations,
+      edgeInsets = edgeInsets,
+      bearing = bearing,
+      pitch = pitch,
+      resultCallback = result,
+    )
+  }
+
+  private fun cameraForAnnotationsImpl(
+    annotations: List<View>,
+    edgeInsets: EdgeInsets?,
+    bearing: Double?,
+    pitch: Double?,
+    resultCallback: ((CameraOptions) -> Unit)?
+  ): CameraOptions? {
     val viewAnnotations = annotations
       .filter { it.isVisible }
       .mapNotNull { view ->
         viewAnnotations.values.find { it.view == view }
       }
 
-    if (viewAnnotations.isEmpty()) return null
+    if (viewAnnotations.isEmpty()) {
+      return invokeCallbackAndReturn(
+        camera = null,
+        resultCallback
+      )
+    }
     val pointCoordinates =
       viewAnnotations.mapNotNull { it.coordinate(it.positionDescriptor) }
 
-    val options = cameraOptions {
+    // zoom will be adjusted later calling cameraFor in a loop
+    val cameraOptionsWithNoZoom = cameraOptions {
       pitch(pitch)
       bearing(bearing)
     }
 
-    var cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinates(
-      coordinates = pointCoordinates,
-      camera = options,
-      coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      maxZoom = null,
-      offset = null
-    )
+    if (resultCallback == null) {
+      val cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinates(
+        coordinates = pointCoordinates,
+        camera = cameraOptionsWithNoZoom,
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = null
+      )
+      return adjustCameraForAnnotations(
+        cameraForViewAnnotationPoints = cameraForViewAnnotationPoints,
+        edgeInsets = edgeInsets,
+        viewAnnotations = viewAnnotations,
+        cameraOptionsWithNoZoom = cameraOptionsWithNoZoom,
+        resultCallback = null
+      )
+    } else {
+      mapboxMap.cameraForCoordinates(
+        coordinates = pointCoordinates,
+        camera = cameraOptionsWithNoZoom,
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = null
+      ) { cameraForViewAnnotationPoints ->
+        adjustCameraForAnnotations(
+          cameraForViewAnnotationPoints = cameraForViewAnnotationPoints,
+          edgeInsets = edgeInsets,
+          viewAnnotations = viewAnnotations,
+          cameraOptionsWithNoZoom = cameraOptionsWithNoZoom,
+          resultCallback = resultCallback
+        )
+      }
+    }
+    return null
+  }
 
-    if (cameraForViewAnnotationPoints.isEmpty) return null
+  private fun adjustCameraForAnnotations(
+    cameraForViewAnnotationPoints: CameraOptions,
+    edgeInsets: EdgeInsets?,
+    viewAnnotations: List<ViewAnnotation>,
+    cameraOptionsWithNoZoom: CameraOptions,
+    resultCallback: ((CameraOptions) -> Unit)?
+  ): CameraOptions? {
+    if (cameraForViewAnnotationPoints.isEmpty) {
+      return invokeCallbackAndReturn(
+        camera = null,
+        resultCallback
+      )
+    }
 
+    var adjustedCamera = cameraForViewAnnotationPoints
     var isCorrectBound = false
     // viewAnnotation, frame and max coordinate
     var north: Triple<ViewAnnotation, Rect?, Double>? = null
@@ -262,7 +363,7 @@ internal class ViewAnnotationManagerImpl(
     var boundsCounter = 1
 
     while (!isCorrectBound && boundsCounter <= MAX_ADJUST_BOUNDS_COUNTER) {
-      val zoom = cameraForViewAnnotationPoints.zoom
+      val zoom = adjustedCamera.zoom
       boundsCounter++
       isCorrectBound = true
 
@@ -272,9 +373,7 @@ internal class ViewAnnotationManagerImpl(
           viewAnnotation.positionDescriptor
         ) ?: Rect(0, 0, 0, 0)
         val annotationBounds = calculateCoordinateBoundForAnnotation(viewAnnotation, frame, zoom)
-        if (annotationBounds == null) {
-          return@forEach
-        }
+          ?: return@forEach
 
         if (north == null || north!!.third < annotationBounds.north()) {
           north = Triple(viewAnnotation, frame, annotationBounds.north())
@@ -296,8 +395,11 @@ internal class ViewAnnotationManagerImpl(
 
       // adding extra checks for nullability (this shouldn't execute normally as we are checking nullability in loop of viewannotations).
       if (north == null || east == null || south == null || west == null) {
-        logW(TAG, "ViewAnnotation options framing is null. Returning null camera option")
-        return null
+        logW(TAG, "ViewAnnotation options framing is null. Returning empty camera")
+        return invokeCallbackAndReturn(
+          camera = null,
+          resultCallback
+        )
       }
 
       val coordinateBoundsForCamera = listOf(
@@ -318,15 +420,27 @@ internal class ViewAnnotationManagerImpl(
         (edgeInsets?.right ?: 0).toDouble() + abs((east!!.second?.right ?: 0.0).toDouble())
       )
 
-      cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinates(
+      @Suppress("OPT_IN_USAGE")
+      adjustedCamera = mapboxMap.cameraForCoordinates(
         coordinates = coordinateBoundsForCamera,
-        camera = options,
+        camera = cameraOptionsWithNoZoom,
         coordinatesPadding = paddings,
         maxZoom = null,
         offset = null
       )
     }
-    return cameraForViewAnnotationPoints.takeUnless { it.isEmpty }
+    return invokeCallbackAndReturn(
+      camera = adjustedCamera.takeUnless { it.isEmpty },
+      resultCallback
+    )
+  }
+
+  private fun invokeCallbackAndReturn(
+    camera: CameraOptions?,
+    callback: ((CameraOptions) -> Unit)?
+  ): CameraOptions? {
+    callback?.invoke(camera ?: cameraOptions { })
+    return camera
   }
 
   /**

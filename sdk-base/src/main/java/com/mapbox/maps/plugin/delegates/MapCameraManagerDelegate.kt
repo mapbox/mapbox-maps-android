@@ -109,8 +109,19 @@ interface MapCameraManagerDelegate {
   /**
    * Convenience method that returns the [CameraOptions] object for given parameters.
    *
-   * Note: if the render thread did not yet calculate the size of the map (due to initialization or map resizing) - empty [CameraOptions] will be returned.
-   *  Emptiness could be checked with [CameraOptions.isEmpty]. Consider using asynchronous overloaded method.
+   * Important: if the render thread did not yet calculate the size of the map (due to initialization or map resizing) - empty [CameraOptions] will be returned.
+   * Emptiness could be checked with [CameraOptions.isEmpty]. Consider using asynchronous overloaded method:
+   *    ```
+   *    fun cameraForCoordinates(
+   *     coordinates: List<Point>,
+   *     camera: CameraOptions,
+   *     coordinatesPadding: EdgeInsets?,
+   *     maxZoom: Double?,
+   *     offset: ScreenCoordinate?,
+   *     result: (CameraOptions) -> Unit
+   *    )
+   *    ```
+   * Consider using this synchronous method ONLY when you are absolutely sure that map is fully ready.
    *
    * @param coordinates The `coordinates` representing the bounds of the camera.
    * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
@@ -122,6 +133,7 @@ interface MapCameraManagerDelegate {
    * @return The [CameraOptions] object representing the provided parameters if the map size was calculated and empty [CameraOptions] otherwise, see [CameraOptions.isEmpty].
    *  Also empty [CameraOptions] are returned in case of an internal error.
    */
+  @MapboxDelicateApi
   fun cameraForCoordinates(
     coordinates: List<Point>,
     camera: CameraOptions,

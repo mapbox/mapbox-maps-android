@@ -524,21 +524,6 @@ class ViewAnnotationManagerTest {
   }
 
   @Test
-  fun testCameraForAnnotationsWithGlobeProjection() {
-    every { style.getStyleProjectionProperty("name") } returns
-      StylePropertyValue(Value(ProjectionName.GLOBE.value), StylePropertyValueKind.CONSTANT)
-
-    val annotations = mutableListOf<View>()
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-    }
-    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-    annotations.add(view)
-
-    assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
-  }
-
-  @Test
   fun testCameraForAnnotationsWithInvisibleViews() {
     val annotations = mutableListOf<View>()
     val viewAnnotationOptions = viewAnnotationOptions {

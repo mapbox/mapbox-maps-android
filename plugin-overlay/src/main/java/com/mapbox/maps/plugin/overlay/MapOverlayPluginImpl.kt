@@ -109,12 +109,13 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
    * @param onReframeFinished the listener to get the CameraOptions
    */
   override fun reframe(onReframeFinished: OnReframeFinished?) {
-    val reframeCameraOption = getReframeCameraOption()
-    if (onReframeFinished != null) {
-      onReframeFinished.onReframeFinished(reframeCameraOption)
-    } else {
-      reframeCameraOption?.let {
-        mapCameraManagerDelegate.setCamera(it)
+    reframe { camera ->
+      if (onReframeFinished != null) {
+        onReframeFinished.onReframeFinished(camera)
+      } else {
+        camera?.let {
+          mapCameraManagerDelegate.setCamera(it)
+        }
       }
     }
   }
@@ -124,10 +125,10 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
    * on the MapView and not covered by registered MapOverlays.
    * Users can use their own animation to move camera with this CameraOptions.
    *
-   * @return the CameraOptions that MapView should animate to.
+   * @param result callback with CameraOptions that MapView should animate to.
    * Will be null if MapOverlayCoordinatesProvider is not provided.
    */
-  private fun getReframeCameraOption(): CameraOptions? {
+  private fun reframe(result: (CameraOptions?) -> Unit) {
     mapOverlayCoordinatesProvider?.let {
       val coordinates = it.getShownCoordinates()
       var north = -90.0
@@ -141,15 +142,17 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
         east = maxOf(east, point.longitude())
       }
 
-      return mapCameraManagerDelegate.cameraForCoordinates(
+      mapCameraManagerDelegate.cameraForCoordinates(
         coordinates = listOf(Point.fromLngLat(west, south), Point.fromLngLat(east, north)),
         camera = cameraOptions { },
         coordinatesPadding = getEdgeInsets(),
         maxZoom = null,
-        offset = null
+        offset = null,
+        result
       )
+    } ?: run {
+      result.invoke(null)
     }
-    return null
   }
 
   private fun getMapOverLayRect(view: View): MapOverLayRect {
