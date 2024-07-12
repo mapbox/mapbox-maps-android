@@ -19,14 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
@@ -40,13 +33,13 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapStyle
-import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.FormattedValue
 import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue
 import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.compose.style.rememberStyleImage
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -56,7 +49,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  */
 @OptIn(MapboxExperimental::class)
 public class StyleCompositionActivity : ComponentActivity() {
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -76,7 +68,7 @@ public class StyleCompositionActivity : ComponentActivity() {
         mutableStateOf(CityLocations.HELSINKI)
       }
 
-      var textColor by remember {
+      var symbolTextColor by remember {
         mutableStateOf(Color.Red)
       }
 
@@ -119,6 +111,7 @@ public class StyleCompositionActivity : ComponentActivity() {
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
                   centerLocation = centerLocation.shiftPosition()
+                  centerLocation = centerLocation.shiftPosition()
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -137,7 +130,7 @@ public class StyleCompositionActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  textColor = if (textColor == Color.Red) {
+                  symbolTextColor = if (symbolTextColor == Color.Red) {
                     Color.Yellow
                   } else {
                     Color.Red
@@ -171,28 +164,21 @@ public class StyleCompositionActivity : ComponentActivity() {
             if (showSymbolLayer) {
               CircleLayer(
                 sourceState = geoJsonSource,
-                circleColor = ColorValue(Color.Cyan),
-                circleRadius = DoubleValue(50.0),
+              ) {
+                circleColor = ColorValue(Color.Cyan)
+                circleRadius = DoubleValue(50.0)
                 circleRadiusTransition = Transition(durationMillis = 1000L)
-              )
-
-              val painter = painterResource(id = markerResource)
-              // Every time `painter.drawToBitmap()` is called a new bitmap is created so we need to remember it
-              val imageBitmap: ImageBitmap = remember(markerResource) {
-                painter.drawToBitmap()
               }
+              val styleImage = rememberStyleImage(imageId = "icon_id", resourceId = markerResource)
+
               SymbolLayer(
-                sourceState = geoJsonSource,
-                iconImage = ImageValue(
-                  StyleImage(
-                    imageId = "icon_id",
-                    imageBitmap = imageBitmap
-                  )
-                ),
-                iconAnchor = IconAnchorValue.BOTTOM,
-                textField = text,
-                textColor = ColorValue(textColor),
-                textColorTransition = Transition(durationMillis = 1000),
+                sourceState = geoJsonSource
+              ) {
+                iconImage = ImageValue(styleImage)
+                iconAnchor = IconAnchorValue.BOTTOM
+                textField = text
+                textColor = ColorValue(symbolTextColor)
+                textColorTransition = Transition(durationMillis = 1000)
                 textSize = DoubleValue(
                   Expression.interpolate {
                     linear()
@@ -207,7 +193,7 @@ public class StyleCompositionActivity : ComponentActivity() {
                     }
                   }
                 )
-              )
+              }
             }
           }
         }
@@ -234,19 +220,5 @@ public class StyleCompositionActivity : ComponentActivity() {
     const val ZOOM: Double = 9.0
     private var count = 0
     private const val OFFSET = 0.03
-    fun Painter.drawToBitmap(): ImageBitmap {
-      val drawScope = CanvasDrawScope()
-      val bitmap = ImageBitmap(intrinsicSize.width.toInt(), intrinsicSize.height.toInt())
-      val canvas = Canvas(bitmap)
-      drawScope.draw(
-        density = Density(1f),
-        layoutDirection = LayoutDirection.Ltr,
-        canvas = canvas,
-        size = intrinsicSize
-      ) {
-        draw(intrinsicSize)
-      }
-      return bitmap
-    }
   }
 }

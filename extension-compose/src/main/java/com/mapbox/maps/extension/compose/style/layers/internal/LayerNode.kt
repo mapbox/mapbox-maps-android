@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.compose.style.layers.internal
 
+import androidx.compose.runtime.Stable
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @OptIn(MapboxExperimental::class)
+@Stable
 internal class LayerNode(
   private val map: MapboxMap,
   private val layerType: String,

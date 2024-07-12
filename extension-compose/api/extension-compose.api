@@ -483,9 +483,8 @@ public final class com/mapbox/maps/extension/compose/style/StringValue$Companion
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleImage {
-	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)V
-	public synthetic fun <init> (Ljava/lang/String;Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/Image;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)V
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/Image;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lcom/mapbox/maps/Image;
 	public final fun component3 ()Ljava/lang/Float;
@@ -505,6 +504,12 @@ public final class com/mapbox/maps/extension/compose/style/StyleImage {
 	public final fun getStretchY ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/StyleImageKt {
+	public static final fun rememberStyleImage (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
+	public static final fun rememberStyleImage (Ljava/lang/String;ILjava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
+	public static final fun rememberStyleImage (Ljava/lang/String;Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleImportsConfig {
@@ -698,11 +703,95 @@ public final class com/mapbox/maps/extension/compose/style/layers/ModelIdValue$C
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundLayerKt {
-	public static final fun BackgroundLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Landroidx/compose/runtime/Composer;III)V
+	public static final fun BackgroundLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun BackgroundLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundLayerState {
+	public fun <init> ()V
+	public final fun getBackgroundColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getBackgroundColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getBackgroundEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getBackgroundEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getBackgroundOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getBackgroundOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getBackgroundPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setBackgroundColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setBackgroundColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setBackgroundEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setBackgroundEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setBackgroundOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setBackgroundOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setBackgroundPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleLayerKt {
-	public static final fun CircleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun CircleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun CircleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleLayerState {
+	public fun <init> ()V
+	public final fun getCircleBlur ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleBlurTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getCircleColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;
+	public final fun getCirclePitchScale ()Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;
+	public final fun getCircleRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleStrokeColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getCircleStrokeColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleStrokeOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleStrokeOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleStrokeWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCircleStrokeWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getCircleTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getCircleTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;
+	public final fun getCircleTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setCircleBlur (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleBlurTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setCircleColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCirclePitchAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;)V
+	public final fun setCirclePitchScale (Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;)V
+	public final fun setCircleRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleStrokeColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setCircleStrokeColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleStrokeOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleStrokeOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleStrokeWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCircleStrokeWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setCircleTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setCircleTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;)V
+	public final fun setCircleTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue {
@@ -763,7 +852,102 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerKt {
-	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIIIIII)V
+	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerState {
+	public fun <init> ()V
+	public final fun getFillExtrusionAmbientOcclusionGroundAttenuation ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionAmbientOcclusionGroundAttenuationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionAmbientOcclusionGroundRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionAmbientOcclusionGroundRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionAmbientOcclusionIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionAmbientOcclusionIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionAmbientOcclusionRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionAmbientOcclusionRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionAmbientOcclusionWallRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionAmbientOcclusionWallRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionBase ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionBaseTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getFillExtrusionColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionCutoffFadeRange ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionEdgeRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionFloodLightColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getFillExtrusionFloodLightColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionFloodLightGroundAttenuation ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionFloodLightGroundAttenuationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionFloodLightGroundRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionFloodLightGroundRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionFloodLightIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionFloodLightIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionFloodLightWallRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionFloodLightWallRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionHeight ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionHeightTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getFillExtrusionRoundedRoof ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getFillExtrusionTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getFillExtrusionTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;
+	public final fun getFillExtrusionTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionVerticalGradient ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getFillExtrusionVerticalScale ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionVerticalScaleTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFillExtrusionAmbientOcclusionGroundAttenuation (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionAmbientOcclusionGroundAttenuationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionAmbientOcclusionGroundRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionAmbientOcclusionGroundRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionAmbientOcclusionIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionAmbientOcclusionIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionAmbientOcclusionRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionAmbientOcclusionRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionAmbientOcclusionWallRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionAmbientOcclusionWallRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionBase (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionBaseTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setFillExtrusionColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionCutoffFadeRange (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionEdgeRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionFloodLightColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setFillExtrusionFloodLightColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionFloodLightGroundAttenuation (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionFloodLightGroundAttenuationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionFloodLightGroundRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionFloodLightGroundRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionFloodLightIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionFloodLightIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionFloodLightWallRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionFloodLightWallRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionHeight (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionHeightTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setFillExtrusionRoundedRoof (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setFillExtrusionTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setFillExtrusionTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;)V
+	public final fun setFillExtrusionTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionVerticalGradient (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setFillExtrusionVerticalScale (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionVerticalScaleTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue {
@@ -786,7 +970,50 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillLayerKt {
-	public static final fun FillLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun FillLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun FillLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillLayerState {
+	public fun <init> ()V
+	public final fun getFillAntialias ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getFillColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getFillColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillOutlineColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getFillOutlineColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getFillSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
+	public final fun getFillTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFillAntialias (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setFillColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setFillColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillOutlineColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setFillOutlineColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setFillSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;)V
+	public final fun setFillTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue {
@@ -809,7 +1036,38 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HeatmapLayerKt {
-	public static final fun HeatmapLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;III)V
+	public static final fun HeatmapLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun HeatmapLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/HeatmapLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getHeatmapColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getHeatmapIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getHeatmapIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHeatmapOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getHeatmapOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHeatmapRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getHeatmapRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHeatmapWeight ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setHeatmapColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setHeatmapIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setHeatmapIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHeatmapOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setHeatmapOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHeatmapRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setHeatmapRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHeatmapWeight (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue {
@@ -832,7 +1090,46 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Hill
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeLayerKt {
-	public static final fun HillshadeLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;III)V
+	public static final fun HillshadeLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun HillshadeLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getHillshadeAccentColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getHillshadeAccentColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHillshadeEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getHillshadeEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHillshadeExaggeration ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getHillshadeExaggerationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHillshadeHighlightColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getHillshadeHighlightColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getHillshadeIlluminationAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;
+	public final fun getHillshadeIlluminationDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getHillshadeShadowColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getHillshadeShadowColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setHillshadeAccentColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setHillshadeAccentColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHillshadeEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setHillshadeEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHillshadeExaggeration (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setHillshadeExaggerationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHillshadeHighlightColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setHillshadeHighlightColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setHillshadeIlluminationAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;)V
+	public final fun setHillshadeIlluminationDirection (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setHillshadeShadowColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setHillshadeShadowColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue {
@@ -983,7 +1280,92 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineLayerKt {
-	public static final fun LineLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIIIIII)V
+	public static final fun LineLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun LineLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LineLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getLineBlur ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineBlurTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineBorderColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getLineBorderColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineBorderWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineBorderWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineCap ()Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;
+	public final fun getLineColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getLineColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineDasharray ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getLineDepthOcclusionFactor ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineDepthOcclusionFactorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineGapWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineGapWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineGradient ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getLineJoin ()Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
+	public final fun getLineMiterLimit ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineOcclusionOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineOcclusionOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineOffsetTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLinePattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getLineRoundLimit ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getLineTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;
+	public final fun getLineTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineTrimOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getLineWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineZOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setLineBlur (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineBlurTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineBorderColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setLineBorderColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineBorderWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineBorderWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineCap (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;)V
+	public final fun setLineColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setLineColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineDasharray (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setLineDepthOcclusionFactor (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineDepthOcclusionFactorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineGapWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineGapWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineGradient (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setLineJoin (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;)V
+	public final fun setLineMiterLimit (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineOcclusionOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineOcclusionOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineOffset (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineOffsetTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLinePattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setLineRoundLimit (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setLineTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;)V
+	public final fun setLineTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineTrimOffset (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setLineWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineZOffset (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue {
@@ -1006,11 +1388,149 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LocationIndicatorLayerKt {
-	public static final fun LocationIndicatorLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIIIII)V
+	public static final fun LocationIndicatorLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/LocationIndicatorLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun LocationIndicatorLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LocationIndicatorLayerState {
+	public fun <init> ()V
+	public final fun getAccuracyRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getAccuracyRadiusBorderColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getAccuracyRadiusBorderColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getAccuracyRadiusColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getAccuracyRadiusColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getAccuracyRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getBearing ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getBearingImage ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getBearingImageSize ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getBearingImageSizeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getBearingTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getEmphasisCircleColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getEmphasisCircleColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getEmphasisCircleRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getEmphasisCircleRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getImagePitchDisplacement ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLocation ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getLocationIndicatorOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLocationIndicatorOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLocationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getPerspectiveCompensation ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getShadowImage ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getShadowImageSize ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getShadowImageSizeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getTopImage ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getTopImageSize ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTopImageSizeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setAccuracyRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setAccuracyRadiusBorderColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setAccuracyRadiusBorderColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setAccuracyRadiusColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setAccuracyRadiusColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setAccuracyRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setBearing (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setBearingImage (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setBearingImageSize (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setBearingImageSizeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setBearingTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setEmphasisCircleColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setEmphasisCircleColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setEmphasisCircleRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setEmphasisCircleRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setImagePitchDisplacement (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLocation (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setLocationIndicatorOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLocationIndicatorOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLocationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setPerspectiveCompensation (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setShadowImage (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setShadowImageSize (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setShadowImageSizeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setTopImage (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setTopImageSize (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTopImageSizeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelLayerKt {
-	public static final fun ModelLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/ModelIdValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIIIII)V
+	public static final fun ModelLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ModelLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getModelAmbientOcclusionIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelAmbientOcclusionIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelCastShadows ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getModelColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getModelColorMixIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelColorMixIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelCutoffFadeRange ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelFrontCutoff ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getModelHeightBasedEmissiveStrengthMultiplier ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getModelHeightBasedEmissiveStrengthMultiplierTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelId ()Lcom/mapbox/maps/extension/compose/style/layers/ModelIdValue;
+	public final fun getModelOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelReceiveShadows ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getModelRotation ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getModelRotationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelRoughness ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelRoughnessTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelScale ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getModelScaleMode ()Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;
+	public final fun getModelScaleTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelTranslation ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getModelTranslationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getModelType ()Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setModelAmbientOcclusionIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelAmbientOcclusionIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelCastShadows (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setModelColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setModelColorMixIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelColorMixIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelCutoffFadeRange (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelFrontCutoff (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setModelHeightBasedEmissiveStrengthMultiplier (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setModelHeightBasedEmissiveStrengthMultiplierTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelId (Lcom/mapbox/maps/extension/compose/style/layers/ModelIdValue;)V
+	public final fun setModelOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelReceiveShadows (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setModelRotation (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setModelRotationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelRoughness (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelRoughnessTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelScale (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setModelScaleMode (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;)V
+	public final fun setModelScaleTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelTranslation (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setModelTranslationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setModelType (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue {
@@ -1052,11 +1572,107 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterLayerKt {
-	public static final fun RasterLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIIII)V
+	public static final fun RasterLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun RasterLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getRasterArrayBand ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getRasterBrightnessMax ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterBrightnessMaxTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterBrightnessMin ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterBrightnessMinTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getRasterColorMix ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getRasterColorMixTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterColorRange ()Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;
+	public final fun getRasterColorRangeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterContrast ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterContrastTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterElevation ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterElevationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterFadeDuration ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterHueRotate ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterHueRotateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterResampling ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;
+	public final fun getRasterSaturation ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterSaturationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setRasterArrayBand (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setRasterBrightnessMax (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterBrightnessMaxTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterBrightnessMin (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterBrightnessMinTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setRasterColorMix (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setRasterColorMixTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterColorRange (Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;)V
+	public final fun setRasterColorRangeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterContrast (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterContrastTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterElevation (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterElevationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterFadeDuration (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterHueRotate (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterHueRotateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterResampling (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;)V
+	public final fun setRasterSaturation (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterSaturationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleLayerKt {
-	public static final fun RasterParticleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;III)V
+	public static final fun RasterParticleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterParticleLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun RasterParticleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getRasterParticleArrayBand ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getRasterParticleColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getRasterParticleCount ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getRasterParticleFadeOpacityFactor ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterParticleFadeOpacityFactorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterParticleMaxSpeed ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterParticleResetRateFactor ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterParticleSpeedFactor ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRasterParticleSpeedFactorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setRasterParticleArrayBand (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setRasterParticleColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setRasterParticleCount (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setRasterParticleFadeOpacityFactor (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterParticleFadeOpacityFactorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterParticleMaxSpeed (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterParticleResetRateFactor (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterParticleSpeedFactor (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRasterParticleSpeedFactorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue {
@@ -1079,7 +1695,42 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyLayerKt {
-	public static final fun SkyLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;III)V
+	public static final fun SkyLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun SkyLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSkyAtmosphereColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getSkyAtmosphereHaloColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getSkyAtmosphereSun ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getSkyAtmosphereSunIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getSkyGradient ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getSkyGradientCenter ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getSkyGradientRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getSkyOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getSkyOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getSkyType ()Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSkyAtmosphereColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setSkyAtmosphereHaloColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setSkyAtmosphereSun (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setSkyAtmosphereSunIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setSkyGradient (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setSkyGradientCenter (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setSkyGradientRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setSkyOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setSkyOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setSkyType (Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue {
@@ -1102,7 +1753,182 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyT
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolLayerKt {
-	public static final fun SymbolLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue;Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/layers/Filter;Landroidx/compose/runtime/Composer;IIIIIIIIIIII)V
+	public static final fun SymbolLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun SymbolLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolLayerState {
+	public fun <init> ()V
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getIconAllowOverlap ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;
+	public final fun getIconColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getIconColorSaturation ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconColorSaturationTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconHaloBlur ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconHaloBlurTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconHaloColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getIconHaloColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconHaloWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconHaloWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconIgnorePlacement ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getIconImage ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getIconImageCrossFade ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconImageCrossFadeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconKeepUpright ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getIconOcclusionOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconOcclusionOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getIconOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIconOptional ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getIconPadding ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconPitchAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;
+	public final fun getIconRotate ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconRotationAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;
+	public final fun getIconSize ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIconTextFit ()Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;
+	public final fun getIconTextFitPadding ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getIconTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;
+	public final fun getIconTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getSymbolAvoidEdges ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;
+	public final fun getSymbolSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getSymbolSpacing ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getSymbolZElevate ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getSymbolZOrder ()Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;
+	public final fun getTextAllowOverlap ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
+	public final fun getTextColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getTextColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextField ()Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue;
+	public final fun getTextFont ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
+	public final fun getTextHaloBlur ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextHaloBlurTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextHaloColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getTextHaloColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextHaloWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextHaloWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextIgnorePlacement ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getTextJustify ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;
+	public final fun getTextKeepUpright ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getTextLetterSpacing ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextLineHeight ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextMaxAngle ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextMaxWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextOcclusionOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextOcclusionOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getTextOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextOptional ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getTextPadding ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextPitchAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;
+	public final fun getTextRadialOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextRotate ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextRotationAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;
+	public final fun getTextSize ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getTextTransform ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;
+	public final fun getTextTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getTextTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;
+	public final fun getTextTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getTextVariableAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;
+	public final fun getTextWritingMode ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setIconAllowOverlap (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setIconAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;)V
+	public final fun setIconColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setIconColorSaturation (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconColorSaturationTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconHaloBlur (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconHaloBlurTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconHaloColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setIconHaloColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconHaloWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconHaloWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconIgnorePlacement (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setIconImage (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setIconImageCrossFade (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconImageCrossFadeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconKeepUpright (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setIconOcclusionOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconOcclusionOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconOffset (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setIconOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIconOptional (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setIconPadding (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconPitchAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;)V
+	public final fun setIconRotate (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconRotationAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;)V
+	public final fun setIconSize (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIconTextFit (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;)V
+	public final fun setIconTextFitPadding (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setIconTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;)V
+	public final fun setIconTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setSymbolAvoidEdges (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;)V
+	public final fun setSymbolSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setSymbolSpacing (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setSymbolZElevate (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setSymbolZOrder (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;)V
+	public final fun setTextAllowOverlap (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setTextAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;)V
+	public final fun setTextColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setTextColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextField (Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue;)V
+	public final fun setTextFont (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
+	public final fun setTextHaloBlur (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextHaloBlurTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextHaloColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setTextHaloColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextHaloWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextHaloWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextIgnorePlacement (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setTextJustify (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;)V
+	public final fun setTextKeepUpright (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setTextLetterSpacing (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextLineHeight (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextMaxAngle (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextMaxWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextOcclusionOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextOcclusionOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextOffset (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setTextOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextOptional (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setTextPadding (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextPitchAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;)V
+	public final fun setTextRadialOffset (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextRotate (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextRotationAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;)V
+	public final fun setTextSize (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setTextTransform (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;)V
+	public final fun setTextTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setTextTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;)V
+	public final fun setTextTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setTextVariableAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;)V
+	public final fun setTextWritingMode (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue {

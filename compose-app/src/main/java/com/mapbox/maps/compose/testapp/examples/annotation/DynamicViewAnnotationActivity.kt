@@ -266,33 +266,37 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
         LineLayer(
           sourceState = altRouteSourceState,
           layerId = LAYER_ALT_ID,
+        ) {
           lineColor = ColorValue(
             Color(0xFF999999)
-          ),
-          lineWidth = DoubleValue(12.0),
-          lineBorderWidth = DoubleValue(2.0),
+          )
+          lineWidth = DoubleValue(12.0)
+          lineBorderWidth = DoubleValue(2.0)
           lineBorderColor = ColorValue(Color(0xFF333333))
-        )
+        }
         LineLayer(
           sourceState = mainRouteSourceState,
-          layerId = LAYER_MAIN_ID,
-          lineColor = ColorValue(Color(0xFF57A9FB)),
-          lineWidth = DoubleValue(12.0),
-          lineCap = LineCapValue.ROUND,
-          lineBorderWidth = DoubleValue(2.0),
+          layerId = LAYER_MAIN_ID
+        ) {
+          lineColor = ColorValue(Color(0xFF57A9FB))
+          lineWidth = DoubleValue(12.0)
+          lineCap = LineCapValue.ROUND
+          lineBorderWidth = DoubleValue(2.0)
           lineBorderColor = ColorValue(Color(0xFF327AC2))
-        )
+        }
         FillLayer(
           sourceState = parkingSourceState,
-          layerId = LAYER_PARKING,
-          fillColor = ColorValue(Color(0xff0080ff)),
+          layerId = LAYER_PARKING
+        ) {
+          fillColor = ColorValue(Color(0xff0080ff))
           fillOpacity = DoubleValue(0.5)
-        )
+        }
         CircleLayer(
           sourceState = constructionSourceState,
-          layerId = LAYER_CONSTRUCTION,
+          layerId = LAYER_CONSTRUCTION
+        ) {
           circleColor = ColorValue(Color.Transparent)
-        )
+        }
       }
     )
   }

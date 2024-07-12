@@ -126,10 +126,10 @@ public class StyleImportsActivity : ComponentActivity() {
                 slotsContent {
                   slot("top") {
                     if (showBackgroundLayer) {
-                      BackgroundLayer(
-                        backgroundColor = ColorValue(Color.Red),
+                      BackgroundLayer {
+                        backgroundColor = ColorValue(Color.Red)
                         backgroundOpacity = DoubleValue(0.5)
-                      )
+                      }
                     }
                   }
                 }

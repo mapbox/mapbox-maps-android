@@ -106,25 +106,27 @@ public class ModelLayerActivity : ComponentActivity() {
                         .also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_2) }
                     )
                   )
-                },
-                modelId = ModelIdValue(Expression.get(MODEL_ID_KEY)),
-                modelType = ModelTypeValue.COMMON_3D,
-                modelScale = DoubleListValue(listOf(40.0, 40.0, 40.0)),
-                modelTranslation = DoubleListValue(listOf(0.0, 0.0, 0.0)),
-                modelRotation = DoubleListValue(listOf(0.0, 0.0, 90.0)),
-                modelOpacity = DoubleValue(0.7),
+                }
+              ) {
+                modelId = ModelIdValue(Expression.get(MODEL_ID_KEY))
+                modelType = ModelTypeValue.COMMON_3D
+                modelScale = DoubleListValue(listOf(40.0, 40.0, 40.0))
+                modelTranslation = DoubleListValue(listOf(0.0, 0.0, 0.0))
+                modelRotation = DoubleListValue(listOf(0.0, 0.0, 90.0))
+                modelOpacity = DoubleValue(0.7)
                 modelAmbientOcclusionIntensity = DoubleValue(1.0)
-              )
+              }
               // Add model through inlined model uri.
               ModelLayer(
                 sourceState = rememberGeoJsonSourceState {
                   data = GeoJSONData(CityLocations.HELSINKI)
-                },
-                modelId = ModelIdValue(modelId = MODEL_ID_3, uri = modelUri),
-                modelType = ModelTypeValue.COMMON_3D,
-                modelScale = DoubleListValue(listOf(40.0, 40.0, 40.0)),
+                }
+              ) {
+                modelId = ModelIdValue(modelId = MODEL_ID_3, uri = modelUri)
+                modelType = ModelTypeValue.COMMON_3D
+                modelScale = DoubleListValue(listOf(40.0, 40.0, 40.0))
                 modelAmbientOcclusionIntensity = DoubleValue(1.0)
-              )
+              }
             }
           }
         }

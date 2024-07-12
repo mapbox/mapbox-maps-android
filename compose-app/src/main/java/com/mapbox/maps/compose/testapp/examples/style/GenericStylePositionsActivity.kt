@@ -212,10 +212,11 @@ public class GenericStylePositionsActivity : ComponentActivity() {
               CircleLayer(
                 sourceState = rememberGeoJsonSourceState {
                   data = GeoJSONData(CityLocations.HELSINKI)
-                },
-                circleRadius = DoubleValue(30.0),
+                }
+              ) {
                 circleColor = ColorValue(Color.Yellow)
-              )
+                circleRadius = DoubleValue(30.0)
+              }
             }
             CircleAnnotation(
               point = CityLocations.HELSINKI.offset(-0.005),
@@ -250,18 +251,19 @@ public class GenericStylePositionsActivity : ComponentActivity() {
             slot("top") {
               CircleLayer(
                 sourceState = geoJsonSource,
-                circleColor = ColorValue(Color.Cyan),
-                circleRadius = DoubleValue(50.0),
-                circleRadiusTransition = Transition(durationMillis = 1000L)
-              )
+              ) {
+                circleColor = ColorValue(Color.Cyan)
+                circleRadius = DoubleValue(50.0)
+                circleColorTransition = Transition(durationMillis = 1000L)
+              }
             }
           }
           if (showMiddleSlotContent) {
             slot("middle") {
-              BackgroundLayer(
-                backgroundColor = ColorValue(Color.Red),
+              BackgroundLayer {
+                backgroundColor = ColorValue(Color.Red)
                 backgroundOpacity = DoubleValue(0.3)
-              )
+              }
             }
           }
         }
@@ -272,10 +274,10 @@ public class GenericStylePositionsActivity : ComponentActivity() {
         if (styleUri != Style.STANDARD) {
           if (showLayerPositionedContent) {
             belowLayer("building") {
-              BackgroundLayer(
-                backgroundColor = ColorValue(Color.Yellow),
+              BackgroundLayer {
+                backgroundColor = ColorValue(Color.Yellow)
                 backgroundOpacity = DoubleValue(0.3)
-              )
+              }
             }
           }
         }

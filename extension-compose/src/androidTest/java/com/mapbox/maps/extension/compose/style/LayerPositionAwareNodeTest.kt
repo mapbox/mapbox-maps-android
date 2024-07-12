@@ -67,13 +67,14 @@ public class LayerPositionAwareNodeTest {
       mapContent = { btn1State, btn2State ->
         if (btn1State) {
           CircleLayer(
-            layerId = remember { "circle-layer-1" },
             sourceState = rememberGeoJsonSourceState {
               data = GeoJSONData(HELSINKI.offset(0.005))
             },
-            circleRadius = DoubleValue(30.0),
-            circleColor = ColorValue(Color.Red),
-          )
+            layerId = remember { "circle-layer-1" }
+          ) {
+            circleColor = ColorValue(Color.Red)
+            circleRadius = DoubleValue(30.0)
+          }
         }
         if (btn2State) {
           CircleAnnotation(
@@ -83,13 +84,14 @@ public class LayerPositionAwareNodeTest {
           )
         }
         CircleLayer(
-          layerId = remember { "circle-layer-2" },
           sourceState = rememberGeoJsonSourceState {
             data = GeoJSONData(HELSINKI.offset(-0.005))
           },
-          circleRadius = DoubleValue(30.0),
-          circleColor = ColorValue(Color.Blue),
-        )
+          layerId = remember { "circle-layer-2" }
+        ) {
+          circleColor = ColorValue(Color.Blue)
+          circleRadius = DoubleValue(30.0)
+        }
       }
     )
     Assert.assertTrue(mapLoadLatch.await(TEST_TIMEOUT_MS, TimeUnit.MILLISECONDS))
@@ -159,13 +161,14 @@ public class LayerPositionAwareNodeTest {
       },
       mapContent = { btn1State, _ ->
         CircleLayer(
-          layerId = remember { "circle-layer-1" },
           sourceState = rememberGeoJsonSourceState {
             data = GeoJSONData(HELSINKI.offset(0.005))
           },
-          circleRadius = DoubleValue(30.0),
-          circleColor = ColorValue(Color.Red),
-        )
+          layerId = remember { "circle-layer-1" }
+        ) {
+          circleColor = ColorValue(Color.Red)
+          circleRadius = DoubleValue(30.0)
+        }
         if (btn1State) {
           CircleAnnotationGroup(
             annotations = CLUSTER_POINTS.map {
@@ -192,13 +195,14 @@ public class LayerPositionAwareNodeTest {
           )
         }
         CircleLayer(
-          layerId = remember { "circle-layer-2" },
           sourceState = rememberGeoJsonSourceState {
             data = GeoJSONData(HELSINKI.offset(-0.005))
           },
-          circleRadius = DoubleValue(30.0),
-          circleColor = ColorValue(Color.Blue),
-        )
+          layerId = remember { "circle-layer-2" }
+        ) {
+          circleColor = ColorValue(Color.Blue)
+          circleRadius = DoubleValue(30.0)
+        }
       }
     )
     Assert.assertTrue(mapLoadLatch.await(TEST_TIMEOUT_MS, TimeUnit.MILLISECONDS))
@@ -255,32 +259,35 @@ public class LayerPositionAwareNodeTest {
       slotContent = { btn1State, btn2State ->
         if (btn1State) {
           CircleLayer(
-            layerId = remember { "circle-layer-1" },
             sourceState = rememberGeoJsonSourceState {
               data = GeoJSONData(HELSINKI.offset(0.005))
             },
-            circleRadius = DoubleValue(30.0),
-            circleColor = ColorValue(Color.Red),
-          )
+            layerId = remember { "circle-layer-1" }
+          ) {
+            circleColor = ColorValue(Color.Red)
+            circleRadius = DoubleValue(30.0)
+          }
         }
         if (btn2State) {
           CircleLayer(
-            layerId = remember { "circle-layer-2" },
             sourceState = rememberGeoJsonSourceState {
               data = GeoJSONData(HELSINKI)
             },
-            circleRadius = DoubleValue(30.0),
-            circleColor = ColorValue(Color.Yellow),
-          )
+            layerId = remember { "circle-layer-2" }
+          ) {
+            circleColor = ColorValue(Color.Yellow)
+            circleRadius = DoubleValue(30.0)
+          }
         }
         CircleLayer(
-          layerId = remember { "circle-layer-3" },
           sourceState = rememberGeoJsonSourceState {
             data = GeoJSONData(HELSINKI.offset(-0.005))
           },
-          circleRadius = DoubleValue(30.0),
-          circleColor = ColorValue(Color.Blue),
-        )
+          layerId = remember { "circle-layer-3" }
+        ) {
+          circleColor = ColorValue(Color.Blue)
+          circleRadius = DoubleValue(30.0)
+        }
       }
     )
     Assert.assertTrue(mapLoadLatch.await(TEST_TIMEOUT_MS, TimeUnit.MILLISECONDS))
@@ -347,23 +354,25 @@ public class LayerPositionAwareNodeTest {
       layerPositionedContent = { btn1State, btn2State ->
         if (btn1State) {
           CircleLayer(
-            layerId = remember { "circle-layer-1" },
             sourceState = rememberGeoJsonSourceState {
               data = GeoJSONData(HELSINKI.offset(0.005))
             },
-            circleRadius = DoubleValue(30.0),
-            circleColor = ColorValue(Color.Red),
-          )
+            layerId = remember { "circle-layer-1" }
+          ) {
+            circleColor = ColorValue(Color.Red)
+            circleRadius = DoubleValue(30.0)
+          }
         }
         if (btn2State) {
           CircleLayer(
-            layerId = remember { "circle-layer-2" },
             sourceState = rememberGeoJsonSourceState {
               data = GeoJSONData(HELSINKI)
             },
-            circleRadius = DoubleValue(30.0),
-            circleColor = ColorValue(Color.Yellow),
-          )
+            layerId = remember { "circle-layer-2" }
+          ) {
+            circleColor = ColorValue(Color.Yellow)
+            circleRadius = DoubleValue(30.0)
+          }
         }
       }
     )

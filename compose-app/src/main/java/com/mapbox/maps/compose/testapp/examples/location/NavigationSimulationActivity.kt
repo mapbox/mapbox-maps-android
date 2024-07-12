@@ -113,8 +113,8 @@ public class NavigationSimulationActivity : ComponentActivity() {
               if (routeLine != null) {
                 FloatingActionButton(
                   modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .align(Alignment.End),
+                      .padding(bottom = 10.dp)
+                      .align(Alignment.End),
                   onClick = {
                     if ((mapViewportState.mapViewportStatus as? ViewportStatus.State)?.state is FollowPuckViewportState) {
                       routeLine?.let {
@@ -214,8 +214,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
       topSlot = {
         if (routeLine != null) {
           LineLayer(
-            sourceState = geoJsonSource,
-            lineTrimOffset = DoubleListValue(listOf(0.0, progress)),
+            sourceState = geoJsonSource
+          ) {
+            lineTrimOffset = DoubleListValue(listOf(0.0, progress))
             lineWidth = DoubleValue(
               interpolate {
                 exponential {
@@ -243,9 +244,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
                   product(29.0, 1.0)
                 }
               }
-            ),
-            lineCap = LineCapValue.ROUND,
-            lineJoin = LineJoinValue.ROUND,
+            )
+            lineCap = LineCapValue.ROUND
+            lineJoin = LineJoinValue.ROUND
             lineGradient = ColorValue(
               interpolate {
                 linear()
@@ -260,10 +261,11 @@ public class NavigationSimulationActivity : ComponentActivity() {
                 }
               }
             )
-          )
+          }
           LineLayer(
-            sourceState = geoJsonSource,
-            lineTrimOffset = DoubleListValue(listOf(0.0, progress)),
+            sourceState = geoJsonSource
+          ) {
+            lineTrimOffset = DoubleListValue(listOf(0.0, progress))
             lineWidth = DoubleValue(
               interpolate {
                 exponential {
@@ -295,9 +297,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
                   product(18.0, 1.0)
                 }
               }
-            ),
-            lineCap = LineCapValue.ROUND,
-            lineJoin = LineJoinValue.ROUND,
+            )
+            lineCap = LineCapValue.ROUND
+            lineJoin = LineJoinValue.ROUND
             lineGradient = ColorValue(
               interpolate {
                 linear()
@@ -316,7 +318,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
                 stop { literal(1.0); rgb { literal(255); literal(30); literal(0) } }
               }
             )
-          )
+          }
         }
       }
     )
