@@ -428,4 +428,14 @@ class CompassViewPluginTest {
     compassPlugin.enabled = true
     verify { compassView.isCompassVisible = true }
   }
+
+  @Test
+  fun updateSettings_disableCompass_viewHidden() {
+    clearMocks(compassView)
+
+    compassPlugin.updateSettings { this.enabled = false }
+
+    assertFalse(compassPlugin.enabled)
+    verify { compassView.isCompassVisible = false }
+  }
 }

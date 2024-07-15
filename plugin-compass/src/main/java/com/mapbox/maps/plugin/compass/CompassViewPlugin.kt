@@ -66,6 +66,7 @@ internal class CompassViewPlugin(
   }
 
   override fun applySettings() {
+    enabled = internalSettings.enabled
     compassView.apply {
       compassGravity = internalSettings.position
       internalSettings.image?.let { imageHolder ->

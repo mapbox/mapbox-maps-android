@@ -22,6 +22,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Make use of asynchronous `MapboxMap.cameraForCoordinates` in Mapbox overlay plugin better covering some corner cases.
 * Mark synchronous methods `MapboxMap.cameraForCoordinates` and `ViewAnnotationManager.cameraForAnnotations` with `@MapboxDelicateApi`. Consider using asynchronous overloaded methods instead.
 
+## Bug fixes 🐞
+* Fix compass view ignoring `enabled` option when it is set in `updateSettings()`.
+
 # 11.5.0 July 05, 2024
 ## Breaking changes ⚠️
 * [compose] Make `MapboxMap.onMapClickListener` and `MapboxMap.onMapLongClickListener` nullable and default to `null`.
