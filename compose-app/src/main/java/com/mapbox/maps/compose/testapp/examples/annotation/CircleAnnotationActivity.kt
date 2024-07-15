@@ -1,12 +1,13 @@
 package com.mapbox.maps.compose.testapp.examples.annotation
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -16,6 +17,7 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroup
+import com.mapbox.maps.extension.compose.annotation.generated.withCircleColor
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -44,8 +46,6 @@ public class CircleAnnotationActivity : ComponentActivity() {
           ) {
             CircleAnnotation(
               point = SINGLE_POINT,
-              circleRadius = 20.0,
-              circleColorInt = Color.BLUE,
               onClick = {
                 Toast.makeText(
                   this@CircleAnnotationActivity,
@@ -54,25 +54,28 @@ public class CircleAnnotationActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            )
+            ) {
+              circleRadius = 20.0
+              circleColor = Color.Blue
+            }
             CircleAnnotationGroup(
               annotations = CLUSTER_POINTS.map {
                 CircleAnnotationOptions()
                   .withPoint(it)
                   .withCircleRadius(10.0)
-                  .withCircleColor(Color.RED)
+                  .withCircleColor(Color.Red)
               },
               annotationConfig = AnnotationConfig(
                 annotationSourceOptions = AnnotationSourceOptions(
                   clusterOptions = ClusterOptions(
-                    textColorExpression = Expression.color(Color.YELLOW),
-                    textColor = Color.BLACK, // Will not be applied as textColorExpression has been set
+                    textColorExpression = Expression.color(Color.Yellow.toArgb()),
+                    textColor = Color.Black.toArgb(), // Will not be applied as textColorExpression has been set
                     textSize = 20.0,
                     circleRadiusExpression = literal(25.0),
                     colorLevels = listOf(
-                      Pair(100, Color.RED),
-                      Pair(50, Color.BLUE),
-                      Pair(0, Color.GREEN)
+                      Pair(100, Color.Red.toArgb()),
+                      Pair(50, Color.Blue.toArgb()),
+                      Pair(0, Color.Green.toArgb())
                     )
                   )
                 )

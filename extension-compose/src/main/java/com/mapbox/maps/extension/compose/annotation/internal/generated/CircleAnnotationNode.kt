@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.extension.compose.annotation.internal.generated
 
+import androidx.compose.runtime.Stable
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapNode
@@ -9,6 +10,7 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationClickListener
 
+@Stable
 internal class CircleAnnotationNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: CircleAnnotationManager,

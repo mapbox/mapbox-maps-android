@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.extension.compose.annotation.internal.generated
 
+import androidx.compose.runtime.Stable
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapNode
@@ -9,6 +10,7 @@ import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationClickList
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 
+@Stable
 internal class PolylineAnnotationNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: PolylineAnnotationManager,

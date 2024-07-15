@@ -276,6 +276,17 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.annotation.PointAnnotationActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_point_annotation"
+            android:exported="true"
+            android:label="@string/activity_point_annotation"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
     </application>
 
 </manifest>

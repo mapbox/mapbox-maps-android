@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose.annotation
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -11,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -37,6 +38,8 @@ import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGro
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroup
+import com.mapbox.maps.extension.compose.annotation.generated.withCircleColor
+import com.mapbox.maps.extension.compose.annotation.generated.withLineColor
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
 import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -71,13 +74,14 @@ public class AnnotationTests {
     ) {
       CircleAnnotation(
         point = SINGLE_POINT,
-        circleRadius = 20.0,
-        circleColorInt = Color.BLUE,
         onClick = {
           clickedAnnotation = it
           true
         }
-      )
+      ) {
+        circleRadius = 20.0
+        circleColor = Color.Blue
+      }
     }
 
     composeTestRule.onNodeWithTag(testTag).performClick()
@@ -100,15 +104,15 @@ public class AnnotationTests {
           CircleAnnotationOptions()
             .withPoint(it)
             .withCircleRadius(10.0)
-            .withCircleColor(Color.RED)
+            .withCircleColor(Color.Red)
         },
         annotationConfig = AnnotationConfig(
           annotationSourceOptions = AnnotationSourceOptions(
             clusterOptions = ClusterOptions(
               colorLevels = listOf(
-                Pair(100, Color.RED),
-                Pair(50, Color.BLUE),
-                Pair(0, Color.GREEN)
+                Pair(100, Color.Red.toArgb()),
+                Pair(50, Color.Blue.toArgb()),
+                Pair(0, Color.Green.toArgb())
               )
             )
           )
@@ -122,7 +126,7 @@ public class AnnotationTests {
     composeTestRule.onNodeWithTag(testTag).performClick()
     composeTestRule.waitUntil { clickedAnnotation != null }
     assertEquals(CLUSTER_POINTS[2], clickedAnnotation!!.point)
-    assertEquals(Color.RED, clickedAnnotation!!.circleColorInt)
+    assertEquals(Color.Red.toArgb(), clickedAnnotation!!.circleColorInt)
   }
 
   @Test
@@ -135,23 +139,15 @@ public class AnnotationTests {
       annotationPoint = SINGLE_POINT,
       testTag
     ) {
+      val icon = rememberIconImage(resourceId = R.drawable.mapbox_mylocation_icon_bearing)
       PointAnnotation(
         point = SINGLE_POINT,
-        iconImage = "bitmap",
         onClick = {
           clickedAnnotation = it
           true
         }
-      )
-
-      MapEffect(Unit) { mapView ->
-        mapView.mapboxMap.loadStyle(Style.STANDARD) {
-          it.addImage(
-            "bitmap",
-            ContextCompat.getDrawable(mapView.context, R.drawable.mapbox_mylocation_icon_bearing)!!
-              .toBitmap()
-          )
-        }
+      ) {
+        iconImage = icon
       }
     }
 
@@ -180,9 +176,9 @@ public class AnnotationTests {
           annotationSourceOptions = AnnotationSourceOptions(
             clusterOptions = ClusterOptions(
               colorLevels = listOf(
-                Pair(100, Color.RED),
-                Pair(50, Color.BLUE),
-                Pair(0, Color.GREEN)
+                Pair(100, Color.Red.toArgb()),
+                Pair(50, Color.Blue.toArgb()),
+                Pair(0, Color.Green.toArgb())
               )
             )
           )
@@ -221,16 +217,17 @@ public class AnnotationTests {
     ) {
       PolygonAnnotation(
         points = POLYGON_POINTS,
-        fillColorInt = Color.RED,
         onClick = {
           clickedAnnotation = it
           true
         }
-      )
+      ) {
+        fillColor = Color.Red
+      }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
     composeTestRule.waitUntil { clickedAnnotation != null }
-    assertEquals(Color.RED, clickedAnnotation!!.fillColorInt)
+    assertEquals(Color.Red.toArgb(), clickedAnnotation!!.fillColorInt)
     assertEquals(POLYGON_POINTS, clickedAnnotation!!.points)
   }
 
@@ -245,17 +242,18 @@ public class AnnotationTests {
     ) {
       PolylineAnnotation(
         points = POLYLINE_POINTS,
-        lineColorInt = Color.RED,
-        lineWidth = 15.0,
         onClick = {
           clickedAnnotation = it
           true
         }
-      )
+      ) {
+        lineColor = Color.Red
+        lineWidth = 15.0
+      }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
     composeTestRule.waitUntil { clickedAnnotation != null }
-    assertEquals(Color.RED, clickedAnnotation!!.lineColorInt)
+    assertEquals(Color.Red.toArgb(), clickedAnnotation!!.lineColorInt)
     assertEquals(POLYLINE_POINTS, clickedAnnotation!!.points)
   }
 
@@ -273,7 +271,7 @@ public class AnnotationTests {
           PolylineAnnotationOptions()
             .withPoints(it)
             .withLineWidth(15.0)
-            .withLineColor(Color.BLUE)
+            .withLineColor(Color.Blue)
         },
         annotationConfig = AnnotationConfig(),
         onClick = {
@@ -284,7 +282,7 @@ public class AnnotationTests {
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
     composeTestRule.waitUntil { clickedAnnotation != null }
-    assertEquals(Color.BLUE, clickedAnnotation!!.lineColorInt)
+    assertEquals(Color.Blue.toArgb(), clickedAnnotation!!.lineColorInt)
     assertEquals(POLYLINE_POINTS, clickedAnnotation!!.points)
   }
 
@@ -327,9 +325,9 @@ public class AnnotationTests {
         if (offset != null) {
           Box(
             modifier = Modifier
-                .size(5.dp)
-                .offset { offset ?: IntOffset.Zero }
-                .testTag(testTag)
+              .size(5.dp)
+              .offset { offset ?: IntOffset.Zero }
+              .testTag(testTag)
           )
         }
       }

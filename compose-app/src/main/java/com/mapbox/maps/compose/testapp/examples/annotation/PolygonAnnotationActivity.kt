@@ -1,12 +1,21 @@
 package com.mapbox.maps.compose.testapp.examples.annotation
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
@@ -25,8 +34,23 @@ public class PolygonAnnotationActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      var color by remember {
+        mutableStateOf(Color.Red)
+      }
       MapboxMapComposeTheme {
-        ExampleScaffold {
+        ExampleScaffold(
+          floatingActionButton = {
+            FloatingActionButton(
+              modifier = Modifier.padding(bottom = 10.dp),
+              onClick = {
+                color = if (color == Color.Red) Color.Blue else Color.Red
+              },
+              shape = RoundedCornerShape(16.dp),
+            ) {
+              Text(modifier = Modifier.padding(10.dp), text = "Toggle color")
+            }
+          }
+        ) {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = MapViewportState().apply {
@@ -37,11 +61,10 @@ public class PolygonAnnotationActivity : ComponentActivity() {
             },
             style = {
               MapStyle(style = Style.LIGHT)
-            }
+            },
           ) {
             PolygonAnnotation(
               points = POLYGON_POINTS,
-              fillColorInt = Color.RED,
               onClick = {
                 Toast.makeText(
                   this@PolygonAnnotationActivity,
@@ -50,7 +73,9 @@ public class PolygonAnnotationActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            )
+            ) {
+              fillColor = color
+            }
           }
         }
       }

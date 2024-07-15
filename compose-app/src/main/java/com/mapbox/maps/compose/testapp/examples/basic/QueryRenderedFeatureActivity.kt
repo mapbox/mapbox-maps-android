@@ -1,6 +1,5 @@
 package com.mapbox.maps.compose.testapp.examples.basic
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.MapboxExperimental
@@ -81,7 +81,10 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
             },
             mapState = mapState
           ) {
-            PolygonAnnotation(highlightedBuilding, fillColorInt = Color.RED, fillOpacity = 0.5)
+            PolygonAnnotation(highlightedBuilding) {
+              fillColor = Color.Red
+              fillOpacity = 0.5
+            }
           }
         }
       }

@@ -204,9 +204,10 @@ public class GenericStylePositionsActivity : ComponentActivity() {
             if (showBottomAnnotation) {
               CircleAnnotation(
                 point = CityLocations.HELSINKI.offset(0.005),
-                circleRadius = 30.0,
-                circleColorString = "red"
-              )
+              ) {
+                circleRadius = 30.0
+                circleColor = Color.Red
+              }
             }
             if (showMiddleCircleLayer) {
               CircleLayer(
@@ -219,10 +220,11 @@ public class GenericStylePositionsActivity : ComponentActivity() {
               }
             }
             CircleAnnotation(
-              point = CityLocations.HELSINKI.offset(-0.005),
-              circleRadius = 30.0,
-              circleColorString = "blue"
-            )
+              point = CityLocations.HELSINKI.offset(-0.005)
+            ) {
+              circleRadius = 30.0
+              circleColor = Color.Blue
+            }
           }
         }
       }

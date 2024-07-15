@@ -26,7 +26,7 @@ import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations.HELSINKI
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.geometry
@@ -64,7 +64,7 @@ public class ViewAnnotationActivity : ComponentActivity() {
         ) {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapViewportState = MapViewportState().apply {
+            mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
                 center(HELSINKI)

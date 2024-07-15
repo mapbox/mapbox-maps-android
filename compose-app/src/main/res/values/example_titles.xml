@@ -3,6 +3,7 @@
     <string name="activity_simple_map">Display a map view</string>
     <string name="activity_debug_mode">Debug mode</string>
     <string name="activity_circle_annotation">Circle Annotation</string>
+    <string name="activity_point_annotation">Point Annotation</string>
     <string name="activity_point_annotation_cluster">Point Annotation Clustering</string>
     <string name="activity_polygon_annotation">Polygon Annotation</string>
     <string name="activity_polyline_annotation">Polyline Annotation</string>

@@ -95,7 +95,7 @@ public fun rememberStyleImage(
 @MapboxExperimental
 @Composable
 public fun rememberStyleImage(
-  key: Any,
+  key: Any?,
   imageId: String,
   painter: Painter,
   scale: Float? = null,
@@ -153,7 +153,7 @@ public fun rememberStyleImage(
   )
 }
 
-private fun Painter.drawToBitmap(): ImageBitmap {
+internal fun Painter.drawToBitmap(): ImageBitmap {
   val drawScope = CanvasDrawScope()
   val bitmap = ImageBitmap(intrinsicSize.width.toInt(), intrinsicSize.height.toInt())
   val canvas = Canvas(bitmap)

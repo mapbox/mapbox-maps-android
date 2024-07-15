@@ -5,91 +5,51 @@ package com.mapbox.maps.extension.compose.annotation.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
-import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationManagerNode
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapApplier
-import com.mapbox.maps.extension.compose.internal.RootMapNode
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 
 /**
- * Composable function to add a [CircleAnnotation] to the Map.
+ * Composable function to add a [CircleAnnotation] to the Map. For convenience, if there's
+ * no need to hoist the [circleAnnotationState], use `CircleAnnotation(point, onClick, init)` with trailing lambda instead.
  *
  * @param point The Point of the circleAnnotation, which represents the location of the circleAnnotation on the map.
- * @param circleBlur Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
- * @param circleColorInt The fill color of the circle. The property is set as Color Int.
- * @param circleColorString The fill color of the circle. The property is set as Color String.
- * @param circleOpacity The opacity at which the circle will be drawn.
- * @param circleRadius Circle radius. The unit of circleRadius is in density-independent pixels.
- * @param circleStrokeColorInt The stroke color of the circle. The property is set as Color Int.
- * @param circleStrokeColorString The stroke color of the circle. The property is set as Color String.
- * @param circleStrokeOpacity The opacity of the circle's stroke.
- * @param circleStrokeWidth The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
  * @param onClick Callback to be invoked when the [CircleAnnotation] is clicked. The clicked [CircleAnnotation] will be passed as parameter.
+ * @param circleAnnotationState The state holder for [CircleAnnotation] properties.
  */
 @Composable
 @MapboxMapComposable
 @MapboxExperimental
 public fun CircleAnnotation(
   point: Point,
-  circleBlur: Double? = null,
-  circleColorInt: Int? = null,
-  circleColorString: String? = null,
-  circleOpacity: Double? = null,
-  circleRadius: Double? = null,
-  circleStrokeColorInt: Int? = null,
-  circleStrokeColorString: String? = null,
-  circleStrokeOpacity: Double? = null,
-  circleStrokeWidth: Double? = null,
   onClick: (CircleAnnotation) -> Boolean = { false },
+  circleAnnotationState: CircleAnnotationState = remember { CircleAnnotationState() },
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
     ?: throw IllegalStateException("Illegal use of CircleAnnotation inside unsupported composable function")
+
+  var annotationNode by remember {
+    mutableStateOf<CircleAnnotationNode?>(null)
+  }
+
   ComposeNode<CircleAnnotationNode, MapApplier>(
     factory = {
-      val annotationManager = when (val currentNode = mapApplier.current) {
-        // not reachable now as we don't allow inserting annotation node under annotation cluster node.
-        is CircleAnnotationManagerNode -> currentNode.annotationManager
-        is RootMapNode -> mapApplier.mapView.annotations.createCircleAnnotationManager()
-        else -> throw IllegalArgumentException("Illegal use of CircleAnnotation inside an incompatible node: $currentNode.")
-      }
+      val annotationManager = mapApplier.mapView.annotations.createCircleAnnotationManager()
       val annotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
         .withPoint(point)
-      circleBlur?.let {
-        annotationOptions.withCircleBlur(it)
-      }
-      circleColorInt?.let {
-        annotationOptions.withCircleColor(it)
-      }
-      circleColorString?.let {
-        annotationOptions.withCircleColor(it)
-      }
-      circleOpacity?.let {
-        annotationOptions.withCircleOpacity(it)
-      }
-      circleRadius?.let {
-        annotationOptions.withCircleRadius(it)
-      }
-      circleStrokeColorInt?.let {
-        annotationOptions.withCircleStrokeColor(it)
-      }
-      circleStrokeColorString?.let {
-        annotationOptions.withCircleStrokeColor(it)
-      }
-      circleStrokeOpacity?.let {
-        annotationOptions.withCircleStrokeOpacity(it)
-      }
-      circleStrokeWidth?.let {
-        annotationOptions.withCircleStrokeWidth(it)
-      }
-
       val annotation = annotationManager.create(annotationOptions)
-      CircleAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick)
+      CircleAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick).also { annotationNode = it }
     },
     update = {
       update(onClick) {
@@ -99,42 +59,38 @@ public fun CircleAnnotation(
         annotation.point = it
         annotationManager.update(annotation)
       }
-      update(circleBlur) {
-        annotation.circleBlur = it
-        annotationManager.update(annotation)
-      }
-      update(circleColorInt) {
-        annotation.circleColorInt = it
-        annotationManager.update(annotation)
-      }
-      update(circleColorString) {
-        annotation.circleColorString = it
-        annotationManager.update(annotation)
-      }
-      update(circleOpacity) {
-        annotation.circleOpacity = it
-        annotationManager.update(annotation)
-      }
-      update(circleRadius) {
-        annotation.circleRadius = it
-        annotationManager.update(annotation)
-      }
-      update(circleStrokeColorInt) {
-        annotation.circleStrokeColorInt = it
-        annotationManager.update(annotation)
-      }
-      update(circleStrokeColorString) {
-        annotation.circleStrokeColorString = it
-        annotationManager.update(annotation)
-      }
-      update(circleStrokeOpacity) {
-        annotation.circleStrokeOpacity = it
-        annotationManager.update(annotation)
-      }
-      update(circleStrokeWidth) {
-        annotation.circleStrokeWidth = it
-        annotationManager.update(annotation)
+    }
+  ) {
+    key(circleAnnotationState) {
+      annotationNode?.let {
+        circleAnnotationState.UpdateProperties(it)
       }
     }
+  }
+}
+
+/**
+ * Composable function to add a [CircleAnnotation] to the Map.
+ *
+ * @param point The Point of the circleAnnotation, which represents the location of the circleAnnotation on the map.
+ * @param onClick Callback to be invoked when the [CircleAnnotation] is clicked. The clicked [CircleAnnotation] will be passed as parameter.
+ * @param init the lambda that will be applied to the remembered [CircleAnnotationState].
+ */
+@Composable
+@MapboxMapComposable
+@MapboxExperimental
+public inline fun CircleAnnotation(
+  point: Point,
+  noinline onClick: (CircleAnnotation) -> Boolean = { false },
+  crossinline init: CircleAnnotationState.() -> Unit,
+) {
+  CircleAnnotation(
+    point = point,
+    onClick = onClick,
+    circleAnnotationState = remember {
+      CircleAnnotationState()
+    }.apply(init),
   )
 }
+
+// End of generated file

@@ -181,6 +181,16 @@ package com.mapbox.maps.extension.compose.animation.viewport {
 
 package com.mapbox.maps.extension.compose.annotation {
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class IconImage implements android.os.Parcelable {
+    ctor public IconImage(String imageId);
+    ctor public IconImage(android.graphics.Bitmap bitmap);
+  }
+
+  public final class IconImageKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.annotation.IconImage rememberIconImage(Object? key, androidx.compose.ui.graphics.painter.Painter painter);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.annotation.IconImage rememberIconImage(@DrawableRes int resourceId);
+  }
+
   public final class ViewAnnotationKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ViewAnnotation(com.mapbox.maps.ViewAnnotationOptions options, androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener? onUpdatedListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
@@ -190,35 +200,419 @@ package com.mapbox.maps.extension.compose.annotation {
 package com.mapbox.maps.extension.compose.annotation.generated {
 
   public final class CircleAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, Double? circleEmissiveStrength = null, com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? circlePitchAlignment = null, com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? circlePitchScale = null, java.util.List<java.lang.Double>? circleTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState circleAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState,kotlin.Unit> init);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class CircleAnnotationGroupState {
+    ctor public CircleAnnotationGroupState();
+    method public Double? getCircleEmissiveStrength();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? getCirclePitchAlignment();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? getCirclePitchScale();
+    method public java.util.List<java.lang.Double>? getCircleTranslate();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? getCircleTranslateAnchor();
+    method public void setCircleEmissiveStrength(Double?);
+    method public void setCirclePitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment?);
+    method public void setCirclePitchScale(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale?);
+    method public void setCircleTranslate(java.util.List<java.lang.Double>?);
+    method public void setCircleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor?);
+    property public final Double? circleEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? circlePitchAlignment;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? circlePitchScale;
+    property public final java.util.List<java.lang.Double>? circleTranslate;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor;
   }
 
   public final class CircleAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, Double? circleBlur = null, Integer? circleColorInt = null, String? circleColorString = null, Double? circleOpacity = null, Double? circleRadius = null, Integer? circleStrokeColorInt = null, String? circleStrokeColorString = null, Double? circleStrokeOpacity = null, Double? circleStrokeWidth = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState circleAnnotationState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState,kotlin.Unit> init);
+  }
+
+  public final class CircleAnnotationOptionsExtKt {
+    method public static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions withCircleColor(com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions, long circleColor);
+    method public static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions withCircleStrokeColor(com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions, long circleStrokeColor);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class CircleAnnotationState {
+    ctor public CircleAnnotationState();
+    method public Double? getCircleBlur();
+    method public androidx.compose.ui.graphics.Color? getCircleColor();
+    method public Double? getCircleOpacity();
+    method public Double? getCircleRadius();
+    method public androidx.compose.ui.graphics.Color? getCircleStrokeColor();
+    method public Double? getCircleStrokeOpacity();
+    method public Double? getCircleStrokeWidth();
+    method public void setCircleBlur(Double?);
+    method public void setCircleColor(androidx.compose.ui.graphics.Color?);
+    method public void setCircleOpacity(Double?);
+    method public void setCircleRadius(Double?);
+    method public void setCircleStrokeColor(androidx.compose.ui.graphics.Color?);
+    method public void setCircleStrokeOpacity(Double?);
+    method public void setCircleStrokeWidth(Double?);
+    property public final Double? circleBlur;
+    property public final androidx.compose.ui.graphics.Color? circleColor;
+    property public final Double? circleOpacity;
+    property public final Double? circleRadius;
+    property public final androidx.compose.ui.graphics.Color? circleStrokeColor;
+    property public final Double? circleStrokeOpacity;
+    property public final Double? circleStrokeWidth;
   }
 
   public final class PointAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, Boolean? iconAllowOverlap = null, Boolean? iconIgnorePlacement = null, Boolean? iconKeepUpright = null, Boolean? iconOptional = null, Double? iconPadding = null, com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? iconPitchAlignment = null, com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? iconRotationAlignment = null, Boolean? symbolAvoidEdges = null, com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement = null, Double? symbolSpacing = null, Boolean? symbolZElevate = null, com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder = null, Boolean? textAllowOverlap = null, java.util.List<java.lang.String>? textFont = null, Boolean? textIgnorePlacement = null, Boolean? textKeepUpright = null, Double? textMaxAngle = null, Boolean? textOptional = null, Double? textPadding = null, com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment? textPitchAlignment = null, com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? textRotationAlignment = null, java.util.List<java.lang.String>? textVariableAnchor = null, java.util.List<java.lang.String>? textWritingMode = null, Double? iconColorSaturation = null, Double? iconOcclusionOpacity = null, java.util.List<java.lang.Double>? iconTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor = null, Double? textOcclusionOpacity = null, java.util.List<java.lang.Double>? textTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? textTranslateAnchor = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState pointAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState,kotlin.Unit> init);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PointAnnotationGroupState {
+    ctor public PointAnnotationGroupState();
+    method public Boolean? getIconAllowOverlap();
+    method public Double? getIconColorSaturation();
+    method public Boolean? getIconIgnorePlacement();
+    method public Boolean? getIconKeepUpright();
+    method public Double? getIconOcclusionOpacity();
+    method public Boolean? getIconOptional();
+    method public Double? getIconPadding();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? getIconPitchAlignment();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? getIconRotationAlignment();
+    method public java.util.List<java.lang.Double>? getIconTranslate();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
+    method public Boolean? getSymbolAvoidEdges();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
+    method public Double? getSymbolSpacing();
+    method public Boolean? getSymbolZElevate();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? getSymbolZOrder();
+    method public Boolean? getTextAllowOverlap();
+    method public java.util.List<java.lang.String>? getTextFont();
+    method public Boolean? getTextIgnorePlacement();
+    method public Boolean? getTextKeepUpright();
+    method public Double? getTextMaxAngle();
+    method public Double? getTextOcclusionOpacity();
+    method public Boolean? getTextOptional();
+    method public Double? getTextPadding();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment? getTextPitchAlignment();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? getTextRotationAlignment();
+    method public java.util.List<java.lang.Double>? getTextTranslate();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? getTextTranslateAnchor();
+    method public java.util.List<java.lang.String>? getTextVariableAnchor();
+    method public java.util.List<java.lang.String>? getTextWritingMode();
+    method public void setIconAllowOverlap(Boolean?);
+    method public void setIconColorSaturation(Double?);
+    method public void setIconIgnorePlacement(Boolean?);
+    method public void setIconKeepUpright(Boolean?);
+    method public void setIconOcclusionOpacity(Double?);
+    method public void setIconOptional(Boolean?);
+    method public void setIconPadding(Double?);
+    method public void setIconPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment?);
+    method public void setIconRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment?);
+    method public void setIconTranslate(java.util.List<java.lang.Double>?);
+    method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
+    method public void setSymbolAvoidEdges(Boolean?);
+    method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
+    method public void setSymbolSpacing(Double?);
+    method public void setSymbolZElevate(Boolean?);
+    method public void setSymbolZOrder(com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder?);
+    method public void setTextAllowOverlap(Boolean?);
+    method public void setTextFont(java.util.List<java.lang.String>?);
+    method public void setTextIgnorePlacement(Boolean?);
+    method public void setTextKeepUpright(Boolean?);
+    method public void setTextMaxAngle(Double?);
+    method public void setTextOcclusionOpacity(Double?);
+    method public void setTextOptional(Boolean?);
+    method public void setTextPadding(Double?);
+    method public void setTextPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment?);
+    method public void setTextRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment?);
+    method public void setTextTranslate(java.util.List<java.lang.Double>?);
+    method public void setTextTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor?);
+    method public void setTextVariableAnchor(java.util.List<java.lang.String>?);
+    method public void setTextWritingMode(java.util.List<java.lang.String>?);
+    property public final Boolean? iconAllowOverlap;
+    property public final Double? iconColorSaturation;
+    property public final Boolean? iconIgnorePlacement;
+    property public final Boolean? iconKeepUpright;
+    property public final Double? iconOcclusionOpacity;
+    property public final Boolean? iconOptional;
+    property public final Double? iconPadding;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? iconPitchAlignment;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? iconRotationAlignment;
+    property public final java.util.List<java.lang.Double>? iconTranslate;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
+    property public final Boolean? symbolAvoidEdges;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
+    property public final Double? symbolSpacing;
+    property public final Boolean? symbolZElevate;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder;
+    property public final Boolean? textAllowOverlap;
+    property public final java.util.List<java.lang.String>? textFont;
+    property public final Boolean? textIgnorePlacement;
+    property public final Boolean? textKeepUpright;
+    property public final Double? textMaxAngle;
+    property public final Double? textOcclusionOpacity;
+    property public final Boolean? textOptional;
+    property public final Double? textPadding;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment? textPitchAlignment;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? textRotationAlignment;
+    property public final java.util.List<java.lang.Double>? textTranslate;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? textTranslateAnchor;
+    property public final java.util.List<java.lang.String>? textVariableAnchor;
+    property public final java.util.List<java.lang.String>? textWritingMode;
   }
 
   public final class PointAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, android.graphics.Bitmap? iconImageBitmap = null, com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor = null, String? iconImage = null, java.util.List<java.lang.Double>? iconOffset = null, Double? iconRotate = null, Double? iconSize = null, com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit = null, java.util.List<java.lang.Double>? iconTextFitPadding = null, com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor = null, String? textField = null, com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? textJustify = null, Double? textLetterSpacing = null, Double? textLineHeight = null, Double? textMaxWidth = null, java.util.List<java.lang.Double>? textOffset = null, Double? textRadialOffset = null, Double? textRotate = null, Double? textSize = null, com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? textTransform = null, Integer? iconColorInt = null, String? iconColorString = null, Double? iconEmissiveStrength = null, Double? iconHaloBlur = null, Integer? iconHaloColorInt = null, String? iconHaloColorString = null, Double? iconHaloWidth = null, Double? iconImageCrossFade = null, Double? iconOpacity = null, Integer? textColorInt = null, String? textColorString = null, Double? textEmissiveStrength = null, Double? textHaloBlur = null, Integer? textHaloColorInt = null, String? textHaloColorString = null, Double? textHaloWidth = null, Double? textOpacity = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState pointAnnotationState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState,kotlin.Unit> init);
+  }
+
+  public final class PointAnnotationOptionsExtKt {
+    method public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconColor(com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions, long iconColor);
+    method public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconHaloColor(com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions, long iconHaloColor);
+    method public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextColor(com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions, long textColor);
+    method public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextHaloColor(com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions, long textHaloColor);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PointAnnotationState {
+    ctor public PointAnnotationState();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
+    method public androidx.compose.ui.graphics.Color? getIconColor();
+    method public Double? getIconEmissiveStrength();
+    method public Double? getIconHaloBlur();
+    method public androidx.compose.ui.graphics.Color? getIconHaloColor();
+    method public Double? getIconHaloWidth();
+    method public com.mapbox.maps.extension.compose.annotation.IconImage? getIconImage();
+    method public Double? getIconImageCrossFade();
+    method public java.util.List<java.lang.Double>? getIconOffset();
+    method public Double? getIconOpacity();
+    method public Double? getIconRotate();
+    method public Double? getIconSize();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
+    method public java.util.List<java.lang.Double>? getIconTextFitPadding();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
+    method public androidx.compose.ui.graphics.Color? getTextColor();
+    method public Double? getTextEmissiveStrength();
+    method public String? getTextField();
+    method public Double? getTextHaloBlur();
+    method public androidx.compose.ui.graphics.Color? getTextHaloColor();
+    method public Double? getTextHaloWidth();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? getTextJustify();
+    method public Double? getTextLetterSpacing();
+    method public Double? getTextLineHeight();
+    method public Double? getTextMaxWidth();
+    method public java.util.List<java.lang.Double>? getTextOffset();
+    method public Double? getTextOpacity();
+    method public Double? getTextRadialOffset();
+    method public Double? getTextRotate();
+    method public Double? getTextSize();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? getTextTransform();
+    method public void setIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor?);
+    method public void setIconColor(androidx.compose.ui.graphics.Color?);
+    method public void setIconEmissiveStrength(Double?);
+    method public void setIconHaloBlur(Double?);
+    method public void setIconHaloColor(androidx.compose.ui.graphics.Color?);
+    method public void setIconHaloWidth(Double?);
+    method public void setIconImage(com.mapbox.maps.extension.compose.annotation.IconImage?);
+    method public void setIconImageCrossFade(Double?);
+    method public void setIconOffset(java.util.List<java.lang.Double>?);
+    method public void setIconOpacity(Double?);
+    method public void setIconRotate(Double?);
+    method public void setIconSize(Double?);
+    method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
+    method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
+    method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
+    method public void setTextColor(androidx.compose.ui.graphics.Color?);
+    method public void setTextEmissiveStrength(Double?);
+    method public void setTextField(String?);
+    method public void setTextHaloBlur(Double?);
+    method public void setTextHaloColor(androidx.compose.ui.graphics.Color?);
+    method public void setTextHaloWidth(Double?);
+    method public void setTextJustify(com.mapbox.maps.extension.style.layers.properties.generated.TextJustify?);
+    method public void setTextLetterSpacing(Double?);
+    method public void setTextLineHeight(Double?);
+    method public void setTextMaxWidth(Double?);
+    method public void setTextOffset(java.util.List<java.lang.Double>?);
+    method public void setTextOpacity(Double?);
+    method public void setTextRadialOffset(Double?);
+    method public void setTextRotate(Double?);
+    method public void setTextSize(Double?);
+    method public void setTextTransform(com.mapbox.maps.extension.style.layers.properties.generated.TextTransform?);
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
+    property public final androidx.compose.ui.graphics.Color? iconColor;
+    property public final Double? iconEmissiveStrength;
+    property public final Double? iconHaloBlur;
+    property public final androidx.compose.ui.graphics.Color? iconHaloColor;
+    property public final Double? iconHaloWidth;
+    property public final com.mapbox.maps.extension.compose.annotation.IconImage? iconImage;
+    property public final Double? iconImageCrossFade;
+    property public final java.util.List<java.lang.Double>? iconOffset;
+    property public final Double? iconOpacity;
+    property public final Double? iconRotate;
+    property public final Double? iconSize;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
+    property public final java.util.List<java.lang.Double>? iconTextFitPadding;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
+    property public final androidx.compose.ui.graphics.Color? textColor;
+    property public final Double? textEmissiveStrength;
+    property public final String? textField;
+    property public final Double? textHaloBlur;
+    property public final androidx.compose.ui.graphics.Color? textHaloColor;
+    property public final Double? textHaloWidth;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? textJustify;
+    property public final Double? textLetterSpacing;
+    property public final Double? textLineHeight;
+    property public final Double? textMaxWidth;
+    property public final java.util.List<java.lang.Double>? textOffset;
+    property public final Double? textOpacity;
+    property public final Double? textRadialOffset;
+    property public final Double? textRotate;
+    property public final Double? textSize;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? textTransform;
   }
 
   public final class PolygonAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, Boolean? fillAntialias = null, Double? fillEmissiveStrength = null, java.util.List<java.lang.Double>? fillTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState polygonAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState,kotlin.Unit> init);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolygonAnnotationGroupState {
+    ctor public PolygonAnnotationGroupState();
+    method public Boolean? getFillAntialias();
+    method public Double? getFillEmissiveStrength();
+    method public java.util.List<java.lang.Double>? getFillTranslate();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
+    method public void setFillAntialias(Boolean?);
+    method public void setFillEmissiveStrength(Double?);
+    method public void setFillTranslate(java.util.List<java.lang.Double>?);
+    method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
+    property public final Boolean? fillAntialias;
+    property public final Double? fillEmissiveStrength;
+    property public final java.util.List<java.lang.Double>? fillTranslate;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
   }
 
   public final class PolygonAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, Integer? fillColorInt = null, String? fillColorString = null, Double? fillOpacity = null, Integer? fillOutlineColorInt = null, String? fillOutlineColorString = null, String? fillPattern = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState polygonAnnotationState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState,kotlin.Unit> init);
+  }
+
+  public final class PolygonAnnotationOptionsExtKt {
+    method public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillColor);
+    method public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillOutlineColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillOutlineColor);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolygonAnnotationState {
+    ctor public PolygonAnnotationState();
+    method public androidx.compose.ui.graphics.Color? getFillColor();
+    method public Double? getFillOpacity();
+    method public androidx.compose.ui.graphics.Color? getFillOutlineColor();
+    method public String? getFillPattern();
+    method public void setFillColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillOpacity(Double?);
+    method public void setFillOutlineColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillPattern(String?);
+    property public final androidx.compose.ui.graphics.Color? fillColor;
+    property public final Double? fillOpacity;
+    property public final androidx.compose.ui.graphics.Color? fillOutlineColor;
+    property public final String? fillPattern;
   }
 
   public final class PolylineAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap = null, Double? lineMiterLimit = null, Double? lineRoundLimit = null, java.util.List<java.lang.Double>? lineDasharray = null, Double? lineDepthOcclusionFactor = null, Double? lineEmissiveStrength = null, Double? lineOcclusionOpacity = null, java.util.List<java.lang.Double>? lineTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor = null, java.util.List<java.lang.Double>? lineTrimOffset = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState polylineAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState,kotlin.Unit> init);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolylineAnnotationGroupState {
+    ctor public PolylineAnnotationGroupState();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
+    method public java.util.List<java.lang.Double>? getLineDasharray();
+    method public Double? getLineDepthOcclusionFactor();
+    method public Double? getLineEmissiveStrength();
+    method public Double? getLineMiterLimit();
+    method public Double? getLineOcclusionOpacity();
+    method public Double? getLineRoundLimit();
+    method public java.util.List<java.lang.Double>? getLineTranslate();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
+    method public java.util.List<java.lang.Double>? getLineTrimOffset();
+    method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
+    method public void setLineDasharray(java.util.List<java.lang.Double>?);
+    method public void setLineDepthOcclusionFactor(Double?);
+    method public void setLineEmissiveStrength(Double?);
+    method public void setLineMiterLimit(Double?);
+    method public void setLineOcclusionOpacity(Double?);
+    method public void setLineRoundLimit(Double?);
+    method public void setLineTranslate(java.util.List<java.lang.Double>?);
+    method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
+    method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
+    property public final java.util.List<java.lang.Double>? lineDasharray;
+    property public final Double? lineDepthOcclusionFactor;
+    property public final Double? lineEmissiveStrength;
+    property public final Double? lineMiterLimit;
+    property public final Double? lineOcclusionOpacity;
+    property public final Double? lineRoundLimit;
+    property public final java.util.List<java.lang.Double>? lineTranslate;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
+    property public final java.util.List<java.lang.Double>? lineTrimOffset;
   }
 
   public final class PolylineAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin = null, Double? lineZOffset = null, Double? lineBlur = null, Integer? lineBorderColorInt = null, String? lineBorderColorString = null, Double? lineBorderWidth = null, Integer? lineColorInt = null, String? lineColorString = null, Double? lineGapWidth = null, Double? lineOffset = null, Double? lineOpacity = null, String? linePattern = null, Double? lineWidth = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false });
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState polylineAnnotationState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState,kotlin.Unit> init);
+  }
+
+  public final class PolylineAnnotationOptionsExtKt {
+    method public static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineBorderColor(com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions, long lineBorderColor);
+    method public static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions, long lineColor);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolylineAnnotationState {
+    ctor public PolylineAnnotationState();
+    method public Double? getLineBlur();
+    method public androidx.compose.ui.graphics.Color? getLineBorderColor();
+    method public Double? getLineBorderWidth();
+    method public androidx.compose.ui.graphics.Color? getLineColor();
+    method public Double? getLineGapWidth();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
+    method public Double? getLineOffset();
+    method public Double? getLineOpacity();
+    method public String? getLinePattern();
+    method public Double? getLineWidth();
+    method public Double? getLineZOffset();
+    method public void setLineBlur(Double?);
+    method public void setLineBorderColor(androidx.compose.ui.graphics.Color?);
+    method public void setLineBorderWidth(Double?);
+    method public void setLineColor(androidx.compose.ui.graphics.Color?);
+    method public void setLineGapWidth(Double?);
+    method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
+    method public void setLineOffset(Double?);
+    method public void setLineOpacity(Double?);
+    method public void setLinePattern(String?);
+    method public void setLineWidth(Double?);
+    method public void setLineZOffset(Double?);
+    property public final Double? lineBlur;
+    property public final androidx.compose.ui.graphics.Color? lineBorderColor;
+    property public final Double? lineBorderWidth;
+    property public final androidx.compose.ui.graphics.Color? lineColor;
+    property public final Double? lineGapWidth;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
+    property public final Double? lineOffset;
+    property public final Double? lineOpacity;
+    property public final String? linePattern;
+    property public final Double? lineWidth;
+    property public final Double? lineZOffset;
   }
 
 }
@@ -489,7 +883,7 @@ package com.mapbox.maps.extension.compose.style {
 
   public final class StyleImageKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, androidx.compose.ui.graphics.ImageBitmap imageBitmap, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(Object key, String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(Object? key, String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, @DrawableRes int resourceId, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
   }
 

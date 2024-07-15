@@ -78,10 +78,11 @@ public class LayerPositionAwareNodeTest {
         }
         if (btn2State) {
           CircleAnnotation(
-            point = HELSINKI,
-            circleRadius = 30.0,
-            circleColorString = "yellow",
-          )
+            point = HELSINKI
+          ) {
+            circleRadius = 30.0
+            circleColor = Color.Yellow
+          }
         }
         CircleLayer(
           sourceState = rememberGeoJsonSourceState {

@@ -1,14 +1,14 @@
 package com.mapbox.maps.compose.testapp.examples.annotation
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -17,9 +17,10 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroup
+import com.mapbox.maps.extension.compose.annotation.generated.withLineColor
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
-import java.util.*
+import java.util.Random
 
 /**
  * Example to showcase usage of PolylineAnnotation with Jetpack Compose.
@@ -47,8 +48,6 @@ public class PolylineAnnotationActivity : ComponentActivity() {
           ) {
             PolylineAnnotation(
               points = POLYLINE_POINTS,
-              lineColorInt = Color.RED,
-              lineWidth = 5.0,
               onClick = {
                 Toast.makeText(
                   this@PolylineAnnotationActivity,
@@ -57,7 +56,10 @@ public class PolylineAnnotationActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            )
+            ) {
+              lineColor = Color.Red
+              lineWidth = 5.0
+            }
             PolylineAnnotationGroup(
               annotations = mutableListOf<PolylineAnnotationOptions>().apply {
                 repeat(100) {
@@ -65,7 +67,7 @@ public class PolylineAnnotationActivity : ComponentActivity() {
                     PolylineAnnotationOptions()
                       .withPoints(AnnotationUtils.createRandomPoints())
                       .withLineColor(
-                        Color.rgb(
+                        Color(
                           random.nextInt(256),
                           random.nextInt(256),
                           random.nextInt(256),

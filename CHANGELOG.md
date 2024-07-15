@@ -6,11 +6,16 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * [compose] Remove `StyleImage` constructor with `BitmapImage`, use `rememberStyleImage` composable function to build it instead.
 * [compose] Move layer properties within `*Layer` composable functions to `*LayerState` classes, use the convenient method `*Layer(sourceState, layerId, init)` with trailing lambda for easier migration.
+* [compose] Move `onClick` listener from last parameter to the second last parameter of `Annotation` and `AnnotationGroup` composable functions.
+* [compose] Move properties within `*Annotation` and `*AnnotationGroup` composable functions to the new `*AnnotationState` and `*AnnotationGroupState` classes, use the convenient method `*Annotation(point, onClick, init)` and `*AnnotationGroup(annotations, annotationConfig, onClick, init)` with trailing lambda for easier migration.
+* [compose] Replace color int and color string property types in `*Annotation` with compose `Color` type.
+* [compose] Replace `PointAnnotation.iconImageBitmap` and `PointAnnotation.iconImage` with `PointAnnotationState.iconImage` with `IconImage` type, `IconImage` can be constructed with either a image id `String` or a `Bitmap`, and introduced `rememberIconImage` to build and remember a bitmap from `Painter` or from a drawable resource id.
 
 ## Features ✨ and improvements 🏁
 * [compose] Mark `MapState`, `MapViewportState`, `TerrainState`, light states and source states as `Stable` as they are internally backed by `MutableState`.
 * [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `MapboxStandardStyle`.
 * [compose] Introduce `StyleImage` constructor with `Image` type, and add `rememberStyleImage` composable functions to create and remember `StyleImage`.
+* [compose] Add extension function to `*AnnotationOptions` to handle compose `Color`, use it in `*AnnotationGroup` composable functions for convenience.
 * Modify `awaitCameraForCoordinates` extension function to use `MapCameraManagerDelegate` as receiver type.
 * Modify `queryRenderedFeatures` and `querySourceFeatures` extension functions to use `MapFeatureQueryDelegate` as receiver type.
 * Introduce asynchronous overloaded method `ViewAnnotationManager.cameraForAnnotations` better covering some corner cases.
