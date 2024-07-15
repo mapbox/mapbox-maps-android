@@ -25,6 +25,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Mark synchronous methods `MapboxMap.cameraForCoordinates` and `ViewAnnotationManager.cameraForAnnotations` with `@MapboxDelicateApi`. Consider using asynchronous overloaded methods instead.
 
 ## Bug fixes 🐞
+* [compose] Fix minZoom/maxZoom not working for layers.
 * Fix compass view ignoring `enabled` option when it is set in `updateSettings()`.
 
 # 11.5.0 July 05, 2024

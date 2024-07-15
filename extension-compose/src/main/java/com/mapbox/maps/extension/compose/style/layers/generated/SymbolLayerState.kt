@@ -1046,13 +1046,13 @@ public class SymbolLayerState private constructor(
   @Composable
   private fun UpdateMinZoom(layerNode: LayerNode) {
     if (minZoom.notInitial) {
-      layerNode.setProperty("min-zoom", minZoom.value)
+      layerNode.setProperty("minzoom", minZoom.value)
     }
   }
   @Composable
   private fun UpdateMaxZoom(layerNode: LayerNode) {
     if (maxZoom.notInitial) {
-      layerNode.setProperty("max-zoom", maxZoom.value)
+      layerNode.setProperty("maxzoom", maxZoom.value)
     }
   }
   @Composable
