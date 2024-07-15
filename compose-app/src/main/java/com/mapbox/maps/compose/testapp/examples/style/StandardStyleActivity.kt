@@ -34,22 +34,22 @@ public class StandardStyleActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      var showPlaceLabels by remember {
+      var enablePlaceLabels by remember {
         mutableStateOf(true)
       }
-      var showRoadLabels by remember {
+      var enableRoadLabels by remember {
         mutableStateOf(true)
       }
-      var showPointOfInterestLabels by remember {
+      var enablePointOfInterestLabels by remember {
         mutableStateOf(true)
       }
-      var showTransitLabels by remember {
+      var enableTransitLabels by remember {
         mutableStateOf(true)
       }
-      var lightPreset by remember {
+      var selectedLightPreset by remember {
         mutableStateOf(LightPresetValue.DAY)
       }
-      var font by remember {
+      var selectedFont by remember {
         mutableStateOf("DIN Pro")
       }
 
@@ -60,55 +60,55 @@ public class StandardStyleActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showPlaceLabels = !showPlaceLabels
+                  enablePlaceLabels = !enablePlaceLabels
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "showPlaceLabels: $showPlaceLabels"
+                  text = "showPlaceLabels: $enablePlaceLabels"
                 )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showRoadLabels = !showRoadLabels
+                  enableRoadLabels = !enableRoadLabels
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "showRoadLabels: $showRoadLabels"
+                  text = "showRoadLabels: $enableRoadLabels"
                 )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showPointOfInterestLabels = !showPointOfInterestLabels
+                  enablePointOfInterestLabels = !enablePointOfInterestLabels
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "showPointOfInterestLabels: $showPointOfInterestLabels"
+                  text = "showPointOfInterestLabels: $enablePointOfInterestLabels"
                 )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showTransitLabels = !showTransitLabels
+                  enableTransitLabels = !enableTransitLabels
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "showTransitLabels: $showTransitLabels"
+                  text = "showTransitLabels: $enableTransitLabels"
                 )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  lightPreset = when (lightPreset) {
+                  selectedLightPreset = when (selectedLightPreset) {
                     LightPresetValue.DAY -> LightPresetValue.DUSK
                     LightPresetValue.DUSK -> LightPresetValue.NIGHT
                     LightPresetValue.NIGHT -> LightPresetValue.DAWN
@@ -120,13 +120,13 @@ public class StandardStyleActivity : ComponentActivity() {
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "lightPreset: $lightPreset"
+                  text = "lightPreset: $selectedLightPreset"
                 )
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  font = when (font) {
+                  selectedFont = when (selectedFont) {
                     "DIN Pro" -> "Roboto"
                     else -> "DIN Pro"
                   }
@@ -135,7 +135,7 @@ public class StandardStyleActivity : ComponentActivity() {
               ) {
                 Text(
                   modifier = Modifier.padding(10.dp),
-                  text = "font: $font"
+                  text = "font: $selectedFont"
                 )
               }
             }
@@ -150,14 +150,14 @@ public class StandardStyleActivity : ComponentActivity() {
               }
             },
             style = {
-              MapboxStandardStyle(
-                showPlaceLabels = BooleanValue(showPlaceLabels),
-                showRoadLabels = BooleanValue(showRoadLabels),
-                showPointOfInterestLabels = BooleanValue(showPointOfInterestLabels),
-                showTransitLabels = BooleanValue(showTransitLabels),
-                lightPreset = lightPreset,
-                font = StringValue(font)
-              )
+              MapboxStandardStyle {
+                showPlaceLabels = BooleanValue(enablePlaceLabels)
+                showRoadLabels = BooleanValue(enableRoadLabels)
+                showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)
+                showTransitLabels = BooleanValue(enableTransitLabels)
+                lightPreset = selectedLightPreset
+                font = StringValue(selectedFont)
+              }
             }
           )
         }

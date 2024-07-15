@@ -239,8 +239,9 @@ public class StyleStatesActivity : ComponentActivity() {
                 projection = projections[currentProjectionIdx],
                 atmosphereState = currentAtmosphereState,
                 lightsState = lightsStates[currentLightIdx],
+              ) {
                 lightPreset = lightsPresets[currentLightPresetIdx]
-              )
+              }
             }
           )
         }

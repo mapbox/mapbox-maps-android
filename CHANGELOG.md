@@ -10,10 +10,11 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Move properties within `*Annotation` and `*AnnotationGroup` composable functions to the new `*AnnotationState` and `*AnnotationGroupState` classes, use the convenient method `*Annotation(point, onClick, init)` and `*AnnotationGroup(annotations, annotationConfig, onClick, init)` with trailing lambda for easier migration.
 * [compose] Replace color int and color string property types in `*Annotation` with compose `Color` type.
 * [compose] Replace `PointAnnotation.iconImageBitmap` and `PointAnnotation.iconImage` with `PointAnnotationState.iconImage` with `IconImage` type, `IconImage` can be constructed with either a image id `String` or a `Bitmap`, and introduced `rememberIconImage` to build and remember a bitmap from `Painter` or from a drawable resource id.
+* [compose] Introduce `StandardStyleConfigurationState` class to hold the configurations of `MapboxStandardStyle`, and move `lightPreset` config from `MapboxStandardStyle` to `StandardStyleConfigurationState`; consider using overload method `MapboxStandardStyle` with trailing init lambda for easier migration.
 
 ## Features ✨ and improvements 🏁
 * [compose] Mark `MapState`, `MapViewportState`, `TerrainState`, light states and source states as `Stable` as they are internally backed by `MutableState`.
-* [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `MapboxStandardStyle`.
+* [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `StandardStyleConfigurationState`.
 * [compose] Introduce `StyleImage` constructor with `Image` type, and add `rememberStyleImage` composable functions to create and remember `StyleImage`.
 * [compose] Add extension function to `*AnnotationOptions` to handle compose `Color`, use it in `*AnnotationGroup` composable functions for convenience.
 * Modify `awaitCameraForCoordinates` extension function to use `MapCameraManagerDelegate` as receiver type.

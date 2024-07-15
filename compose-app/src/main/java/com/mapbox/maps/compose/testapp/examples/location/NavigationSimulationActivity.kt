@@ -210,7 +210,6 @@ public class NavigationSimulationActivity : ComponentActivity() {
       }
     }
     MapboxStandardStyle(
-      lightPreset = lightPreset,
       topSlot = {
         if (routeLine != null) {
           LineLayer(
@@ -321,7 +320,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
           }
         }
       }
-    )
+    ) {
+      this.lightPreset = lightPreset
+    }
   }
 
   private companion object {

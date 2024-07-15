@@ -1,16 +1,12 @@
 package com.mapbox.maps.extension.compose.style.standard
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMapComposable
-import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
-import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable
 import com.mapbox.maps.extension.compose.style.imports.StyleImportsScope
@@ -19,87 +15,6 @@ import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.styleImportsConfig
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
-import com.mapbox.maps.extension.style.expressions.generated.Expression
-
-/**
- * Define the lightPreset style import config for [MapboxStandardStyle].
- *
- * @param value the property wrapped in [Value] to be used with native renderer.
- */
-@Immutable
-@MapboxExperimental
-public data class LightPresetValue(public val value: Value) {
-  /**
-   * Construct the [LightPresetValue] with [String].
-   */
-  public constructor(value: String) : this(Value(value))
-
-  /**
-   * Construct the [LightPresetValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
-   */
-  public constructor(expression: Expression) : this(expression as Value)
-
-  /**
-   * Get the name of the [LightPresetValue] as [String], or null if it's not a constant(e.g. an expression).
-   */
-  public val presetNameOrNull: String?
-    get() = value.contents as? String
-
-  /**
-   * True if the this value is not [INITIAL]
-   */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
-
-  /**
-   * Public companion object.
-   */
-  public companion object {
-    internal const val NAME: String = "lightPreset"
-
-    /**
-     * Use this constant to signal that no property should be set to the Maps engine.
-     * This is needed because sending nullValue resets the value of the property to the default one
-     * defined by the Maps engine, which results in overriding the value from the loaded style.
-     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
-     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
-     * to differentiate them because they use [equals].
-     */
-    @JvmField
-    internal val INITIAL: LightPresetValue =
-      LightPresetValue(Value.valueOf("LightPresetValue.INITIAL"))
-
-    /**
-     * Default value for [LightPresetValue], setting default will result in restoring the property value defined in the style.
-     */
-    @JvmField
-    public val DEFAULT: LightPresetValue = LightPresetValue(Value.nullValue())
-
-    /**
-     * The light preset for "day".
-     */
-    @JvmField
-    public val DAY: LightPresetValue = LightPresetValue("day")
-
-    /**
-     * The light preset for "night".
-     */
-    @JvmField
-    public val NIGHT: LightPresetValue = LightPresetValue("night")
-
-    /**
-     * The light preset for "dusk".
-     */
-    @JvmField
-    public val DUSK: LightPresetValue = LightPresetValue("dusk")
-
-    /**
-     * The light preset for "dawn".
-     */
-    @JvmField
-    public val DAWN: LightPresetValue = LightPresetValue("dawn")
-  }
-}
 
 /**
  * The convenient composable function to set a Mapbox Standard style to the map, with available slots
@@ -109,16 +24,11 @@ public data class LightPresetValue(public val value: Value) {
  * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
  * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
  * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
- * @param showPlaceLabels Whether or not to show the place labels, default to true.
- * @param showRoadLabels Whether or not to show the road labels, default to true.
- * @param showPointOfInterestLabels Whether or not to show the point of interest labels, default to true.
- * @param showTransitLabels Whether or not to show the transit labels, default to true.
- * @param lightPreset The [LightPresetValue] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk", defaults to "day".
- * @param font The font to be used with the standard style.
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the Standard style definition.
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
+ * @param standardStyleConfigurationState The configurations for [MapboxStandardStyle].
  */
 @Composable
 @MapboxStyleComposable
@@ -128,16 +38,13 @@ public fun MapboxStandardStyle(
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
-  showPlaceLabels: BooleanValue = BooleanValue.INITIAL,
-  showRoadLabels: BooleanValue = BooleanValue.INITIAL,
-  showPointOfInterestLabels: BooleanValue = BooleanValue.INITIAL,
-  showTransitLabels: BooleanValue = BooleanValue.INITIAL,
-  lightPreset: LightPresetValue = LightPresetValue.INITIAL,
-  font: StringValue = StringValue.INITIAL,
   projection: Projection = Projection.INITIAL,
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
-  lightsState: LightsState = LightsState.INITIAL
+  lightsState: LightsState = LightsState.INITIAL,
+  standardStyleConfigurationState: StandardStyleConfigurationState = remember {
+    StandardStyleConfigurationState()
+  }
 ) {
   GenericStyle(
     style = Style.STANDARD,
@@ -149,23 +56,31 @@ public fun MapboxStandardStyle(
     },
     styleImportsConfig = styleImportsConfig {
       importConfig(importId = "basemap") {
-        if (showPlaceLabels.notInitial) {
-          config("showPlaceLabels", showPlaceLabels.value)
-        }
-        if (showRoadLabels.notInitial) {
-          config("showRoadLabels", showRoadLabels.value)
-        }
-        if (showPointOfInterestLabels.notInitial) {
-          config("showPointOfInterestLabels", showPointOfInterestLabels.value)
-        }
-        if (showTransitLabels.notInitial) {
-          config("showTransitLabels", showTransitLabels.value)
-        }
-        if (lightPreset.notInitial) {
-          config(LightPresetValue.NAME, lightPreset.value)
-        }
-        if (font.notInitial) {
-          config("font", font.value)
+        with(standardStyleConfigurationState) {
+          if (showPlaceLabels.notInitial) {
+            config(StandardStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
+          }
+          if (showRoadLabels.notInitial) {
+            config(StandardStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
+          }
+          if (showPointOfInterestLabels.notInitial) {
+            config(
+              StandardStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
+              showPointOfInterestLabels.value
+            )
+          }
+          if (showTransitLabels.notInitial) {
+            config(
+              StandardStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
+              showTransitLabels.value
+            )
+          }
+          if (lightPreset.notInitial) {
+            config(StandardStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
+          }
+          if (font.notInitial) {
+            config(StandardStyleConfigurationState.CONFIG_FONT, font.value)
+          }
         }
       }
     },
@@ -173,5 +88,48 @@ public fun MapboxStandardStyle(
     atmosphereState = atmosphereState,
     terrainState = terrainState,
     lightsState = lightsState,
+  )
+}
+
+/**
+ * The convenient composable function to set a Mapbox Standard style to the map, with available slots
+ * and config options.
+ *
+ * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
+ * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
+ * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
+ * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
+ * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the Standard style definition.
+ * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
+ * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
+ * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
+ * @param init The lambda that will be applied to the remembered [StandardStyleConfigurationState].
+ */
+@Composable
+@MapboxStyleComposable
+@MapboxExperimental
+public fun MapboxStandardStyle(
+  styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
+  topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  projection: Projection = Projection.INITIAL,
+  atmosphereState: AtmosphereState = remember { AtmosphereState() },
+  terrainState: TerrainState = TerrainState.INITIAL,
+  lightsState: LightsState = LightsState.INITIAL,
+  init: StandardStyleConfigurationState.() -> Unit
+) {
+  MapboxStandardStyle(
+    styleImportsContent = styleImportsContent,
+    topSlot = topSlot,
+    middleSlot = middleSlot,
+    bottomSlot = bottomSlot,
+    projection = projection,
+    atmosphereState = atmosphereState,
+    terrainState = terrainState,
+    lightsState = lightsState,
+    standardStyleConfigurationState = remember {
+      StandardStyleConfigurationState()
+    }.apply(init)
   )
 }
