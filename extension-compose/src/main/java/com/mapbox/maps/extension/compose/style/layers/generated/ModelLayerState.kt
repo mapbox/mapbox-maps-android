@@ -24,8 +24,8 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#model)
  */
-@MapboxExperimental
 @Stable
+@MapboxExperimental
 public class ModelLayerState private constructor(
   initialModelId: ModelIdValue,
   initialModelAmbientOcclusionIntensity: DoubleValue,
@@ -255,6 +255,7 @@ public class ModelLayerState private constructor(
   public var filter: Filter by mutableStateOf(initialFilter)
 
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelId(layerNode: LayerNode) {
     if (modelId.notInitial) {
       modelId.modelInfo?.let {
@@ -264,156 +265,182 @@ public class ModelLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelAmbientOcclusionIntensity(layerNode: LayerNode) {
     if (modelAmbientOcclusionIntensity.notInitial) {
       layerNode.setProperty("model-ambient-occlusion-intensity", modelAmbientOcclusionIntensity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelAmbientOcclusionIntensityTransition(layerNode: LayerNode) {
     if (modelAmbientOcclusionIntensityTransition.notInitial) {
       layerNode.setProperty("model-ambient-occlusion-intensity-transition", modelAmbientOcclusionIntensityTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelCastShadows(layerNode: LayerNode) {
     if (modelCastShadows.notInitial) {
       layerNode.setProperty("model-cast-shadows", modelCastShadows.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelColor(layerNode: LayerNode) {
     if (modelColor.notInitial) {
       layerNode.setProperty("model-color", modelColor.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelColorTransition(layerNode: LayerNode) {
     if (modelColorTransition.notInitial) {
       layerNode.setProperty("model-color-transition", modelColorTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelColorMixIntensity(layerNode: LayerNode) {
     if (modelColorMixIntensity.notInitial) {
       layerNode.setProperty("model-color-mix-intensity", modelColorMixIntensity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelColorMixIntensityTransition(layerNode: LayerNode) {
     if (modelColorMixIntensityTransition.notInitial) {
       layerNode.setProperty("model-color-mix-intensity-transition", modelColorMixIntensityTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelCutoffFadeRange(layerNode: LayerNode) {
     if (modelCutoffFadeRange.notInitial) {
       layerNode.setProperty("model-cutoff-fade-range", modelCutoffFadeRange.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelEmissiveStrength(layerNode: LayerNode) {
     if (modelEmissiveStrength.notInitial) {
       layerNode.setProperty("model-emissive-strength", modelEmissiveStrength.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelEmissiveStrengthTransition(layerNode: LayerNode) {
     if (modelEmissiveStrengthTransition.notInitial) {
       layerNode.setProperty("model-emissive-strength-transition", modelEmissiveStrengthTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelFrontCutoff(layerNode: LayerNode) {
     if (modelFrontCutoff.notInitial) {
       layerNode.setProperty("model-front-cutoff", modelFrontCutoff.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelHeightBasedEmissiveStrengthMultiplier(layerNode: LayerNode) {
     if (modelHeightBasedEmissiveStrengthMultiplier.notInitial) {
       layerNode.setProperty("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelHeightBasedEmissiveStrengthMultiplierTransition(layerNode: LayerNode) {
     if (modelHeightBasedEmissiveStrengthMultiplierTransition.notInitial) {
       layerNode.setProperty("model-height-based-emissive-strength-multiplier-transition", modelHeightBasedEmissiveStrengthMultiplierTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelOpacity(layerNode: LayerNode) {
     if (modelOpacity.notInitial) {
       layerNode.setProperty("model-opacity", modelOpacity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelOpacityTransition(layerNode: LayerNode) {
     if (modelOpacityTransition.notInitial) {
       layerNode.setProperty("model-opacity-transition", modelOpacityTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelReceiveShadows(layerNode: LayerNode) {
     if (modelReceiveShadows.notInitial) {
       layerNode.setProperty("model-receive-shadows", modelReceiveShadows.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelRotation(layerNode: LayerNode) {
     if (modelRotation.notInitial) {
       layerNode.setProperty("model-rotation", modelRotation.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelRotationTransition(layerNode: LayerNode) {
     if (modelRotationTransition.notInitial) {
       layerNode.setProperty("model-rotation-transition", modelRotationTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelRoughness(layerNode: LayerNode) {
     if (modelRoughness.notInitial) {
       layerNode.setProperty("model-roughness", modelRoughness.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelRoughnessTransition(layerNode: LayerNode) {
     if (modelRoughnessTransition.notInitial) {
       layerNode.setProperty("model-roughness-transition", modelRoughnessTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelScale(layerNode: LayerNode) {
     if (modelScale.notInitial) {
       layerNode.setProperty("model-scale", modelScale.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelScaleTransition(layerNode: LayerNode) {
     if (modelScaleTransition.notInitial) {
       layerNode.setProperty("model-scale-transition", modelScaleTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelScaleMode(layerNode: LayerNode) {
     if (modelScaleMode.notInitial) {
       layerNode.setProperty("model-scale-mode", modelScaleMode.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelTranslation(layerNode: LayerNode) {
     if (modelTranslation.notInitial) {
       layerNode.setProperty("model-translation", modelTranslation.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelTranslationTransition(layerNode: LayerNode) {
     if (modelTranslationTransition.notInitial) {
       layerNode.setProperty("model-translation-transition", modelTranslationTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelType(layerNode: LayerNode) {
     if (modelType.notInitial) {
       layerNode.setProperty("model-type", modelType.value)

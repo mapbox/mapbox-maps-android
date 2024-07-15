@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.currentComposer
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import kotlinx.coroutines.CoroutineScope
 
@@ -21,7 +20,6 @@ import kotlinx.coroutines.CoroutineScope
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun MapEffect(key1: Any?, block: suspend CoroutineScope.(MapView) -> Unit) {
   val map = (currentComposer.applier as MapApplier).mapView
   LaunchedEffect(key1 = key1) {
@@ -43,7 +41,6 @@ public fun MapEffect(key1: Any?, block: suspend CoroutineScope.(MapView) -> Unit
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun MapEffect(key1: Any?, key2: Any?, block: suspend CoroutineScope.(MapView) -> Unit) {
   val map = (currentComposer.applier as MapApplier).mapView
   LaunchedEffect(key1 = key1, key2 = key2) {
@@ -65,7 +62,6 @@ public fun MapEffect(key1: Any?, key2: Any?, block: suspend CoroutineScope.(MapV
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun MapEffect(
   key1: Any?,
   key2: Any?,
@@ -91,7 +87,6 @@ public fun MapEffect(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun MapEffect(vararg keys: Any?, block: suspend CoroutineScope.(MapView) -> Unit) {
   val map = (currentComposer.applier as MapApplier).mapView
   LaunchedEffect(keys = keys) {

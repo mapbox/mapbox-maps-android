@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.compose.style.sources.generated
 
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
@@ -13,7 +12,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class SchemeValue(public val value: Value) {
   /**
    * Construct the SchemeValue with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -68,7 +66,6 @@ public data class SchemeValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class EncodingValue(public val value: Value) {
   /**
    * Construct the EncodingValue with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).

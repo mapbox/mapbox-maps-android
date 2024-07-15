@@ -21,8 +21,8 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#raster-particle)
  */
-@MapboxExperimental
 @Stable
+@MapboxExperimental
 public class RasterParticleLayerState private constructor(
   initialRasterParticleArrayBand: StringValue,
   initialRasterParticleColor: ColorValue,
@@ -126,54 +126,63 @@ public class RasterParticleLayerState private constructor(
   public var filter: Filter by mutableStateOf(initialFilter)
 
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleArrayBand(layerNode: LayerNode) {
     if (rasterParticleArrayBand.notInitial) {
       layerNode.setProperty("raster-particle-array-band", rasterParticleArrayBand.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleColor(layerNode: LayerNode) {
     if (rasterParticleColor.notInitial) {
       layerNode.setProperty("raster-particle-color", rasterParticleColor.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleCount(layerNode: LayerNode) {
     if (rasterParticleCount.notInitial) {
       layerNode.setProperty("raster-particle-count", rasterParticleCount.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleFadeOpacityFactor(layerNode: LayerNode) {
     if (rasterParticleFadeOpacityFactor.notInitial) {
       layerNode.setProperty("raster-particle-fade-opacity-factor", rasterParticleFadeOpacityFactor.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleFadeOpacityFactorTransition(layerNode: LayerNode) {
     if (rasterParticleFadeOpacityFactorTransition.notInitial) {
       layerNode.setProperty("raster-particle-fade-opacity-factor-transition", rasterParticleFadeOpacityFactorTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleMaxSpeed(layerNode: LayerNode) {
     if (rasterParticleMaxSpeed.notInitial) {
       layerNode.setProperty("raster-particle-max-speed", rasterParticleMaxSpeed.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleResetRateFactor(layerNode: LayerNode) {
     if (rasterParticleResetRateFactor.notInitial) {
       layerNode.setProperty("raster-particle-reset-rate-factor", rasterParticleResetRateFactor.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleSpeedFactor(layerNode: LayerNode) {
     if (rasterParticleSpeedFactor.notInitial) {
       layerNode.setProperty("raster-particle-speed-factor", rasterParticleSpeedFactor.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterParticleSpeedFactorTransition(layerNode: LayerNode) {
     if (rasterParticleSpeedFactorTransition.notInitial) {
       layerNode.setProperty("raster-particle-speed-factor-transition", rasterParticleSpeedFactorTransition.value)

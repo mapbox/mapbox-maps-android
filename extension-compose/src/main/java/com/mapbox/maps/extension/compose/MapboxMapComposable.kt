@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.compose
 
 import androidx.compose.runtime.ComposableTargetMarker
-import com.mapbox.maps.MapboxExperimental
 
 /**
  * Marks a composable function as being expected to be used inside another composable function that is
@@ -19,5 +18,4 @@ import com.mapbox.maps.MapboxExperimental
   AnnotationTarget.TYPE,
   AnnotationTarget.TYPE_PARAMETER,
 )
-@MapboxExperimental
 public annotation class MapboxMapComposable

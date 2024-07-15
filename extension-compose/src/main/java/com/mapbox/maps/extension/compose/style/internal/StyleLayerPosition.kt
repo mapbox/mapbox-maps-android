@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
@@ -43,7 +42,6 @@ internal class StyleLayerPositionNode(
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 internal fun StyleLayerPosition(
   layerPosition: LayerPosition,
   content: (@Composable @MapboxMapComposable () -> Unit)? = null

@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.extension.compose {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ComposeMapInitOptions {
+  @androidx.compose.runtime.Immutable public final class ComposeMapInitOptions {
     ctor public ComposeMapInitOptions(com.mapbox.maps.MapOptions mapOptions, boolean textureView = false, int antialiasingSampleCount = 1, String mapName = "");
     ctor public ComposeMapInitOptions(float pixelRatio, boolean textureView = false, int antialiasingSampleCount = 1, String mapName = "");
     method public com.mapbox.maps.MapOptions component1();
@@ -25,52 +25,20 @@ package com.mapbox.maps.extension.compose {
   }
 
   public final class DisposableMapEffectKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object![]? keys, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object![]? keys, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
   }
 
   public final class MapEffectKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object![]? keys, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object![]? keys, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class MapEvents {
-    ctor public MapEvents(com.mapbox.maps.MapLoadedCallback? onMapLoaded = null, com.mapbox.maps.MapIdleCallback? onMapIdle = null, com.mapbox.maps.MapLoadingErrorCallback? onMapLoadingError = null, com.mapbox.maps.StyleLoadedCallback? onStyleLoaded = null, com.mapbox.maps.StyleDataLoadedCallback? onStyleDataLoaded = null, com.mapbox.maps.SourceDataLoadedCallback? onSourceDataLoaded = null, com.mapbox.maps.SourceAddedCallback? onSourceAdded = null, com.mapbox.maps.SourceRemovedCallback? onSourceRemoved = null, com.mapbox.maps.StyleImageMissingCallback? onStyleImageMissing = null, com.mapbox.maps.StyleImageRemoveUnusedCallback? onStyleImageRemoveUnused = null, com.mapbox.maps.CameraChangedCallback? onCameraChanged = null, com.mapbox.maps.RenderFrameStartedCallback? onRenderFrameStarted = null, com.mapbox.maps.RenderFrameFinishedCallback? onRenderFrameFinished = null, com.mapbox.maps.ResourceRequestCallback? onResourceRequest = null);
-    method public com.mapbox.maps.CameraChangedCallback? getOnCameraChanged();
-    method public com.mapbox.maps.MapIdleCallback? getOnMapIdle();
-    method public com.mapbox.maps.MapLoadedCallback? getOnMapLoaded();
-    method public com.mapbox.maps.MapLoadingErrorCallback? getOnMapLoadingError();
-    method public com.mapbox.maps.RenderFrameFinishedCallback? getOnRenderFrameFinished();
-    method public com.mapbox.maps.RenderFrameStartedCallback? getOnRenderFrameStarted();
-    method public com.mapbox.maps.ResourceRequestCallback? getOnResourceRequest();
-    method public com.mapbox.maps.SourceAddedCallback? getOnSourceAdded();
-    method public com.mapbox.maps.SourceDataLoadedCallback? getOnSourceDataLoaded();
-    method public com.mapbox.maps.SourceRemovedCallback? getOnSourceRemoved();
-    method public com.mapbox.maps.StyleDataLoadedCallback? getOnStyleDataLoaded();
-    method public com.mapbox.maps.StyleImageMissingCallback? getOnStyleImageMissing();
-    method public com.mapbox.maps.StyleImageRemoveUnusedCallback? getOnStyleImageRemoveUnused();
-    method public com.mapbox.maps.StyleLoadedCallback? getOnStyleLoaded();
-    property public final com.mapbox.maps.CameraChangedCallback? onCameraChanged;
-    property public final com.mapbox.maps.MapIdleCallback? onMapIdle;
-    property public final com.mapbox.maps.MapLoadedCallback? onMapLoaded;
-    property public final com.mapbox.maps.MapLoadingErrorCallback? onMapLoadingError;
-    property public final com.mapbox.maps.RenderFrameFinishedCallback? onRenderFrameFinished;
-    property public final com.mapbox.maps.RenderFrameStartedCallback? onRenderFrameStarted;
-    property public final com.mapbox.maps.ResourceRequestCallback? onResourceRequest;
-    property public final com.mapbox.maps.SourceAddedCallback? onSourceAdded;
-    property public final com.mapbox.maps.SourceDataLoadedCallback? onSourceDataLoaded;
-    property public final com.mapbox.maps.SourceRemovedCallback? onSourceRemoved;
-    property public final com.mapbox.maps.StyleDataLoadedCallback? onStyleDataLoaded;
-    property public final com.mapbox.maps.StyleImageMissingCallback? onStyleImageMissing;
-    property public final com.mapbox.maps.StyleImageRemoveUnusedCallback? onStyleImageRemoveUnused;
-    property public final com.mapbox.maps.StyleLoadedCallback? onStyleLoaded;
-  }
-
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class MapState {
+  @androidx.compose.runtime.Stable public final class MapState {
     ctor public MapState();
     method @com.mapbox.maps.MapboxExperimental public kotlinx.coroutines.flow.Flow<com.mapbox.maps.GenericEvent> genericEvents(String eventName);
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
@@ -88,8 +56,8 @@ package com.mapbox.maps.extension.compose {
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageMissing> getStyleImageMissingEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageRemoveUnused> getStyleImageRemoveUnusedEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleLoaded> getStyleLoadedEvents();
-    method @com.mapbox.maps.MapboxExperimental public suspend Object? pixelForCoordinate(com.mapbox.geojson.Point coordinate, kotlin.coroutines.Continuation<? super com.mapbox.maps.ScreenCoordinate>);
-    method @com.mapbox.maps.MapboxExperimental public suspend Object? queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>>);
+    method public suspend Object? pixelForCoordinate(com.mapbox.geojson.Point coordinate, kotlin.coroutines.Continuation<? super com.mapbox.maps.ScreenCoordinate>);
+    method public suspend Object? queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>>);
     method public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
     property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
@@ -114,7 +82,7 @@ package com.mapbox.maps.extension.compose {
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.MapState,com.mapbox.maps.extension.compose.MapState.Holder> Saver;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public static final class MapState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize public static final class MapState.Holder implements android.os.Parcelable {
     ctor public MapState.Holder(java.util.Map<java.lang.String,? extends android.os.Parcelable> savedProperties);
     method public java.util.Map<java.lang.String,android.os.Parcelable> component1();
     method public com.mapbox.maps.extension.compose.MapState.Holder copy(java.util.Map<java.lang.String,? extends android.os.Parcelable> savedProperties);
@@ -123,21 +91,21 @@ package com.mapbox.maps.extension.compose {
   }
 
   public final class MapStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.MapState rememberMapState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapState,kotlin.Unit> init = {});
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.MapState rememberMapState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Map Composable") @com.mapbox.maps.MapboxExperimental @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxMapComposable {
+  @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Map Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxMapComposable {
   }
 
   public final class MapboxMapKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.ComposeMapInitOptions composeMapInitOptions = with(LocalDensity.current, { 
+    method @androidx.compose.runtime.Composable public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.ComposeMapInitOptions composeMapInitOptions = with(LocalDensity.current, { 
     return remember({ 
         return <init>(density)
     })
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope,kotlin.Unit> compass = { Compass() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope,kotlin.Unit> scaleBar = { ScaleBar() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope,kotlin.Unit> logo = { Logo() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope,kotlin.Unit> attribution = { Attribution() }, com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.extension.compose.MapState mapState = rememberMapState(), com.mapbox.maps.plugin.gestures.OnMapClickListener? onMapClickListener = null, com.mapbox.maps.plugin.gestures.OnMapLongClickListener? onMapLongClickListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> style = { MapboxStandardStyle() }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapboxMapScope {
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapboxMapScope {
     field public static final com.mapbox.maps.extension.compose.MapboxMapScope INSTANCE;
   }
 
@@ -148,19 +116,19 @@ package com.mapbox.maps.extension.compose {
 
 package com.mapbox.maps.extension.compose.animation.viewport {
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class MapViewportState {
+  @androidx.compose.runtime.Stable public final class MapViewportState {
     ctor public MapViewportState(com.mapbox.maps.CameraState initialCameraState = com.mapbox.maps.extension.compose.animation.viewport.MapViewportState.INIT_CAMERA_STATE);
-    method @com.mapbox.maps.MapboxExperimental public void easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
-    method @com.mapbox.maps.MapboxExperimental public void flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     method public com.mapbox.maps.CameraState? getCameraState();
     method public com.mapbox.maps.plugin.viewport.ViewportStatus? getMapViewportStatus();
     method public com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason? getMapViewportStatusChangedReason();
     method public com.mapbox.maps.CameraOptions? getStyleDefaultCameraOptions();
-    method @com.mapbox.maps.MapboxExperimental public void idle();
-    method @UiThread @com.mapbox.maps.MapboxExperimental public void setCameraOptions(com.mapbox.maps.CameraOptions cameraOptions);
-    method @UiThread @com.mapbox.maps.MapboxExperimental public void setCameraOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public void transitionToFollowPuckState(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions followPuckViewportStateOptions = FollowPuckViewportStateOptions.<init>().build(), com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
-    method @com.mapbox.maps.MapboxExperimental public void transitionToOverviewState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions overviewViewportStateOptions, com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void idle();
+    method @UiThread public void setCameraOptions(com.mapbox.maps.CameraOptions cameraOptions);
+    method @UiThread public void setCameraOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
+    method public void transitionToFollowPuckState(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions followPuckViewportStateOptions = FollowPuckViewportStateOptions.<init>().build(), com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void transitionToOverviewState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions overviewViewportStateOptions, com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     property public final com.mapbox.maps.CameraState? cameraState;
     property public final com.mapbox.maps.plugin.viewport.ViewportStatus? mapViewportStatus;
     property public final com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason? mapViewportStatusChangedReason;
@@ -174,25 +142,25 @@ package com.mapbox.maps.extension.compose.animation.viewport {
   }
 
   public final class MapViewportStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.animation.viewport.MapViewportState rememberMapViewportState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.animation.viewport.MapViewportState,kotlin.Unit> init = {});
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.animation.viewport.MapViewportState rememberMapViewportState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.animation.viewport.MapViewportState,kotlin.Unit> init = {});
   }
 
 }
 
 package com.mapbox.maps.extension.compose.annotation {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class IconImage implements android.os.Parcelable {
+  @androidx.compose.runtime.Immutable @kotlinx.parcelize.Parcelize public final class IconImage implements android.os.Parcelable {
     ctor public IconImage(String imageId);
     ctor public IconImage(android.graphics.Bitmap bitmap);
   }
 
   public final class IconImageKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.annotation.IconImage rememberIconImage(Object? key, androidx.compose.ui.graphics.painter.Painter painter);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.annotation.IconImage rememberIconImage(@DrawableRes int resourceId);
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.annotation.IconImage rememberIconImage(Object? key, androidx.compose.ui.graphics.painter.Painter painter);
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.annotation.IconImage rememberIconImage(@DrawableRes int resourceId);
   }
 
   public final class ViewAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ViewAnnotation(com.mapbox.maps.ViewAnnotationOptions options, androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener? onUpdatedListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ViewAnnotation(com.mapbox.maps.ViewAnnotationOptions options, androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener? onUpdatedListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
 }
@@ -200,13 +168,13 @@ package com.mapbox.maps.extension.compose.annotation {
 package com.mapbox.maps.extension.compose.annotation.generated {
 
   public final class CircleAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState circleAnnotationGroupState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState circleAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class CircleAnnotationGroupState {
+  @androidx.compose.runtime.Stable public final class CircleAnnotationGroupState {
     ctor public CircleAnnotationGroupState();
     method public Double? getCircleEmissiveStrength();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? getCirclePitchAlignment();
@@ -226,10 +194,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class CircleAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState circleAnnotationState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState circleAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState,kotlin.Unit> init);
   }
 
   public final class CircleAnnotationOptionsExtKt {
@@ -237,7 +205,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions withCircleStrokeColor(com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions, long circleStrokeColor);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class CircleAnnotationState {
+  @androidx.compose.runtime.Stable public final class CircleAnnotationState {
     ctor public CircleAnnotationState();
     method public Double? getCircleBlur();
     method public androidx.compose.ui.graphics.Color? getCircleColor();
@@ -263,13 +231,13 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PointAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState pointAnnotationGroupState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState pointAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PointAnnotationGroupState {
+  @androidx.compose.runtime.Stable public final class PointAnnotationGroupState {
     ctor public PointAnnotationGroupState();
     method public Boolean? getIconAllowOverlap();
     method public Double? getIconColorSaturation();
@@ -364,10 +332,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PointAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState pointAnnotationState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState pointAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState,kotlin.Unit> init);
   }
 
   public final class PointAnnotationOptionsExtKt {
@@ -377,7 +345,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextHaloColor(com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions, long textHaloColor);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PointAnnotationState {
+  @androidx.compose.runtime.Stable public final class PointAnnotationState {
     ctor public PointAnnotationState();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method public androidx.compose.ui.graphics.Color? getIconColor();
@@ -475,13 +443,13 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PolygonAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState polygonAnnotationGroupState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState polygonAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolygonAnnotationGroupState {
+  @androidx.compose.runtime.Stable public final class PolygonAnnotationGroupState {
     ctor public PolygonAnnotationGroupState();
     method public Boolean? getFillAntialias();
     method public Double? getFillEmissiveStrength();
@@ -498,10 +466,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PolygonAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState polygonAnnotationState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState polygonAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState,kotlin.Unit> init);
   }
 
   public final class PolygonAnnotationOptionsExtKt {
@@ -509,7 +477,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillOutlineColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillOutlineColor);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolygonAnnotationState {
+  @androidx.compose.runtime.Stable public final class PolygonAnnotationState {
     ctor public PolygonAnnotationState();
     method public androidx.compose.ui.graphics.Color? getFillColor();
     method public Double? getFillOpacity();
@@ -526,13 +494,13 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PolylineAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState polylineAnnotationGroupState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState polylineAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolylineAnnotationGroupState {
+  @androidx.compose.runtime.Stable public final class PolylineAnnotationGroupState {
     ctor public PolylineAnnotationGroupState();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method public java.util.List<java.lang.Double>? getLineDasharray();
@@ -567,10 +535,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PolylineAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState polylineAnnotationState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState polylineAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState,kotlin.Unit> init);
   }
 
   public final class PolylineAnnotationOptionsExtKt {
@@ -578,7 +546,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions, long lineColor);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class PolylineAnnotationState {
+  @androidx.compose.runtime.Stable public final class PolylineAnnotationState {
     ctor public PolylineAnnotationState();
     method public Double? getLineBlur();
     method public androidx.compose.ui.graphics.Color? getLineBorderColor();
@@ -635,41 +603,41 @@ package com.mapbox.maps.extension.compose.internal {
 
 package com.mapbox.maps.extension.compose.ornaments.attribution {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapAttributionScope {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public void Attribution(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.BottomStart, long iconColor = Color(4280192171), kotlin.jvm.functions.Function3<? super java.util.List<com.mapbox.maps.plugin.attribution.Attribution>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit>,kotlin.Unit> attributionDialog = { attributions, onDismissRequest, onAttributionClick -> AttributionDialog(attributions, onDismissRequest, onAttributionClick) }, kotlin.jvm.functions.Function4<? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,kotlin.Unit> telemetryDialog = { onDismissRequest, onMoreInfo, onDisagree, onAgree -> TelemetryDialog(onDismissRequest, onMoreInfo, onDisagree, onAgree) });
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public void AttributionDialog(java.util.List<com.mapbox.maps.plugin.attribution.Attribution> attributions, kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit> onAttributionClick);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public void TelemetryDialog(kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function0<kotlin.Unit> onMoreInfo, kotlin.jvm.functions.Function0<kotlin.Unit> onDisagree, kotlin.jvm.functions.Function0<kotlin.Unit> onAgree);
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapAttributionScope {
+    method @androidx.compose.runtime.Composable public void Attribution(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.BottomStart, long iconColor = Color(4280192171), kotlin.jvm.functions.Function3<? super java.util.List<com.mapbox.maps.plugin.attribution.Attribution>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit>,kotlin.Unit> attributionDialog = { attributions, onDismissRequest, onAttributionClick -> AttributionDialog(attributions, onDismissRequest, onAttributionClick) }, kotlin.jvm.functions.Function4<? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,kotlin.Unit> telemetryDialog = { onDismissRequest, onMoreInfo, onDisagree, onAgree -> TelemetryDialog(onDismissRequest, onMoreInfo, onDisagree, onAgree) });
+    method @androidx.compose.runtime.Composable public void AttributionDialog(java.util.List<com.mapbox.maps.plugin.attribution.Attribution> attributions, kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit> onAttributionClick);
+    method @androidx.compose.runtime.Composable public void TelemetryDialog(kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function0<kotlin.Unit> onMoreInfo, kotlin.jvm.functions.Function0<kotlin.Unit> onDisagree, kotlin.jvm.functions.Function0<kotlin.Unit> onAgree);
   }
 
 }
 
 package com.mapbox.maps.extension.compose.ornaments.compass {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapCompassScope {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public void Compass(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.TopEnd, boolean fadeWhenFacingNorth = true, boolean resetToNorthUponClick = true, kotlin.jvm.functions.Function0<kotlin.Unit> content = { Image(painterResource(R.drawable.mapbox_compass_icon), "Mapbox Compass") });
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapCompassScope {
+    method @androidx.compose.runtime.Composable public void Compass(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.TopEnd, boolean fadeWhenFacingNorth = true, boolean resetToNorthUponClick = true, kotlin.jvm.functions.Function0<kotlin.Unit> content = { Image(painterResource(R.drawable.mapbox_compass_icon), "Mapbox Compass") });
   }
 
 }
 
 package com.mapbox.maps.extension.compose.ornaments.logo {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapLogoScope {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public void Logo(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.BottomStart);
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapLogoScope {
+    method @androidx.compose.runtime.Composable public void Logo(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.BottomStart);
   }
 
 }
 
 package com.mapbox.maps.extension.compose.ornaments.scalebar {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapScaleBarScope {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public void ScaleBar(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.TopStart, long textColor = Color.Black, long primaryColor = Color.Black, long secondaryColor = Color.White, float borderWidth = 2.dp, float height = 2.dp, float textBarMargin = 8.dp, float textBorderWidth = 2.dp, long textSize = 8.sp, boolean isMetricUnit = true, long refreshInterval = 15.milliseconds, boolean showTextBorder = true, float ratio = 0.5f, boolean useContinuousRendering = false);
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapScaleBarScope {
+    method @androidx.compose.runtime.Composable public void ScaleBar(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.TopStart, long textColor = Color.Black, long primaryColor = Color.Black, long secondaryColor = Color.White, float borderWidth = 2.dp, float height = 2.dp, float textBarMargin = 8.dp, float textBorderWidth = 2.dp, long textSize = 8.sp, boolean isMetricUnit = true, long refreshInterval = 15.milliseconds, boolean showTextBorder = true, float ratio = 0.5f, boolean useContinuousRendering = false);
   }
 
 }
 
 package com.mapbox.maps.extension.compose.style {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class BooleanValue {
+  @androidx.compose.runtime.Immutable public final class BooleanValue {
     ctor public BooleanValue(com.mapbox.bindgen.Value value);
     ctor public BooleanValue(boolean value);
     ctor public BooleanValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -686,7 +654,7 @@ package com.mapbox.maps.extension.compose.style {
   public static final class BooleanValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ColorValue {
+  @androidx.compose.runtime.Immutable public final class ColorValue {
     ctor public ColorValue(com.mapbox.bindgen.Value value);
     ctor public ColorValue(long value);
     ctor public ColorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -739,7 +707,7 @@ package com.mapbox.maps.extension.compose.style {
   public static final class DoubleRangeValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class DoubleValue {
+  @androidx.compose.runtime.Immutable public final class DoubleValue {
     ctor public DoubleValue(com.mapbox.bindgen.Value value);
     ctor public DoubleValue(double value);
     ctor public DoubleValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -756,19 +724,19 @@ package com.mapbox.maps.extension.compose.style {
   public static final class DoubleValue.Companion {
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class IdGenerator {
-    method @com.mapbox.maps.MapboxExperimental public String generateRandomLayerId(String layerType);
-    method @com.mapbox.maps.MapboxExperimental public String generateRandomLightId(String lightType);
-    method @com.mapbox.maps.MapboxExperimental public String generateRandomSourceId(String sourceType);
+  public final class IdGenerator {
+    method public String generateRandomLayerId(String layerType);
+    method public String generateRandomLightId(String lightType);
+    method public String generateRandomSourceId(String sourceType);
     field public static final com.mapbox.maps.extension.compose.style.IdGenerator INSTANCE;
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ImportConfigs {
+  @androidx.compose.runtime.Stable public final class ImportConfigs {
     method public void config(String name, com.mapbox.bindgen.Value value);
     method public com.mapbox.maps.extension.compose.style.ImportConfigs copy(java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class LayerPositionedContent {
+  @androidx.compose.runtime.Stable public final class LayerPositionedContent {
     method public void aboveLayer(String layerId, kotlin.jvm.functions.Function0<kotlin.Unit> content);
     method public void atIndex(int index, kotlin.jvm.functions.Function0<kotlin.Unit> content);
     method public void belowLayer(String layerId, kotlin.jvm.functions.Function0<kotlin.Unit> content);
@@ -776,7 +744,7 @@ package com.mapbox.maps.extension.compose.style {
     method public void layerPosition(com.mapbox.maps.LayerPosition layerPosition, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LongValue {
+  @androidx.compose.runtime.Immutable public final class LongValue {
     ctor public LongValue(com.mapbox.bindgen.Value value);
     ctor public LongValue(long value);
     ctor public LongValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -815,12 +783,12 @@ package com.mapbox.maps.extension.compose.style {
   public static final class PointListValue.Companion {
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SlotsContent {
+  @androidx.compose.runtime.Stable public final class SlotsContent {
     method public com.mapbox.maps.extension.compose.style.SlotsContent copy(java.util.Map<java.lang.String,kotlin.jvm.functions.Function0<kotlin.Unit>> entries);
     method public void slot(String name, kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StringListValue {
+  @androidx.compose.runtime.Immutable public final class StringListValue {
     ctor public StringListValue(com.mapbox.bindgen.Value value);
     ctor public StringListValue(java.lang.String... value);
     ctor public StringListValue(java.util.List<java.lang.String> value);
@@ -838,7 +806,7 @@ package com.mapbox.maps.extension.compose.style {
   public static final class StringListValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StringValue {
+  @androidx.compose.runtime.Immutable public final class StringValue {
     ctor public StringValue(com.mapbox.bindgen.Value value);
     ctor public StringValue(String value);
     ctor public StringValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -855,7 +823,7 @@ package com.mapbox.maps.extension.compose.style {
   public static final class StringValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StyleImage {
+  @androidx.compose.runtime.Immutable public final class StyleImage {
     ctor public StyleImage(String imageId, com.mapbox.maps.Image image, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
     method public String component1();
     method public com.mapbox.maps.Image component2();
@@ -882,18 +850,18 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public final class StyleImageKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, androidx.compose.ui.graphics.ImageBitmap imageBitmap, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(Object? key, String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, @DrawableRes int resourceId, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, androidx.compose.ui.graphics.ImageBitmap imageBitmap, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(Object? key, String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, @DrawableRes int resourceId, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StyleImportsConfig {
+  @androidx.compose.runtime.Stable public final class StyleImportsConfig {
     method public com.mapbox.maps.extension.compose.style.StyleImportsConfig copy(java.util.Map<java.lang.String,com.mapbox.maps.extension.compose.style.ImportConfigs> entries);
     method public void importConfig(String importId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfigs,kotlin.Unit> configs);
   }
 
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = remember({ 
     return <init>()
@@ -902,13 +870,13 @@ package com.mapbox.maps.extension.compose.style {
 }), com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.ImportConfigs importConfigs(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfigs,kotlin.Unit> init);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
+    method public static com.mapbox.maps.extension.compose.style.ImportConfigs importConfigs(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfigs,kotlin.Unit> init);
+    method public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
+    method public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
+    method public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
   }
 
   public final class Transition {
@@ -939,7 +907,7 @@ package com.mapbox.maps.extension.compose.style.atmosphere {
 
 package com.mapbox.maps.extension.compose.style.atmosphere.generated {
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class AtmosphereState {
+  @androidx.compose.runtime.Stable public final class AtmosphereState {
     ctor public AtmosphereState();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
@@ -991,7 +959,7 @@ package com.mapbox.maps.extension.compose.style.atmosphere.generated {
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState,com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Holder> Saver;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class AtmosphereState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class AtmosphereState.Holder implements android.os.Parcelable {
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
     method public com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
@@ -999,7 +967,7 @@ package com.mapbox.maps.extension.compose.style.atmosphere.generated {
   }
 
   public final class AtmosphereStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState rememberAtmosphereState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState,kotlin.Unit> init = {});
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState rememberAtmosphereState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState,kotlin.Unit> init = {});
   }
 
 }
@@ -1009,8 +977,8 @@ package com.mapbox.maps.extension.compose.style.imports {
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Import Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleImportComposable {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class StyleImportsScope {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable public void StyleImport(String importId, String style, com.mapbox.maps.extension.compose.style.ImportConfigs? configs = null);
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class StyleImportsScope {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable public void StyleImport(String importId, String style, com.mapbox.maps.extension.compose.style.ImportConfigs? configs = null);
   }
 
 }
@@ -1030,7 +998,7 @@ package com.mapbox.maps.extension.compose.style.internal {
 
 package com.mapbox.maps.extension.compose.style.layers {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class Filter {
+  @androidx.compose.runtime.Immutable public final class Filter {
     ctor public Filter(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.Filter copy(com.mapbox.bindgen.Value value);
@@ -1043,7 +1011,7 @@ package com.mapbox.maps.extension.compose.style.layers {
   public static final class Filter.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FormattedValue {
+  @androidx.compose.runtime.Immutable public final class FormattedValue {
     ctor public FormattedValue(String value);
     ctor public FormattedValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1059,7 +1027,7 @@ package com.mapbox.maps.extension.compose.style.layers {
   public static final class FormattedValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ImageValue {
+  @androidx.compose.runtime.Immutable public final class ImageValue {
     ctor public ImageValue(com.mapbox.maps.extension.compose.style.StyleImage styleImage);
     ctor public ImageValue(String imageId);
     ctor public ImageValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -1106,17 +1074,17 @@ package com.mapbox.maps.extension.compose.style.layers {
 package com.mapbox.maps.extension.compose.style.layers.generated {
 
   public final class BackgroundLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void BackgroundLayer(String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void BackgroundLayer(String layerId = remember({ 
     return generateRandomLayerId("background")
 }), com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayerState backgroundLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void BackgroundLayer(String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void BackgroundLayer(String layerId = remember({ 
     return generateRandomLayerId("background")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class BackgroundLayerState {
+  @androidx.compose.runtime.Stable public final class BackgroundLayerState {
     ctor public BackgroundLayerState();
     method public com.mapbox.maps.extension.compose.style.ColorValue getBackgroundColor();
     method public com.mapbox.maps.extension.compose.style.Transition getBackgroundColorTransition();
@@ -1151,17 +1119,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class CircleLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("circle")
 }), com.mapbox.maps.extension.compose.style.layers.generated.CircleLayerState circleLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("circle")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.CircleLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class CircleLayerState {
+  @androidx.compose.runtime.Stable public final class CircleLayerState {
     ctor public CircleLayerState();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getCircleBlur();
     method public com.mapbox.maps.extension.compose.style.Transition getCircleBlurTransition();
@@ -1246,7 +1214,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class CirclePitchAlignmentValue {
+  @androidx.compose.runtime.Immutable public final class CirclePitchAlignmentValue {
     ctor public CirclePitchAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public CirclePitchAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1262,7 +1230,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class CirclePitchAlignmentValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class CirclePitchScaleValue {
+  @androidx.compose.runtime.Immutable public final class CirclePitchScaleValue {
     ctor public CirclePitchScaleValue(com.mapbox.bindgen.Value value);
     ctor public CirclePitchScaleValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1278,7 +1246,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class CirclePitchScaleValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class CircleTranslateAnchorValue {
+  @androidx.compose.runtime.Immutable public final class CircleTranslateAnchorValue {
     ctor public CircleTranslateAnchorValue(com.mapbox.bindgen.Value value);
     ctor public CircleTranslateAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1295,17 +1263,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class FillExtrusionLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void FillExtrusionLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void FillExtrusionLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("fill-extrusion")
 }), com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionLayerState fillExtrusionLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void FillExtrusionLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void FillExtrusionLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("fill-extrusion")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class FillExtrusionLayerState {
+  @androidx.compose.runtime.Stable public final class FillExtrusionLayerState {
     ctor public FillExtrusionLayerState();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionAmbientOcclusionGroundAttenuation();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionAmbientOcclusionGroundAttenuationTransition();
@@ -1444,7 +1412,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FillExtrusionTranslateAnchorValue {
+  @androidx.compose.runtime.Immutable public final class FillExtrusionTranslateAnchorValue {
     ctor public FillExtrusionTranslateAnchorValue(com.mapbox.bindgen.Value value);
     ctor public FillExtrusionTranslateAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1461,17 +1429,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class FillLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void FillLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void FillLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("fill")
 }), com.mapbox.maps.extension.compose.style.layers.generated.FillLayerState fillLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void FillLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void FillLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("fill")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.FillLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class FillLayerState {
+  @androidx.compose.runtime.Stable public final class FillLayerState {
     ctor public FillLayerState();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getFillAntialias();
     method public com.mapbox.maps.extension.compose.style.ColorValue getFillColor();
@@ -1532,7 +1500,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FillTranslateAnchorValue {
+  @androidx.compose.runtime.Immutable public final class FillTranslateAnchorValue {
     ctor public FillTranslateAnchorValue(com.mapbox.bindgen.Value value);
     ctor public FillTranslateAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1549,17 +1517,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class HeatmapLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void HeatmapLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void HeatmapLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("heatmap")
 }), com.mapbox.maps.extension.compose.style.layers.generated.HeatmapLayerState heatmapLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void HeatmapLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void HeatmapLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("heatmap")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.HeatmapLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class HeatmapLayerState {
+  @androidx.compose.runtime.Stable public final class HeatmapLayerState {
     ctor public HeatmapLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.ColorValue getHeatmapColor();
@@ -1602,7 +1570,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class HillshadeIlluminationAnchorValue {
+  @androidx.compose.runtime.Immutable public final class HillshadeIlluminationAnchorValue {
     ctor public HillshadeIlluminationAnchorValue(com.mapbox.bindgen.Value value);
     ctor public HillshadeIlluminationAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1619,17 +1587,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class HillshadeLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void HillshadeLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void HillshadeLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("hillshade")
 }), com.mapbox.maps.extension.compose.style.layers.generated.HillshadeLayerState hillshadeLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void HillshadeLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void HillshadeLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("hillshade")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.HillshadeLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class HillshadeLayerState {
+  @androidx.compose.runtime.Stable public final class HillshadeLayerState {
     ctor public HillshadeLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.ColorValue getHillshadeAccentColor();
@@ -1684,7 +1652,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class IconAnchorValue {
+  @androidx.compose.runtime.Immutable public final class IconAnchorValue {
     ctor public IconAnchorValue(com.mapbox.bindgen.Value value);
     ctor public IconAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1707,7 +1675,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class IconAnchorValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class IconPitchAlignmentValue {
+  @androidx.compose.runtime.Immutable public final class IconPitchAlignmentValue {
     ctor public IconPitchAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public IconPitchAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1724,7 +1692,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class IconPitchAlignmentValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class IconRotationAlignmentValue {
+  @androidx.compose.runtime.Immutable public final class IconRotationAlignmentValue {
     ctor public IconRotationAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public IconRotationAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1741,7 +1709,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class IconRotationAlignmentValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class IconTextFitValue {
+  @androidx.compose.runtime.Immutable public final class IconTextFitValue {
     ctor public IconTextFitValue(com.mapbox.bindgen.Value value);
     ctor public IconTextFitValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1759,7 +1727,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class IconTextFitValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class IconTranslateAnchorValue {
+  @androidx.compose.runtime.Immutable public final class IconTranslateAnchorValue {
     ctor public IconTranslateAnchorValue(com.mapbox.bindgen.Value value);
     ctor public IconTranslateAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1775,7 +1743,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class IconTranslateAnchorValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LineCapValue {
+  @androidx.compose.runtime.Immutable public final class LineCapValue {
     ctor public LineCapValue(com.mapbox.bindgen.Value value);
     ctor public LineCapValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1792,7 +1760,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class LineCapValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LineJoinValue {
+  @androidx.compose.runtime.Immutable public final class LineJoinValue {
     ctor public LineJoinValue(com.mapbox.bindgen.Value value);
     ctor public LineJoinValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1811,17 +1779,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class LineLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void LineLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void LineLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("line")
 }), com.mapbox.maps.extension.compose.style.layers.generated.LineLayerState lineLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void LineLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void LineLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("line")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.LineLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class LineLayerState {
+  @androidx.compose.runtime.Stable public final class LineLayerState {
     ctor public LineLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineBlur();
@@ -1945,7 +1913,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LineTranslateAnchorValue {
+  @androidx.compose.runtime.Immutable public final class LineTranslateAnchorValue {
     ctor public LineTranslateAnchorValue(com.mapbox.bindgen.Value value);
     ctor public LineTranslateAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1962,17 +1930,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class LocationIndicatorLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void LocationIndicatorLayer(String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void LocationIndicatorLayer(String layerId = remember({ 
     return generateRandomLayerId("location-indicator")
 }), com.mapbox.maps.extension.compose.style.layers.generated.LocationIndicatorLayerState locationIndicatorLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void LocationIndicatorLayer(String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void LocationIndicatorLayer(String layerId = remember({ 
     return generateRandomLayerId("location-indicator")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.LocationIndicatorLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class LocationIndicatorLayerState {
+  @androidx.compose.runtime.Stable public final class LocationIndicatorLayerState {
     ctor public LocationIndicatorLayerState();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getAccuracyRadius();
     method public com.mapbox.maps.extension.compose.style.ColorValue getAccuracyRadiusBorderColor();
@@ -2216,17 +2184,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class RasterLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void RasterLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void RasterLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("raster")
 }), com.mapbox.maps.extension.compose.style.layers.generated.RasterLayerState rasterLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void RasterLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void RasterLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("raster")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.RasterLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterLayerState {
+  @androidx.compose.runtime.Stable public final class RasterLayerState {
     ctor public RasterLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
@@ -2374,7 +2342,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterResamplingValue {
+  @androidx.compose.runtime.Immutable public final class RasterResamplingValue {
     ctor public RasterResamplingValue(com.mapbox.bindgen.Value value);
     ctor public RasterResamplingValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2391,17 +2359,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class SkyLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void SkyLayer(String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void SkyLayer(String layerId = remember({ 
     return generateRandomLayerId("sky")
 }), com.mapbox.maps.extension.compose.style.layers.generated.SkyLayerState skyLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void SkyLayer(String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void SkyLayer(String layerId = remember({ 
     return generateRandomLayerId("sky")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.SkyLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SkyLayerState {
+  @androidx.compose.runtime.Stable public final class SkyLayerState {
     ctor public SkyLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
@@ -2450,7 +2418,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class SkyTypeValue {
+  @androidx.compose.runtime.Immutable public final class SkyTypeValue {
     ctor public SkyTypeValue(com.mapbox.bindgen.Value value);
     ctor public SkyTypeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2467,17 +2435,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class SymbolLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void SymbolLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void SymbolLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("symbol")
 }), com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayerState symbolLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void SymbolLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void SymbolLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("symbol")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SymbolLayerState {
+  @androidx.compose.runtime.Stable public final class SymbolLayerState {
     ctor public SymbolLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getIconAllowOverlap();
@@ -2736,7 +2704,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class SymbolPlacementValue {
+  @androidx.compose.runtime.Immutable public final class SymbolPlacementValue {
     ctor public SymbolPlacementValue(com.mapbox.bindgen.Value value);
     ctor public SymbolPlacementValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2753,7 +2721,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class SymbolPlacementValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class SymbolZOrderValue {
+  @androidx.compose.runtime.Immutable public final class SymbolZOrderValue {
     ctor public SymbolZOrderValue(com.mapbox.bindgen.Value value);
     ctor public SymbolZOrderValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2770,7 +2738,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class SymbolZOrderValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextAnchorValue {
+  @androidx.compose.runtime.Immutable public final class TextAnchorValue {
     ctor public TextAnchorValue(com.mapbox.bindgen.Value value);
     ctor public TextAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2793,7 +2761,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextAnchorValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextJustifyValue {
+  @androidx.compose.runtime.Immutable public final class TextJustifyValue {
     ctor public TextJustifyValue(com.mapbox.bindgen.Value value);
     ctor public TextJustifyValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2811,7 +2779,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextJustifyValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextPitchAlignmentValue {
+  @androidx.compose.runtime.Immutable public final class TextPitchAlignmentValue {
     ctor public TextPitchAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public TextPitchAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2828,7 +2796,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextPitchAlignmentValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextRotationAlignmentValue {
+  @androidx.compose.runtime.Immutable public final class TextRotationAlignmentValue {
     ctor public TextRotationAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public TextRotationAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2845,7 +2813,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextRotationAlignmentValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextTransformValue {
+  @androidx.compose.runtime.Immutable public final class TextTransformValue {
     ctor public TextTransformValue(com.mapbox.bindgen.Value value);
     ctor public TextTransformValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2862,7 +2830,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextTransformValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextTranslateAnchorValue {
+  @androidx.compose.runtime.Immutable public final class TextTranslateAnchorValue {
     ctor public TextTranslateAnchorValue(com.mapbox.bindgen.Value value);
     ctor public TextTranslateAnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2878,7 +2846,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextTranslateAnchorValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextVariableAnchor {
+  @androidx.compose.runtime.Immutable public final class TextVariableAnchor {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextVariableAnchor copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
@@ -2898,7 +2866,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextVariableAnchor.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextVariableAnchorListValue {
+  @androidx.compose.runtime.Immutable public final class TextVariableAnchorListValue {
     ctor public TextVariableAnchorListValue(com.mapbox.bindgen.Value value);
     ctor public TextVariableAnchorListValue(java.util.List<com.mapbox.maps.extension.compose.style.layers.generated.TextVariableAnchor> value);
     ctor public TextVariableAnchorListValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -2913,7 +2881,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextVariableAnchorListValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextWritingMode {
+  @androidx.compose.runtime.Immutable public final class TextWritingMode {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextWritingMode copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
@@ -2926,7 +2894,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextWritingMode.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TextWritingModeListValue {
+  @androidx.compose.runtime.Immutable public final class TextWritingModeListValue {
     ctor public TextWritingModeListValue(com.mapbox.bindgen.Value value);
     ctor public TextWritingModeListValue(java.util.List<com.mapbox.maps.extension.compose.style.layers.generated.TextWritingMode> value);
     ctor public TextWritingModeListValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -2941,7 +2909,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class TextWritingModeListValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class VisibilityValue {
+  @androidx.compose.runtime.Immutable public final class VisibilityValue {
     ctor public VisibilityValue(com.mapbox.bindgen.Value value);
     ctor public VisibilityValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -2961,7 +2929,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
 
 package com.mapbox.maps.extension.compose.style.lights {
 
-  @com.mapbox.maps.MapboxExperimental public final class LightsState {
+  public final class LightsState {
     ctor public LightsState(com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState directionalLightState, com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState ambientLightState);
     ctor public LightsState(com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState flatLightState);
     field public static final com.mapbox.maps.extension.compose.style.lights.LightsState.Companion Companion;
@@ -2975,7 +2943,7 @@ package com.mapbox.maps.extension.compose.style.lights {
 
 package com.mapbox.maps.extension.compose.style.lights.generated {
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class AmbientLightState {
+  @androidx.compose.runtime.Stable public final class AmbientLightState {
     ctor public AmbientLightState(String id = generateRandomLightId("ambient"));
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
@@ -2999,7 +2967,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState,com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState.Holder> Saver;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class AmbientLightState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class AmbientLightState.Holder implements android.os.Parcelable {
     ctor public AmbientLightState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
     method public com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
@@ -3008,12 +2976,12 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
   }
 
   public final class AmbientLightStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState rememberAmbientLightState(String id = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState rememberAmbientLightState(String id = remember({ 
     return generateRandomLightId("ambient")
 }), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class AnchorValue {
+  @androidx.compose.runtime.Immutable public final class AnchorValue {
     ctor public AnchorValue(com.mapbox.bindgen.Value value);
     ctor public AnchorValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -3029,7 +2997,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
   public static final class AnchorValue.Companion {
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class DirectionalLightState {
+  @androidx.compose.runtime.Stable public final class DirectionalLightState {
     ctor public DirectionalLightState(String id = generateRandomLightId("directional"));
     method public com.mapbox.maps.extension.compose.style.BooleanValue getCastShadows();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
@@ -3068,7 +3036,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState,com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Holder> Saver;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class DirectionalLightState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class DirectionalLightState.Holder implements android.os.Parcelable {
     ctor public DirectionalLightState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
     method public com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
@@ -3077,12 +3045,12 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
   }
 
   public final class DirectionalLightStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState rememberDirectionalLightState(String id = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState rememberDirectionalLightState(String id = remember({ 
     return generateRandomLightId("directional")
 }), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class FlatLightState {
+  @androidx.compose.runtime.Stable public final class FlatLightState {
     ctor public FlatLightState(String id = generateRandomLightId("flat"));
     method public com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue getAnchor();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
@@ -3115,7 +3083,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState,com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState.Holder> Saver;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class FlatLightState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class FlatLightState.Holder implements android.os.Parcelable {
     ctor public FlatLightState.Holder(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
     method public com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties);
@@ -3124,7 +3092,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
   }
 
   public final class FlatLightStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState rememberFlatLightState(String id = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState rememberFlatLightState(String id = remember({ 
     return generateRandomLightId("flat")
 }), String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState,kotlin.Unit> init = {});
   }
@@ -3133,7 +3101,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
 
 package com.mapbox.maps.extension.compose.style.projection.generated {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class Projection {
+  @androidx.compose.runtime.Immutable public final class Projection {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.projection.generated.Projection copy(com.mapbox.bindgen.Value value);
     method public String? getProjectionNameOrNull();
@@ -3153,7 +3121,7 @@ package com.mapbox.maps.extension.compose.style.projection.generated {
 
 package com.mapbox.maps.extension.compose.style.sources {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ClusterProperties {
+  @androidx.compose.runtime.Immutable public final class ClusterProperties {
     ctor public ClusterProperties(com.mapbox.bindgen.Value value);
     ctor public ClusterProperties(java.util.HashMap<java.lang.String,java.lang.Object> value);
     ctor public ClusterProperties(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -3168,7 +3136,7 @@ package com.mapbox.maps.extension.compose.style.sources {
   public static final class ClusterProperties.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class GeoJSONData {
+  @androidx.compose.runtime.Immutable public final class GeoJSONData {
     ctor public GeoJSONData(com.mapbox.maps.GeoJSONSourceData data);
     ctor public GeoJSONData(String value);
     ctor public GeoJSONData(com.mapbox.geojson.Feature value);
@@ -3182,7 +3150,7 @@ package com.mapbox.maps.extension.compose.style.sources {
   public static final class GeoJSONData.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class PromoteIdValue {
+  @androidx.compose.runtime.Immutable public final class PromoteIdValue {
     ctor public PromoteIdValue(com.mapbox.bindgen.Value value);
     ctor public PromoteIdValue(String propertyName, String? sourceId = null);
     ctor public PromoteIdValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -3197,7 +3165,7 @@ package com.mapbox.maps.extension.compose.style.sources {
   public static final class PromoteIdValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterLayers {
+  @androidx.compose.runtime.Immutable public final class RasterLayers {
     ctor public RasterLayers(com.mapbox.bindgen.Value value);
     ctor public RasterLayers(java.util.List<com.mapbox.maps.extension.style.sources.generated.RasterArraySource.RasterDataLayer> value);
     ctor public RasterLayers(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -3212,7 +3180,7 @@ package com.mapbox.maps.extension.compose.style.sources {
   public static final class RasterLayers.Companion {
   }
 
-  @com.mapbox.maps.MapboxExperimental public abstract class SourceState {
+  public abstract class SourceState {
     method protected final com.mapbox.maps.extension.compose.style.sources.GeoJSONData getGeoJSONData();
     method protected final com.mapbox.bindgen.Value? getProperty(String name);
     method public final String getSourceId();
@@ -3221,7 +3189,7 @@ package com.mapbox.maps.extension.compose.style.sources {
     property public final String sourceId;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler @kotlinx.parcelize.TypeParceler @kotlinx.parcelize.TypeParceler public static final class SourceState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler @kotlinx.parcelize.TypeParceler @kotlinx.parcelize.TypeParceler public static final class SourceState.Holder implements android.os.Parcelable {
     ctor public SourceState.Holder(String sourcedId, java.util.Map<java.lang.String,? extends kotlin.Pair<java.lang.Boolean,? extends com.mapbox.bindgen.Value>> savedProperties, com.mapbox.maps.extension.compose.style.sources.GeoJSONData geoJSONData);
     method public String component1();
     method public java.util.Map<java.lang.String,kotlin.Pair<java.lang.Boolean,com.mapbox.bindgen.Value>> component2();
@@ -3238,7 +3206,7 @@ package com.mapbox.maps.extension.compose.style.sources {
   public final class SourceStateKt {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class TileCacheBudget {
+  @androidx.compose.runtime.Immutable public final class TileCacheBudget {
     ctor public TileCacheBudget(com.mapbox.bindgen.Value value);
     ctor public TileCacheBudget(com.mapbox.maps.TileCacheBudgetInMegabytes value);
     ctor public TileCacheBudget(com.mapbox.maps.TileCacheBudgetInTiles value);
@@ -3258,7 +3226,7 @@ package com.mapbox.maps.extension.compose.style.sources {
 
 package com.mapbox.maps.extension.compose.style.sources.generated {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class EncodingValue {
+  @androidx.compose.runtime.Immutable public final class EncodingValue {
     ctor public EncodingValue(com.mapbox.bindgen.Value value);
     ctor public EncodingValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -3274,7 +3242,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   public static final class EncodingValue.Companion {
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class GeoJsonSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable public final class GeoJsonSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public GeoJsonSourceState(String sourceId = generateRandomSourceId("geojson"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.LongValue getBuffer();
@@ -3330,12 +3298,12 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class GeoJsonSourceStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState rememberGeoJsonSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState rememberGeoJsonSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("geojson")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ImageSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable public final class ImageSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public ImageSourceState(String sourceId = generateRandomSourceId("image"));
     method public com.mapbox.maps.extension.compose.style.PointListValue getCoordinates();
     method public com.mapbox.maps.extension.compose.style.LongValue getPrefetchZoomDelta();
@@ -3355,7 +3323,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class ImageSourceStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.sources.generated.ImageSourceState rememberImageSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.ImageSourceState rememberImageSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("image")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.ImageSourceState,kotlin.Unit> init = {});
   }
@@ -3403,7 +3371,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.RasterArraySourceState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterDemSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable public final class RasterDemSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public RasterDemSourceState(String sourceId = generateRandomSourceId("raster-dem"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -3459,12 +3427,12 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class RasterDemSourceStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rememberRasterDemSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rememberRasterDemSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("raster-dem")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable public final class RasterSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public RasterSourceState(String sourceId = generateRandomSourceId("raster"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -3520,12 +3488,12 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class RasterSourceStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.sources.generated.RasterSourceState rememberRasterSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.RasterSourceState rememberRasterSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("raster")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.RasterSourceState,kotlin.Unit> init = {});
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class SchemeValue {
+  @androidx.compose.runtime.Immutable public final class SchemeValue {
     ctor public SchemeValue(com.mapbox.bindgen.Value value);
     ctor public SchemeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -3541,7 +3509,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   public static final class SchemeValue.Companion {
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class VectorSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+  @androidx.compose.runtime.Stable public final class VectorSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public VectorSourceState(String sourceId = generateRandomSourceId("vector"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getBounds();
@@ -3597,7 +3565,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class VectorSourceStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.sources.generated.VectorSourceState rememberVectorSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.VectorSourceState rememberVectorSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("vector")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.VectorSourceState,kotlin.Unit> init = {});
   }
@@ -3606,7 +3574,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
 package com.mapbox.maps.extension.compose.style.standard {
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LightPresetValue {
+  @androidx.compose.runtime.Immutable public final class LightPresetValue {
     ctor public LightPresetValue(com.mapbox.bindgen.Value value);
     ctor public LightPresetValue(String value);
     ctor public LightPresetValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -3628,17 +3596,17 @@ package com.mapbox.maps.extension.compose.style.standard {
   }
 
   public final class MapboxStandardStyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState standardStyleConfigurationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StandardStyleConfigurationState {
+  @androidx.compose.runtime.Stable public final class StandardStyleConfigurationState {
     ctor public StandardStyleConfigurationState();
     method public com.mapbox.maps.extension.compose.style.StringValue getFont();
     method public com.mapbox.maps.extension.compose.style.standard.LightPresetValue getLightPreset();
@@ -3671,7 +3639,7 @@ package com.mapbox.maps.extension.compose.style.terrain {
 
 package com.mapbox.maps.extension.compose.style.terrain.generated {
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class TerrainState {
+  @androidx.compose.runtime.Stable public final class TerrainState {
     ctor public TerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState);
     method public com.mapbox.maps.extension.compose.style.DoubleValue getExaggeration();
     method public com.mapbox.maps.extension.compose.style.Transition getExaggerationTransition();
@@ -3688,7 +3656,7 @@ package com.mapbox.maps.extension.compose.style.terrain.generated {
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState,com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.Holder> Saver;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class TerrainState.Holder implements android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class TerrainState.Holder implements android.os.Parcelable {
     method public com.mapbox.maps.extension.compose.style.sources.SourceState.Holder? component1();
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component2();
     method public boolean component3();
@@ -3702,7 +3670,7 @@ package com.mapbox.maps.extension.compose.style.terrain.generated {
   }
 
   public final class TerrainStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState rememberTerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState, String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState,kotlin.Unit> init = {});
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState rememberTerrainState(com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState rasterDemSourceState, String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState,kotlin.Unit> init = {});
   }
 
 }

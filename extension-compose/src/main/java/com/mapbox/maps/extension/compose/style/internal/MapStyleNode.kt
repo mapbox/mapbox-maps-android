@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.compose.style.internal
 
 import android.util.Log
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleDataLoadedType
@@ -24,7 +23,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 
-@OptIn(MapboxExperimental::class)
 internal class MapStyleNode(
   val style: String,
   val mapboxMap: MapboxMap,

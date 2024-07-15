@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -42,7 +41,6 @@ import kotlin.random.Random
 /**
  * Example to showcase usage of [AtmosphereState] and [Projection].
  */
-@OptIn(MapboxExperimental::class)
 public class StyleStatesActivity : ComponentActivity() {
 
   private val projections =

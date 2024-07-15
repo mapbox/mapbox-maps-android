@@ -7,7 +7,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.ImportPosition
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
@@ -19,7 +18,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-@MapboxExperimental
 internal class StyleImportNode(
   private var importId: String,
   private var style: String,
@@ -126,7 +124,6 @@ internal class StyleImportNode(
  */
 @MapboxMapScopeMarker
 @Immutable
-@MapboxExperimental
 public class StyleImportsScope internal constructor() {
   /**
    * Add a Style Import to the current style.
@@ -137,7 +134,6 @@ public class StyleImportsScope internal constructor() {
    */
   @Composable
   @MapboxStyleImportComposable
-  @MapboxExperimental
   public fun StyleImport(
     importId: String,
     style: String,

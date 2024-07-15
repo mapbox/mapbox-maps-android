@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -30,7 +29,6 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun CircleAnnotation(
   point: Point,
   onClick: (CircleAnnotation) -> Boolean = { false },
@@ -78,7 +76,6 @@ public fun CircleAnnotation(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public inline fun CircleAnnotation(
   point: Point,
   noinline onClick: (CircleAnnotation) -> Boolean = { false },

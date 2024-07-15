@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 /**
  * The state holder for [PolylineAnnotation] properties.
  */
-@MapboxExperimental
 @Stable
 public class PolylineAnnotationState private constructor(
   initialLineJoin: LineJoin?,

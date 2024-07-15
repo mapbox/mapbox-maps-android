@@ -54,8 +54,8 @@ public inline fun rememberRasterArraySourceState(
  * @param sourceId The id of the source state, by default a random generated ID will be used.
  * @param initialProperties The initial mutable properties of the source.
  */
-@MapboxExperimental
 @Stable
+@MapboxExperimental
 public class RasterArraySourceState private constructor(
   sourceId: String,
   sourceType: String,

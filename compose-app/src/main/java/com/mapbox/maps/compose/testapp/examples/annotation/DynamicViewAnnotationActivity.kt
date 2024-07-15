@@ -45,7 +45,6 @@ import com.mapbox.geojson.GeometryCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationAnchorConfig
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -114,7 +113,6 @@ import kotlinx.coroutines.flow.firstOrNull
  *    puck([ViewAnnotationOptions.allowOverlapWithPuck]=true). This is useful for high priority labels
  *    that shouldn't be covered by anything.
  */
-@OptIn(MapboxExperimental::class)
 public class DynamicViewAnnotationActivity : ComponentActivity() {
   private val featureRouteMain: Feature by lazy { getFeatureFromAsset(ROUTE_MAIN_GEOJSON) }
   private val featureRouteAlt: Feature by lazy { getFeatureFromAsset(ROUTE_ALT_GEOJSON) }

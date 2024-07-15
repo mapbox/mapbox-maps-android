@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.gestures
@@ -77,7 +76,6 @@ private class MapboxMapNode(
   }
 }
 
-@OptIn(MapboxExperimental::class)
 @JvmSynthetic
 @Composable
 internal fun MapboxMapComposeNode(

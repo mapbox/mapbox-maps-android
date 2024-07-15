@@ -2,7 +2,6 @@ package com.mapbox.maps.extension.compose.style.layers.internal
 
 import androidx.compose.runtime.Stable
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.internal.LayerPositionAwareNode
@@ -22,7 +21,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-@OptIn(MapboxExperimental::class)
 @Stable
 internal class LayerNode(
   private val map: MapboxMap,

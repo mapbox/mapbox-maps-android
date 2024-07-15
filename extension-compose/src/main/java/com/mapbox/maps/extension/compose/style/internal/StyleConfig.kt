@@ -5,7 +5,6 @@ import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -65,7 +64,6 @@ internal class StyleConfigNode(
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 internal fun StyleConfig(
   importId: String,
   name: String,

@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -29,7 +28,6 @@ import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 /**
  * Example to showcase usage of the configs of `MapboxStandardStyle`.
  */
-@OptIn(MapboxExperimental::class)
 public class StandardStyleActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

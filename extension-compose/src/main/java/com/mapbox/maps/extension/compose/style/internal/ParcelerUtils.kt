@@ -4,7 +4,6 @@ import android.os.Parcel
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.GeoJSONSourceData
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import kotlinx.parcelize.Parceler
 
@@ -18,7 +17,6 @@ internal object ValueParceler : Parceler<Value> {
   }
 }
 
-@OptIn(MapboxExperimental::class)
 internal object GeoJSONDataParceler : Parceler<GeoJSONData> {
   override fun create(parcel: Parcel): GeoJSONData {
     val typeInfo = GeoJSONSourceData.Type.valueOf(parcel.readString()!!)

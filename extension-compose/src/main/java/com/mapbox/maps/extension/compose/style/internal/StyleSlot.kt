@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.compose.style.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
@@ -41,7 +40,6 @@ internal class StyleSlotNode(
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 internal fun StyleSlot(
   name: String,
   content: (@Composable @MapboxMapComposable () -> Unit)? = null

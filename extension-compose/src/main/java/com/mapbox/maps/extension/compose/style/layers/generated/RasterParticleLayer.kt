@@ -27,9 +27,9 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param rasterParticleLayerState the state holder for [RasterParticleLayer]'s properties.
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public fun RasterParticleLayer(
   sourceState: SourceState,
   layerId: String = remember {
@@ -81,9 +81,9 @@ public fun RasterParticleLayer(
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param init the lambda that will be applied to the remembered [RasterParticleLayerState].
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public inline fun RasterParticleLayer(
   sourceState: SourceState,
   layerId: String = remember {

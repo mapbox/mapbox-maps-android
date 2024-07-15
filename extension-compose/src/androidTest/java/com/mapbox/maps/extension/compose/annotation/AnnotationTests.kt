@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.coroutine.awaitStyle
 import com.mapbox.maps.extension.compose.MapEffect
@@ -56,7 +55,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(MapboxExperimental::class)
 public class AnnotationTests {
 
   @get:Rule

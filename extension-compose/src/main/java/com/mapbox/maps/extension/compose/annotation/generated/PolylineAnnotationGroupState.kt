@@ -15,7 +15,6 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 /**
  * The state holder for [PolylineAnnotationGroup] properties.
  */
-@MapboxExperimental
 @Stable
 public class PolylineAnnotationGroupState private constructor(
   initialLineCap: LineCap?,
@@ -108,6 +107,7 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineEmissiveStrength = lineEmissiveStrength
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateLineOcclusionOpacity(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineOcclusionOpacity = lineOcclusionOpacity
   }

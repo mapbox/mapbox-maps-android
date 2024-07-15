@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.toMapboxImage
 
 /**
@@ -29,7 +28,6 @@ import com.mapbox.maps.toMapboxImage
  * @param stretchY An array of two-element arrays, consisting of two numbers that represent the from position and the to position of areas that can be stretched vertically.
  * @param content An array of four numbers, with the first two specifying the left, top corner, and the last two specifying the right, bottom corner. If present, and if the icon uses icon-text-fit, the symbol's text will be fit inside the content box.
  */
-@MapboxExperimental
 @Immutable
 public data class StyleImage(
   val imageId: String,
@@ -54,7 +52,6 @@ public data class StyleImage(
  *
  * @return a [StyleImage]
  */
-@MapboxExperimental
 @Composable
 public fun rememberStyleImage(
   imageId: String,
@@ -92,7 +89,6 @@ public fun rememberStyleImage(
  *
  * @return a [StyleImage]
  */
-@MapboxExperimental
 @Composable
 public fun rememberStyleImage(
   key: Any?,
@@ -130,7 +126,6 @@ public fun rememberStyleImage(
  *
  * @return a [StyleImage]
  */
-@MapboxExperimental
 @Composable
 public fun rememberStyleImage(
   imageId: String,

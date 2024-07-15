@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.compose.style.lights
 
 import androidx.compose.runtime.Composable
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState
 import com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState
@@ -11,7 +10,6 @@ import com.mapbox.maps.extension.compose.style.lights.internal.MapboxLight
 /**
  * Defines the lights of the style.
  */
-@MapboxExperimental
 public class LightsState private constructor(private val mapboxLight: MapboxLight) {
   /**
    * Set dynamic light to the style.

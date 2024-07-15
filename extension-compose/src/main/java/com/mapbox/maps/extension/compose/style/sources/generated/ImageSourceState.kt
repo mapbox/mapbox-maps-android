@@ -12,7 +12,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.PointListValue
@@ -32,7 +31,6 @@ import java.util.Objects
  * @param init A function initialise this [ImageSourceState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberImageSourceState(
   key: String? = null,
   sourceId: String = remember {
@@ -51,7 +49,6 @@ public inline fun rememberImageSourceState(
  * @param sourceId The id of the source state, by default a random generated ID will be used.
  * @param initialProperties The initial mutable properties of the source.
  */
-@MapboxExperimental
 @Stable
 public class ImageSourceState private constructor(
   sourceId: String,

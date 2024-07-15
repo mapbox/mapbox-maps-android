@@ -59,27 +59,6 @@ public final class com/mapbox/maps/extension/compose/MapEffectKt {
 	public static final fun MapEffect ([Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 }
 
-public final class com/mapbox/maps/extension/compose/MapEvents {
-	public static final field $stable I
-	public fun <init> ()V
-	public fun <init> (Lcom/mapbox/maps/MapLoadedCallback;Lcom/mapbox/maps/MapIdleCallback;Lcom/mapbox/maps/MapLoadingErrorCallback;Lcom/mapbox/maps/StyleLoadedCallback;Lcom/mapbox/maps/StyleDataLoadedCallback;Lcom/mapbox/maps/SourceDataLoadedCallback;Lcom/mapbox/maps/SourceAddedCallback;Lcom/mapbox/maps/SourceRemovedCallback;Lcom/mapbox/maps/StyleImageMissingCallback;Lcom/mapbox/maps/StyleImageRemoveUnusedCallback;Lcom/mapbox/maps/CameraChangedCallback;Lcom/mapbox/maps/RenderFrameStartedCallback;Lcom/mapbox/maps/RenderFrameFinishedCallback;Lcom/mapbox/maps/ResourceRequestCallback;)V
-	public synthetic fun <init> (Lcom/mapbox/maps/MapLoadedCallback;Lcom/mapbox/maps/MapIdleCallback;Lcom/mapbox/maps/MapLoadingErrorCallback;Lcom/mapbox/maps/StyleLoadedCallback;Lcom/mapbox/maps/StyleDataLoadedCallback;Lcom/mapbox/maps/SourceDataLoadedCallback;Lcom/mapbox/maps/SourceAddedCallback;Lcom/mapbox/maps/SourceRemovedCallback;Lcom/mapbox/maps/StyleImageMissingCallback;Lcom/mapbox/maps/StyleImageRemoveUnusedCallback;Lcom/mapbox/maps/CameraChangedCallback;Lcom/mapbox/maps/RenderFrameStartedCallback;Lcom/mapbox/maps/RenderFrameFinishedCallback;Lcom/mapbox/maps/ResourceRequestCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getOnCameraChanged ()Lcom/mapbox/maps/CameraChangedCallback;
-	public final fun getOnMapIdle ()Lcom/mapbox/maps/MapIdleCallback;
-	public final fun getOnMapLoaded ()Lcom/mapbox/maps/MapLoadedCallback;
-	public final fun getOnMapLoadingError ()Lcom/mapbox/maps/MapLoadingErrorCallback;
-	public final fun getOnRenderFrameFinished ()Lcom/mapbox/maps/RenderFrameFinishedCallback;
-	public final fun getOnRenderFrameStarted ()Lcom/mapbox/maps/RenderFrameStartedCallback;
-	public final fun getOnResourceRequest ()Lcom/mapbox/maps/ResourceRequestCallback;
-	public final fun getOnSourceAdded ()Lcom/mapbox/maps/SourceAddedCallback;
-	public final fun getOnSourceDataLoaded ()Lcom/mapbox/maps/SourceDataLoadedCallback;
-	public final fun getOnSourceRemoved ()Lcom/mapbox/maps/SourceRemovedCallback;
-	public final fun getOnStyleDataLoaded ()Lcom/mapbox/maps/StyleDataLoadedCallback;
-	public final fun getOnStyleImageMissing ()Lcom/mapbox/maps/StyleImageMissingCallback;
-	public final fun getOnStyleImageRemoveUnused ()Lcom/mapbox/maps/StyleImageRemoveUnusedCallback;
-	public final fun getOnStyleLoaded ()Lcom/mapbox/maps/StyleLoadedCallback;
-}
-
 public final class com/mapbox/maps/extension/compose/MapState {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/MapState$Companion;
 	public fun <init> ()V

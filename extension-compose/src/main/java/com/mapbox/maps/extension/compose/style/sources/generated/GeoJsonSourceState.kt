@@ -12,7 +12,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
@@ -39,7 +38,6 @@ import java.util.Objects
  * @param init A function initialise this [GeoJsonSourceState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberGeoJsonSourceState(
   key: String? = null,
   sourceId: String = remember {
@@ -59,7 +57,6 @@ public inline fun rememberGeoJsonSourceState(
  * @param initialProperties The initial mutable properties of the source.
  * @param initialData The initial [GeoJSONData] of the source.
  */
-@MapboxExperimental
 @Stable
 public class GeoJsonSourceState private constructor(
   sourceId: String,

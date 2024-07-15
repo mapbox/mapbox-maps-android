@@ -14,7 +14,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
@@ -94,7 +93,6 @@ public class ViewAnnotationTest {
     composeTestRule.onNodeWithText(VIEW_ANNOTATION_TEXT).assertDoesNotExist()
   }
 
-  @OptIn(MapboxExperimental::class)
   private fun setMapContent(
     cameraCenter: Point,
     annotationCenter: Point,

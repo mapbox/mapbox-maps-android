@@ -7,14 +7,12 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
 
 /**
  * The state holder for [PolygonAnnotationGroup] properties.
  */
-@MapboxExperimental
 @Stable
 public class PolygonAnnotationGroupState private constructor(
   initialFillAntialias: Boolean?,

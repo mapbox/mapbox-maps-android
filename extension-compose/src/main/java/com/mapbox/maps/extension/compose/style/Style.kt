@@ -9,7 +9,6 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
@@ -35,7 +34,6 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 @SuppressLint("ComposableLambdaParameterNaming", "ComposableLambdaParameterPosition")
 public fun MapStyle(
   style: String,
@@ -59,7 +57,6 @@ public fun MapStyle(
  * Class that holds [MapboxMapComposable] content per each slot.
  */
 @Stable
-@MapboxExperimental
 public data class SlotsContent internal constructor(
   internal val entries: MutableMap<String, @Composable @MapboxMapComposable () -> Unit> = mutableMapOf()
 ) {
@@ -82,14 +79,12 @@ public data class SlotsContent internal constructor(
 /**
  * Type-safe builder for slot based [MapboxMapComposable] content.
  */
-@MapboxExperimental
 public fun slotsContent(init: SlotsContent.() -> Unit): SlotsContent = SlotsContent().apply(init)
 
 /**
  * Class that holds [MapboxMapComposable] content per each [LayerPosition].
  */
 @Stable
-@MapboxExperimental
 public data class LayerPositionedContent internal constructor(
   internal val entries: MutableMap<LayerPosition, @Composable @MapboxMapComposable () -> Unit> = mutableMapOf()
 ) {
@@ -151,7 +146,6 @@ public data class LayerPositionedContent internal constructor(
 /**
  * Type-safe builder for layer position based [MapboxMapComposable] content.
  */
-@MapboxExperimental
 public fun layerPositionedContent(init: LayerPositionedContent.() -> Unit): LayerPositionedContent =
   LayerPositionedContent().apply(init)
 
@@ -159,7 +153,6 @@ public fun layerPositionedContent(init: LayerPositionedContent.() -> Unit): Laye
  * Class that holds [ImportConfigs] per each Import ID.
  */
 @Stable
-@MapboxExperimental
 public data class StyleImportsConfig internal constructor(
   internal val entries: MutableMap<String, ImportConfigs> = mutableMapOf()
 ) {
@@ -182,7 +175,6 @@ public data class StyleImportsConfig internal constructor(
 /**
  * Type-safe builder for [StyleImportsConfig].
  */
-@MapboxExperimental
 public fun styleImportsConfig(init: StyleImportsConfig.() -> Unit): StyleImportsConfig =
   StyleImportsConfig().apply(init)
 
@@ -190,7 +182,6 @@ public fun styleImportsConfig(init: StyleImportsConfig.() -> Unit): StyleImports
  * Class that holds the configs for one import ID.
  */
 @Stable
-@MapboxExperimental
 public data class ImportConfigs internal constructor(
   internal val configs: HashMap<String, Value> = hashMapOf()
 ) {
@@ -213,7 +204,6 @@ public data class ImportConfigs internal constructor(
 /**
  * Type-safe builder for [ImportConfigs].
  */
-@MapboxExperimental
 public fun importConfigs(init: ImportConfigs.() -> Unit): ImportConfigs =
   ImportConfigs().apply(init)
 
@@ -238,7 +228,6 @@ public fun importConfigs(init: ImportConfigs.() -> Unit): ImportConfigs =
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 @SuppressLint("ComposableLambdaParameterNaming", "ComposableLambdaParameterPosition")
 public fun GenericStyle(
   style: String,

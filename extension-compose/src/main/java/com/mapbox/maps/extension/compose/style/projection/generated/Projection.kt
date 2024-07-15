@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.compose.style.projection.generated
 
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 
 /**
@@ -13,7 +12,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
  * @param value the [Projection] wrapped in [Value].
  */
 @Immutable
-@MapboxExperimental
 public data class Projection internal constructor(
   public val value: Value
 ) {

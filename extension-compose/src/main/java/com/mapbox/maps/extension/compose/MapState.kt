@@ -70,7 +70,6 @@ import kotlinx.parcelize.Parcelize
  * initial state.
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberMapState(
   key: String? = null,
   crossinline init: MapState.() -> Unit = {}
@@ -82,7 +81,6 @@ public inline fun rememberMapState(
  * The [MapState] that can be hoisted to observe map events, query rendered features and control gestures settings.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-@MapboxExperimental
 @Stable
 public class MapState internal constructor(initialGesturesSettings: GesturesSettings) {
 
@@ -112,7 +110,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [MapLoaded] updates from [MapboxMap.subscribeMapLoaded].
    */
-  @MapboxExperimental
   public val mapLoadedEvents: Flow<MapLoaded> = mapboxMapFlow.flatMapLatest {
     it?.mapLoadedEvents ?: emptyFlow()
   }
@@ -120,7 +117,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [MapLoadingError] updates from [MapboxMap.subscribeMapLoadingError].
    */
-  @MapboxExperimental
   public val mapLoadingErrorEvents: Flow<MapLoadingError> = mapboxMapFlow.flatMapLatest {
     it?.mapLoadingErrorEvents ?: emptyFlow()
   }
@@ -128,7 +124,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [StyleLoaded] updates from [MapboxMap.subscribeStyleLoaded].
    */
-  @MapboxExperimental
   public val styleLoadedEvents: Flow<StyleLoaded> = mapboxMapFlow.flatMapLatest {
     it?.styleLoadedEvents ?: emptyFlow()
   }
@@ -136,7 +131,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [StyleDataLoaded] updates from [MapboxMap.subscribeStyleDataLoaded].
    */
-  @MapboxExperimental
   public val styleDataLoadedEvents: Flow<StyleDataLoaded> = mapboxMapFlow.flatMapLatest {
     it?.styleDataLoadedEvents ?: emptyFlow()
   }
@@ -144,7 +138,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [CameraChanged] updates from [MapboxMap.subscribeCameraChanged].
    */
-  @MapboxExperimental
   public val cameraChangedEvents: Flow<CameraChanged> = mapboxMapFlow.flatMapLatest {
     it?.cameraChangedEvents ?: emptyFlow()
   }
@@ -152,7 +145,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [MapIdle] updates from [MapboxMap.subscribeMapIdle].
    */
-  @MapboxExperimental
   public val mapIdleEvents: Flow<MapIdle> = mapboxMapFlow.flatMapLatest {
     it?.mapIdleEvents ?: emptyFlow()
   }
@@ -160,7 +152,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [SourceAdded] updates from [MapboxMap.subscribeSourceAdded].
    */
-  @MapboxExperimental
   public val sourceAddedEvents: Flow<SourceAdded> = mapboxMapFlow.flatMapLatest {
     it?.sourceAddedEvents ?: emptyFlow()
   }
@@ -168,7 +159,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [SourceRemoved] updates from [MapboxMap.subscribeSourceRemoved].
    */
-  @MapboxExperimental
   public val sourceRemovedEvents: Flow<SourceRemoved> = mapboxMapFlow.flatMapLatest {
     it?.sourceRemovedEvents ?: emptyFlow()
   }
@@ -176,7 +166,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [SourceDataLoaded] updates from [MapboxMap.subscribeSourceDataLoaded].
    */
-  @MapboxExperimental
   public val sourceDataLoadedEvents: Flow<SourceDataLoaded> = mapboxMapFlow.flatMapLatest {
     it?.sourceDataLoadedEvents ?: emptyFlow()
   }
@@ -184,7 +173,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [StyleImageMissing] updates from [MapboxMap.subscribeStyleImageMissing].
    */
-  @MapboxExperimental
   public val styleImageMissingEvents: Flow<StyleImageMissing> = mapboxMapFlow.flatMapLatest {
     it?.styleImageMissingEvents ?: emptyFlow()
   }
@@ -192,7 +180,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [StyleImageRemoveUnused] updates from [MapboxMap.subscribeStyleImageRemoveUnused].
    */
-  @MapboxExperimental
   public val styleImageRemoveUnusedEvents: Flow<StyleImageRemoveUnused> =
     mapboxMapFlow.flatMapLatest {
       it?.styleImageRemoveUnusedEvents ?: emptyFlow()
@@ -201,7 +188,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [RenderFrameStarted] updates from [MapboxMap.subscribeRenderFrameStarted].
    */
-  @MapboxExperimental
   public val renderFrameStartedEvents: Flow<RenderFrameStarted> = mapboxMapFlow.flatMapLatest {
     it?.renderFrameStartedEvents ?: emptyFlow()
   }
@@ -209,7 +195,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [RenderFrameFinished] updates from [MapboxMap.subscribeRenderFrameFinished].
    */
-  @MapboxExperimental
   public val renderFrameFinishedEvents: Flow<RenderFrameFinished> = mapboxMapFlow.flatMapLatest {
     it?.renderFrameFinishedEvents ?: emptyFlow()
   }
@@ -217,7 +202,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * [Flow] of [ResourceRequest] updates from [MapboxMap.subscribeResourceRequest].
    */
-  @MapboxExperimental
   public val resourceRequestEvents: Flow<ResourceRequest> = mapboxMapFlow.flatMapLatest {
     it?.resourceRequestEvents ?: emptyFlow()
   }
@@ -240,7 +224,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    *
    * @return a list of [QueriedRenderedFeature] or a string describing an error.
    */
-  @MapboxExperimental
   public suspend fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     options: RenderedQueryOptions
@@ -270,14 +253,12 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    *
    * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels. If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate contains -1 for both coordinates.
    */
-  @MapboxExperimental
   public suspend fun pixelForCoordinate(coordinate: Point): ScreenCoordinate =
     mapboxMapFlow.filterNotNull().first().pixelForCoordinate(coordinate)
 
   /**
    * Attach the [MapState] to the [MapboxMap].
    */
-  @MapboxExperimental
   @Composable
   internal fun BindToMap(mapboxMap: MapboxMap) {
     UpdateGesturesSettings(mapboxMap = mapboxMap)
@@ -294,7 +275,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    *
    * @param savedProperties properties to be saved
    */
-  @MapboxExperimental
   @Parcelize
   public data class Holder(
     val savedProperties: Map<String, Parcelable>

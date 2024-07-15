@@ -38,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -50,7 +49,6 @@ import java.util.Random
 /**
  * Example to showcase usage of ornaments customisation.
  */
-@OptIn(MapboxExperimental::class)
 public class OrnamentCustomisationActivity : ComponentActivity() {
   private val random = Random()
   override fun onCreate(savedInstanceState: Bundle?) {

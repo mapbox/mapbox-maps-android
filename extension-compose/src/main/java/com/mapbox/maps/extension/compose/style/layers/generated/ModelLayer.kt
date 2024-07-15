@@ -25,9 +25,9 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param modelLayerState the state holder for [ModelLayer]'s properties.
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public fun ModelLayer(
   sourceState: SourceState,
   layerId: String = remember {
@@ -77,9 +77,9 @@ public fun ModelLayer(
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param init the lambda that will be applied to the remembered [ModelLayerState].
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public inline fun ModelLayer(
   sourceState: SourceState,
   layerId: String = remember {

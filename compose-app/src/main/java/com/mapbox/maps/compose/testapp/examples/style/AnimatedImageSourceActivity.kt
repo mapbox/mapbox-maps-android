@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.res.imageResource
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -28,7 +27,6 @@ import kotlinx.coroutines.delay
  * Load a raster image to a style using ImageSource and display it on a map as
  * animated weather data using RasterLayer.
  */
-@OptIn(MapboxExperimental::class)
 public class AnimatedImageSourceActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {

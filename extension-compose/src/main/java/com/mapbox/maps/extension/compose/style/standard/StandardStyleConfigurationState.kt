@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.standard.LightPresetValue.Companion.equals
@@ -18,7 +17,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class LightPresetValue(public val value: Value) {
   /**
    * Construct the [LightPresetValue] with [String].
@@ -93,7 +91,6 @@ public data class LightPresetValue(public val value: Value) {
 /**
  * The state holder for [MapboxStandardStyle]'s configurations.
  */
-@MapboxExperimental
 @Stable
 public class StandardStyleConfigurationState private constructor(
   initialShowPlaceLabels: BooleanValue,

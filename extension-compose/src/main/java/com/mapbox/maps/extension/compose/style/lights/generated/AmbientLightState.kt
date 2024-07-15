@@ -13,7 +13,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.ColorValue
@@ -38,7 +37,6 @@ import java.util.Objects
  * @param init A function initialise this [AmbientLightState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberAmbientLightState(
   id: String = remember {
     generateRandomLightId("ambient")
@@ -54,7 +52,6 @@ public inline fun rememberAmbientLightState(
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/light)
  */
-@MapboxExperimental
 @Stable
 public class AmbientLightState internal constructor(
   /**
@@ -162,7 +159,6 @@ public class AmbientLightState internal constructor(
     )
   }
 
-  @MapboxExperimental
   @Composable
   internal fun UpdateProperties(mapboxMap: MapboxMap) {
     UpdateColor(mapboxMap)
@@ -210,7 +206,6 @@ public class AmbientLightState internal constructor(
    *
    * @param savedProperties properties to be saved.
    */
-  @MapboxExperimental
   @Parcelize
   @TypeParceler<Value, ValueParceler>
   public data class Holder(

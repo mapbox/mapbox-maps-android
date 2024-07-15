@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose.style.projection
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -8,7 +7,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 public class ProjectionTests {
   @Test

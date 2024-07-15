@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PointAnnotationNode
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
@@ -22,7 +21,6 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 /**
  * The state holder for [PointAnnotation] properties.
  */
-@MapboxExperimental
 @Stable
 public class PointAnnotationState private constructor(
   initialIconAnchor: IconAnchor?,

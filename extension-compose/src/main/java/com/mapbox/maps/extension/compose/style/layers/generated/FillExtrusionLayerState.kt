@@ -24,7 +24,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#fill-extrusion)
  */
-@MapboxExperimental
 @Stable
 public class FillExtrusionLayerState private constructor(
   initialFillExtrusionEdgeRadius: DoubleValue,
@@ -326,30 +325,35 @@ public class FillExtrusionLayerState private constructor(
   public var filter: Filter by mutableStateOf(initialFilter)
 
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionEdgeRadius(layerNode: LayerNode) {
     if (fillExtrusionEdgeRadius.notInitial) {
       layerNode.setProperty("fill-extrusion-edge-radius", fillExtrusionEdgeRadius.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionAmbientOcclusionGroundAttenuation(layerNode: LayerNode) {
     if (fillExtrusionAmbientOcclusionGroundAttenuation.notInitial) {
       layerNode.setProperty("fill-extrusion-ambient-occlusion-ground-attenuation", fillExtrusionAmbientOcclusionGroundAttenuation.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionAmbientOcclusionGroundAttenuationTransition(layerNode: LayerNode) {
     if (fillExtrusionAmbientOcclusionGroundAttenuationTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-ambient-occlusion-ground-attenuation-transition", fillExtrusionAmbientOcclusionGroundAttenuationTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionAmbientOcclusionGroundRadius(layerNode: LayerNode) {
     if (fillExtrusionAmbientOcclusionGroundRadius.notInitial) {
       layerNode.setProperty("fill-extrusion-ambient-occlusion-ground-radius", fillExtrusionAmbientOcclusionGroundRadius.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionAmbientOcclusionGroundRadiusTransition(layerNode: LayerNode) {
     if (fillExtrusionAmbientOcclusionGroundRadiusTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-ambient-occlusion-ground-radius-transition", fillExtrusionAmbientOcclusionGroundRadiusTransition.value)
@@ -380,12 +384,14 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionAmbientOcclusionWallRadius(layerNode: LayerNode) {
     if (fillExtrusionAmbientOcclusionWallRadius.notInitial) {
       layerNode.setProperty("fill-extrusion-ambient-occlusion-wall-radius", fillExtrusionAmbientOcclusionWallRadius.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionAmbientOcclusionWallRadiusTransition(layerNode: LayerNode) {
     if (fillExtrusionAmbientOcclusionWallRadiusTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-ambient-occlusion-wall-radius-transition", fillExtrusionAmbientOcclusionWallRadiusTransition.value)
@@ -434,60 +440,70 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightColor(layerNode: LayerNode) {
     if (fillExtrusionFloodLightColor.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-color", fillExtrusionFloodLightColor.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightColorTransition(layerNode: LayerNode) {
     if (fillExtrusionFloodLightColorTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-color-transition", fillExtrusionFloodLightColorTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightGroundAttenuation(layerNode: LayerNode) {
     if (fillExtrusionFloodLightGroundAttenuation.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-ground-attenuation", fillExtrusionFloodLightGroundAttenuation.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightGroundAttenuationTransition(layerNode: LayerNode) {
     if (fillExtrusionFloodLightGroundAttenuationTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-ground-attenuation-transition", fillExtrusionFloodLightGroundAttenuationTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightGroundRadius(layerNode: LayerNode) {
     if (fillExtrusionFloodLightGroundRadius.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-ground-radius", fillExtrusionFloodLightGroundRadius.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightGroundRadiusTransition(layerNode: LayerNode) {
     if (fillExtrusionFloodLightGroundRadiusTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-ground-radius-transition", fillExtrusionFloodLightGroundRadiusTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightIntensity(layerNode: LayerNode) {
     if (fillExtrusionFloodLightIntensity.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-intensity", fillExtrusionFloodLightIntensity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightIntensityTransition(layerNode: LayerNode) {
     if (fillExtrusionFloodLightIntensityTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-intensity-transition", fillExtrusionFloodLightIntensityTransition.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightWallRadius(layerNode: LayerNode) {
     if (fillExtrusionFloodLightWallRadius.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-wall-radius", fillExtrusionFloodLightWallRadius.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionFloodLightWallRadiusTransition(layerNode: LayerNode) {
     if (fillExtrusionFloodLightWallRadiusTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-wall-radius-transition", fillExtrusionFloodLightWallRadiusTransition.value)
@@ -527,6 +543,7 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionRoundedRoof(layerNode: LayerNode) {
     if (fillExtrusionRoundedRoof.notInitial) {
       layerNode.setProperty("fill-extrusion-rounded-roof", fillExtrusionRoundedRoof.value)
@@ -557,12 +574,14 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionVerticalScale(layerNode: LayerNode) {
     if (fillExtrusionVerticalScale.notInitial) {
       layerNode.setProperty("fill-extrusion-vertical-scale", fillExtrusionVerticalScale.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillExtrusionVerticalScaleTransition(layerNode: LayerNode) {
     if (fillExtrusionVerticalScaleTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-vertical-scale-transition", fillExtrusionVerticalScaleTransition.value)

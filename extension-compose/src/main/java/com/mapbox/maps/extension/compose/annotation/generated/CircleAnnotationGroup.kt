@@ -10,7 +10,6 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationManagerNode
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -37,7 +36,6 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun CircleAnnotationGroup(
   annotations: List<CircleAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
@@ -92,7 +90,6 @@ public fun CircleAnnotationGroup(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public inline fun CircleAnnotationGroup(
   annotations: List<CircleAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,

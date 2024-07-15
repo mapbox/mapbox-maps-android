@@ -12,7 +12,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -37,7 +36,6 @@ import java.util.Objects
  * @param init A function initialise this [VectorSourceState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberVectorSourceState(
   key: String? = null,
   sourceId: String = remember {
@@ -56,7 +54,6 @@ public inline fun rememberVectorSourceState(
  * @param sourceId The id of the source state, by default a random generated ID will be used.
  * @param initialProperties The initial mutable properties of the source.
  */
-@MapboxExperimental
 @Stable
 public class VectorSourceState private constructor(
   sourceId: String,

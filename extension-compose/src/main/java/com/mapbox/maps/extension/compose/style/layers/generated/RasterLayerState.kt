@@ -23,7 +23,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#raster)
  */
-@MapboxExperimental
 @Stable
 public class RasterLayerState private constructor(
   initialRasterArrayBand: StringValue,
@@ -212,6 +211,7 @@ public class RasterLayerState private constructor(
   public var filter: Filter by mutableStateOf(initialFilter)
 
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterArrayBand(layerNode: LayerNode) {
     if (rasterArrayBand.notInitial) {
       layerNode.setProperty("raster-array-band", rasterArrayBand.value)
@@ -284,12 +284,14 @@ public class RasterLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterElevation(layerNode: LayerNode) {
     if (rasterElevation.notInitial) {
       layerNode.setProperty("raster-elevation", rasterElevation.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateRasterElevationTransition(layerNode: LayerNode) {
     if (rasterElevationTransition.notInitial) {
       layerNode.setProperty("raster-elevation-transition", rasterElevationTransition.value)

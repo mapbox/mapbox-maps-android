@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.compose.style.sources
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.internal.GeoJSONDataParceler
 import com.mapbox.maps.extension.compose.style.internal.PairParceler
@@ -48,7 +47,6 @@ private data class PropertyDetails(
  * @param initialProperties The initial mutable properties of the source.
  * @param initialGeoJsonData The initial [GeoJSONData] of the source to be used for [GeoJsonSourceState].
  */
-@MapboxExperimental
 public abstract class SourceState internal constructor(
   public val sourceId: String,
   private val sourceType: String,
@@ -373,7 +371,6 @@ public abstract class SourceState internal constructor(
    * @param savedProperties The initial mutable properties of the source.
    * @param geoJSONData The initial [GeoJSONData] of the source(used only in [GeoJsonSourceState]).
    */
-  @MapboxExperimental
   @Parcelize
   @TypeParceler<GeoJSONData, GeoJSONDataParceler>
   @TypeParceler<Value, ValueParceler>

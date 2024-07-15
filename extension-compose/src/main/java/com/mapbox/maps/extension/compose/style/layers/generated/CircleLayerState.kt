@@ -7,7 +7,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -22,7 +21,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#circle)
  */
-@MapboxExperimental
 @Stable
 public class CircleLayerState private constructor(
   initialCircleSortKey: DoubleValue,

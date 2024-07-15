@@ -2,7 +2,6 @@ package com.mapbox.maps.extension.compose.style.standard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.style.GenericStyle
@@ -32,7 +31,6 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 public fun MapboxStandardStyle(
   styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
@@ -107,7 +105,6 @@ public fun MapboxStandardStyle(
  */
 @Composable
 @MapboxStyleComposable
-@MapboxExperimental
 public fun MapboxStandardStyle(
   styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,

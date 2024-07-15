@@ -5,7 +5,6 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.GeoJSONSourceData
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.TileCacheBudgetInMegabytes
 import com.mapbox.maps.TileCacheBudgetInTiles
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
@@ -22,7 +21,6 @@ For more advanced use cases, in place of `operator`, you can use a custom reduce
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class ClusterProperties(public val value: Value) {
   /**
    * Construct the ClusterProperties with [HashMap<String, Any>].
@@ -69,7 +67,6 @@ public data class ClusterProperties(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TileCacheBudget(public val value: Value) {
   /**
    * Construct the TileCacheBudget with [TileCacheBudgetInMegabytes].
@@ -122,7 +119,6 @@ public data class TileCacheBudget(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class RasterLayers(public val value: Value) {
   /**
    * Construct the RasterLayers with [List<RasterDataLayer>].
@@ -178,7 +174,6 @@ public data class RasterLayers(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class PromoteIdValue(public val value: Value) {
   /**
    * Construct the [PromoteIdValue] with [propertyName] and optional [sourceId].
@@ -233,7 +228,6 @@ public data class PromoteIdValue(public val value: Value) {
  * @param data the [GeoJSONSourceData] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class GeoJSONData(internal val data: GeoJSONSourceData) {
   /**
    * Construct the [GeoJSONData] with [String].

@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.res.imageResource
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
@@ -28,7 +27,6 @@ import com.mapbox.maps.extension.style.sources.updateImage
 /**
  * Example to showcase usage of ImageSource.
  */
-@OptIn(MapboxExperimental::class)
 public class ImageSourceActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {

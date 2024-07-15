@@ -9,7 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState
 import com.mapbox.maps.extension.compose.style.drawToBitmap
 import kotlinx.parcelize.Parcelize
@@ -20,7 +19,6 @@ import java.util.Objects
  */
 @Immutable
 @Parcelize
-@MapboxExperimental
 public class IconImage private constructor(
   internal val imageId: String?,
   internal val bitmap: Bitmap?
@@ -64,7 +62,6 @@ public class IconImage private constructor(
  *
  * @return a [Bitmap]
  */
-@MapboxExperimental
 @Composable
 public fun rememberIconImage(key: Any?, painter: Painter): IconImage {
   return remember(key, painter) {
@@ -79,7 +76,6 @@ public fun rememberIconImage(key: Any?, painter: Painter): IconImage {
  *
  * @return a [Bitmap]
  */
-@MapboxExperimental
 @Composable
 public fun rememberIconImage(@DrawableRes resourceId: Int): IconImage {
   return rememberIconImage(key = resourceId, painter = painterResource(id = resourceId))

@@ -26,7 +26,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
@@ -44,7 +43,6 @@ import kotlin.math.abs
  */
 @MapboxMapScopeMarker
 @Immutable
-@MapboxExperimental
 public class MapCompassScope internal constructor(
   private val mapView: MapView,
   private val boxScope: BoxScope
@@ -64,7 +62,6 @@ public class MapCompassScope internal constructor(
    * @param content The composable to draw the compass.
    */
   @Composable
-  @MapboxExperimental
   public fun Compass(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(4.dp),

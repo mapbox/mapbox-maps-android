@@ -5,7 +5,6 @@ package com.mapbox.maps.extension.compose.style.lights.generated
 
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
@@ -14,7 +13,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class AnchorValue(public val value: Value) {
   /**
    * Construct the Anchor with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).

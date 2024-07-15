@@ -23,7 +23,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#line)
  */
-@MapboxExperimental
 @Stable
 public class LineLayerState private constructor(
   initialLineCap: LineCapValue,
@@ -308,6 +307,7 @@ public class LineLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateLineZOffset(layerNode: LayerNode) {
     if (lineZOffset.notInitial) {
       layerNode.setProperty("line-z-offset", lineZOffset.value)
@@ -410,12 +410,14 @@ public class LineLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateLineOcclusionOpacity(layerNode: LayerNode) {
     if (lineOcclusionOpacity.notInitial) {
       layerNode.setProperty("line-occlusion-opacity", lineOcclusionOpacity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateLineOcclusionOpacityTransition(layerNode: LayerNode) {
     if (lineOcclusionOpacityTransition.notInitial) {
       layerNode.setProperty("line-occlusion-opacity-transition", lineOcclusionOpacityTransition.value)

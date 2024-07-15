@@ -13,7 +13,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.ViewAnnotationAnchorConfig
 import com.mapbox.maps.ViewAnnotationOptions
@@ -116,7 +115,6 @@ internal class ViewAnnotationNode(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun ViewAnnotation(
   options: ViewAnnotationOptions,
   modifier: Modifier = Modifier,

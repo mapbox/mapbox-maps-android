@@ -9,14 +9,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 
 /**
  * The state holder for [CircleAnnotation] properties.
  */
-@MapboxExperimental
 @Stable
 public class CircleAnnotationState private constructor(
   initialCircleBlur: Double?,

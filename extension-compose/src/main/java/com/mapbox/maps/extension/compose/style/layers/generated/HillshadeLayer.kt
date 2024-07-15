@@ -8,7 +8,6 @@ import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
@@ -27,7 +26,6 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param hillshadeLayerState the state holder for [HillshadeLayer]'s properties.
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
 public fun HillshadeLayer(
@@ -81,7 +79,6 @@ public fun HillshadeLayer(
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param init the lambda that will be applied to the remembered [HillshadeLayerState].
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
 public inline fun HillshadeLayer(

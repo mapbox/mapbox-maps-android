@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose.style.layers
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.StyleImage
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -8,7 +7,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 public class PropertiesTests {
   @Test

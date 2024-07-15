@@ -13,7 +13,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the filter expression wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class Filter internal constructor(public val value: Value) {
 
   /**
@@ -56,7 +55,6 @@ public data class Filter internal constructor(public val value: Value) {
  * @param value the Formatted expression wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class FormattedValue internal constructor(public val value: Value) {
   /**
    * Construct the [FormattedValue] with [String].
@@ -110,7 +108,6 @@ public data class FormattedValue internal constructor(public val value: Value) {
  * @param styleImage the optional style image that will be added to the style if available.
  */
 @Immutable
-@MapboxExperimental
 public data class ImageValue internal constructor(public val value: Value, public val styleImage: StyleImage? = null) {
   /**
    * Construct the [ImageValue] with [StyleImage].

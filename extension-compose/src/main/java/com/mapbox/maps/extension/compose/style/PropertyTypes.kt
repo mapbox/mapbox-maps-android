@@ -5,7 +5,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.utils.ColorUtils
@@ -17,7 +16,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
  * @param value a value representing the color. See [Color](https://docs.mapbox.com/style-spec/reference/types/#color).
  */
 @Immutable
-@MapboxExperimental
 public data class ColorValue(public val value: Value) {
   /**
    * Construct the Color with [Color].
@@ -79,7 +77,6 @@ public data class ColorValue(public val value: Value) {
  * @param value a value representing a number. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
 @Immutable
-@MapboxExperimental
 public data class DoubleValue(public val value: Value) {
   /**
    * Create a [DoubleValue] that contains finite double [value].
@@ -217,7 +214,6 @@ public data class DoubleRangeValue(public val value: Value) {
  * @param value a value representing a number. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
 @Immutable
-@MapboxExperimental
 public data class LongValue(public val value: Value) {
   /**
    * Create a [LongValue] that contains long [value].
@@ -273,7 +269,6 @@ public data class LongValue(public val value: Value) {
  * @param value a value representing a boolean.
  */
 @Immutable
-@MapboxExperimental
 public data class BooleanValue(public val value: Value) {
   /**
    * Create a [BooleanValue] that contains boolean [value].
@@ -329,7 +324,6 @@ public data class BooleanValue(public val value: Value) {
  * @param value a value representing a string.
  */
 @Immutable
-@MapboxExperimental
 public data class StringValue(public val value: Value) {
   /**
    * Create a [StringValue] that contains string [value].
@@ -385,7 +379,6 @@ public data class StringValue(public val value: Value) {
  * @param value a value representing a string.
  */
 @Immutable
-@MapboxExperimental
 public data class StringListValue(public val value: Value) {
   /**
    * Create a [StringListValue] that contains string [value].

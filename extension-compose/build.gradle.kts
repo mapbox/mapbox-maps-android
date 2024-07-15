@@ -28,6 +28,10 @@ android {
   kotlinOptions {
     freeCompilerArgs += "-Xexplicit-api=strict"
   }
+
+  lint {
+    warningsAsErrors = true
+  }
 }
 
 mapboxLibrary {

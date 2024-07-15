@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.MultiPoint
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.examples.utils.offset
@@ -38,7 +37,6 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 /**
  * Showcase the basic camera animations based on [MapViewportState] API.
  */
-@OptIn(MapboxExperimental::class)
 public class MapViewportAnimationsActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

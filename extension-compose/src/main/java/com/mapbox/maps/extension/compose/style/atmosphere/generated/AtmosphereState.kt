@@ -12,7 +12,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -34,7 +33,6 @@ import java.util.Objects
  * @param init A function initialise this [AtmosphereState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberAtmosphereState(
   key: String? = null,
   crossinline init: AtmosphereState.() -> Unit = {}
@@ -47,7 +45,6 @@ public inline fun rememberAtmosphereState(
  *
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/)
  */
-@MapboxExperimental
 @Stable
 public class AtmosphereState private constructor(
   internal val applier: AtmosphereStateApplier,
@@ -416,7 +413,6 @@ public class AtmosphereState private constructor(
   /**
    * Atmosphere Holder class to be used within [Saver].
    */
-  @MapboxExperimental
   @Parcelize
   @TypeParceler<Value, ValueParceler>
   public data class Holder internal constructor(

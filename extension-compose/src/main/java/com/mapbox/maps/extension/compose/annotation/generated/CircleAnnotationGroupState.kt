@@ -7,7 +7,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment
 import com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale
 import com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor
@@ -16,7 +15,6 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 /**
  * The state holder for [CircleAnnotationGroup] properties.
  */
-@MapboxExperimental
 @Stable
 public class CircleAnnotationGroupState private constructor(
   initialCircleEmissiveStrength: Double?,

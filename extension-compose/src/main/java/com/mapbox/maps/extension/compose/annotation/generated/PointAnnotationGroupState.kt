@@ -21,7 +21,6 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 /**
  * The state holder for [PointAnnotationGroup] properties.
  */
-@MapboxExperimental
 @Stable
 public class PointAnnotationGroupState private constructor(
   initialIconAllowOverlap: Boolean?,
@@ -307,6 +306,7 @@ public class PointAnnotationGroupState private constructor(
     annotationManager.iconColorSaturation = iconColorSaturation
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateIconOcclusionOpacity(annotationManager: PointAnnotationManager) {
     annotationManager.iconOcclusionOpacity = iconOcclusionOpacity
   }
@@ -319,6 +319,7 @@ public class PointAnnotationGroupState private constructor(
     annotationManager.iconTranslateAnchor = iconTranslateAnchor
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateTextOcclusionOpacity(annotationManager: PointAnnotationManager) {
     annotationManager.textOcclusionOpacity = textOcclusionOpacity
   }

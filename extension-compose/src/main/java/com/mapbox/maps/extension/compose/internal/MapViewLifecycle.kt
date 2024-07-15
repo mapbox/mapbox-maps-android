@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 
 /**
  * Handle the lifecycle of [MapView] in compose.
@@ -26,7 +25,6 @@ import com.mapbox.maps.MapboxExperimental
  */
 @Composable
 @JvmSynthetic
-@MapboxExperimental
 @SuppressLint("Lifecycle")
 internal fun MapViewLifecycle(mapView: MapView) {
   val context = LocalContext.current

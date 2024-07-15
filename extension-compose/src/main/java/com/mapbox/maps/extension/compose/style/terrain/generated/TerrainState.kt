@@ -12,7 +12,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
@@ -35,7 +34,6 @@ import java.util.Objects
  * @param init A function initialise this [TerrainState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberTerrainState(
   rasterDemSourceState: RasterDemSourceState,
   key: String? = null,
@@ -49,7 +47,6 @@ public inline fun rememberTerrainState(
  *
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/terrain/)
  */
-@MapboxExperimental
 @Stable
 public class TerrainState private constructor(
   internal val applier: TerrainStateApplier,
@@ -166,7 +163,6 @@ public class TerrainState private constructor(
   /**
    * Terrain Holder class to be used within [Saver].
    */
-  @MapboxExperimental
   @Parcelize
   @TypeParceler<Value, ValueParceler>
   public data class Holder internal constructor(

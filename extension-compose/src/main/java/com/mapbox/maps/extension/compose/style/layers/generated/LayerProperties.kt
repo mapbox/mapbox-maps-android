@@ -14,7 +14,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class FillTranslateAnchorValue(public val value: Value) {
   /**
    * Construct the [FillTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -68,7 +67,6 @@ public data class FillTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class VisibilityValue(public val value: Value) {
   /**
    * Construct the [VisibilityValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -122,7 +120,6 @@ public data class VisibilityValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class LineCapValue(public val value: Value) {
   /**
    * Construct the [LineCapValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -182,7 +179,6 @@ public data class LineCapValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class LineJoinValue(public val value: Value) {
   /**
    * Construct the [LineJoinValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -248,7 +244,6 @@ public data class LineJoinValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class LineTranslateAnchorValue(public val value: Value) {
   /**
    * Construct the [LineTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -302,7 +297,6 @@ public data class LineTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class IconAnchorValue(public val value: Value) {
   /**
    * Construct the [IconAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -398,7 +392,6 @@ public data class IconAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class IconPitchAlignmentValue(public val value: Value) {
   /**
    * Construct the [IconPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -458,7 +451,6 @@ public data class IconPitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class IconRotationAlignmentValue(public val value: Value) {
   /**
    * Construct the [IconRotationAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -518,7 +510,6 @@ public data class IconRotationAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class IconTextFitValue(public val value: Value) {
   /**
    * Construct the [IconTextFitValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -584,7 +575,6 @@ public data class IconTextFitValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class SymbolPlacementValue(public val value: Value) {
   /**
    * Construct the [SymbolPlacementValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -644,7 +634,6 @@ public data class SymbolPlacementValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class SymbolZOrderValue(public val value: Value) {
   /**
    * Construct the [SymbolZOrderValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -704,7 +693,6 @@ public data class SymbolZOrderValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextAnchorValue(public val value: Value) {
   /**
    * Construct the [TextAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -800,7 +788,6 @@ public data class TextAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextJustifyValue(public val value: Value) {
   /**
    * Construct the [TextJustifyValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -866,7 +853,6 @@ public data class TextJustifyValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextPitchAlignmentValue(public val value: Value) {
   /**
    * Construct the [TextPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -926,7 +912,6 @@ public data class TextPitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextRotationAlignmentValue(public val value: Value) {
   /**
    * Construct the [TextRotationAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -986,7 +971,6 @@ public data class TextRotationAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextTransformValue(public val value: Value) {
   /**
    * Construct the [TextTransformValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1046,7 +1030,6 @@ public data class TextTransformValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextVariableAnchorListValue(public val value: Value) {
   /**
    * Construct the [TextVariableAnchorListValue] with [TextVariableAnchor].
@@ -1093,7 +1076,6 @@ public data class TextVariableAnchorListValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextVariableAnchor internal constructor(public val value: Value) {
   /**
    * Public companion object.
@@ -1162,7 +1144,6 @@ public data class TextVariableAnchor internal constructor(public val value: Valu
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextWritingModeListValue(public val value: Value) {
   /**
    * Construct the [TextWritingModeListValue] with [TextWritingMode].
@@ -1209,7 +1190,6 @@ public data class TextWritingModeListValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextWritingMode internal constructor(public val value: Value) {
   /**
    * Public companion object.
@@ -1236,7 +1216,6 @@ public data class TextWritingMode internal constructor(public val value: Value) 
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class IconTranslateAnchorValue(public val value: Value) {
   /**
    * Construct the [IconTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1290,7 +1269,6 @@ public data class IconTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class TextTranslateAnchorValue(public val value: Value) {
   /**
    * Construct the [TextTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1344,7 +1322,6 @@ public data class TextTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class CirclePitchAlignmentValue(public val value: Value) {
   /**
    * Construct the [CirclePitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1398,7 +1375,6 @@ public data class CirclePitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class CirclePitchScaleValue(public val value: Value) {
   /**
    * Construct the [CirclePitchScaleValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1452,7 +1428,6 @@ public data class CirclePitchScaleValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class CircleTranslateAnchorValue(public val value: Value) {
   /**
    * Construct the [CircleTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1506,7 +1481,6 @@ public data class CircleTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class FillExtrusionTranslateAnchorValue(public val value: Value) {
   /**
    * Construct the [FillExtrusionTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1560,7 +1534,6 @@ public data class FillExtrusionTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class RasterResamplingValue(public val value: Value) {
   /**
    * Construct the [RasterResamplingValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1614,7 +1587,6 @@ public data class RasterResamplingValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class HillshadeIlluminationAnchorValue(public val value: Value) {
   /**
    * Construct the [HillshadeIlluminationAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1776,7 +1748,6 @@ public data class ModelTypeValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class SkyTypeValue(public val value: Value) {
   /**
    * Construct the [SkyTypeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).

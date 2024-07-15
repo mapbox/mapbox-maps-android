@@ -20,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations.HELSINKI
@@ -36,7 +35,6 @@ import java.util.Random
 /**
  * Example to showcase usage of MapboxMap.
  */
-@OptIn(MapboxExperimental::class)
 public class ViewAnnotationActivity : ComponentActivity() {
   private val random = Random()
   override fun onCreate(savedInstanceState: Bundle?) {

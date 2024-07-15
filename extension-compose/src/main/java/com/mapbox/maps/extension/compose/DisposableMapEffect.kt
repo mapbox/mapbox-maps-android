@@ -6,7 +6,6 @@ import androidx.compose.runtime.DisposableEffectResult
 import androidx.compose.runtime.DisposableEffectScope
 import androidx.compose.runtime.currentComposer
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.internal.MapApplier
 
 /**
@@ -18,7 +17,6 @@ import com.mapbox.maps.extension.compose.internal.MapApplier
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun DisposableMapEffect(key1: Any?, block: DisposableEffectScope.(MapView) -> DisposableEffectResult) {
   val map = (currentComposer.applier as MapApplier).mapView
   DisposableEffect(key1 = key1) {
@@ -35,7 +33,6 @@ public fun DisposableMapEffect(key1: Any?, block: DisposableEffectScope.(MapView
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun DisposableMapEffect(key1: Any?, key2: Any?, block: DisposableEffectScope.(MapView) -> DisposableEffectResult) {
   val map = (currentComposer.applier as MapApplier).mapView
   DisposableEffect(key1 = key1, key2 = key2) {
@@ -52,7 +49,6 @@ public fun DisposableMapEffect(key1: Any?, key2: Any?, block: DisposableEffectSc
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun DisposableMapEffect(
   key1: Any?,
   key2: Any?,
@@ -74,7 +70,6 @@ public fun DisposableMapEffect(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun DisposableMapEffect(vararg keys: Any?, block: DisposableEffectScope.(MapView) -> DisposableEffectResult) {
   val map = (currentComposer.applier as MapApplier).mapView
   DisposableEffect(keys = keys) {

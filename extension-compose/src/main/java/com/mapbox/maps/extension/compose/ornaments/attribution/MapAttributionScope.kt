@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.ornaments.attribution.internal.AttributionComposePlugin
@@ -58,7 +57,6 @@ import com.mapbox.maps.plugin.attribution.AttributionParserConfig
 @Suppress("NAMED_ARGUMENTS_NOT_ALLOWED")
 @MapboxMapScopeMarker
 @Immutable
-@MapboxExperimental
 public class MapAttributionScope internal constructor(
   private val mapView: MapView,
   private val boxScope: BoxScope
@@ -76,7 +74,6 @@ public class MapAttributionScope internal constructor(
    * @param attributionDialog Defines AlertDialog when the attribution is clicked.
    */
   @Composable
-  @MapboxExperimental
   public fun Attribution(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp),
@@ -231,7 +228,6 @@ public class MapAttributionScope internal constructor(
    * @param onAttributionClick The callback to be invoked when a attribution is clicked.
    */
   @OptIn(ExperimentalComposeUiApi::class)
-  @MapboxExperimental
   @Composable
   public fun AttributionDialog(
     attributions: List<Attribution>,
@@ -283,7 +279,6 @@ public class MapAttributionScope internal constructor(
    * @param onDisagree The callback to be invoked when user disagrees with the telemetry collection.
    * @param onAgree The callback to be invoked when user agrees with the telemetry collection.
    */
-  @MapboxExperimental
   @Composable
   public fun TelemetryDialog(
     onDismissRequest: () -> Unit,

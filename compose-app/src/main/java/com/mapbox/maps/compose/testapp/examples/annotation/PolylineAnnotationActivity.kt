@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -25,7 +24,6 @@ import java.util.Random
 /**
  * Example to showcase usage of PolylineAnnotation with Jetpack Compose.
  */
-@OptIn(MapboxExperimental::class)
 public class PolylineAnnotationActivity : ComponentActivity() {
   private val random = Random()
 

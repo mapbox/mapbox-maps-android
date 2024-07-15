@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.ornaments.scalebar.internal.ScaleBarComposePlugin
 import com.mapbox.maps.plugin.Plugin
@@ -32,7 +31,6 @@ import kotlin.time.DurationUnit
  */
 @MapboxMapScopeMarker
 @Immutable
-@MapboxExperimental
 public class MapScaleBarScope internal constructor(
   private val mapView: MapView,
   private val boxScope: BoxScope
@@ -64,7 +62,6 @@ public class MapScaleBarScope internal constructor(
    *     Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
    */
   @Composable
-  @MapboxExperimental
   public fun ScaleBar(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(4.dp),

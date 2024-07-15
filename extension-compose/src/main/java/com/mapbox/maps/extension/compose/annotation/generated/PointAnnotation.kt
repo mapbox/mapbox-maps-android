@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PointAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -30,7 +29,6 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun PointAnnotation(
   point: Point,
   onClick: (PointAnnotation) -> Boolean = { false },
@@ -78,7 +76,6 @@ public fun PointAnnotation(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public inline fun PointAnnotation(
   point: Point,
   noinline onClick: (PointAnnotation) -> Boolean = { false },

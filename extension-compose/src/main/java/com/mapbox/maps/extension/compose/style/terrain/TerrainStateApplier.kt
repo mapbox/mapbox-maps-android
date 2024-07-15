@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.compose.style.terrain
 
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSourceState
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
@@ -30,7 +29,6 @@ private typealias PropertyValueFlow = MutableStateFlow<Value>
  * 1. if [initial] is true then this class will behave as no-op. That is, it won't change anything related to Terrain from current [MapboxMap] state.
  * 2. if [initial] is false but [rasterDemSourceState] is `null` then terrain will be removed (the default (`Value.nullValue()`) in gl-native engine).
  */
-@OptIn(MapboxExperimental::class)
 internal class TerrainStateApplier internal constructor(
   internal val rasterDemSourceState: RasterDemSourceState?,
   initialProperties: Map<String, Value>,
@@ -128,7 +126,6 @@ internal class TerrainStateApplier internal constructor(
     }
   }
 
-  @OptIn(MapboxExperimental::class)
   internal fun save(properties: Map<String, Value>): TerrainState.Holder = TerrainState.Holder(
     rasterDemSourceState?.save(),
     properties,

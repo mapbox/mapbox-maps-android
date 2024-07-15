@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 
@@ -19,7 +18,6 @@ import com.mapbox.maps.extension.compose.R
  */
 @MapboxMapScopeMarker
 @Immutable
-@MapboxExperimental
 public class MapLogoScope internal constructor(
   private val boxScope: BoxScope
 ) {
@@ -36,7 +34,6 @@ public class MapLogoScope internal constructor(
    * @param alignment The alignment of the [Logo] within the Map.
    */
   @Composable
-  @MapboxExperimental
   public fun Logo(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(4.dp),

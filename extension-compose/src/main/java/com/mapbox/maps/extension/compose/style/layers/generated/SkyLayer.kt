@@ -8,7 +8,6 @@ import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
@@ -28,7 +27,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param skyLayerState the state holder for [SkyLayer]'s properties.
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
 public fun SkyLayer(
@@ -78,7 +76,6 @@ public fun SkyLayer(
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param init the lambda that will be applied to the remembered [SkyLayerState].
  */
-@MapboxExperimental
 @Composable
 @MapboxMapComposable
 public inline fun SkyLayer(

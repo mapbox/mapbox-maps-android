@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
@@ -52,7 +51,6 @@ import kotlinx.coroutines.awaitCancellation
  * @param content The content of the map.
  */
 @Composable
-@MapboxExperimental
 public fun MapboxMap(
   modifier: Modifier = Modifier,
   composeMapInitOptions: ComposeMapInitOptions = with(LocalDensity.current) {

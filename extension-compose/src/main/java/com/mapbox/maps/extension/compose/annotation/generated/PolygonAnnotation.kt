@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PolygonAnnotationNode
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -30,7 +29,6 @@ import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManage
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public fun PolygonAnnotation(
   points: List<List<Point>>,
   onClick: (PolygonAnnotation) -> Boolean = { false },
@@ -78,7 +76,6 @@ public fun PolygonAnnotation(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public inline fun PolygonAnnotation(
   points: List<List<Point>>,
   noinline onClick: (PolygonAnnotation) -> Boolean = { false },

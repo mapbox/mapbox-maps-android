@@ -30,7 +30,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -38,7 +37,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(MapboxExperimental::class)
 public class MapIntegrationTests {
 
   @get:Rule

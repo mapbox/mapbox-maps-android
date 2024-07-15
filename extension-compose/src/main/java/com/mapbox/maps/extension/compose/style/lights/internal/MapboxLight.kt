@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.compose.style.lights.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.lights.generated.AmbientLightState
 import com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState
@@ -11,7 +10,6 @@ import com.mapbox.maps.extension.compose.style.lights.generated.FlatLightState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 
-@MapboxExperimental
 internal sealed class MapboxLight {
   internal class DynamicLight(
     private val directionalLightState: List<DirectionalLightState>,

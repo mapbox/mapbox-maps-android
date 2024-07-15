@@ -13,7 +13,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.BooleanValue
@@ -40,7 +39,6 @@ import java.util.Objects
  * @param init A function initialise this [DirectionalLightState].
  */
 @Composable
-@MapboxExperimental
 public inline fun rememberDirectionalLightState(
   id: String = remember {
     generateRandomLightId("directional")
@@ -56,7 +54,6 @@ public inline fun rememberDirectionalLightState(
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/light)
  */
-@MapboxExperimental
 @Stable
 public class DirectionalLightState internal constructor(
   /**
@@ -263,7 +260,6 @@ public class DirectionalLightState internal constructor(
     )
   }
 
-  @MapboxExperimental
   @Composable
   internal fun UpdateProperties(mapboxMap: MapboxMap) {
     UpdateCastShadows(mapboxMap)
@@ -326,7 +322,6 @@ public class DirectionalLightState internal constructor(
    *
    * @param savedProperties properties to be saved.
    */
-  @MapboxExperimental
   @Parcelize
   @TypeParceler<Value, ValueParceler>
   public data class Holder(

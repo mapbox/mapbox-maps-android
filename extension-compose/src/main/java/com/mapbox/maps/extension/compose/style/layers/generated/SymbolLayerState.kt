@@ -26,7 +26,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  *
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#symbol)
  */
-@MapboxExperimental
 @Stable
 public class SymbolLayerState private constructor(
   initialIconAllowOverlap: BooleanValue,
@@ -891,12 +890,14 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateIconOcclusionOpacity(layerNode: LayerNode) {
     if (iconOcclusionOpacity.notInitial) {
       layerNode.setProperty("icon-occlusion-opacity", iconOcclusionOpacity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateIconOcclusionOpacityTransition(layerNode: LayerNode) {
     if (iconOcclusionOpacityTransition.notInitial) {
       layerNode.setProperty("icon-occlusion-opacity-transition", iconOcclusionOpacityTransition.value)
@@ -993,12 +994,14 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateTextOcclusionOpacity(layerNode: LayerNode) {
     if (textOcclusionOpacity.notInitial) {
       layerNode.setProperty("text-occlusion-opacity", textOcclusionOpacity.value)
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateTextOcclusionOpacityTransition(layerNode: LayerNode) {
     if (textOcclusionOpacityTransition.notInitial) {
       layerNode.setProperty("text-occlusion-opacity-transition", textOcclusionOpacityTransition.value)

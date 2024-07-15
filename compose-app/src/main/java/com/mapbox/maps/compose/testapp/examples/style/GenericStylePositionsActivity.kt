@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -45,7 +44,6 @@ import com.mapbox.maps.extension.compose.style.styleImportsConfig
  * Example to showcase the usage of [slotsContent] and [layerPositionedContent] to arrange contents within the
  * base style using [GenericStyle] API.
  */
-@OptIn(MapboxExperimental::class)
 public class GenericStylePositionsActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
