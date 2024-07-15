@@ -54,6 +54,7 @@ public class PolylineAnnotationState private constructor(
   /**
    * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
    */
+  @MapboxExperimental
   public var lineZOffset: Double? by mutableStateOf(initialLineZOffset)
   /**
    * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.

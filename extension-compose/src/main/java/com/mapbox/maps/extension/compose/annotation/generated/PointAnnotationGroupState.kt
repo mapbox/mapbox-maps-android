@@ -186,6 +186,7 @@ public class PointAnnotationGroupState private constructor(
   /**
    * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels.
    */
+  @MapboxExperimental
   public var iconOcclusionOpacity: Double? by mutableStateOf(initialIconOcclusionOpacity)
   /**
    * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.
@@ -198,6 +199,7 @@ public class PointAnnotationGroupState private constructor(
   /**
    * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels.
    */
+  @MapboxExperimental
   public var textOcclusionOpacity: Double? by mutableStateOf(initialTextOcclusionOpacity)
   /**
    * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of textTranslate is in density-independent pixels.

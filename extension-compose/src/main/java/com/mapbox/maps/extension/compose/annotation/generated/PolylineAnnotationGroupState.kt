@@ -68,6 +68,7 @@ public class PolylineAnnotationGroupState private constructor(
   /**
    * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when {@link PropertyFactory#lineOpacity} has data-driven styling.
    */
+  @MapboxExperimental
   public var lineOcclusionOpacity: Double? by mutableStateOf(initialLineOcclusionOpacity)
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of lineTranslate is in density-independent pixels.
