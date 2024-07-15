@@ -106,12 +106,10 @@ You can set the initial map style with `MapStyle` composable function and the in
     setContent {
       MapboxMap(
         Modifier.fillMaxSize(),
-        mapViewportState = remember {
-          MapViewportState().apply {
-            setCameraOptions {
-              center(Point.fromLngLat(24.9384, 60.1699))
-              zoom(9.0)
-            }
+        mapViewportState = rememberMapViewportState {
+          setCameraOptions {
+            center(Point.fromLngLat(24.9384, 60.1699))
+            zoom(9.0)
           }
         },
         style = {
@@ -205,9 +203,9 @@ The following example showcases adding a button to do a `flyTo` animation to the
 
 ### Add Annotations to the map
 
-The full Annotation support is added with the initial compose extension release 0.1.0. `PointAnnotation`/`CircleAnnotation`/`PolygonAnnotation`/`PolylineAnnotation` can be added as composable functions within the content of the `MapboxMap` composable funciton.
+The full Annotation support is added with the initial compose extension release 0.1.0. `PointAnnotation`/`CircleAnnotation`/`PolygonAnnotation`/`PolylineAnnotation` can be added as composable functions within the content of the `MapboxMap` composable function.
 
-We also exposed `AnnotationGroup` composable function to efficiently add a list of annotations to the map, and Point and Circle annotations within the same group can be configured to be clustered.
+`AnnotationGroup` composable functions are also introduced additionally to efficiently add a list of annotations to the map, and Point and Circle annotations within the same group can be configured to be clustered.
 
 #### Add a single `CircleAnnotation` to the map
 
@@ -218,11 +216,9 @@ The following example showcases adding one circle annotation to the map:
     super.onCreate(savedInstanceState)
     setContent {
       MapboxMap(modifier = Modifier.fillMaxSize()) {
-        // Add a single circle annotation at null island. 
+        // Add a single circle annotation at null island.
         CircleAnnotation(
           point = Point.fromLngLat(0.0, 0.0),
-          circleRadius = 20.0,
-          circleColorInt = Color.BLUE,
           onClick = {
             Toast.makeText(
               this@CircleAnnotationActivity,
@@ -231,13 +227,16 @@ The following example showcases adding one circle annotation to the map:
             ).show()
             true
           }
-        )
+        ) {
+          circleRadius = 20.0
+          circleColor = Color.Blue
+        }
       }
     }
   }
 ```
 
-#### Add multiple `CircleAnnotations` to the map in a group(more efficent for large number of annotations)
+#### Add multiple `CircleAnnotations` to the map in a group(more efficient for large number of annotations)
 
 Adding multiple Annotations to the map using `AnnotationGroup` is more efficient, as they are backed by the same `AnnotationManager` and will be processed in batch and rendered in the same layer.
 
@@ -327,8 +326,10 @@ The following example showcases adding `ViewAnnotation` that holds a `Button` to
         ViewAnnotation(
           options = viewAnnotationOptions {
             // set the view annotation associated geometry
-            geometry(HELSINKI)
-            anchor(ViewAnnotationAnchor.BOTTOM)
+            geometry(Point.fromLngLat(0.0, 0.0))
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.BOTTOM)
+            }
             allowOverlap(false)
           }
         ) {
@@ -397,35 +398,36 @@ MapboxMap(
 
 ### Gestures settings
 
-The following example showcases how to remember a `MutableState` of the `GesturesSettings` and update the settings through user interaction:
+The following example showcases how to change the `GesturesSettings` through hoisted `MapState`:
 
 ```kotlin
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      // Hold the hoisted gesturesSettings as mutable state to manipulate the gestures settings.
-      var gesturesSettings by remember {
-        mutableStateOf(DefaultSettingsProvider.defaultGesturesSettings)
-      }
+      // Hold the hoisted mapState to manipulate the map settings including gestures settings.
+      val mapState = rememberMapState()
       Box(modifier = Modifier.fillMaxSize()) {
-        // Add a MapboxMap with the gesturesSettings
+        // Add a MapboxMap with the mapState.
         MapboxMap(
           modifier = Modifier.fillMaxSize(),
-          gesturesSettings = gesturesSettings
+          mapState = mapState
         )
         // Add a button on top of the map
         Button(
           onClick = {
-            gesturesSettings = gesturesSettings.toBuilder().setScrollEnabled(false).build()
+            mapState.apply {
+              gesturesSettings = gesturesSettings.toBuilder().setScrollEnabled(false).build()
+            }
           }
         ) {
           Text(text = "Disable scroll gesture")
         }
       }
+    }
   }
 ```
 
-### Work with runtime styling (work in progress)
+### Work with runtime styling
 
 The map style can be set through `MapboxStyleComposable`, currently we expose following Style composable functions:
 
@@ -448,54 +450,64 @@ In case if you need the layer/source id later for other purpose, e.g. query rend
 The following example showcases how to work with runtime styling with composable functions:
 
 ```kotlin
-// Create a geoJsonSourceState to be used later with layers.
-val geoJsonSource: GeoJsonSourceState = rememberGeoJsonSourceState {
-  // Set the initial geoJsonData as a Point
-  data = GeoJSONData(Point.fromLngLat(0.0, 0.0))
-}
-MapboxMap(
-  style = {
-    // Load mapbox standard style
-    MapboxStandardStyle(
-      // Add a background layer to the 'top' slot of the standard style
-      topSlot = {
-        BackgroundLayer(
-          backgroundColor = BackgroundColor(Color.Yellow),
-          backgroundOpacity = BackgroundOpacity(0.3)
-        )
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      // Create a geoJsonSourceState to be used later with layers.
+      val geoJsonSource: GeoJsonSourceState = rememberGeoJsonSourceState {
+        // Set the initial geoJsonData as a Point
+        data = GeoJSONData(Point.fromLngLat(0.0, 0.0))
       }
-    )
+      MapboxMap(
+        style = {
+          // Load mapbox standard style
+          MapboxStandardStyle(
+            // Add a background layer to the 'top' slot of the standard style
+            topSlot = {
+              BackgroundLayer {
+                backgroundColor = ColorValue(Color.Yellow)
+                backgroundOpacity = DoubleValue(0.3)
+              }
+            }
+          ) {
+            // Set the light preset of Mapbox standard style to dawn through configuration.
+            lightPreset = LightPresetValue.DAWN
+          }
+        }
+      ) {
+        // Insert a circle layer with the given geoJsonSource, to display a background circle.
+        CircleLayer(
+          sourceState = geoJsonSource
+        ) {
+          circleColor = ColorValue(Color.Cyan)
+          circleRadius = DoubleValue(50.0)
+          circleRadiusTransition = Transition(durationMillis = 1000L)
+        }
+        // Insert a symbol layer with the same geoJsonSource, to display a text above the circle.
+        SymbolLayer(
+          sourceState = geoJsonSource
+        ) {
+          textField = FormattedValue("Hello")
+          textColor = ColorValue(Color.Black)
+          // Use expression to set the text size as data driven property
+          textSize = DoubleValue(
+            Expression.interpolate {
+              linear()
+              zoom()
+              stop {
+                literal(0.0)
+                literal(10.0)
+              }
+              stop {
+                literal(10.0)
+                literal(20.0)
+              }
+            }
+          )
+        }
+      }
+    }
   }
-) {
-  // Insert a circle layer with the given geoJsonSource, to display a background circle.
-  CircleLayer(
-    sourceState = geoJsonSource,
-    circleColor = CircleColor(Color.Cyan),
-    circleRadius = CircleRadius(50.0),
-    circleRadiusTransition = Transition(duration = 1000L)
-  )
-  // Insert a symbol layer with the same geoJsonSource, to display a text above the circle.
-  SymbolLayer(
-    sourceState = geoJsonSource,
-    textField = TextField("Hello"),
-    textColor = TextColor(Color.Black),
-    // Use expression to set the text size as data driven property
-    textSize = TextSize(
-      Expression.interpolate {
-        linear()
-        zoom()
-        stop {
-          literal(0.0)
-          literal(10.0)
-        }
-        stop {
-          literal(10.0)
-          literal(20.0)
-        }
-      }
-    )
-  )
-}
 ```
 
 ## Compatibility with Maps SDK v11
@@ -516,5 +528,7 @@ Map ornament(Compass, ScaleBar, Attribution, Logo) support | ✅ | v11.3.0+
 Style composable function support | ✅ | v11.3.0+
 Style layer/source support | ✅ | v11.3.0+
 Style projection support | ✅ | v11.3.0+
+Style terrain support | ✅ | v11.5.0+
+Style light support | ✅ | v11.5.0+
 
 View [LICENSE.md](LICENSE.md) for all dependencies used by this extension.
