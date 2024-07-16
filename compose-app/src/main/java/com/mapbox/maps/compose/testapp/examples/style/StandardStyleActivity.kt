@@ -24,6 +24,7 @@ import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.style.utils.transition
 
 /**
  * Example to showcase usage of the configs of `MapboxStandardStyle`.
@@ -148,7 +149,14 @@ public class StandardStyleActivity : ComponentActivity() {
               }
             },
             style = {
-              MapboxStandardStyle {
+              MapboxStandardStyle(
+                styleTransition = remember {
+                  transition {
+                    duration(1_000)
+                    enablePlacementTransitions(true)
+                  }
+                }
+              ) {
                 showPlaceLabels = BooleanValue(enablePlaceLabels)
                 showRoadLabels = BooleanValue(enableRoadLabels)
                 showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)

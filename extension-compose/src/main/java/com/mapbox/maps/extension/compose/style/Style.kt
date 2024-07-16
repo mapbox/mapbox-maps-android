@@ -9,6 +9,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
@@ -21,6 +22,7 @@ import com.mapbox.maps.extension.compose.style.internal.StyleSlot
 import com.mapbox.maps.extension.compose.style.lights.LightsState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
+import com.mapbox.maps.extension.style.utils.transition
 
 /**
  * A simple composable function to set the style to the map without slots or import configs.
@@ -31,6 +33,7 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
+ * @param styleTransition Transition options applied when loading the style.
  */
 @Composable
 @MapboxStyleComposable
@@ -42,6 +45,7 @@ public fun MapStyle(
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
   lightsState: LightsState = LightsState.INITIAL,
+  styleTransition: TransitionOptions = remember { transition { } },
 ) {
   GenericStyle(
     style = style,
@@ -50,6 +54,7 @@ public fun MapStyle(
     atmosphereState = atmosphereState,
     terrainState = terrainState,
     lightsState = lightsState,
+    styleTransition = styleTransition,
   )
 }
 
@@ -225,6 +230,7 @@ public fun importConfigs(init: ImportConfigs.() -> Unit): ImportConfigs =
  * @param atmosphereState The atmosphere to be set to the map. By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
+ * @param styleTransition Transition options applied when loading the style.
  */
 @Composable
 @MapboxStyleComposable
@@ -239,6 +245,7 @@ public fun GenericStyle(
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
   lightsState: LightsState = LightsState.INITIAL,
+  styleTransition: TransitionOptions = remember { transition { } },
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -265,6 +272,9 @@ public fun GenericStyle(
         }
         update(terrainState) {
           updateTerrain(terrainState)
+        }
+        set(styleTransition) {
+          updateStyleTransition(it)
         }
       }
     ) {

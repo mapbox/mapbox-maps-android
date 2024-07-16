@@ -18,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `StandardStyleConfigurationState`.
 * [compose] Introduce `StyleImage` constructor with `Image` type, and add `rememberStyleImage` composable functions to create and remember `StyleImage`.
 * [compose] Add extension function to `*AnnotationOptions` to handle compose `Color`, use it in `*AnnotationGroup` composable functions for convenience.
+* [compose] Add style transition parameter in `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
 * Modify `awaitCameraForCoordinates` extension function to use `MapCameraManagerDelegate` as receiver type.
 * Modify `queryRenderedFeatures` and `querySourceFeatures` extension functions to use `MapFeatureQueryDelegate` as receiver type.
 * Introduce asynchronous overloaded method `ViewAnnotationManager.cameraForAnnotations` better covering some corner cases.

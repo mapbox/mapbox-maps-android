@@ -4,6 +4,7 @@ import android.util.Log
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleDataLoadedType
+import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
@@ -99,10 +100,10 @@ internal class MapStyleNode(
     mapboxMap.loadStyle(style) {
       logD(TAG, "loadStyle $style finished")
 
-    // TODO: create an AtmosphereState with the gl-native default prefilled then read the
-    //       properties from the style (gl-native could be optimized to only return only the
-    //       mutated ones from their default values, for now we need to read them individually) and
-    //       merge them as the `styleAtmosphereState`.
+      // TODO: create an AtmosphereState with the gl-native default prefilled then read the
+      //       properties from the style (gl-native could be optimized to only return only the
+      //       mutated ones from their default values, for now we need to read them individually) and
+      //       merge them as the `styleAtmosphereState`.
     }
   }
 
@@ -152,6 +153,14 @@ internal class MapStyleNode(
           it.attachToLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
         }
         terrainState.applier.attachTo(mapboxMap)
+      }
+    }
+  }
+
+  internal fun updateStyleTransition(transition: TransitionOptions) {
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        mapboxMap.setStyleTransition(transition)
       }
     }
   }

@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.compose.style.standard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.mapbox.maps.Style
+import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
@@ -14,6 +15,7 @@ import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.styleImportsConfig
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
+import com.mapbox.maps.extension.style.utils.transition
 
 /**
  * The convenient composable function to set a Mapbox Standard style to the map, with available slots
@@ -27,6 +29,7 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
+ * @param styleTransition Transition options applied when loading the style.
  * @param standardStyleConfigurationState The configurations for [MapboxStandardStyle].
  */
 @Composable
@@ -40,6 +43,7 @@ public fun MapboxStandardStyle(
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
   lightsState: LightsState = LightsState.INITIAL,
+  styleTransition: TransitionOptions = remember { transition { } },
   standardStyleConfigurationState: StandardStyleConfigurationState = remember {
     StandardStyleConfigurationState()
   }
@@ -86,6 +90,7 @@ public fun MapboxStandardStyle(
     atmosphereState = atmosphereState,
     terrainState = terrainState,
     lightsState = lightsState,
+    styleTransition = styleTransition,
   )
 }
 
@@ -101,6 +106,7 @@ public fun MapboxStandardStyle(
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
+ * @param styleTransition Transition options applied when loading the style.
  * @param init The lambda that will be applied to the remembered [StandardStyleConfigurationState].
  */
 @Composable
@@ -114,6 +120,7 @@ public fun MapboxStandardStyle(
   atmosphereState: AtmosphereState = remember { AtmosphereState() },
   terrainState: TerrainState = TerrainState.INITIAL,
   lightsState: LightsState = LightsState.INITIAL,
+  styleTransition: TransitionOptions = remember { transition { } },
   init: StandardStyleConfigurationState.() -> Unit
 ) {
   MapboxStandardStyle(
@@ -125,6 +132,7 @@ public fun MapboxStandardStyle(
     atmosphereState = atmosphereState,
     terrainState = terrainState,
     lightsState = lightsState,
+    styleTransition = styleTransition,
     standardStyleConfigurationState = remember {
       StandardStyleConfigurationState()
     }.apply(init)

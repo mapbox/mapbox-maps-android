@@ -869,10 +869,18 @@ package com.mapbox.maps.extension.compose.style {
     return <init>()
 }), com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
+    return transition({ 
+    
+    })
+}));
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL);
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
+    return transition({ 
+    
+    })
+}));
     method public static com.mapbox.maps.extension.compose.style.ImportConfigs importConfigs(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfigs,kotlin.Unit> init);
     method public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
     method public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
@@ -3598,12 +3606,20 @@ package com.mapbox.maps.extension.compose.style.standard {
   public final class MapboxStandardStyleKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState standardStyleConfigurationState = remember({ 
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
+    return transition({ 
+    
+    })
+}), com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState standardStyleConfigurationState = remember({ 
     return <init>()
 }));
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
-}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState,kotlin.Unit> init);
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
+    return transition({ 
+    
+    })
+}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState,kotlin.Unit> init);
   }
 
   @androidx.compose.runtime.Stable public final class StandardStyleConfigurationState {
