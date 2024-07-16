@@ -2,9 +2,7 @@ package com.mapbox.maps.extension.compose.internal
 
 import androidx.compose.runtime.AbstractApplier
 import com.mapbox.maps.MapView
-import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.logD
-import com.mapbox.maps.logW
 
 /**
  * Defines the contract of a MapNode, the MapNode will be notified when it's added/moved/removed from
@@ -112,13 +110,11 @@ internal class MapApplier(
   }
 
   private fun printNodesTree(tag: String = TAG) {
-    if (BuildConfig.DEBUG) {
-      walkChildren(tag = tag, node = root)
-    }
+    walkChildren(tag = tag, node = root)
   }
 
   private fun walkChildren(tag: String = TAG, prefix: String = "\t", node: MapNode) {
-    logW(tag, "$prefix - $node")
+    logD(tag, "$prefix - $node")
     node.children.forEach {
       walkChildren(tag = tag, prefix = "$prefix\t", node = it)
     }
