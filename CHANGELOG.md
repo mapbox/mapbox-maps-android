@@ -28,6 +28,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Deprecate `MapboxMap.getDebug()`/`MapboxMap.setDebug()` in favour of `MapView.debugOptions` taking new enhanced enum `MapViewDebugOptions` as an argument.
 * Introduce `MapViewDebugOptions.CAMERA` and `MapViewDebugOptions.PADDING` debug options to track current camera state and visualize camera paddings.
 * Expose experimental `ClipLayer` to remove 3D data (fill extrusions, landmarks, instanced trees) and symbols.
+* Enable r8 optimisations for all the Mapbox extensions and plugins in consumer proguard file, the optimisation will apply when minify is enabled in app's build settings.
 
 ## Bug fixes 🐞
 * [compose] Fix minZoom/maxZoom not working for layers.
