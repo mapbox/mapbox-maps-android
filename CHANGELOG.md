@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 
-# 11.4.2
+
+# 11.4.2 July 17, 2024
 ## Bug fixes 🐞
 * Fix local glyph rasterization to ensure the correct Typeface is used.
 
