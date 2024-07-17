@@ -1742,3 +1742,56 @@ class TextWritingMode private constructor(override val value: String) : LayerPro
     }
   }
 }
+// CLIP_LAYER_TYPES: Layer types that will also be removed if fallen below this clip layer.
+/**
+ * Layer types that will also be removed if fallen below this clip layer.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class ClipLayerTypes private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is ClipLayerTypes &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "ClipLayerTypes(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * If present the clip layer would remove all 3d model layers below it. Currently only instanced models (e.g. trees) are removed.
+     */
+    @JvmField
+    val MODEL = ClipLayerTypes("model")
+    /**
+     * If present the clip layer would remove all symbol layers below it.
+     */
+    @JvmField
+    val SYMBOL = ClipLayerTypes("symbol")
+
+    /**
+     * Utility function to get [ClipLayerTypes] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): ClipLayerTypes {
+      return when (value) {
+        "MODEL" -> MODEL
+        "SYMBOL" -> SYMBOL
+        else -> throw RuntimeException("ClipLayerTypes.valueOf does not support [$value]")
+      }
+    }
+  }
+}

@@ -43,7 +43,7 @@ class CustomRasterSourceTest {
 
     testSource = customRasterSource("testId") {
       // mandatory builder argument
-      tileStatusChangedFunction(mockk())
+      clientCallback(mockk())
     }
   }
 

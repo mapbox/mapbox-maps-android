@@ -105,4 +105,5 @@
     <string name="description_custom_raster_source">Showcase the usage of a custom raster source.</string>
     <string name="description_slot_layer">Showcase the usage of slot layer.</string>
     <string name="description_raster_particles">Showcase the usage of a raster particle layer.</string>
+    <string name="description_clip_layer">Showcase the usage of clip layer.</string>
 </resources>

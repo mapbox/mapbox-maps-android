@@ -1270,6 +1270,67 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class CircleTranslateAnchorValue.Companion {
   }
 
+  public final class ClipLayerKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ClipLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    return generateRandomLayerId("clip")
+}), com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerState clipLayerState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void ClipLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    return generateRandomLayerId("clip")
+}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerState,kotlin.Unit> init);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ClipLayerState {
+    ctor public ClipLayerState();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue getClipLayerTypes();
+    method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
+    method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
+    method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
+    method public void setClipLayerTypes(com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue);
+    method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
+    method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue clipLayerTypes;
+    property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
+    property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
+    property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ClipLayerTypes {
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes MODEL;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes SYMBOL;
+  }
+
+  public static final class ClipLayerTypes.Companion {
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ClipLayerTypesListValue {
+    ctor public ClipLayerTypesListValue(com.mapbox.bindgen.Value value);
+    ctor public ClipLayerTypesListValue(java.util.List<com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes> value);
+    ctor public ClipLayerTypesListValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue DEFAULT;
+  }
+
+  public static final class ClipLayerTypesListValue.Companion {
+  }
+
   public final class FillExtrusionLayerKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void FillExtrusionLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("fill-extrusion")

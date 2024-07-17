@@ -6,9 +6,11 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.CustomLayerRenderParameters
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.ShadowStyleManager
+import com.mapbox.maps.extension.style.layers.generated.clipLayer
 import com.mapbox.maps.extension.style.layers.generated.slotLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import io.mockk.*
@@ -127,6 +129,27 @@ class LayerExtTest {
             "id" to Value(layerId),
             "slot" to Value(slotName),
             "type" to Value("slot"),
+          )
+        ),
+        any()
+      )
+    }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun testClipLayerAdd() {
+    val layerId = "layer-id"
+    val sourceId = "source-id"
+    val layer = clipLayer(layerId, sourceId) {}
+    style.addLayer(layer)
+    verify(exactly = 1) {
+      style.addStyleLayer(
+        Value.valueOf(
+          hashMapOf(
+            "id" to Value(layerId),
+            "source" to Value(sourceId),
+            "type" to Value("clip"),
           )
         ),
         any()

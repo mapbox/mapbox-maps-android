@@ -1550,6 +1550,71 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public static com.mapbox.maps.extension.style.layers.generated.CircleLayer circleLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.CircleLayerDsl,kotlin.Unit> block);
   }
 
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class ClipLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl {
+    ctor public ClipLayer(String layerId, String sourceId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public java.util.List<java.lang.String>? getClipLayerTypes();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getClipLayerTypesAsExpression();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFilter();
+    method public String getLayerId();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
+    method public String? getSlot();
+    method public String getSourceId();
+    method public String? getSourceLayer();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getVisibility();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer sourceLayer(String sourceLayer);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+    property public final java.util.List<java.lang.String>? clipLayerTypes;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? clipLayerTypesAsExpression;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? filter;
+    property public String layerId;
+    property public Double? maxZoom;
+    property public Double? minZoom;
+    property public String? slot;
+    property public final String sourceId;
+    property public final String? sourceLayer;
+    property public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? visibility;
+    property public com.mapbox.maps.extension.style.expressions.generated.Expression? visibilityAsExpression;
+    field public static final com.mapbox.maps.extension.style.layers.generated.ClipLayer.Companion Companion;
+  }
+
+  public static final class ClipLayer.Companion {
+    method public java.util.List<java.lang.String>? getDefaultClipLayerTypes();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultClipLayerTypesAsExpression();
+    method public Double? getDefaultMaxZoom();
+    method public Double? getDefaultMinZoom();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
+    property public final java.util.List<java.lang.String>? defaultClipLayerTypes;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultClipLayerTypesAsExpression;
+    property public final Double? defaultMaxZoom;
+    property public final Double? defaultMinZoom;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface ClipLayerDsl {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes = listOf());
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer sourceLayer(String sourceLayer);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+  }
+
+  public final class ClipLayerKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl,kotlin.Unit> block);
+  }
+
   @UiThread public final class FillExtrusionLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayerDsl {
     ctor public FillExtrusionLayer(String layerId, String sourceId);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuation(double fillExtrusionAmbientOcclusionGroundAttenuation);
@@ -5362,6 +5427,19 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
   public static final class CircleTranslateAnchor.Companion {
     method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class ClipLayerTypes {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes MODEL;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes SYMBOL;
+  }
+
+  public static final class ClipLayerTypes.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes valueOf(String value);
   }
 
   public final class FillExtrusionTranslateAnchor {

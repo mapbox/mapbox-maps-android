@@ -1121,6 +1121,61 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerKt {
+	public static final fun ClipLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ClipLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerState {
+	public fun <init> ()V
+	public final fun getClipLayerTypes ()Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setClipLayerTypes (Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;)V
+	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes$Companion;
+	public static final field MODEL Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes;
+	public static final field SYMBOL Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes;
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerKt {
 	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V

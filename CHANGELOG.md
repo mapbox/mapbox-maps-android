@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Replace color int and color string property types in `*Annotation` with compose `Color` type.
 * [compose] Replace `PointAnnotation.iconImageBitmap` and `PointAnnotation.iconImage` with `PointAnnotationState.iconImage` with `IconImage` type, `IconImage` can be constructed with either a image id `String` or a `Bitmap`, and introduced `rememberIconImage` to build and remember a bitmap from `Painter` or from a drawable resource id.
 * [compose] Introduce `StandardStyleConfigurationState` class to hold the configurations of `MapboxStandardStyle`, and move `lightPreset` config from `MapboxStandardStyle` to `StandardStyleConfigurationState`; consider using overload method `MapboxStandardStyle` with trailing init lambda for easier migration.
+* Experimental `CustomRasterSourceOptions.Builder` now accepts `CustomRasterSourceClient` containing `CustomRasterSourceTileStatusChangedCallback` instead of `CustomRasterSourceTileStatusChangedCallback` interface directly.
 
 ## Features ✨ and improvements 🏁
 * **[compose] Promote Compose Extension to stable.**
@@ -26,9 +27,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Mark synchronous methods `MapboxMap.cameraForCoordinates` and `ViewAnnotationManager.cameraForAnnotations` with `@MapboxDelicateApi`. Consider using asynchronous overloaded methods instead.
 * Deprecate `MapboxMap.getDebug()`/`MapboxMap.setDebug()` in favour of `MapView.debugOptions` taking new enhanced enum `MapViewDebugOptions` as an argument.
 * Introduce `MapViewDebugOptions.CAMERA` and `MapViewDebugOptions.PADDING` debug options to track current camera state and visualize camera paddings.
+* Expose experimental `ClipLayer` to remove 3D data (fill extrusions, landmarks, instanced trees) and symbols.
 
 ## Bug fixes 🐞
 * [compose] Fix minZoom/maxZoom not working for layers.
+* [compose] Fix `java.lang.UnsupportedOperationException` when setting `textWritingMode` and `textVariableAnchor`.
 * Fix compass view ignoring `enabled` option when it is set in `updateSettings()`.
 
 

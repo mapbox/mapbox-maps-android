@@ -1794,4 +1794,78 @@ public data class SkyTypeValue(public val value: Value) {
     public val ATMOSPHERE: SkyTypeValue = SkyTypeValue(Value("atmosphere"))
   }
 }
+
+/**
+ * Layer types that will also be removed if fallen below this clip layer. Default value: [].
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class ClipLayerTypesListValue(public val value: Value) {
+  /**
+   * Construct the [ClipLayerTypesListValue] with [ClipLayerTypes].
+   */
+  public constructor(value: List<ClipLayerTypes>) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * Construct the [ClipLayerTypesListValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: ClipLayerTypesListValue = ClipLayerTypesListValue(Value.valueOf("ClipLayerTypesListValue.INITIAL"))
+
+    /**
+     * Default value for [ClipLayerTypesListValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: ClipLayerTypesListValue = ClipLayerTypesListValue(Value.nullValue())
+  }
+}
+
+/**
+ *  Layer types that will also be removed if fallen below this clip layer. Default value: [].
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class ClipLayerTypes internal constructor(public val value: Value) {
+  /**
+   * Public companion object.
+   */
+  public companion object {
+
+    /**
+     * If present the clip layer would remove all 3d model layers below it. Currently only instanced models (e.g. trees) are removed.
+     */
+    @JvmField
+    public val MODEL: ClipLayerTypes = ClipLayerTypes(Value("model"))
+
+    /**
+     * If present the clip layer would remove all symbol layers below it.
+     */
+    @JvmField
+    public val SYMBOL: ClipLayerTypes = ClipLayerTypes(Value("symbol"))
+  }
+}
 // End of generated file.

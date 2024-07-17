@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CanonicalTileID
+import com.mapbox.maps.CustomRasterSourceClient
 import com.mapbox.maps.CustomRasterSourceTileData
 import com.mapbox.maps.CustomRasterSourceTileStatus
 import com.mapbox.maps.MapboxExperimental
@@ -49,20 +50,24 @@ class CustomRasterSourceActivity : AppCompatActivity() {
       scrollEnabled = false
     }
     val requiredTiles = mutableListOf<CanonicalTileID>()
-    customRasterSource = customRasterSource(CUSTOM_RASTER_SOURCE_ID) {
-      tileSize(TILE_SIZE.toShort())
-      tileStatusChangedFunction { tileId: CanonicalTileID, status: CustomRasterSourceTileStatus ->
-        logI(TAG, "tileStatusChangedFunction called: status=${status.name}, tileId=[x=${tileId.x}, y=${tileId.y}, z=${tileId.z}]")
-        if (status == CustomRasterSourceTileStatus.REQUIRED) {
-          requiredTiles.add(tileId)
-          refresh(requiredTiles)
-        } else {
-          if (requiredTiles.contains(tileId)) {
-            requiredTiles.remove(tileId)
-            customRasterSource.setTileData(listOf(CustomRasterSourceTileData(tileId, null)))
-          }
+    val client = CustomRasterSourceClient { tileId: CanonicalTileID, status: CustomRasterSourceTileStatus ->
+      logI(
+        TAG,
+        "tileStatusChangedFunction called: status=${status.name}, tileId=[x=${tileId.x}, y=${tileId.y}, z=${tileId.z}]"
+      )
+      if (status == CustomRasterSourceTileStatus.REQUIRED) {
+        requiredTiles.add(tileId)
+        refresh(requiredTiles)
+      } else {
+        if (requiredTiles.contains(tileId)) {
+          requiredTiles.remove(tileId)
+          customRasterSource.setTileData(listOf(CustomRasterSourceTileData(tileId, null)))
         }
       }
+    }
+    customRasterSource = customRasterSource(CUSTOM_RASTER_SOURCE_ID) {
+      tileSize(TILE_SIZE.toShort())
+      clientCallback(client)
     }
     binding.mapView.mapboxMap.apply {
       setCamera(INITIAL_CAMERA)

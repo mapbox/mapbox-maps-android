@@ -1423,6 +1423,64 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayerK
 	public static final fun circleLayer (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 }
 
+public final class com/mapbox/maps/extension/style/layers/generated/ClipLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/ClipLayerDsl {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun clipLayerTypes (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public fun clipLayerTypes (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public final fun getClipLayerTypes ()Ljava/util/List;
+	public final fun getClipLayerTypesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public fun getLayerId ()Ljava/lang/String;
+	public fun getMaxZoom ()Ljava/lang/Double;
+	public fun getMinZoom ()Ljava/lang/Double;
+	public fun getSlot ()Ljava/lang/String;
+	public final fun getSourceId ()Ljava/lang/String;
+	public final fun getSourceLayer ()Ljava/lang/String;
+	public fun getVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+	public fun getVisibilityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public synthetic fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public synthetic fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/ClipLayer$Companion {
+	public final fun getDefaultClipLayerTypes ()Ljava/util/List;
+	public final fun getDefaultClipLayerTypesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
+	public final fun getDefaultMinZoom ()Ljava/lang/Double;
+	public final fun getDefaultVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/layers/generated/ClipLayerDsl {
+	public abstract fun clipLayerTypes (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun clipLayerTypes (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun visibility (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/ClipLayerDsl$DefaultImpls {
+	public static synthetic fun clipLayerTypes$default (Lcom/mapbox/maps/extension/style/layers/generated/ClipLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/ClipLayerKt {
+	public static final fun clipLayer (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+}
+
 public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl {
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
@@ -4374,6 +4432,21 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/C
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor$Companion {
 	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes$Companion;
+	public static final field MODEL Lcom/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes;
+	public static final field SYMBOL Lcom/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ClipLayerTypes;
 }
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/FillExtrusionTranslateAnchor : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
