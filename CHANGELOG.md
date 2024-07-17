@@ -3,6 +3,14 @@
 Mapbox welcomes participation and contributions from everyone.
 
 
+# 11.4.2
+## Bug fixes 🐞
+* Fix local glyph rasterization to ensure the correct Typeface is used.
+
+## Dependencies
+* Update gl-native to v11.4.1.
+
+
 # 11.4.1 June 03, 2024
 ## Bug fixes 🐞
 * Fix an issue that `getLight` API always returns null.
