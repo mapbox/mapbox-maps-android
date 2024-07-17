@@ -8,7 +8,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.PerformanceSamplerOptions
+import com.mapbox.maps.PerformanceStatisticsOptions
+import com.mapbox.maps.Style
+import com.mapbox.maps.debugoptions.MapViewDebugOptions
+import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
@@ -20,13 +27,15 @@ import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 class DebugModeActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
-  private val debugOptions: MutableList<MapDebugOptions> = mutableListOf(
-    MapDebugOptions.TILE_BORDERS,
-    MapDebugOptions.PARSE_STATUS,
-    MapDebugOptions.TIMESTAMPS,
-    MapDebugOptions.COLLISION,
-    MapDebugOptions.STENCIL_CLIP,
-    MapDebugOptions.DEPTH_BUFFER
+  private val debugOptions: MutableSet<MapViewDebugOptions> = mutableSetOf(
+    MapViewDebugOptions.TILE_BORDERS,
+    MapViewDebugOptions.PARSE_STATUS,
+    MapViewDebugOptions.TIMESTAMPS,
+    MapViewDebugOptions.COLLISION,
+    MapViewDebugOptions.STENCIL_CLIP,
+    MapViewDebugOptions.DEPTH_BUFFER,
+    MapViewDebugOptions.CAMERA,
+    MapViewDebugOptions.PADDING,
   )
   private var resourceRequestCancelable: Cancelable? = null
   private var untypedEventCancelable: Cancelable? = null
@@ -50,7 +59,7 @@ class DebugModeActivity : AppCompatActivity() {
     mapboxMap.loadStyle(Style.STANDARD)
     setupPerformanceStatisticsCollection()
     binding.mapView.compass.opacity = 0.5f
-    mapboxMap.setDebug(debugOptions, true)
+    binding.mapView.debugOptions = debugOptions
     registerListeners(mapboxMap)
   }
 
@@ -156,25 +165,31 @@ class DebugModeActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.menu_debug_mode_tile_borders -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.TILE_BORDERS)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.TILE_BORDERS)
       }
       R.id.menu_debug_mode_parse_status -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.PARSE_STATUS)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.PARSE_STATUS)
       }
       R.id.menu_debug_mode_timestamps -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.TIMESTAMPS)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.TIMESTAMPS)
       }
       R.id.menu_debug_mode_collision -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.COLLISION)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.COLLISION)
       }
       R.id.menu_debug_mode_overdraw -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.OVERDRAW)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.OVERDRAW)
       }
       R.id.menu_debug_mode_stencil_clip -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.STENCIL_CLIP)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.STENCIL_CLIP)
       }
       R.id.menu_debug_mode_depth_buffer -> {
-        item.isChecked = toggleDebugOptions(MapDebugOptions.DEPTH_BUFFER)
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.DEPTH_BUFFER)
+      }
+      R.id.menu_debug_mode_camera_overlay -> {
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.CAMERA)
+      }
+      R.id.menu_debug_mode_padding_overlay -> {
+        item.isChecked = toggleDebugOptions(MapViewDebugOptions.PADDING)
       }
       else -> {
         return super.onOptionsItemSelected(item)
@@ -183,18 +198,15 @@ class DebugModeActivity : AppCompatActivity() {
     return true
   }
 
-  private fun toggleDebugOptions(option: MapDebugOptions): Boolean {
-    return if (debugOptions.contains(option)) {
-      mapboxMap.setDebug(debugOptions, false)
-      debugOptions.remove(option)
-      mapboxMap.setDebug(debugOptions, true)
-      false
-    } else {
-      mapboxMap.setDebug(debugOptions, false)
-      debugOptions.add(option)
-      mapboxMap.setDebug(debugOptions, true)
-      true
+  private fun toggleDebugOptions(option: MapViewDebugOptions): Boolean {
+    if (debugOptions.add(option)) {
+      binding.mapView.debugOptions = debugOptions
+      return true
     }
+
+    debugOptions.remove(option)
+    binding.mapView.debugOptions = debugOptions
+    return false
   }
 
   override fun onStart() {

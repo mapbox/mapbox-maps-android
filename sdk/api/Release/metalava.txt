@@ -115,6 +115,7 @@ package com.mapbox.maps {
     method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public final void createPlugin(com.mapbox.maps.plugin.Plugin plugin);
+    method public final java.util.Set<com.mapbox.maps.debugoptions.MapViewDebugOptions> getDebugOptions();
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
@@ -131,11 +132,13 @@ package com.mapbox.maps {
     method public final void removePlugin(String id);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
+    method public final void setDebugOptions(java.util.Set<com.mapbox.maps.debugoptions.MapViewDebugOptions>);
     method public void setMaximumFps(@IntRange(from=1L, to=kotlin.jvm.internal.IntCompanionObject.MAX_VALUE.toLong()) int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method @com.mapbox.maps.MapboxExperimental public final void setSnapshotLegacyMode(boolean enabled);
     method public android.graphics.Bitmap? snapshot();
     method public void snapshot(com.mapbox.maps.MapView.OnSnapshotReady listener);
+    property public final java.util.Set<com.mapbox.maps.debugoptions.MapViewDebugOptions> debugOptions;
     property public com.mapbox.maps.MapboxMap mapboxMap;
     property public final com.mapbox.maps.viewannotation.ViewAnnotationManager viewAnnotationManager;
     field public static final com.mapbox.maps.MapView.Companion Companion;
@@ -200,7 +203,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.CameraBounds getBounds();
     method public com.mapbox.maps.CameraState getCameraState();
     method public com.mapbox.maps.MapCenterAltitudeMode getCenterAltitudeMode();
-    method public java.util.List<com.mapbox.maps.MapDebugOptions> getDebug();
+    method @Deprecated public java.util.List<com.mapbox.maps.MapDebugOptions> getDebug();
     method public Double? getElevation(com.mapbox.geojson.Point coordinate);
     method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
     method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
@@ -266,7 +269,7 @@ package com.mapbox.maps {
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
     method public void setCenterAltitudeMode(com.mapbox.maps.MapCenterAltitudeMode mode);
     method public void setConstrainMode(com.mapbox.maps.ConstrainMode constrainMode);
-    method public void setDebug(java.util.List<? extends com.mapbox.maps.MapDebugOptions> debugOptions, boolean enabled);
+    method @Deprecated public void setDebug(java.util.List<? extends com.mapbox.maps.MapDebugOptions> debugOptions, boolean enabled);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public void setGestureInProgress(boolean inProgress);
@@ -543,6 +546,38 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! removeFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, String stateKey = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! resetFeatureStates(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! setFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
+  }
+
+}
+
+package com.mapbox.maps.debugoptions {
+
+  public final class MapViewDebugOptions {
+    method public com.mapbox.maps.debugoptions.MapViewDebugOptions copy(String name);
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions CAMERA;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions COLLISION;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions.Companion Companion;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions DEPTH_BUFFER;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions LAYERS2_DWIREFRAME;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions LAYERS3_DWIREFRAME;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions LIGHT;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions MODEL_BOUNDS;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions OVERDRAW;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions PADDING;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions PARSE_STATUS;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions STENCIL_CLIP;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions TERRAIN_WIREFRAME;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions TILE_BORDERS;
+    field public static final com.mapbox.maps.debugoptions.MapViewDebugOptions TIMESTAMPS;
+  }
+
+  public static final class MapViewDebugOptions.Companion {
+  }
+
+  public final class MapViewDebugOptionsKt {
+  }
+
+  public final class PaddingDebugViewKt {
   }
 
 }

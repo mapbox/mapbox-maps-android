@@ -37,7 +37,7 @@ class MapViewTypedArrayTest(
     mapView = MapView(
       mockk(relaxed = true),
       mockk(relaxed = true),
-      mapController
+      mapController,
     )
     context = mockk()
     val typedArray = mockk<TypedArray>()

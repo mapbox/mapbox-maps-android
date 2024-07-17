@@ -61,6 +61,7 @@ import com.mapbox.maps.Snapshotter;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.TileStoreUsageMode;
 import com.mapbox.maps.TransitionOptions;
+import com.mapbox.maps.debugoptions.MapViewDebugOptions;
 import com.mapbox.maps.extension.style.StyleContract;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
 import com.mapbox.maps.extension.style.expressions.types.FormatSection;
@@ -112,7 +113,9 @@ import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -606,6 +609,29 @@ public class JavaInterfaceChecker {
             });
       }
     });
+  }
+
+  private void debugOptions(MapView mapView) {
+    mapView.setDebugOptions(
+        new HashSet<>(
+            Arrays.asList(
+                MapViewDebugOptions.TILE_BORDERS,
+                MapViewDebugOptions.PARSE_STATUS,
+                MapViewDebugOptions.TIMESTAMPS,
+                MapViewDebugOptions.COLLISION,
+                MapViewDebugOptions.OVERDRAW,
+                MapViewDebugOptions.STENCIL_CLIP,
+                MapViewDebugOptions.DEPTH_BUFFER,
+                MapViewDebugOptions.MODEL_BOUNDS,
+                MapViewDebugOptions.TERRAIN_WIREFRAME,
+                MapViewDebugOptions.LAYERS2_DWIREFRAME,
+                MapViewDebugOptions.LAYERS3_DWIREFRAME,
+                MapViewDebugOptions.LIGHT,
+                MapViewDebugOptions.CAMERA,
+                MapViewDebugOptions.PADDING
+            )
+        )
+    );
   }
 
   private static class CustomTelemetry implements MapTelemetry {

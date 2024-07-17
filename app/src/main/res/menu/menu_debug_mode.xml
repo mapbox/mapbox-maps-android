@@ -35,4 +35,15 @@
         android:checkable="true"
         android:checked="true"
         android:title="@string/toggle_depth_buffer" />
+    <item
+        android:id="@+id/menu_debug_mode_camera_overlay"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_camera_overlay" />
+    <item
+        android:id="@+id/menu_debug_mode_padding_overlay"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_padding_overlay" />
+
 </menu>

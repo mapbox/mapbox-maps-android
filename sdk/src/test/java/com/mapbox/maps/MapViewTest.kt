@@ -1,10 +1,13 @@
 package com.mapbox.maps
 
 import android.view.MotionEvent
+import com.mapbox.maps.debugoptions.DebugOptionsController
+import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
+import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertFalse
@@ -23,13 +26,17 @@ class MapViewTest {
 
   @Before
   fun setUp() {
+    mockkConstructor(DebugOptionsController::class)
+    every { anyConstructed<DebugOptionsController>().onStart() } just Runs
+    every { anyConstructed<DebugOptionsController>().onStop() } just Runs
+    every { anyConstructed<DebugOptionsController>().options = any() } just Runs
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
     every { mapController.mapboxMap } returns mapboxMap
     mapView = MapView(
       mockk(relaxed = true),
       mockk(relaxed = true),
-      mapController
+      mapController,
     )
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
@@ -68,6 +75,41 @@ class MapViewTest {
   fun getMapboxMap() {
     mapView.mapboxMap
     verify { mapController.mapboxMap }
+  }
+
+  @Test
+  fun getDebugOptions() {
+    mapView.debugOptions
+    verify { anyConstructed<DebugOptionsController>().options }
+  }
+
+  @Test
+  fun setDebugOption() {
+    val debugOptions: Set<MapViewDebugOptions> = mockk()
+
+    mapView.debugOptions = debugOptions
+
+    verify { anyConstructed<DebugOptionsController>().options = debugOptions }
+  }
+
+  @Test
+  fun debugOptionsControllerNotInitializedByLifecycle() {
+    mapView.onStart()
+    mapView.onStop()
+
+    verifyNo { anyConstructed<DebugOptionsController>().onStart() }
+    verifyNo { anyConstructed<DebugOptionsController>().onStop() }
+  }
+
+  @Test
+  fun debugOptionsControllerInitializedByOptions() {
+    mapView.debugOptions = setOf()
+
+    mapView.onStart()
+    mapView.onStop()
+
+    verify { anyConstructed<DebugOptionsController>().onStart() }
+    verify { anyConstructed<DebugOptionsController>().onStop() }
   }
 
   @Test

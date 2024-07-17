@@ -90,7 +90,7 @@ dependencies {
   testImplementation(libs.asyncInflater)
   testImplementation(libs.androidx.testJUnit)
   testImplementation(libs.coroutinesTest)
-  debugImplementation(libs.androidx.appCompat)
+  implementation(libs.androidx.appCompat)
 
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
   androidTestImplementation(libs.androidx.testJUnit)

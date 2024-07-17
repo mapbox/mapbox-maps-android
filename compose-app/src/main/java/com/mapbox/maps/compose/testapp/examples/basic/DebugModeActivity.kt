@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.mapbox.maps.MapDebugOptions
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
+import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
@@ -89,20 +89,17 @@ public class DebugModeActivity : ComponentActivity() {
       ) {
         // Enable debug mode using MapEffect
         MapEffect(Unit) { mapView ->
-          mapView.mapboxMap.setDebug(
-            listOf(
-              MapDebugOptions.TILE_BORDERS,
-              MapDebugOptions.PARSE_STATUS,
-              MapDebugOptions.TIMESTAMPS,
-              MapDebugOptions.COLLISION,
-              MapDebugOptions.STENCIL_CLIP,
-              MapDebugOptions.DEPTH_BUFFER,
-              MapDebugOptions.MODEL_BOUNDS,
-              MapDebugOptions.TERRAIN_WIREFRAME,
-              MapDebugOptions.LAYERS2_DWIREFRAME,
-              MapDebugOptions.LAYERS3_DWIREFRAME,
-            ),
-            true
+          mapView.debugOptions = setOf(
+            MapViewDebugOptions.TILE_BORDERS,
+            MapViewDebugOptions.PARSE_STATUS,
+            MapViewDebugOptions.TIMESTAMPS,
+            MapViewDebugOptions.COLLISION,
+            MapViewDebugOptions.STENCIL_CLIP,
+            MapViewDebugOptions.DEPTH_BUFFER,
+            MapViewDebugOptions.MODEL_BOUNDS,
+            MapViewDebugOptions.TERRAIN_WIREFRAME,
+            MapViewDebugOptions.LAYERS2_DWIREFRAME,
+            MapViewDebugOptions.LAYERS3_DWIREFRAME,
           )
         }
       }

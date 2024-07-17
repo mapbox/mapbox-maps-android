@@ -658,6 +658,7 @@ class MapboxMap :
   /**
    * Get debug options
    */
+  @Deprecated("Use `MapView.debugOptions` instead.")
   fun getDebug(): List<MapDebugOptions> {
     checkNativeMap("getDebug")
     return nativeMap.getDebug()
@@ -666,10 +667,25 @@ class MapboxMap :
   /**
    * Set debug options
    */
+  @Deprecated("Use `MapView.debugOptions` instead.")
   fun setDebug(debugOptions: List<MapDebugOptions>, enabled: Boolean) {
     checkNativeMap("setDebug")
     nativeMap.setDebug(debugOptions, enabled)
   }
+
+  internal var debugOptions: Set<MapDebugOptions>
+    get() {
+      checkNativeMap("getDebug")
+      return nativeMap.getDebug().toSet()
+    }
+    set(value) {
+      checkNativeMap("setDebug")
+      // disable previously selected options
+      nativeMap.setDebug(nativeMap.getDebug(), false)
+
+      // enable new set of options
+      nativeMap.setDebug(value.toList(), true)
+    }
 
   /**
    * Convert the given [bounds], [boundsPadding], [bearing] and [pitch] values to [CameraOptions].

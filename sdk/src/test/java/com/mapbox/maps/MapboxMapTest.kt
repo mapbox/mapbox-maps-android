@@ -992,6 +992,23 @@ class MapboxMapTest {
   }
 
   @Test
+  fun getDebugOptions() {
+    mapboxMap.debugOptions
+    verify { nativeMap.getDebug() }
+  }
+
+  @Test
+  fun setDebugOptions() {
+    val initialDebugOptions = listOf(MapDebugOptions.DEPTH_BUFFER, MapDebugOptions.TERRAIN_WIREFRAME)
+    every { nativeMap.getDebug() } returns initialDebugOptions
+    val newDebugOptions = setOf(MapDebugOptions.COLLISION, MapDebugOptions.LAYERS3_DWIREFRAME)
+    mapboxMap.debugOptions = newDebugOptions
+
+    verify { nativeMap.setDebug(initialDebugOptions, false) }
+    verify { nativeMap.setDebug(newDebugOptions.toList(), true) }
+  }
+
+  @Test
   fun getMapOptions() {
     mapboxMap.getMapOptions()
     verify { mapboxMap.getMapOptions() }

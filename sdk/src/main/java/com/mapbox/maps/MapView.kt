@@ -12,6 +12,8 @@ import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.debugoptions.DebugOptionsController
+import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -42,15 +44,31 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   @get:JvmSynthetic
   internal lateinit var mapController: MapController
     private set
-
+  private val debugOptionsControllerDelegate = lazy {
+    DebugOptionsController(
+      this,
+      mapController.mapboxMap
+    )
+  }
+  private val debugOptionsController: DebugOptionsController by debugOptionsControllerDelegate
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
+
   /**
    * Get view annotation manager instance to add / update / remove view annotations
    * represented as Android views.
    */
   val viewAnnotationManager: ViewAnnotationManager by viewAnnotationManagerDelegate
+
+  /**
+   * [Set] of debug options for the current [MapView] and its native [MapboxMap].
+   */
+  var debugOptions: Set<MapViewDebugOptions>
+    get() = debugOptionsController.options
+    set(value) {
+      debugOptionsController.options = value
+    }
 
   /**
    * Build a [MapView] with [Context] and [MapInitOptions] objects.
@@ -115,12 +133,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
           contextMode,
           resolvedMapInitOptions.mapName
         )
+
         is TextureView -> MapboxTextureViewRenderer(
           view,
           resolvedMapInitOptions.antialiasingSampleCount,
           contextMode,
           resolvedMapInitOptions.mapName
         )
+
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions
@@ -211,6 +231,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     val screenRefreshRate = display?.refreshRate?.toInt() ?: DEFAULT_FPS
     mapController.setScreenRefreshRate(screenRefreshRate)
     mapController.onStart()
+    if (debugOptionsControllerDelegate.isInitialized()) {
+      debugOptionsController.onStart()
+    }
   }
 
   /**
@@ -220,6 +243,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun onStop() {
     mapController.onStop()
+    if (debugOptionsControllerDelegate.isInitialized()) {
+      debugOptionsController.onStop()
+    }
   }
 
   /**
@@ -263,7 +289,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   )
   // Hide it from Java. They will use [mapboxMap] property getter above. Moreover, mangle the name
   // in Java to avoid "platform declaration clash".
-  @JvmSynthetic @JvmName("getMapboxMapDeprecated")
+  @JvmSynthetic
+  @JvmName("getMapboxMapDeprecated")
   fun getMapboxMap(): MapboxMap = mapboxMap
 
   /**
@@ -382,14 +409,17 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
         false
       }
+
       MotionEvent.ACTION_MOVE -> {
         interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
       }
+
       MotionEvent.ACTION_UP,
       MotionEvent.ACTION_CANCEL -> {
         interceptedViewAnnotationEvents.clear()
         return false
       }
+
       MotionEvent.ACTION_POINTER_UP -> {
         val upPointerId = event.getPointerId(event.actionIndex)
         interceptedViewAnnotationEvents.removeAll {
@@ -398,6 +428,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
         return false
       }
+
       else -> {
         // In general, we don't want to intercept touch events. They should be
         // handled by the child view.
@@ -416,9 +447,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       }
       if (
         hypot(
-            x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
-            y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
-          ) > touchSlop
+          x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
+          y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
+        ) > touchSlop
       ) {
         return true
       }

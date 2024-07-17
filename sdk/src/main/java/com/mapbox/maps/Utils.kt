@@ -1,5 +1,7 @@
 package com.mapbox.maps
 
+import android.content.Context
+import android.util.TypedValue
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.Cancelable
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -24,4 +26,11 @@ internal suspend inline fun <reified E, reified V, reified T : Expected<E, V>> s
     val cancelable = block(continuation)
     continuation.invokeOnCancellation { cancelable.cancel() }
   }
+}
+
+@Suppress("UNCHECKED_CAST")
+internal fun <T : Number> T.toDP(context: Context): T {
+  return TypedValue.applyDimension(
+      TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+  ) as T
 }

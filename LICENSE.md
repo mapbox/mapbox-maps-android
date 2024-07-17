@@ -146,7 +146,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library Annotations.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.2.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.2.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 

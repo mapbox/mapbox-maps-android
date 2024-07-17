@@ -112,6 +112,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public final fun createPlugin (Lcom/mapbox/maps/plugin/Plugin;)V
+	public final fun getDebugOptions ()Ljava/util/Set;
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public final synthetic fun getMapboxMapDeprecated ()Lcom/mapbox/maps/MapboxMap;
 	public fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
@@ -132,6 +133,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public final fun removePlugin (Ljava/lang/String;)V
 	public fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
+	public final fun setDebugOptions (Ljava/util/Set;)V
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
 	public final fun setSnapshotLegacyMode (Z)V
@@ -617,6 +619,32 @@ public final class com/mapbox/maps/coroutine/MapboxMapExtKt {
 	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final synthetic fun setFeatureState (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/debugoptions/MapViewDebugOptions {
+	public static final field CAMERA Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field COLLISION Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field Companion Lcom/mapbox/maps/debugoptions/MapViewDebugOptions$Companion;
+	public static final field DEPTH_BUFFER Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field LAYERS2_DWIREFRAME Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field LAYERS3_DWIREFRAME Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field LIGHT Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field MODEL_BOUNDS Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field OVERDRAW Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field PADDING Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field PARSE_STATUS Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field STENCIL_CLIP Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field TERRAIN_WIREFRAME Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field TILE_BORDERS Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static final field TIMESTAMPS Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public final fun copy (Ljava/lang/String;)Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/debugoptions/MapViewDebugOptions;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/debugoptions/MapViewDebugOptions$Companion {
 }
 
 public final class com/mapbox/maps/plugin/InvalidViewPluginHostException : java/lang/Exception {

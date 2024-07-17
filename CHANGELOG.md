@@ -24,6 +24,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce asynchronous overloaded method `ViewAnnotationManager.cameraForAnnotations` better covering some corner cases.
 * Make use of asynchronous `MapboxMap.cameraForCoordinates` in Mapbox overlay plugin better covering some corner cases.
 * Mark synchronous methods `MapboxMap.cameraForCoordinates` and `ViewAnnotationManager.cameraForAnnotations` with `@MapboxDelicateApi`. Consider using asynchronous overloaded methods instead.
+* Deprecate `MapboxMap.getDebug()`/`MapboxMap.setDebug()` in favour of `MapView.debugOptions` taking new enhanced enum `MapViewDebugOptions` as an argument.
+* Introduce `MapViewDebugOptions.CAMERA` and `MapViewDebugOptions.PADDING` debug options to track current camera state and visualize camera paddings.
 
 ## Bug fixes 🐞
 * [compose] Fix minZoom/maxZoom not working for layers.
