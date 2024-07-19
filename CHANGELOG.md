@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.6.0-beta.1 July 19, 2024
 ## Breaking changes ⚠️
 * [compose] Remove `StyleImage` constructor with `BitmapImage`, use `rememberStyleImage` composable function to build it instead.
 * [compose] Move layer properties within `*Layer` composable functions to `*LayerState` classes, use the convenient method `*Layer(sourceState, layerId, init)` with trailing lambda for easier migration.
@@ -42,8 +44,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix local glyph rasterization to ensure the correct Typeface is used.
 * Fix `CustomRasterSource` rendering when camera shows antimeridian or multiple world copies.
 
+## Known issues
+* `ClipLayer.clipLayerTypes` could not be updated with a layer setter. Layer has to be re-added to update it. This is expected to be fixed in v11.6.0-rc.1.
+
 ## Dependencies
 * Update gl-native to v11.6.0-beta.1 and common to v24.6.0-beta.1.
+
 
 # 11.4.2 July 17, 2024
 ## Bug fixes 🐞
