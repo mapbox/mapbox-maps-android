@@ -29,12 +29,21 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `MapViewDebugOptions.CAMERA` and `MapViewDebugOptions.PADDING` debug options to track current camera state and visualize camera paddings.
 * Expose experimental `ClipLayer` to remove 3D data (fill extrusions, landmarks, instanced trees) and symbols.
 * Enable r8 optimisations for all the Mapbox extensions and plugins in consumer proguard file, the optimisation will apply when minify is enabled in app's build settings.
+* Align default displacement for Android and Google location providers.
+* Enable direct rendering into `CustomRasterSource` tiles.
+* Introduce a new `allowZElevate` option in `ViewAnnotationOptions`. When set to true, the annotation will be positioned on the rooftops of buildings, including both fill extrusions and models.
 
 ## Bug fixes 🐞
 * [compose] Fix minZoom/maxZoom not working for layers.
 * [compose] Fix `java.lang.UnsupportedOperationException` when setting `textWritingMode` and `textVariableAnchor`.
 * Fix compass view ignoring `enabled` option when it is set in `updateSettings()`.
+* Fix background locations not received when unregistering other providers.
+* Improve `linePattern` precision.
+* Fix local glyph rasterization to ensure the correct Typeface is used.
+* Fix `CustomRasterSource` rendering when camera shows antimeridian or multiple world copies.
 
+## Dependencies
+* Update gl-native to v11.6.0-beta.1 and common to v24.6.0-beta.1.
 
 # 11.4.2 July 17, 2024
 ## Bug fixes 🐞
