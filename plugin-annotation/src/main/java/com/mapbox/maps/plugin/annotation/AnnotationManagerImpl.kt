@@ -40,6 +40,7 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Base class for annotation managers
@@ -49,6 +50,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   final override val delegateProvider: MapDelegateProvider,
   private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V, I> {
+  internal val id: Long = ID_GENERATOR.incrementAndGet()
   private var mapCameraManagerDelegate: MapCameraManagerDelegate =
     delegateProvider.mapCameraManagerDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
@@ -69,6 +71,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
   protected abstract val dragSourceId: String
+
+  private val associatedLayers = mutableListOf<String>()
+  private val associatedSources = mutableListOf<String>()
 
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
@@ -207,6 +212,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     source?.let {
       if (!style.styleSourceExists(it.sourceId)) {
         style.addSource(it)
+        associatedSources.add(it.sourceId)
       }
     }
 
@@ -228,12 +234,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         if (!layerAdded) {
           style.addPersistentLayer(it)
         }
+        associatedLayers.add(it.layerId)
       }
     }
 
     dragSource?.let {
       if (!style.styleSourceExists(it.sourceId)) {
         style.addSource(it)
+        associatedSources.add(it.sourceId)
       }
     }
     dragLayer?.let {
@@ -241,6 +249,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         layer?.layerId?.let { aboveLayerId ->
           // Add drag layer above the annotation layer
           style.addPersistentLayer(it, LayerPosition(aboveLayerId, null, null))
+          associatedLayers.add(it.layerId)
         }
       }
     }
@@ -257,17 +266,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
         if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
           style.addPersistentLayer(clusterLevelLayer)
+          associatedLayers.add(clusterLevelLayer.layerId)
         }
       }
       val clusterTextLayer = createClusterTextLayer()
       if (!style.styleLayerExists(clusterTextLayer.layerId)) {
         style.addPersistentLayer(clusterTextLayer)
+        associatedLayers.add(clusterTextLayer.layerId)
       }
     }
   }
 
   private fun createClusterLevelLayer(level: Int, colorLevels: List<Pair<Int, Int>>) =
-    circleLayer("mapbox-android-cluster-circle-layer-$level", sourceId) {
+    circleLayer("mapbox-android-cluster-circle-layer-$id-level-$level", sourceId) {
       circleColor(colorLevels[level].second)
       annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
         if (it.circleRadiusExpression == null) {
@@ -289,7 +300,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       )
     }
 
-  private fun createClusterTextLayer() = symbolLayer(CLUSTER_TEXT_LAYER_ID, sourceId) {
+  private fun createClusterTextLayer() = symbolLayer("mapbox-android-cluster-text-layer-$id", sourceId) {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
       textField(if (it.textField == null) DEFAULT_TEXT_FIELD else it.textField as Expression)
       if (it.textSizeExpression == null) {
@@ -516,24 +527,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun onDestroy() {
     delegateProvider.getStyle { style ->
-      layer?.let {
-        if (style.styleLayerExists(it.layerId)) {
-          style.removeStyleLayer(it.layerId)
+      associatedLayers.forEach {
+        if (style.styleLayerExists(it)) {
+          style.removeStyleLayer(it)
         }
       }
-      source?.let {
-        if (style.styleSourceExists(it.sourceId)) {
-          style.removeStyleSource(it.sourceId)
-        }
-      }
-      dragLayer?.let {
-        if (style.styleLayerExists(it.layerId)) {
-          style.removeStyleLayer(it.layerId)
-        }
-      }
-      dragSource?.let {
-        if (style.styleSourceExists(it.sourceId)) {
-          style.removeStyleSource(it.sourceId)
+      associatedSources.forEach {
+        if (style.styleSourceExists(it)) {
+          style.removeStyleSource(it)
         }
       }
     }
@@ -874,7 +875,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   /**
    * Static variables and methods.
    */
-  private companion object {
+  companion object {
     /**
      * Tag for log
      */
@@ -883,7 +884,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
     /** At most wait 2 seconds to prevent ANR */
     private const val QUERY_WAIT_TIME = 2L
-    private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
+    /** The generator for id */
+    var ID_GENERATOR = AtomicLong(0)
   }
 }

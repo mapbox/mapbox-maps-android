@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import java.util.*
-import java.util.concurrent.atomic.AtomicLong
 
 /**
  * The polygonAnnotation manager allows to add polygonAnnotations to a map.
@@ -29,7 +28,6 @@ class PolygonAnnotationManager(
   AnnotationManagerImpl<Polygon, PolygonAnnotation, PolygonAnnotationOptions, OnPolygonAnnotationDragListener, OnPolygonAnnotationClickListener, OnPolygonAnnotationLongClickListener, OnPolygonAnnotationInteractionListener, FillLayer>(
     delegateProvider, annotationConfig
   ) {
-  private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polygonAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polygonAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-polygonAnnotation-draglayer-$id"
@@ -247,14 +245,6 @@ class PolygonAnnotationManager(
         dragLayer?.filter(it)
       }
     }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    /** The generator for id */
-    var ID_GENERATOR = AtomicLong(0)
-  }
 }
 
 /**

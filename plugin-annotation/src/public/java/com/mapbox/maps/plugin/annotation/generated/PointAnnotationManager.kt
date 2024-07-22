@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import java.util.*
-import java.util.concurrent.atomic.AtomicLong
 
 /**
  * The pointAnnotation manager allows to add pointAnnotations to a map.
@@ -29,7 +28,6 @@ class PointAnnotationManager(
   AnnotationManagerImpl<Point, PointAnnotation, PointAnnotationOptions, OnPointAnnotationDragListener, OnPointAnnotationClickListener, OnPointAnnotationLongClickListener, OnPointAnnotationInteractionListener, SymbolLayer>(
     delegateProvider, annotationConfig
   ) {
-  private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-pointAnnotation-draglayer-$id"
@@ -1085,14 +1083,6 @@ class PointAnnotationManager(
         dragLayer?.filter(it)
       }
     }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    /** The generator for id */
-    var ID_GENERATOR = AtomicLong(0)
-  }
 }
 
 /**
