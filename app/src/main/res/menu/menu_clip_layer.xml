@@ -7,6 +7,9 @@
         android:id="@+id/menu_action_clip_symbol"
         android:title="@string/clip_symbol"/>
     <item
+        android:id="@+id/menu_action_clip_model_and_symbol"
+        android:title="@string/clip_model_and_symbol"/>
+    <item
         android:id="@+id/menu_action_clip_reset"
         android:title="@string/clip_reset"/>
 </menu>

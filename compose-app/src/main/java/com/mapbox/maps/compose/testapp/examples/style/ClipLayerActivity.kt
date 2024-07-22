@@ -46,13 +46,10 @@ public class ClipLayerActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      var showClipSymbol by remember {
-        mutableStateOf(false)
+      var clipLayerTypesListValue by remember {
+        mutableStateOf(ClipLayerTypesListValue(emptyList()))
       }
-      var showClipModel by remember {
-        mutableStateOf(false)
-      }
-      var showClipModelAndSymbol by remember {
+      var showClipLayer by remember {
         mutableStateOf(false)
       }
       val geoJsonSource = rememberGeoJsonSourceState {
@@ -69,7 +66,8 @@ public class ClipLayerActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showClipSymbol = true
+                  showClipLayer = true
+                  clipLayerTypesListValue = ClipLayerTypesListValue(listOf(ClipLayerTypes.SYMBOL))
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -78,7 +76,8 @@ public class ClipLayerActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showClipModel = true
+                  showClipLayer = true
+                  clipLayerTypesListValue = ClipLayerTypesListValue(listOf(ClipLayerTypes.MODEL))
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -87,7 +86,10 @@ public class ClipLayerActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showClipModelAndSymbol = true
+                  showClipLayer = true
+                  clipLayerTypesListValue = ClipLayerTypesListValue(
+                    listOf(ClipLayerTypes.MODEL, ClipLayerTypes.SYMBOL)
+                  )
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -96,9 +98,7 @@ public class ClipLayerActivity : ComponentActivity() {
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
                 onClick = {
-                  showClipSymbol = false
-                  showClipModel = false
-                  showClipModelAndSymbol = false
+                  showClipLayer = false
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
@@ -126,26 +126,11 @@ public class ClipLayerActivity : ComponentActivity() {
               )
             }
           ) {
-            if (showClipSymbol) {
+            if (showClipLayer) {
               ClipLayer(
                 sourceState = geoJsonSource,
               ) {
-                clipLayerTypes = ClipLayerTypesListValue(listOf(ClipLayerTypes.MODEL))
-              }
-            }
-            if (showClipModel) {
-              ClipLayer(
-                sourceState = geoJsonSource,
-              ) {
-                clipLayerTypes = ClipLayerTypesListValue(listOf(ClipLayerTypes.SYMBOL))
-              }
-            }
-            if (showClipModelAndSymbol) {
-              ClipLayer(
-                sourceState = geoJsonSource,
-              ) {
-                clipLayerTypes =
-                  ClipLayerTypesListValue(listOf(ClipLayerTypes.MODEL, ClipLayerTypes.SYMBOL))
+                clipLayerTypes = clipLayerTypesListValue
               }
             }
           }
