@@ -2,9 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.18.3
+
+# 10.18.3 July 22, 2024
 ## Bug fixes 🐞
 * Fix multiple annotation clusters not supported issue.
+
 
 # 10.18.2 June 24, 2024
 ## Features ✨ and improvements 🏁
