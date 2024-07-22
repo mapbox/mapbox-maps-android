@@ -2,6 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.18.3
 ## Bug fixes 🐞
 * Fix multiple annotation clusters not supported issue.
 
