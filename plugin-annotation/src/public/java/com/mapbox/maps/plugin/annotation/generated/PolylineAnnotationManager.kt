@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import java.util.*
-import java.util.concurrent.atomic.AtomicLong
 
 /**
  * The polylineAnnotation manager allows to add polylineAnnotations to a map.
@@ -29,7 +28,6 @@ class PolylineAnnotationManager(
   AnnotationManagerImpl<LineString, PolylineAnnotation, PolylineAnnotationOptions, OnPolylineAnnotationDragListener, OnPolylineAnnotationClickListener, OnPolylineAnnotationLongClickListener, OnPolylineAnnotationInteractionListener, LineLayer>(
     delegateProvider, annotationConfig
   ) {
-  private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-polylineAnnotation-draglayer-$id"
@@ -379,14 +377,6 @@ class PolylineAnnotationManager(
         dragLayer?.filter(it)
       }
     }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    /** The generator for id */
-    var ID_GENERATOR = AtomicLong(0)
-  }
 }
 
 /**

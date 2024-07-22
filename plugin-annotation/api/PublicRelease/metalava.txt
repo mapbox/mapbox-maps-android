@@ -47,6 +47,13 @@ package com.mapbox.maps.plugin.annotation {
     property protected abstract String layerId;
     property public java.util.List<V> longClickListeners;
     property protected abstract String sourceId;
+    field public static final com.mapbox.maps.plugin.annotation.AnnotationManagerImpl.Companion Companion;
+  }
+
+  public static final class AnnotationManagerImpl.Companion {
+    method public java.util.concurrent.atomic.AtomicLong getID_GENERATOR();
+    method public void setID_GENERATOR(java.util.concurrent.atomic.AtomicLong ID_GENERATOR);
+    property public final java.util.concurrent.atomic.AtomicLong ID_GENERATOR;
   }
 
   public final class AnnotationManagerImpl.MapClick implements com.mapbox.maps.plugin.gestures.OnMapClickListener {
@@ -176,13 +183,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property protected String layerId;
     property protected String sourceId;
-    field public static final com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager.Companion Companion;
-  }
-
-  public static final class CircleAnnotationManager.Companion {
-    method public java.util.concurrent.atomic.AtomicLong getID_GENERATOR();
-    method public void setID_GENERATOR(java.util.concurrent.atomic.AtomicLong ID_GENERATOR);
-    property public final java.util.concurrent.atomic.AtomicLong ID_GENERATOR;
   }
 
   public final class CircleAnnotationManagerKt {
@@ -518,13 +518,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? textTranslateAnchor;
     property public final java.util.List<java.lang.String>? textVariableAnchor;
     property public final java.util.List<java.lang.String>? textWritingMode;
-    field public static final com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager.Companion Companion;
-  }
-
-  public static final class PointAnnotationManager.Companion {
-    method public java.util.concurrent.atomic.AtomicLong getID_GENERATOR();
-    method public void setID_GENERATOR(java.util.concurrent.atomic.AtomicLong ID_GENERATOR);
-    property public final java.util.concurrent.atomic.AtomicLong ID_GENERATOR;
   }
 
   public final class PointAnnotationManagerKt {
@@ -756,13 +749,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property protected String layerId;
     property protected String sourceId;
-    field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager.Companion Companion;
-  }
-
-  public static final class PolygonAnnotationManager.Companion {
-    method public java.util.concurrent.atomic.AtomicLong getID_GENERATOR();
-    method public void setID_GENERATOR(java.util.concurrent.atomic.AtomicLong ID_GENERATOR);
-    property public final java.util.concurrent.atomic.AtomicLong ID_GENERATOR;
   }
 
   public final class PolygonAnnotationManagerKt {
@@ -902,13 +888,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property protected String sourceId;
-    field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;
-  }
-
-  public static final class PolylineAnnotationManager.Companion {
-    method public java.util.concurrent.atomic.AtomicLong getID_GENERATOR();
-    method public void setID_GENERATOR(java.util.concurrent.atomic.AtomicLong ID_GENERATOR);
-    property public final java.util.concurrent.atomic.AtomicLong ID_GENERATOR;
   }
 
   public final class PolylineAnnotationManagerKt {
