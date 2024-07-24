@@ -177,7 +177,7 @@ class RasterParticlesActivity : AppCompatActivity() {
 
   private companion object {
     private const val RASTER_ARRAY_SOURCE_ID = "wind-mrt-source"
-    private const val RASTER_ARRAY_TILE_JSON_URL = "https://api.mapbox.com/v4/rasterarrayexamples.gfs-winds.json?access_token=pk.eyJ1IjoicmFzdGVyYXJyYXlleGFtcGxlcyIsImEiOiJjbHd1d3Yxamswa2xlMmxvbTZxNjhyOGF3In0.5n1Lkr1c4_GHEGX7wOSw-Q"
+    private const val RASTER_ARRAY_TILE_JSON_URL = "mapbox://rasterarrayexamples.gfs-winds"
     private const val RASTER_LAYER_ID = "layer_particles"
   }
 }
