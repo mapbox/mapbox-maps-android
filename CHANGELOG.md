@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.5.1
+
+# 11.5.1 July 25, 2024
 ## Bug fixes 🐞
 * Fix local glyph rasterization to ensure the correct Typeface is used.
 * Fix map freezing and huge memory consumption issue when using 3D models.
@@ -13,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.5.2.
+
 
 # 11.6.0-beta.1 July 19, 2024
 ## Breaking changes ⚠️
