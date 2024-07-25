@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MapViewportState</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.compose.animation.viewport/MapViewportState///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.compose.animation.viewport</a><span class="delimiter">/</span><span class="current">MapViewportState</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Map</span><wbr></wbr><span>Viewport</span><wbr></wbr><span><span>State</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">class </span><a href="index.html">MapViewportState</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">initialCameraState<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-state/index.html">CameraState</a><span class="token operator"> = </span>INIT_CAMERA_STATE</span></span><span class="token punctuation">)</span></div><p class="paragraph">A state object that can be hoisted to control and observe the map's camera state. A <a href="index.html">MapViewportState</a> may only be used by a single <a href="../../com.mapbox.maps/-mapbox-map/index.html">MapboxMap</a> composable at a time as it reflects instance state for a single view of a map.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Parameters">Parameters</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">Parameters</h4>
+      <div data-togglable="Parameters">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="Parameters"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div data-togglable="Parameters"><div class="table" data-togglable="Parameters"><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>initial</span><wbr></wbr><span>Camera</span><wbr></wbr><span><span>State</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">the initial camera position</p></div></div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-1978935330%2FConstructors%2F540127926" anchor-label="MapViewportState" id="-1978935330%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-map-viewport-state.html"><span>Map</span><wbr></wbr><span>Viewport</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1978935330%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-map-viewport-state.html"><span class="token function">MapViewportState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">initialCameraState<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-state/index.html">CameraState</a><span class="token operator"> = </span>INIT_CAMERA_STATE</span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="-558208747%2FClasslikes%2F540127926" anchor-label="Companion" id="-558208747%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-558208747%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div><div class="brief "><p class="paragraph">Companion object of <a href="index.html">MapViewportState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="1572624683%2FFunctions%2F540127926" anchor-label="easeTo" id="1572624683%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="ease-to.html"><span>ease</span><wbr></wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1572624683%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="ease-to.html"><span class="token function">easeTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cameraOptions<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">completionListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport/-completion-listener/index.html">CompletionListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Ease the map camera to a given camera options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1183927506%2FFunctions%2F540127926" anchor-label="flyTo" id="-1183927506%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="fly-to.html"><span>fly</span><wbr></wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1183927506%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="fly-to.html"><span class="token function">flyTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cameraOptions<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">completionListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport/-completion-listener/index.html">CompletionListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Fly the map camera to a given camera options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2136481720%2FFunctions%2F540127926" anchor-label="idle" id="2136481720%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="idle.html"><span><span>idle</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2136481720%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="idle.html"><span class="token function">idle</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="../../com.mapbox.maps.plugin.viewport/-viewport-plugin/status.html">ViewportPlugin.status</a> to <a href="../../com.mapbox.maps.plugin.viewport/-viewport-status/-idle/index.html">ViewportStatus.Idle</a> synchronously.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="29510452%2FFunctions%2F540127926" anchor-label="setCameraOptions" id="29510452%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="set-camera-options.html"><span>set</span><wbr></wbr><span>Camera</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="29510452%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/UiThread.html"><span class="token annotation builtin">UiThread</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-camera-options.html"><span class="token function">setCameraOptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cameraOptions<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Move the camera instantaneously as specified by <a href="set-camera-options.html">cameraOptions</a>. Any camera animation in progress will be cancelled.</p></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/UiThread.html"><span class="token annotation builtin">UiThread</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-camera-options.html"><span class="token function">setCameraOptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps/-camera-options/-builder/index.html">CameraOptions.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Move the camera instantaneously as specified by <a href="set-camera-options.html">block</a> camera options. Any camera animation in progress will be cancelled.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="853634985%2FFunctions%2F540127926" anchor-label="transitionToFollowPuckState" id="853634985%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="transition-to-follow-puck-state.html"><span>transition</span><wbr></wbr><span>To</span><wbr></wbr><span>Follow</span><wbr></wbr><span>Puck</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="853634985%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="transition-to-follow-puck-state.html"><span class="token function">transitionToFollowPuckState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">followPuckViewportStateOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport.data/-follow-puck-viewport-state-options/index.html">FollowPuckViewportStateOptions</a><span class="token operator"> = </span>FollowPuckViewportStateOptions.Builder()
+      .build()<span class="token punctuation">, </span></span><span class="parameter ">defaultTransitionOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport.data/-default-viewport-transition-options/index.html">DefaultViewportTransitionOptions</a><span class="token operator"> = </span>DefaultViewportTransitionOptions.Builder()
+      .build()<span class="token punctuation">, </span></span><span class="parameter ">completionListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport/-completion-listener/index.html">CompletionListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Transition to a new <a href="../../com.mapbox.maps.plugin.viewport.state/-follow-puck-viewport-state/index.html">FollowPuckViewportState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1160415309%2FFunctions%2F540127926" anchor-label="transitionToOverviewState" id="-1160415309%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="transition-to-overview-state.html"><span>transition</span><wbr></wbr><span>To</span><wbr></wbr><span>Overview</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1160415309%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="transition-to-overview-state.html"><span class="token function">transitionToOverviewState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">overviewViewportStateOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport.data/-overview-viewport-state-options/index.html">OverviewViewportStateOptions</a><span class="token punctuation">, </span></span><span class="parameter ">defaultTransitionOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport.data/-default-viewport-transition-options/index.html">DefaultViewportTransitionOptions</a><span class="token operator"> = </span>DefaultViewportTransitionOptions.Builder()
+      .build()<span class="token punctuation">, </span></span><span class="parameter ">completionListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport/-completion-listener/index.html">CompletionListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Transition to a new <a href="../../com.mapbox.maps.plugin.viewport.state/-overview-viewport-state/index.html">OverviewViewportState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-497768286%2FProperties%2F540127926" anchor-label="cameraState" id="-497768286%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="camera-state.html"><span>camera</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-497768286%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-497768286%2FProperties%2F540127926" anchor-label="cameraState" id="-497768286%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="camera-state.html">cameraState</a><span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-state/index.html">CameraState</a><span class="token operator">?</span></div><div class="brief "><a data-name="-497768286%2FProperties%2F540127926" anchor-label="cameraState" id="-497768286%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The current <a href="../../com.mapbox.maps/-camera-state/index.html">CameraState</a> of the map or null if this <a href="index.html">MapViewportState</a> is not yet associated with a map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="489580698%2FProperties%2F540127926" anchor-label="mapViewportStatus" id="489580698%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="map-viewport-status.html"><span>map</span><wbr></wbr><span>Viewport</span><wbr></wbr><span><span>Status</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="489580698%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="489580698%2FProperties%2F540127926" anchor-label="mapViewportStatus" id="489580698%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="map-viewport-status.html">mapViewportStatus</a><span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport/-viewport-status/index.html">ViewportStatus</a><span class="token operator">?</span></div><div class="brief "><a data-name="489580698%2FProperties%2F540127926" anchor-label="mapViewportStatus" id="489580698%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The current <a href="../../com.mapbox.maps.plugin.viewport/-viewport-status/index.html">ViewportStatus</a> that represents the status of the viewport or null if this <a href="index.html">MapViewportState</a> is not yet associated with a map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1592009976%2FProperties%2F540127926" anchor-label="mapViewportStatusChangedReason" id="-1592009976%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="map-viewport-status-changed-reason.html"><span>map</span><wbr></wbr><span>Viewport</span><wbr></wbr><span>Status</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Reason</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1592009976%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1592009976%2FProperties%2F540127926" anchor-label="mapViewportStatusChangedReason" id="-1592009976%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="map-viewport-status-changed-reason.html">mapViewportStatusChangedReason</a><span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.viewport.data/-viewport-status-change-reason/index.html">ViewportStatusChangeReason</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1592009976%2FProperties%2F540127926" anchor-label="mapViewportStatusChangedReason" id="-1592009976%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The reason why the <a href="../../com.mapbox.maps.plugin.viewport/-viewport-status/index.html">ViewportStatus</a> has been changed or null if this <a href="index.html">MapViewportState</a> is not yet associated with a map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="3012517%2FProperties%2F540127926" anchor-label="styleDefaultCameraOptions" id="3012517%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="style-default-camera-options.html"><span>style</span><wbr></wbr><span>Default</span><wbr></wbr><span>Camera</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="3012517%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="3012517%2FProperties%2F540127926" anchor-label="styleDefaultCameraOptions" id="3012517%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="style-default-camera-options.html">styleDefaultCameraOptions</a><span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a><span class="token operator">?</span></div><div class="brief "><a data-name="3012517%2FProperties%2F540127926" anchor-label="styleDefaultCameraOptions" id="3012517%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">A utility function to get the default <a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a> defined in the style or null if this <a href="index.html">MapViewportState</a> is not yet associated with a map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
