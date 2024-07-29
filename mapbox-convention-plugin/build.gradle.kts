@@ -57,5 +57,6 @@ dependencies {
   compileOnly(libs.plugin.gradle)
   implementation(libs.plugin.dokka)
   implementation(libs.plugin.japicmp)
+  implementation(libs.plugin.jacoco)
   implementation(libs.plugin.mapbox.accessToken)
 }

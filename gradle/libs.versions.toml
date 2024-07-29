@@ -15,7 +15,7 @@ exampleCompileSdkVersion = "34"
 exampleNdkVersion = "23.2.8568313"
 
 # Plugins
-pluginJacoco = "0.2"
+pluginJacoco = "0.8.12"
 pluginGradle = "7.4.2"
 pluginLicense = "0.9.0"
 pluginMapboxAccessToken = "0.4.0"
@@ -93,7 +93,7 @@ toster = "0.3.2"
 [libraries]
 plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "pluginGradle" }
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-plugin-jacoco = { module = "com.hiya:jacoco-android", version.ref = "pluginJacoco" }
+plugin-jacoco = { module = "org.jacoco:org.jacoco.core", version.ref = "pluginJacoco" }
 plugin-license = { module = "com.jaredsburrows:gradle-license-plugin", version.ref = "pluginLicense" }
 plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 plugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }

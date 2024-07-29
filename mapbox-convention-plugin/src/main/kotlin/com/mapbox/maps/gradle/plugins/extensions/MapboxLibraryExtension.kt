@@ -25,6 +25,7 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
 
   private val dokka = objects.newInstance<MapboxDokkaExtension>()
   private val jApiCmp = objects.newInstance<MapboxJApiCmpExtension>()
+  private val jacoco = objects.newInstance<MapboxJacocoExtension>()
 
   /** Configure the inner DSL object, [MapboxDokkaExtension]. */
   public fun dokka(action: Action<MapboxDokkaExtension>) {
@@ -34,6 +35,11 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
   /** Configure the inner DSL object, [MapboxJApiCmpExtension]. */
   public fun jApiCmp(action: Action<MapboxJApiCmpExtension>) {
     action.execute(jApiCmp)
+  }
+
+  /** Configure the inner DSL object, [MapboxJacocoExtension]. */
+  public fun jacoco(action: Action<MapboxJacocoExtension>) {
+    action.execute(jacoco)
   }
 
   internal fun applyTo(project: Project) {
@@ -48,6 +54,7 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
         jApiCmp.applyTo(project)
       }
     }
+    jacoco.applyTo(project)
   }
 
   private fun Project.applyRequiredPlugins() {
