@@ -10,10 +10,12 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix elevated line occlusion issue in 2D mode.
-* Fix known issue since v11.6.0-beta.1 when `ClipLayer.clipLayerTypes` was not working.
 
 ## Dependencies
 * Update gl-native to v11.6.0-rc.1 and common to v24.6.0-rc.1.
+
+## Known issues
+* `ClipLayer` property `clipLayerTypes` is not updated in runtime. The fix is expected to land in stable 11.6.0.
 
 # 11.5.1 July 25, 2024
 ## Bug fixes 🐞
