@@ -12,11 +12,9 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.style.layers.generated.ClipLayer
+import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.clipLayer
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
-import com.mapbox.maps.extension.style.layers.getLayerAs
-import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
@@ -24,7 +22,6 @@ import com.mapbox.maps.testapp.R
 /**
  * Example showcasing the usage of [com.mapbox.maps.extension.style.layers.generated.ClipLayer].
  */
-@OptIn(MapboxExperimental::class)
 class ClipLayerActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
@@ -46,9 +43,6 @@ class ClipLayerActivity : AppCompatActivity() {
           fillColor(ContextCompat.getColor(this@ClipLayerActivity, R.color.blue))
           slot("bottom")
         }
-        +clipLayer(CLIP_LAYER_ID, SOURCE_ID) {
-          visibility(Visibility.NONE)
-        }
       }
     )
   }
@@ -62,7 +56,9 @@ class ClipLayerActivity : AppCompatActivity() {
     return when (item.itemId) {
       R.id.menu_action_clip_reset -> {
         mapboxMap.getStyle { style ->
-          style.getLayerAs<ClipLayer>(CLIP_LAYER_ID)?.visibility(Visibility.NONE)
+          if (style.styleLayerExists(CLIP_LAYER_ID)) {
+            style.removeStyleLayer(CLIP_LAYER_ID)
+          }
         }
         true
       }
@@ -77,11 +73,6 @@ class ClipLayerActivity : AppCompatActivity() {
         true
       }
 
-      R.id.menu_action_clip_model_and_symbol -> {
-        updateClipLayerTypes("model", "symbol")
-        true
-      }
-
       else -> {
         super.onOptionsItemSelected(item)
       }
@@ -89,10 +80,16 @@ class ClipLayerActivity : AppCompatActivity() {
   }
 
   @OptIn(MapboxExperimental::class)
-  private fun updateClipLayerTypes(vararg clipLayerTypes: String) {
+  private fun updateClipLayerTypes(clipLayerTypes: String) {
     mapboxMap.getStyle { style ->
-      style.getLayerAs<ClipLayer>(CLIP_LAYER_ID)?.visibility(Visibility.VISIBLE)
-      style.getLayerAs<ClipLayer>(CLIP_LAYER_ID)?.clipLayerTypes(clipLayerTypes.asList())
+      if (style.styleLayerExists(CLIP_LAYER_ID)) {
+        style.removeStyleLayer(CLIP_LAYER_ID)
+      }
+      style.addLayer(
+        clipLayer(CLIP_LAYER_ID, SOURCE_ID) {
+          clipLayerTypes(listOf(clipLayerTypes))
+        }
+      )
     }
   }
 
