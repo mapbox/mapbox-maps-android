@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.6.0-rc.1
+
+# 11.6.0-rc.1 August 02, 2024
 ## Features ✨ and improvements 🏁
 * Support negative values for `CircleLayer.circleBlur` to render inner glow effect.
 * Add new `Style.STANDARD_SATELLITE` style that combines updated satellite imagery and vector layers.
@@ -18,9 +19,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v11.6.0-rc.1 and common to v24.6.0-rc.1.
 
-
 ## Known issues
-* `ClipLayer` property `clipLayerTypes` is not updated in runtime. The fix is expected to land in stable 11.6.0.
+* Experimental `ClipLayer`'s property `clipLayerTypes` is not updated in runtime. The fix is expected to land in stable 11.6.0.
+
 
 # 11.5.1 July 25, 2024
 ## Bug fixes 🐞
