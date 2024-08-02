@@ -1301,6 +1301,11 @@ class Style internal constructor(
     const val STANDARD = "mapbox://styles/mapbox/standard"
 
     /**
+     * Mapbox Standard Satellite: Combines updated satellite imagery and vector layers to offer users improved clarity and detail.
+     */
+    const val STANDARD_SATELLITE = "mapbox://styles/mapbox/standard-satellite"
+
+    /**
      * Mapbox Streets: A complete base map, perfect for incorporating your own data. Using this
      * constant means your map style will always use the latest version and may change as we
      * improve the style.

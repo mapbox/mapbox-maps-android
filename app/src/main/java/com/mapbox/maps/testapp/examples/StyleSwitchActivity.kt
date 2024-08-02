@@ -42,5 +42,11 @@ class StyleSwitchActivity : AppCompatActivity() {
     binding.outdoorsButton.setOnClickListener {
       mapboxMap.loadStyle(Style.OUTDOORS)
     }
+    binding.standardButton.setOnClickListener {
+      mapboxMap.loadStyle(Style.STANDARD)
+    }
+    binding.standardSatelliteButton.setOnClickListener {
+      mapboxMap.loadStyle(Style.STANDARD_SATELLITE)
+    }
   }
 }

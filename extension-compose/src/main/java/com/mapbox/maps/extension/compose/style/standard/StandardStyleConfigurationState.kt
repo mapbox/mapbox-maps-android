@@ -7,29 +7,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.compose.style.BooleanValue
-import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.standard.LightPresetValue.Companion.equals
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
- * Define the lightPreset style import config for [MapboxStandardStyle].
+ * Define the Theme style import config for [MapboxStandardStyle].
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class LightPresetValue(public val value: Value) {
+public data class ThemeValue(public val value: Value) {
   /**
-   * Construct the [LightPresetValue] with [String].
+   * Construct the [ThemeValue] with [String].
    */
   public constructor(value: String) : this(Value(value))
 
   /**
-   * Construct the [LightPresetValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   * Construct the [ThemeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
   public constructor(expression: Expression) : this(expression as Value)
 
   /**
-   * Get the name of the [LightPresetValue] as [String], or null if it's not a constant(e.g. an expression).
+   * Get the name of the [ThemeValue] as [String], or null if it's not a constant(e.g. an expression).
    */
   public val presetNameOrNull: String?
     get() = value.contents as? String
@@ -53,101 +52,58 @@ public data class LightPresetValue(public val value: Value) {
      * to differentiate them because they use [equals].
      */
     @JvmField
-    internal val INITIAL: LightPresetValue =
-      LightPresetValue(Value.valueOf("LightPresetValue.INITIAL"))
+    internal val INITIAL: ThemeValue =
+      ThemeValue(Value.valueOf("ThemeValue.INITIAL"))
 
     /**
-     * Default value for [LightPresetValue], setting default will result in restoring the property value defined in the style.
+     * The theme for "default".
      */
     @JvmField
-    public val DEFAULT: LightPresetValue = LightPresetValue(Value.nullValue())
+    public val DEFAULT: ThemeValue = ThemeValue("default")
 
     /**
-     * The light preset for "day".
+     * The theme for "faded".
      */
     @JvmField
-    public val DAY: LightPresetValue = LightPresetValue("day")
+    public val FADED: ThemeValue = ThemeValue("faded")
 
     /**
-     * The light preset for "night".
+     * The theme for "monochrome".
      */
     @JvmField
-    public val NIGHT: LightPresetValue = LightPresetValue("night")
-
-    /**
-     * The light preset for "dusk".
-     */
-    @JvmField
-    public val DUSK: LightPresetValue = LightPresetValue("dusk")
-
-    /**
-     * The light preset for "dawn".
-     */
-    @JvmField
-    public val DAWN: LightPresetValue = LightPresetValue("dawn")
+    public val MONOCHROME: ThemeValue = ThemeValue("monochrome")
   }
 }
 
 /**
- * The state holder for [MapboxStandardStyle]'s configurations.
+ * The state holder for the [MapboxStandardStyle]'s configurations.
  */
 @Stable
 public class StandardStyleConfigurationState private constructor(
-  initialShowPlaceLabels: BooleanValue,
-  initialShowRoadLabels: BooleanValue,
-  initialShowPointOfInterestLabels: BooleanValue,
-  initialShowTransitLabels: BooleanValue,
-  initialLightPreset: LightPresetValue,
-  initialFont: StringValue,
-) {
+  initialTheme: ThemeValue,
+  initialShow3dObjects: BooleanValue
+) : BaseStyleConfigurationState() {
+
   /**
    * Public constructor for [StandardStyleConfigurationState].
    */
   public constructor() : this(
-    initialShowPlaceLabels = BooleanValue.INITIAL,
-    initialShowRoadLabels = BooleanValue.INITIAL,
-    initialShowPointOfInterestLabels = BooleanValue.INITIAL,
-    initialShowTransitLabels = BooleanValue.INITIAL,
-    initialLightPreset = LightPresetValue.INITIAL,
-    initialFont = StringValue.INITIAL,
+    initialTheme = ThemeValue.INITIAL,
+    initialShow3dObjects = BooleanValue.INITIAL,
   )
 
   /**
-   * Whether or not to show the place labels, default to true.
+   * The [ThemeValue] settings of the Mapbox Standard Style, available themes "default", "faded" and "monochrome".
    */
-  public var showPlaceLabels: BooleanValue by mutableStateOf(initialShowPlaceLabels)
+  public var theme: ThemeValue by mutableStateOf(initialTheme)
 
   /**
-   * Whether or not to show the road labels, default to true.
+   * Whether or not to show all 3d layers (3D buildings, landmarks, trees, etc.) including shadows, ambient occlusion, and flood lights.
    */
-  public var showRoadLabels: BooleanValue by mutableStateOf(initialShowRoadLabels)
-
-  /**
-   * Whether or not to show the point of interest labels, default to true.
-   */
-  public var showPointOfInterestLabels: BooleanValue by mutableStateOf(initialShowPointOfInterestLabels)
-
-  /**
-   * Whether or not to show the transit labels, default to true.
-   */
-  public var showTransitLabels: BooleanValue by mutableStateOf(initialShowTransitLabels)
-
-  /**
-   * The [LightPresetValue] settings of the Mapbox Standard Style, available lightPresets including "day", "night", "dawn", "dusk", defaults to "day".
-   */
-  public var lightPreset: LightPresetValue by mutableStateOf(initialLightPreset)
-
-  /**
-   * The font to be used with the standard style.
-   */
-  public var font: StringValue by mutableStateOf(initialFont)
+  public var show3dObjects: BooleanValue by mutableStateOf(initialShow3dObjects)
 
   internal companion object {
-    internal const val CONFIG_SHOW_PLACE_LABELS = "showPlaceLabels"
-    internal const val CONFIG_SHOW_ROAD_LABELS = "showRoadLabels"
-    internal const val CONFIG_SHOW_POINT_OF_INTEREST_LABELS = "showPointOfInterestLabels"
-    internal const val CONFIG_SHOW_TRANSIT_LABELS = "showTransitLabels"
-    internal const val CONFIG_LIGHT_PRESET = "lightPreset"
-    internal const val CONFIG_FONT = "font"
+    internal const val CONFIG_THEME = "theme"
+    internal const val CONFIG_SHOW_3D_OBJECTS = "show3dObjects"
   }
 }

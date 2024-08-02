@@ -6,12 +6,17 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.6.0-rc.1
 ## Features ✨ and improvements 🏁
 * Support negative values for `CircleLayer.circleBlur` to render inner glow effect.
+* Add new `Style.STANDARD_SATELLITE` style that combines updated satellite imagery and vector layers.
+* Introduce new import configuration properties for `Style.STANDARD`: `theme`, `show3dObjects` which could be set with `Style.setStyleImportConfigProperty`.
+* [compose] Extend `StandardStyleConfigurationState` with `theme: ThemeValue` and `show3dObjects: BooleanValue` properties.
+* [compose] Introduce composable function `MapboxStandardSatelliteStyle` with dedicated `StandardSatelliteStyleConfigurationState`.
 
 ## Bug fixes 🐞
 * Fix elevated line occlusion issue in 2D mode.
 
 ## Dependencies
 * Update gl-native to v11.6.0-rc.1 and common to v24.6.0-rc.1.
+
 
 ## Known issues
 * `ClipLayer` property `clipLayerTypes` is not updated in runtime. The fix is expected to land in stable 11.6.0.

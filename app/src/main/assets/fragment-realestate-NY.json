@@ -9,7 +9,9 @@
                 "showPointOfInterestLabels": true,
                 "showTransitLabels": false,
                 "showPlaceLabels": true,
-                "showRoadLabels": false
+                "showRoadLabels": false,
+                "theme": "monochrome",
+                "show3dObjects": true
             }
         }
     ],
