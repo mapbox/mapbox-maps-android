@@ -18,23 +18,23 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.style.utils.transition
 
 /**
- * The convenient composable function to set a Mapbox Standard style to the map, with available slots
+ * The convenient composable function to set a Mapbox Standard Satellite style to the map, with available slots
  * and config options.
  *
  * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
- * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
- * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
- * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
+ * @param topSlot The content to be set to the top slot of the Mapbox Standard Satellite style.
+ * @param middleSlot The content to be set to the middle slot of the Mapbox Standard Satellite style.
+ * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard Satellite style.
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the Standard style definition.
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
  * @param styleTransition Transition options applied when loading the style.
- * @param standardStyleConfigurationState The configurations for [MapboxStandardStyle].
+ * @param standardSatelliteStyleConfigurationState The configurations for [MapboxStandardSatelliteStyle].
  */
 @Composable
 @MapboxStyleComposable
-public fun MapboxStandardStyle(
+public fun MapboxStandardSatelliteStyle(
   styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
@@ -44,12 +44,12 @@ public fun MapboxStandardStyle(
   terrainState: TerrainState = TerrainState.INITIAL,
   lightsState: LightsState = LightsState.INITIAL,
   styleTransition: TransitionOptions = remember { transition { } },
-  standardStyleConfigurationState: StandardStyleConfigurationState = remember {
-    StandardStyleConfigurationState()
+  standardSatelliteStyleConfigurationState: StandardSatelliteStyleConfigurationState = remember {
+    StandardSatelliteStyleConfigurationState()
   }
 ) {
   GenericStyle(
-    style = Style.STANDARD,
+    style = Style.STANDARD_SATELLITE,
     styleImportsContent = styleImportsContent,
     slotsContent = slotsContent {
       topSlot?.let { slot("top", it) }
@@ -58,7 +58,7 @@ public fun MapboxStandardStyle(
     },
     styleImportsConfig = styleImportsConfig {
       importConfig(importId = "basemap") {
-        with(standardStyleConfigurationState) {
+        with(standardSatelliteStyleConfigurationState) {
           if (showPlaceLabels.notInitial) {
             config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
           }
@@ -83,11 +83,17 @@ public fun MapboxStandardStyle(
           if (font.notInitial) {
             config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
           }
-          if (show3dObjects.notInitial) {
-            config(StandardStyleConfigurationState.CONFIG_SHOW_3D_OBJECTS, show3dObjects.value)
+          if (showRoadsAndTransit.notInitial) {
+            config(
+              StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ROADS_AND_TRANSIT,
+              showRoadsAndTransit.value
+            )
           }
-          if (theme.notInitial) {
-            config(StandardStyleConfigurationState.CONFIG_THEME, theme.value)
+          if (showPedestrianRoads.notInitial) {
+            config(
+              StandardSatelliteStyleConfigurationState.CONFIG_SHOW_PEDESTRIAN_ROADS,
+              showPedestrianRoads.value
+            )
           }
         }
       }
@@ -101,23 +107,23 @@ public fun MapboxStandardStyle(
 }
 
 /**
- * The convenient composable function to set a Mapbox Standard style to the map, with available slots
+ * The convenient composable function to set a Mapbox Standard Satellite style to the map, with available slots
  * and config options.
  *
  * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
- * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
- * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
- * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
+ * @param topSlot The content to be set to the top slot of the Mapbox Standard Satellite style.
+ * @param middleSlot The content to be set to the middle slot of the Mapbox Standard Satellite style.
+ * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard Satellite style.
  * @param projection The projection to be set to the map. Defaults to [Projection.DEFAULT] meaning that projection value is taken from the Standard style definition.
  * @param atmosphereState The atmosphere to be set to the map By default, no changes to the current atmosphere.
  * @param terrainState The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from Standard style definition.
  * @param lightsState The lights to be set to the map. By default, no changes to the current lights defined in style.
  * @param styleTransition Transition options applied when loading the style.
- * @param init The lambda that will be applied to the remembered [StandardStyleConfigurationState].
+ * @param init The lambda that will be applied to the remembered [StandardSatelliteStyleConfigurationState].
  */
 @Composable
 @MapboxStyleComposable
-public fun MapboxStandardStyle(
+public fun MapboxStandardSatelliteStyle(
   styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
   topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
   middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
@@ -127,9 +133,9 @@ public fun MapboxStandardStyle(
   terrainState: TerrainState = TerrainState.INITIAL,
   lightsState: LightsState = LightsState.INITIAL,
   styleTransition: TransitionOptions = remember { transition { } },
-  init: StandardStyleConfigurationState.() -> Unit
+  init: StandardSatelliteStyleConfigurationState.() -> Unit
 ) {
-  MapboxStandardStyle(
+  MapboxStandardSatelliteStyle(
     styleImportsContent = styleImportsContent,
     topSlot = topSlot,
     middleSlot = middleSlot,
@@ -139,8 +145,8 @@ public fun MapboxStandardStyle(
     terrainState = terrainState,
     lightsState = lightsState,
     styleTransition = styleTransition,
-    standardStyleConfigurationState = remember {
-      StandardStyleConfigurationState()
+    standardSatelliteStyleConfigurationState = remember {
+      StandardSatelliteStyleConfigurationState()
     }.apply(init)
   )
 }

@@ -1,6 +1,8 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.LineString
@@ -17,16 +19,18 @@ import com.mapbox.maps.testapp.databinding.ActivityStandardStyleBinding
  * Example of working with style imports and the Standard style.
  */
 class StandardStyleActivity : AppCompatActivity() {
+
   private lateinit var mapboxMap: MapboxMap
   private val line = LineString.fromLngLats(LINE_COORDINATES)
   private var lightSetting: LightPresets = LightPresets.DUSK
+  private var themeSetting: Theme = Theme.DEFAULT
   private var labelsSetting = true
+  private var show3dObjectsSetting = true
   private lateinit var binding: ActivityStandardStyleBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityStandardStyleBinding.inflate(layoutInflater)
-    setContentView(binding.root)
     mapboxMap = binding.mapView.mapboxMap
     setContentView(binding.root)
 
@@ -60,6 +64,22 @@ class StandardStyleActivity : AppCompatActivity() {
   }
 
   private fun addOnClickListeners() {
+    binding.fabThemeSetting.setOnClickListener {
+      mapboxMap.getStyle { style ->
+        themeSetting = when (themeSetting) {
+          Theme.DEFAULT -> Theme.FADED
+          Theme.FADED -> Theme.MONOCHROME
+          Theme.MONOCHROME -> Theme.DEFAULT
+        }
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "theme",
+          themeSetting.value
+        )
+        showAction(it, themeSetting.value.toString())
+      }
+    }
+
     // When a user clicks the light setting button change the `lightPreset` config property on the Standard style import
     binding.fabLightSetting.setOnClickListener {
       mapboxMap.getStyle { style ->
@@ -74,6 +94,7 @@ class StandardStyleActivity : AppCompatActivity() {
           "lightPreset",
           lightSetting.value
         )
+        showAction(it, lightSetting.value.toString())
       }
     }
 
@@ -82,12 +103,48 @@ class StandardStyleActivity : AppCompatActivity() {
     binding.fabLabelsSetting.setOnClickListener {
       mapboxMap.getStyle { style ->
         labelsSetting = !labelsSetting
-        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showPlaceLabels", Value.valueOf(labelsSetting))
-        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showRoadLabels", Value.valueOf(labelsSetting))
-        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showPointInterestLabels", Value.valueOf(labelsSetting))
-        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showTransitLabels", Value.valueOf(labelsSetting))
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "showPlaceLabels",
+          Value.valueOf(labelsSetting)
+        )
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "showRoadLabels",
+          Value.valueOf(labelsSetting)
+        )
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "showPointInterestLabels",
+          Value.valueOf(labelsSetting)
+        )
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "showTransitLabels",
+          Value.valueOf(labelsSetting)
+        )
+        showAction(it, labelsSetting.toString())
       }
     }
+    binding.fab3dObjectsSetting.setOnClickListener {
+      mapboxMap.getStyle { style ->
+        show3dObjectsSetting = !show3dObjectsSetting
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "show3dObjects",
+          Value.valueOf(show3dObjectsSetting)
+        )
+        showAction(it, show3dObjectsSetting.toString())
+      }
+    }
+  }
+
+  private fun showAction(it: View, value: String) {
+    Toast.makeText(
+      this@StandardStyleActivity,
+      it.contentDescription.toString() + value,
+      Toast.LENGTH_SHORT
+    ).show()
   }
 
   private enum class LightPresets(val value: Value) {
@@ -95,6 +152,12 @@ class StandardStyleActivity : AppCompatActivity() {
     DAWN(Value.valueOf("dawn")),
     DUSK(Value.valueOf("dusk")),
     NIGHT(Value.valueOf("night"))
+  }
+
+  private enum class Theme(val value: Value) {
+    FADED(Value.valueOf("faded")),
+    MONOCHROME(Value.valueOf("monochrome")),
+    DEFAULT(Value.valueOf("default"))
   }
 
   companion object {

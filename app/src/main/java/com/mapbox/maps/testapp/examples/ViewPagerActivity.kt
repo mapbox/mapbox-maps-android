@@ -57,7 +57,7 @@ class ViewPagerActivity : AppCompatActivity() {
     }
 
     companion object {
-      private const val NUM_ITEMS = 5
+      private const val NUM_ITEMS = 6
     }
   }
 }
@@ -75,6 +75,7 @@ fun getStyleFromIndex(index: Int): String {
     2 -> Style.SATELLITE
     3 -> Style.LIGHT
     4 -> Style.TRAFFIC_NIGHT
+    5 -> Style.STANDARD_SATELLITE
     else -> Style.STANDARD
   }
 }

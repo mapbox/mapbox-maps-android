@@ -43,7 +43,8 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
         binding.fabStyleToggle.setOnClickListener {
           when (style?.styleURI) {
             Style.STANDARD -> loadStyle(Style.SATELLITE_STREETS)
-            Style.SATELLITE_STREETS -> loadStyle(Style.STANDARD)
+            Style.SATELLITE_STREETS -> loadStyle(Style.STANDARD_SATELLITE)
+            Style.STANDARD_SATELLITE -> loadStyle(Style.STANDARD)
           }
         }
         Toast.makeText(this@ViewAnnotationBasicAddActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()

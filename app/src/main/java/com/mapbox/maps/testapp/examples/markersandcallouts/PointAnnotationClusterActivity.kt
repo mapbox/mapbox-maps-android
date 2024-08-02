@@ -41,7 +41,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   private var slotIndex: Int = 0
 
   // STANDARD style doesn't support ICON_FIRE_STATION image
-  private val styles = AnnotationUtils.STYLES.filterNot { it == Style.STANDARD }
+  private val styles = AnnotationUtils.STYLES.filterNot { it == Style.STANDARD || it == Style.STANDARD_SATELLITE }
   private val nextStyle: String
     get() = styles[styleIndex++ % styles.size]
   private val nextSlot: String

@@ -144,8 +144,8 @@ class CircleAnnotationActivity : AppCompatActivity() {
   private fun switchToNextStyle() {
     val style = nextStyle
     binding.mapView.mapboxMap.loadStyle(style)
-    // only standard supports slots
-    binding.changeSlot.isEnabled = style == Style.STANDARD
+    // only standard based styles support slots
+    binding.changeSlot.isEnabled = (style == Style.STANDARD || style == Style.STANDARD_SATELLITE)
   }
 
   companion object {

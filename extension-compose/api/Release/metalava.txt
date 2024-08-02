@@ -3643,6 +3643,28 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
 package com.mapbox.maps.extension.compose.style.standard {
 
+  @androidx.compose.runtime.Stable public abstract class BaseStyleConfigurationState {
+    ctor protected BaseStyleConfigurationState(com.mapbox.maps.extension.compose.style.BooleanValue initialShowPlaceLabels = com.mapbox.maps.extension.compose.style.BooleanValue.INITIAL, com.mapbox.maps.extension.compose.style.BooleanValue initialShowRoadLabels = com.mapbox.maps.extension.compose.style.BooleanValue.INITIAL, com.mapbox.maps.extension.compose.style.BooleanValue initialShowPointOfInterestLabels = com.mapbox.maps.extension.compose.style.BooleanValue.INITIAL, com.mapbox.maps.extension.compose.style.BooleanValue initialShowTransitLabels = com.mapbox.maps.extension.compose.style.BooleanValue.INITIAL, com.mapbox.maps.extension.compose.style.standard.LightPresetValue initialLightPreset = com.mapbox.maps.extension.compose.style.standard.LightPresetValue.INITIAL, com.mapbox.maps.extension.compose.style.StringValue initialFont = com.mapbox.maps.extension.compose.style.StringValue.INITIAL);
+    method public final com.mapbox.maps.extension.compose.style.StringValue getFont();
+    method public final com.mapbox.maps.extension.compose.style.standard.LightPresetValue getLightPreset();
+    method public final com.mapbox.maps.extension.compose.style.BooleanValue getShowPlaceLabels();
+    method public final com.mapbox.maps.extension.compose.style.BooleanValue getShowPointOfInterestLabels();
+    method public final com.mapbox.maps.extension.compose.style.BooleanValue getShowRoadLabels();
+    method public final com.mapbox.maps.extension.compose.style.BooleanValue getShowTransitLabels();
+    method public final void setFont(com.mapbox.maps.extension.compose.style.StringValue);
+    method public final void setLightPreset(com.mapbox.maps.extension.compose.style.standard.LightPresetValue);
+    method public final void setShowPlaceLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public final void setShowPointOfInterestLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public final void setShowRoadLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public final void setShowTransitLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
+    property public final com.mapbox.maps.extension.compose.style.StringValue font;
+    property public final com.mapbox.maps.extension.compose.style.standard.LightPresetValue lightPreset;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showPlaceLabels;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showRoadLabels;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showTransitLabels;
+  }
+
   @androidx.compose.runtime.Immutable public final class LightPresetValue {
     ctor public LightPresetValue(com.mapbox.bindgen.Value value);
     ctor public LightPresetValue(String value);
@@ -3664,6 +3686,25 @@ package com.mapbox.maps.extension.compose.style.standard {
   public static final class LightPresetValue.Companion {
   }
 
+  public final class MapboxStandardSatelliteStyleKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardSatelliteStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
+    return transition({ 
+    
+    })
+}), com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState standardSatelliteStyleConfigurationState = remember({ 
+    return <init>()
+}));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardSatelliteStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
+    return transition({ 
+    
+    })
+}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState,kotlin.Unit> init);
+  }
+
   public final class MapboxStandardStyleKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
@@ -3683,26 +3724,43 @@ package com.mapbox.maps.extension.compose.style.standard {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable public final class StandardStyleConfigurationState {
+  @androidx.compose.runtime.Stable public final class StandardSatelliteStyleConfigurationState extends com.mapbox.maps.extension.compose.style.standard.BaseStyleConfigurationState {
+    ctor public StandardSatelliteStyleConfigurationState();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPedestrianRoads();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowRoadsAndTransit();
+    method public void setShowPedestrianRoads(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowRoadsAndTransit(com.mapbox.maps.extension.compose.style.BooleanValue);
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showPedestrianRoads;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showRoadsAndTransit;
+  }
+
+  @androidx.compose.runtime.Stable public final class StandardStyleConfigurationState extends com.mapbox.maps.extension.compose.style.standard.BaseStyleConfigurationState {
     ctor public StandardStyleConfigurationState();
-    method public com.mapbox.maps.extension.compose.style.StringValue getFont();
-    method public com.mapbox.maps.extension.compose.style.standard.LightPresetValue getLightPreset();
-    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPlaceLabels();
-    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPointOfInterestLabels();
-    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowRoadLabels();
-    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowTransitLabels();
-    method public void setFont(com.mapbox.maps.extension.compose.style.StringValue);
-    method public void setLightPreset(com.mapbox.maps.extension.compose.style.standard.LightPresetValue);
-    method public void setShowPlaceLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
-    method public void setShowPointOfInterestLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
-    method public void setShowRoadLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
-    method public void setShowTransitLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
-    property public final com.mapbox.maps.extension.compose.style.StringValue font;
-    property public final com.mapbox.maps.extension.compose.style.standard.LightPresetValue lightPreset;
-    property public final com.mapbox.maps.extension.compose.style.BooleanValue showPlaceLabels;
-    property public final com.mapbox.maps.extension.compose.style.BooleanValue showPointOfInterestLabels;
-    property public final com.mapbox.maps.extension.compose.style.BooleanValue showRoadLabels;
-    property public final com.mapbox.maps.extension.compose.style.BooleanValue showTransitLabels;
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dObjects();
+    method public com.mapbox.maps.extension.compose.style.standard.ThemeValue getTheme();
+    method public void setShow3dObjects(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setTheme(com.mapbox.maps.extension.compose.style.standard.ThemeValue);
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
+    property public final com.mapbox.maps.extension.compose.style.standard.ThemeValue theme;
+  }
+
+  @androidx.compose.runtime.Immutable public final class ThemeValue {
+    ctor public ThemeValue(com.mapbox.bindgen.Value value);
+    ctor public ThemeValue(String value);
+    ctor public ThemeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.standard.ThemeValue copy(com.mapbox.bindgen.Value value);
+    method public String? getPresetNameOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final String? presetNameOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ThemeValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ThemeValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ThemeValue FADED;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ThemeValue MONOCHROME;
+  }
+
+  public static final class ThemeValue.Companion {
   }
 
 }

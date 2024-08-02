@@ -10,12 +10,37 @@
         android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab3dObjectsSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="214dp"
+        android:contentDescription="3dObjects: "
+        android:src="@android:drawable/ic_popup_reminder"
+        app:backgroundTint="@color/blue"
+        app:layout_anchorGravity="top" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabThemeSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="148dp"
+        android:contentDescription="Theme: "
+        android:src="@android:drawable/ic_menu_mapmode"
+        app:backgroundTint="@color/accent"
+        app:layout_anchorGravity="top" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabLightSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="82dp"
+        android:contentDescription="LightPreset: "
         android:src="@android:drawable/ic_menu_view"
         app:backgroundTint="@color/red"
         app:layout_anchorGravity="top" />
@@ -26,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
+        android:contentDescription="Label visibility: "
         android:src="@android:drawable/ic_dialog_info"
         app:backgroundTint="@color/primary" />
 
