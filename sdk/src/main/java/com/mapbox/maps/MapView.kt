@@ -342,7 +342,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Set new maximum FPS for map rendering.
    *
-   * @param fps new maximum FPS value that must be > 0 and less than max integer.
+   * @param fps new maximum FPS value that must be greater than 0 and less than max integer.
    * When setting this value higher than screen physically supports - max possible screen FPS rate will be used.
    */
   override fun setMaximumFps(@IntRange(from = 1, to = Int.MAX_VALUE.toLong()) fps: Int) {
