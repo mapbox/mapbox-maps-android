@@ -44,9 +44,7 @@ import org.intellij.lang.annotations.Language
  * Example app that shows how to use OfflineManager and TileStore to
  * download regions for offline use.
  *
- * By default, users may download up to 250MB of data for offline
- * use without incurring additional charges. This limit is subject
- * to change during the beta.
+ * Please refer to our [offline guide](https://docs.mapbox.com/android/maps/guides/offline/#limits) for the limitations of the offline usage.
  */
 class OfflineActivity : AppCompatActivity() {
   private val tileStore: TileStore by lazy { TileStore.create() }
