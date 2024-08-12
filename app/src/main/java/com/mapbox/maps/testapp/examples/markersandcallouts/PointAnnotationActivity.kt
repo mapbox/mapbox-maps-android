@@ -25,7 +25,18 @@ import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationDragListener
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationLongClickListener
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
@@ -35,7 +46,6 @@ import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
 /**
  * Example showing how to add Symbol annotations
@@ -262,7 +272,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         if (pointAnnotationManager != null && pointAnnotation != null) {
           val idKey = pointAnnotationManager!!.getAnnotationIdKey()
           val expression: Expression =
-            eq(toNumber(get(idKey)), literal(pointAnnotation!!.id.toDouble()))
+            eq(get(idKey), literal(pointAnnotation!!.id))
           val filter = pointAnnotationManager!!.layerFilter
           if (filter != null && filter == expression) {
             pointAnnotationManager!!.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
