@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+* Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
 
 # 11.6.0-rc.1 August 02, 2024
 ## Features ✨ and improvements 🏁

@@ -511,6 +511,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineRoundLimit();
     method public java.util.List<java.lang.Double>? getLineTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
+    method public androidx.compose.ui.graphics.Color? getLineTrimColor();
+    method public java.util.List<java.lang.Double>? getLineTrimFadeRange();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
@@ -521,6 +523,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineRoundLimit(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
+    method public void setLineTrimColor(androidx.compose.ui.graphics.Color?);
+    method public void setLineTrimFadeRange(java.util.List<java.lang.Double>?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property public final java.util.List<java.lang.Double>? lineDasharray;
@@ -531,6 +535,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineRoundLimit;
     property public final java.util.List<java.lang.Double>? lineTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
+    property public final androidx.compose.ui.graphics.Color? lineTrimColor;
+    property public final java.util.List<java.lang.Double>? lineTrimFadeRange;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
   }
 
@@ -1892,6 +1898,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineTranslate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue getLineTranslateAnchor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineTranslateTransition();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getLineTrimColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getLineTrimColorTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getLineTrimFadeRange();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineTrimOffset();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineWidth();
     method public com.mapbox.maps.extension.compose.style.Transition getLineWidthTransition();
@@ -1932,6 +1941,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue);
     method public void setLineTranslateTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setLineTrimColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setLineTrimColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setLineTrimFadeRange(com.mapbox.maps.extension.compose.style.DoubleRangeValue);
     method public void setLineTrimOffset(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setLineWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -1972,6 +1984,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineTranslate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue lineTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineTranslateTransition;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue lineTrimColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition lineTrimColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue lineTrimFadeRange;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineTrimOffset;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineWidth;
     property public final com.mapbox.maps.extension.compose.style.Transition lineWidthTransition;

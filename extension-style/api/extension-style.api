@@ -2327,6 +2327,12 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineTranslateAnchorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineTranslateAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineTranslateTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getLineTrimColor ()Ljava/lang/String;
+	public final fun getLineTrimColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getLineTrimColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getLineTrimColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getLineTrimFadeRange ()Ljava/util/List;
+	public final fun getLineTrimFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun getLineTrimOffsetAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineWidth ()Ljava/lang/Double;
@@ -2404,6 +2410,13 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTranslateTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTranslateTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimColor (I)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimFadeRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimOffset (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimOffset (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2477,6 +2490,12 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineTranslateAnchorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineTranslateAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineTranslateTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultLineTrimColor ()Ljava/lang/String;
+	public final fun getDefaultLineTrimColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getDefaultLineTrimColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultLineTrimColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultLineTrimFadeRange ()Ljava/util/List;
+	public final fun getDefaultLineTrimFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineTrimOffset ()Ljava/util/List;
 	public final fun getDefaultLineTrimOffsetAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineWidth ()Ljava/lang/Double;
@@ -2554,6 +2573,13 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTranslateTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTranslateTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimColor (I)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimFadeRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimOffset (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimOffset (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2587,6 +2613,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayerDsl
 	public static synthetic fun lineRoundLimit$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineTranslate$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineTranslateAnchor$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public static synthetic fun lineTrimColor$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public static synthetic fun lineTrimFadeRange$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineTrimOffset$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineWidth$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 }

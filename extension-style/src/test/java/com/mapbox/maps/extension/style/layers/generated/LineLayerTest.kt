@@ -2112,6 +2112,222 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineTrimColorSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = "rgba(0, 0, 0, 1)"
+    layer.bindTo(style)
+    layer.lineTrimColor(testValue)
+    verify { style.setStyleLayerProperty("id", "line-trim-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "rgba(0, 0, 0, 1)")
+  }
+
+  @Test
+  fun lineTrimColorGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), layer.lineTrimColor?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineTrimColorAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimColor(expression)
+    verify { style.setStyleLayerProperty("id", "line-trim-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineTrimColorAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineTrimColorAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color") }
+  }
+
+  @Test
+  fun lineTrimColorAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineTrimColorAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-trim-color") }
+  }
+
+  @Test
+  fun lineTrimColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineTrimColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", layer.lineTrimColor)
+    assertEquals(Color.BLACK, layer.lineTrimColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "line-trim-color") }
+  }
+
+  @Test
+  fun lineTrimColorAsColorIntSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimColor(Color.CYAN)
+    verify { style.setStyleLayerProperty("id", "line-trim-color", capture(valueSlot)) }
+    assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun lineTrimColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(Color.RED, layer.lineTrimColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "line-trim-color") }
+  }
+
+  @Test
+  fun lineTrimColorTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-trim-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineTrimColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineTrimColorTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color-transition") }
+  }
+
+  @Test
+  fun lineTrimColorTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimColorTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-trim-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineTrimFadeRangeSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = listOf(0.0, 1.0)
+    layer.bindTo(style)
+    layer.lineTrimFadeRange(testValue)
+    verify { style.setStyleLayerProperty("id", "line-trim-fade-range", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+  }
+
+  @Test
+  fun lineTrimFadeRangeGet() {
+    val testValue = listOf(0.0, 1.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = listOf(0.0, 1.0)
+    assertEquals(expectedValue.toString(), layer.lineTrimFadeRange?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-fade-range") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineTrimFadeRangeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimFadeRange(expression)
+    verify { style.setStyleLayerProperty("id", "line-trim-fade-range", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineTrimFadeRangeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineTrimFadeRangeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-fade-range") }
+  }
+
+  @Test
+  fun lineTrimFadeRangeAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineTrimFadeRangeAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-trim-fade-range") }
+  }
+
+  @Test
+  fun lineTrimFadeRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("[literal, [0.0, 1.0]]", layer.lineTrimFadeRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.lineTrimFadeRange!!)
+    verify { style.getStyleLayerProperty("id", "line-trim-fade-range") }
+  }
+
+  @Test
   fun lineTrimOffsetSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0)
@@ -3184,6 +3400,112 @@ class LineLayerTest {
     assertEquals(LineTranslateAnchor.MAP.value, LineLayer.defaultLineTranslateAnchorAsExpression.toString())
     assertEquals(LineTranslateAnchor.MAP, LineLayer.defaultLineTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor") }
+  }
+
+  @Test
+  fun defaultLineTrimColorTest() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineTrimColor?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineTrimColorAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineTrimColorAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color") }
+  }
+
+  @Test
+  fun defaultLineTrimColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(expression.toString(), LineLayer.defaultLineTrimColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", LineLayer.defaultLineTrimColor)
+    assertEquals(Color.BLACK, LineLayer.defaultLineTrimColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color") }
+  }
+
+  @Test
+  fun defaultLineTrimColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(Color.RED, LineLayer.defaultLineTrimColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color") }
+  }
+
+  @Test
+  fun defaultLineTrimColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineTrimColorTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color-transition") }
+  }
+
+  @Test
+  fun defaultLineTrimFadeRangeTest() {
+    val testValue = listOf(0.0, 1.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = listOf(0.0, 1.0)
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineTrimFadeRange?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineTrimFadeRangeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineTrimFadeRangeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range") }
+  }
+
+  @Test
+  fun defaultLineTrimFadeRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    assertEquals("[literal, [0.0, 1.0]]", LineLayer.defaultLineTrimFadeRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), LineLayer.defaultLineTrimFadeRange!!)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range") }
   }
 
   @Test

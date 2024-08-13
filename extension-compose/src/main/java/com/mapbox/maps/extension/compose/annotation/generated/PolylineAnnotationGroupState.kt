@@ -7,9 +7,12 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 
 /**
@@ -26,6 +29,8 @@ public class PolylineAnnotationGroupState private constructor(
   initialLineOcclusionOpacity: Double?,
   initialLineTranslate: List<Double>?,
   initialLineTranslateAnchor: LineTranslateAnchor?,
+  initialLineTrimColor: Color?,
+  initialLineTrimFadeRange: List<Double>?,
   initialLineTrimOffset: List<Double>?,
 ) {
   public constructor() : this(
@@ -38,6 +43,8 @@ public class PolylineAnnotationGroupState private constructor(
     initialLineOcclusionOpacity = null,
     initialLineTranslate = null,
     initialLineTranslateAnchor = null,
+    initialLineTrimColor = null,
+    initialLineTrimFadeRange = null,
     initialLineTrimOffset = null,
   )
   /**
@@ -78,7 +85,17 @@ public class PolylineAnnotationGroupState private constructor(
    */
   public var lineTranslateAnchor: LineTranslateAnchor? by mutableStateOf(initialLineTranslateAnchor)
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The color to be used for rendering the trimmed line section that is defined by the {@link PropertyFactory#lineTrimOffset} property.
+   */
+  @MapboxExperimental
+  public var lineTrimColor: Color? by mutableStateOf(initialLineTrimColor)
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the {@link PropertyFactory#lineTrimOffset} property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between {@link PropertyFactory#lineTrimColor} and the color specified by the {@link PropertyFactory#lineColor} or the {@link PropertyFactory#lineGradient} property.
+   */
+  @MapboxExperimental
+  public var lineTrimFadeRange: List<Double>? by mutableStateOf(initialLineTrimFadeRange)
+  /**
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    */
   public var lineTrimOffset: List<Double>? by mutableStateOf(initialLineTrimOffset)
 
@@ -120,6 +137,16 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineTranslateAnchor = lineTranslateAnchor
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimColor(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineTrimColor = lineTrimColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimFadeRange(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineTrimFadeRange = lineTrimFadeRange
+  }
+  @Composable
   private fun UpdateLineTrimOffset(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineTrimOffset = lineTrimOffset
   }
@@ -135,6 +162,8 @@ public class PolylineAnnotationGroupState private constructor(
     UpdateLineOcclusionOpacity(annotationManager)
     UpdateLineTranslate(annotationManager)
     UpdateLineTranslateAnchor(annotationManager)
+    UpdateLineTrimColor(annotationManager)
+    UpdateLineTrimFadeRange(annotationManager)
     UpdateLineTrimOffset(annotationManager)
   }
 }

@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.StringValue
@@ -57,6 +58,9 @@ public class LineLayerState private constructor(
   initialLineTranslate: DoubleListValue,
   initialLineTranslateTransition: Transition,
   initialLineTranslateAnchor: LineTranslateAnchorValue,
+  initialLineTrimColor: ColorValue,
+  initialLineTrimColorTransition: Transition,
+  initialLineTrimFadeRange: DoubleRangeValue,
   initialLineTrimOffset: DoubleListValue,
   initialLineWidth: DoubleValue,
   initialLineWidthTransition: Transition,
@@ -102,6 +106,9 @@ public class LineLayerState private constructor(
     initialLineTranslate = DoubleListValue.INITIAL,
     initialLineTranslateTransition = Transition.INITIAL,
     initialLineTranslateAnchor = LineTranslateAnchorValue.INITIAL,
+    initialLineTrimColor = ColorValue.INITIAL,
+    initialLineTrimColorTransition = Transition.INITIAL,
+    initialLineTrimFadeRange = DoubleRangeValue.INITIAL,
     initialLineTrimOffset = DoubleListValue.INITIAL,
     initialLineWidth = DoubleValue.INITIAL,
     initialLineWidthTransition = Transition.INITIAL,
@@ -244,7 +251,22 @@ public class LineLayerState private constructor(
    */
   public var lineTranslateAnchor: LineTranslateAnchorValue by mutableStateOf(initialLineTranslateAnchor)
   /**
-   *  The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   *  The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   */
+  @MapboxExperimental
+  public var lineTrimColor: ColorValue by mutableStateOf(initialLineTrimColor)
+  /**
+   *  Defines the transition of [lineTrimColor]. Default value: "transparent".
+   */
+  @MapboxExperimental
+  public var lineTrimColorTransition: Transition by mutableStateOf(initialLineTrimColorTransition)
+  /**
+   *  The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   */
+  @MapboxExperimental
+  public var lineTrimFadeRange: DoubleRangeValue by mutableStateOf(initialLineTrimFadeRange)
+  /**
+   *  The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    */
   public var lineTrimOffset: DoubleListValue by mutableStateOf(initialLineTrimOffset)
   /**
@@ -475,6 +497,27 @@ public class LineLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimColor(layerNode: LayerNode) {
+    if (lineTrimColor.notInitial) {
+      layerNode.setProperty("line-trim-color", lineTrimColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimColorTransition(layerNode: LayerNode) {
+    if (lineTrimColorTransition.notInitial) {
+      layerNode.setProperty("line-trim-color-transition", lineTrimColorTransition.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimFadeRange(layerNode: LayerNode) {
+    if (lineTrimFadeRange.notInitial) {
+      layerNode.setProperty("line-trim-fade-range", lineTrimFadeRange.value)
+    }
+  }
+  @Composable
   private fun UpdateLineTrimOffset(layerNode: LayerNode) {
     if (lineTrimOffset.notInitial) {
       layerNode.setProperty("line-trim-offset", lineTrimOffset.value)
@@ -557,6 +600,9 @@ public class LineLayerState private constructor(
     UpdateLineTranslate(layerNode)
     UpdateLineTranslateTransition(layerNode)
     UpdateLineTranslateAnchor(layerNode)
+    UpdateLineTrimColor(layerNode)
+    UpdateLineTrimColorTransition(layerNode)
+    UpdateLineTrimFadeRange(layerNode)
     UpdateLineTrimOffset(layerNode)
     UpdateLineWidth(layerNode)
     UpdateLineWidthTransition(layerNode)

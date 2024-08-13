@@ -11,7 +11,9 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.StyleManager
+import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
@@ -145,6 +147,35 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       polylineAnnotationManager.lineTranslateAnchor = null
       val expectedDefaultValue = LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, polylineAnnotationManager.lineTranslateAnchor)
+    }
+  }
+
+  @Test
+  fun testLineTrimColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineTrimColor = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTrimColor)
+      polylineAnnotationManager.lineTrimColor = null
+      assertEquals(
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color")
+          .silentUnwrap<Expression>()
+          ?.let { ColorUtils.rgbaExpressionToColorString(it) },
+        polylineAnnotationManager.lineTrimColor
+      )
+    }
+  }
+
+  @Test
+  fun testLineTrimFadeRange() {
+    rule.runOnUiThread {
+      val expectedValue = listOf(0.0, 1.0)
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineTrimFadeRange = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTrimFadeRange)
+      polylineAnnotationManager.lineTrimFadeRange = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range").silentUnwrap(), polylineAnnotationManager.lineTrimFadeRange)
     }
   }
 

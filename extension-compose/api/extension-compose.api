@@ -436,6 +436,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineRoundLimit ()Ljava/lang/Double;
 	public final fun getLineTranslate ()Ljava/util/List;
 	public final fun getLineTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;
+	public final fun getLineTrimColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getLineTrimFadeRange ()Ljava/util/List;
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
@@ -446,6 +448,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineRoundLimit (Ljava/lang/Double;)V
 	public final fun setLineTranslate (Ljava/util/List;)V
 	public final fun setLineTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;)V
+	public final fun setLineTrimColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setLineTrimFadeRange (Ljava/util/List;)V
 	public final fun setLineTrimOffset (Ljava/util/List;)V
 }
 
@@ -1643,6 +1647,9 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun getLineTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getLineTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;
 	public final fun getLineTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineTrimColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getLineTrimColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineTrimFadeRange ()Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;
 	public final fun getLineTrimOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getLineWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -1683,6 +1690,9 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun setLineTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setLineTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;)V
 	public final fun setLineTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineTrimColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setLineTrimColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineTrimFadeRange (Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;)V
 	public final fun setLineTrimOffset (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setLineWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V

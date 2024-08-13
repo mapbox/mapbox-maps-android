@@ -7,6 +7,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
@@ -73,6 +74,7 @@ class NavigationSimulator(
     initMapboxMap()
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun initMapboxMap() {
     routeLayer = lineLayer(ROUTE_LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
       lineWidth(
@@ -139,6 +141,8 @@ class NavigationSimulator(
           }
         }
       )
+      lineTrimColor("rgba(6, 1, 255, 0.2)")
+      lineTrimFadeRange(listOf(0.0, 0.0001))
     }
     casingLayer = lineLayer(ROUTE_CASING_LAYER_ID, GEOJSON_SOURCE_ID) {
       lineWidth(

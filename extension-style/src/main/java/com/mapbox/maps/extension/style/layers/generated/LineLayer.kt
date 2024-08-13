@@ -2031,11 +2031,219 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   */
+  @MapboxExperimental
+  val lineTrimColor: String?
+    /**
+     * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+     *
+     * Use static method [LineLayer.defaultLineTrimColor] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      lineTrimColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
+    }
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * Use static method [LineLayer.defaultLineTrimColor] to set the default property.
+   *
+   * @param lineTrimColor value of lineTrimColor
+   */
+  @MapboxExperimental
+  override fun lineTrimColor(lineTrimColor: String): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-color", lineTrimColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * This is an Expression representation of "line-trim-color".
+   *
+   */
+  @MapboxExperimental
+  val lineTrimColorAsExpression: Expression?
+    /**
+     * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+     *
+     * Get the LineTrimColor property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineTrimColorAsExpression] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("line-trim-color")?.let {
+        return it
+      }
+      return null
+    }
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * Use static method [LineLayer.defaultLineTrimColorAsExpression] to set the default property.
+   *
+   * @param lineTrimColor value of lineTrimColor as Expression
+   */
+  @MapboxExperimental
+  override fun lineTrimColor(lineTrimColor: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-color", lineTrimColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   */
+  @MapboxExperimental
+  val lineTrimColorAsColorInt: Int?
+    /**
+     * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+     *
+     * Use static method [LineLayer.defaultLineTrimColorAsColorInt] to get the default property.
+     *
+     * @return int representation of a rgba string color
+     */
+    @ColorInt
+    get() {
+      lineTrimColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * Use static method [LineLayer.defaultLineTrimColorAsColorInt] to set the default property.
+   *
+   * @param lineTrimColor value of lineTrimColor
+   */
+  @MapboxExperimental
+  override fun lineTrimColor(@ColorInt lineTrimColor: Int): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-color", colorIntToRgbaExpression(lineTrimColor))
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineTrimColor.
+   */
+  @MapboxExperimental
+  val lineTrimColorTransition: StyleTransition?
+    /**
+     * Get the LineTrimColor property transition options
+     *
+     * Use static method [LineLayer.defaultLineTrimColorTransition] to get the default property.
+     *
+     * @return transition options for String
+     */
+    get() {
+      return getPropertyValue("line-trim-color-transition")
+    }
+
+  /**
+   * Set the LineTrimColor property transition options
+   *
+   * Use static method [LineLayer.defaultLineTrimColorTransition] to set the default property.
+   *
+   * @param options transition options for String
+   */
+  @MapboxExperimental
+  override fun lineTrimColorTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-color-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineTrimColorTransition].
+   */
+  @MapboxExperimental
+  override fun lineTrimColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineTrimColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   */
+  @MapboxExperimental
+  val lineTrimFadeRange: List<Double>?
+    /**
+     * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     *
+     * Use static method [LineLayer.defaultLineTrimFadeRange] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("line-trim-fade-range")
+    }
+
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   *
+   * Use static method [LineLayer.defaultLineTrimFadeRange] to set the default property.
+   *
+   * @param lineTrimFadeRange value of lineTrimFadeRange
+   */
+  @MapboxExperimental
+  override fun lineTrimFadeRange(lineTrimFadeRange: List<Double>): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-fade-range", lineTrimFadeRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   *
+   * This is an Expression representation of "line-trim-fade-range".
+   *
+   */
+  @MapboxExperimental
+  val lineTrimFadeRangeAsExpression: Expression?
+    /**
+     * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     *
+     * Get the LineTrimFadeRange property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineTrimFadeRangeAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("line-trim-fade-range")?.let {
+        return it
+      }
+      lineTrimFadeRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   *
+   * Use static method [LineLayer.defaultLineTrimFadeRangeAsExpression] to set the default property.
+   *
+   * @param lineTrimFadeRange value of lineTrimFadeRange as Expression
+   */
+  @MapboxExperimental
+  override fun lineTrimFadeRange(lineTrimFadeRange: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-fade-range", lineTrimFadeRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    */
   val lineTrimOffset: List<Double>?
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      *
      * Use static method [LineLayer.defaultLineTrimOffset] to get the default property.
      *
@@ -2046,7 +2254,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * Use static method [LineLayer.defaultLineTrimOffset] to set the default property.
    *
@@ -2058,14 +2266,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * This is an Expression representation of "line-trim-offset".
    *
    */
   val lineTrimOffsetAsExpression: Expression?
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      *
      * Get the LineTrimOffset property as an Expression
      *
@@ -2084,7 +2292,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * Use static method [LineLayer.defaultLineTrimOffsetAsExpression] to set the default property.
    *
@@ -3167,11 +3375,121 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+     */
+    @MapboxExperimental
+    val defaultLineTrimColor: String?
+      /**
+       * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+       *
+       * Get the default value of LineTrimColor property
+       *
+       * @return String
+       */
+      get() {
+        defaultLineTrimColorAsExpression?.let {
+          return rgbaExpressionToColorString(it)
+        }
+        return null
+      }
+
+    /**
+     * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+     *
+     * This is an Expression representation of "line-trim-color".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineTrimColorAsExpression: Expression?
+      /**
+       * Get default value of the LineTrimColor property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        return null
+      }
+
+    /**
+     * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+     */
+    @MapboxExperimental
+    val defaultLineTrimColorAsColorInt: Int?
+      /**
+       * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+       *
+       * Get the default value of LineTrimColor property as color int.
+       *
+       * @return int representation of a rgba string color
+       */
+      @ColorInt
+      get() {
+        defaultLineTrimColorAsExpression?.let {
+          return rgbaExpressionToColorInt(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineTrimColor.
+     */
+    @MapboxExperimental
+    val defaultLineTrimColorTransition: StyleTransition?
+      /**
+       * Get the LineTrimColor property transition options
+       *
+       * @return transition options for String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color-transition").silentUnwrap()
+
+    /**
+     * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     */
+    @MapboxExperimental
+    val defaultLineTrimFadeRange: List<Double>?
+      /**
+       * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+       *
+       * Get the default value of LineTrimFadeRange property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range").silentUnwrap()
+      }
+
+    /**
+     * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     *
+     * This is an Expression representation of "line-trim-fade-range".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineTrimFadeRangeAsExpression: Expression?
+      /**
+       * Get default value of the LineTrimFadeRange property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineTrimFadeRange?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      */
     val defaultLineTrimOffset: List<Double>?
       /**
-       * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+       * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
        *
        * Get the default value of LineTrimOffset property
        *
@@ -3182,7 +3500,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+     * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
      *
      * This is an Expression representation of "line-trim-offset".
      *
@@ -3812,14 +4130,72 @@ interface LineLayerDsl {
   fun lineTranslateAnchor(lineTranslateAnchor: Expression): LineLayer
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * @param lineTrimColor value of lineTrimColor
+   */
+  @MapboxExperimental
+  fun lineTrimColor(lineTrimColor: String = "transparent"): LineLayer
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * @param lineTrimColor value of lineTrimColor as Expression
+   */
+  @MapboxExperimental
+  fun lineTrimColor(lineTrimColor: Expression): LineLayer
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * @param lineTrimColor value of lineTrimColor
+   */
+  @MapboxExperimental
+  fun lineTrimColor(@ColorInt lineTrimColor: Int): LineLayer
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * Set the LineTrimColor property transition options
+   *
+   * @param options transition options for String
+   */
+  @MapboxExperimental
+  fun lineTrimColorTransition(options: StyleTransition): LineLayer
+
+  /**
+   * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
+   *
+   * DSL for [lineTrimColorTransition].
+   */
+  @MapboxExperimental
+  fun lineTrimColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
+
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   *
+   * @param lineTrimFadeRange value of lineTrimFadeRange
+   */
+  @MapboxExperimental
+  fun lineTrimFadeRange(lineTrimFadeRange: List<Double> = listOf(0.0, 0.0)): LineLayer
+
+  /**
+   * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   *
+   * @param lineTrimFadeRange value of lineTrimFadeRange as Expression
+   */
+  @MapboxExperimental
+  fun lineTrimFadeRange(lineTrimFadeRange: Expression): LineLayer
+
+  /**
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * @param lineTrimOffset value of lineTrimOffset
    */
   fun lineTrimOffset(lineTrimOffset: List<Double> = listOf(0.0, 0.0)): LineLayer
 
   /**
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
    *
    * @param lineTrimOffset value of lineTrimOffset as Expression
    */

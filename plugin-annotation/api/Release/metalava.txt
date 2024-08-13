@@ -895,6 +895,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineRoundLimit();
     method public java.util.List<java.lang.Double>? getLineTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
+    method public String? getLineTrimColor();
+    method public java.util.List<java.lang.Double>? getLineTrimFadeRange();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public String? getSlot();
     method protected void setDataDrivenPropertyIsUsed(String property);
@@ -908,6 +910,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineRoundLimit(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
+    method public void setLineTrimColor(String?);
+    method public void setLineTrimFadeRange(java.util.List<java.lang.Double>?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     method public void setSlot(String?);
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
@@ -920,6 +924,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineRoundLimit;
     property public final java.util.List<java.lang.Double>? lineTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
+    property public final String? lineTrimColor;
+    property public final java.util.List<java.lang.Double>? lineTrimFadeRange;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;

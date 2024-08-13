@@ -403,9 +403,65 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineTrimColor property
+   *
+   * The color to be used for rendering the trimmed line section that is defined by the {@link PropertyFactory#lineTrimOffset} property.
+   */
+  @MapboxExperimental
+  var lineTrimColor: String?
+    /**
+     * Get the LineTrimColor property
+     *
+     * @return property wrapper value around String
+     */
+    get(): String? {
+      return layer.lineTrimColor
+    }
+    /**
+     * Set the LineTrimColor property
+     * @param value property wrapper value around String
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color").value
+      }
+      setLayerProperty(wrappedValue, "line-trim-color")
+    }
+
+  /**
+   * The LineTrimFadeRange property
+   *
+   * The fade range for the trim-start and trim-end points is defined by the {@link PropertyFactory#lineTrimOffset} property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between {@link PropertyFactory#lineTrimColor} and the color specified by the {@link PropertyFactory#lineColor} or the {@link PropertyFactory#lineGradient} property.
+   */
+  @MapboxExperimental
+  var lineTrimFadeRange: List<Double>?
+    /**
+     * Get the LineTrimFadeRange property
+     *
+     * @return property wrapper value around List<Double>
+     */
+    get(): List<Double>? {
+      return layer.lineTrimFadeRange
+    }
+    /**
+     * Set the LineTrimFadeRange property
+     * @param value property wrapper value around List<Double>
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range").value
+      }
+      setLayerProperty(wrappedValue, "line-trim-fade-range")
+    }
+
+  /**
    * The LineTrimOffset property
    *
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    */
   var lineTrimOffset: List<Double>?
     /**

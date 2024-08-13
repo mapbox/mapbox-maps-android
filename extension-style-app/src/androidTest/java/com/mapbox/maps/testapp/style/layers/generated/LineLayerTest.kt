@@ -988,6 +988,101 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineTrimColorTest() {
+    val testValue = "rgba(0, 0, 0, 1)"
+    val layer = lineLayer("id", "source") {
+      lineTrimColor(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.lineTrimColor?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimColorAsExpressionTest() {
+    val expression = rgba {
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
+      literal(1.0)
+    }
+    val layer = lineLayer("id", "source") {
+      lineTrimColor(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineTrimColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", layer.lineTrimColor)
+    assertEquals(Color.BLACK, layer.lineTrimColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimColorAsColorIntTest() {
+    val layer = lineLayer("id", "source") {
+      lineTrimColor(Color.CYAN)
+    }
+    setupLayer(layer)
+    assertEquals(Color.CYAN, layer.lineTrimColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineTrimColorTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineTrimColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineTrimColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineTrimColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimFadeRangeTest() {
+    val testValue = listOf(0.0, 1.0)
+    val layer = lineLayer("id", "source") {
+      lineTrimFadeRange(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.lineTrimFadeRange?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimFadeRangeAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+    val layer = lineLayer("id", "source") {
+      lineTrimFadeRange(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineTrimFadeRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.lineTrimFadeRange!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineTrimOffsetTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = lineLayer("id", "source") {
@@ -1155,6 +1250,12 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineTranslateTransition should not be null", LineLayer.defaultLineTranslateTransition)
     assertNotNull("defaultLineTranslateAnchor should not be null", LineLayer.defaultLineTranslateAnchor)
     assertNotNull("defaultLineTranslateAnchorAsExpression should not be null", LineLayer.defaultLineTranslateAnchorAsExpression)
+    assertNotNull("defaultLineTrimColor should not be null", LineLayer.defaultLineTrimColor)
+    assertNotNull("defaultLineTrimColorAsExpression should not be null", LineLayer.defaultLineTrimColorAsExpression)
+    assertNotNull("defaultLineTrimColorAsColorInt should not be null", LineLayer.defaultLineTrimColorAsColorInt)
+    assertNotNull("defaultLineTrimColorTransition should not be null", LineLayer.defaultLineTrimColorTransition)
+    assertNotNull("defaultLineTrimFadeRange should not be null", LineLayer.defaultLineTrimFadeRange)
+    assertNotNull("defaultLineTrimFadeRangeAsExpression should not be null", LineLayer.defaultLineTrimFadeRangeAsExpression)
     assertNotNull("defaultLineTrimOffset should not be null", LineLayer.defaultLineTrimOffset)
     assertNotNull("defaultLineTrimOffsetAsExpression should not be null", LineLayer.defaultLineTrimOffsetAsExpression)
     assertNotNull("defaultLineWidth should not be null", LineLayer.defaultLineWidth)
@@ -1213,6 +1314,8 @@ class LineLayerTest : BaseStyleTest() {
     val linePatternTestValue = "abc"
     val lineTranslateTestValue = listOf(0.0, 1.0)
     val lineTranslateAnchorTestValue = LineTranslateAnchor.MAP
+    val lineTrimColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineTrimFadeRangeTestValue = listOf(0.0, 1.0)
     val lineTrimOffsetTestValue = listOf(0.0, 1.0)
     val lineWidthTestValue = 1.0
 
@@ -1244,6 +1347,8 @@ class LineLayerTest : BaseStyleTest() {
       linePattern(linePatternTestValue)
       lineTranslate(lineTranslateTestValue)
       lineTranslateAnchor(lineTranslateAnchorTestValue)
+      lineTrimColor(lineTrimColorTestValue)
+      lineTrimFadeRange(lineTrimFadeRangeTestValue)
       lineTrimOffset(lineTrimOffsetTestValue)
       lineWidth(lineWidthTestValue)
     }
@@ -1280,6 +1385,8 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(linePatternTestValue, cachedLayer.linePattern)
     assertEquals(lineTranslateTestValue, cachedLayer.lineTranslate)
     assertEquals(lineTranslateAnchorTestValue, cachedLayer.lineTranslateAnchor)
+    assertEquals(lineTrimColorTestValue, cachedLayer.lineTrimColor)
+    assertEquals(lineTrimFadeRangeTestValue, cachedLayer.lineTrimFadeRange)
     assertEquals(lineTrimOffsetTestValue, cachedLayer.lineTrimOffset)
     assertEquals(lineWidthTestValue, cachedLayer.lineWidth)
   }
