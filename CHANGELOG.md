@@ -4,6 +4,61 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+* Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
+
+# 11.6.0
+## Breaking changes ⚠️
+* [compose] Remove `StyleImage` constructor with `BitmapImage`, use `rememberStyleImage` composable function to build it instead.
+* [compose] Move layer properties within `*Layer` composable functions to `*LayerState` classes, use the convenient method `*Layer(sourceState, layerId, init)` with trailing lambda for easier migration.
+* [compose] Move `onClick` listener from last parameter to the second last parameter of `Annotation` and `AnnotationGroup` composable functions.
+* [compose] Move properties within `*Annotation` and `*AnnotationGroup` composable functions to the new `*AnnotationState` and `*AnnotationGroupState` classes, use the convenient method `*Annotation(point, onClick, init)` and `*AnnotationGroup(annotations, annotationConfig, onClick, init)` with trailing lambda for easier migration.
+* [compose] Replace color int and color string property types in `*Annotation` with compose `Color` type.
+* [compose] Replace `PointAnnotation.iconImageBitmap` and `PointAnnotation.iconImage` with `PointAnnotationState.iconImage` with `IconImage` type, `IconImage` can be constructed with either a image id `String` or a `Bitmap`, and introduced `rememberIconImage` to build and remember a bitmap from `Painter` or from a drawable resource id.
+* [compose] Introduce `StandardStyleConfigurationState` class to hold the configurations of `MapboxStandardStyle`, and move `lightPreset` config from `MapboxStandardStyle` to `StandardStyleConfigurationState`; consider using overload method `MapboxStandardStyle` with trailing init lambda for easier migration.
+* Experimental `CustomRasterSourceOptions.Builder` now accepts `CustomRasterSourceClient` containing `CustomRasterSourceTileStatusChangedCallback` instead of `CustomRasterSourceTileStatusChangedCallback` interface directly.
+
+## Features ✨ and improvements 🏁
+* **[compose] Promote Compose Extension to stable.**
+* [compose] Mark `MapState`, `MapViewportState`, `TerrainState`, light states and source states as `Stable` as they are internally backed by `MutableState`.
+* [compose] Add more config options including `showPlaceLabels`, `showRoadLabels`, `showPointOfInterestLabels`, `showTransitLabels` and `font` to `StandardStyleConfigurationState`.
+* [compose] Introduce `StyleImage` constructor with `Image` type, and add `rememberStyleImage` composable functions to create and remember `StyleImage`.
+* [compose] Add extension function to `*AnnotationOptions` to handle compose `Color`, use it in `*AnnotationGroup` composable functions for convenience.
+* [compose] Add style transition parameter in `GenericStyle`, `MapStyle` and `MapboxStandardStyle`.
+* [compose] Extend `StandardStyleConfigurationState` with `theme: ThemeValue` and `show3dObjects: BooleanValue` properties.
+* [compose] Introduce composable function `MapboxStandardSatelliteStyle` with dedicated `StandardSatelliteStyleConfigurationState`.
+* Add new `Style.STANDARD_SATELLITE` style that combines updated satellite imagery and vector layers.
+* Introduce new import configuration properties for `Style.STANDARD`: `theme`, `show3dObjects` which could be set with `Style.setStyleImportConfigProperty`.
+* Modify `awaitCameraForCoordinates` extension function to use `MapCameraManagerDelegate` as receiver type.
+* Modify `queryRenderedFeatures` and `querySourceFeatures` extension functions to use `MapFeatureQueryDelegate` as receiver type.
+* Introduce asynchronous overloaded method `ViewAnnotationManager.cameraForAnnotations` better covering some corner cases.
+* Make use of asynchronous `MapboxMap.cameraForCoordinates` in Mapbox overlay plugin better covering some corner cases.
+* Mark synchronous methods `MapboxMap.cameraForCoordinates` and `ViewAnnotationManager.cameraForAnnotations` with `@MapboxDelicateApi`. Consider using asynchronous overloaded methods instead.
+* Deprecate `MapboxMap.getDebug()`/`MapboxMap.setDebug()` in favour of `MapView.debugOptions` taking new enhanced enum `MapViewDebugOptions` as an argument.
+* Introduce `MapViewDebugOptions.CAMERA` and `MapViewDebugOptions.PADDING` debug options to track current camera state and visualize camera paddings.
+* Expose experimental `ClipLayer` to remove 3D data (fill extrusions, landmarks, instanced trees) and symbols.
+* Enable r8 optimisations for all the Mapbox extensions and plugins in consumer proguard file, the optimisation will apply when minify is enabled in app's build settings.
+* Enable direct rendering into `CustomRasterSource` tiles.
+* Introduce a new `allowZElevate` option in `ViewAnnotationOptions`. When set to true, the annotation will be positioned on the rooftops of buildings, including both fill extrusions and models.
+* Support negative values for `CircleLayer.circleBlur` to render inner glow effect.
+* Support for model-uris as properties in geojson model layers.
+* Allow usage of the tile leveling schemes with maximum zoom exceeding 16.
+
+## Bug fixes 🐞
+* [compose] Fix minZoom/maxZoom not working for layers.
+* [compose] Fix `java.lang.UnsupportedOperationException` when setting `textWritingMode` and `textVariableAnchor`.
+* Fix compass view ignoring `enabled` option when it is set in `updateSettings()`.
+* Fix background locations not received when unregistering other providers.
+* Improve `linePattern` precision.
+* Fix local glyph rasterization to ensure the correct Typeface is used.
+* Fix `CustomRasterSource` rendering when camera shows antimeridian or multiple world copies.
+* Fix elevated line occlusion issue in 2D mode.
+* Fix blinking of layer as you are panning across the antimeridian.
+* Fix `modelFrontCutoff` property for meshopt models.
+* Align location provider default displacement for Android and Google providers.
+
+## Dependencies
+* Update gl-native to v11.6.0 and common to v24.6.0.
+
 # 11.6.0-rc.1 August 02, 2024
 ## Features ✨ and improvements 🏁
 * Support negative values for `CircleLayer.circleBlur` to render inner glow effect.
