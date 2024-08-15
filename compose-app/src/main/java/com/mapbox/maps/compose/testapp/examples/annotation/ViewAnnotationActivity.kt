@@ -6,12 +6,14 @@ import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,17 +48,35 @@ public class ViewAnnotationActivity : ComponentActivity() {
       var showViewAnnotation by remember {
         mutableStateOf(true)
       }
+      var allowZElevate by remember {
+        mutableStateOf(true)
+      }
       val animatedColor by animateColorAsState(buttonColor, label = "ButtonAnnotationColor")
       MapboxMapComposeTheme {
         ExampleScaffold(
           floatingActionButton = {
-            FloatingActionButton(
-              onClick = {
-                showViewAnnotation = !showViewAnnotation
-              },
-              shape = RoundedCornerShape(16.dp),
-            ) {
-              Text(modifier = Modifier.padding(10.dp), text = "Toggle Visibility")
+            Column {
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  showViewAnnotation = !showViewAnnotation
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle Visibility")
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (showViewAnnotation) MaterialTheme.colors.secondary else Color.LightGray,
+                onClick = {
+                  if (showViewAnnotation) {
+                    allowZElevate = !allowZElevate
+                  }
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle allowZElevate")
+              }
             }
           }
         ) {
@@ -65,6 +85,7 @@ public class ViewAnnotationActivity : ComponentActivity() {
             mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
+                pitch(PITCH)
                 center(HELSINKI)
               }
             }
@@ -77,6 +98,7 @@ public class ViewAnnotationActivity : ComponentActivity() {
                     anchor(ViewAnnotationAnchor.BOTTOM)
                   }
                   allowOverlap(false)
+                  allowZElevate(allowZElevate)
                 }
               ) {
                 Button(
@@ -102,6 +124,7 @@ public class ViewAnnotationActivity : ComponentActivity() {
   }
 
   private companion object {
-    const val ZOOM: Double = 9.0
+    const val ZOOM: Double = 16.0
+    const val PITCH: Double = 60.0
   }
 }
