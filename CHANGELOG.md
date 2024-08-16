@@ -6,7 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 * Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
 
-# 11.6.0
+
+# 11.6.0 August 16, 2024
 ## Breaking changes ⚠️
 * [compose] Remove `StyleImage` constructor with `BitmapImage`, use `rememberStyleImage` composable function to build it instead.
 * [compose] Move layer properties within `*Layer` composable functions to `*LayerState` classes, use the convenient method `*Layer(sourceState, layerId, init)` with trailing lambda for easier migration.
@@ -58,6 +59,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.6.0 and common to v24.6.0.
+
 
 # 11.6.0-rc.1 August 02, 2024
 ## Features ✨ and improvements 🏁
