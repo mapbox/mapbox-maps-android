@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mapbox.bindgen.Value
@@ -30,7 +31,6 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.OfflineManager
 import com.mapbox.maps.Style
 import com.mapbox.maps.StylePackLoadOptions
-import com.mapbox.maps.TileStoreUsageMode
 import com.mapbox.maps.TilesetDescriptorOptions
 import com.mapbox.maps.mapsOptions
 import com.mapbox.maps.plugin.annotation.annotations
@@ -38,7 +38,7 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityOfflineBinding
-import org.intellij.lang.annotations.Language
+import kotlinx.coroutines.launch
 
 /**
  * Example app that shows how to use OfflineManager and TileStore to
@@ -47,22 +47,10 @@ import org.intellij.lang.annotations.Language
  * Please refer to our [offline guide](https://docs.mapbox.com/android/maps/guides/offline/#limits) for the limitations of the offline usage.
  */
 class OfflineActivity : AppCompatActivity() {
-  private val tileStore: TileStore by lazy { TileStore.create() }
-  private val offlineManager: OfflineManager by lazy {
-    // Set application-scoped tile store so that all MapViews created from now on will apply these
-    // settings.
-    MapboxOptions.mapsOptions.tileStore = tileStore
-    MapboxOptions.mapsOptions.tileStoreUsageMode = TileStoreUsageMode.READ_ONLY
-    OfflineManager().also {
-      // Revert setting custom tile store
-      MapboxOptions.mapsOptions.tileStore = null
-    }
-  }
-  private val offlineLogsAdapter: OfflineLogsAdapter by lazy {
-    OfflineLogsAdapter()
-  }
-  private var mapView: MapView? = null
-  private lateinit var handler: Handler
+  // We use the default tile store
+  private val tileStore: TileStore = MapboxOptions.mapsOptions.tileStore!!
+  private val offlineManager: OfflineManager = OfflineManager()
+  private val offlineLogsAdapter: OfflineLogsAdapter = OfflineLogsAdapter()
   private lateinit var binding: ActivityOfflineBinding
   private var stylePackCancelable: Cancelable? = null
   private var tilePackCancelable: Cancelable? = null
@@ -70,19 +58,12 @@ class OfflineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityOfflineBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    handler = Handler(Looper.getMainLooper())
 
     // Initialize a logger that writes into the recycler view
     binding.recycler.layoutManager = LinearLayoutManager(this)
     binding.recycler.adapter = offlineLogsAdapter
 
     prepareDownloadButton()
-
-    mapView = MapView(
-      this,
-      MapInitOptions(context = this, styleUri = BLANK_STYLE)
-    )
-    binding.container.addView(mapView)
   }
 
   private fun prepareDownloadButton() {
@@ -103,27 +84,23 @@ class OfflineActivity : AppCompatActivity() {
     // Disable network stack, so that the map can only load from downloaded region.
     OfflineSwitch.getInstance().isMapboxStackConnected = false
     logInfoMessage("Mapbox network stack disabled.")
-    handler.post {
+    lifecycleScope.launch {
       updateButton("VIEW MAP") {
+        val context = this@OfflineActivity
         // create a Mapbox MapView
+        // Note that the MapView will use the current tile store set in MapboxOptions.mapsOptions.tileStore
+        // It must be the same TileStore that is used to create the tile regions. (i.e. the
+        // tileStorePath must be consistent).
+        val mapView = MapView(context, MapInitOptions(context, styleUri = Style.SATELLITE_STREETS))
+        binding.container.addView(mapView)
 
-        // Note that the MapView must be initialised with the same TileStore that is used to create
-        // the tile regions. (i.e. the tileStorePath must be consistent).
-
-        // If user did not assign the tile store path specifically during the tile region download
-        // and the map initialisation period, the default tile store path will be used and
-        // no extra action is needed.
-        mapView?.run {
-          mapboxMap.loadStyle(Style.SATELLITE_STREETS) { _ ->
-            mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
-            // Add a circle annotation to the offline geometry.
-            annotations.createCircleAnnotationManager().create(
-              CircleAnnotationOptions()
-                .withPoint(TOKYO)
-                .withCircleColor(Color.RED)
-            )
-          }
-        }
+        mapView.mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
+        // Add a circle annotation to the offline geometry.
+        mapView.annotations.createCircleAnnotationManager().create(
+          CircleAnnotationOptions()
+            .withPoint(TOKYO)
+            .withCircleColor(Color.RED)
+        )
         prepareShowDownloadedRegionButton()
       }
     }
@@ -156,11 +133,6 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun downloadOfflineRegion() {
-    // By default, users may download up to 250MB of data for offline use without incurring
-    // additional charges. This limit is subject to change during the beta.
-
-    // - - - - - - - -
-
     // 1. Create style package with loadStylePack() call.
 
     // A style pack (a Style offline package) contains the loaded style and its resources: loaded
@@ -184,15 +156,13 @@ class OfflineActivity : AppCompatActivity() {
         )
       },
       { expected ->
-        if (expected.isValue) {
-          expected.value?.let { stylePack ->
-            // Style pack download finishes successfully
-            logSuccessMessage("StylePack downloaded: $stylePack")
-            if (binding.tilePackDownloadProgress.progress == binding.tilePackDownloadProgress.max) {
-              prepareViewMapButton()
-            } else {
-              logInfoMessage("Waiting for tile region download to be finished.")
-            }
+        expected.value?.let { stylePack ->
+          // Style pack download finishes successfully
+          logSuccessMessage("StylePack downloaded: $stylePack")
+          if (binding.tilePackDownloadProgress.progress == binding.tilePackDownloadProgress.max) {
+            prepareViewMapButton()
+          } else {
+            logInfoMessage("Waiting for tile region download to be finished.")
           }
         }
         expected.error?.let {
@@ -201,8 +171,6 @@ class OfflineActivity : AppCompatActivity() {
         }
       }
     )
-
-    // - - - - - - - -
 
     // 2. Create a tile region with tiles for the satellite street style
 
@@ -222,13 +190,13 @@ class OfflineActivity : AppCompatActivity() {
     val tilesetDescriptor = offlineManager.createTilesetDescriptor(
       TilesetDescriptorOptions.Builder()
         .styleURI(Style.SATELLITE_STREETS)
-        .pixelRatio(this.resources.displayMetrics.density)
+        .pixelRatio(resources.displayMetrics.density)
         .minZoom(0)
         .maxZoom(16)
         .build()
     )
 
-    // Use the the default TileStore to load this region. You can create custom TileStores are are
+    // Use the the default TileStore to load this region. You can create custom TileStores that are
     // unique for a particular file path, i.e. there is only ever one TileStore per unique path.
 
     // Note that the TileStore path must be the same with the TileStore used when initialise the MapView.
@@ -249,15 +217,13 @@ class OfflineActivity : AppCompatActivity() {
         )
       }
     ) { expected ->
-      if (expected.isValue) {
-        // Tile pack download finishes successfully
-        expected.value?.let { region ->
-          logSuccessMessage("TileRegion downloaded: $region")
-          if (binding.stylePackDownloadProgress.progress == binding.stylePackDownloadProgress.max) {
-            prepareViewMapButton()
-          } else {
-            logInfoMessage("Waiting for style pack download to be finished.")
-          }
+      // Tile pack download finishes successfully
+      expected.value?.let { region ->
+        logSuccessMessage("TileRegion downloaded: $region")
+        if (binding.stylePackDownloadProgress.progress == binding.stylePackDownloadProgress.max) {
+          prepareViewMapButton()
+        } else {
+          logInfoMessage("Waiting for style pack download to be finished.")
         }
       }
       expected.error?.let {
@@ -271,10 +237,8 @@ class OfflineActivity : AppCompatActivity() {
   private fun showDownloadedRegions() {
     // Get a list of tile regions that are currently available.
     tileStore.getAllTileRegions { expected ->
-      if (expected.isValue) {
-        expected.value?.let { tileRegionList ->
-          logInfoMessage("Existing tile regions: $tileRegionList")
-        }
+      expected.value?.let { tileRegionList ->
+        logInfoMessage("Existing tile regions: $tileRegionList")
       }
       expected.error?.let { tileRegionError ->
         logErrorMessage("TileRegionError: $tileRegionError")
@@ -282,10 +246,8 @@ class OfflineActivity : AppCompatActivity() {
     }
     // Get a list of style packs that are currently available.
     offlineManager.getAllStylePacks { expected ->
-      if (expected.isValue) {
-        expected.value?.let { stylePackList ->
-          logInfoMessage("Existing style packs: $stylePackList")
-        }
+      expected.value?.let { stylePackList ->
+        logInfoMessage("Existing style packs: $stylePackList")
       }
       expected.error?.let { stylePackError ->
         logErrorMessage("StylePackError: $stylePackError")
@@ -352,16 +314,6 @@ class OfflineActivity : AppCompatActivity() {
     offlineLogsAdapter.addLog(OfflineLog.Success(message))
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView?.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView?.onStop()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     // Cancel the current downloading jobs
@@ -371,7 +323,6 @@ class OfflineActivity : AppCompatActivity() {
     removeOfflineRegions()
     // Bring back the network connectivity when exiting the OfflineActivity.
     OfflineSwitch.getInstance().isMapboxStackConnected = true
-    mapView?.onDestroy()
   }
 
   private class OfflineLogsAdapter : RecyclerView.Adapter<OfflineLogsAdapter.ViewHolder>() {
@@ -431,21 +382,9 @@ class OfflineActivity : AppCompatActivity() {
   companion object {
     private const val TAG = "OfflineActivity"
     private const val ZOOM = 12.0
-    private val TOKYO: Point = Point.fromLngLat(139.769305, 35.682027)
+    private val TOKYO = Point.fromLngLat(139.769305, 35.682027)
     private const val TILE_REGION_ID = "myTileRegion"
     private const val STYLE_PACK_METADATA = "my-satellite-street-style-pack"
     private const val TILE_REGION_METADATA = "my-satellite-street-region"
-    @Language("JSON")
-    private const val BLANK_STYLE = """
-{
-  "layers": [
-    {
-      "id": "background",
-      "type": "background",
-      "paint": {"background-color": "hsl(100, 50%, 50%)"}
-    }
-  ]
-}
-"""
   }
 }
