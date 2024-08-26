@@ -27,8 +27,6 @@ class MapViewTest {
   @Before
   fun setUp() {
     mockkConstructor(DebugOptionsController::class)
-    every { anyConstructed<DebugOptionsController>().onStart() } just Runs
-    every { anyConstructed<DebugOptionsController>().onStop() } just Runs
     every { anyConstructed<DebugOptionsController>().options = any() } just Runs
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
@@ -97,8 +95,8 @@ class MapViewTest {
     mapView.onStart()
     mapView.onStop()
 
-    verifyNo { anyConstructed<DebugOptionsController>().onStart() }
-    verifyNo { anyConstructed<DebugOptionsController>().onStop() }
+    verifyNo { anyConstructed<DebugOptionsController>().started = any() }
+    verifyNo { anyConstructed<DebugOptionsController>().started = any() }
   }
 
   @Test
@@ -108,8 +106,8 @@ class MapViewTest {
     mapView.onStart()
     mapView.onStop()
 
-    verify { anyConstructed<DebugOptionsController>().onStart() }
-    verify { anyConstructed<DebugOptionsController>().onStop() }
+    verify { anyConstructed<DebugOptionsController>().started = true }
+    verify { anyConstructed<DebugOptionsController>().started = false }
   }
 
   @Test

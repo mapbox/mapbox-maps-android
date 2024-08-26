@@ -232,7 +232,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     mapController.setScreenRefreshRate(screenRefreshRate)
     mapController.onStart()
     if (debugOptionsControllerDelegate.isInitialized()) {
-      debugOptionsController.onStart()
+      debugOptionsController.started = true
     }
   }
 
@@ -244,7 +244,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onStop() {
     mapController.onStop()
     if (debugOptionsControllerDelegate.isInitialized()) {
-      debugOptionsController.onStop()
+      debugOptionsController.started = false
     }
   }
 

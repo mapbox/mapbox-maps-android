@@ -100,6 +100,8 @@ public class DebugModeActivity : ComponentActivity() {
             MapViewDebugOptions.TERRAIN_WIREFRAME,
             MapViewDebugOptions.LAYERS2_DWIREFRAME,
             MapViewDebugOptions.LAYERS3_DWIREFRAME,
+            MapViewDebugOptions.CAMERA,
+            MapViewDebugOptions.PADDING,
           )
         }
       }

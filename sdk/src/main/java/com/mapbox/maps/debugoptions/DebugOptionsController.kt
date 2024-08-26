@@ -5,6 +5,7 @@ import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapboxMap
+import kotlin.properties.Delegates
 
 internal class DebugOptionsController {
   private val mapView: FrameLayout
@@ -15,12 +16,19 @@ internal class DebugOptionsController {
   private var cameraDebugView: CameraDebugView? = null
   private var paddingDebugView: PaddingDebugView? = null
   private var cameraSubscriptionCancelable: Cancelable? = null
+  var started by Delegates.observable(false) {
+    _, wasStarted, started ->
+    if (wasStarted != started) {
+      updateCameraSubscriptionIfNeeded()
+    }
+  }
 
   var options: Set<MapViewDebugOptions> = setOf()
     set(newValue) {
       field = newValue
       mapboxMap.debugOptions = newValue.nativeDebugOptions
       toggleMapViewDebugOptionsIfNeeded()
+      updateCameraSubscriptionIfNeeded()
     }
 
   constructor(
@@ -41,19 +49,18 @@ internal class DebugOptionsController {
     this.paddingDebugViewProvider = paddingDebugViewProvider
   }
 
-  fun onStart() {
-    if (cameraSubscriptionCancelable != null) {
-      return
+  private fun updateCameraSubscriptionIfNeeded() {
+    val needsCameraUpdates =
+      options.contains(MapViewDebugOptions.CAMERA) || options.contains(MapViewDebugOptions.PADDING)
+    if (started && needsCameraUpdates && cameraSubscriptionCancelable == null) {
+      cameraSubscriptionCancelable = mapboxMap.subscribeCameraChanged {
+        cameraDebugView?.update(it.cameraState)
+        paddingDebugView?.update(it.cameraState.padding)
+      }
+    } else {
+      cameraSubscriptionCancelable?.cancel()
+      cameraSubscriptionCancelable = null
     }
-    cameraSubscriptionCancelable = mapboxMap.subscribeCameraChanged {
-      cameraDebugView?.update(it.cameraState)
-      paddingDebugView?.update(it.cameraState.padding)
-    }
-  }
-
-  fun onStop() {
-    cameraSubscriptionCancelable?.cancel()
-    cameraSubscriptionCancelable = null
   }
 
   private fun toggleMapViewDebugOptionsIfNeeded() {
