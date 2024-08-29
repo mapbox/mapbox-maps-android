@@ -1497,7 +1497,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   val lineOcclusionOpacity: Double?
     /**
      * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
@@ -1517,7 +1516,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineOcclusionOpacity value of lineOcclusionOpacity
    */
-  @MapboxExperimental
   override fun lineOcclusionOpacity(lineOcclusionOpacity: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-occlusion-opacity", lineOcclusionOpacity)
     setProperty(propertyValue)
@@ -1529,7 +1527,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * This is an Expression representation of "line-occlusion-opacity".
    *
    */
-  @MapboxExperimental
   val lineOcclusionOpacityAsExpression: Expression?
     /**
      * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
@@ -1557,7 +1554,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineOcclusionOpacity value of lineOcclusionOpacity as Expression
    */
-  @MapboxExperimental
   override fun lineOcclusionOpacity(lineOcclusionOpacity: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-occlusion-opacity", lineOcclusionOpacity)
     setProperty(propertyValue)
@@ -1566,7 +1562,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LineOcclusionOpacity.
    */
-  @MapboxExperimental
   val lineOcclusionOpacityTransition: StyleTransition?
     /**
      * Get the LineOcclusionOpacity property transition options
@@ -1586,7 +1581,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun lineOcclusionOpacityTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-occlusion-opacity-transition", options)
     setProperty(propertyValue)
@@ -1595,7 +1589,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineOcclusionOpacityTransition].
    */
-  @MapboxExperimental
   override fun lineOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineOcclusionOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -3105,7 +3098,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
      */
-    @MapboxExperimental
     val defaultLineOcclusionOpacity: Double?
       /**
        * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
@@ -3124,7 +3116,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * This is an Expression representation of "line-occlusion-opacity".
      *
      */
-    @MapboxExperimental
     val defaultLineOcclusionOpacityAsExpression: Expression?
       /**
        * Get default value of the LineOcclusionOpacity property as an Expression
@@ -3144,7 +3135,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LineOcclusionOpacity.
      */
-    @MapboxExperimental
     val defaultLineOcclusionOpacityTransition: StyleTransition?
       /**
        * Get the LineOcclusionOpacity property transition options
@@ -3982,7 +3972,6 @@ interface LineLayerDsl {
    *
    * @param lineOcclusionOpacity value of lineOcclusionOpacity
    */
-  @MapboxExperimental
   fun lineOcclusionOpacity(lineOcclusionOpacity: Double = 0.0): LineLayer
 
   /**
@@ -3990,7 +3979,6 @@ interface LineLayerDsl {
    *
    * @param lineOcclusionOpacity value of lineOcclusionOpacity as Expression
    */
-  @MapboxExperimental
   fun lineOcclusionOpacity(lineOcclusionOpacity: Expression): LineLayer
 
   /**
@@ -4000,7 +3988,6 @@ interface LineLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun lineOcclusionOpacityTransition(options: StyleTransition): LineLayer
 
   /**
@@ -4008,7 +3995,6 @@ interface LineLayerDsl {
    *
    * DSL for [lineOcclusionOpacityTransition].
    */
-  @MapboxExperimental
   fun lineOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**

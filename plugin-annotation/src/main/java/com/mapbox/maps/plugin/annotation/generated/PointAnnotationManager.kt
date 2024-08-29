@@ -2,19 +2,24 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Bitmap
+import androidx.annotation.ColorInt
+import com.google.gson.JsonArray
 import com.mapbox.geojson.*
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation.Companion.ICON_DEFAULT_NAME_PREFIX
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import java.util.Locale
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -130,6 +135,10 @@ class PointAnnotationManager(
         layer.iconImageCrossFade(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE))
         dragLayer.iconImageCrossFade(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE))
       }
+      PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY -> {
+        layer.iconOcclusionOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY))
+        dragLayer.iconOcclusionOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY))
+      }
       PointAnnotationOptions.PROPERTY_ICON_OPACITY -> {
         layer.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
         dragLayer.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
@@ -153,6 +162,10 @@ class PointAnnotationManager(
       PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH -> {
         layer.textHaloWidth(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH))
         dragLayer.textHaloWidth(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY -> {
+        layer.textOcclusionOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY))
+        dragLayer.textOcclusionOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY))
       }
       PointAnnotationOptions.PROPERTY_TEXT_OPACITY -> {
         layer.textOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY))
@@ -192,12 +205,14 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
    * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
+   * PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
@@ -242,12 +257,14 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
    * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
+   * PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
@@ -278,6 +295,31 @@ class PointAnnotationManager(
 
   // Property accessors
   /**
+   * The bitmap image for this Symbol
+   *
+   * Will not take effect if [iconImage] has been set.
+   */
+  var iconImageBitmap: Bitmap? = null
+    /**
+     * Set the iconImageBitmap property
+     *
+     * @param value the iconBitmap
+     */
+    set(value) {
+      field = value
+      if (value != null) {
+        if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
+          // User does not set iconImage, update iconImage to this new bitmap
+          val imageId = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
+          iconImage = imageId
+          addStyleImage(imageId, value)
+        }
+      } else {
+        iconImage = null
+      }
+    }
+
+  /**
    * The IconAllowOverlap property
    *
    * If true, the icon will be visible even if it collides with other previously drawn symbols.
@@ -302,6 +344,40 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-allow-overlap").value
       }
       setLayerProperty(wrappedValue, "icon-allow-overlap")
+    }
+
+  /**
+   * The default iconAnchor for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Part of the icon placed closest to the anchor.
+   */
+  var iconAnchor: IconAnchor?
+    /**
+     * Get the iconAnchor property.
+     *
+     * @return property wrapper value around IconAnchor
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
+      value?.let {
+        return IconAnchor.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the iconAnchor property.
+     *
+     * @param value constant property value for IconAnchor
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_ANCHOR, value.value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -332,6 +408,40 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default iconImage for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Name of image in sprite to use for drawing an image background.
+   */
+  var iconImage: String?
+    /**
+     * Get the iconImage property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconImage property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The IconKeepUpright property
    *
    * If true, the icon may be flipped to prevent it from being rendered upside-down.
@@ -356,6 +466,37 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-keep-upright").value
       }
       setLayerProperty(wrappedValue, "icon-keep-upright")
+    }
+
+  /**
+   * The default iconOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of {@link PropertyFactory#iconSize} to obtain the final offset in density-independent pixels. When combined with {@link PropertyFactory#iconRotate} the offset will be as if the rotated direction was up.
+   */
+  var iconOffset: List<Double>?
+    /**
+     * Get the iconOffset property.
+     *
+     * @return [Point] value for List<Double>
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)
+      return (value as? JsonArray)?.map { it.toString().toDouble() }
+    }
+    /**
+     * Set the iconOffset property.
+     */
+    set(value) {
+      if (!value.isNullOrEmpty()) {
+        val jsonArray = JsonArray(value.size)
+        value.forEach { jsonArray.add(it) }
+        dataDrivenPropertyDefaultValues.add(PointAnnotationOptions.PROPERTY_ICON_OFFSET, jsonArray)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -440,6 +581,40 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default iconRotate for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Rotates the icon clockwise. The unit of iconRotate is in degrees.
+   */
+  var iconRotate: Double?
+    /**
+     * Get the iconRotate property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconRotate property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_ROTATE, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_ROTATE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_ROTATE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The IconRotationAlignment property
    *
    * In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of icons.
@@ -464,6 +639,105 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-rotation-alignment").value
       }
       setLayerProperty(wrappedValue, "icon-rotation-alignment")
+    }
+
+  /**
+   * The default iconSize for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image. The unit of iconSize is in factor of the original icon size.
+   */
+  var iconSize: Double?
+    /**
+     * Get the iconSize property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconSize property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_SIZE, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_SIZE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_SIZE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconTextFit for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Scales the icon to fit around the associated text.
+   */
+  var iconTextFit: IconTextFit?
+    /**
+     * Get the iconTextFit property.
+     *
+     * @return property wrapper value around IconTextFit
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
+      value?.let {
+        return IconTextFit.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the iconTextFit property.
+     *
+     * @param value constant property value for IconTextFit
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT, value.value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconTextFitPadding for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
+   */
+  var iconTextFitPadding: List<Double>?
+    /**
+     * Get the iconTextFitPadding property.
+     *
+     * @return [Point] value for List<Double>
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
+      return (value as? JsonArray)?.map { it.toString().toDouble() }
+    }
+    /**
+     * Set the iconTextFitPadding property.
+     */
+    set(value) {
+      if (!value.isNullOrEmpty()) {
+        val jsonArray = JsonArray(value.size)
+        value.forEach { jsonArray.add(it) }
+        dataDrivenPropertyDefaultValues.add(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING, jsonArray)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -518,6 +792,40 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-placement").value
       }
       setLayerProperty(wrappedValue, "symbol-placement")
+    }
+
+  /**
+   * The default symbolSortKey for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   */
+  var symbolSortKey: Double?
+    /**
+     * Get the symbolSortKey property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the symbolSortKey property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -629,6 +937,74 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default textAnchor for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Part of the text placed closest to the anchor.
+   */
+  var textAnchor: TextAnchor?
+    /**
+     * Get the textAnchor property.
+     *
+     * @return property wrapper value around TextAnchor
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
+      value?.let {
+        return TextAnchor.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the textAnchor property.
+     *
+     * @param value constant property value for TextAnchor
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR, value.value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textField for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   */
+  var textField: String?
+    /**
+     * Get the textField property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textField property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_FIELD, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_FIELD)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_FIELD)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The TextFont property
    *
    * Font stack to use for displaying text.
@@ -683,6 +1059,40 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default textJustify for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Text justification options.
+   */
+  var textJustify: TextJustify?
+    /**
+     * Get the textJustify property.
+     *
+     * @return property wrapper value around TextJustify
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
+      value?.let {
+        return TextJustify.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the textJustify property.
+     *
+     * @param value constant property value for TextJustify
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY, value.value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The TextKeepUpright property
    *
    * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
@@ -710,6 +1120,74 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default textLetterSpacing for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Text tracking amount. The unit of textLetterSpacing is in ems.
+   */
+  var textLetterSpacing: Double?
+    /**
+     * Get the textLetterSpacing property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textLetterSpacing property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textLineHeight for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Text leading value for multi-line text. The unit of textLineHeight is in ems.
+   */
+  var textLineHeight: Double?
+    /**
+     * Get the textLineHeight property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textLineHeight property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The TextMaxAngle property
    *
    * Maximum angle change between adjacent characters. The unit of textMaxAngle is in degrees.
@@ -734,6 +1212,71 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-max-angle").value
       }
       setLayerProperty(wrappedValue, "text-max-angle")
+    }
+
+  /**
+   * The default textMaxWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The maximum line width for text wrapping. The unit of textMaxWidth is in ems.
+   */
+  var textMaxWidth: Double?
+    /**
+     * Get the textMaxWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textMaxWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. The unit of textOffset is in ems.
+   */
+  var textOffset: List<Double>?
+    /**
+     * Get the textOffset property.
+     *
+     * @return [Point] value for List<Double>
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)
+      return (value as? JsonArray)?.map { it.toString().toDouble() }
+    }
+    /**
+     * Set the textOffset property.
+     */
+    set(value) {
+      if (!value.isNullOrEmpty()) {
+        val jsonArray = JsonArray(value.size)
+        value.forEach { jsonArray.add(it) }
+        dataDrivenPropertyDefaultValues.add(PointAnnotationOptions.PROPERTY_TEXT_OFFSET, jsonArray)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -818,6 +1361,74 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default textRadialOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present. The unit of textRadialOffset is in ems.
+   */
+  var textRadialOffset: Double?
+    /**
+     * Get the textRadialOffset property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textRadialOffset property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textRotate for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Rotates the text clockwise. The unit of textRotate is in degrees.
+   */
+  var textRotate: Double?
+    /**
+     * Get the textRotate property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textRotate property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_ROTATE, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The TextRotationAlignment property
    *
    * In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of the individual glyphs forming the text.
@@ -842,6 +1453,74 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-rotation-alignment").value
       }
       setLayerProperty(wrappedValue, "text-rotation-alignment")
+    }
+
+  /**
+   * The default textSize for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Font size. The unit of textSize is in density-independent pixels.
+   */
+  var textSize: Double?
+    /**
+     * Get the textSize property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textSize property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_SIZE, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_SIZE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_SIZE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textTransform for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
+   */
+  var textTransform: TextTransform?
+    /**
+     * Get the textTransform property.
+     *
+     * @return property wrapper value around TextTransform
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
+      value?.let {
+        return TextTransform.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the textTransform property.
+     *
+     * @param value constant property value for TextTransform
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM, value.value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -899,6 +1578,77 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default iconColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   */
+  var iconColorInt: Int?
+    /**
+     * Get the iconColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the iconColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PointAnnotationOptions.PROPERTY_ICON_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   */
+  var iconColorString: String?
+    /**
+     * Get the iconColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The IconColorSaturation property
    *
    * Increase or reduce the saturation of the symbol icon.
@@ -926,31 +1676,278 @@ class PointAnnotationManager(
     }
 
   /**
-   * The IconOcclusionOpacity property
+   * The default iconEmissiveStrength for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels.
+   * Controls the intensity of light emitted on the source features. The unit of iconEmissiveStrength is in intensity.
    */
-  @MapboxExperimental
-  var iconOcclusionOpacity: Double?
+  var iconEmissiveStrength: Double?
     /**
-     * Get the IconOcclusionOpacity property
+     * Get the iconEmissiveStrength property.
      *
      * @return property wrapper value around Double
      */
-    get(): Double? {
-      return layer.iconOcclusionOpacity
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
     }
     /**
-     * Set the IconOcclusionOpacity property
-     * @param value property wrapper value around Double
+     * Set the iconEmissiveStrength property.
+     *
+     * @param value constant property value for Double
      */
     set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)
       } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-occlusion-opacity").value
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)
       }
-      setLayerProperty(wrappedValue, "icon-occlusion-opacity")
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconHaloBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
+   */
+  var iconHaloBlur: Double?
+    /**
+     * Get the iconHaloBlur property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloBlur property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   */
+  var iconHaloColorInt: Int?
+    /**
+     * Get the iconHaloColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   */
+  var iconHaloColorString: String?
+    /**
+     * Get the iconHaloColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconHaloWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Distance of halo to the icon outline. The unit of iconHaloWidth is in density-independent pixels.
+   */
+  var iconHaloWidth: Double?
+    /**
+     * Get the iconHaloWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconImageCrossFade for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   */
+  var iconImageCrossFade: Double?
+    /**
+     * Get the iconImageCrossFade property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconImageCrossFade property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconOcclusionOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   */
+  var iconOcclusionOpacity: Double?
+    /**
+     * Get the iconOcclusionOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconOcclusionOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity at which the icon will be drawn.
+   */
+  var iconOpacity: Double?
+    /**
+     * Get the iconOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -1008,31 +2005,315 @@ class PointAnnotationManager(
     }
 
   /**
-   * The TextOcclusionOpacity property
+   * The default textColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels.
+   * The color with which the text will be drawn.
    */
-  @MapboxExperimental
-  var textOcclusionOpacity: Double?
+  var textColorInt: Int?
     /**
-     * Get the TextOcclusionOpacity property
+     * Get the textColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the textColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PointAnnotationOptions.PROPERTY_TEXT_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color with which the text will be drawn.
+   */
+  var textColorString: String?
+    /**
+     * Get the textColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textEmissiveStrength for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Controls the intensity of light emitted on the source features. The unit of textEmissiveStrength is in intensity.
+   */
+  var textEmissiveStrength: Double?
+    /**
+     * Get the textEmissiveStrength property.
      *
      * @return property wrapper value around Double
      */
-    get(): Double? {
-      return layer.textOcclusionOpacity
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
     }
     /**
-     * Set the TextOcclusionOpacity property
-     * @param value property wrapper value around Double
+     * Set the textEmissiveStrength property.
+     *
+     * @param value constant property value for Double
      */
     set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)
       } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-occlusion-opacity").value
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)
       }
-      setLayerProperty(wrappedValue, "text-occlusion-opacity")
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textHaloBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
+   */
+  var textHaloBlur: Double?
+    /**
+     * Get the textHaloBlur property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textHaloBlur property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color of the text's halo, which helps it stand out from backgrounds.
+   */
+  var textHaloColorInt: Int?
+    /**
+     * Get the textHaloColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the textHaloColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color of the text's halo, which helps it stand out from backgrounds.
+   */
+  var textHaloColorString: String?
+    /**
+     * Get the textHaloColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textHaloColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textHaloWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. The unit of textHaloWidth is in density-independent pixels.
+   */
+  var textHaloWidth: Double?
+    /**
+     * Get the textHaloWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textHaloWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textOcclusionOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   */
+  var textOcclusionOpacity: Double?
+    /**
+     * Get the textOcclusionOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textOcclusionOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity at which the text will be drawn.
+   */
+  var textOpacity: Double?
+    /**
+     * Get the textOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_OPACITY, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -1117,98 +2398,6 @@ class PointAnnotationManager(
     }
 
   /**
-   * The TextLineHeight property
-   *
-   * Text leading value for multi-line text.
-   */
-  @Deprecated(
-    "text-line-height property is now data driven, use `PointAnnotation.textLineHeight` instead.",
-    ReplaceWith("PointAnnotation.textLineHeight")
-  )
-  var textLineHeight: Double?
-    /**
-     * Get the TextLineHeight property
-     *
-     * @return property wrapper value around Double
-     */
-    get(): Double? {
-      return layer.textLineHeight
-    }
-    /**
-     * Set the TextLineHeight property
-     * @param value property wrapper value around Double
-     */
-    set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
-      } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("pointAnnotation", "text-line-height").value
-      }
-      setLayerProperty(wrappedValue, "text-line-height")
-    }
-
-  /**
-   * The IconTextFit property
-   *
-   * Scales the icon to fit around the associated text.
-   */
-  @Deprecated(
-    "icon-text-fit property is now data driven, use `PointAnnotation.iconTextFit` instead.",
-    ReplaceWith("PointAnnotation.iconTextFit")
-  )
-  var iconTextFit: IconTextFit?
-    /**
-     * Get the IconTextFit property
-     *
-     * @return property wrapper value around IconTextFit
-     */
-    get(): IconTextFit? {
-      return layer.iconTextFit
-    }
-    /**
-     * Set the IconTextFit property
-     * @param value property wrapper value around IconTextFit
-     */
-    set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
-      } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("pointAnnotation", "icon-text-fit").value
-      }
-      setLayerProperty(wrappedValue, "icon-text-fit")
-    }
-
-  /**
-   * The IconTextFitPadding property
-   *
-   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left.
-   */
-  @Deprecated(
-    "icon-text-fit-padding property is now data driven, use `PointAnnotation.iconTextFitPadding` instead.",
-    ReplaceWith("PointAnnotation.iconTextFitPadding")
-  )
-  var iconTextFitPadding: List<Double>?
-    /**
-     * Get the IconTextFitPadding property
-     *
-     * @return property wrapper value around List<Double>
-     */
-    get(): List<Double>? {
-      return layer.iconTextFitPadding
-    }
-    /**
-     * Set the IconTextFitPadding property
-     * @param value property wrapper value around List<Double>
-     */
-    set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
-      } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("pointAnnotation", "icon-text-fit-padding").value
-      }
-      setLayerProperty(wrappedValue, "icon-text-fit-padding")
-    }
-  /**
    * The filter on the managed pointAnnotations.
    */
   override var layerFilter: Expression?
@@ -1256,12 +2445,14 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_OPACITY] = false
 
     // Show all icons and texts by default.

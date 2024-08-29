@@ -54,6 +54,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineJoin() {
+    rule.runOnUiThread {
+      val expectedValue = LineJoin.BEVEL
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineJoin = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineJoin)
+      polylineAnnotationManager.lineJoin = null
+      assertEquals(null, polylineAnnotationManager.lineJoin)
+    }
+  }
+
+  @Test
   fun testLineMiterLimit() {
     rule.runOnUiThread {
       val expectedValue = 1.0
@@ -74,6 +86,84 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polylineAnnotationManager.lineRoundLimit)
       polylineAnnotationManager.lineRoundLimit = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").silentUnwrap(), polylineAnnotationManager.lineRoundLimit)
+    }
+  }
+
+  @Test
+  fun testLineSortKey() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineSortKey = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineSortKey)
+      polylineAnnotationManager.lineSortKey = null
+      assertEquals(null, polylineAnnotationManager.lineSortKey)
+    }
+  }
+
+  @Test
+  fun testLineZOffset() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineZOffset = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineZOffset)
+      polylineAnnotationManager.lineZOffset = null
+      assertEquals(null, polylineAnnotationManager.lineZOffset)
+    }
+  }
+
+  @Test
+  fun testLineBlur() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineBlur = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineBlur)
+      polylineAnnotationManager.lineBlur = null
+      assertEquals(null, polylineAnnotationManager.lineBlur)
+    }
+  }
+
+  @Test
+  fun testLineBorderColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineBorderColorString = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineBorderColorString)
+      polylineAnnotationManager.lineBorderColorString = null
+      assertEquals(
+        null,
+        polylineAnnotationManager.lineBorderColorString
+      )
+    }
+  }
+
+  @Test
+  fun testLineBorderWidth() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineBorderWidth = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineBorderWidth)
+      polylineAnnotationManager.lineBorderWidth = null
+      assertEquals(null, polylineAnnotationManager.lineBorderWidth)
+    }
+  }
+
+  @Test
+  fun testLineColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineColorString = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineColorString)
+      polylineAnnotationManager.lineColorString = null
+      assertEquals(
+        null,
+        polylineAnnotationManager.lineColorString
+      )
     }
   }
 
@@ -114,6 +204,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineGapWidth() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineGapWidth = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineGapWidth)
+      polylineAnnotationManager.lineGapWidth = null
+      assertEquals(null, polylineAnnotationManager.lineGapWidth)
+    }
+  }
+
+  @Test
   fun testLineOcclusionOpacity() {
     rule.runOnUiThread {
       val expectedValue = 1.0
@@ -122,6 +224,42 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polylineAnnotationManager.lineOcclusionOpacity)
       polylineAnnotationManager.lineOcclusionOpacity = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity").silentUnwrap(), polylineAnnotationManager.lineOcclusionOpacity)
+    }
+  }
+
+  @Test
+  fun testLineOffset() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineOffset = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineOffset)
+      polylineAnnotationManager.lineOffset = null
+      assertEquals(null, polylineAnnotationManager.lineOffset)
+    }
+  }
+
+  @Test
+  fun testLineOpacity() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineOpacity = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineOpacity)
+      polylineAnnotationManager.lineOpacity = null
+      assertEquals(null, polylineAnnotationManager.lineOpacity)
+    }
+  }
+
+  @Test
+  fun testLinePattern() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.linePattern = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.linePattern)
+      polylineAnnotationManager.linePattern = null
+      assertEquals(null, polylineAnnotationManager.linePattern)
     }
   }
 
@@ -188,6 +326,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polylineAnnotationManager.lineTrimOffset)
       polylineAnnotationManager.lineTrimOffset = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap(), polylineAnnotationManager.lineTrimOffset)
+    }
+  }
+
+  @Test
+  fun testLineWidth() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineWidth = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineWidth)
+      polylineAnnotationManager.lineWidth = null
+      assertEquals(null, polylineAnnotationManager.lineWidth)
     }
   }
 

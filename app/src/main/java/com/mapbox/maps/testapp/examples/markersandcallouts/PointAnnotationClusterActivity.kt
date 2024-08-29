@@ -41,7 +41,8 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   private var slotIndex: Int = 0
 
   // STANDARD style doesn't support ICON_FIRE_STATION image
-  private val styles = AnnotationUtils.STYLES.filterNot { it == Style.STANDARD || it == Style.STANDARD_SATELLITE }
+  private val styles =
+    AnnotationUtils.STYLES.filterNot { it == Style.STANDARD || it == Style.STANDARD_SATELLITE }
   private val nextStyle: String
     get() = styles[styleIndex++ % styles.size]
   private val nextSlot: String
@@ -79,18 +80,20 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             )
           )
           pointAnnotationManager =
-            annotationPlugin.createPointAnnotationManager(annotationConfig)
-          pointAnnotationManager?.addClickListener(
-            OnPointAnnotationClickListener {
-              Toast.makeText(
-                this@PointAnnotationClusterActivity,
-                "Click: ${it.id}",
-                Toast.LENGTH_SHORT
+            annotationPlugin.createPointAnnotationManager(annotationConfig).apply {
+              // Set the icon image for this point annotation manager, so it will be applied to all annotations
+              iconImage = ICON_FIRE_STATION
+              addClickListener(
+                OnPointAnnotationClickListener {
+                  Toast.makeText(
+                    this@PointAnnotationClusterActivity,
+                    "Click: ${it.id}",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
               )
-                .show()
-              true
             }
-          )
           launch {
             loadData()
           }
@@ -115,7 +118,6 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
         options = features.take(AMOUNT).map { feature ->
           PointAnnotationOptions()
             .withGeometry((feature.geometry() as Point))
-            .withIconImage(ICON_FIRE_STATION)
         }
       }
     }

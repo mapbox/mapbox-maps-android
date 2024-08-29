@@ -1,9 +1,11 @@
 package com.mapbox.maps.plugin.annotation
 
+import android.graphics.Bitmap
 import android.graphics.PointF
 import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
+import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
@@ -79,6 +81,7 @@ internal constructor(
   private var draggingAnnotation: T? = null
   private val annotationMap = LinkedHashMap<String, T>()
   private val dragAnnotationMap = LinkedHashMap<String, T>()
+  internal val dataDrivenPropertyDefaultValues: JsonObject = JsonObject()
 
   private val interactionsCancelableSet = mutableSetOf<Cancelable>()
 
@@ -422,7 +425,7 @@ internal constructor(
         if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
           style.addPersistentLayer(
             clusterLevelLayer,
-              LayerPosition(
+            LayerPosition(
               /* above = */ associatedLayers.lastOrNull(),
               /* below = */ null,
               /* at = */ null
@@ -435,7 +438,7 @@ internal constructor(
       if (!style.styleLayerExists(clusterTextLayer.layerId)) {
         style.addPersistentLayer(
           clusterTextLayer,
-            LayerPosition(
+          LayerPosition(
             /* above = */ associatedLayers.lastOrNull(),
             /* below = */ null,
             /* at = */ null
@@ -475,7 +478,11 @@ internal constructor(
       )
     }
 
-  private fun createClusterTextLayer(annotationSourceOptions: AnnotationSourceOptions?, typeName: String, id: Long) =
+  private fun createClusterTextLayer(
+    annotationSourceOptions: AnnotationSourceOptions?,
+    typeName: String,
+    id: Long
+  ) =
     symbolLayer("mapbox-android-$typeName-cluster-text-layer-$id", source.sourceId) {
       annotationSourceOptions?.clusterOptions?.let {
         textField(if (it.textField == null) DEFAULT_TEXT_FIELD else it.textField as Expression)
@@ -596,7 +603,14 @@ internal constructor(
     source.featureCollection(FeatureCollection.fromFeatures(features))
   }
 
+  // Add a bitmap to the style.
+  internal fun addStyleImage(imageId: String, bitmap: Bitmap) {
+    delegateProvider.mapStyleManagerDelegate.addImage(image(imageId, bitmap))
+  }
+
+  // Add icons to style from PointAnnotation.
   private fun addIconToStyle(style: MapboxStyleManager, annotations: Collection<T>) {
+    // Add icon image bitmap from point annotation
     annotations
       .filter { it.getType() == AnnotationType.PointAnnotation }
       .forEach {
@@ -605,18 +619,29 @@ internal constructor(
           if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
             // User set the bitmap icon, add the icon to style
             symbol.iconImageBitmap?.let { bitmap ->
-              val imagePlugin = image(image, bitmap)
-              style.addImage(imagePlugin)
+              style.addImage(image(image, bitmap))
             }
           }
         }
       }
   }
 
+  // Extension function on the JsonObject that annotation defines.
+  // If the default property value is defined for the data driven property in `AnnotationManager`, we
+  // check if the property value is already set in the `Annotation` JsonObject, if it's not defined in
+  // `Annotation`, we fallback to the property defined in the `AnnotationManager`.
+  private fun JsonObject.applyPropertyDefaults(): JsonObject = apply {
+    dataDrivenPropertyDefaultValues.entrySet().forEach {
+      if (!has(it.key)) {
+        add(it.key, it.value)
+      }
+    }
+  }
+
   private fun convertAnnotationsToFeatures(annotations: Collection<T>): List<Feature> =
     annotations.map {
       it.setUsedDataDrivenProperties()
-      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy(), it.id)
+      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy().applyPropertyDefaults(), it.id)
     }
 
   /**

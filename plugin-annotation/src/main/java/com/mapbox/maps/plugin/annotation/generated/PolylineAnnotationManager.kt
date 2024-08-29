@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import androidx.annotation.ColorInt
 import com.mapbox.geojson.*
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
@@ -9,12 +10,14 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import java.util.Locale
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -186,6 +189,40 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The default lineJoin for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The display of lines when joining.
+   */
+  var lineJoin: LineJoin?
+    /**
+     * Get the lineJoin property.
+     *
+     * @return property wrapper value around LineJoin
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
+      value?.let {
+        return LineJoin.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the lineJoin property.
+     *
+     * @param value constant property value for LineJoin
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_JOIN, value.value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The LineMiterLimit property
    *
    * Used to automatically convert miter joins to bevel joins for sharp angles.
@@ -237,6 +274,284 @@ class PolylineAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").value
       }
       setLayerProperty(wrappedValue, "line-round-limit")
+    }
+
+  /**
+   * The default lineSortKey for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+   */
+  var lineSortKey: Double?
+    /**
+     * Get the lineSortKey property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineSortKey property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   */
+  var lineZOffset: Double?
+    /**
+     * Get the lineZOffset property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineZOffset property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
+   */
+  var lineBlur: Double?
+    /**
+     * Get the lineBlur property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineBlur property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BLUR, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineBorderColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  var lineBorderColorInt: Int?
+    /**
+     * Get the lineBorderColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineBorderColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  var lineBorderColorString: String?
+    /**
+     * Get the lineBorderColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineBorderWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The width of the line border. A value of zero means no border.
+   */
+  var lineBorderWidth: Double?
+    /**
+     * Get the lineBorderWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color with which the line will be drawn.
+   */
+  var lineColorInt: Int?
+    /**
+     * Get the lineColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the lineColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PolylineAnnotationOptions.PROPERTY_LINE_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color with which the line will be drawn.
+   */
+  var lineColorString: String?
+    /**
+     * Get the lineColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -321,11 +636,44 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The default lineGapWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. The unit of lineGapWidth is in density-independent pixels.
+   */
+  var lineGapWidth: Double?
+    /**
+     * Get the lineGapWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineGapWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The LineOcclusionOpacity property
    *
    * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when {@link PropertyFactory#lineOpacity} has data-driven styling.
    */
-  @MapboxExperimental
   var lineOcclusionOpacity: Double?
     /**
      * Get the LineOcclusionOpacity property
@@ -346,6 +694,108 @@ class PolylineAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity").value
       }
       setLayerProperty(wrappedValue, "line-occlusion-opacity")
+    }
+
+  /**
+   * The default lineOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. The unit of lineOffset is in density-independent pixels.
+   */
+  var lineOffset: Double?
+    /**
+     * Get the lineOffset property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineOffset property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity at which the line will be drawn.
+   */
+  var lineOpacity: Double?
+    /**
+     * Get the lineOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default linePattern for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   */
+  var linePattern: String?
+    /**
+     * Get the linePattern property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the linePattern property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -483,6 +933,40 @@ class PolylineAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").value
       }
       setLayerProperty(wrappedValue, "line-trim-offset")
+    }
+
+  /**
+   * The default lineWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Stroke thickness. The unit of lineWidth is in density-independent pixels.
+   */
+  var lineWidth: Double?
+    /**
+     * Get the lineWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**

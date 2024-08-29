@@ -614,6 +614,19 @@ class PolygonAnnotationManagerTest {
   }
 
   @Test
+  fun testFillSortKeyInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillSortKey = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
+  }
+
+  @Test
   fun testFillColorIntLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -644,6 +657,19 @@ class PolygonAnnotationManagerTest {
   }
 
   @Test
+  fun testFillColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
+  }
+
+  @Test
   fun testFillOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -654,6 +680,19 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
+  }
+
+  @Test
+  fun testFillOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillOpacity = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
@@ -690,6 +729,19 @@ class PolygonAnnotationManagerTest {
   }
 
   @Test
+  fun testFillOutlineColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillOutlineColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+  }
+
+  @Test
   fun testFillPatternLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -700,6 +752,19 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
     verify(exactly = 1) { manager.dragLayer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.dragLayer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+  }
+
+  @Test
+  fun testFillPatternInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillPattern = "pedestrian-polygon"
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
     verify(exactly = 1) { manager.dragLayer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }

@@ -47,12 +47,14 @@ public class PointAnnotationState private constructor(
   initialIconHaloColor: Color?,
   initialIconHaloWidth: Double?,
   initialIconImageCrossFade: Double?,
+  initialIconOcclusionOpacity: Double?,
   initialIconOpacity: Double?,
   initialTextColor: Color?,
   initialTextEmissiveStrength: Double?,
   initialTextHaloBlur: Double?,
   initialTextHaloColor: Color?,
   initialTextHaloWidth: Double?,
+  initialTextOcclusionOpacity: Double?,
   initialTextOpacity: Double?,
 ) {
 
@@ -81,12 +83,14 @@ public class PointAnnotationState private constructor(
     initialIconHaloColor = null,
     initialIconHaloWidth = null,
     initialIconImageCrossFade = null,
+    initialIconOcclusionOpacity = null,
     initialIconOpacity = null,
     initialTextColor = null,
     initialTextEmissiveStrength = null,
     initialTextHaloBlur = null,
     initialTextHaloColor = null,
     initialTextHaloWidth = null,
+    initialTextOcclusionOpacity = null,
     initialTextOpacity = null,
   )
 
@@ -187,6 +191,10 @@ public class PointAnnotationState private constructor(
    */
   public var iconImageCrossFade: Double? by mutableStateOf(initialIconImageCrossFade)
   /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   */
+  public var iconOcclusionOpacity: Double? by mutableStateOf(initialIconOcclusionOpacity)
+  /**
    * The opacity at which the icon will be drawn.
    */
   public var iconOpacity: Double? by mutableStateOf(initialIconOpacity)
@@ -210,6 +218,10 @@ public class PointAnnotationState private constructor(
    * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. The unit of textHaloWidth is in density-independent pixels.
    */
   public var textHaloWidth: Double? by mutableStateOf(initialTextHaloWidth)
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   */
+  public var textOcclusionOpacity: Double? by mutableStateOf(initialTextOcclusionOpacity)
   /**
    * The opacity at which the text will be drawn.
    */
@@ -463,6 +475,16 @@ public class PointAnnotationState private constructor(
     )
   }
   @Composable
+  private fun UpdateIconOcclusionOpacity(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.iconOcclusionOpacity = iconOcclusionOpacity
+      }
+    )
+  }
+  @Composable
   private fun UpdateIconOpacity(
     annotationNode: PointAnnotationNode
   ) {
@@ -523,6 +545,16 @@ public class PointAnnotationState private constructor(
     )
   }
   @Composable
+  private fun UpdateTextOcclusionOpacity(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.textOcclusionOpacity = textOcclusionOpacity
+      }
+    )
+  }
+  @Composable
   private fun UpdateTextOpacity(
     annotationNode: PointAnnotationNode
   ) {
@@ -561,12 +593,14 @@ public class PointAnnotationState private constructor(
     UpdateIconHaloColor(annotationNode)
     UpdateIconHaloWidth(annotationNode)
     UpdateIconImageCrossFade(annotationNode)
+    UpdateIconOcclusionOpacity(annotationNode)
     UpdateIconOpacity(annotationNode)
     UpdateTextColor(annotationNode)
     UpdateTextEmissiveStrength(annotationNode)
     UpdateTextHaloBlur(annotationNode)
     UpdateTextHaloColor(annotationNode)
     UpdateTextHaloWidth(annotationNode)
+    UpdateTextOcclusionOpacity(annotationNode)
     UpdateTextOpacity(annotationNode)
   }
 }

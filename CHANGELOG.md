@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce experimental interactive feature elements and related APIs. Those APIs provide the convenient way to add the click / long click listener to layer / featureset / map itself with `MapboxMap.addInteraction`.
 * Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
+* Introduce `PointAnnotation.iconOcclusionOpacity`, `PointAnnotation.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
+* Remove `MapboxExperimental` from `SymbolLayer.iconOcclusionOpacity`, `SymbolLayer.textOcclusionOpacity` and these properties are now supported on global zoom levels with default value changed to `0`.
+* Remove `MapboxExperimental` from `PolylineAnnotationManager.lineOcclusionOpacity`, `PointAnnotationManager.iconOcclusionOpacity`, `PointAnnotationManager.textOcclusionOpacity`.
+* Expose data-driven properties on `AnnotationManager`s. Now it's possible to set data-driven properties globally on `AnnotationManager` and specify per-annotation overrides. Setting global property value on `AnnotationManager` could introduce performance improvements when the amount of annotations is large.
+* [compose] Introduce `PointAnnotationState.iconOcclusionOpacity`, `PointAnnotationState.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
+* [compose] Remove `MapboxExperimental` from `PolylineAnnotationGroupState.lineOcclusionOpacity`, `PointAnnotationGroupState.iconOcclusionOpacity`, `PointAnnotationGroupState.textOcclusionOpacity`.
+* [compose] Expose data-driven properties on `AnnotationGroupState`s. Now it's possible to set data-driven properties globally on `AnnotationGroupState` and specify per-annotation overrides in `AnnotationState`. Setting global property value on `AnnotationGroupState` could introduce performance improvements when the amount of annotations is large.
 
 ## Bug fixes 🐞
 * [compose] Fix `UnsatisfiedLinkError` issue when rendering preview.

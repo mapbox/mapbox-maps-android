@@ -2,12 +2,14 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import androidx.annotation.ColorInt
 import com.mapbox.geojson.*
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
@@ -133,6 +135,145 @@ class CircleAnnotationManager(
 
   // Property accessors
   /**
+   * The default circleSortKey for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+   */
+  var circleSortKey: Double?
+    /**
+     * Get the circleSortKey property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleSortKey property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+   */
+  var circleBlur: Double?
+    /**
+     * Get the circleBlur property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleBlur property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The fill color of the circle.
+   */
+  var circleColorInt: Int?
+    /**
+     * Get the circleColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the circleColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The fill color of the circle.
+   */
+  var circleColorString: String?
+    /**
+     * Get the circleColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the circleColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The CircleEmissiveStrength property
    *
    * Controls the intensity of light emitted on the source features. The unit of circleEmissiveStrength is in intensity.
@@ -157,6 +298,40 @@ class CircleAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").value
       }
       setLayerProperty(wrappedValue, "circle-emissive-strength")
+    }
+
+  /**
+   * The default circleOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity at which the circle will be drawn.
+   */
+  var circleOpacity: Double?
+    /**
+     * Get the circleOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -211,6 +386,179 @@ class CircleAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").value
       }
       setLayerProperty(wrappedValue, "circle-pitch-scale")
+    }
+
+  /**
+   * The default circleRadius for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Circle radius. The unit of circleRadius is in density-independent pixels.
+   */
+  var circleRadius: Double?
+    /**
+     * Get the circleRadius property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleRadius property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleStrokeColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The stroke color of the circle.
+   */
+  var circleStrokeColorInt: Int?
+    /**
+     * Get the circleStrokeColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleStrokeColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The stroke color of the circle.
+   */
+  var circleStrokeColorString: String?
+    /**
+     * Get the circleStrokeColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleStrokeOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The opacity of the circle's stroke.
+   */
+  var circleStrokeOpacity: Double?
+    /**
+     * Get the circleStrokeOpacity property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeOpacity property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleStrokeWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
+   */
+  var circleStrokeWidth: Double?
+    /**
+     * Get the circleStrokeWidth property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeWidth property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**

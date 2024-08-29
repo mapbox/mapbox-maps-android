@@ -519,6 +519,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
+   */
+  var iconOcclusionOpacity: Double? = null
+
+  /**
+   * Set icon-occlusion-opacity to initialise the pointAnnotation with.
+   *
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   *
+   * @param iconOcclusionOpacity the icon-occlusion-opacity value
+   * @return this
+   */
+  fun withIconOcclusionOpacity(iconOcclusionOpacity: Double): PointAnnotationOptions {
+    this.iconOcclusionOpacity = iconOcclusionOpacity
+    return this
+  }
+
+  /**
    * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    */
   var iconOpacity: Double? = null
@@ -649,6 +667,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    */
   fun withTextHaloWidth(textHaloWidth: Double): PointAnnotationOptions {
     this.textHaloWidth = textHaloWidth
+    return this
+  }
+
+  /**
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
+   */
+  var textOcclusionOpacity: Double? = null
+
+  /**
+   * Set text-occlusion-opacity to initialise the pointAnnotation with.
+   *
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   *
+   * @param textOcclusionOpacity the text-occlusion-opacity value
+   * @return this
+   */
+  fun withTextOcclusionOpacity(textOcclusionOpacity: Double): PointAnnotationOptions {
+    this.textOcclusionOpacity = textOcclusionOpacity
     return this
   }
 
@@ -840,6 +876,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     iconImageCrossFade?.let {
       jsonObject.addProperty(PROPERTY_ICON_IMAGE_CROSS_FADE, it)
     }
+    iconOcclusionOpacity?.let {
+      jsonObject.addProperty(PROPERTY_ICON_OCCLUSION_OPACITY, it)
+    }
     iconOpacity?.let {
       jsonObject.addProperty(PROPERTY_ICON_OPACITY, it)
     }
@@ -857,6 +896,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     }
     textHaloWidth?.let {
       jsonObject.addProperty(PROPERTY_TEXT_HALO_WIDTH, it)
+    }
+    textOcclusionOpacity?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_OCCLUSION_OPACITY, it)
     }
     textOpacity?.let {
       jsonObject.addProperty(PROPERTY_TEXT_OPACITY, it)
@@ -950,6 +992,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     /** The property for icon-image-cross-fade */
     const val PROPERTY_ICON_IMAGE_CROSS_FADE = "icon-image-cross-fade"
 
+    /** The property for icon-occlusion-opacity */
+    const val PROPERTY_ICON_OCCLUSION_OPACITY = "icon-occlusion-opacity"
+
     /** The property for icon-opacity */
     const val PROPERTY_ICON_OPACITY = "icon-opacity"
 
@@ -967,6 +1012,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for text-halo-width */
     const val PROPERTY_TEXT_HALO_WIDTH = "text-halo-width"
+
+    /** The property for text-occlusion-opacity */
+    const val PROPERTY_TEXT_OCCLUSION_OPACITY = "text-occlusion-opacity"
 
     /** The property for text-opacity */
     const val PROPERTY_TEXT_OPACITY = "text-opacity"
@@ -1065,6 +1113,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       if (feature.hasProperty(PROPERTY_ICON_IMAGE_CROSS_FADE)) {
         options.iconImageCrossFade = feature.getProperty(PROPERTY_ICON_IMAGE_CROSS_FADE).asDouble
       }
+      if (feature.hasProperty(PROPERTY_ICON_OCCLUSION_OPACITY)) {
+        options.iconOcclusionOpacity = feature.getProperty(PROPERTY_ICON_OCCLUSION_OPACITY).asDouble
+      }
       if (feature.hasProperty(PROPERTY_ICON_OPACITY)) {
         options.iconOpacity = feature.getProperty(PROPERTY_ICON_OPACITY).asDouble
       }
@@ -1082,6 +1133,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_TEXT_HALO_WIDTH)) {
         options.textHaloWidth = feature.getProperty(PROPERTY_TEXT_HALO_WIDTH).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_TEXT_OCCLUSION_OPACITY)) {
+        options.textOcclusionOpacity = feature.getProperty(PROPERTY_TEXT_OCCLUSION_OPACITY).asDouble
       }
       if (feature.hasProperty(PROPERTY_TEXT_OPACITY)) {
         options.textOpacity = feature.getProperty(PROPERTY_TEXT_OPACITY).asDouble

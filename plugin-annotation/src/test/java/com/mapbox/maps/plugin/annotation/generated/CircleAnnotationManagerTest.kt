@@ -659,6 +659,19 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun testCircleSortKeyInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleSortKey = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+  }
+
+  @Test
   fun testCircleBlurLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -669,6 +682,19 @@ class CircleAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
+  }
+
+  @Test
+  fun testCircleBlurInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleBlur = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
@@ -705,6 +731,19 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun testCircleColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
+  }
+
+  @Test
   fun testCircleOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -721,6 +760,19 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun testCircleOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleOpacity = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
+  }
+
+  @Test
   fun testCircleRadiusLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -731,6 +783,19 @@ class CircleAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
     verify(exactly = 1) { manager.dragLayer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
+    verify(exactly = 1) { manager.dragLayer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
+  }
+
+  @Test
+  fun testCircleRadiusInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleRadius = 5.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
     verify(exactly = 1) { manager.dragLayer.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
@@ -767,6 +832,19 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun testCircleStrokeColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleStrokeColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+  }
+
+  @Test
   fun testCircleStrokeOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -783,6 +861,19 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun testCircleStrokeOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleStrokeOpacity = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+  }
+
+  @Test
   fun testCircleStrokeWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -793,6 +884,19 @@ class CircleAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+  }
+
+  @Test
+  fun testCircleStrokeWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleStrokeWidth = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }

@@ -39,6 +39,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillSortKey() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillSortKey = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillSortKey)
+      polygonAnnotationManager.fillSortKey = null
+      assertEquals(null, polygonAnnotationManager.fillSortKey)
+    }
+  }
+
+  @Test
   fun testFillAntialias() {
     rule.runOnUiThread {
       val expectedValue = true
@@ -51,6 +63,21 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillColorString = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillColorString)
+      polygonAnnotationManager.fillColorString = null
+      assertEquals(
+        null,
+        polygonAnnotationManager.fillColorString
+      )
+    }
+  }
+
+  @Test
   fun testFillEmissiveStrength() {
     rule.runOnUiThread {
       val expectedValue = 1.0
@@ -59,6 +86,45 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polygonAnnotationManager.fillEmissiveStrength)
       polygonAnnotationManager.fillEmissiveStrength = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").silentUnwrap(), polygonAnnotationManager.fillEmissiveStrength)
+    }
+  }
+
+  @Test
+  fun testFillOpacity() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillOpacity = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillOpacity)
+      polygonAnnotationManager.fillOpacity = null
+      assertEquals(null, polygonAnnotationManager.fillOpacity)
+    }
+  }
+
+  @Test
+  fun testFillOutlineColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillOutlineColorString = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillOutlineColorString)
+      polygonAnnotationManager.fillOutlineColorString = null
+      assertEquals(
+        null,
+        polygonAnnotationManager.fillOutlineColorString
+      )
+    }
+  }
+
+  @Test
+  fun testFillPattern() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillPattern = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillPattern)
+      polygonAnnotationManager.fillPattern = null
+      assertEquals(null, polygonAnnotationManager.fillPattern)
     }
   }
 

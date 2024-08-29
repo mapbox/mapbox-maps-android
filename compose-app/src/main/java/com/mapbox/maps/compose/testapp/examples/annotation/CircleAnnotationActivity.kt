@@ -4,10 +4,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -31,8 +41,37 @@ public class CircleAnnotationActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      var groupColor by remember {
+        mutableStateOf(Color.White)
+      }
+      var individualColor by remember {
+        mutableStateOf(Color.Red)
+      }
       MapboxMapComposeTheme {
-        ExampleScaffold {
+        ExampleScaffold(
+          floatingActionButton = {
+            Column {
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  groupColor = if (groupColor == Color.Black) Color.White else Color.Black
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle group color")
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  individualColor = if (individualColor == Color.Red) Color.Yellow else Color.Red
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Toggle individual color")
+              }
+            }
+          }
+        ) {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = MapViewportState().apply {
@@ -57,11 +96,16 @@ public class CircleAnnotationActivity : ComponentActivity() {
               circleColor = Color.Blue
             }
             CircleAnnotationGroup(
-              annotations = CLUSTER_POINTS.map {
+              annotations = CLUSTER_POINTS.mapIndexed { index, item ->
                 CircleAnnotationOptions()
-                  .withPoint(it)
+                  .withPoint(item)
                   .withCircleRadius(10.0)
-                  .withCircleColor(Color.Red)
+                  .apply {
+                    // Apply circle color for selected annotation to overwrite the group settings
+                    if (index % 3 == 0) {
+                      withCircleColor(individualColor)
+                    }
+                  }
               },
               annotationConfig = AnnotationConfig(
                 annotationSourceOptions = AnnotationSourceOptions(
@@ -86,7 +130,10 @@ public class CircleAnnotationActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            )
+            ) {
+              // Apply circle color to the whole CircleAnnotationGroup
+              circleColor = groupColor
+            }
           }
         }
       }

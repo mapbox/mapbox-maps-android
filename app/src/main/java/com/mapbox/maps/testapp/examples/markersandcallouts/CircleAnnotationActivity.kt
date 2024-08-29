@@ -52,6 +52,10 @@ class CircleAnnotationActivity : AppCompatActivity() {
     Toast.makeText(this, "Long click a circle to enable dragging.", Toast.LENGTH_LONG).show()
     annotationPlugin = binding.mapView.annotations
     val circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
+      // Setup the default properties for all annotations added to this manager
+      circleColorInt = Color.YELLOW
+      circleRadius = 8.0
+
       addClickListener(
         OnCircleAnnotationClickListener {
           Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
@@ -97,7 +101,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
 
       val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
         .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
-        .withCircleColor(Color.YELLOW)
+        // overwrite circleAnnotationManager base circle annotation's radius to the specific value of 12.0
         .withCircleRadius(12.0)
         .withDraggable(false)
       create(circleAnnotationOptions)
@@ -110,8 +114,8 @@ class CircleAnnotationActivity : AppCompatActivity() {
               Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
             CircleAnnotationOptions()
               .withPoint(AnnotationUtils.createRandomPoint())
+              // overwrite circleAnnotationManager base circle color for this specific annotation to random color.
               .withCircleColor(color)
-              .withCircleRadius(8.0)
               .withDraggable(false)
           }
         }

@@ -153,18 +153,15 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)
-      value?.let {
-        return (it as JsonArray).map { it.toString().toDouble() }
-      }
-      return null
+      return (value as? JsonArray)?.map { it.toString().toDouble() }
     }
     /**
      * Set the iconOffset property.
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
      */
     set(value) {
-      if (value != null) {
-        val jsonArray = JsonArray()
+      if (!value.isNullOrEmpty()) {
+        val jsonArray = JsonArray(value.size)
         value.forEach { jsonArray.add(it) }
         jsonObject.add(PointAnnotationOptions.PROPERTY_ICON_OFFSET, jsonArray)
       } else {
@@ -284,18 +281,15 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
-      value?.let {
-        return (it as JsonArray).map { it.toString().toDouble() }
-      }
-      return null
+      return (value as? JsonArray)?.map { it.toString().toDouble() }
     }
     /**
      * Set the iconTextFitPadding property.
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
      */
     set(value) {
-      if (value != null) {
-        val jsonArray = JsonArray()
+      if (!value.isNullOrEmpty()) {
+        val jsonArray = JsonArray(value.size)
         value.forEach { jsonArray.add(it) }
         jsonObject.add(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING, jsonArray)
       } else {
@@ -547,18 +541,15 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)
-      value?.let {
-        return (it as JsonArray).map { it.toString().toDouble() }
-      }
-      return null
+      return (value as? JsonArray)?.map { it.toString().toDouble() }
     }
     /**
      * Set the textOffset property.
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
      */
     set(value) {
-      if (value != null) {
-        val jsonArray = JsonArray()
+      if (!value.isNullOrEmpty()) {
+        val jsonArray = JsonArray(value.size)
         value.forEach { jsonArray.add(it) }
         jsonObject.add(PointAnnotationOptions.PROPERTY_TEXT_OFFSET, jsonArray)
       } else {
@@ -963,6 +954,39 @@ class PointAnnotation(
     }
 
   /**
+   * The iconOcclusionOpacity property
+   *
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   */
+  var iconOcclusionOpacity: Double?
+    /**
+     * Get the iconOcclusionOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconOcclusionOpacity property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)
+      }
+    }
+
+  /**
    * The iconOpacity property
    *
    * The opacity at which the icon will be drawn.
@@ -1227,6 +1251,39 @@ class PointAnnotation(
     }
 
   /**
+   * The textOcclusionOpacity property
+   *
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   */
+  var textOcclusionOpacity: Double?
+    /**
+     * Get the textOcclusionOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textOcclusionOpacity property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)
+      }
+    }
+
+  /**
    * The textOpacity property
    *
    * The opacity at which the text will be drawn.
@@ -1357,6 +1414,9 @@ class PointAnnotation(
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
     }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)
+    }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
     }
@@ -1374,6 +1434,9 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)

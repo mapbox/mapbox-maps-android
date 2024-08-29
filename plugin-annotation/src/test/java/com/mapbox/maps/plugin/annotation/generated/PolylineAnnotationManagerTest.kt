@@ -664,6 +664,19 @@ class PolylineAnnotationManagerTest {
   }
 
   @Test
+  fun testLineJoinInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineJoin = LineJoin.MITER
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
+    verify(exactly = 1) { manager.dragLayer.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
+  }
+
+  @Test
   fun testLineSortKeyLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -674,6 +687,19 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
     verify(exactly = 1) { manager.dragLayer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+  }
+
+  @Test
+  fun testLineSortKeyInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineSortKey = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
     verify(exactly = 1) { manager.dragLayer.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
@@ -696,6 +722,19 @@ class PolylineAnnotationManagerTest {
   }
 
   @Test
+  fun testLineZOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineZOffset = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
+  }
+
+  @Test
   fun testLineBlurLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -706,6 +745,19 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+  }
+
+  @Test
+  fun testLineBlurInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineBlur = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
@@ -742,6 +794,19 @@ class PolylineAnnotationManagerTest {
   }
 
   @Test
+  fun testLineBorderColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineBorderColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+  }
+
+  @Test
   fun testLineBorderWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -752,6 +817,19 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+  }
+
+  @Test
+  fun testLineBorderWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineBorderWidth = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
@@ -788,6 +866,19 @@ class PolylineAnnotationManagerTest {
   }
 
   @Test
+  fun testLineColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
+  }
+
+  @Test
   fun testLineGapWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -798,6 +889,19 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
+  }
+
+  @Test
+  fun testLineGapWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineGapWidth = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
@@ -820,6 +924,19 @@ class PolylineAnnotationManagerTest {
   }
 
   @Test
+  fun testLineOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineOffset = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
+  }
+
+  @Test
   fun testLineOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -830,6 +947,19 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
+  }
+
+  @Test
+  fun testLineOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineOpacity = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
@@ -852,6 +982,19 @@ class PolylineAnnotationManagerTest {
   }
 
   @Test
+  fun testLinePatternInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.linePattern = "pedestrian-polygon"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
+    verify(exactly = 1) { manager.dragLayer.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
+  }
+
+  @Test
   fun testLineWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -862,6 +1005,19 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+  }
+
+  @Test
+  fun testLineWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineWidth = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }

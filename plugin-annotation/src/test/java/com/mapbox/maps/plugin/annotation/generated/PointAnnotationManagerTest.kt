@@ -143,6 +143,8 @@ class PointAnnotationManagerTest {
     every { dragLayer.iconHaloWidth(any<Expression>()) } answers { dragLayer }
     every { layer.iconImageCrossFade(any<Expression>()) } answers { layer }
     every { dragLayer.iconImageCrossFade(any<Expression>()) } answers { dragLayer }
+    every { layer.iconOcclusionOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.iconOcclusionOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.iconOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.iconOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.textColor(any<Expression>()) } answers { layer }
@@ -155,6 +157,8 @@ class PointAnnotationManagerTest {
     every { dragLayer.textHaloColor(any<Expression>()) } answers { dragLayer }
     every { layer.textHaloWidth(any<Expression>()) } answers { layer }
     every { dragLayer.textHaloWidth(any<Expression>()) } answers { dragLayer }
+    every { layer.textOcclusionOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.textOcclusionOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.textOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.textOpacity(any<Expression>()) } answers { dragLayer }
   }
@@ -517,6 +521,11 @@ class PointAnnotationManagerTest {
     annotation.iconImageCrossFade = null
     assertNull(annotation.iconImageCrossFade)
 
+    annotation.iconOcclusionOpacity = 0.0
+    assertEquals(0.0, annotation.iconOcclusionOpacity)
+    annotation.iconOcclusionOpacity = null
+    assertNull(annotation.iconOcclusionOpacity)
+
     annotation.iconOpacity = 1.0
     assertEquals(1.0, annotation.iconOpacity)
     annotation.iconOpacity = null
@@ -556,6 +565,11 @@ class PointAnnotationManagerTest {
     assertEquals(0.0, annotation.textHaloWidth)
     annotation.textHaloWidth = null
     assertNull(annotation.textHaloWidth)
+
+    annotation.textOcclusionOpacity = 0.0
+    assertEquals(0.0, annotation.textOcclusionOpacity)
+    annotation.textOcclusionOpacity = null
+    assertNull(annotation.textOcclusionOpacity)
 
     annotation.textOpacity = 1.0
     assertEquals(1.0, annotation.textOpacity)
@@ -928,6 +942,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconAnchorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconAnchor = IconAnchor.CENTER
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
+    verify(exactly = 1) { manager.dragLayer.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
+  }
+
+  @Test
   fun testIconImageLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -938,6 +965,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
     verify(exactly = 1) { manager.dragLayer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
+    verify(exactly = 1) { manager.dragLayer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
+  }
+
+  @Test
+  fun testIconImageInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconImage = ""
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
     verify(exactly = 1) { manager.dragLayer.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
@@ -960,6 +1000,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconOffset = listOf(0.0, 0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
+  }
+
+  @Test
   fun testIconRotateLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -970,6 +1023,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
     verify(exactly = 1) { manager.dragLayer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
+    verify(exactly = 1) { manager.dragLayer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
+  }
+
+  @Test
+  fun testIconRotateInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconRotate = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
     verify(exactly = 1) { manager.dragLayer.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
@@ -992,6 +1058,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconSizeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconSize = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
+    verify(exactly = 1) { manager.dragLayer.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
+  }
+
+  @Test
   fun testIconTextFitLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1002,6 +1081,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
     verify(exactly = 1) { manager.dragLayer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    verify(exactly = 1) { manager.dragLayer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+  }
+
+  @Test
+  fun testIconTextFitInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconTextFit = IconTextFit.NONE
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
     verify(exactly = 1) { manager.dragLayer.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
@@ -1024,6 +1116,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconTextFitPaddingInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconTextFitPadding = listOf(0.0, 0.0, 0.0, 0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+    verify(exactly = 1) { manager.dragLayer.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+  }
+
+  @Test
   fun testSymbolSortKeyLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1034,6 +1139,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
     verify(exactly = 1) { manager.dragLayer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+  }
+
+  @Test
+  fun testSymbolSortKeyInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.symbolSortKey = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
     verify(exactly = 1) { manager.dragLayer.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
@@ -1056,6 +1174,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextAnchorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textAnchor = TextAnchor.CENTER
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
+    verify(exactly = 1) { manager.dragLayer.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
+  }
+
+  @Test
   fun testTextFieldLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1066,6 +1197,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
     verify(exactly = 1) { manager.dragLayer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
+    verify(exactly = 1) { manager.dragLayer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
+  }
+
+  @Test
+  fun testTextFieldInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textField = ""
     manager.create(options)
     verify(exactly = 1) { manager.layer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
     verify(exactly = 1) { manager.dragLayer.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
@@ -1088,6 +1232,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextJustifyInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textJustify = TextJustify.CENTER
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
+    verify(exactly = 1) { manager.dragLayer.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
+  }
+
+  @Test
   fun testTextLetterSpacingLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1098,6 +1255,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     verify(exactly = 1) { manager.dragLayer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    verify(exactly = 1) { manager.dragLayer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+  }
+
+  @Test
+  fun testTextLetterSpacingInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textLetterSpacing = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     verify(exactly = 1) { manager.dragLayer.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
@@ -1120,6 +1290,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextLineHeightInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textLineHeight = 1.2
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+    verify(exactly = 1) { manager.dragLayer.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+  }
+
+  @Test
   fun testTextMaxWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1130,6 +1313,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+  }
+
+  @Test
+  fun testTextMaxWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textMaxWidth = 10.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
@@ -1152,6 +1348,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textOffset = listOf(0.0, 0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
+  }
+
+  @Test
   fun testTextRadialOffsetLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1162,6 +1371,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
     verify(exactly = 1) { manager.dragLayer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+  }
+
+  @Test
+  fun testTextRadialOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textRadialOffset = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
     verify(exactly = 1) { manager.dragLayer.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
@@ -1184,6 +1406,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextRotateInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textRotate = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
+    verify(exactly = 1) { manager.dragLayer.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
+  }
+
+  @Test
   fun testTextSizeLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1200,6 +1435,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextSizeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textSize = 16.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
+    verify(exactly = 1) { manager.dragLayer.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
+  }
+
+  @Test
   fun testTextTransformLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1210,6 +1458,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
     verify(exactly = 1) { manager.dragLayer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
+    verify(exactly = 1) { manager.dragLayer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
+  }
+
+  @Test
+  fun testTextTransformInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textTransform = TextTransform.NONE
     manager.create(options)
     verify(exactly = 1) { manager.layer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
     verify(exactly = 1) { manager.dragLayer.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
@@ -1246,6 +1507,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
+  }
+
+  @Test
   fun testIconEmissiveStrengthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1262,6 +1536,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconEmissiveStrengthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconEmissiveStrength = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+  }
+
+  @Test
   fun testIconHaloBlurLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1272,6 +1559,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
+  }
+
+  @Test
+  fun testIconHaloBlurInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconHaloBlur = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
@@ -1308,6 +1608,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconHaloColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconHaloColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
+  }
+
+  @Test
   fun testIconHaloWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1318,6 +1631,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
+  }
+
+  @Test
+  fun testIconHaloWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconHaloWidth = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
@@ -1340,6 +1666,48 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconImageCrossFadeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconImageCrossFade = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+    verify(exactly = 1) { manager.dragLayer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+  }
+
+  @Test
+  fun testIconOcclusionOpacityLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconOcclusionOpacity(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+  }
+
+  @Test
+  fun testIconOcclusionOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconOcclusionOpacity = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.iconOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)) }
+  }
+
+  @Test
   fun testIconOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1350,6 +1718,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+  }
+
+  @Test
+  fun testIconOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconOpacity = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
@@ -1386,6 +1767,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
+  }
+
+  @Test
   fun testTextEmissiveStrengthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1402,6 +1796,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextEmissiveStrengthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textEmissiveStrength = 1.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+  }
+
+  @Test
   fun testTextHaloBlurLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1412,6 +1819,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
+  }
+
+  @Test
+  fun testTextHaloBlurInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textHaloBlur = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
     verify(exactly = 1) { manager.dragLayer.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
@@ -1448,6 +1868,19 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextHaloColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textHaloColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
+  }
+
+  @Test
   fun testTextHaloWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1464,6 +1897,48 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testTextHaloWidthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textHaloWidth = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+  }
+
+  @Test
+  fun testTextOcclusionOpacityLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextOcclusionOpacity(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+  }
+
+  @Test
+  fun testTextOcclusionOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textOcclusionOpacity = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.textOcclusionOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY)) }
+  }
+
+  @Test
   fun testTextOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1474,6 +1949,19 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+  }
+
+  @Test
+  fun testTextOpacityInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textOpacity = 1.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }

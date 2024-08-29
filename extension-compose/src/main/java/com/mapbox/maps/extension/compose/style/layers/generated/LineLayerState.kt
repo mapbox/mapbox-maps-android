@@ -211,12 +211,10 @@ public class LineLayerState private constructor(
   /**
    *  Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   public var lineOcclusionOpacity: DoubleValue by mutableStateOf(initialLineOcclusionOpacity)
   /**
    *  Defines the transition of [lineOcclusionOpacity]. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   public var lineOcclusionOpacityTransition: Transition by mutableStateOf(initialLineOcclusionOpacityTransition)
   /**
    *  The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
@@ -432,14 +430,12 @@ public class LineLayerState private constructor(
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateLineOcclusionOpacity(layerNode: LayerNode) {
     if (lineOcclusionOpacity.notInitial) {
       layerNode.setProperty("line-occlusion-opacity", lineOcclusionOpacity.value)
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateLineOcclusionOpacityTransition(layerNode: LayerNode) {
     if (lineOcclusionOpacityTransition.notInitial) {
       layerNode.setProperty("line-occlusion-opacity-transition", lineOcclusionOpacityTransition.value)

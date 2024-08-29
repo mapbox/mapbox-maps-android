@@ -7,7 +7,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
@@ -430,14 +429,12 @@ public class SymbolLayerState private constructor(
    */
   public var iconImageCrossFadeTransition: Transition by mutableStateOf(initialIconImageCrossFadeTransition)
   /**
-   *  The opacity at which the icon will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *  The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   public var iconOcclusionOpacity: DoubleValue by mutableStateOf(initialIconOcclusionOpacity)
   /**
-   *  Defines the transition of [iconOcclusionOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [iconOcclusionOpacity]. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   public var iconOcclusionOpacityTransition: Transition by mutableStateOf(initialIconOcclusionOpacityTransition)
   /**
    *  The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
@@ -500,14 +497,12 @@ public class SymbolLayerState private constructor(
    */
   public var textHaloWidthTransition: Transition by mutableStateOf(initialTextHaloWidthTransition)
   /**
-   *  The opacity at which the text will be drawn in case of being depth occluded. Not supported on globe zoom levels. Default value: 1. Value range: [0, 1]
+   *  The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   public var textOcclusionOpacity: DoubleValue by mutableStateOf(initialTextOcclusionOpacity)
   /**
-   *  Defines the transition of [textOcclusionOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [textOcclusionOpacity]. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   public var textOcclusionOpacityTransition: Transition by mutableStateOf(initialTextOcclusionOpacityTransition)
   /**
    *  The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
@@ -890,14 +885,12 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateIconOcclusionOpacity(layerNode: LayerNode) {
     if (iconOcclusionOpacity.notInitial) {
       layerNode.setProperty("icon-occlusion-opacity", iconOcclusionOpacity.value)
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateIconOcclusionOpacityTransition(layerNode: LayerNode) {
     if (iconOcclusionOpacityTransition.notInitial) {
       layerNode.setProperty("icon-occlusion-opacity-transition", iconOcclusionOpacityTransition.value)
@@ -994,14 +987,12 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateTextOcclusionOpacity(layerNode: LayerNode) {
     if (textOcclusionOpacity.notInitial) {
       layerNode.setProperty("text-occlusion-opacity", textOcclusionOpacity.value)
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateTextOcclusionOpacityTransition(layerNode: LayerNode) {
     if (textOcclusionOpacityTransition.notInitial) {
       layerNode.setProperty("text-occlusion-opacity-transition", textOcclusionOpacityTransition.value)

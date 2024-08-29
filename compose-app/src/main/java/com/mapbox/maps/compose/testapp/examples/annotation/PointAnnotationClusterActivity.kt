@@ -24,6 +24,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
 import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
@@ -70,7 +71,6 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
               annotations = points.map {
                 PointAnnotationOptions()
                   .withPoint(it)
-                  .withIconImage(ICON_FIRE_STATION)
               },
               annotationConfig = AnnotationConfig(
                 annotationSourceOptions = AnnotationSourceOptions(
@@ -95,7 +95,10 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            )
+            ) {
+              // Apply icon image to the whole annotation group.
+              iconImage = IconImage(ICON_FIRE_STATION)
+            }
           }
           LaunchedEffect(Unit) {
             withContext(Dispatchers.IO) {

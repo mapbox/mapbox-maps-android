@@ -5,7 +5,6 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -19,7 +18,6 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for SymbolLayer
  */
-@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class SymbolLayerTest : BaseStyleTest() {
 
@@ -1679,14 +1677,18 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun iconOcclusionOpacityAsExpressionTest() {
-    val expression = literal(1.0)
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
     val layer = symbolLayer("id", "source") {
       iconOcclusionOpacity(expression)
     }
     setupLayer(layer)
 
-    assertEquals(1.0, layer.iconOcclusionOpacityAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.iconOcclusionOpacity!!, 1E-5)
+    assertEquals(expression.toString(), layer.iconOcclusionOpacityAsExpression.toString())
+    assertEquals(null, layer.iconOcclusionOpacity)
   }
 
   @Test
@@ -2186,14 +2188,18 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun textOcclusionOpacityAsExpressionTest() {
-    val expression = literal(1.0)
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
     val layer = symbolLayer("id", "source") {
       textOcclusionOpacity(expression)
     }
     setupLayer(layer)
 
-    assertEquals(1.0, layer.textOcclusionOpacityAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.textOcclusionOpacity!!, 1E-5)
+    assertEquals(expression.toString(), layer.textOcclusionOpacityAsExpression.toString())
+    assertEquals(null, layer.textOcclusionOpacity)
   }
 
   @Test
