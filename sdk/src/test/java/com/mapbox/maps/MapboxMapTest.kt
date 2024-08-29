@@ -8,13 +8,41 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.InteractiveFeature
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameFinishedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameStartedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceAddedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceRemovedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.verifyNo
-import io.mockk.*
-import junit.framework.Assert.*
+import io.mockk.CapturingSlot
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.slot
+import io.mockk.unmockkStatic
+import io.mockk.verify
+import io.mockk.verifySequence
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertNotNull
+import junit.framework.Assert.assertNull
+import junit.framework.Assert.assertTrue
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -883,6 +911,410 @@ class MapboxMapTest {
     val callback = mockk<FeatureStateOperationCallback>()
     mapboxMap.removeFeatureState("id", "source-layer", "feature", "state", callback)
     verify { nativeMap.removeFeatureState("id", "source-layer", "feature", "state", callback) }
+  }
+
+  @Test
+  fun addInteraction() {
+    val interaction = mockk<MapInteraction>()
+    val coreInteraction = mockk<Interaction>()
+    interaction.coreInteraction = coreInteraction
+    mapboxMap.addInteraction(interaction)
+    verify { nativeMap.addInteraction(coreInteraction) }
+  }
+
+  @Test
+  fun dispatch() {
+    val dispatchEvent = mockk<PlatformEventInfo>()
+    mapboxMap.dispatch(dispatchEvent)
+    verify { nativeMap.dispatch(dispatchEvent) }
+  }
+
+  @Test
+  fun setFeatureStateFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val newStateKey1 = "newStateKey1"
+    val newStateValue1 = Value.valueOf("newStateValue1")
+    val newStateKey2 = "newStateKey2"
+    val newStateValue2 = Value.valueOf("newStateValue2")
+    val interactiveFeature = InteractiveFeature(
+      featuresetHolder = FeaturesetHolder.Featureset(featuresetId = featuresetId, importId = importId),
+      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
+      source = "",
+      featureNamespace = featureNamespace,
+      state = Value.nullValue(),
+    )
+    val newState1 = FeatureStateValue(newStateKey1, newStateValue1)
+    val newState2 = FeatureStateValue(newStateKey2, newStateValue2)
+    mapboxMap.setFeatureState(
+      interactiveFeature,
+      newState1,
+      newState2
+    )
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.setFeatureState(
+        FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        Value.valueOf(hashMapOf(newStateKey1 to newStateValue1, newStateKey2 to newStateValue2)),
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun setFeatureStateLayer() {
+    val layerId = "layerId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val newStateKey1 = "newStateKey1"
+    val newStateValue1 = Value.valueOf("newStateValue1")
+    val newStateKey2 = "newStateKey2"
+    val newStateValue2 = Value.valueOf("newStateValue2")
+    val interactiveFeature = InteractiveFeature(
+      featuresetHolder = FeaturesetHolder.Layer(layerId = layerId),
+      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
+      source = "",
+      featureNamespace = featureNamespace,
+      state = Value.nullValue(),
+    )
+    val newState1 = FeatureStateValue(newStateKey1, newStateValue1)
+    val newState2 = FeatureStateValue(newStateKey2, newStateValue2)
+    mapboxMap.setFeatureState(
+      interactiveFeature,
+      newState1,
+      newState2
+    )
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.setFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        Value.valueOf(hashMapOf(newStateKey1 to newStateValue1, newStateKey2 to newStateValue2)),
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun setFeatureStateFeaturesetHolderFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val state = Value.nullValue()
+    mapboxMap.setFeatureState(
+      featuresetHolder,
+      featureId,
+      featureNamespace,
+      state
+    )
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.setFeatureState(
+        FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        state,
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun setFeatureStateFeaturesetHolderLayer() {
+    val layerId = "layerId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val state = Value.nullValue()
+    mapboxMap.setFeatureState(
+      featuresetHolder,
+      featureId,
+      featureNamespace,
+      state
+    )
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.setFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        state,
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun getFeatureStateFeaturesetHolderFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    mapboxMap.getFeatureState(
+      featuresetHolder,
+      featureId,
+      featureNamespace
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.getFeatureState(
+        FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun getFeatureStateFeaturesetHolderLayer() {
+    val layerId = "layerId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    mapboxMap.getFeatureState(
+      featuresetHolder,
+      featureId,
+      featureNamespace
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.getFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun removeFeatureStateInteractiveFeatureFromFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val stateKey = "stateKey"
+    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val interactiveFeature = InteractiveFeature(
+      featuresetHolder = featuresetHolder,
+      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
+      source = "",
+      featureNamespace = featureNamespace,
+      state = Value.nullValue(),
+    )
+    mapboxMap.removeFeatureState(
+      interactiveFeature = interactiveFeature,
+      stateKey = stateKey,
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.removeFeatureState(
+        FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        stateKey,
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun removeFeatureStateInteractiveFeatureFromLayer() {
+    val layerId = "layerId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val stateKey = "stateKey"
+    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val interactiveFeature = InteractiveFeature(
+      featuresetHolder = featuresetHolder,
+      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
+      source = "",
+      featureNamespace = featureNamespace,
+      state = Value.nullValue(),
+    )
+    mapboxMap.removeFeatureState(
+      interactiveFeature = interactiveFeature,
+      stateKey = stateKey,
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.removeFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        stateKey,
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun removeFeatureStateFeaturesetHolderFromFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val stateKey = "stateKey"
+    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    mapboxMap.removeFeatureState(
+      featureset = featuresetHolder,
+      featureId = featureId,
+      featureNamespace = featureNamespace,
+      stateKey = stateKey
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.removeFeatureState(
+        FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        stateKey,
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun removeFeatureStateFeaturesetHolderFromLayer() {
+    val layerId = "layerId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val stateKey = "stateKey"
+    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    mapboxMap.removeFeatureState(
+      featureset = featuresetHolder,
+      featureId = featureId,
+      featureNamespace = featureNamespace,
+      stateKey = stateKey
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.removeFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        stateKey,
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId.string == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun resetFeatureStatesFeaturesetHolderFromFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    mapboxMap.resetFeatureStates(
+      featureset = featuresetHolder,
+    ) { }
+    verify {
+      nativeMap.resetFeatureStates(
+        FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+        /* callback */ any()
+      )
+    }
+  }
+
+  @Test
+  fun resetFeatureStatesFeaturesetHolderFromLayer() {
+    val layerId = "layerId"
+    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    mapboxMap.resetFeatureStates(
+      featureset = featuresetHolder,
+    ) { }
+    verify {
+      nativeMap.resetFeatureStates(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        /* callback */ any()
+      )
+    }
+  }
+
+  @Test
+  fun querySourceFeaturesFeaturesetHolderFromFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val filter = Value.nullValue()
+    val tag = 0L
+    mapboxMap.querySourceFeatures(
+      featureset = featuresetHolder,
+      filter = filter,
+      tag = tag,
+    ) { }
+    verify {
+      nativeMap.querySourceFeatures(
+        FeaturesetQueryTarget(
+          FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
+          filter,
+          tag,
+        ),
+        /* callback */ any()
+      )
+    }
+  }
+
+  @Test
+  fun querySourceFeaturesFeaturesetHolderFromLayer() {
+    val layerId = "layerId"
+    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val filter = Value.nullValue()
+    val tag = 0L
+    mapboxMap.querySourceFeatures(
+      featureset = featuresetHolder,
+      filter = filter,
+      tag = tag,
+    ) { }
+    verify {
+      nativeMap.querySourceFeatures(
+        FeaturesetQueryTarget(
+          FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+          filter,
+          tag,
+        ),
+        /* callback */ any()
+      )
+    }
+  }
+
+  @OptIn(MapboxDelicateApi::class)
+  @Test
+  fun queryRenderedFeaturesFromFeaturesetQueryTargets() {
+    val geometry = mockk<RenderedQueryGeometry>()
+    val targets = listOf(mockk<FeaturesetQueryTarget>())
+    mapboxMap.queryRenderedFeatures(geometry, targets) { }
+    verify {
+      nativeMap.queryRenderedFeatures(geometry, targets, any())
+    }
   }
 
   @Test

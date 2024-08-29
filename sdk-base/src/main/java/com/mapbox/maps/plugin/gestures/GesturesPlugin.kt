@@ -17,9 +17,7 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
   /**
    * Called when user touches the screen, all positions are absolute.
    *
-   *
    * Forwards event to the related gesture detectors.
-   *
    *
    * @param motionEvent the MotionEvent
    * @return True if touch event is handled
@@ -29,9 +27,7 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
   /**
    * Called for events that don't fit the other handlers.
    *
-   *
    * Examples of such events are mouse scroll events, mouse moves, joystick & trackpad.
-   *
    *
    * @param event The MotionEvent occurred
    * @return True is the event is handled
@@ -40,6 +36,8 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
 
   /**
    * Add a map click listener that is invoked when a map is clicked.
+   *
+   * When several [OnMapClickListener]s are registered - the callbacks will be triggered from first to last.
    *
    * @param onMapClickListener The map click listener to be added
    */
@@ -54,6 +52,8 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
 
   /**
    * Add a map long click listener that is invoked when a map is clicked.
+   *
+   * When several [OnMapLongClickListener]s are registered - the callbacks will be triggered from first to last.
    *
    * @param onMapLongClickListener The map long click listener to be added
    */
@@ -113,7 +113,9 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
   fun removeOnFlingListener(onFlingListener: OnFlingListener)
 
   /**
-   * Add a move gesture listener that is invoked when a map is moved
+   * Add a move gesture listener that is invoked when a map is moved.
+   *
+   * When several [OnMoveListener]s are registered - the callbacks will be triggered from first to last.
    *
    * @param onMoveListener The move gesture listener to be added
    */

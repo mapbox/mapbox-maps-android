@@ -45,7 +45,7 @@ public final class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl$MapLo
 	public fun onMapLongClick (Lcom/mapbox/geojson/Point;)Z
 }
 
-public final class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl$MapMove : com/mapbox/maps/plugin/gestures/TopPriorityOnMoveListener {
+public final class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl$MapMove : com/mapbox/maps/plugin/gestures/OnMoveListener {
 	public fun <init> (Lcom/mapbox/maps/plugin/annotation/AnnotationManagerImpl;)V
 	public fun onMove (Lcom/mapbox/android/gestures/MoveGestureDetector;)Z
 	public fun onMoveBegin (Lcom/mapbox/android/gestures/MoveGestureDetector;)V

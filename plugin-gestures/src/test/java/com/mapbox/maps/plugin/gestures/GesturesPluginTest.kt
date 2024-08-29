@@ -12,6 +12,7 @@ import androidx.test.core.view.PointerCoordsBuilder
 import androidx.test.core.view.PointerPropertiesBuilder
 import com.mapbox.android.gestures.*
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.Plugin
@@ -45,6 +46,7 @@ class GesturesPluginTest {
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
+  private val mapInteractionDelegate: MapInteractionDelegate = mockk()
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
   private val mapCenterAltitudeMode: MapCenterAltitudeMode = mockk()
@@ -88,6 +90,20 @@ class GesturesPluginTest {
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+
+    every { mapDelegateProvider.mapInteractionDelegate } returns mapInteractionDelegate
+    every { mapInteractionDelegate.addInteraction(any()) } returns Cancelable { }
+    every { mapInteractionDelegate.dispatch(any()) } answers {
+      val platformEventInfo = firstArg<PlatformEventInfo>()
+      when (platformEventInfo.type) {
+        PlatformEventType.CLICK -> presenter.handleClickEvent(platformEventInfo.screenCoordinate)
+        PlatformEventType.LONG_CLICK -> presenter.handleLongPressEvent(platformEventInfo.screenCoordinate)
+        PlatformEventType.DRAG_BEGIN -> presenter.handleMoveStartEvent()
+        PlatformEventType.DRAG -> presenter.handleMove(platformEventInfo.screenCoordinate)
+        PlatformEventType.DRAG_END -> presenter.handleMoveEnd()
+      }
+    }
+
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
 
     every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
@@ -141,6 +157,8 @@ class GesturesPluginTest {
     val listener: OnMoveListener = mockk(relaxed = true)
     presenter.addOnMoveListener(listener)
     every { moveGestureDetector.isEnabled } returns isEnabled
+    every { moveGestureDetector.focalPoint } returns PointF(1.0f, 1.0f)
+    presenter.moveGestureListener.detector = moveGestureDetector
     return listener
   }
 
@@ -388,7 +406,7 @@ class GesturesPluginTest {
   fun verifyMoveStartDisabled() {
     val listener = setupMoveListener()
     presenter.scrollEnabled = false
-    val handled = presenter.handleMoveStartEvent(mockk())
+    val handled = presenter.moveGestureListener.onMoveBegin(moveGestureDetector)
     assertFalse(handled)
     verify(exactly = 0) { listener.onMoveBegin(any()) }
   }
@@ -400,11 +418,11 @@ class GesturesPluginTest {
     every { scaleGestureDetector.isInProgress } returns false
     every { rotateGestureDetector.isInProgress } returns false
     every { shoveGestureDetector.isInProgress } returns false
-    val handled = presenter.handleMoveStartEvent(mockk())
-    assert(handled)
+    val handled = presenter.moveGestureListener.onMoveBegin(moveGestureDetector)
+    assertTrue(handled)
     verify(exactly = 1) { listener.onMoveBegin(any()) }
     presenter.removeOnMoveListener(listener)
-    presenter.handleMoveStartEvent(mockk())
+    presenter.handleMoveStartEvent()
     verify(exactly = 1) { listener.onMoveBegin(any()) }
   }
 
@@ -417,13 +435,13 @@ class GesturesPluginTest {
     every {
       moveGestureDetector.focalPoint
     } returns PointF(Float.NaN, Float.NaN)
-    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    var handled = presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     assertFalse(handled)
     verify(exactly = 1) { logE(any(), any()) }
     every {
       moveGestureDetector.focalPoint
     } returns PointF(Float.POSITIVE_INFINITY, Float.NaN)
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    handled = presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     assertFalse(handled)
     verify(exactly = 2) { logE(any(), any()) }
     unmockkStatic("com.mapbox.maps.MapboxLogger")
@@ -438,11 +456,9 @@ class GesturesPluginTest {
     every {
       moveGestureDetector.focalPoint
     } returns PointF(0f, 0f)
-    var handled = presenter.handleMove(moveGestureDetector, 1f, Float.NaN)
-    assertFalse(handled)
+    presenter.moveGestureListener.onMove(moveGestureDetector, 1f, Float.NaN)
     verify(exactly = 1) { logE(any(), any()) }
-    handled = presenter.handleMove(moveGestureDetector, Float.NaN, 1f)
-    assertFalse(handled)
+    presenter.moveGestureListener.onMove(moveGestureDetector, Float.NaN, 1f)
     verify(exactly = 2) { logE(any(), any()) }
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
@@ -466,23 +482,27 @@ class GesturesPluginTest {
     } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
 
     val moveGestureDetector = mockk<MoveGestureDetector>()
-    every {
-      moveGestureDetector.focalPoint
-    } returns PointF(0.0f, 0.0f)
+    every { moveGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
+    every { moveGestureDetector.isInProgress } returns false
+    presenter.moveGestureListener.detector = moveGestureDetector
     every { moveGestureDetector.pointersCount } returns 3
-    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify three finger pan gesture shouldn't work
-    assertFalse(handled)
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     every { moveGestureDetector.pointersCount } returns 2
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify two finger pan gesture shouldn't work
-    assertFalse(handled)
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     every { moveGestureDetector.pointersCount } returns 1
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify single finger pan gesture should work
-    assert(handled)
-    // listeners are notified every time, but animations applied only once
-    verify(exactly = 3) { listener.onMove(any()) }
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
+    // only 1-pan gesture did actually trigger dispatch
+    verify(exactly = 1) {
+      mapInteractionDelegate.dispatch(
+        PlatformEventInfo(
+          PlatformEventType.DRAG,
+          ScreenCoordinate(-50.0, -50.0)
+        )
+      )
+    }
+    // user listener is triggered only once
+    verify(exactly = 1) { listener.onMove(any()) }
+    // animation is run only once as well
     verify(exactly = 1) {
       mapCameraManagerDelegate.cameraForDrag(
         ScreenCoordinate(0.0, 0.0),
@@ -517,30 +537,20 @@ class GesturesPluginTest {
       )
     } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
     val moveGestureDetector = mockk<MoveGestureDetector>()
-    every {
-      moveGestureDetector.focalPoint
-    } returns PointF(0.0f, 0.0f)
-
+    every { moveGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
+    every { moveGestureDetector.isInProgress } returns false
+    presenter.moveGestureListener.detector = moveGestureDetector
     every { moveGestureDetector.pointersCount } returns 3
-    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify three finger pan gesture shouldn't work
-    assertFalse(handled)
-
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     every { moveGestureDetector.pointersCount } returns 2
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify two finger pan gesture should work
-    assert(handled)
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     verify(exactly = 1) {
       cameraAnimationsPlugin.easeTo(any(), capture(mapAnimationOptionsSlot))
     }
-
     every { moveGestureDetector.pointersCount } returns 1
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify single finger pan gesture should work
-    assert(handled)
-    // listeners are notified every time, but animations applied twice
-    verify(exactly = 3) { listener.onMove(any()) }
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
+    verify(exactly = 2) { listener.onMove(any()) }
     verify(exactly = 2) {
       mapCameraManagerDelegate.cameraForDrag(
         ScreenCoordinate(0.0, 0.0),
@@ -560,7 +570,7 @@ class GesturesPluginTest {
   @Test
   fun verifyMoveEndListener() {
     val listener = setupMoveListener()
-    presenter.handleMoveEnd(mockk())
+    presenter.moveGestureListener.onMoveEnd(moveGestureDetector, 0f, 0f)
     verify(exactly = 1) { listener.onMoveEnd(any()) }
   }
 
@@ -963,9 +973,8 @@ class GesturesPluginTest {
     } returns PointF(0.0f, 0.0f)
 
     every { moveGestureDetector.pointersCount } returns 1
-    val handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify single finger pan gesture should work
-    assert(handled)
+    presenter.moveGestureListener.detector = moveGestureDetector
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
     verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
     verify(exactly = 0) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
@@ -1132,6 +1141,7 @@ class IsPointAboveHorizonTest(
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
+  private val mapInteractionDelegate: MapInteractionDelegate = mockk()
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
   private val style: MapboxStyleManager = mockk()
 
@@ -1172,6 +1182,15 @@ class IsPointAboveHorizonTest(
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
+    every { mapDelegateProvider.mapInteractionDelegate } returns mapInteractionDelegate
+    every { mapInteractionDelegate.addInteraction(any()) } returns Cancelable { }
+    every { mapInteractionDelegate.dispatch(any()) } answers {
+      val platformEventInfo = firstArg<PlatformEventInfo>()
+      when (platformEventInfo.type) {
+        PlatformEventType.DRAG -> presenter.handleMove(platformEventInfo.screenCoordinate)
+        else -> throw RuntimeException("Not needed in this test")
+      }
+    }
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
     every { style.getStyleProjectionProperty("name") } returns testProjectionStylePropertyValue
     every { mapTransformDelegate.getSize() } returns testMapSize
@@ -1209,7 +1228,8 @@ class IsPointAboveHorizonTest(
       moveGestureDetector.focalPoint
     } returns PointF(testScreenCoordinate.x.toFloat(), testScreenCoordinate.y.toFloat())
     every { moveGestureDetector.pointersCount } returns 1
-    presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    presenter.moveGestureListener.detector = moveGestureDetector
+    presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
     verify(exactly = if (expectedResult) 0 else 1) {
       cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
@@ -1405,6 +1425,7 @@ class FlingGestureTest(
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+    every { mapDelegateProvider.mapInteractionDelegate } returns mockk(relaxed = true)
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
     every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(1.0, 1.0)

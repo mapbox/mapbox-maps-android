@@ -32,6 +32,18 @@
             "url": "mapbox://examples.clkiiizwk04l62jo3rjx61lgj-7xsxp"
         }
     },
+    "featuresets": {
+      "hotels-price": {
+          "selectors": [
+              {
+                  "layer": "NY-hotels-price",
+                  "properties": {
+                      "price": ["get", "price"]
+                  }
+              }
+          ]
+        }
+    },
     "layers": [
         {
             "id": "water",

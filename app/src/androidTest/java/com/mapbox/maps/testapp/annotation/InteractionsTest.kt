@@ -5,6 +5,8 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.matcher.ViewMatchers
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.Point
+import com.mapbox.maps.DragInteraction
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.R
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.annotation.annotations
@@ -12,7 +14,6 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMoveListener
-import com.mapbox.maps.plugin.gestures.TopPriorityOnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.gestures.GesturesUiTestUtils
@@ -21,7 +22,7 @@ import org.junit.Test
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
-class AnnotationOnMoveTest : BaseMapTest() {
+class InteractionsTest : BaseMapTest() {
 
   private lateinit var circleAnnotation: CircleAnnotation
 
@@ -33,14 +34,10 @@ class AnnotationOnMoveTest : BaseMapTest() {
   }
 
   /**
-   * Assuming we perform async QRF in annotation manager's `onMoveBegin` we have to be sure that:
-   * a) map is not moved until QRF is executed (this is verified in gesture plugin implementation)
-   * b) no user explicit `OnMoveListener.onMove`s are called until QRF is executed
-   *  or after QRF showed that we tapped on draggable annotation.
+   * Instrument test to make sure Interaction API works as expected.
    */
   @Test
-  fun annotationsOnMoveTest() {
-    var userDefinedMoveBeginCalled = false
+  fun dragAnnotationTest() {
     val latch = CountDownLatch(1)
     rule.scenario.onActivity {
       mapView.annotations.createCircleAnnotationManager().apply {
@@ -56,31 +53,15 @@ class AnnotationOnMoveTest : BaseMapTest() {
       }
       mapView.gestures.addOnMoveListener(object : OnMoveListener {
         override fun onMoveBegin(detector: MoveGestureDetector) {
-          userDefinedMoveBeginCalled = true
-
-          // simulate situation that gestures plugin received explicit `onMove` during async QRF;
-          // otherwise QRF in reality works too fast and finishes async before first `onMove` is called by our gestures library
-          val gesturesImpl = Class.forName("com.mapbox.maps.plugin.gestures.GesturesPluginImpl")
-          val internalHandleMove = gesturesImpl.getDeclaredMethod(
-            "handleMove\$plugin_gestures_debug",
-            MoveGestureDetector::class.java,
-            Float::class.java,
-            Float::class.java
-          )
-          internalHandleMove.isAccessible = true
-          internalHandleMove.invoke(
-            mapView.gestures,
-            detector,
-            10.0f,
-            0f
-          )
+          // Make sure this user defined map surface `onMoveBegin` is not called due to the
+          // `circleAnnotation` consuming it and not dispatching further
+          throw RuntimeException("User defined map onMoveBegin must not be called!")
         }
 
         override fun onMove(detector: MoveGestureDetector): Boolean {
-          // Make sure this user defined `onMove` is not called due to the
-          // `circleAnnotation` consuming all the `onMove` events, either
-          // because the QRF is being done or because the circle annotation is being dragged
-          throw RuntimeException("User defined onMove must not be called!")
+          // Make sure this user defined map surface `onMove` is not called due to the
+          // `circleAnnotation` consuming all the `onMove` events
+          throw RuntimeException("User defined map onMove must not be called!")
         }
 
         override fun onMoveEnd(detector: MoveGestureDetector) {
@@ -99,7 +80,20 @@ class AnnotationOnMoveTest : BaseMapTest() {
           0f
         )
       )
-    Assert.assertTrue(userDefinedMoveBeginCalled)
+    // check that map camera did not change
+    rule.scenario.onActivity {
+      Assert.assertEquals(
+        mapboxMap.cameraState.center.longitude(),
+        INITIAL_CAMERA.center!!.longitude(),
+        EPS
+      )
+      Assert.assertEquals(
+        mapboxMap.cameraState.center.latitude(),
+        INITIAL_CAMERA.center!!.latitude(),
+        EPS
+      )
+    }
+    // check that circle annotation was dragged
     Assert.assertEquals(
       24.938827583733797,
       circleAnnotation.point.longitude(),
@@ -112,46 +106,53 @@ class AnnotationOnMoveTest : BaseMapTest() {
     )
   }
 
+  @OptIn(MapboxExperimental::class)
   @Test
-  fun addOnMoveListenerOrderingOneTest() {
+  fun mapMoveListenersTest() {
     val listOfMoveBeginEvents = mutableListOf<String>()
     rule.scenario.onActivity {
       mapView.gestures.addOnMoveListener(object : OnMoveListener {
         override fun onMoveBegin(detector: MoveGestureDetector) {
-          listOfMoveBeginEvents.add("1_normal")
+          listOfMoveBeginEvents.add("1_gesture")
         }
 
-        override fun onMove(detector: MoveGestureDetector): Boolean { return false }
+        override fun onMove(detector: MoveGestureDetector): Boolean {
+          return false
+        }
 
-        override fun onMoveEnd(detector: MoveGestureDetector) { }
+        override fun onMoveEnd(detector: MoveGestureDetector) {}
       })
       mapView.gestures.addOnMoveListener(object : OnMoveListener {
         override fun onMoveBegin(detector: MoveGestureDetector) {
-          listOfMoveBeginEvents.add("2_normal")
+          listOfMoveBeginEvents.add("2_gesture")
         }
 
-        override fun onMove(detector: MoveGestureDetector): Boolean { return false }
-
-        override fun onMoveEnd(detector: MoveGestureDetector) { }
-      })
-      mapView.gestures.addOnMoveListener(object : TopPriorityOnMoveListener {
-        override fun onMoveBegin(detector: MoveGestureDetector) {
-          listOfMoveBeginEvents.add("1_priority")
+        override fun onMove(detector: MoveGestureDetector): Boolean {
+          return false
         }
 
-        override fun onMove(detector: MoveGestureDetector): Boolean { return false }
-
-        override fun onMoveEnd(detector: MoveGestureDetector) { }
+        override fun onMoveEnd(detector: MoveGestureDetector) {}
       })
-      mapView.gestures.addOnMoveListener(object : TopPriorityOnMoveListener {
-        override fun onMoveBegin(detector: MoveGestureDetector) {
-          listOfMoveBeginEvents.add("2_priority")
-        }
-
-        override fun onMove(detector: MoveGestureDetector): Boolean { return false }
-
-        override fun onMoveEnd(detector: MoveGestureDetector) { }
-      })
+      mapView.mapboxMap.addInteraction(
+        DragInteraction(
+          onDragBegin = {
+            listOfMoveBeginEvents.add("1_map_interaction")
+            return@DragInteraction false
+          },
+          onDrag = { },
+          onDragEnd = { }
+        )
+      )
+      mapView.mapboxMap.addInteraction(
+        DragInteraction(
+          onDragBegin = {
+            listOfMoveBeginEvents.add("2_map_interaction")
+            return@DragInteraction false
+          },
+          onDrag = { },
+          onDragEnd = { }
+        )
+      )
     }
     Espresso
       .onView(ViewMatchers.withId(R.id.mapView))
@@ -161,8 +162,10 @@ class AnnotationOnMoveTest : BaseMapTest() {
           0f
         )
       )
+    // interactions are LIFO while map gesture listeners are FIFO
+    // also user defined interactions are always triggered before map gesture listeners
     Assert.assertArrayEquals(
-      arrayOf("1_priority", "2_priority", "1_normal", "2_normal"),
+      arrayOf("2_map_interaction", "1_map_interaction", "1_gesture", "2_gesture"),
       listOfMoveBeginEvents.toTypedArray()
     )
   }

@@ -9,6 +9,7 @@ import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
+import com.mapbox.maps.plugin.delegates.MapInteractionDelegate
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -35,4 +36,5 @@ internal class MapDelegateProviderImpl(
   }
 
   override val mapStyleManagerDelegate: MapboxStyleManager = mapboxMap
+  override val mapInteractionDelegate: MapInteractionDelegate = mapboxMap
 }

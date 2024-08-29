@@ -63,6 +63,7 @@ class GestureOptionsTest {
     every { mapPluginProviderDelegate.camera } returns cameraAnimationsPlugin
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+    gesturePlugin.mapInteractionDelegate = mockk(relaxed = true)
   }
 
   private fun setupGesturePlugin() {

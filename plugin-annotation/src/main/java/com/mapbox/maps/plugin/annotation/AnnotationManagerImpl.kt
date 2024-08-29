@@ -11,8 +11,14 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.ClickInteraction
+import com.mapbox.maps.DragInteraction
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.LongClickInteraction
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.PlatformEventInfo
+import com.mapbox.maps.PlatformEventType
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
@@ -41,12 +47,10 @@ import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
-import com.mapbox.maps.plugin.gestures.TopPriorityOnMoveListener
 import java.util.UUID
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -67,15 +71,16 @@ internal constructor(
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = mutableMapOf()
   private val mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
   private val mapFeatureQueryDelegate = delegateProvider.mapFeatureQueryDelegate
-  private val mapListenerDelegate: MapListenerDelegate = delegateProvider.mapListenerDelegate
+  @OptIn(MapboxExperimental::class)
+  private val mapInteractionDelegate = delegateProvider.mapInteractionDelegate
   private var width = 0
   private var height = 0
-  private val mapClickResolver = MapClick()
-  private val mapLongClickResolver = MapLongClick()
-  private val mapMoveResolver = MapMove()
+
   private var draggingAnnotation: T? = null
   private val annotationMap = LinkedHashMap<String, T>()
   private val dragAnnotationMap = LinkedHashMap<String, T>()
+
+  private val interactionsCancelableSet = mutableSetOf<Cancelable>()
 
   /**
    * The list of layer ids that's associated with the annotation manager.
@@ -89,6 +94,7 @@ internal constructor(
   ) ?: throw InvalidPluginConfigurationException(
     "Can't look up an instance of plugin, is it available on the clazz path and loaded through the map?"
   )
+  private val mapMoveDetector = gesturesPlugin.getGesturesManager().moveGestureDetector
 
   /** The layer created by this manager. Annotations will be added to this layer.*/
   internal var layer: L
@@ -199,10 +205,147 @@ internal constructor(
       initClusterLayers(styleManager, annotationSourceOptions, typeName, id)
     }
     updateSource()
+    registerInteractions()
+  }
 
-    gesturesPlugin.addOnMapClickListener(mapClickResolver)
-    gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
-    gesturesPlugin.addOnMoveListener(mapMoveResolver)
+  @OptIn(MapboxExperimental::class)
+  private fun registerInteractions() {
+    val clickInteraction = { layerId: String, map: Map<String, T> ->
+      ClickInteraction.layer(layerId) { selectedFeature, _ ->
+        selectedFeature.feature.getProperty(getAnnotationIdKey()).asString
+          ?.let { annotationId ->
+            map[annotationId]?.let { annotation ->
+              val consumeClick = clickListeners.any { it.onAnnotationClick(annotation) }
+              selectAnnotation(annotation)
+              return@layer consumeClick
+            }
+          }
+        return@layer false
+      }
+    }
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        clickInteraction(layer.layerId, annotationMap)
+      )
+    )
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        clickInteraction(dragLayer.layerId, dragAnnotationMap)
+      )
+    )
+    val longClickInteraction = { layerId: String, map: Map<String, T> ->
+      LongClickInteraction.layer(layerId) { selectedFeature, _ ->
+        selectedFeature.feature.getProperty(getAnnotationIdKey()).asString
+          ?.let { annotationId ->
+            map[annotationId]?.let { annotation ->
+              return@layer longClickListeners.any { it.onAnnotationLongClick(annotation) }
+            }
+          }
+        return@layer false
+      }
+    }
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        longClickInteraction(layer.layerId, annotationMap)
+      )
+    )
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        longClickInteraction(dragLayer.layerId, dragAnnotationMap)
+      )
+    )
+    val dragInteraction = { layerId: String, map: Map<String, T> ->
+      DragInteraction.layer(
+        layerId = layerId,
+        onDragBegin = { selectedFeature, _ ->
+          selectedFeature.feature.getProperty(getAnnotationIdKey()).asString
+            ?.let { annotationId ->
+              map[annotationId]?.let { annotation ->
+                return@layer startDragging(annotation)
+              }
+            }
+          return@layer false
+        },
+        onDrag = { drag() },
+        onDragEnd = { stopDragging() }
+      )
+    }
+    // drag interaction for non-drag layer is needed to transition the feature from `source` to `dragSource`
+    // that happens in the first `DragInteraction.onDrag`;
+    // all subsequent drags for that feature will be happening in the DragInteraction for `dragLayer`;
+    // note: when the feature is transitioned from `source` to `dragSource` - it is never transitioned back
+    // to avoid `layer` flickering.
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        dragInteraction(layer.layerId, annotationMap)
+      )
+    )
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        dragInteraction(dragLayer.layerId, dragAnnotationMap)
+      )
+    )
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun drag() {
+    // Updating symbol's position
+    draggingAnnotation?.let { annotation ->
+      val focalPoint = ScreenCoordinate(
+        mapMoveDetector.focalPoint.x.toDouble(),
+        mapMoveDetector.focalPoint.y.toDouble()
+      )
+      if (mapMoveDetector.pointersCount > 1 || !annotation.isDraggable) {
+        // Stopping the drag when we don't work with a simple, on-pointer move anymore
+        stopDragging()
+        // explicitly end the drag gesture so that other drag interactions start getting events
+        mapInteractionDelegate.dispatch(
+          PlatformEventInfo(
+            PlatformEventType.DRAG_END,
+            focalPoint
+          )
+        )
+      }
+      val moveObject = mapMoveDetector.getMoveObject(0)
+      val x = moveObject.currentX
+      val y = moveObject.currentY
+      val pointF = PointF(x, y)
+      if (pointF.x < 0 || pointF.y < 0 || pointF.x > width || pointF.y > height) {
+        stopDragging()
+        // explicitly end the drag gesture so that other drag interactions start getting events
+        mapInteractionDelegate.dispatch(
+          PlatformEventInfo(
+            PlatformEventType.DRAG_END,
+            focalPoint
+          )
+        )
+      }
+      if (annotationMap.containsKey(annotation.id)) {
+        // Delete the dragging annotation from original source and add it to drag source
+        annotationMap.remove(annotation.id)
+        dragAnnotationMap[annotation.id] = annotation
+        // The dragging annotation has been removed from original source,
+        // update both source and drag source to make sure it is shown in drag layer.
+        updateSource()
+        updateDragSource()
+      }
+      annotation.getOffsetGeometry(
+        delegateProvider.mapCameraManagerDelegate, moveObject
+      )?.let { geometry ->
+        annotation.geometry = geometry
+        updateDragSource()
+        dragListeners.forEach {
+          it.onAnnotationDrag(annotation)
+        }
+      }
+    }
+  }
+
+  private fun unregisterInteractions() {
+    interactionsCancelableSet.forEach {
+      it.cancel()
+    }
+    interactionsCancelableSet.clear()
   }
 
   /**
@@ -550,9 +693,7 @@ internal constructor(
       }
     }
 
-    gesturesPlugin.removeOnMapClickListener(mapClickResolver)
-    gesturesPlugin.removeOnMapLongClickListener(mapLongClickResolver)
-    gesturesPlugin.removeOnMoveListener(mapMoveResolver)
+    unregisterInteractions()
     annotationMap.clear()
     dragAnnotationMap.clear()
     dragListeners.clear()
@@ -602,158 +743,19 @@ internal constructor(
     }
   }
 
-  /**
-   * Class handle the map click event
-   */
-  inner class MapClick : OnMapClickListener {
-    /**
-     * Called when the user clicks on the map view.
-     * Note that calling this method is blocking main thread until querying map for features is finished.
-     *
-     * @param point The projected map coordinate the user clicked on.
-     * @return True if this click should be consumed and not passed further to other listeners registered afterwards,
-     * false otherwise.
-     */
-    override fun onMapClick(point: Point): Boolean {
-      queryMapForFeatures(point)?.let {
-        clickListeners.forEach { listener ->
-          if (listener.onAnnotationClick(it)) {
-            return true
-          }
-        }
-        selectAnnotation(it)
-      }
+  private fun startDragging(annotation: T): Boolean {
+    if (!annotation.isDraggable) {
       return false
     }
+    dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
+    draggingAnnotation = annotation
+    return true
   }
 
-  /**
-   * Class handle the map long click event
-   */
-  inner class MapLongClick : OnMapLongClickListener {
-    /**
-     * Called when the user long clicks on the map view.
-     *
-     * @param point The projected map coordinate the user clicked on.
-     * @return True if this click should be consumed and not passed further to other listeners registered afterwards,
-     * false otherwise.
-     */
-    override fun onMapLongClick(point: Point): Boolean {
-      if (longClickListeners.isEmpty()) {
-        return false
-      }
-      queryMapForFeatures(point)?.let {
-        longClickListeners.forEach { listener ->
-          if (listener.onAnnotationLongClick(it)) {
-            return true
-          }
-        }
-      }
-      return false
-    }
-  }
-
-  /**
-   * Class handle the map move event.
-   *
-   * It implements [TopPriorityOnMoveListener] to make sure that this listener
-   * is always invoked before any other added by the user. That assures user's [OnMoveListener.onMove]
-   * will not be called until async QRF is executed.
-   */
-  inner class MapMove : TopPriorityOnMoveListener {
-
-    private var asyncQrfCancelable: Cancelable? = null
-
-    /**
-     * Called when the move gesture is starting.
-     */
-    override fun onMoveBegin(detector: MoveGestureDetector) {
-      if (detector.pointersCount == 1) {
-        asyncQrfCancelable?.cancel()
-        asyncQrfCancelable = queryMapForFeaturesAsync(
-          ScreenCoordinate(
-            detector.focalPoint.x.toDouble(),
-            detector.focalPoint.y.toDouble()
-          )
-        ) { annotation ->
-          annotation?.let {
-            startDragging(it)
-          }
-          asyncQrfCancelable = null
-        }
-      }
-    }
-
-    /**
-     * Called when the move gesture is executing.
-     */
-    override fun onMove(detector: MoveGestureDetector): Boolean {
-      // Updating symbol's position
-      draggingAnnotation?.let { annotation ->
-        if (detector.pointersCount > 1 || !annotation.isDraggable) {
-          // Stopping the drag when we don't work with a simple, on-pointer move anymore
-          stopDragging()
-          return true
-        }
-        val moveObject = detector.getMoveObject(0)
-        val x = moveObject.currentX
-        val y = moveObject.currentY
-        val pointF = PointF(x, y)
-        if (pointF.x < 0 || pointF.y < 0 || pointF.x > width || pointF.y > height) {
-          stopDragging()
-          return true
-        }
-
-        if (annotationMap.containsKey(annotation.id)) {
-          // Delete the dragging annotation from original source and add it to drag source
-          annotationMap.remove(annotation.id)
-          dragAnnotationMap[annotation.id] = annotation
-          updateSource()
-        }
-
-        annotation.getOffsetGeometry(
-          delegateProvider.mapCameraManagerDelegate, moveObject
-        )?.let { geometry ->
-          annotation.geometry = geometry
-          updateDragSource()
-          dragListeners.forEach {
-            it.onAnnotationDrag(annotation)
-          }
-          return true
-        }
-
-        /* The dragging annotation has been removed from original source,
-         update drag source to make sure it is shown in drag layer.
-         */
-        updateDragSource()
-      }
-      // explicitly handle this `onMove` if QRF is in progress so that
-      // other registered OnMoveListener's do not get notified
-      return asyncQrfCancelable != null
-    }
-
-    /**
-     * Called when the move gesture is ending.
-     */
-    override fun onMoveEnd(detector: MoveGestureDetector) {
-      // Stopping the drag when move ends
-      stopDragging()
-    }
-
-    private fun startDragging(annotation: T): Boolean {
-      if (!annotation.isDraggable) {
-        return false
-      }
-      dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
-      draggingAnnotation = annotation
-      return true
-    }
-
-    private fun stopDragging() {
-      draggingAnnotation?.let { annotation ->
-        dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
-        draggingAnnotation = null
-      }
+  private fun stopDragging() {
+    draggingAnnotation?.let { annotation ->
+      dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
+      draggingAnnotation = null
     }
   }
 
@@ -783,7 +785,9 @@ internal constructor(
   protected abstract fun setDataDrivenPropertyIsUsed(property: String)
 
   /**
-   * Query the rendered annotation around the point
+   * Query the rendered annotation for given point.
+   *
+   * Note: using this method blocks the calling thread.
    *
    * @param point the point for querying
    * @return the queried annotation at this point
@@ -794,7 +798,9 @@ internal constructor(
   }
 
   /**
-   * Query the rendered annotation around the point
+   * Query the rendered annotation for given screen coordinate.
+   *
+   * Note: using this method blocks the calling thread.
    *
    * @param screenCoordinate the screenCoordinate for querying
    * @return the queried annotation on this screenCoordinate
@@ -840,39 +846,6 @@ internal constructor(
     return annotation
   }
 
-  private fun queryMapForFeaturesAsync(
-    screenCoordinate: ScreenCoordinate,
-    qrfResult: (T?) -> (Unit)
-  ): Cancelable =
-    mapFeatureQueryDelegate.queryRenderedFeatures(
-      RenderedQueryGeometry(screenCoordinate),
-      RenderedQueryOptions(
-        listOf(layer.layerId, dragLayer.layerId),
-        literal(true)
-      )
-    ) { features ->
-      features.value?.firstOrNull()?.queriedFeature?.feature?.getProperty(getAnnotationIdKey())
-        ?.let { annotationId ->
-          val id = annotationId.asString
-          when {
-            annotationMap.containsKey(id) -> {
-              qrfResult(annotationMap[id])
-            }
-
-            dragAnnotationMap.containsKey(id) -> {
-              qrfResult(dragAnnotationMap[id])
-            }
-
-            else -> {
-              logE(
-                TAG,
-                "The queried id: $id, doesn't belong to an active annotation."
-              )
-            }
-          }
-        } ?: qrfResult(null)
-    }
-
   protected fun setLayerProperty(value: Value, propertyName: String) {
     try {
       with(delegateProvider.mapStyleManagerDelegate) {
@@ -885,6 +858,55 @@ internal constructor(
         e.cause
       )
     }
+  }
+
+  /**
+   * Should not be used.
+   */
+  @Deprecated("Should not be used, will be removed in the next major version")
+  inner class MapClick : OnMapClickListener {
+
+    /**
+     * Should not be used.
+     */
+    override fun onMapClick(point: Point): Boolean {
+      return false
+    }
+  }
+
+  /**
+   * Should not be used.
+   */
+  @Deprecated("Should not be used, will be removed in the next major version")
+  inner class MapLongClick : OnMapLongClickListener {
+
+    /**
+     * Should not be used.
+     */
+    override fun onMapLongClick(point: Point): Boolean {
+      return false
+    }
+  }
+
+  /**
+   * Should not be used.
+   */
+  @Deprecated("Should not be used, will be removed in the next major version")
+  inner class MapMove : OnMoveListener {
+    /**
+     * Should not be used.
+     */
+    override fun onMoveBegin(detector: MoveGestureDetector) { }
+
+    /**
+     * Should not be used.
+     */
+    override fun onMove(detector: MoveGestureDetector): Boolean { return false }
+
+    /**
+     * Should not be used.
+     */
+    override fun onMoveEnd(detector: MoveGestureDetector) { }
   }
 
   /**

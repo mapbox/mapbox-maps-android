@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ClickInteraction
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgb
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -17,6 +20,7 @@ import com.mapbox.maps.testapp.databinding.ActivityStandardStyleBinding
 
 /**
  * Example of working with style imports and the Standard style.
+ * Additionally showcases the map interactions.
  */
 class StandardStyleActivity : AppCompatActivity() {
 
@@ -27,6 +31,8 @@ class StandardStyleActivity : AppCompatActivity() {
   private var labelsSetting = true
   private var show3dObjectsSetting = true
   private lateinit var binding: ActivityStandardStyleBinding
+
+  private var hotelPriceAlertBar: Snackbar? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -63,7 +69,33 @@ class StandardStyleActivity : AppCompatActivity() {
     addOnClickListeners()
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun addOnClickListeners() {
+    binding.mapView.mapboxMap.addInteraction(
+      ClickInteraction.featureset(
+        featuresetId = "hotels-price"
+      ) { selectedPriceLabel, _ ->
+        hotelPriceAlertBar = Snackbar.make(
+          binding.mapView,
+          "Selected hotel price: ${selectedPriceLabel.feature.getNumberProperty("price")}",
+          Snackbar.LENGTH_INDEFINITE
+        ).apply {
+          show()
+        }
+        // return true meaning we consume this click and
+        // do not dispatch it to the map interaction declared below
+        return@featureset true
+      }
+    )
+
+    binding.mapView.mapboxMap.addInteraction(
+      // handle click interactions on the map itself (outside of hotels' price POIs)
+      ClickInteraction { _ ->
+        hotelPriceAlertBar?.dismiss()
+        return@ClickInteraction true
+      }
+    )
+
     binding.fabThemeSetting.setOnClickListener {
       mapboxMap.getStyle { style ->
         themeSetting = when (themeSetting) {

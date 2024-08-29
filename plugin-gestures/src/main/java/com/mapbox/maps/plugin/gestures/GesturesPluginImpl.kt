@@ -14,8 +14,25 @@ import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
-import com.mapbox.android.gestures.*
-import com.mapbox.maps.*
+import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.android.gestures.MultiFingerTapGestureDetector
+import com.mapbox.android.gestures.RotateGestureDetector
+import com.mapbox.android.gestures.ShoveGestureDetector
+import com.mapbox.android.gestures.StandardGestureDetector
+import com.mapbox.android.gestures.StandardScaleGestureDetector
+import com.mapbox.common.Cancelable
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ClickInteraction
+import com.mapbox.maps.DragInteraction
+import com.mapbox.maps.LongClickInteraction
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.PlatformEventInfo
+import com.mapbox.maps.PlatformEventType
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -25,14 +42,24 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapInteractionDelegate
+import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
 import com.mapbox.maps.util.CoreGesturesHandler
-import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.exp
+import kotlin.math.hypot
+import kotlin.math.ln
+import kotlin.math.min
+import kotlin.math.pow
 
 /**
  * Manages gestures events on a MapView.
@@ -44,13 +71,19 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   private var pixelRatio: Float = 1f
 
   private lateinit var gesturesManager: AndroidGesturesManager
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal lateinit var moveGestureListener: MoveGestureListener
   private lateinit var gestureState: GestureState
   private var style: MapboxStyleManager? = null
+  private val interactionsCancelableSet = mutableSetOf<Cancelable>()
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapProjectionDelegate: MapProjectionDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
+  @OptIn(MapboxExperimental::class)
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal lateinit var mapInteractionDelegate: MapInteractionDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
 
   private val protectedCameraAnimatorOwners = CopyOnWriteArraySet<String>()
@@ -167,7 +200,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
           com.mapbox.android.gestures.R.dimen.mapbox_defaultScaleSpanSinceStartThreshold
         )
       )
-      val moveGestureListener = MoveGestureListener()
+      moveGestureListener = MoveGestureListener()
       minimumGestureSpeed = context.resources.getDimension(R.dimen.mapbox_minimum_scale_speed)
       minimumAngledGestureSpeed =
         context.resources.getDimension(R.dimen.mapbox_minimum_angled_scale_speed)
@@ -198,7 +231,47 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       gesturesManager.setRotateGestureListener(rotateGestureListener)
       gesturesManager.setShoveGestureListener(shoveGestureListener)
       gesturesManager.setMultiFingerTapGestureListener(tapGestureListener)
+      registerInteractions()
     }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun registerInteractions() {
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        ClickInteraction { context ->
+          handleClickEvent(context.screenCoordinate)
+          return@ClickInteraction true
+        }
+      )
+    )
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        LongClickInteraction {
+          handleLongPressEvent(it.screenCoordinate)
+          return@LongClickInteraction true
+        }
+      )
+    )
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        DragInteraction(
+          onDragBegin = {
+            handleMoveStartEvent()
+            return@DragInteraction true
+          },
+          onDrag = { handleMove(it.screenCoordinate) },
+          onDragEnd = { handleMoveEnd() }
+        )
+      )
+    )
+  }
+
+  private fun unregisterInteractions() {
+    interactionsCancelableSet.forEach {
+      it.cancel()
+    }
+    interactionsCancelableSet.clear()
   }
 
   private fun initializeGesturesManager(
@@ -392,18 +465,29 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     /**
      * Called when an on single tap up confirmed gesture was detected.
      */
+    @OptIn(MapboxExperimental::class)
     override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
+      // this callback comes from the Java library and could still be NULL
       @Suppress("SENSELESS_COMPARISON")
       if (motionEvent == null) {
         return false
       }
-      return handleClickEvent(motionEvent.toScreenCoordinate())
+      mapInteractionDelegate.dispatch(
+        PlatformEventInfo(
+          PlatformEventType.CLICK,
+          motionEvent.toScreenCoordinate()
+        )
+      )
+      // always propagate false here;
+      // InteractionHandlers will define the correct callback order after QRF is run
+      return false
     }
 
     /**
      * Called when an on double tap gesture was detected.
      */
     override fun onDoubleTapEvent(motionEvent: MotionEvent): Boolean {
+      // this callback comes from the Java library and could still be NULL
       @Suppress("SENSELESS_COMPARISON")
       if (motionEvent == null) {
         return false
@@ -416,13 +500,19 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     /**
      * Called when an on long press gesture was detected.
      */
+    @OptIn(MapboxExperimental::class)
     override fun onLongPress(motionEvent: MotionEvent) {
+      // this callback comes from the Java library and could still be NULL
       @Suppress("SENSELESS_COMPARISON")
       if (motionEvent == null) {
         return
       }
-
-      handleLongPressEvent(motionEvent.toScreenCoordinate())
+      mapInteractionDelegate.dispatch(
+        PlatformEventInfo(
+          PlatformEventType.LONG_CLICK,
+          motionEvent.toScreenCoordinate()
+        )
+      )
     }
 
     /**
@@ -434,6 +524,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       velocityX: Float,
       velocityY: Float
     ): Boolean {
+      // this callback comes from the Java library and could still be NULL
       @Suppress("SENSELESS_COMPARISON")
       if (e1 == null || e2 == null) {
         return false
@@ -453,30 +544,109 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   /**
    * Move gesture listener, receives callbacks for gestures detected by AndroidGesturesManager.
    */
-  private inner class MoveGestureListener : MoveGestureDetector.SimpleOnMoveGestureListener() {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal inner class MoveGestureListener : MoveGestureDetector.SimpleOnMoveGestureListener() {
+
+    lateinit var detector: MoveGestureDetector
+
     /**
-     * Called when an on move begin gesture was detected.
+     * Indicates that the move gesture started.
+     *
+     * @param detector this detector
+     *
+     * @return true if you want to receive subsequent `onMove(MoveGestureDetector, float, float)` callbacks,
+     * false if you want to ignore this gesture.
      */
+    @OptIn(MapboxExperimental::class)
     override fun onMoveBegin(detector: MoveGestureDetector): Boolean {
-      return handleMoveStartEvent(detector)
+      if (!::detector.isInitialized || this.detector !== detector) {
+        this.detector = detector
+      }
+      if (!internalSettings.scrollEnabled) {
+        return false
+      }
+      mapInteractionDelegate.dispatch(
+        PlatformEventInfo(
+          PlatformEventType.DRAG_BEGIN,
+          ScreenCoordinate(
+            detector.focalPoint.x.toDouble(),
+            detector.focalPoint.y.toDouble()
+          )
+        )
+      )
+      return true
     }
 
     /**
      * Called when an on move gesture was detected.
      */
+    @OptIn(MapboxExperimental::class)
     override fun onMove(
       detector: MoveGestureDetector,
       distanceX: Float,
       distanceY: Float
     ): Boolean {
-      return handleMove(detector, distanceX, distanceY)
+      // Skip if there is no actual movement
+      if (distanceX == 0f && distanceY == 0f) {
+        return false
+      }
+      // Skip 3 or more fingers pan
+      if (detector.pointersCount > 2) {
+        return false
+      }
+      // Skip 2-finger scroll if pinchScrollEnabled is disabled.
+      if (!internalSettings.pinchScrollEnabled && detector.pointersCount > 1) {
+        return false
+      }
+
+      val fromX = detector.focalPoint.x.toDouble()
+      val fromY = detector.focalPoint.y.toDouble()
+
+      // Skip invalid focal points with non-finite values
+      if (!fromX.isFinite() || !fromY.isFinite()) {
+        logE(TAG, "Invalid focal point=${detector.focalPoint} to perform map panning!")
+        return false
+      }
+      // Skip invalid distance with non-finite values
+      if (!distanceX.isFinite() || !distanceY.isFinite()) {
+        logE(TAG, "Invalid distanceX=$distanceX or distanceY=$distanceY to perform map panning!")
+        return false
+      }
+      // Skip if focal point is above horizon
+      if (isPointAboveHorizon(ScreenCoordinate(fromX, fromY))) {
+        return false
+      }
+      val resolvedDistanceX =
+        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else (distanceX.toDouble())
+      val resolvedDistanceY =
+        if (internalSettings.isScrollVerticallyLimited()) 0.0 else (distanceY.toDouble())
+
+      val toX = fromX - resolvedDistanceX
+      val toY = fromY - resolvedDistanceY
+      // Dispatch to perform actual camera movement in `onDrag` interaction callback
+      mapInteractionDelegate.dispatch(
+        PlatformEventInfo(
+          PlatformEventType.DRAG,
+          ScreenCoordinate(toX, toY)
+        )
+      )
+      return false
     }
 
     /**
      * Called when an on move end gesture was detected.
      */
+    @OptIn(MapboxExperimental::class)
     override fun onMoveEnd(detector: MoveGestureDetector, velocityX: Float, velocityY: Float) {
-      handleMoveEnd(detector)
+      mapInteractionDelegate.dispatch(
+        PlatformEventInfo(
+          PlatformEventType.DRAG_END,
+          ScreenCoordinate(
+            detector.focalPoint.x.toDouble(),
+            detector.focalPoint.y.toDouble()
+          )
+        )
+      )
     }
   }
 
@@ -811,7 +981,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     val delta = abs(detector.deltaSinceLast)
     val ratio = (delta / velocityXY).toDouble()
 
-    if (!internalSettings.rotateDecelerationEnabled || abs(angularVelocity) < minimumAngularVelocity || gesturesManager.standardScaleGestureDetector.isInProgress() && ratio < rotateVelocityRatioThreshold) {
+    if (!internalSettings.rotateDecelerationEnabled || abs(angularVelocity) < minimumAngularVelocity || gesturesManager.standardScaleGestureDetector.isInProgress && ratio < rotateVelocityRatioThreshold) {
       // notifying listeners that camera is idle only if there is no follow-up animation
       return
     }
@@ -1280,13 +1450,9 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     return true
   }
 
-  internal fun handleMoveStartEvent(detector: MoveGestureDetector): Boolean {
-    if (!internalSettings.scrollEnabled) {
-      return false
-    }
+  internal fun handleMoveStartEvent() {
     cancelTransitionsIfRequired()
-    notifyOnMoveBeginListeners(detector)
-    return true
+    notifyOnMoveBeginListeners(moveGestureListener.detector)
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -1338,69 +1504,28 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       ZOOM_RATE.toDouble() *
       internalSettings.zoomAnimationAmount.toDouble()
 
-  internal fun handleMove(
-    detector: MoveGestureDetector,
-    distanceX: Float,
-    distanceY: Float
-  ): Boolean {
-    // first move event is often delivered with no displacement
-    if (distanceX != 0f || distanceY != 0f) {
-      if (notifyOnMoveListeners(detector)) {
-        return true
-      }
-
-      // Skip 3 or more fingers pan
-      if (detector.pointersCount > 2) {
-        return false
-      }
-
-      // Skip 2-finger scroll if pinchScrollEnabled is disabled.
-      if (!internalSettings.pinchScrollEnabled && detector.pointersCount > 1) {
-        return false
-      }
-
-      val focalPoint = detector.focalPoint
-      val fromX = focalPoint.x.toDouble()
-      val fromY = focalPoint.y.toDouble()
-
-      // Skip invalid focal points with non-finite values
-      if (!focalPoint.x.isFinite() || !focalPoint.y.isFinite()) {
-        logE(TAG, "Invalid focal point=$focalPoint to perform map panning!")
-        return false
-      }
-
-      // Skip invalid distance with non-finite values
-      if (!distanceX.isFinite() || !distanceY.isFinite()) {
-        logE(TAG, "Invalid distanceX=$distanceX or distanceY=$distanceY to perform map panning!")
-        return false
-      }
-
-      if (isPointAboveHorizon(ScreenCoordinate(fromX, fromY))) {
-        return false
-      }
-      val resolvedDistanceX =
-        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else (distanceX.toDouble())
-      val resolvedDistanceY =
-        if (internalSettings.isScrollVerticallyLimited()) 0.0 else (distanceY.toDouble())
-
-      val toX = fromX - resolvedDistanceX
-      val toY = fromY - resolvedDistanceY
-
-      coreGesturesHandler.notifyCoreGestureStarted()
-      val cameraOptions = mapCameraManagerDelegate.cameraForDrag(
-        ScreenCoordinate(fromX, fromY),
-        ScreenCoordinate(toX, toY)
-      )
-      cameraAnimationsPlugin.easeTo(
-        cameraOptions,
-        IMMEDIATE_ANIMATION_OPTIONS
-      )
+  internal fun handleMove(targetScreenCoordinate: ScreenCoordinate) {
+    val detector = moveGestureListener.detector
+    // return early if any user-registered OnMoveListener returns `true`
+    if (notifyOnMoveListeners(detector)) {
+      return
     }
-    return true
+    val focalPoint = detector.focalPoint
+    val fromX = focalPoint.x.toDouble()
+    val fromY = focalPoint.y.toDouble()
+    coreGesturesHandler.notifyCoreGestureStarted()
+    val cameraOptions = mapCameraManagerDelegate.cameraForDrag(
+      ScreenCoordinate(fromX, fromY),
+      targetScreenCoordinate
+    )
+    cameraAnimationsPlugin.easeTo(
+      cameraOptions,
+      IMMEDIATE_ANIMATION_OPTIONS
+    )
   }
 
-  internal fun handleMoveEnd(detector: MoveGestureDetector) {
-    notifyOnMoveEndListeners(detector)
+  internal fun handleMoveEnd() {
+    notifyOnMoveEndListeners(moveGestureListener.detector)
   }
 
   internal fun handleSingleTapUpEvent(): Boolean {
@@ -1535,17 +1660,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is moved.
    */
   override fun addOnMoveListener(onMoveListener: OnMoveListener) {
-    if (onMoveListener is TopPriorityOnMoveListener) {
-      val (topPriority, normalPriority) = onMoveListeners.partition { it is TopPriorityOnMoveListener }
-      with(onMoveListeners) {
-        clear()
-        addAll(topPriority)
-        add(onMoveListener)
-        addAll(normalPriority)
-      }
-    } else {
-      onMoveListeners.add(onMoveListener)
-    }
+    onMoveListeners.add(onMoveListener)
   }
 
   /**
@@ -1660,6 +1775,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    */
   override fun cleanup() {
     style = null
+    unregisterInteractions()
     protectedCameraAnimatorOwners.clear()
     animationsTimeoutHandler.removeCallbacksAndMessages(null)
   }
@@ -1700,6 +1816,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
     this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
+    this.mapInteractionDelegate = delegateProvider.mapInteractionDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
       MAPBOX_CAMERA_PLUGIN_ID

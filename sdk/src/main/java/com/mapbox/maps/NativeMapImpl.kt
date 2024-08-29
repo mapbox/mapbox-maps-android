@@ -709,4 +709,63 @@ internal class NativeMapImpl(val map: Map) {
   fun stopPerformanceStatisticsCollection() {
     map.stopPerformanceStatisticsCollection()
   }
+
+  // ///// START INTERACTIONS /////////
+
+  fun addInteraction(interaction: Interaction): Cancelable {
+    return map.addInteraction(interaction)
+  }
+
+  fun dispatch(platformEventInfo: PlatformEventInfo) {
+    map.dispatch(platformEventInfo)
+  }
+
+  fun setFeatureState(
+    featureset: FeaturesetDescriptor,
+    featureId: FeaturesetFeatureId,
+    state: Value,
+    callback: FeatureStateOperationCallback
+  ): Cancelable {
+    return map.setFeatureState(featureset, featureId, state, callback)
+  }
+
+  fun getFeatureState(
+    featureset: FeaturesetDescriptor,
+    featureId: FeaturesetFeatureId,
+    callback: QueryFeatureStateCallback
+  ): Cancelable {
+    return map.getFeatureState(featureset, featureId, callback)
+  }
+
+  fun removeFeatureState(
+    featureset: FeaturesetDescriptor,
+    featureId: FeaturesetFeatureId,
+    stateKey: String?,
+    callback: FeatureStateOperationCallback
+  ): Cancelable {
+    return map.removeFeatureState(featureset, featureId, stateKey, callback)
+  }
+
+  fun resetFeatureStates(
+    featureset: FeaturesetDescriptor,
+    callback: FeatureStateOperationCallback
+  ): Cancelable {
+    return map.resetFeatureStates(featureset, callback)
+  }
+
+  fun querySourceFeatures(
+    target: FeaturesetQueryTarget,
+    callback: QuerySourceFeaturesCallback
+  ): Cancelable {
+    return map.querySourceFeatures(target, callback)
+  }
+
+  fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    targets: List<FeaturesetQueryTarget>,
+    callback: QueryRenderedFeaturesCallback
+  ): Cancelable {
+    return map.queryRenderedFeatures(geometry, targets, callback)
+  }
+  // ///// END INTERACTIONS /////////
 }

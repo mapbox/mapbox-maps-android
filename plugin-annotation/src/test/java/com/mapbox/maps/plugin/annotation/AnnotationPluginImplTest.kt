@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.sources.addSource
@@ -20,13 +21,14 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.unmockkStatic
-import junit.framework.Assert.assertEquals
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 class AnnotationPluginImplTest {
   private val delegateProvider: MapDelegateProvider = mockk()
@@ -52,7 +54,8 @@ class AnnotationPluginImplTest {
     every { delegateProvider.mapStyleManagerDelegate } returns style
     every { delegateProvider.mapCameraManagerDelegate } returns mockk()
     every { delegateProvider.mapFeatureQueryDelegate } returns mockk()
-    every { delegateProvider.mapListenerDelegate } returns mockk()
+    every { delegateProvider.mapInteractionDelegate } returns mockk(relaxed = true)
+    every { gesturesPlugin.getGesturesManager().moveGestureDetector } returns mockk(relaxed = true)
 
     annotationPluginImpl = AnnotationPluginImpl()
     annotationPluginImpl.onDelegateProvider(delegateProvider)

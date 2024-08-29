@@ -6,8 +6,8 @@ import android.graphics.Color
 import android.graphics.PointF
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
-import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -21,12 +21,11 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.InteractiveFeature
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
-import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -36,26 +35,21 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowProjection::class])
 class PolygonAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: MapboxStyleManager = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
-  private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
-  private val mapListenerDelegate: MapListenerDelegate = mockk()
+  private val mapInteractionDelegate: MapInteractionDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
+  private val moveGestureDetector: MoveGestureDetector = mockk()
   private val layer: FillLayer = mockk()
   private val source: GeoJsonSource = mockk()
   private val dragLayer: FillLayer = mockk()
   private val dragSource: GeoJsonSource = mockk()
-  private val queriedRenderedFeaturesExpected = mockk<Expected<String, List<QueriedRenderedFeature>>>()
-  private val queriedRenderedFeature = mockk<QueriedRenderedFeature>()
-  private val cancelable = mockk<Cancelable>()
   private val feature = mockk<Feature>()
-  private val queriedRenderedFeatureList = listOf(queriedRenderedFeature)
-  private val queryRenderedFeaturesCallbackSlot = slot<QueryRenderedFeaturesCallback>()
-  private val executeOnRenderThreadSlot = slot<Runnable>()
 
   private lateinit var manager: PolygonAnnotationManager
   @Before
@@ -76,39 +70,18 @@ class PolygonAnnotationManagerTest {
     every { style.removeStyleLayer(any()) } returns mockk()
     every { style.removeStyleSource(any()) } returns mockk()
     every { style.pixelRatio } returns 1.0f
-    every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
-    every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
-    every { gesturesPlugin.addOnMoveListener(any()) } just Runs
-    every { gesturesPlugin.removeOnMoveListener(any()) } just Runs
-    every { gesturesPlugin.removeOnMapClickListener(any()) } just Runs
-    every { gesturesPlugin.removeOnMapLongClickListener(any()) } just Runs
     every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(any()) } returns gesturesPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
-    every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
-    every { delegateProvider.mapListenerDelegate } returns mapListenerDelegate
-    every { mapListenerDelegate.addOnMapIdleListener(any()) } just Runs
+    every { delegateProvider.mapInteractionDelegate } returns mapInteractionDelegate
+    every { delegateProvider.mapFeatureQueryDelegate } returns mockk()
+    every { mapInteractionDelegate.addInteraction(any()) } returns Cancelable { }
+    every { gesturesPlugin.getGesturesManager().moveGestureDetector } returns moveGestureDetector
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { mapCameraManagerDelegate.cameraState } returns mockk(relaxed = true)
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
-
-    every { queriedRenderedFeature.queriedFeature.feature } returns feature
-    every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
-    every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
-      executeOnRenderThreadSlot.captured.run()
-    }
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<RenderedQueryGeometry>(),
-        any(),
-        capture(queryRenderedFeaturesCallbackSlot)
-      )
-    } answers {
-      queryRenderedFeaturesCallbackSlot.captured.run(queriedRenderedFeaturesExpected)
-      cancelable
-    }
 
     manager = PolygonAnnotationManager(delegateProvider)
     manager.layer = layer
@@ -134,9 +107,9 @@ class PolygonAnnotationManagerTest {
 
   @Test
   fun initialize() {
-    verify { gesturesPlugin.addOnMapClickListener(any()) }
-    verify { gesturesPlugin.addOnMapLongClickListener(any()) }
-    verify { gesturesPlugin.addOnMoveListener(any()) }
+    verify(exactly = 2) { mapInteractionDelegate.addInteraction(ofType(ClickInteraction::class)) }
+    verify(exactly = 2) { mapInteractionDelegate.addInteraction(ofType(LongClickInteraction::class)) }
+    verify(exactly = 2) { mapInteractionDelegate.addInteraction(ofType(DragInteraction::class)) }
     assertEquals(PolygonAnnotation.ID_KEY, manager.getAnnotationIdKey())
     verify { style.addPersistentLayer(any(), null) }
     every { style.styleLayerExists("test_layer") } returns true
@@ -155,9 +128,6 @@ class PolygonAnnotationManagerTest {
     manager.onDestroy()
     verify { style.removeStyleLayer(any()) }
     verify { style.removeStyleSource(any()) }
-    verify { gesturesPlugin.removeOnMapClickListener(any()) }
-    verify { gesturesPlugin.removeOnMapLongClickListener(any()) }
-    verify { gesturesPlugin.removeOnMoveListener(any()) }
     assertTrue(manager.dragListeners.isEmpty())
     assertTrue(manager.clickListeners.isEmpty())
     assertTrue(manager.longClickListeners.isEmpty())
@@ -336,24 +306,72 @@ class PolygonAnnotationManagerTest {
 
   @Test
   fun clickWithNoAnnotation() {
-    val captureSlot = slot<OnMapClickListener>()
-    every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = PolygonAnnotationManager(delegateProvider)
+    mockkObject(ClickInteraction.Companion)
+    val onClickLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val customLayerId = "customLayerId"
+    every {
+      ClickInteraction.layer(layerId = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
+    } answers {
+      mockk()
+    }
+    every {
+      ClickInteraction.layer(
+        layerId = any(),
+        filter = any(),
+        onClick = { _, _ -> return@layer false }
+      )
+    } returns mockk()
+    val manager = PolygonAnnotationManager(
+      delegateProvider,
+      annotationConfig = AnnotationConfig(layerId = customLayerId)
+    )
 
     val listener = mockk<OnPolygonAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
     manager.addClickListener(listener)
 
-    every { feature.getProperty(any()) } returns null
-    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    every { feature.getProperty(any()).asString } returns null
+    onClickLayerIdSlot.captured.invoke(
+      InteractiveFeature(
+        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
+        feature = feature,
+        source = "source",
+        featureNamespace = null,
+        state = Value.nullValue()
+      ),
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify(exactly = 0) { listener.onAnnotationClick(any()) }
+    unmockkObject(ClickInteraction.Companion)
   }
 
   @Test
   fun click() {
-    val captureSlot = slot<OnMapClickListener>()
-    every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = PolygonAnnotationManager(delegateProvider)
+    mockkObject(ClickInteraction.Companion)
+    val onClickLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val customLayerId = "customLayerId"
+    every {
+      ClickInteraction.layer(layerId = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
+    } answers {
+      mockk()
+    }
+    every {
+      ClickInteraction.layer(
+        layerId = any(),
+        filter = any(),
+        onClick = { _, _ -> return@layer false }
+      )
+    } returns mockk()
+    val manager = PolygonAnnotationManager(
+      delegateProvider,
+      annotationConfig = AnnotationConfig(layerId = customLayerId)
+    )
     val annotation = manager.create(
       PolygonAnnotationOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -362,7 +380,7 @@ class PolygonAnnotationManagerTest {
     every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolygonAnnotationClickListener>()
-    every { listener.onAnnotationClick(any()) } returns false
+    every { listener.onAnnotationClick(any()) } returns true
     manager.addClickListener(listener)
 
     val interactionListener = mockk<OnPolygonAnnotationInteractionListener>()
@@ -370,23 +388,70 @@ class PolygonAnnotationManagerTest {
     every { interactionListener.onDeselectAnnotation(any()) } just Runs
     manager.addInteractionListener(interactionListener)
 
-    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+   onClickLayerIdSlot.captured.invoke(
+      InteractiveFeature(
+        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
+        feature = feature,
+        source = "source",
+        featureNamespace = null,
+        state = Value.nullValue()
+      ),
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify { listener.onAnnotationClick(annotation) }
     verify { interactionListener.onSelectAnnotation(annotation) }
-    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    onClickLayerIdSlot.captured.invoke(
+      InteractiveFeature(
+        featuresetHolder = FeaturesetHolder.Layer(annotation.id),
+        feature = feature,
+        source = "source",
+        featureNamespace = null,
+        state = Value.nullValue()
+      ),
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify { interactionListener.onDeselectAnnotation(annotation) }
 
     manager.removeClickListener(listener)
     assertTrue(manager.clickListeners.isEmpty())
     manager.removeInteractionListener(interactionListener)
     assertTrue(manager.interactionListener.isEmpty())
+    unmockkObject(ClickInteraction.Companion)
   }
 
   @Test
   fun longClick() {
-    val captureSlot = slot<OnMapLongClickListener>()
-    every { gesturesPlugin.addOnMapLongClickListener(capture(captureSlot)) } just Runs
-    val manager = PolygonAnnotationManager(delegateProvider)
+    mockkObject(LongClickInteraction.Companion)
+    val onLongClickLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val customLayerId = "customLayerId"
+    every {
+      LongClickInteraction.layer(layerId = customLayerId, filter = any(), onLongClick = capture(onLongClickLayerIdSlot))
+    } answers {
+      mockk()
+    }
+    every {
+      LongClickInteraction.layer(
+        layerId = any(),
+        filter = any(),
+        onLongClick = { _, _ -> return@layer false }
+      )
+    } returns mockk()
+    val manager = PolygonAnnotationManager(
+      delegateProvider,
+      annotationConfig = AnnotationConfig(layerId = customLayerId)
+    )
 
     val annotation = manager.create(
       PolygonAnnotationOptions()
@@ -398,18 +463,60 @@ class PolygonAnnotationManagerTest {
     val listener = mockk<OnPolygonAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
     manager.addLongClickListener(listener)
-    captureSlot.captured.onMapLongClick(Point.fromLngLat(0.0, 0.0))
+    onLongClickLayerIdSlot.captured.invoke(
+      InteractiveFeature(
+        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
+        feature = feature,
+        source = "source",
+        featureNamespace = null,
+        state = Value.nullValue()
+      ),
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify { listener.onAnnotationLongClick(annotation) }
 
     manager.removeLongClickListener(listener)
     assertTrue(manager.longClickListeners.isEmpty())
+    unmockkObject(LongClickInteraction.Companion)
   }
 
   @Test
   fun drag() {
-    val captureSlot = slot<OnMoveListener>()
-    every { gesturesPlugin.addOnMoveListener(capture(captureSlot)) } just Runs
-    val manager = PolygonAnnotationManager(delegateProvider)
+    mockkObject(DragInteraction.Companion)
+    val onDragBeginLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val onDragSlot = slot<((InteractionContext) -> Unit)>()
+    val onDragEndSlot = slot<((InteractionContext) -> Unit)>()
+    val customLayerId = "customLayerId"
+    every {
+      DragInteraction.layer(
+        layerId = customLayerId,
+        filter = any(),
+        onDragBegin = capture(onDragBeginLayerIdSlot),
+        onDrag = capture(onDragSlot),
+        onDragEnd = capture(onDragEndSlot)
+      )
+    } answers {
+      mockk()
+    }
+    every {
+      DragInteraction.layer(
+        layerId = any(),
+        filter = any(),
+        onDragBegin = { _, _ -> return@layer false },
+        onDrag = { },
+        onDragEnd = { }
+      )
+    } returns mockk()
+    val manager = PolygonAnnotationManager(
+      delegateProvider,
+      annotationConfig = AnnotationConfig(layerId = customLayerId)
+    )
     manager.onSizeChanged(100, 100)
     val annotation = manager.create(
       PolygonAnnotationOptions()
@@ -423,12 +530,26 @@ class PolygonAnnotationManagerTest {
     manager.addDragListener(listener)
 
     annotation.isDraggable = true
-    val moveGestureDetector = mockk<MoveGestureDetector>()
     val pointF = PointF(0f, 0f)
     every { moveGestureDetector.pointersCount } returns 1
     every { moveGestureDetector.focalPoint } returns pointF
 
-    captureSlot.captured.onMoveBegin(moveGestureDetector)
+    onDragBeginLayerIdSlot.captured.invoke(
+      InteractiveFeature(
+        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
+        feature = feature,
+        source = "source",
+        featureNamespace = null,
+        state = Value.nullValue()
+      ),
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify { listener.onAnnotationDragStarted(annotation) }
     assertEquals(1, manager.annotations.size)
 
@@ -438,11 +559,27 @@ class PolygonAnnotationManagerTest {
     every { moveDistancesObject.distanceXSinceLast } returns 1f
     every { moveDistancesObject.distanceYSinceLast } returns 1f
     every { moveGestureDetector.getMoveObject(any()) } returns moveDistancesObject
-    captureSlot.captured.onMove(moveGestureDetector)
+    onDragSlot.captured.invoke(
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify { listener.onAnnotationDrag(annotation) }
     assertEquals(1, manager.annotations.size)
 
-    captureSlot.captured.onMoveEnd(moveGestureDetector)
+    onDragEndSlot.captured.invoke(
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
     verify { listener.onAnnotationDragFinished(annotation) }
 
     manager.removeDragListener(listener)
@@ -457,6 +594,7 @@ class PolygonAnnotationManagerTest {
     // Verify delete after drag
     manager.delete(annotation)
     assertTrue(manager.annotations.isEmpty())
+    unmockkObject(DragInteraction.Companion)
   }
 
   @Test

@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.delegates
 
 import androidx.annotation.RestrictTo
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 
 /**
@@ -53,4 +54,10 @@ interface MapDelegateProvider {
    * Delegate used to manager listeners.
    */
   val mapListenerDelegate: MapListenerDelegate
+
+  /**
+   * Delegate used to manage interactions (click gestures for example).
+   */
+  @MapboxExperimental
+  val mapInteractionDelegate: MapInteractionDelegate
 }

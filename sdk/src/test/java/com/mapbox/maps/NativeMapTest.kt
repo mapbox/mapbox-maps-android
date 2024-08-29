@@ -716,11 +716,21 @@ class NativeMapTest {
   @Test
   fun queryRenderedFeatures() {
     val callback = mockk<QueryRenderedFeaturesCallback>()
-    val value = mockk<RenderedQueryGeometry>()
+    val geometry = mockk<RenderedQueryGeometry>()
     val queryOptions = mockk<RenderedQueryOptions>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.queryRenderedFeatures(value, queryOptions, callback)
-    verify { map.queryRenderedFeatures(value, queryOptions, callback) }
+    nativeMap.queryRenderedFeatures(geometry, queryOptions, callback)
+    verify { map.queryRenderedFeatures(geometry, queryOptions, callback) }
+  }
+
+  @Test
+  fun queryRenderedFeaturesFeaturesetQueryTargets() {
+    val callback = mockk<QueryRenderedFeaturesCallback>()
+    val geometry = mockk<RenderedQueryGeometry>()
+    val featuresetQueryTargets = listOf(mockk<FeaturesetQueryTarget>())
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.queryRenderedFeatures(geometry, featuresetQueryTargets, callback)
+    verify { map.queryRenderedFeatures(geometry, featuresetQueryTargets, callback) }
   }
 
   @Test
@@ -730,6 +740,15 @@ class NativeMapTest {
     val nativeMap = NativeMapImpl(map)
     nativeMap.querySourceFeatures("foo", queryOptions, callback)
     verify { map.querySourceFeatures("foo", queryOptions, callback) }
+  }
+
+  @Test
+  fun querySourceFeaturesFeaturesetQueryTarget() {
+    val callback = mockk<QuerySourceFeaturesCallback>()
+    val featuresetQueryTarget = mockk<FeaturesetQueryTarget>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.querySourceFeatures(featuresetQueryTarget, callback)
+    verify { map.querySourceFeatures(featuresetQueryTarget, callback) }
   }
 
   @Test
@@ -761,11 +780,32 @@ class NativeMapTest {
   }
 
   @Test
+  fun setFeatureStateFestureset() {
+    val value = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+    val featuresetDescriptor = mockk<FeaturesetDescriptor>()
+    val featuresetFeatureId = mockk<FeaturesetFeatureId>()
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.setFeatureState(featuresetDescriptor, featuresetFeatureId, value, callback)
+    verify { map.setFeatureState(featuresetDescriptor, featuresetFeatureId, value, callback) }
+  }
+
+  @Test
   fun getFeatureState() {
     val nativeMap = NativeMapImpl(map)
     val callback = mockk<QueryFeatureStateCallback>()
     nativeMap.getFeatureState("foo", "bar", "id", callback)
     verify { map.getFeatureState("foo", "bar", "id", callback) }
+  }
+
+  @Test
+  fun getFeatureStateFestureset() {
+    val nativeMap = NativeMapImpl(map)
+    val featuresetDescriptor = mockk<FeaturesetDescriptor>()
+    val featuresetFeatureId = mockk<FeaturesetFeatureId>()
+    val callback = mockk<QueryFeatureStateCallback>()
+    nativeMap.getFeatureState(featuresetDescriptor, featuresetFeatureId, callback)
+    verify { map.getFeatureState(featuresetDescriptor, featuresetFeatureId, callback) }
   }
 
   @Test
@@ -777,11 +817,30 @@ class NativeMapTest {
   }
 
   @Test
+  fun removeFeatureStateFeatureset() {
+    val nativeMap = NativeMapImpl(map)
+    val callback = mockk<FeatureStateOperationCallback>()
+    val featuresetDescriptor = mockk<FeaturesetDescriptor>()
+    val featuresetFeatureId = mockk<FeaturesetFeatureId>()
+    nativeMap.removeFeatureState(featuresetDescriptor, featuresetFeatureId, "key", callback)
+    verify { map.removeFeatureState(featuresetDescriptor, featuresetFeatureId, "key", callback) }
+  }
+
+  @Test
   fun resetFeatureStates() {
     val nativeMap = NativeMapImpl(map)
     val callback = mockk<FeatureStateOperationCallback>()
     nativeMap.resetFeatureStates("foo", "bar", callback)
     verify { map.resetFeatureStates("foo", "bar", callback) }
+  }
+
+  @Test
+  fun resetFeatureStatesFeatureset() {
+    val nativeMap = NativeMapImpl(map)
+    val callback = mockk<FeatureStateOperationCallback>()
+    val featuresetDescriptor = mockk<FeaturesetDescriptor>()
+    nativeMap.resetFeatureStates(featuresetDescriptor, callback)
+    verify { map.resetFeatureStates(featuresetDescriptor, callback) }
   }
 
   @Test

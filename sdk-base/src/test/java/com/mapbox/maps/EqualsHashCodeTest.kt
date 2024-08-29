@@ -1,5 +1,10 @@
 package com.mapbox.maps
 
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.Point
+import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.InteractiveFeature
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -135,5 +140,35 @@ class EqualsHashCodeTest {
     EqualsVerifier.forClass(ScaleBarSettings::class.java)
       .usingGetClass()
       .verify()
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun `FeatureStateValue hashCode and equals test`() {
+    EqualsVerifier.forClass(FeatureStateValue::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun `FeaturesetHolder hashCode and equals test`() {
+    EqualsVerifier.forClass(FeaturesetHolder::class.java)
+      .usingGetClass()
+      .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+      .verify()
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun `InteractiveFeature hashCode and equals test`() {
+    EqualsVerifier.forClass(InteractiveFeature::class.java)
+      .usingGetClass()
+      .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+      .withPrefabValues(
+        Feature::class.java,
+        Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)),
+        Feature.fromGeometry(Point.fromLngLat(1.0, 1.0)),
+      ).verify()
   }
 }

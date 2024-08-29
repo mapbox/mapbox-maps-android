@@ -35,14 +35,18 @@ import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
+import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.Value;
+import com.mapbox.common.Cancelable;
 import com.mapbox.common.MapboxOptions;
 import com.mapbox.common.TileStore;
 import com.mapbox.geojson.Feature;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.CameraState;
+import com.mapbox.maps.ClickInteraction;
 import com.mapbox.maps.ExtensionUtils;
 import com.mapbox.maps.FeatureStateOperationCallback;
+import com.mapbox.maps.FeaturesetDescriptor;
 import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
@@ -70,12 +74,14 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
+import com.mapbox.maps.interactions.FeatureStateValue;
+import com.mapbox.maps.interactions.FeaturesetHolder;
 import com.mapbox.maps.module.MapTelemetry;
 import com.mapbox.maps.plugin.LocationPuck;
 import com.mapbox.maps.plugin.LocationPuck2D;
 import com.mapbox.maps.plugin.LocationPuck3D;
-import com.mapbox.maps.plugin.ScrollMode;
 import com.mapbox.maps.plugin.Plugin;
+import com.mapbox.maps.plugin.ScrollMode;
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsUtils;
 import com.mapbox.maps.plugin.animation.MapAnimationOptions;
@@ -120,6 +126,7 @@ import java.util.List;
 import java.util.Locale;
 
 import kotlin.Pair;
+import kotlin.jvm.functions.Function2;
 
 /** @noinspection UnusedAssignment*/
 @SuppressWarnings("unused")
@@ -654,5 +661,41 @@ public class JavaInterfaceChecker {
     public void onPerformanceEvent(@Nullable Bundle data) {
 
     }
+  }
+
+  @MapboxExperimental
+  private void interactions(final MapboxMap mapboxMap) {
+    final Cancelable cancelable1 = mapboxMap.addInteraction(
+            ClickInteraction.featureset(
+                    "featuresetId",
+                    "importId",
+                    (interactiveFeature, context) -> {
+                      mapboxMap.setFeatureState(interactiveFeature, new FeatureStateValue("key", Value.valueOf(true)));
+                      mapboxMap.removeFeatureState(interactiveFeature);
+                      mapboxMap.removeFeatureState(interactiveFeature.getFeaturesetHolder(), interactiveFeature.getFeature().id(), "stateKey");
+                      return true;
+                    }
+            )
+    );
+
+    final FeaturesetHolder.Layer layer = new FeaturesetHolder.Layer("layerId");
+    final Cancelable cancelable2 = mapboxMap.addInteraction(
+            ClickInteraction.layer(
+                    layer.getLayerId(),
+                    (interactiveFeature, context) -> {
+                      mapboxMap.setFeatureState(layer, interactiveFeature.getFeature().id(), interactiveFeature.getFeatureNamespace(), Value.nullValue());
+                      mapboxMap.getFeatureState(layer, "feaatureId", result -> {
+                        result.getValue();
+                      });
+                      return true;
+                    }
+            )
+    );
+
+    final Cancelable cancelable3 = mapboxMap.addInteraction(
+            ClickInteraction.map(context ->
+                    !context.getScreenCoordinate().equals(new ScreenCoordinate(0.0, 0.0))
+            )
+    );
   }
 }
