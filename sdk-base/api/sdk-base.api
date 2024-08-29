@@ -715,7 +715,6 @@ public abstract class com/mapbox/maps/interactions/BaseInteractiveFeature {
 	public final fun getFeature ()Lcom/mapbox/geojson/Feature;
 	public final fun getFeatureNamespace ()Ljava/lang/String;
 	public final fun getFeaturesetHolder ()Lcom/mapbox/maps/interactions/FeaturesetHolder;
-	public final fun getSource ()Ljava/lang/String;
 	public final fun getState ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
 }
@@ -753,7 +752,7 @@ public final class com/mapbox/maps/interactions/FeaturesetHolder$Layer : com/map
 }
 
 public final class com/mapbox/maps/interactions/InteractiveFeature : com/mapbox/maps/interactions/BaseInteractiveFeature {
-	public fun <init> (Lcom/mapbox/maps/interactions/FeaturesetHolder;Lcom/mapbox/geojson/Feature;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/interactions/FeaturesetHolder;Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
 }
 
 public abstract interface class com/mapbox/maps/module/MapTelemetry {

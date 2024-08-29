@@ -46,6 +46,7 @@ class GesturesPluginTest {
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
+  @OptIn(MapboxExperimental::class)
   private val mapInteractionDelegate: MapInteractionDelegate = mockk()
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
@@ -463,6 +464,7 @@ class GesturesPluginTest {
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
+  @OptIn(MapboxExperimental::class)
   @Test
   fun verifyMoveListenerPinchScrollDisabled() {
     presenter.pinchScrollEnabled = false
@@ -1141,6 +1143,7 @@ class IsPointAboveHorizonTest(
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
+  @OptIn(MapboxExperimental::class)
   private val mapInteractionDelegate: MapInteractionDelegate = mockk()
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
   private val style: MapboxStyleManager = mockk()

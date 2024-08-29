@@ -715,12 +715,10 @@ package com.mapbox.maps.interactions {
     method public final com.mapbox.geojson.Feature getFeature();
     method public final String? getFeatureNamespace();
     method public final FH getFeaturesetHolder();
-    method public final String getSource();
     method public final com.mapbox.bindgen.Value getState();
     property public final com.mapbox.geojson.Feature feature;
     property public final String? featureNamespace;
     property public final FH featuresetHolder;
-    property public final String source;
     property public final com.mapbox.bindgen.Value state;
   }
 
@@ -754,7 +752,7 @@ package com.mapbox.maps.interactions {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class InteractiveFeature<FH extends com.mapbox.maps.interactions.FeaturesetHolder> extends com.mapbox.maps.interactions.BaseInteractiveFeature<FH,com.mapbox.maps.interactions.FeatureStateValue> {
-    ctor public InteractiveFeature(FH featuresetHolder, com.mapbox.geojson.Feature feature, String source, String? featureNamespace, com.mapbox.bindgen.Value state);
+    ctor public InteractiveFeature(FH featuresetHolder, com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value state);
   }
 
 }

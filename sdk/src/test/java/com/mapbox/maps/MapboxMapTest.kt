@@ -942,7 +942,6 @@ class MapboxMapTest {
     val interactiveFeature = InteractiveFeature(
       featuresetHolder = FeaturesetHolder.Featureset(featuresetId = featuresetId, importId = importId),
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      source = "",
       featureNamespace = featureNamespace,
       state = Value.nullValue(),
     )
@@ -979,7 +978,6 @@ class MapboxMapTest {
     val interactiveFeature = InteractiveFeature(
       featuresetHolder = FeaturesetHolder.Layer(layerId = layerId),
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      source = "",
       featureNamespace = featureNamespace,
       state = Value.nullValue(),
     )
@@ -1119,7 +1117,6 @@ class MapboxMapTest {
     val interactiveFeature = InteractiveFeature(
       featuresetHolder = featuresetHolder,
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      source = "",
       featureNamespace = featureNamespace,
       state = Value.nullValue(),
     )
@@ -1151,7 +1148,6 @@ class MapboxMapTest {
     val interactiveFeature = InteractiveFeature(
       featuresetHolder = featuresetHolder,
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      source = "",
       featureNamespace = featureNamespace,
       state = Value.nullValue(),
     )

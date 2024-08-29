@@ -96,7 +96,6 @@ class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
         InteractiveFeature(
           featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId),
           feature = it.feature,
-          source = it.source,
           featureNamespace = it.featuresetFeatureId?.featureNamespace,
           state = it.state
         )
@@ -126,7 +125,6 @@ class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
         InteractiveFeature(
           featuresetHolder = FeaturesetHolder.Layer(layerId),
           feature = it.feature,
-          source = it.source,
           featureNamespace = it.featuresetFeatureId?.featureNamespace,
           state = it.state
         )

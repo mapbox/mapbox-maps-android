@@ -663,7 +663,6 @@ class PointAnnotationManagerTest {
       InteractiveFeature(
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
-        source = "source",
         featureNamespace = null,
         state = Value.nullValue()
       ),
@@ -720,7 +719,6 @@ class PointAnnotationManagerTest {
       InteractiveFeature(
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
-        source = "source",
         featureNamespace = null,
         state = Value.nullValue()
       ),
@@ -738,7 +736,6 @@ class PointAnnotationManagerTest {
       InteractiveFeature(
         featuresetHolder = FeaturesetHolder.Layer(annotation.id),
         feature = feature,
-        source = "source",
         featureNamespace = null,
         state = Value.nullValue()
       ),
@@ -795,7 +792,6 @@ class PointAnnotationManagerTest {
       InteractiveFeature(
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
-        source = "source",
         featureNamespace = null,
         state = Value.nullValue()
       ),
@@ -866,7 +862,6 @@ class PointAnnotationManagerTest {
       InteractiveFeature(
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
-        source = "source",
         featureNamespace = null,
         state = Value.nullValue()
       ),

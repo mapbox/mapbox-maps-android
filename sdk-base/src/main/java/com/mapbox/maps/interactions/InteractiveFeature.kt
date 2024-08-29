@@ -22,10 +22,6 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
    */
   val feature: Feature,
   /**
-   * The source id. Might be an empty string.
-   */
-  val source: String,
-  /**
    * Optional feature namespace.
    *
    * Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
@@ -51,7 +47,6 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
 
     if (featuresetHolder != other.featuresetHolder) return false
     if (feature != other.feature) return false
-    if (source != other.source) return false
     if (state != other.state) return false
     if (featureNamespace != other.featureNamespace) return false
 
@@ -62,7 +57,7 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
    * Override hashCode method.
    */
   override fun hashCode(): Int =
-    Objects.hash(featuresetHolder, feature, source, state, featureNamespace)
+    Objects.hash(featuresetHolder, feature, state, featureNamespace)
 }
 
 /**
@@ -73,7 +68,6 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
 class InteractiveFeature<FH : FeaturesetHolder>(
   featuresetHolder: FH,
   feature: Feature,
-  source: String,
   featureNamespace: String?,
   state: Value,
-) : BaseInteractiveFeature<FH, FeatureStateValue>(featuresetHolder, feature, source, featureNamespace, state)
+) : BaseInteractiveFeature<FH, FeatureStateValue>(featuresetHolder, feature, featureNamespace, state)
