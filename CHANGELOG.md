@@ -4,8 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
 * Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
 
+## Bug fixes 🐞
+* [compose] Fix `UnsatisfiedLinkError` issue when rendering preview. 
 
 # 11.6.0 August 16, 2024
 ## Breaking changes ⚠️
