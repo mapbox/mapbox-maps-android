@@ -1933,7 +1933,6 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun getModelCutoffFadeRange ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getModelEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getModelFrontCutoff ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getModelHeightBasedEmissiveStrengthMultiplier ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getModelHeightBasedEmissiveStrengthMultiplierTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getModelId ()Lcom/mapbox/maps/extension/compose/style/layers/ModelIdValue;
@@ -1965,7 +1964,6 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun setModelCutoffFadeRange (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setModelEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setModelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setModelFrontCutoff (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setModelHeightBasedEmissiveStrengthMultiplier (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setModelHeightBasedEmissiveStrengthMultiplierTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setModelId (Lcom/mapbox/maps/extension/compose/style/layers/ModelIdValue;)V
@@ -3006,9 +3004,10 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getAutoMaxZoom ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getBuffer ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getCluster ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getClusterMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
@@ -3025,6 +3024,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public final fun getTolerance ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public fun hashCode ()I
 	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setAutoMaxZoom (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setBuffer (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setCluster (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setClusterMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V

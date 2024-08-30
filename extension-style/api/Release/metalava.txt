@@ -3459,8 +3459,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getModelEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelEmissiveStrengthTransition();
-    method public java.util.List<java.lang.Double>? getModelFrontCutoff();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelFrontCutoffAsExpression();
     method public java.util.List<java.lang.Double>? getModelHeightBasedEmissiveStrengthMultiplier();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelHeightBasedEmissiveStrengthMultiplierAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelHeightBasedEmissiveStrengthMultiplierTransition();
@@ -3515,8 +3513,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(java.util.List<java.lang.Double> modelFrontCutoff);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(com.mapbox.maps.extension.style.expressions.generated.Expression modelFrontCutoff);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(java.util.List<java.lang.Double> modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.style.expressions.generated.Expression modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3574,8 +3570,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? modelEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelEmissiveStrengthTransition;
-    property public final java.util.List<java.lang.Double>? modelFrontCutoff;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelFrontCutoffAsExpression;
     property public final java.util.List<java.lang.Double>? modelHeightBasedEmissiveStrengthMultiplier;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelHeightBasedEmissiveStrengthMultiplierAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelHeightBasedEmissiveStrengthMultiplierTransition;
@@ -3630,8 +3624,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultModelEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelEmissiveStrengthTransition();
-    method public java.util.List<java.lang.Double>? getDefaultModelFrontCutoff();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelFrontCutoffAsExpression();
     method public java.util.List<java.lang.Double>? getDefaultModelHeightBasedEmissiveStrengthMultiplier();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelHeightBasedEmissiveStrengthMultiplierAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelHeightBasedEmissiveStrengthMultiplierTransition();
@@ -3678,8 +3670,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultModelEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelEmissiveStrengthTransition;
-    property public final java.util.List<java.lang.Double>? defaultModelFrontCutoff;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelFrontCutoffAsExpression;
     property public final java.util.List<java.lang.Double>? defaultModelHeightBasedEmissiveStrengthMultiplier;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelHeightBasedEmissiveStrengthMultiplierTransition;
@@ -3734,8 +3724,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(java.util.List<java.lang.Double> modelFrontCutoff = listOf(0.0, 0.0, 1.0));
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelFrontCutoff(com.mapbox.maps.extension.style.expressions.generated.Expression modelFrontCutoff);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(java.util.List<java.lang.Double> modelHeightBasedEmissiveStrengthMultiplier = listOf(1.0, 1.0, 1.0, 1.0, 0.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.style.expressions.generated.Expression modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6233,6 +6221,7 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class GeoJsonSource extends com.mapbox.maps.extension.style.sources.Source {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource autoMaxZoom(boolean value = false);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value, String dataId = "");
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource feature(com.mapbox.geojson.Feature value, String dataId = "");
@@ -6242,6 +6231,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource geometry(com.mapbox.geojson.Geometry value, String dataId = "");
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource geometry(com.mapbox.geojson.Geometry value);
     method public String? getAttribution();
+    method public Boolean? getAutoMaxZoom();
     method public Long? getBuffer();
     method public Boolean? getCluster();
     method public Long? getClusterMaxZoom();
@@ -6261,6 +6251,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value, String dataId = "");
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value);
     property public final String? attribution;
+    property public final Boolean? autoMaxZoom;
     property public final Long? buffer;
     property public final Boolean? cluster;
     property public final Long? clusterMaxZoom;
@@ -6281,6 +6272,7 @@ package com.mapbox.maps.extension.style.sources.generated {
   @com.mapbox.maps.extension.style.types.SourceDsl public static final class GeoJsonSource.Builder {
     ctor public GeoJsonSource.Builder(String sourceId);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder attribution(String value);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder autoMaxZoom(boolean value = false);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder buffer(long value = 128L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource build();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder cluster(boolean value = false);
@@ -6312,6 +6304,7 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public static final class GeoJsonSource.Companion {
+    method public Boolean? getDefaultAutoMaxZoom();
     method public Long? getDefaultBuffer();
     method public Boolean? getDefaultCluster();
     method public Long? getDefaultClusterMaxZoom();
@@ -6322,6 +6315,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getDefaultMaxzoom();
     method public Long? getDefaultPrefetchZoomDelta();
     method public Double? getDefaultTolerance();
+    property public final Boolean? defaultAutoMaxZoom;
     property public final Long? defaultBuffer;
     property public final Boolean? defaultCluster;
     property public final Long? defaultClusterMaxZoom;

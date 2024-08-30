@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.SourceDataLoadedCallback
 import com.mapbox.maps.SourceDataLoadedType
 import com.mapbox.maps.TileCacheBudget
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeoutException
 /**
  * Basic smoke tests for GeoJsonSource.
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class GeoJsonSourceTest : BaseStyleTest() {
   private var cancelable: Cancelable? = null
@@ -334,6 +336,28 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun autoMaxZoomTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+      autoMaxZoom(true)
+    }
+    setupSource(testSource)
+    assertEquals(true, testSource.autoMaxZoom)
+  }
+
+  @Test
+  @UiThreadTest
+  fun autoMaxZoomAfterBindTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.autoMaxZoom(true)
+    assertEquals(true, testSource.autoMaxZoom)
+  }
+
+  @Test
+  @UiThreadTest
   fun prefetchZoomDeltaTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
@@ -608,6 +632,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultClusterMinPoints should not be null", GeoJsonSource.defaultClusterMinPoints)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
     assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
+    assertNotNull("defaultAutoMaxZoom should not be null", GeoJsonSource.defaultAutoMaxZoom)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
   }
 

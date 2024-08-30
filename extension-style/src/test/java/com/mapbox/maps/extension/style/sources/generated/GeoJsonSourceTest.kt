@@ -11,6 +11,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -35,6 +36,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class GeoJsonSourceTest {
@@ -477,6 +479,37 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun autoMaxZoomSet() {
+    val testSource = geoJsonSource("testId") {
+      autoMaxZoom(true)
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("autoMaxZoom=true"))
+  }
+
+  @Test
+  fun autoMaxZoomSetAfterBind() {
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+    testSource.autoMaxZoom(true)
+
+    verify { style.setStyleSourceProperty("testId", "autoMaxZoom", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun autoMaxZoomGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(true.toString(), testSource.autoMaxZoom?.toString())
+    verify { style.getStyleSourceProperty("testId", "autoMaxZoom") }
+  }
+
+  @Test
   fun prefetchZoomDeltaSet() {
     val testSource = geoJsonSource("testId") {
       prefetchZoomDelta(1L)
@@ -827,6 +860,14 @@ class GeoJsonSourceTest {
 
     assertEquals(true.toString(), GeoJsonSource.defaultGenerateId?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId") }
+  }
+
+  @Test
+  fun defaultAutoMaxZoomGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+
+    assertEquals(true.toString(), GeoJsonSource.defaultAutoMaxZoom?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "autoMaxZoom") }
   }
 
   @Test

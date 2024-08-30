@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
@@ -75,6 +76,7 @@ public class GeoJsonSourceState private constructor(
   lineMetrics: BooleanValue,
   generateId: BooleanValue,
   promoteId: PromoteIdValue,
+  autoMaxZoom: BooleanValue,
   prefetchZoomDelta: LongValue,
   tileCacheBudget: TileCacheBudget,
 ) : SourceState(
@@ -101,6 +103,7 @@ public class GeoJsonSourceState private constructor(
     lineMetrics = BooleanValue.INITIAL,
     generateId = BooleanValue.INITIAL,
     promoteId = PromoteIdValue.INITIAL,
+    autoMaxZoom = BooleanValue.INITIAL,
     prefetchZoomDelta = LongValue.INITIAL,
     tileCacheBudget = TileCacheBudget.INITIAL,
   )
@@ -327,6 +330,27 @@ public class GeoJsonSourceState private constructor(
       }
     }
   }
+  private val autoMaxZoomState: MutableState<BooleanValue> = mutableStateOf(autoMaxZoom)
+
+  /**
+   * When set to true, the maxZoom property is ignored and is instead calculated automatically based on
+   * the largest bounding box from the geoJSON features. This resolves rendering artifacts for features that use
+   * wide blur (e.g. fill extrusion ground flood light or circle layer) and would bring performance improvement
+   * on lower zoom levels, especially for geoJSON sources that update data frequently. However, it can lead
+   * to flickering and precision loss on zoom levels above 19.
+   * Default value: false.
+   */
+  @MapboxExperimental
+  public var autoMaxZoom: BooleanValue by autoMaxZoomState
+
+  @Composable
+  private fun UpdateAutoMaxZoom() {
+    autoMaxZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("autoMaxZoom", value)
+      }
+    }
+  }
   private val prefetchZoomDeltaState: MutableState<LongValue> = mutableStateOf(prefetchZoomDelta)
 
   /**
@@ -379,6 +403,7 @@ public class GeoJsonSourceState private constructor(
     UpdateLineMetrics()
     UpdateGenerateId()
     UpdatePromoteId()
+    UpdateAutoMaxZoom()
     UpdatePrefetchZoomDelta()
     UpdateTileCacheBudget()
   }
@@ -397,6 +422,7 @@ public class GeoJsonSourceState private constructor(
       ("lineMetrics" to lineMetrics.value).takeIf { lineMetrics.notInitial },
       ("generateId" to generateId.value).takeIf { generateId.notInitial },
       ("promoteId" to promoteId.value).takeIf { promoteId.notInitial },
+      ("autoMaxZoom" to autoMaxZoom.value).takeIf { autoMaxZoom.notInitial },
       ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.notInitial },
       ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.notInitial },
     ).toMap()
@@ -424,6 +450,7 @@ public class GeoJsonSourceState private constructor(
     if (lineMetrics != other.lineMetrics) return false
     if (generateId != other.generateId) return false
     if (promoteId != other.promoteId) return false
+    if (autoMaxZoom != other.autoMaxZoom) return false
     if (prefetchZoomDelta != other.prefetchZoomDelta) return false
     if (tileCacheBudget != other.tileCacheBudget) return false
 
@@ -449,6 +476,7 @@ public class GeoJsonSourceState private constructor(
       lineMetrics,
       generateId,
       promoteId,
+      autoMaxZoom,
       prefetchZoomDelta,
       tileCacheBudget,
     )
@@ -458,7 +486,7 @@ public class GeoJsonSourceState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "GeoJsonSourceState(sourceId=$sourceId,  data=$data, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
+    "GeoJsonSourceState(sourceId=$sourceId,  data=$data, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, autoMaxZoom=$autoMaxZoom, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.
@@ -487,6 +515,7 @@ public class GeoJsonSourceState private constructor(
           lineMetrics = holder.savedProperties["lineMetrics"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
           generateId = holder.savedProperties["generateId"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
           promoteId = holder.savedProperties["promoteId"]?.let { PromoteIdValue(it.second) } ?: PromoteIdValue.INITIAL,
+          autoMaxZoom = holder.savedProperties["autoMaxZoom"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
           prefetchZoomDelta = holder.savedProperties["prefetch-zoom-delta"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
           tileCacheBudget = holder.savedProperties["tile-cache-budget"]?.let { TileCacheBudget(it.second) } ?: TileCacheBudget.INITIAL,
         )

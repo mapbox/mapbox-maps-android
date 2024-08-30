@@ -2909,8 +2909,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public final fun getModelEmissiveStrength ()Ljava/lang/Double;
 	public final fun getModelEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
-	public final fun getModelFrontCutoff ()Ljava/util/List;
-	public final fun getModelFrontCutoffAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelHeightBasedEmissiveStrengthMultiplier ()Ljava/util/List;
 	public final fun getModelHeightBasedEmissiveStrengthMultiplierAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelHeightBasedEmissiveStrengthMultiplierTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2967,8 +2965,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun modelEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelEmissiveStrengthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
-	public fun modelFrontCutoff (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
-	public fun modelFrontCutoff (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelHeightBasedEmissiveStrengthMultiplier (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelHeightBasedEmissiveStrengthMultiplier (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelHeightBasedEmissiveStrengthMultiplierTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3030,8 +3026,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$C
 	public final fun getDefaultModelEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultModelEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
-	public final fun getDefaultModelFrontCutoff ()Ljava/util/List;
-	public final fun getDefaultModelFrontCutoffAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelHeightBasedEmissiveStrengthMultiplier ()Ljava/util/List;
 	public final fun getDefaultModelHeightBasedEmissiveStrengthMultiplierAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelHeightBasedEmissiveStrengthMultiplierTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3086,8 +3080,6 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun modelEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelEmissiveStrengthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
-	public abstract fun modelFrontCutoff (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
-	public abstract fun modelFrontCutoff (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelHeightBasedEmissiveStrengthMultiplier (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelHeightBasedEmissiveStrengthMultiplier (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelHeightBasedEmissiveStrengthMultiplierTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3133,7 +3125,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerDs
 	public static synthetic fun modelColorMixIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelCutoffFadeRange$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
-	public static synthetic fun modelFrontCutoff$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelHeightBasedEmissiveStrengthMultiplier$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelId$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -5278,6 +5269,8 @@ public final class com/mapbox/maps/extension/style/sources/generated/Encoding$Co
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion;
 	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun autoMaxZoom (Z)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
+	public static synthetic fun autoMaxZoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
 	public final fun data (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun data (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
@@ -5292,6 +5285,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun geometry (Lcom/mapbox/geojson/Geometry;Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public static synthetic fun geometry$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;Lcom/mapbox/geojson/Geometry;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun getAttribution ()Ljava/lang/String;
+	public final fun getAutoMaxZoom ()Ljava/lang/Boolean;
 	public final fun getBuffer ()Ljava/lang/Long;
 	public final fun getCluster ()Ljava/lang/Boolean;
 	public final fun getClusterMaxZoom ()Ljava/lang/Long;
@@ -5317,6 +5311,8 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun attribution (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
+	public final fun autoMaxZoom (Z)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
+	public static synthetic fun autoMaxZoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun buffer (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public static synthetic fun buffer$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun build ()Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
@@ -5360,6 +5356,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 }
 
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion {
+	public final fun getDefaultAutoMaxZoom ()Ljava/lang/Boolean;
 	public final fun getDefaultBuffer ()Ljava/lang/Long;
 	public final fun getDefaultCluster ()Ljava/lang/Boolean;
 	public final fun getDefaultClusterMaxZoom ()Ljava/lang/Long;

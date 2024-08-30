@@ -2327,7 +2327,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getModelCutoffFadeRange();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getModelEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getModelEmissiveStrengthTransition();
-    method public com.mapbox.maps.extension.compose.style.DoubleListValue getModelFrontCutoff();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getModelHeightBasedEmissiveStrengthMultiplier();
     method public com.mapbox.maps.extension.compose.style.Transition getModelHeightBasedEmissiveStrengthMultiplierTransition();
     method public com.mapbox.maps.extension.compose.style.layers.ModelIdValue getModelId();
@@ -2359,7 +2358,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setModelCutoffFadeRange(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setModelEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setModelEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
-    method public void setModelFrontCutoff(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setModelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setModelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setModelId(com.mapbox.maps.extension.compose.style.layers.ModelIdValue);
@@ -2391,7 +2389,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue modelCutoffFadeRange;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue modelEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition modelEmissiveStrengthTransition;
-    property public final com.mapbox.maps.extension.compose.style.DoubleListValue modelFrontCutoff;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue modelHeightBasedEmissiveStrengthMultiplier;
     property public final com.mapbox.maps.extension.compose.style.Transition modelHeightBasedEmissiveStrengthMultiplierTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.ModelIdValue modelId;
@@ -3506,6 +3503,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   @androidx.compose.runtime.Stable public final class GeoJsonSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
     ctor public GeoJsonSourceState(String sourceId = generateRandomSourceId("geojson"));
     method public com.mapbox.maps.extension.compose.style.StringValue getAttribution();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getAutoMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getBuffer();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getCluster();
     method public com.mapbox.maps.extension.compose.style.LongValue getClusterMaxZoom();
@@ -3521,6 +3519,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public com.mapbox.maps.extension.compose.style.sources.TileCacheBudget getTileCacheBudget();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getTolerance();
     method public void setAttribution(com.mapbox.maps.extension.compose.style.StringValue);
+    method public void setAutoMaxZoom(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setBuffer(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setCluster(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setClusterMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
@@ -3536,6 +3535,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public void setTileCacheBudget(com.mapbox.maps.extension.compose.style.sources.TileCacheBudget);
     method public void setTolerance(com.mapbox.maps.extension.compose.style.DoubleValue);
     property public final com.mapbox.maps.extension.compose.style.StringValue attribution;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue autoMaxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue buffer;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue cluster;
     property public final com.mapbox.maps.extension.compose.style.LongValue clusterMaxZoom;

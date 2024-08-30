@@ -38,7 +38,6 @@ public class ModelLayerState private constructor(
   initialModelCutoffFadeRange: DoubleValue,
   initialModelEmissiveStrength: DoubleValue,
   initialModelEmissiveStrengthTransition: Transition,
-  initialModelFrontCutoff: DoubleListValue,
   initialModelHeightBasedEmissiveStrengthMultiplier: DoubleListValue,
   initialModelHeightBasedEmissiveStrengthMultiplierTransition: Transition,
   initialModelOpacity: DoubleValue,
@@ -75,7 +74,6 @@ public class ModelLayerState private constructor(
     initialModelCutoffFadeRange = DoubleValue.INITIAL,
     initialModelEmissiveStrength = DoubleValue.INITIAL,
     initialModelEmissiveStrengthTransition = Transition.INITIAL,
-    initialModelFrontCutoff = DoubleListValue.INITIAL,
     initialModelHeightBasedEmissiveStrengthMultiplier = DoubleListValue.INITIAL,
     initialModelHeightBasedEmissiveStrengthMultiplierTransition = Transition.INITIAL,
     initialModelOpacity = DoubleValue.INITIAL,
@@ -153,11 +151,6 @@ public class ModelLayerState private constructor(
    */
   @MapboxExperimental
   public var modelEmissiveStrengthTransition: Transition by mutableStateOf(initialModelEmissiveStrengthTransition)
-  /**
-   *  An array for configuring the fade-out effect for the front cutoff of content on pitched map views. It contains three values: start, range and final opacity. The start parameter defines the point at which the fade-out effect begins, with smaller values causing the effect to start earlier. The range parameter specifies how long the fade-out effect will last. A value of 0.0 for range makes content disappear immediately without a fade-out effect. The final opacity determines content opacity at the end of the fade-out effect. A value of 1.0 for final opacity means that the cutoff is completely disabled. Default value: [0,0,1]. Minimum value: [0,0,0]. Maximum value: [1,1,1].
-   */
-  @MapboxExperimental
-  public var modelFrontCutoff: DoubleListValue by mutableStateOf(initialModelFrontCutoff)
   /**
    *  Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    */
@@ -336,13 +329,6 @@ public class ModelLayerState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateModelFrontCutoff(layerNode: LayerNode) {
-    if (modelFrontCutoff.notInitial) {
-      layerNode.setProperty("model-front-cutoff", modelFrontCutoff.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateModelHeightBasedEmissiveStrengthMultiplier(layerNode: LayerNode) {
     if (modelHeightBasedEmissiveStrengthMultiplier.notInitial) {
       layerNode.setProperty("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier.value)
@@ -490,7 +476,6 @@ public class ModelLayerState private constructor(
     UpdateModelCutoffFadeRange(layerNode)
     UpdateModelEmissiveStrength(layerNode)
     UpdateModelEmissiveStrengthTransition(layerNode)
-    UpdateModelFrontCutoff(layerNode)
     UpdateModelHeightBasedEmissiveStrengthMultiplier(layerNode)
     UpdateModelHeightBasedEmissiveStrengthMultiplierTransition(layerNode)
     UpdateModelOpacity(layerNode)

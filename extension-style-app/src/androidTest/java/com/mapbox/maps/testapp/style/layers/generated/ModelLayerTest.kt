@@ -390,30 +390,6 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun modelFrontCutoffTest() {
-    val testValue = listOf(0.0, 1.0, 2.0)
-    val layer = modelLayer("id", "source") {
-      modelFrontCutoff(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.modelFrontCutoff?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun modelFrontCutoffAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0, 2.0))
-    val layer = modelLayer("id", "source") {
-      modelFrontCutoff(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.modelFrontCutoffAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0, 2.0), layer.modelFrontCutoff!!)
-  }
-
-  @Test
-  @UiThreadTest
   fun modelHeightBasedEmissiveStrengthMultiplierTest() {
     val testValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
     val layer = modelLayer("id", "source") {
@@ -892,8 +868,6 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelEmissiveStrength should not be null", ModelLayer.defaultModelEmissiveStrength)
     assertNotNull("defaultModelEmissiveStrengthAsExpression should not be null", ModelLayer.defaultModelEmissiveStrengthAsExpression)
     assertNotNull("defaultModelEmissiveStrengthTransition should not be null", ModelLayer.defaultModelEmissiveStrengthTransition)
-    assertNotNull("defaultModelFrontCutoff should not be null", ModelLayer.defaultModelFrontCutoff)
-    assertNotNull("defaultModelFrontCutoffAsExpression should not be null", ModelLayer.defaultModelFrontCutoffAsExpression)
     assertNotNull("defaultModelHeightBasedEmissiveStrengthMultiplier should not be null", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier)
     assertNotNull("defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression should not be null", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression)
     assertNotNull("defaultModelHeightBasedEmissiveStrengthMultiplierTransition should not be null", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierTransition)
@@ -936,7 +910,6 @@ class ModelLayerTest : BaseStyleTest() {
     val modelColorMixIntensityTestValue = 1.0
     val modelCutoffFadeRangeTestValue = 1.0
     val modelEmissiveStrengthTestValue = 1.0
-    val modelFrontCutoffTestValue = listOf(0.0, 1.0, 2.0)
     val modelHeightBasedEmissiveStrengthMultiplierTestValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
     val modelOpacityTestValue = 1.0
     val modelReceiveShadowsTestValue = true
@@ -961,7 +934,6 @@ class ModelLayerTest : BaseStyleTest() {
       modelColorMixIntensity(modelColorMixIntensityTestValue)
       modelCutoffFadeRange(modelCutoffFadeRangeTestValue)
       modelEmissiveStrength(modelEmissiveStrengthTestValue)
-      modelFrontCutoff(modelFrontCutoffTestValue)
       modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplierTestValue)
       modelOpacity(modelOpacityTestValue)
       modelReceiveShadows(modelReceiveShadowsTestValue)
@@ -991,7 +963,6 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(modelColorMixIntensityTestValue, cachedLayer.modelColorMixIntensity)
     assertEquals(modelCutoffFadeRangeTestValue, cachedLayer.modelCutoffFadeRange)
     assertEquals(modelEmissiveStrengthTestValue, cachedLayer.modelEmissiveStrength)
-    assertEquals(modelFrontCutoffTestValue, cachedLayer.modelFrontCutoff)
     assertEquals(modelHeightBasedEmissiveStrengthMultiplierTestValue, cachedLayer.modelHeightBasedEmissiveStrengthMultiplier)
     assertEquals(modelOpacityTestValue, cachedLayer.modelOpacity)
     assertEquals(modelReceiveShadowsTestValue, cachedLayer.modelReceiveShadows)
