@@ -837,7 +837,7 @@ class MapboxMap :
     return nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset).getValueOrElse {
       logE(
         TAG,
-        "Error occurred in synchronous cameraForCoordinates: $it, empty cameraState will be returned"
+        "Error occurred in synchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
       )
       return@getValueOrElse cameraOptions { }
     }
@@ -869,7 +869,7 @@ class MapboxMap :
           .getValueOrElse {
             logE(
               TAG,
-              "Error occurred in asynchronous cameraForCoordinates: $it, empty cameraState will be returned"
+              "Error occurred in asynchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
             )
             return@getValueOrElse cameraOptions { }
           }
