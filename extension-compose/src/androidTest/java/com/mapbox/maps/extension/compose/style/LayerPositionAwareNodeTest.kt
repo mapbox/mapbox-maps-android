@@ -24,7 +24,7 @@ import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.MapboxMapComposable
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroup
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
@@ -476,7 +476,7 @@ public class LayerPositionAwareNodeTest {
             Modifier
                 .fillMaxSize()
                 .testTag(MAP_TEST_TAG),
-          mapViewportState = MapViewportState().apply {
+          mapViewportState = rememberMapViewportState {
             setCameraOptions {
               zoom(ZOOM)
               center(cameraCenter)

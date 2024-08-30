@@ -29,7 +29,7 @@ import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.R
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroup
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
@@ -303,7 +303,7 @@ public class AnnotationTests {
       Box(modifier = Modifier.fillMaxSize()) {
         MapboxMap(
           modifier = Modifier.testTag(MAP_TEST_TAG),
-          mapViewportState = MapViewportState().apply {
+          mapViewportState = rememberMapViewportState {
             setCameraOptions {
               zoom(zoom)
               center(cameraCenter)

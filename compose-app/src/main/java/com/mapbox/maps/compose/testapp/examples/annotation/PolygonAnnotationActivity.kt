@@ -21,7 +21,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.style.MapStyle
 
@@ -51,7 +51,7 @@ public class PolygonAnnotationActivity : ComponentActivity() {
         ) {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapViewportState = MapViewportState().apply {
+            mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
                 center(CAMERA_CENTER)

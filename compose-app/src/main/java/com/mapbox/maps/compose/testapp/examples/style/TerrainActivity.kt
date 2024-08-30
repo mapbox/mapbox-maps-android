@@ -22,7 +22,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.LongValue
@@ -95,7 +95,7 @@ public class TerrainActivity : ComponentActivity() {
         ) {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapViewportState = MapViewportState().apply {
+            mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
                 center(CENTER)

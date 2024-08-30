@@ -43,7 +43,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.R
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import java.util.Random
 
 /**
@@ -195,7 +195,7 @@ public class OrnamentCustomisationActivity : ComponentActivity() {
             logo = {
               Logo(modifier = Modifier.padding(scaffoldPadding))
             },
-            mapViewportState = MapViewportState().apply {
+            mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
                 center(CityLocations.HELSINKI)

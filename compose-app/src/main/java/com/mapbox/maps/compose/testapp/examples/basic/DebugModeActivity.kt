@@ -15,7 +15,7 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.logI
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ public class DebugModeActivity : ComponentActivity() {
     ExampleScaffold {
       MapboxMap(
         Modifier.fillMaxSize(),
-        mapViewportState = MapViewportState().apply {
+        mapViewportState = rememberMapViewportState {
           setCameraOptions {
             center(CityLocations.BERLIN)
             zoom(ZOOM)

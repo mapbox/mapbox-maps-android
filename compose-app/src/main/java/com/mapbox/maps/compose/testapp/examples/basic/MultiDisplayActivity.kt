@@ -26,7 +26,7 @@ import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 
 /**
  * Showcase showing a map in a secondary display.
@@ -67,7 +67,7 @@ public class MultiDisplayActivity : ComponentActivity() {
           if (mapOnDefaultDisplay) {
             MapboxMap(
               Modifier.fillMaxSize(),
-              mapViewportState = MapViewportState().apply {
+              mapViewportState = rememberMapViewportState {
                 setCameraOptions {
                   center(CityLocations.HELSINKI)
                   zoom(15.0)
