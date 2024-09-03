@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.7.0-beta.1 September 03, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `PointAnnotationState.iconOcclusionOpacity`, `PointAnnotationState.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
 * [compose] Remove `MapboxExperimental` from `PolylineAnnotationGroupState.lineOcclusionOpacity`, `PointAnnotationGroupState.iconOcclusionOpacity`, `PointAnnotationGroupState.textOcclusionOpacity`.
@@ -51,6 +53,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * Experimental `GeoJsonSource.autoMaxZoom` and `GeoJsonSourceState.autoMaxZoom` will return `null` value even after it's set.
+
 
 # 11.6.0 August 16, 2024
 ## Breaking changes ⚠️
