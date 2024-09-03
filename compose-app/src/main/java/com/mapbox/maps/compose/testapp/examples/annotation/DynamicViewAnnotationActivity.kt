@@ -1,5 +1,6 @@
 package com.mapbox.maps.compose.testapp.examples.annotation
 
+import android.graphics.Matrix
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
@@ -31,12 +32,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.asAndroidPath
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mapbox.geojson.Feature
@@ -418,24 +431,15 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
       modifier = Modifier
         .width(120.dp)
         .height(60.dp)
+        .shadow(elevation = 8.dp, CalloutShape(etaViewAnnotationAnchor))
+        .background(Color(0xFF4264FB))
+//        .background(Color(0xFF4264FB), CalloutShape(etaViewAnnotationAnchor)) // this works, but I need clipping for shadows and ripple
         .clickable(
           interactionSource = remember { MutableInteractionSource() },
           indication = null,
           onClick = onClick
         )
     ) {
-      Image(
-        modifier = Modifier
-          .fillMaxSize()
-          .scale(
-            scaleX = etaViewAnnotationAnchor.getScaleX(),
-            scaleY = etaViewAnnotationAnchor.getScaleY()
-          ),
-        painter = painterResource(id = R.drawable.bg_dva_eta),
-        contentDescription = "Eta label",
-        contentScale = ContentScale.FillBounds,
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
-      )
       Text(
         modifier = Modifier.align(Alignment.Center),
         text = "25 min",
@@ -598,5 +602,68 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
     const val ROUTE_ALT_GEOJSON = "dva-sf-route-alternative.geojson"
     const val PARKINGS_GEOJSON = "dva-sf-parkings.geojson"
     const val CONSTRUCTION_GEOJSON = "dva-sf-construction.geojson"
+  }
+}
+
+private data class CalloutShape(private val anchor: ViewAnnotationAnchor?) : Shape {
+
+  override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
+    val path = Path()
+    val scaledSize = size / density.density
+    path.addArrow(anchor, scaledSize)
+    path.addRoundRect(RoundRect(scaledSize.toRect().deflate(delta = 12f), CornerRadius(x = 16f)))
+    val matrix = Matrix()
+    matrix.setScale(density.density, density.density)
+    path.asAndroidPath().transform(matrix)
+    return Outline.Generic(path)
+  }
+}
+
+private fun Path.addArrow(anchor: ViewAnnotationAnchor?, size: Size) {
+  when (anchor) {
+    ViewAnnotationAnchor.TOP_LEFT -> addPath(
+      Path().apply {
+        moveTo(x = 32f, y = 12f)
+        cubicTo(x1 = 26f, y1 = 12f, x2 = 24.7f, y2 = 11.5f, x3 = 21.1f, y3 = 9.7f)
+        lineTo(x = 1.4f, y = 0.1f)
+        cubicTo(x1 = 0.6f, y1 = -0.3f, x2 = -0.3f, y2 = 0.6f, x3 = 0.1f, y3 = 1.5f)
+        lineTo(x = 9.8f, y = 21f)
+        cubicTo(x1 = 11.5f, y1 = 24.7f, x2 = 12f, y2 = 26f, x3 = 12f, y3 = 32f)
+      },
+    )
+    ViewAnnotationAnchor.TOP_RIGHT -> addPath(
+      Path().apply {
+        moveTo(x = 20f, y = 32f)
+        cubicTo(x1 = 20f, y1 = 26f, x2 = 20.5f, y2 = 24.7f, x3 = 22.2f, y3 = 21f)
+        lineTo(x = 31.9f, y = 1.5f)
+        cubicTo(x1 = 32.3f, y1 = 0.6f, x2 = 31.4f, y2 = -0.3f, x3 = 30.6f, y3 = 0.1f)
+        lineTo(x = 10.9f, y = 9.7f)
+        cubicTo(x1 = 7.3f, y1 = 11.5f, x2 = 6f, y2 = 12f, x3 = 0f, y3 = 12f)
+      },
+      Offset(x = size.width - 32f, y = 0f),
+    )
+    ViewAnnotationAnchor.BOTTOM_RIGHT -> addPath(
+      Path().apply {
+        moveTo(x = 0f, y = 20f)
+        cubicTo(x1 = 6f, y1 = 20f, x2 = 7.3f, y2 = 20.5f, x3 = 10.9f, y3 = 22.3f)
+        lineTo(x = 30.6f, y = 31.9f)
+        cubicTo(x1 = 31.4f, y1 = 32.3f, x2 = 32.3f, y2 = 31.4f, x3 = 31.9f, y3 = 30.5f)
+        lineTo(x = 22.2f, y = 11f)
+        cubicTo(x1 = 20.5f, y1 = 7.3f, x2 = 20f, y2 = 6f, x3 = 20f, y3 = 0f)
+      },
+      Offset(x = size.width - 32f, y = size.height - 32f),
+    )
+    ViewAnnotationAnchor.BOTTOM_LEFT -> addPath(
+      Path().apply {
+        moveTo(x = 12f, y = 0f)
+        cubicTo(x1 = 12f, y1 = 6f, x2 = 11.5f, y2 = 7.3f, x3 = 9.8f, y3 = 11f)
+        lineTo(x = 0.1f, y = 30.5f)
+        cubicTo(x1 = -0.3f, y1 = 31.4f, x2 = 0.6f, y2 = 32.3f, x3 = 1.4f, y3 = 31.9f)
+        lineTo(x = 21.1f, y = 22.3f)
+        cubicTo(x1 = 24.7f, y1 = 20.5f, x2 = 26f, y2 = 20f, x3 = 32f, y3 = 20f)
+      },
+      Offset(x = 0f, y = size.height - 32f),
+    )
+    else -> return
   }
 }
