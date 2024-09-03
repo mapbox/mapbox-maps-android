@@ -362,24 +362,9 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    * Default value: false.
    */
   @MapboxExperimental
-  fun autoMaxZoom(value: Boolean = false): GeoJsonSource = apply {
-    setProperty(PropertyValue("autoMaxZoom", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * When set to true, the maxZoom property is ignored and is instead calculated automatically based on
-   * the largest bounding box from the geoJSON features. This resolves rendering artifacts for features that use
-   * wide blur (e.g. fill extrusion ground flood light or circle layer) and would bring performance improvement
-   * on lower zoom levels, especially for geoJSON sources that update data frequently. However, it can lead
-   * to flickering and precision loss on zoom levels above 19.
-   * Default value: false.
-   */
-  @MapboxExperimental
   val autoMaxZoom: Boolean?
     /**
      * Get the AutoMaxZoom property
-     *
-     * Use static method [GeoJsonSource.defaultAutoMaxZoom] to get the default property.
      *
      * @return Boolean
      */
@@ -955,23 +940,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
        * @return Boolean
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap()
-
-    /**
-     * When set to true, the maxZoom property is ignored and is instead calculated automatically based on
-     * the largest bounding box from the geoJSON features. This resolves rendering artifacts for features that use
-     * wide blur (e.g. fill extrusion ground flood light or circle layer) and would bring performance improvement
-     * on lower zoom levels, especially for geoJSON sources that update data frequently. However, it can lead
-     * to flickering and precision loss on zoom levels above 19.
-     * Default value: false.
-     */
-    @MapboxExperimental
-    val defaultAutoMaxZoom: Boolean?
-      /**
-       * Get the AutoMaxZoom property
-       *
-       * @return Boolean
-       */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "autoMaxZoom").silentUnwrap()
 
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map

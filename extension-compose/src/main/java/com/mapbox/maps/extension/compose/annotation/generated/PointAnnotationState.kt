@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PointAnnotationNode
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
@@ -49,6 +50,7 @@ public class PointAnnotationState private constructor(
   initialIconImageCrossFade: Double?,
   initialIconOcclusionOpacity: Double?,
   initialIconOpacity: Double?,
+  initialSymbolZOffset: Double?,
   initialTextColor: Color?,
   initialTextEmissiveStrength: Double?,
   initialTextHaloBlur: Double?,
@@ -85,6 +87,7 @@ public class PointAnnotationState private constructor(
     initialIconImageCrossFade = null,
     initialIconOcclusionOpacity = null,
     initialIconOpacity = null,
+    initialSymbolZOffset = null,
     initialTextColor = null,
     initialTextEmissiveStrength = null,
     initialTextHaloBlur = null,
@@ -198,6 +201,11 @@ public class PointAnnotationState private constructor(
    * The opacity at which the icon will be drawn.
    */
   public var iconOpacity: Double? by mutableStateOf(initialIconOpacity)
+  /**
+   * Specifies an uniform elevation from the ground, in meters.
+   */
+  @MapboxExperimental
+  public var symbolZOffset: Double? by mutableStateOf(initialSymbolZOffset)
   /**
    * The color with which the text will be drawn.
    */
@@ -495,6 +503,16 @@ public class PointAnnotationState private constructor(
     )
   }
   @Composable
+  private fun UpdateSymbolZOffset(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.symbolZOffset = symbolZOffset
+      }
+    )
+  }
+  @Composable
   private fun UpdateTextColor(
     annotationNode: PointAnnotationNode
   ) {
@@ -595,6 +613,7 @@ public class PointAnnotationState private constructor(
     UpdateIconImageCrossFade(annotationNode)
     UpdateIconOcclusionOpacity(annotationNode)
     UpdateIconOpacity(annotationNode)
+    UpdateSymbolZOffset(annotationNode)
     UpdateTextColor(annotationNode)
     UpdateTextEmissiveStrength(annotationNode)
     UpdateTextHaloBlur(annotationNode)

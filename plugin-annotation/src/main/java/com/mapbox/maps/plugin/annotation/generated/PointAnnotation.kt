@@ -1020,6 +1020,39 @@ class PointAnnotation(
     }
 
   /**
+   * The symbolZOffset property
+   *
+   * Specifies an uniform elevation from the ground, in meters.
+   */
+  var symbolZOffset: Double?
+    /**
+     * Get the symbolZOffset property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the symbolZOffset property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)
+      }
+    }
+
+  /**
    * The textColor property in Int
    * The color with which the text will be drawn.
    */
@@ -1419,6 +1452,9 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR)

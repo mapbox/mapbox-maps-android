@@ -39,14 +39,14 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    */
   var circleBlur: Double? = null
 
   /**
    * Set circle-blur to initialise the circleAnnotation with.
    *
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
    *
    * @param circleBlur the circle-blur value
    * @return this

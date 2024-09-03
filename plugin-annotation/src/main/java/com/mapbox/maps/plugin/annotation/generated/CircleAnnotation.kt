@@ -86,7 +86,7 @@ class CircleAnnotation(
   /**
    * The circleBlur property
    *
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
    */
   var circleBlur: Double?
     /**

@@ -324,6 +324,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.geojson.Point? getOffsetGeometry(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate, com.mapbox.android.gestures.MoveDistancesObject moveDistancesObject);
     method public com.mapbox.geojson.Point getPoint();
     method public Double? getSymbolSortKey();
+    method public Double? getSymbolZOffset();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
     method @ColorInt public Integer? getTextColorInt();
     method public String? getTextColorString();
@@ -365,6 +366,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setPoint(com.mapbox.geojson.Point);
     method public void setSymbolSortKey(Double?);
+    method public void setSymbolZOffset(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColorInt(@ColorInt Integer?);
     method public void setTextColorString(String?);
@@ -406,6 +408,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final com.mapbox.geojson.Point point;
     property public final Double? symbolSortKey;
+    property public final Double? symbolZOffset;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property @ColorInt public final Integer? textColorInt;
     property public final String? textColorString;
@@ -470,10 +473,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method public String? getSlot();
     method public Boolean? getSymbolAvoidEdges();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
     method public Double? getSymbolSortKey();
     method public Double? getSymbolSpacing();
     method public Boolean? getSymbolZElevate();
+    method public Double? getSymbolZOffset();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? getSymbolZOrder();
     method public Boolean? getTextAllowOverlap();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
@@ -540,10 +545,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     method public void setSlot(String?);
     method public void setSymbolAvoidEdges(Boolean?);
+    method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
     method public void setSymbolSortKey(Double?);
     method public void setSymbolSpacing(Double?);
     method public void setSymbolZElevate(Boolean?);
+    method public void setSymbolZOffset(Double?);
     method public void setSymbolZOrder(com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder?);
     method public void setTextAllowOverlap(Boolean?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
@@ -609,10 +616,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public final String? slot;
     property public final Boolean? symbolAvoidEdges;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
     property public final Double? symbolSortKey;
     property public final Double? symbolSpacing;
     property public final Boolean? symbolZElevate;
+    property public final Double? symbolZOffset;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder;
     property public final Boolean? textAllowOverlap;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
@@ -683,6 +692,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public com.mapbox.geojson.Point? getPoint();
     method public Double? getSymbolSortKey();
+    method public Double? getSymbolZOffset();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
     method public String? getTextColor();
     method public Double? getTextEmissiveStrength();
@@ -717,6 +727,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setSymbolSortKey(Double?);
+    method public void setSymbolZOffset(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColor(String?);
     method public void setTextEmissiveStrength(Double?);
@@ -758,6 +769,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconTextFitPadding(java.util.List<java.lang.Double> iconTextFitPadding);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withPoint(com.mapbox.geojson.Point point);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withSymbolSortKey(double symbolSortKey);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withSymbolZOffset(double symbolZOffset);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor textAnchor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextColor(String textColor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextColor(@ColorInt int textColor);
@@ -794,6 +806,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final Double? symbolSortKey;
+    property public final Double? symbolZOffset;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property public final String? textColor;
     property public final Double? textEmissiveStrength;
@@ -829,6 +842,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_ICON_TEXT_FIT = "icon-text-fit";
     field public static final String PROPERTY_ICON_TEXT_FIT_PADDING = "icon-text-fit-padding";
     field public static final String PROPERTY_SYMBOL_SORT_KEY = "symbol-sort-key";
+    field public static final String PROPERTY_SYMBOL_Z_OFFSET = "symbol-z-offset";
     field public static final String PROPERTY_TEXT_ANCHOR = "text-anchor";
     field public static final String PROPERTY_TEXT_COLOR = "text-color";
     field public static final String PROPERTY_TEXT_EMISSIVE_STRENGTH = "text-emissive-strength";

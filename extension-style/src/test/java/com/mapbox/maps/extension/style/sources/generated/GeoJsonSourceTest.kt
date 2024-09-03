@@ -490,16 +490,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun autoMaxZoomSetAfterBind() {
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-    testSource.autoMaxZoom(true)
-
-    verify { style.setStyleSourceProperty("testId", "autoMaxZoom", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "true")
-  }
-
-  @Test
   fun autoMaxZoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
@@ -860,14 +850,6 @@ class GeoJsonSourceTest {
 
     assertEquals(true.toString(), GeoJsonSource.defaultGenerateId?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId") }
-  }
-
-  @Test
-  fun defaultAutoMaxZoomGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-
-    assertEquals(true.toString(), GeoJsonSource.defaultAutoMaxZoom?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "autoMaxZoom") }
   }
 
   @Test

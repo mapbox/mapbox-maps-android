@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
@@ -90,6 +91,9 @@ public class SymbolLayerState private constructor(
   initialIconTranslate: DoubleListValue,
   initialIconTranslateTransition: Transition,
   initialIconTranslateAnchor: IconTranslateAnchorValue,
+  initialSymbolElevationReference: SymbolElevationReferenceValue,
+  initialSymbolZOffset: DoubleValue,
+  initialSymbolZOffsetTransition: Transition,
   initialTextColor: ColorValue,
   initialTextColorTransition: Transition,
   initialTextEmissiveStrength: DoubleValue,
@@ -180,6 +184,9 @@ public class SymbolLayerState private constructor(
     initialIconTranslate = DoubleListValue.INITIAL,
     initialIconTranslateTransition = Transition.INITIAL,
     initialIconTranslateAnchor = IconTranslateAnchorValue.INITIAL,
+    initialSymbolElevationReference = SymbolElevationReferenceValue.INITIAL,
+    initialSymbolZOffset = DoubleValue.INITIAL,
+    initialSymbolZOffsetTransition = Transition.INITIAL,
     initialTextColor = ColorValue.INITIAL,
     initialTextColorTransition = Transition.INITIAL,
     initialTextEmissiveStrength = DoubleValue.INITIAL,
@@ -456,6 +463,21 @@ public class SymbolLayerState private constructor(
    *  Controls the frame of reference for `icon-translate`. Default value: "map".
    */
   public var iconTranslateAnchor: IconTranslateAnchorValue by mutableStateOf(initialIconTranslateAnchor)
+  /**
+   *  Selects the base of symbol-elevation. Default value: "ground".
+   */
+  @MapboxExperimental
+  public var symbolElevationReference: SymbolElevationReferenceValue by mutableStateOf(initialSymbolElevationReference)
+  /**
+   *  Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  public var symbolZOffset: DoubleValue by mutableStateOf(initialSymbolZOffset)
+  /**
+   *  Defines the transition of [symbolZOffset]. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  public var symbolZOffsetTransition: Transition by mutableStateOf(initialSymbolZOffsetTransition)
   /**
    *  The color with which the text will be drawn. Default value: "#000000".
    */
@@ -927,6 +949,27 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolElevationReference(layerNode: LayerNode) {
+    if (symbolElevationReference.notInitial) {
+      layerNode.setProperty("symbol-elevation-reference", symbolElevationReference.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolZOffset(layerNode: LayerNode) {
+    if (symbolZOffset.notInitial) {
+      layerNode.setProperty("symbol-z-offset", symbolZOffset.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolZOffsetTransition(layerNode: LayerNode) {
+    if (symbolZOffsetTransition.notInitial) {
+      layerNode.setProperty("symbol-z-offset-transition", symbolZOffsetTransition.value)
+    }
+  }
+  @Composable
   private fun UpdateTextColor(layerNode: LayerNode) {
     if (textColor.notInitial) {
       layerNode.setProperty("text-color", textColor.value)
@@ -1124,6 +1167,9 @@ public class SymbolLayerState private constructor(
     UpdateIconTranslate(layerNode)
     UpdateIconTranslateTransition(layerNode)
     UpdateIconTranslateAnchor(layerNode)
+    UpdateSymbolElevationReference(layerNode)
+    UpdateSymbolZOffset(layerNode)
+    UpdateSymbolZOffsetTransition(layerNode)
     UpdateTextColor(layerNode)
     UpdateTextColorTransition(layerNode)
     UpdateTextEmissiveStrength(layerNode)

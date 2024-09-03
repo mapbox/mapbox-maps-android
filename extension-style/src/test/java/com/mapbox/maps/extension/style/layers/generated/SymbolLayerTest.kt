@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class SymbolLayerTest {
@@ -4362,6 +4364,181 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun symbolElevationReferenceSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolElevationReference(SymbolElevationReference.SEA)
+    verify { style.setStyleLayerProperty("id", "symbol-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "sea")
+  }
+
+  @Test
+  fun symbolElevationReferenceGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
+
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun symbolElevationReferenceAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolElevationReference(expression)
+    verify { style.setStyleLayerProperty("id", "symbol-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun symbolElevationReferenceAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.symbolElevationReferenceAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun symbolElevationReferenceAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.symbolElevationReferenceAsExpression)
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun symbolElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "sea"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.symbolElevationReferenceAsExpression?.toString())
+    assertEquals(SymbolElevationReference.SEA.value, layer.symbolElevationReferenceAsExpression.toString())
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun symbolZOffsetSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.symbolZOffset(testValue)
+    verify { style.setStyleLayerProperty("id", "symbol-z-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun symbolZOffsetGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.symbolZOffset?.toString())
+    verify { style.getStyleLayerProperty("id", "symbol-z-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun symbolZOffsetAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolZOffset(expression)
+    verify { style.setStyleLayerProperty("id", "symbol-z-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun symbolZOffsetAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.symbolZOffsetAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "symbol-z-offset") }
+  }
+
+  @Test
+  fun symbolZOffsetAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.symbolZOffsetAsExpression)
+    verify { style.getStyleLayerProperty("id", "symbol-z-offset") }
+  }
+
+  @Test
+  fun symbolZOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.symbolZOffsetAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.symbolZOffset!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "symbol-z-offset") }
+  }
+
+  @Test
+  fun symbolZOffsetTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolZOffsetTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "symbol-z-offset-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun symbolZOffsetTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.symbolZOffsetTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "symbol-z-offset-transition") }
+  }
+
+  @Test
+  fun symbolZOffsetTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolZOffsetTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "symbol-z-offset-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun textColorSet() {
     val layer = symbolLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -7399,6 +7576,83 @@ class SymbolLayerTest {
     assertEquals(IconTranslateAnchor.MAP.value, SymbolLayer.defaultIconTranslateAnchorAsExpression.toString())
     assertEquals(IconTranslateAnchor.MAP, SymbolLayer.defaultIconTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor") }
+  }
+
+  @Test
+  fun defaultSymbolElevationReferenceTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
+
+    assertEquals(SymbolElevationReference.SEA, SymbolLayer.defaultSymbolElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultSymbolElevationReferenceAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultSymbolElevationReferenceAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun defaultSymbolElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "sea"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), SymbolLayer.defaultSymbolElevationReferenceAsExpression?.toString())
+    assertEquals(SymbolElevationReference.SEA.value, SymbolLayer.defaultSymbolElevationReferenceAsExpression.toString())
+    assertEquals(SymbolElevationReference.SEA, SymbolLayer.defaultSymbolElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun defaultSymbolZOffsetTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultSymbolZOffset?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultSymbolZOffsetAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultSymbolZOffsetAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset") }
+  }
+
+  @Test
+  fun defaultSymbolZOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultSymbolZOffsetAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultSymbolZOffset!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset") }
+  }
+
+  @Test
+  fun defaultSymbolZOffsetTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultSymbolZOffsetTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset-transition") }
   }
 
   @Test

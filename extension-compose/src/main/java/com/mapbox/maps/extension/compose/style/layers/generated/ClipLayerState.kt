@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringListValue
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
@@ -21,6 +22,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Stable
 @MapboxExperimental
 public class ClipLayerState private constructor(
+  initialClipLayerScope: StringListValue,
   initialClipLayerTypes: ClipLayerTypesListValue,
   initialVisibility: VisibilityValue,
   initialMinZoom: LongValue,
@@ -32,6 +34,7 @@ public class ClipLayerState private constructor(
    * Construct an default [ClipLayerState].
    */
   public constructor() : this(
+    initialClipLayerScope = StringListValue.INITIAL,
     initialClipLayerTypes = ClipLayerTypesListValue.INITIAL,
     initialVisibility = VisibilityValue.INITIAL,
     initialMinZoom = LongValue.INITIAL,
@@ -40,6 +43,11 @@ public class ClipLayerState private constructor(
     initialFilter = Filter.INITIAL,
   )
 
+  /**
+   *  Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   */
+  @MapboxExperimental
+  public var clipLayerScope: StringListValue by mutableStateOf(initialClipLayerScope)
   /**
    *  Layer types that will also be removed if fallen below this clip layer. Default value: [].
    */
@@ -66,6 +74,13 @@ public class ClipLayerState private constructor(
    */
   public var filter: Filter by mutableStateOf(initialFilter)
 
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateClipLayerScope(layerNode: LayerNode) {
+    if (clipLayerScope.notInitial) {
+      layerNode.setProperty("clip-layer-scope", clipLayerScope.value)
+    }
+  }
   @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateClipLayerTypes(layerNode: LayerNode) {
@@ -106,6 +121,7 @@ public class ClipLayerState private constructor(
 
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
+    UpdateClipLayerScope(layerNode)
     UpdateClipLayerTypes(layerNode)
     UpdateVisibility(layerNode)
     UpdateMinZoom(layerNode)

@@ -1064,6 +1064,59 @@ class IconTranslateAnchor private constructor(override val value: String) : Laye
     }
   }
 }
+// SYMBOL_ELEVATION_REFERENCE: Selects the base of symbol-elevation.
+/**
+ * Selects the base of symbol-elevation.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class SymbolElevationReference private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is SymbolElevationReference &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "SymbolElevationReference(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Elevate symbols relative to the sea level.
+     */
+    @JvmField
+    val SEA = SymbolElevationReference("sea")
+    /**
+     * Elevate symbols relative to the ground's height below them.
+     */
+    @JvmField
+    val GROUND = SymbolElevationReference("ground")
+
+    /**
+     * Utility function to get [SymbolElevationReference] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): SymbolElevationReference {
+      return when (value) {
+        "SEA" -> SEA
+        "GROUND" -> GROUND
+        else -> throw RuntimeException("SymbolElevationReference.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // TEXT_TRANSLATE_ANCHOR: Controls the frame of reference for `text-translate`.
 /**
  * Controls the frame of reference for `text-translate`.

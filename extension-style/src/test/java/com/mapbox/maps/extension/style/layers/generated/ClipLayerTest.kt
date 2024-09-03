@@ -158,6 +158,73 @@ class ClipLayerTest {
   // Property getters and setters
 
   @Test
+  fun clipLayerScopeSet() {
+    val layer = clipLayer("id", "source") {}
+    val testValue = listOf("a", "b", "c")
+    layer.bindTo(style)
+    layer.clipLayerScope(testValue)
+    verify { style.setStyleLayerProperty("id", "clip-layer-scope", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[a, b, c]")
+  }
+
+  @Test
+  fun clipLayerScopeGet() {
+    val testValue = listOf("a", "b", "c")
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = clipLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = listOf("a", "b", "c")
+    assertEquals(expectedValue.toString(), layer.clipLayerScope?.toString())
+    verify { style.getStyleLayerProperty("id", "clip-layer-scope") }
+  }
+  // Expression Tests
+
+  @Test
+  fun clipLayerScopeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = clipLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.clipLayerScope(expression)
+    verify { style.setStyleLayerProperty("id", "clip-layer-scope", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun clipLayerScopeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = clipLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.clipLayerScopeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "clip-layer-scope") }
+  }
+
+  @Test
+  fun clipLayerScopeAsExpressionGetNull() {
+    val layer = clipLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.clipLayerScopeAsExpression)
+    verify { style.getStyleLayerProperty("id", "clip-layer-scope") }
+  }
+
+  @Test
+  fun clipLayerScopeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf("a", "b", "c"))
+    val layer = clipLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("[literal, [a, b, c]]", layer.clipLayerScopeAsExpression.toString())
+    assertEquals(listOf("a", "b", "c"), layer.clipLayerScope!!)
+    verify { style.getStyleLayerProperty("id", "clip-layer-scope") }
+  }
+
+  @Test
   fun clipLayerTypesSet() {
     val layer = clipLayer("id", "source") {}
     val testValue = listOf("model", "symbol")
@@ -291,6 +358,37 @@ class ClipLayerTest {
   }
 
   // Default property getter tests
+
+  @Test
+  fun defaultClipLayerScopeTest() {
+    val testValue = listOf("a", "b", "c")
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = listOf("a", "b", "c")
+    assertEquals(expectedValue.toString(), ClipLayer.defaultClipLayerScope?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("clip", "clip-layer-scope") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultClipLayerScopeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ClipLayer.defaultClipLayerScopeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("clip", "clip-layer-scope") }
+  }
+
+  @Test
+  fun defaultClipLayerScopeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf("a", "b", "c"))
+    assertEquals("[literal, [a, b, c]]", ClipLayer.defaultClipLayerScopeAsExpression.toString())
+    assertEquals(listOf("a", "b", "c"), ClipLayer.defaultClipLayerScope!!)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("clip", "clip-layer-scope") }
+  }
 
   @Test
   fun defaultClipLayerTypesTest() {

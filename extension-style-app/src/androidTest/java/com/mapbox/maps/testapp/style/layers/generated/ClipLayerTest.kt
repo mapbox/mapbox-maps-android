@@ -70,6 +70,30 @@ class ClipLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun clipLayerScopeTest() {
+    val testValue = listOf("a", "b", "c")
+    val layer = clipLayer("id", "source") {
+      clipLayerScope(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.clipLayerScope?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun clipLayerScopeAsExpressionTest() {
+    val expression = literal(listOf("a", "b", "c"))
+    val layer = clipLayer("id", "source") {
+      clipLayerScope(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.clipLayerScopeAsExpression.toString())
+    assertEquals(listOf("a", "b", "c"), layer.clipLayerScope!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun clipLayerTypesTest() {
     val testValue = listOf("model", "symbol")
     val layer = clipLayer("id", "source") {
@@ -125,6 +149,8 @@ class ClipLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", ClipLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", ClipLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", ClipLayer.defaultMaxZoom)
+    assertNotNull("defaultClipLayerScope should not be null", ClipLayer.defaultClipLayerScope)
+    assertNotNull("defaultClipLayerScopeAsExpression should not be null", ClipLayer.defaultClipLayerScopeAsExpression)
     assertNotNull("defaultClipLayerTypes should not be null", ClipLayer.defaultClipLayerTypes)
     assertNotNull("defaultClipLayerTypesAsExpression should not be null", ClipLayer.defaultClipLayerTypesAsExpression)
   }
@@ -138,6 +164,7 @@ class ClipLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val clipLayerScopeTestValue = listOf("a", "b", "c")
     val clipLayerTypesTestValue = listOf("model", "symbol")
 
     val minZoomTestValue = 10.0
@@ -147,6 +174,7 @@ class ClipLayerTest : BaseStyleTest() {
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
+      clipLayerScope(clipLayerScopeTestValue)
       clipLayerTypes(clipLayerTypesTestValue)
     }
 
@@ -161,6 +189,7 @@ class ClipLayerTest : BaseStyleTest() {
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(clipLayerScopeTestValue, cachedLayer.clipLayerScope)
     assertEquals(clipLayerTypesTestValue, cachedLayer.clipLayerTypes)
   }
 }

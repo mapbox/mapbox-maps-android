@@ -687,6 +687,31 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSymbolElevationReference() {
+    rule.runOnUiThread {
+      val expectedValue = SymbolElevationReference.SEA
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.symbolElevationReference = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.symbolElevationReference)
+      pointAnnotationManager.symbolElevationReference = null
+      val expectedDefaultValue = SymbolElevationReference.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, pointAnnotationManager.symbolElevationReference)
+    }
+  }
+
+  @Test
+  fun testSymbolZOffset() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.symbolZOffset = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.symbolZOffset)
+      pointAnnotationManager.symbolZOffset = null
+      assertEquals(null, pointAnnotationManager.symbolZOffset)
+    }
+  }
+
+  @Test
   fun testTextColor() {
     rule.runOnUiThread {
       val expectedValue = "rgba(0, 0, 0, 1)"

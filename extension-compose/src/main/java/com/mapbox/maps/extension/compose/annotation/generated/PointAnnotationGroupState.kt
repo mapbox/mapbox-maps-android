@@ -9,12 +9,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment
 import com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment
 import com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit
 import com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
@@ -84,6 +86,8 @@ public class PointAnnotationGroupState private constructor(
   initialIconOpacity: Double?,
   initialIconTranslate: List<Double>?,
   initialIconTranslateAnchor: IconTranslateAnchor?,
+  initialSymbolElevationReference: SymbolElevationReference?,
+  initialSymbolZOffset: Double?,
   initialTextColor: Color?,
   initialTextEmissiveStrength: Double?,
   initialTextHaloBlur: Double?,
@@ -148,6 +152,8 @@ public class PointAnnotationGroupState private constructor(
     initialIconOpacity = null,
     initialIconTranslate = null,
     initialIconTranslateAnchor = null,
+    initialSymbolElevationReference = null,
+    initialSymbolZOffset = null,
     initialTextColor = null,
     initialTextEmissiveStrength = null,
     initialTextHaloBlur = null,
@@ -370,6 +376,16 @@ public class PointAnnotationGroupState private constructor(
    * Controls the frame of reference for {@link PropertyFactory#iconTranslate}.
    */
   public var iconTranslateAnchor: IconTranslateAnchor? by mutableStateOf(initialIconTranslateAnchor)
+  /**
+   * Selects the base of symbol-elevation.
+   */
+  @MapboxExperimental
+  public var symbolElevationReference: SymbolElevationReference? by mutableStateOf(initialSymbolElevationReference)
+  /**
+   * Specifies an uniform elevation from the ground, in meters.
+   */
+  @MapboxExperimental
+  public var symbolZOffset: Double? by mutableStateOf(initialSymbolZOffset)
   /**
    * The color with which the text will be drawn.
    */
@@ -627,6 +643,16 @@ public class PointAnnotationGroupState private constructor(
     annotationManager.iconTranslateAnchor = iconTranslateAnchor
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolElevationReference(annotationManager: PointAnnotationManager) {
+    annotationManager.symbolElevationReference = symbolElevationReference
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolZOffset(annotationManager: PointAnnotationManager) {
+    annotationManager.symbolZOffset = symbolZOffset
+  }
+  @Composable
   private fun UpdateTextColor(annotationManager: PointAnnotationManager) {
     annotationManager.textColorString = textColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
   }
@@ -718,6 +744,8 @@ public class PointAnnotationGroupState private constructor(
     UpdateIconOpacity(annotationManager)
     UpdateIconTranslate(annotationManager)
     UpdateIconTranslateAnchor(annotationManager)
+    UpdateSymbolElevationReference(annotationManager)
+    UpdateSymbolZOffset(annotationManager)
     UpdateTextColor(annotationManager)
     UpdateTextEmissiveStrength(annotationManager)
     UpdateTextHaloBlur(annotationManager)

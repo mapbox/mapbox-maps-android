@@ -9,6 +9,11 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Expose data-driven properties on `AnnotationGroupState`s. Now it's possible to set data-driven properties globally on `AnnotationGroupState` and specify per-annotation overrides in `AnnotationState`. Setting global property value on `AnnotationGroupState` could introduce performance improvements when the amount of annotations is large.
 * [compose] Remove experimental `ModelLayerState.modelFrontCutoff`.
 * [compose] Introduce experimental `GeoJsonSourceState.autoMaxZoom` property to resolve rendering artifacts for features that use wide blur (e.g. fill extrusion ground flood light or circle layer).
+* [compose] Introduce experimental `ClipLayerState.clipLayerScope` API to remove data from certain style fragments only.
+* [compose] Introduce experimental `PointAnnotationState.symbolZOffset` property.
+* [compose] Introduce experimental `PointAnnotationGroupState.symbolElevationReference` property.
+* [compose] Introduce experimental `SymbolLayerState.symbolElevationReference` and `SymbolLayerState.symbolZOffset` properties.
+* [compose] Introduce experimental `SymbolLayerState.symbolZOffsetTransition` API.
 * Introduce experimental interactive feature elements and related APIs. Those APIs provide the convenient way to add the click / long click listener to layer / featureset / map itself with `MapboxMap.addInteraction`.
 * Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
 * Introduce `PointAnnotation.iconOcclusionOpacity`, `PointAnnotation.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
@@ -17,11 +22,35 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose data-driven properties on `AnnotationManager`s. Now it's possible to set data-driven properties globally on `AnnotationManager` and specify per-annotation overrides. Setting global property value on `AnnotationManager` could introduce performance improvements when the amount of annotations is large.
 * Remove experimental `ModelLayer.modelFrontCutoff`.
 * Introduce experimental `GeoJsonSource.autoMaxZoom` property to resolve rendering artifacts for features that use wide blur (e.g. fill extrusion ground flood light or circle layer).
+* Introduce static `HttpServiceFactory.setCancellationCallback` API.
+* Reduce style parsing time.
+* Enable multiple meta tiling schemes for composited sources.
+* Expose experimental `ClipLayer.clipLayerScope` API to remove data from certain style fragments only.
+* Expose experimental `PointAnnotation.symbolZOffset` property.
+* Expose experimental `PointAnnotationManager.symbolElevationReference` property.
+* Expose experimental `SymbolLayer.symbolElevationReference` and `SymbolLayer.symbolZOffset` properties.
+* Expose experimental `SymbolLayer.symbolZOffsetTransition` API.
 
 ## Bug fixes 🐞
 * [compose] Fix `UnsatisfiedLinkError` issue when rendering preview.
 * Fix annotation issues with click / long click callback ordering and dragging. Now the order of triggering the callbacks / dragging is determined: from top-level rendered annotation to bottom-level one.
 * Fix `OnAnnotationInteractionListener` not triggered if any `OnAnnotationClickListener.onAnnotationClick` returns true.
+* Fix incorrect layer updates when using `ClipLayer.clipLayerTypes` or `ClipLayerState.clipLayerTypes` in Compose.
+* Fix shadow rendering issues when using `FillExtrusionLayer.fillExtrusionCutoffFadeRange` or `FillExtrusionLayerState.fillExtrusionCutoffFadeRange`.
+* Significantly reduce the rate at which raster-particle trails cross each other.
+* Fix normal offset to improve shadow accuracy.
+* Fix data synchronization between renderer and the main threads on map resize.
+* Regenerate location indicator mipmap on image change.
+* Fix landmark visibility issues near tile borders.
+* Fix elevated line depth occlusion issue in 2D mode.
+* Fix Dynamic View Annotation position update for annotated geojson feature with `allowZElevate` to be true.
+* Fix race condition between `setFeatureState` and `removeFeatureState` / `resetFeatureStates` resulting in feature state not being applied or removed.
+
+## Dependencies
+* Update gl-native to v11.7.0-beta.2 and common to v24.7.0-beta.2.
+
+## Known issues
+* Experimental `GeoJsonSource.autoMaxZoom` and `GeoJsonSourceState.autoMaxZoom` will return `null` value even after it's set.
 
 # 11.6.0 August 16, 2024
 ## Breaking changes ⚠️

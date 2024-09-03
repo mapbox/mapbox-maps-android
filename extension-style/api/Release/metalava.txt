@@ -1552,9 +1552,13 @@ package com.mapbox.maps.extension.style.layers.generated {
 
   @UiThread @com.mapbox.maps.MapboxExperimental public final class ClipLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl {
     ctor public ClipLayer(String layerId, String sourceId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public java.util.List<java.lang.String>? getClipLayerScope();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getClipLayerScopeAsExpression();
     method public java.util.List<java.lang.String>? getClipLayerTypes();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getClipLayerTypesAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFilter();
@@ -1572,6 +1576,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+    property public final java.util.List<java.lang.String>? clipLayerScope;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? clipLayerScopeAsExpression;
     property public final java.util.List<java.lang.String>? clipLayerTypes;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? clipLayerTypesAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? filter;
@@ -1587,11 +1593,15 @@ package com.mapbox.maps.extension.style.layers.generated {
   }
 
   public static final class ClipLayer.Companion {
+    method public java.util.List<java.lang.String>? getDefaultClipLayerScope();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultClipLayerScopeAsExpression();
     method public java.util.List<java.lang.String>? getDefaultClipLayerTypes();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultClipLayerTypesAsExpression();
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
+    property public final java.util.List<java.lang.String>? defaultClipLayerScope;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultClipLayerScopeAsExpression;
     property public final java.util.List<java.lang.String>? defaultClipLayerTypes;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultClipLayerTypesAsExpression;
     property public final Double? defaultMaxZoom;
@@ -1600,6 +1610,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface ClipLayerDsl {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope = listOf(""));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes = listOf());
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
@@ -4474,6 +4486,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String? getSourceLayer();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolAvoidEdgesAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolElevationReferenceAsExpression();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolPlacementAsExpression();
     method public Double? getSymbolSortKey();
@@ -4482,6 +4496,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolSpacingAsExpression();
     method public Boolean? getSymbolZElevate();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolZElevateAsExpression();
+    method public Double? getSymbolZOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolZOffsetAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getSymbolZOffsetTransition();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? getSymbolZOrder();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSymbolZOrderAsExpression();
     method public Boolean? getTextAllowOverlap();
@@ -4637,6 +4654,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(boolean symbolAvoidEdges);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(com.mapbox.maps.extension.style.expressions.generated.Expression symbolAvoidEdges);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference symbolElevationReference);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression symbolElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement symbolPlacement);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolPlacement(com.mapbox.maps.extension.style.expressions.generated.Expression symbolPlacement);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolSortKey(double symbolSortKey);
@@ -4645,6 +4664,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolSpacing(com.mapbox.maps.extension.style.expressions.generated.Expression symbolSpacing);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZElevate(boolean symbolZElevate);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZElevate(com.mapbox.maps.extension.style.expressions.generated.Expression symbolZElevate);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffset(double symbolZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression symbolZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffsetTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOrder(com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder symbolZOrder);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOrder(com.mapbox.maps.extension.style.expressions.generated.Expression symbolZOrder);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textAllowOverlap(boolean textAllowOverlap);
@@ -4802,6 +4825,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final String? sourceLayer;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolAvoidEdgesAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolElevationReferenceAsExpression;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolPlacementAsExpression;
     property public final Double? symbolSortKey;
@@ -4810,6 +4835,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolSpacingAsExpression;
     property public final Boolean? symbolZElevate;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolZElevateAsExpression;
+    property public final Double? symbolZOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolZOffsetAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? symbolZOffsetTransition;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? symbolZOrderAsExpression;
     property public final Boolean? textAllowOverlap;
@@ -4957,6 +4985,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultMinZoom();
     method public Boolean? getDefaultSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolAvoidEdgesAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getDefaultSymbolElevationReference();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolElevationReferenceAsExpression();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getDefaultSymbolPlacement();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolPlacementAsExpression();
     method public Double? getDefaultSymbolSortKey();
@@ -4965,6 +4995,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolSpacingAsExpression();
     method public Boolean? getDefaultSymbolZElevate();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolZElevateAsExpression();
+    method public Double? getDefaultSymbolZOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolZOffsetAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultSymbolZOffsetTransition();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? getDefaultSymbolZOrder();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultSymbolZOrderAsExpression();
     method public Boolean? getDefaultTextAllowOverlap();
@@ -5107,6 +5140,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultMinZoom;
     property public final Boolean? defaultSymbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolAvoidEdgesAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? defaultSymbolElevationReference;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolElevationReferenceAsExpression;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? defaultSymbolPlacement;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolPlacementAsExpression;
     property public final Double? defaultSymbolSortKey;
@@ -5115,6 +5150,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolSpacingAsExpression;
     property public final Boolean? defaultSymbolZElevate;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolZElevateAsExpression;
+    property public final Double? defaultSymbolZOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolZOffsetAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultSymbolZOffsetTransition;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? defaultSymbolZOrder;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultSymbolZOrderAsExpression;
     property public final Boolean? defaultTextAllowOverlap;
@@ -5273,6 +5311,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(boolean symbolAvoidEdges = false);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(com.mapbox.maps.extension.style.expressions.generated.Expression symbolAvoidEdges);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference symbolElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference.GROUND);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression symbolElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement symbolPlacement = com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement.POINT);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolPlacement(com.mapbox.maps.extension.style.expressions.generated.Expression symbolPlacement);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolSortKey(double symbolSortKey);
@@ -5281,6 +5321,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolSpacing(com.mapbox.maps.extension.style.expressions.generated.Expression symbolSpacing);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZElevate(boolean symbolZElevate = false);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZElevate(com.mapbox.maps.extension.style.expressions.generated.Expression symbolZElevate);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffset(double symbolZOffset = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression symbolZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOffsetTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOrder(com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder symbolZOrder = com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder.AUTO);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolZOrder(com.mapbox.maps.extension.style.expressions.generated.Expression symbolZOrder);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textAllowOverlap(boolean textAllowOverlap = false);
@@ -5688,6 +5732,19 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
   public static final class SkyType.Companion {
     method public com.mapbox.maps.extension.style.layers.properties.generated.SkyType valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class SymbolElevationReference {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference GROUND;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference SEA;
+  }
+
+  public static final class SymbolElevationReference.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference valueOf(String value);
   }
 
   public final class SymbolPlacement {
@@ -6221,7 +6278,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class GeoJsonSource extends com.mapbox.maps.extension.style.sources.Source {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource autoMaxZoom(boolean value = false);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value, String dataId = "");
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource feature(com.mapbox.geojson.Feature value, String dataId = "");
@@ -6304,7 +6360,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public static final class GeoJsonSource.Companion {
-    method public Boolean? getDefaultAutoMaxZoom();
     method public Long? getDefaultBuffer();
     method public Boolean? getDefaultCluster();
     method public Long? getDefaultClusterMaxZoom();
@@ -6315,7 +6370,6 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getDefaultMaxzoom();
     method public Long? getDefaultPrefetchZoomDelta();
     method public Double? getDefaultTolerance();
-    property public final Boolean? defaultAutoMaxZoom;
     property public final Long? defaultBuffer;
     property public final Boolean? defaultCluster;
     property public final Long? defaultClusterMaxZoom;

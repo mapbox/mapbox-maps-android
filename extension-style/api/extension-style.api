@@ -1426,9 +1426,13 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayerK
 public final class com/mapbox/maps/extension/style/layers/generated/ClipLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/ClipLayerDsl {
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun clipLayerScope (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public fun clipLayerScope (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public fun clipLayerTypes (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public fun clipLayerTypes (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public final fun getClipLayerScope ()Ljava/util/List;
+	public final fun getClipLayerScopeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getClipLayerTypes ()Ljava/util/List;
 	public final fun getClipLayerTypesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -1454,6 +1458,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ClipLayer : 
 }
 
 public final class com/mapbox/maps/extension/style/layers/generated/ClipLayer$Companion {
+	public final fun getDefaultClipLayerScope ()Ljava/util/List;
+	public final fun getDefaultClipLayerScopeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultClipLayerTypes ()Ljava/util/List;
 	public final fun getDefaultClipLayerTypesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
@@ -1462,6 +1468,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ClipLayer$Co
 }
 
 public abstract interface class com/mapbox/maps/extension/style/layers/generated/ClipLayerDsl {
+	public abstract fun clipLayerScope (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
+	public abstract fun clipLayerScope (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public abstract fun clipLayerTypes (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public abstract fun clipLayerTypes (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
@@ -1474,6 +1482,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 }
 
 public final class com/mapbox/maps/extension/style/layers/generated/ClipLayerDsl$DefaultImpls {
+	public static synthetic fun clipLayerScope$default (Lcom/mapbox/maps/extension/style/layers/generated/ClipLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 	public static synthetic fun clipLayerTypes$default (Lcom/mapbox/maps/extension/style/layers/generated/ClipLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ClipLayer;
 }
 
@@ -3720,6 +3729,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getSourceLayer ()Ljava/lang/String;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getSymbolAvoidEdgesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
+	public final fun getSymbolElevationReferenceAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
 	public final fun getSymbolPlacementAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSymbolSortKey ()Ljava/lang/Double;
@@ -3728,6 +3739,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getSymbolSpacingAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSymbolZElevate ()Ljava/lang/Boolean;
 	public final fun getSymbolZElevateAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSymbolZOffset ()Ljava/lang/Double;
+	public final fun getSymbolZOffsetAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSymbolZOffsetTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getSymbolZOrder ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;
 	public final fun getSymbolZOrderAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextAllowOverlap ()Ljava/lang/Boolean;
@@ -3886,6 +3900,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolAvoidEdges (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolAvoidEdges (Z)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun symbolElevationReference (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun symbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolPlacement (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolSortKey (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -3894,6 +3910,10 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun symbolSpacing (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolZElevate (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolZElevate (Z)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun symbolZOffset (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun symbolZOffset (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun symbolZOffsetTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun symbolZOffsetTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolZOrder (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun symbolZOrder (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textAllowOverlap (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4051,6 +4071,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
 	public final fun getDefaultSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getDefaultSymbolAvoidEdgesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
+	public final fun getDefaultSymbolElevationReferenceAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
 	public final fun getDefaultSymbolPlacementAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSymbolSortKey ()Ljava/lang/Double;
@@ -4059,6 +4081,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultSymbolSpacingAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSymbolZElevate ()Ljava/lang/Boolean;
 	public final fun getDefaultSymbolZElevateAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultSymbolZOffset ()Ljava/lang/Double;
+	public final fun getDefaultSymbolZOffsetAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultSymbolZOffsetTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultSymbolZOrder ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;
 	public final fun getDefaultSymbolZOrderAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextAllowOverlap ()Ljava/lang/Boolean;
@@ -4217,6 +4242,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolAvoidEdges (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolAvoidEdges (Z)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun symbolElevationReference (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun symbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolPlacement (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolSortKey (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4225,6 +4252,10 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun symbolSpacing (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolZElevate (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolZElevate (Z)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun symbolZOffset (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun symbolZOffset (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun symbolZOffsetTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun symbolZOffsetTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolZOrder (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolZOrder (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textAllowOverlap (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4339,9 +4370,11 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayerD
 	public static synthetic fun iconTranslate$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconTranslateAnchor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolAvoidEdges$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public static synthetic fun symbolElevationReference$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolPlacement$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolSpacing$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolZElevate$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public static synthetic fun symbolZOffset$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolZOrder$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun textAllowOverlap$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun textAnchor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4720,6 +4753,21 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/S
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/SkyType$Companion {
 	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/SkyType;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference$Companion;
+	public static final field GROUND Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
+	public static final field SEA Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
 }
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
@@ -5269,8 +5317,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/Encoding$Co
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion;
 	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun autoMaxZoom (Z)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
-	public static synthetic fun autoMaxZoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
 	public final fun data (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun data (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
@@ -5356,7 +5402,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 }
 
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion {
-	public final fun getDefaultAutoMaxZoom ()Ljava/lang/Boolean;
 	public final fun getDefaultBuffer ()Ljava/lang/Long;
 	public final fun getDefaultCluster ()Ljava/lang/Boolean;
 	public final fun getDefaultClusterMaxZoom ()Ljava/lang/Long;

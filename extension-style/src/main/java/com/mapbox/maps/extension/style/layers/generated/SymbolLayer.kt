@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -4169,6 +4170,184 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   */
+  @MapboxExperimental
+  val symbolElevationReference: SymbolElevationReference?
+    /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     *
+     * Use static method [SymbolLayer.defaultSymbolElevationReference] to get the default property.
+     *
+     * @return SymbolElevationReference
+     */
+    get() {
+      getPropertyValue<String?>("symbol-elevation-reference")?.let {
+        return SymbolElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * Use static method [SymbolLayer.defaultSymbolElevationReference] to set the default property.
+   *
+   * @param symbolElevationReference value of symbolElevationReference
+   */
+  @MapboxExperimental
+  override fun symbolElevationReference(symbolElevationReference: SymbolElevationReference): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-elevation-reference", symbolElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * This is an Expression representation of "symbol-elevation-reference".
+   *
+   */
+  @MapboxExperimental
+  val symbolElevationReferenceAsExpression: Expression?
+    /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     *
+     * Get the SymbolElevationReference property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to get the default property.
+     *
+     * @return SymbolElevationReference
+     */
+    get() {
+      getPropertyValue<Expression>("symbol-elevation-reference")?.let {
+        return it
+      }
+      symbolElevationReference?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to set the default property.
+   *
+   * @param symbolElevationReference value of symbolElevationReference as Expression
+   */
+  @MapboxExperimental
+  override fun symbolElevationReference(symbolElevationReference: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-elevation-reference", symbolElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  val symbolZOffset: Double?
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     *
+     * Use static method [SymbolLayer.defaultSymbolZOffset] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("symbol-z-offset")
+    }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * Use static method [SymbolLayer.defaultSymbolZOffset] to set the default property.
+   *
+   * @param symbolZOffset value of symbolZOffset
+   */
+  @MapboxExperimental
+  override fun symbolZOffset(symbolZOffset: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-z-offset", symbolZOffset)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * This is an Expression representation of "symbol-z-offset".
+   *
+   */
+  @MapboxExperimental
+  val symbolZOffsetAsExpression: Expression?
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     *
+     * Get the SymbolZOffset property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultSymbolZOffsetAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("symbol-z-offset")?.let {
+        return it
+      }
+      symbolZOffset?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * Use static method [SymbolLayer.defaultSymbolZOffsetAsExpression] to set the default property.
+   *
+   * @param symbolZOffset value of symbolZOffset as Expression
+   */
+  @MapboxExperimental
+  override fun symbolZOffset(symbolZOffset: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-z-offset", symbolZOffset)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for SymbolZOffset.
+   */
+  @MapboxExperimental
+  val symbolZOffsetTransition: StyleTransition?
+    /**
+     * Get the SymbolZOffset property transition options
+     *
+     * Use static method [SymbolLayer.defaultSymbolZOffsetTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("symbol-z-offset-transition")
+    }
+
+  /**
+   * Set the SymbolZOffset property transition options
+   *
+   * Use static method [SymbolLayer.defaultSymbolZOffsetTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun symbolZOffsetTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-z-offset-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [symbolZOffsetTransition].
+   */
+  @MapboxExperimental
+  override fun symbolZOffsetTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    symbolZOffsetTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The color with which the text will be drawn. Default value: "#000000".
    */
   val textColor: String?
@@ -7313,6 +7492,99 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     */
+    @MapboxExperimental
+    val defaultSymbolElevationReference: SymbolElevationReference?
+      /**
+       * Selects the base of symbol-elevation. Default value: "ground".
+       *
+       * Get the default value of SymbolElevationReference property
+       *
+       * @return SymbolElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<String>()?.let {
+          return SymbolElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     *
+     * This is an Expression representation of "symbol-elevation-reference".
+     *
+     */
+    @MapboxExperimental
+    val defaultSymbolElevationReferenceAsExpression: Expression?
+      /**
+       * Get default value of the SymbolElevationReference property as an Expression
+       *
+       * @return SymbolElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultSymbolElevationReference?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     */
+    @MapboxExperimental
+    val defaultSymbolZOffset: Double?
+      /**
+       * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+       *
+       * Get the default value of SymbolZOffset property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset").silentUnwrap()
+      }
+
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     *
+     * This is an Expression representation of "symbol-z-offset".
+     *
+     */
+    @MapboxExperimental
+    val defaultSymbolZOffsetAsExpression: Expression?
+      /**
+       * Get default value of the SymbolZOffset property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultSymbolZOffset?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for SymbolZOffset.
+     */
+    @MapboxExperimental
+    val defaultSymbolZOffsetTransition: StyleTransition?
+      /**
+       * Get the SymbolZOffset property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-offset-transition").silentUnwrap()
+
+    /**
      * The color with which the text will be drawn. Default value: "#000000".
      */
     val defaultTextColor: String?
@@ -8782,6 +9054,56 @@ interface SymbolLayerDsl {
    * @param iconTranslateAnchor value of iconTranslateAnchor as Expression
    */
   fun iconTranslateAnchor(iconTranslateAnchor: Expression): SymbolLayer
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * @param symbolElevationReference value of symbolElevationReference
+   */
+  @MapboxExperimental
+  fun symbolElevationReference(symbolElevationReference: SymbolElevationReference = SymbolElevationReference.GROUND): SymbolLayer
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * @param symbolElevationReference value of symbolElevationReference as Expression
+   */
+  @MapboxExperimental
+  fun symbolElevationReference(symbolElevationReference: Expression): SymbolLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * @param symbolZOffset value of symbolZOffset
+   */
+  @MapboxExperimental
+  fun symbolZOffset(symbolZOffset: Double = 0.0): SymbolLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * @param symbolZOffset value of symbolZOffset as Expression
+   */
+  @MapboxExperimental
+  fun symbolZOffset(symbolZOffset: Expression): SymbolLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * Set the SymbolZOffset property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun symbolZOffsetTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   *
+   * DSL for [symbolZOffsetTransition].
+   */
+  @MapboxExperimental
+  fun symbolZOffsetTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
    * The color with which the text will be drawn. Default value: "#000000".

@@ -1264,6 +1264,60 @@ public data class IconTranslateAnchorValue(public val value: Value) {
 }
 
 /**
+ * Selects the base of symbol-elevation. Default value: "ground".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class SymbolElevationReferenceValue(public val value: Value) {
+  /**
+   * Construct the [SymbolElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value.valueOf("SymbolElevationReferenceValue.INITIAL"))
+
+    /**
+     * Default value for [SymbolElevationReferenceValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value.nullValue())
+
+    /**
+     * Elevate symbols relative to the sea level.
+     */
+    @JvmField
+    public val SEA: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("sea"))
+
+    /**
+     * Elevate symbols relative to the ground's height below them.
+     */
+    @JvmField
+    public val GROUND: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("ground"))
+  }
+}
+
+/**
  * Controls the frame of reference for `text-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.

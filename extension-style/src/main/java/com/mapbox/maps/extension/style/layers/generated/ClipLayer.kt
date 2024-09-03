@@ -245,6 +245,75 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
   // Property getters and setters
 
   /**
+   * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   */
+  @MapboxExperimental
+  val clipLayerScope: List<String>?
+    /**
+     * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+     *
+     * Use static method [ClipLayer.defaultClipLayerScope] to get the default property.
+     *
+     * @return List<String>
+     */
+    get() {
+      return getPropertyValue<List<String>>("clip-layer-scope")
+    }
+
+  /**
+   * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   *
+   * Use static method [ClipLayer.defaultClipLayerScope] to set the default property.
+   *
+   * @param clipLayerScope value of clipLayerScope
+   */
+  @MapboxExperimental
+  override fun clipLayerScope(clipLayerScope: List<String>): ClipLayer = apply {
+    val propertyValue = PropertyValue("clip-layer-scope", clipLayerScope)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   *
+   * This is an Expression representation of "clip-layer-scope".
+   *
+   */
+  @MapboxExperimental
+  val clipLayerScopeAsExpression: Expression?
+    /**
+     * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+     *
+     * Get the ClipLayerScope property as an Expression
+     *
+     * Use static method [ClipLayer.defaultClipLayerScopeAsExpression] to get the default property.
+     *
+     * @return List<String>
+     */
+    get() {
+      getPropertyValue<Expression>("clip-layer-scope")?.let {
+        return it
+      }
+      clipLayerScope?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   *
+   * Use static method [ClipLayer.defaultClipLayerScopeAsExpression] to set the default property.
+   *
+   * @param clipLayerScope value of clipLayerScope as Expression
+   */
+  @MapboxExperimental
+  override fun clipLayerScope(clipLayerScope: Expression): ClipLayer = apply {
+    val propertyValue = PropertyValue("clip-layer-scope", clipLayerScope)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Layer types that will also be removed if fallen below this clip layer. Default value: [].
    */
   @MapboxExperimental
@@ -373,6 +442,45 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("clip", "maxzoom").silentUnwrap()
 
     /**
+     * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+     */
+    @MapboxExperimental
+    val defaultClipLayerScope: List<String>?
+      /**
+       * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+       *
+       * Get the default value of ClipLayerScope property
+       *
+       * @return List<String>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("clip", "clip-layer-scope").silentUnwrap()
+      }
+
+    /**
+     * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+     *
+     * This is an Expression representation of "clip-layer-scope".
+     *
+     */
+    @MapboxExperimental
+    val defaultClipLayerScopeAsExpression: Expression?
+      /**
+       * Get default value of the ClipLayerScope property as an Expression
+       *
+       * @return List<String>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("clip", "clip-layer-scope").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultClipLayerScope?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Layer types that will also be removed if fallen below this clip layer. Default value: [].
      */
     @MapboxExperimental
@@ -488,6 +596,22 @@ interface ClipLayerDsl {
   fun maxZoom(maxZoom: Double): ClipLayer
 
   // Property getters and setters
+
+  /**
+   * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   *
+   * @param clipLayerScope value of clipLayerScope
+   */
+  @MapboxExperimental
+  fun clipLayerScope(clipLayerScope: List<String> = listOf("")): ClipLayer
+
+  /**
+   * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
+   *
+   * @param clipLayerScope value of clipLayerScope as Expression
+   */
+  @MapboxExperimental
+  fun clipLayerScope(clipLayerScope: Expression): ClipLayer
 
   /**
    * Layer types that will also be removed if fallen below this clip layer. Default value: [].

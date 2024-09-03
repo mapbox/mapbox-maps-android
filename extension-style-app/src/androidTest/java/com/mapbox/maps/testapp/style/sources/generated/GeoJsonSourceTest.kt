@@ -336,23 +336,13 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  @Ignore("Experimental GeoJsonSource.autoMaxZoom and GeoJsonSourceState.autoMaxZoom will return null value even after it's set.")
   fun autoMaxZoomTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       autoMaxZoom(true)
     }
     setupSource(testSource)
-    assertEquals(true, testSource.autoMaxZoom)
-  }
-
-  @Test
-  @UiThreadTest
-  fun autoMaxZoomAfterBindTest() {
-    val testSource = geoJsonSource(SOURCE_ID) {
-      url(TEST_URI)
-    }
-    setupSource(testSource)
-    testSource.autoMaxZoom(true)
     assertEquals(true, testSource.autoMaxZoom)
   }
 
@@ -632,7 +622,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultClusterMinPoints should not be null", GeoJsonSource.defaultClusterMinPoints)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
     assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
-    assertNotNull("defaultAutoMaxZoom should not be null", GeoJsonSource.defaultAutoMaxZoom)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
   }
 

@@ -287,6 +287,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Point;
 	public final fun getPoint ()Lcom/mapbox/geojson/Point;
 	public final fun getSymbolSortKey ()Ljava/lang/Double;
+	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColorInt ()Ljava/lang/Integer;
 	public final fun getTextColorString ()Ljava/lang/String;
@@ -328,6 +329,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun setIconTextFitPadding (Ljava/util/List;)V
 	public final fun setPoint (Lcom/mapbox/geojson/Point;)V
 	public final fun setSymbolSortKey (Ljava/lang/Double;)V
+	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColorInt (Ljava/lang/Integer;)V
 	public final fun setTextColorString (Ljava/lang/String;)V
@@ -392,10 +394,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSlot ()Ljava/lang/String;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
+	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
 	public final fun getSymbolSortKey ()Ljava/lang/Double;
 	public final fun getSymbolSpacing ()Ljava/lang/Double;
 	public final fun getSymbolZElevate ()Ljava/lang/Boolean;
+	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getSymbolZOrder ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;
 	public final fun getTextAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
@@ -461,10 +465,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun setSlot (Ljava/lang/String;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
+	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)V
 	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)V
 	public final fun setSymbolSortKey (Ljava/lang/Double;)V
 	public final fun setSymbolSpacing (Ljava/lang/Double;)V
 	public final fun setSymbolZElevate (Ljava/lang/Boolean;)V
+	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setSymbolZOrder (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;)V
 	public final fun setTextAllowOverlap (Ljava/lang/Boolean;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
@@ -529,6 +535,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field PROPERTY_ICON_TEXT_FIT Ljava/lang/String;
 	public static final field PROPERTY_ICON_TEXT_FIT_PADDING Ljava/lang/String;
 	public static final field PROPERTY_SYMBOL_SORT_KEY Ljava/lang/String;
+	public static final field PROPERTY_SYMBOL_Z_OFFSET Ljava/lang/String;
 	public static final field PROPERTY_TEXT_ANCHOR Ljava/lang/String;
 	public static final field PROPERTY_TEXT_COLOR Ljava/lang/String;
 	public static final field PROPERTY_TEXT_EMISSIVE_STRENGTH Ljava/lang/String;
@@ -570,6 +577,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getIconTextFitPadding ()Ljava/util/List;
 	public final fun getPoint ()Lcom/mapbox/geojson/Point;
 	public final fun getSymbolSortKey ()Ljava/lang/Double;
+	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor ()Ljava/lang/String;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
@@ -604,6 +612,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun setIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)V
 	public final fun setIconTextFitPadding (Ljava/util/List;)V
 	public final fun setSymbolSortKey (Ljava/lang/Double;)V
+	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor (Ljava/lang/String;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
@@ -645,6 +654,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun withIconTextFitPadding (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withPoint (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withSymbolSortKey (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withSymbolZOffset (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;

@@ -312,11 +312,11 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    */
   val circleBlur: Double?
     /**
-     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
      *
      * Use static method [CircleLayer.defaultCircleBlur] to get the default property.
      *
@@ -327,7 +327,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * Use static method [CircleLayer.defaultCircleBlur] to set the default property.
    *
@@ -339,14 +339,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * This is an Expression representation of "circle-blur".
    *
    */
   val circleBlurAsExpression: Expression?
     /**
-     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
      *
      * Get the CircleBlur property as an Expression
      *
@@ -365,7 +365,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * Use static method [CircleLayer.defaultCircleBlurAsExpression] to set the default property.
    *
@@ -1565,11 +1565,11 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       }
 
     /**
-     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
      */
     val defaultCircleBlur: Double?
       /**
-       * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+       * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
        *
        * Get the default value of CircleBlur property
        *
@@ -1580,7 +1580,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       }
 
     /**
-     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
      *
      * This is an Expression representation of "circle-blur".
      *
@@ -2246,21 +2246,21 @@ interface CircleLayerDsl {
   fun circleSortKey(circleSortKey: Expression): CircleLayer
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * @param circleBlur value of circleBlur
    */
   fun circleBlur(circleBlur: Double = 0.0): CircleLayer
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * @param circleBlur value of circleBlur as Expression
    */
   fun circleBlur(circleBlur: Expression): CircleLayer
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * Set the CircleBlur property transition options
    *
@@ -2269,7 +2269,7 @@ interface CircleLayerDsl {
   fun circleBlurTransition(options: StyleTransition): CircleLayer
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * DSL for [circleBlurTransition].
    */

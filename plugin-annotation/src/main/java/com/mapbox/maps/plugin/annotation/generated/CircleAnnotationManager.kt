@@ -171,7 +171,7 @@ class CircleAnnotationManager(
   /**
    * The default circleBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
    */
   var circleBlur: Double?
     /**

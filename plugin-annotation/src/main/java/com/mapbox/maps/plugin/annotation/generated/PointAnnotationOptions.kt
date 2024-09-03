@@ -555,6 +555,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   */
+  var symbolZOffset: Double? = null
+
+  /**
+   * Set symbol-z-offset to initialise the pointAnnotation with.
+   *
+   * Specifies an uniform elevation from the ground, in meters.
+   *
+   * @param symbolZOffset the symbol-z-offset value
+   * @return this
+   */
+  fun withSymbolZOffset(symbolZOffset: Double): PointAnnotationOptions {
+    this.symbolZOffset = symbolZOffset
+    return this
+  }
+
+  /**
    * The color with which the text will be drawn. Default value: "#000000".
    */
   var textColor: String? = null
@@ -882,6 +900,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     iconOpacity?.let {
       jsonObject.addProperty(PROPERTY_ICON_OPACITY, it)
     }
+    symbolZOffset?.let {
+      jsonObject.addProperty(PROPERTY_SYMBOL_Z_OFFSET, it)
+    }
     textColor?.let {
       jsonObject.addProperty(PROPERTY_TEXT_COLOR, it)
     }
@@ -997,6 +1018,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for icon-opacity */
     const val PROPERTY_ICON_OPACITY = "icon-opacity"
+
+    /** The property for symbol-z-offset */
+    const val PROPERTY_SYMBOL_Z_OFFSET = "symbol-z-offset"
 
     /** The property for text-color */
     const val PROPERTY_TEXT_COLOR = "text-color"
@@ -1118,6 +1142,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_ICON_OPACITY)) {
         options.iconOpacity = feature.getProperty(PROPERTY_ICON_OPACITY).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_SYMBOL_Z_OFFSET)) {
+        options.symbolZOffset = feature.getProperty(PROPERTY_SYMBOL_Z_OFFSET).asDouble
       }
       if (feature.hasProperty(PROPERTY_TEXT_COLOR)) {
         options.textColor = feature.getProperty(PROPERTY_TEXT_COLOR).asString

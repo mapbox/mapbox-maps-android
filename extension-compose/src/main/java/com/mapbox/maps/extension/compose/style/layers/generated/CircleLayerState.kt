@@ -89,7 +89,7 @@ public class CircleLayerState private constructor(
    */
   public var circleSortKey: DoubleValue by mutableStateOf(initialCircleSortKey)
   /**
-   *  Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Default value: 0.
+   *  Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    */
   public var circleBlur: DoubleValue by mutableStateOf(initialCircleBlur)
   /**

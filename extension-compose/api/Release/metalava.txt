@@ -289,10 +289,12 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public java.util.List<java.lang.Double>? getIconTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
     method public Boolean? getSymbolAvoidEdges();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
     method public Double? getSymbolSortKey();
     method public Double? getSymbolSpacing();
     method public Boolean? getSymbolZElevate();
+    method public Double? getSymbolZOffset();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? getSymbolZOrder();
     method public Boolean? getTextAllowOverlap();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
@@ -351,10 +353,12 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
     method public void setSymbolAvoidEdges(Boolean?);
+    method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
     method public void setSymbolSortKey(Double?);
     method public void setSymbolSpacing(Double?);
     method public void setSymbolZElevate(Boolean?);
+    method public void setSymbolZOffset(Double?);
     method public void setSymbolZOrder(com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder?);
     method public void setTextAllowOverlap(Boolean?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
@@ -413,10 +417,12 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final java.util.List<java.lang.Double>? iconTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
     property public final Boolean? symbolAvoidEdges;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
     property public final Double? symbolSortKey;
     property public final Double? symbolSpacing;
     property public final Boolean? symbolZElevate;
+    property public final Double? symbolZOffset;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder;
     property public final Boolean? textAllowOverlap;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
@@ -482,6 +488,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getIconSize();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
     method public java.util.List<java.lang.Double>? getIconTextFitPadding();
+    method public Double? getSymbolZOffset();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
     method public androidx.compose.ui.graphics.Color? getTextColor();
     method public Double? getTextEmissiveStrength();
@@ -515,6 +522,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconSize(Double?);
     method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
+    method public void setSymbolZOffset(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColor(androidx.compose.ui.graphics.Color?);
     method public void setTextEmissiveStrength(Double?);
@@ -548,6 +556,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? iconSize;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
+    property public final Double? symbolZOffset;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property public final androidx.compose.ui.graphics.Color? textColor;
     property public final Double? textEmissiveStrength;
@@ -1466,18 +1475,21 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
 
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ClipLayerState {
     ctor public ClipLayerState();
+    method public com.mapbox.maps.extension.compose.style.StringListValue getClipLayerScope();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue getClipLayerTypes();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
+    method public void setClipLayerScope(com.mapbox.maps.extension.compose.style.StringListValue);
     method public void setClipLayerTypes(com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue);
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
+    property public final com.mapbox.maps.extension.compose.style.StringListValue clipLayerScope;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue clipLayerTypes;
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
@@ -2692,6 +2704,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class SkyTypeValue.Companion {
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class SymbolElevationReferenceValue {
+    ctor public SymbolElevationReferenceValue(com.mapbox.bindgen.Value value);
+    ctor public SymbolElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue GROUND;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue SEA;
+  }
+
+  public static final class SymbolElevationReferenceValue.Companion {
+  }
+
   public final class SymbolLayerKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void SymbolLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("symbol")
@@ -2745,10 +2773,13 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getSymbolAvoidEdges();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue getSymbolElevationReference();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue getSymbolPlacement();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getSymbolSortKey();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getSymbolSpacing();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getSymbolZElevate();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getSymbolZOffset();
+    method public com.mapbox.maps.extension.compose.style.Transition getSymbolZOffsetTransition();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue getSymbolZOrder();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getTextAllowOverlap();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue getTextAnchor();
@@ -2830,10 +2861,13 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setSymbolAvoidEdges(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setSymbolElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue);
     method public void setSymbolPlacement(com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue);
     method public void setSymbolSortKey(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setSymbolSpacing(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setSymbolZElevate(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setSymbolZOffset(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setSymbolZOffsetTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setSymbolZOrder(com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue);
     method public void setTextAllowOverlap(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setTextAnchor(com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue);
@@ -2915,10 +2949,13 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue symbolAvoidEdges;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue symbolElevationReference;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue symbolPlacement;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue symbolSortKey;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue symbolSpacing;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue symbolZElevate;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue symbolZOffset;
+    property public final com.mapbox.maps.extension.compose.style.Transition symbolZOffsetTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue symbolZOrder;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue textAllowOverlap;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue textAnchor;

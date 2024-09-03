@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import androidx.annotation.ColorInt
 import com.google.gson.JsonArray
 import com.mapbox.geojson.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -33,6 +34,7 @@ class PointAnnotationManager(
     delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "pointAnnotation", ::SymbolLayer
   ) {
 
+  @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       PointAnnotationOptions.PROPERTY_ICON_ANCHOR -> {
@@ -143,6 +145,10 @@ class PointAnnotationManager(
         layer.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
         dragLayer.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
       }
+      PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET -> {
+        layer.symbolZOffset(get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET))
+        dragLayer.symbolZOffset(get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET))
+      }
       PointAnnotationOptions.PROPERTY_TEXT_COLOR -> {
         layer.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
         dragLayer.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
@@ -207,6 +213,7 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
    * PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
+   * PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET - Double
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
@@ -259,6 +266,7 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
    * PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
+   * PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET - Double
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
@@ -2005,6 +2013,68 @@ class PointAnnotationManager(
     }
 
   /**
+   * The SymbolElevationReference property
+   *
+   * Selects the base of symbol-elevation.
+   */
+  @MapboxExperimental
+  var symbolElevationReference: SymbolElevationReference?
+    /**
+     * Get the SymbolElevationReference property
+     *
+     * @return property wrapper value around SymbolElevationReference
+     */
+    get(): SymbolElevationReference? {
+      return layer.symbolElevationReference
+    }
+    /**
+     * Set the SymbolElevationReference property
+     * @param value property wrapper value around SymbolElevationReference
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").value
+      }
+      setLayerProperty(wrappedValue, "symbol-elevation-reference")
+    }
+
+  /**
+   * The default symbolZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Specifies an uniform elevation from the ground, in meters.
+   */
+  var symbolZOffset: Double?
+    /**
+     * Get the symbolZOffset property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the symbolZOffset property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The default textColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
    * The color with which the text will be drawn.
@@ -2447,6 +2517,7 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OPACITY] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR] = false

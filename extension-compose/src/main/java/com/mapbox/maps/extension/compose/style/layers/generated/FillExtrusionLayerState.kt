@@ -223,7 +223,7 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundAttenuationTransition: Transition by mutableStateOf(initialFillExtrusionFloodLightGroundAttenuationTransition)
   /**
-   *  The extent of the flood light effect on the ground beneath the extruded buildings in meters. Default value: 0.
+   *  The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundRadius: DoubleValue by mutableStateOf(initialFillExtrusionFloodLightGroundRadius)

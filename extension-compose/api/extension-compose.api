@@ -283,10 +283,12 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconTranslate ()Ljava/util/List;
 	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
+	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
 	public final fun getSymbolSortKey ()Ljava/lang/Double;
 	public final fun getSymbolSpacing ()Ljava/lang/Double;
 	public final fun getSymbolZElevate ()Ljava/lang/Boolean;
+	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getSymbolZOrder ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;
 	public final fun getTextAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
@@ -345,10 +347,12 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconTranslate (Ljava/util/List;)V
 	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
+	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)V
 	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)V
 	public final fun setSymbolSortKey (Ljava/lang/Double;)V
 	public final fun setSymbolSpacing (Ljava/lang/Double;)V
 	public final fun setSymbolZElevate (Ljava/lang/Boolean;)V
+	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setSymbolZOrder (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;)V
 	public final fun setTextAllowOverlap (Ljava/lang/Boolean;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
@@ -412,6 +416,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconSize ()Ljava/lang/Double;
 	public final fun getIconTextFit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;
 	public final fun getIconTextFitPadding ()Ljava/util/List;
+	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
@@ -445,6 +450,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconSize (Ljava/lang/Double;)V
 	public final fun setIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)V
 	public final fun setIconTextFitPadding (Ljava/util/List;)V
+	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
@@ -1250,12 +1256,14 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Clip
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerState {
 	public fun <init> ()V
+	public final fun getClipLayerScope ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
 	public final fun getClipLayerTypes ()Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
+	public final fun setClipLayerScope (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
 	public final fun setClipLayerTypes (Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
@@ -2203,6 +2211,25 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyT
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
+	public static final field GROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
+	public static final field SEA Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolLayerKt {
 	public static final fun SymbolLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolLayerState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun SymbolLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
@@ -2250,10 +2277,13 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getSymbolAvoidEdges ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;
 	public final fun getSymbolSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getSymbolSpacing ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getSymbolZElevate ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getSymbolZOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getSymbolZOffsetTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getSymbolZOrder ()Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;
 	public final fun getTextAllowOverlap ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
@@ -2335,10 +2365,13 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setSymbolAvoidEdges (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;)V
 	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;)V
 	public final fun setSymbolSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setSymbolSpacing (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setSymbolZElevate (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setSymbolZOffset (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setSymbolZOffsetTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setSymbolZOrder (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;)V
 	public final fun setTextAllowOverlap (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;)V

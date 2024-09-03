@@ -5,6 +5,7 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -18,6 +19,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for SymbolLayer
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class SymbolLayerTest : BaseStyleTest() {
 
@@ -1861,6 +1863,88 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun symbolElevationReferenceTest() {
+    val layer = symbolLayer("id", "source") {
+      symbolElevationReference(SymbolElevationReference.SEA)
+    }
+    setupLayer(layer)
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolElevationReferenceAsExpressionTest() {
+    val expression = literal("sea")
+    val layer = symbolLayer("id", "source") {
+      symbolElevationReference(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.symbolElevationReferenceAsExpression.toString())
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference!!)
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolZOffsetTest() {
+    val testValue = 1.0
+    val layer = symbolLayer("id", "source") {
+      symbolZOffset(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.symbolZOffset!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolZOffsetAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = symbolLayer("id", "source") {
+      symbolZOffset(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.symbolZOffsetAsExpression.toString())
+    assertEquals(null, layer.symbolZOffset)
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolZOffsetTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      symbolZOffsetTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.symbolZOffsetTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolZOffsetTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      symbolZOffsetTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.symbolZOffsetTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun textColorTest() {
     val testValue = "rgba(0, 0, 0, 1)"
     val layer = symbolLayer("id", "source") {
@@ -2523,6 +2607,11 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconTranslateTransition should not be null", SymbolLayer.defaultIconTranslateTransition)
     assertNotNull("defaultIconTranslateAnchor should not be null", SymbolLayer.defaultIconTranslateAnchor)
     assertNotNull("defaultIconTranslateAnchorAsExpression should not be null", SymbolLayer.defaultIconTranslateAnchorAsExpression)
+    assertNotNull("defaultSymbolElevationReference should not be null", SymbolLayer.defaultSymbolElevationReference)
+    assertNotNull("defaultSymbolElevationReferenceAsExpression should not be null", SymbolLayer.defaultSymbolElevationReferenceAsExpression)
+    assertNotNull("defaultSymbolZOffset should not be null", SymbolLayer.defaultSymbolZOffset)
+    assertNotNull("defaultSymbolZOffsetAsExpression should not be null", SymbolLayer.defaultSymbolZOffsetAsExpression)
+    assertNotNull("defaultSymbolZOffsetTransition should not be null", SymbolLayer.defaultSymbolZOffsetTransition)
     assertNotNull("defaultTextColor should not be null", SymbolLayer.defaultTextColor)
     assertNotNull("defaultTextColorAsExpression should not be null", SymbolLayer.defaultTextColorAsExpression)
     assertNotNull("defaultTextColorAsColorInt should not be null", SymbolLayer.defaultTextColorAsColorInt)
@@ -2632,6 +2721,8 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconOpacityTestValue = 1.0
     val iconTranslateTestValue = listOf(0.0, 1.0)
     val iconTranslateAnchorTestValue = IconTranslateAnchor.MAP
+    val symbolElevationReferenceTestValue = SymbolElevationReference.SEA
+    val symbolZOffsetTestValue = 1.0
     val textColorTestValue = "rgba(0, 0, 0, 1)"
     val textEmissiveStrengthTestValue = 1.0
     val textHaloBlurTestValue = 1.0
@@ -2702,6 +2793,8 @@ class SymbolLayerTest : BaseStyleTest() {
       iconOpacity(iconOpacityTestValue)
       iconTranslate(iconTranslateTestValue)
       iconTranslateAnchor(iconTranslateAnchorTestValue)
+      symbolElevationReference(symbolElevationReferenceTestValue)
+      symbolZOffset(symbolZOffsetTestValue)
       textColor(textColorTestValue)
       textEmissiveStrength(textEmissiveStrengthTestValue)
       textHaloBlur(textHaloBlurTestValue)
@@ -2777,6 +2870,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(iconOpacityTestValue, cachedLayer.iconOpacity)
     assertEquals(iconTranslateTestValue, cachedLayer.iconTranslate)
     assertEquals(iconTranslateAnchorTestValue, cachedLayer.iconTranslateAnchor)
+    assertEquals(symbolElevationReferenceTestValue, cachedLayer.symbolElevationReference)
+    assertEquals(symbolZOffsetTestValue, cachedLayer.symbolZOffset)
     assertEquals(textColorTestValue, cachedLayer.textColor)
     assertEquals(textEmissiveStrengthTestValue, cachedLayer.textEmissiveStrength)
     assertEquals(textHaloBlurTestValue, cachedLayer.textHaloBlur)

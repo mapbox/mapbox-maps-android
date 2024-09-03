@@ -147,6 +147,8 @@ class PointAnnotationManagerTest {
     every { dragLayer.iconOcclusionOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.iconOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.iconOpacity(any<Expression>()) } answers { dragLayer }
+    every { layer.symbolZOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.symbolZOffset(any<Expression>()) } answers { dragLayer }
     every { layer.textColor(any<Expression>()) } answers { layer }
     every { dragLayer.textColor(any<Expression>()) } answers { dragLayer }
     every { layer.textEmissiveStrength(any<Expression>()) } answers { layer }
@@ -530,6 +532,11 @@ class PointAnnotationManagerTest {
     assertEquals(1.0, annotation.iconOpacity)
     annotation.iconOpacity = null
     assertNull(annotation.iconOpacity)
+
+    annotation.symbolZOffset = 0.0
+    assertEquals(0.0, annotation.symbolZOffset)
+    annotation.symbolZOffset = null
+    assertNull(annotation.symbolZOffset)
 
     annotation.textColorInt = Color.BLACK
     assertEquals(Color.BLACK, annotation.textColorInt)
@@ -1729,6 +1736,35 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+  }
+
+  @Test
+  fun testSymbolZOffsetLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withSymbolZOffset(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+  }
+
+  @Test
+  fun testSymbolZOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.symbolZOffset = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.symbolZOffset(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET)) }
   }
 
   @Test
