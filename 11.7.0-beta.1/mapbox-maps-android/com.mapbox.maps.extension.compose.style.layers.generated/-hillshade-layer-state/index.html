@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>HillshadeLayerState</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.compose.style.layers.generated/HillshadeLayerState///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.compose.style.layers.generated</a><span class="delimiter">/</span><span class="current">HillshadeLayerState</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Hillshade</span><wbr></wbr><span>Layer</span><wbr></wbr><span><span>State</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Stable.html"><span class="token annotation builtin">Stable</span></a></div></div><span class="token keyword">class </span><a href="index.html">HillshadeLayerState</a></div><p class="paragraph">The state holder for <a href="../-hillshade-layer.html">HillshadeLayer</a>'s layer properties.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="See also">See also</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">See also</h4>
+      <div data-togglable="See also">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="See also"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div></div></span></div><div><div class="title"><div data-togglable="See also"><p class="paragraph"><a href="https://docs.mapbox.com/style-spec/reference/layers#hillshade">The online documentation</a></p></div></div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-1032599277%2FConstructors%2F540127926" anchor-label="HillshadeLayerState" id="-1032599277%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-hillshade-layer-state.html"><span>Hillshade</span><wbr></wbr><span>Layer</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1032599277%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-hillshade-layer-state.html"><span class="token function">HillshadeLayerState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Construct an default <a href="index.html">HillshadeLayerState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-1383503645%2FProperties%2F540127926" anchor-label="filter" id="-1383503645%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="filter.html"><span><span>filter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1383503645%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1383503645%2FProperties%2F540127926" anchor-label="filter" id="-1383503645%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="filter.html">filter</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style.layers/-filter/index.html">Filter</a></div><div class="brief "><a data-name="-1383503645%2FProperties%2F540127926" anchor-label="filter" id="-1383503645%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The <code class="lang-kotlin">[&quot;feature-state&quot;, ...]</code> expression is not supported in filter expressions. The <code class="lang-kotlin">[&quot;pitch&quot;]</code> and <code class="lang-kotlin">[&quot;distance-from-center&quot;]</code> expressions are supported only for filter expressions on the symbol layer.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="856922350%2FProperties%2F540127926" anchor-label="hillshadeAccentColor" id="856922350%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-accent-color.html"><span>hillshade</span><wbr></wbr><span>Accent</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="856922350%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="856922350%2FProperties%2F540127926" anchor-label="hillshadeAccentColor" id="856922350%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-accent-color.html">hillshadeAccentColor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="856922350%2FProperties%2F540127926" anchor-label="hillshadeAccentColor" id="856922350%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: &quot;#000000&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2110088153%2FProperties%2F540127926" anchor-label="hillshadeAccentColorTransition" id="2110088153%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-accent-color-transition.html"><span>hillshade</span><wbr></wbr><span>Accent</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2110088153%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2110088153%2FProperties%2F540127926" anchor-label="hillshadeAccentColorTransition" id="2110088153%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-accent-color-transition.html">hillshadeAccentColorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="2110088153%2FProperties%2F540127926" anchor-label="hillshadeAccentColorTransition" id="2110088153%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="hillshade-accent-color.html">hillshadeAccentColor</a>. Default value: &quot;#000000&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1533800069%2FProperties%2F540127926" anchor-label="hillshadeEmissiveStrength" id="-1533800069%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-emissive-strength.html"><span>hillshade</span><wbr></wbr><span>Emissive</span><wbr></wbr><span><span>Strength</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1533800069%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1533800069%2FProperties%2F540127926" anchor-label="hillshadeEmissiveStrength" id="-1533800069%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-emissive-strength.html">hillshadeEmissiveStrength</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-1533800069%2FProperties%2F540127926" anchor-label="hillshadeEmissiveStrength" id="-1533800069%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1158041638%2FProperties%2F540127926" anchor-label="hillshadeEmissiveStrengthTransition" id="1158041638%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-emissive-strength-transition.html"><span>hillshade</span><wbr></wbr><span>Emissive</span><wbr></wbr><span>Strength</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1158041638%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1158041638%2FProperties%2F540127926" anchor-label="hillshadeEmissiveStrengthTransition" id="1158041638%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-emissive-strength-transition.html">hillshadeEmissiveStrengthTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="1158041638%2FProperties%2F540127926" anchor-label="hillshadeEmissiveStrengthTransition" id="1158041638%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="hillshade-emissive-strength.html">hillshadeEmissiveStrength</a>. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1662011193%2FProperties%2F540127926" anchor-label="hillshadeExaggeration" id="1662011193%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-exaggeration.html"><span>hillshade</span><wbr></wbr><span><span>Exaggeration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1662011193%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1662011193%2FProperties%2F540127926" anchor-label="hillshadeExaggeration" id="1662011193%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-exaggeration.html">hillshadeExaggeration</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="1662011193%2FProperties%2F540127926" anchor-label="hillshadeExaggeration" id="1662011193%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Intensity of the hillshade Default value: 0.5. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-213847964%2FProperties%2F540127926" anchor-label="hillshadeExaggerationTransition" id="-213847964%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-exaggeration-transition.html"><span>hillshade</span><wbr></wbr><span>Exaggeration</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-213847964%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-213847964%2FProperties%2F540127926" anchor-label="hillshadeExaggerationTransition" id="-213847964%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-exaggeration-transition.html">hillshadeExaggerationTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-213847964%2FProperties%2F540127926" anchor-label="hillshadeExaggerationTransition" id="-213847964%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="hillshade-exaggeration.html">hillshadeExaggeration</a>. Default value: 0.5. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2109704316%2FProperties%2F540127926" anchor-label="hillshadeHighlightColor" id="-2109704316%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-highlight-color.html"><span>hillshade</span><wbr></wbr><span>Highlight</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2109704316%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-2109704316%2FProperties%2F540127926" anchor-label="hillshadeHighlightColor" id="-2109704316%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-highlight-color.html">hillshadeHighlightColor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="-2109704316%2FProperties%2F540127926" anchor-label="hillshadeHighlightColor" id="-2109704316%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The shading color of areas that faces towards the light source. Default value: &quot;#FFFFFF&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1458929391%2FProperties%2F540127926" anchor-label="hillshadeHighlightColorTransition" id="1458929391%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-highlight-color-transition.html"><span>hillshade</span><wbr></wbr><span>Highlight</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1458929391%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1458929391%2FProperties%2F540127926" anchor-label="hillshadeHighlightColorTransition" id="1458929391%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-highlight-color-transition.html">hillshadeHighlightColorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="1458929391%2FProperties%2F540127926" anchor-label="hillshadeHighlightColorTransition" id="1458929391%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="hillshade-highlight-color.html">hillshadeHighlightColor</a>. Default value: &quot;#FFFFFF&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-589944881%2FProperties%2F540127926" anchor-label="hillshadeIlluminationAnchor" id="-589944881%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-illumination-anchor.html"><span>hillshade</span><wbr></wbr><span>Illumination</span><wbr></wbr><span><span>Anchor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-589944881%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-589944881%2FProperties%2F540127926" anchor-label="hillshadeIlluminationAnchor" id="-589944881%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-illumination-anchor.html">hillshadeIlluminationAnchor</a><span class="token operator">: </span><a href="../-hillshade-illumination-anchor-value/index.html">HillshadeIlluminationAnchorValue</a></div><div class="brief "><a data-name="-589944881%2FProperties%2F540127926" anchor-label="hillshadeIlluminationAnchor" id="-589944881%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Direction of light source when map is rotated. Default value: &quot;viewport&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="238064279%2FProperties%2F540127926" anchor-label="hillshadeIlluminationDirection" id="238064279%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-illumination-direction.html"><span>hillshade</span><wbr></wbr><span>Illumination</span><wbr></wbr><span><span>Direction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="238064279%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="238064279%2FProperties%2F540127926" anchor-label="hillshadeIlluminationDirection" id="238064279%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-illumination-direction.html">hillshadeIlluminationDirection</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="238064279%2FProperties%2F540127926" anchor-label="hillshadeIlluminationDirection" id="238064279%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The direction of the light source used to generate the hillshading with 0 as the top of the viewport if <code class="lang-kotlin">hillshade-illumination-anchor</code> is set to <code class="lang-kotlin">viewport</code> and due north if <code class="lang-kotlin">hillshade-illumination-anchor</code> is set to <code class="lang-kotlin">map</code> and no 3d lights enabled. If <code class="lang-kotlin">hillshade-illumination-anchor</code> is set to <code class="lang-kotlin">map</code> and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: 0, 359</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="815047364%2FProperties%2F540127926" anchor-label="hillshadeShadowColor" id="815047364%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-shadow-color.html"><span>hillshade</span><wbr></wbr><span>Shadow</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="815047364%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="815047364%2FProperties%2F540127926" anchor-label="hillshadeShadowColor" id="815047364%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-shadow-color.html">hillshadeShadowColor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="815047364%2FProperties%2F540127926" anchor-label="hillshadeShadowColor" id="815047364%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The shading color of areas that face away from the light source. Default value: &quot;#000000&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-813917649%2FProperties%2F540127926" anchor-label="hillshadeShadowColorTransition" id="-813917649%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="hillshade-shadow-color-transition.html"><span>hillshade</span><wbr></wbr><span>Shadow</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-813917649%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-813917649%2FProperties%2F540127926" anchor-label="hillshadeShadowColorTransition" id="-813917649%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="hillshade-shadow-color-transition.html">hillshadeShadowColorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-813917649%2FProperties%2F540127926" anchor-label="hillshadeShadowColorTransition" id="-813917649%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="hillshade-shadow-color.html">hillshadeShadowColor</a>. Default value: &quot;#000000&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-98282904%2FProperties%2F540127926" anchor-label="maxZoom" id="-98282904%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="max-zoom.html"><span>max</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-98282904%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-98282904%2FProperties%2F540127926" anchor-label="maxZoom" id="-98282904%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="max-zoom.html">maxZoom</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-long-value/index.html">LongValue</a></div><div class="brief "><a data-name="-98282904%2FProperties%2F540127926" anchor-label="maxZoom" id="-98282904%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: 0, 24</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1700011974%2FProperties%2F540127926" anchor-label="minZoom" id="-1700011974%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="min-zoom.html"><span>min</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1700011974%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1700011974%2FProperties%2F540127926" anchor-label="minZoom" id="-1700011974%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="min-zoom.html">minZoom</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-long-value/index.html">LongValue</a></div><div class="brief "><a data-name="-1700011974%2FProperties%2F540127926" anchor-label="minZoom" id="-1700011974%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: 0, 24</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1611733079%2FProperties%2F540127926" anchor-label="sourceLayer" id="-1611733079%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="source-layer.html"><span>source</span><wbr></wbr><span><span>Layer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1611733079%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1611733079%2FProperties%2F540127926" anchor-label="sourceLayer" id="-1611733079%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="source-layer.html">sourceLayer</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-string-value/index.html">StringValue</a></div><div class="brief "><a data-name="-1611733079%2FProperties%2F540127926" anchor-label="sourceLayer" id="-1611733079%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="313373577%2FProperties%2F540127926" anchor-label="visibility" id="313373577%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="visibility.html"><span><span>visibility</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="313373577%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="313373577%2FProperties%2F540127926" anchor-label="visibility" id="313373577%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="visibility.html">visibility</a><span class="token operator">: </span><a href="../-visibility-value/index.html">VisibilityValue</a></div><div class="brief "><a data-name="313373577%2FProperties%2F540127926" anchor-label="visibility" id="313373577%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether this layer is displayed. Default value: &quot;visible&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
