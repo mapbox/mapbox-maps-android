@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.mapbox.common</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.common////PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><span class="current">com.mapbox.common</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="1762018395%2FClasslikes%2F540127926" anchor-label="AmbientCacheClearingCallback" id="1762018395%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-ambient-cache-clearing-callback/index.html"><span>Ambient</span><wbr></wbr><span>Cache</span><wbr></wbr><span>Clearing</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1762018395%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-ambient-cache-clearing-callback/index.html">AmbientCacheClearingCallback</a></div><div class="brief ">Callback invoked as a result of the TileStore clearAmbientCache() method call.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="25916430%2FClasslikes%2F540127926" anchor-label="CacheClearingError" id="25916430%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-cache-clearing-error/index.html"><span>Cache</span><wbr></wbr><span>Clearing</span><wbr></wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="25916430%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-cache-clearing-error/index.html">CacheClearingError</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Describes a cache clearing error.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="488100724%2FClasslikes%2F540127926" anchor-label="CacheClearingErrorType" id="488100724%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-cache-clearing-error-type/index.html"><span>Cache</span><wbr></wbr><span>Clearing</span><wbr></wbr><span>Error</span><wbr></wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="488100724%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-cache-clearing-error-type/index.html">CacheClearingErrorType</a></div><div class="brief ">Describes the reason for a cache clearing failure.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="762100939%2FClasslikes%2F540127926" anchor-label="Cancelable" id="762100939%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-cancelable/index.html"><span><span>Cancelable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="762100939%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-cancelable/index.html">Cancelable</a></div><div class="brief ">Allows to cancel the associated asynchronous operation The associated asynchronous operation is not automatically canceled if this object goes out of scope.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-68666954%2FClasslikes%2F540127926" anchor-label="HttpMethod" id="-68666954%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-method/index.html"><span>Http</span><wbr></wbr><span><span>Method</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-68666954%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-http-method/index.html">HttpMethod</a></div><div class="brief ">HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="833754620%2FClasslikes%2F540127926" anchor-label="HttpRequest" id="833754620%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-request/index.html"><span>Http</span><wbr></wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="833754620%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-http-request/index.html">HttpRequest</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">HttpRequest holds basic information for construction of an HTTP request</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1129688994%2FClasslikes%2F540127926" anchor-label="HttpRequestError" id="-1129688994%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-request-error/index.html"><span>Http</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1129688994%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-http-request-error/index.html">HttpRequestError</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Record which contains detailed information about HTTP error happened during request/download call.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="969934788%2FClasslikes%2F540127926" anchor-label="HttpRequestErrorType" id="969934788%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-request-error-type/index.html"><span>Http</span><wbr></wbr><span>Request</span><wbr></wbr><span>Error</span><wbr></wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="969934788%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-http-request-error-type/index.html">HttpRequestErrorType</a></div><div class="brief ">Enum which describes possible error types which could happen during HTTP request/download calls.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-18419521%2FClasslikes%2F540127926" anchor-label="HttpRequestFlags" id="-18419521%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-request-flags/index.html"><span>Http</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Flags</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-18419521%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-http-request-flags/index.html">HttpRequestFlags</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1534091944%2FClasslikes%2F540127926" anchor-label="HttpRequestOrResponse" id="-1534091944%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-request-or-response/index.html"><span>Http</span><wbr></wbr><span>Request</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Response</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1534091944%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-http-request-or-response/index.html">HttpRequestOrResponse</a></div><div class="brief ">Contains either an HttpRequest or an HttpResponse.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1140635434%2FClasslikes%2F540127926" anchor-label="HttpResponse" id="-1140635434%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-response/index.html"><span>Http</span><wbr></wbr><span><span>Response</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1140635434%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-http-response/index.html">HttpResponse</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Record which is used to report HTTP response to the caller.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="164666129%2FClasslikes%2F540127926" anchor-label="HttpResponseCallback" id="164666129%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-response-callback/index.html"><span>Http</span><wbr></wbr><span>Response</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="164666129%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-http-response-callback/index.html">HttpResponseCallback</a></div><div class="brief ">Callback which is used to report result of HTTP request.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="802161100%2FClasslikes%2F540127926" anchor-label="HttpResponseData" id="802161100%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-response-data/index.html"><span>Http</span><wbr></wbr><span>Response</span><wbr></wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="802161100%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-http-response-data/index.html">HttpResponseData</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Record which contains data received in HTTP response.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="638144142%2FClasslikes%2F540127926" anchor-label="HttpServiceCancellationCallback" id="638144142%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-service-cancellation-callback/index.html"><span>Http</span><wbr></wbr><span>Service</span><wbr></wbr><span>Cancellation</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="638144142%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-http-service-cancellation-callback/index.html">HttpServiceCancellationCallback</a></div><div class="brief ">Callback for the HTTP request cancelled event.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1137326722%2FClasslikes%2F540127926" anchor-label="HttpServiceFactory" id="1137326722%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-service-factory/index.html"><span>Http</span><wbr></wbr><span>Service</span><wbr></wbr><span><span>Factory</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1137326722%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-http-service-factory/index.html">HttpServiceFactory</a></div><div class="brief ">HTTP service factory.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-971173406%2FClasslikes%2F540127926" anchor-label="HttpServiceInterceptorInterface" id="-971173406%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-service-interceptor-interface/index.html"><span>Http</span><wbr></wbr><span>Service</span><wbr></wbr><span>Interceptor</span><wbr></wbr><span><span>Interface</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-971173406%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-http-service-interceptor-interface/index.html">HttpServiceInterceptorInterface</a></div><div class="brief ">Interface for intercepting and modifying HttpService function calls.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1062365397%2FClasslikes%2F540127926" anchor-label="HttpServiceInterceptorRequestContinuation" id="1062365397%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-service-interceptor-request-continuation/index.html"><span>Http</span><wbr></wbr><span>Service</span><wbr></wbr><span>Interceptor</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Continuation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1062365397%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-http-service-interceptor-request-continuation/index.html">HttpServiceInterceptorRequestContinuation</a></div><div class="brief ">Continuation to be invoked once the interceptor is done processing a request.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1030943503%2FClasslikes%2F540127926" anchor-label="HttpServiceInterceptorResponseContinuation" id="1030943503%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-http-service-interceptor-response-continuation/index.html"><span>Http</span><wbr></wbr><span>Service</span><wbr></wbr><span>Interceptor</span><wbr></wbr><span>Response</span><wbr></wbr><span><span>Continuation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1030943503%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-http-service-interceptor-response-continuation/index.html">HttpServiceInterceptorResponseContinuation</a></div><div class="brief ">Continuation to be invoked once the interceptor is done processing a request's response.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-509138911%2FClasslikes%2F540127926" anchor-label="NetworkRestriction" id="-509138911%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-network-restriction/index.html"><span>Network</span><wbr></wbr><span><span>Restriction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-509138911%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-network-restriction/index.html">NetworkRestriction</a></div><div class="brief ">Classify network types based on cost.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="417921388%2FClasslikes%2F540127926" anchor-label="OfflineSwitch" id="417921388%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-offline-switch/index.html"><span>Offline</span><wbr></wbr><span><span>Switch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="417921388%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-offline-switch/index.html">OfflineSwitch</a></div><div class="brief ">Instance that allows connecting or disconnecting the Mapbox stack to the network.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1236924979%2FClasslikes%2F540127926" anchor-label="SdkInformation" id="-1236924979%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-sdk-information/index.html"><span>Sdk</span><wbr></wbr><span><span>Information</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1236924979%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-sdk-information/index.html">SdkInformation</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Provides information about a given Mapbox SDK.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1495755885%2FClasslikes%2F540127926" anchor-label="SdkInformationQuery" id="1495755885%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-sdk-information-query/index.html"><span>Sdk</span><wbr></wbr><span>Information</span><wbr></wbr><span><span>Query</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1495755885%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-sdk-information-query/index.html">SdkInformationQuery</a> : <a href="-sdk-information-query-interface/index.html">SdkInformationQueryInterface</a></div><div class="brief ">Provides an interface to query registered Mapbox SDKs.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-843664260%2FClasslikes%2F540127926" anchor-label="SdkInformationQueryInterface" id="-843664260%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-sdk-information-query-interface/index.html"><span>Sdk</span><wbr></wbr><span>Information</span><wbr></wbr><span>Query</span><wbr></wbr><span><span>Interface</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-843664260%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-sdk-information-query-interface/index.html">SdkInformationQueryInterface</a></div><div class="brief ">Provides an interface to query registered Mapbox SDKs.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="970301251%2FClasslikes%2F540127926" anchor-label="TileDataDomain" id="970301251%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-data-domain/index.html"><span>Tile</span><wbr></wbr><span>Data</span><wbr></wbr><span><span>Domain</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="970301251%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-tile-data-domain/index.html">TileDataDomain</a></div><div class="brief ">Describes the tiles data domain.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1213284323%2FClasslikes%2F540127926" anchor-label="TileRegion" id="-1213284323%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region/index.html"><span>Tile</span><wbr></wbr><span><span>Region</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1213284323%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-region/index.html">TileRegion</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">TileRegion represents an identifiable geographic tile region with metadata</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1973568776%2FClasslikes%2F540127926" anchor-label="TileRegionBooleanCallback" id="-1973568776%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-boolean-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Boolean</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1973568776%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-boolean-callback/index.html">TileRegionBooleanCallback</a></div><div class="brief ">Callback invoked as a result of the TileStore tileRegionContainsDescriptors() method call.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="420469592%2FClasslikes%2F540127926" anchor-label="TileRegionCallback" id="420469592%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="420469592%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-callback/index.html">TileRegionCallback</a></div><div class="brief ">Callback invoked when returning a tile region.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-464006435%2FClasslikes%2F540127926" anchor-label="TileRegionError" id="-464006435%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-error/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-464006435%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-region-error/index.html">TileRegionError</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Describes a tile region load request error.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-236309821%2FClasslikes%2F540127926" anchor-label="TileRegionErrorType" id="-236309821%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-error-type/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Error</span><wbr></wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-236309821%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-tile-region-error-type/index.html">TileRegionErrorType</a></div><div class="brief ">Describes the reason for a tile region download request failure.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1102558385%2FClasslikes%2F540127926" anchor-label="TileRegionEstimateOptions" id="-1102558385%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-estimate-options/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Estimate</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1102558385%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-region-estimate-options/index.html">TileRegionEstimateOptions</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Holds options for the tile region estimation operation.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="785695272%2FClasslikes%2F540127926" anchor-label="TileRegionEstimateProgress" id="785695272%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-estimate-progress/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Estimate</span><wbr></wbr><span><span>Progress</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="785695272%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-region-estimate-progress/index.html">TileRegionEstimateProgress</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">A tile region's estimate progress includes counts of the number of resources that have been estimated and the total number of resources as well as a partial result with the current estimate, calculated using the data available at the moment.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-234577309%2FClasslikes%2F540127926" anchor-label="TileRegionEstimateProgressCallback" id="-234577309%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-estimate-progress-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Estimate</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-234577309%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-estimate-progress-callback/index.html">TileRegionEstimateProgressCallback</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-288892104%2FClasslikes%2F540127926" anchor-label="TileRegionEstimateResult" id="-288892104%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-estimate-result/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Estimate</span><wbr></wbr><span><span>Result</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-288892104%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-region-estimate-result/index.html">TileRegionEstimateResult</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">The result of tile region estim</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="34974579%2FClasslikes%2F540127926" anchor-label="TileRegionEstimateResultCallback" id="34974579%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-estimate-result-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Estimate</span><wbr></wbr><span>Result</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="34974579%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-estimate-result-callback/index.html">TileRegionEstimateResultCallback</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1917984006%2FClasslikes%2F540127926" anchor-label="TileRegionGeometryCallback" id="1917984006%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-geometry-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Geometry</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1917984006%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-geometry-callback/index.html">TileRegionGeometryCallback</a></div><div class="brief ">Callback invoked to return a tile region's associated geometry</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-685576947%2FClasslikes%2F540127926" anchor-label="TileRegionLoadOptions" id="-685576947%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-load-options/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Load</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-685576947%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-tile-region-load-options/index.html">TileRegionLoadOptions</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">Describes the tile region load option values.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="827217962%2FClasslikes%2F540127926" anchor-label="TileRegionLoadProgress" id="827217962%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-load-progress/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Load</span><wbr></wbr><span><span>Progress</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="827217962%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-region-load-progress/index.html">TileRegionLoadProgress</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a></div><div class="brief ">A tile region's load progress includes counts of the number of resources that have completed downloading and the total number of resources that are required.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1391389083%2FClasslikes%2F540127926" anchor-label="TileRegionLoadProgressCallback" id="-1391389083%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-load-progress-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Load</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1391389083%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-load-progress-callback/index.html">TileRegionLoadProgressCallback</a></div><div class="brief ">Callback Invoked to report the progess of the tile region loading operation.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2039920105%2FClasslikes%2F540127926" anchor-label="TileRegionMetadataCallback" id="2039920105%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-region-metadata-callback/index.html"><span>Tile</span><wbr></wbr><span>Region</span><wbr></wbr><span>Metadata</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2039920105%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-region-metadata-callback/index.html">TileRegionMetadataCallback</a></div><div class="brief ">Callback invoked to return a tile region's associated metadata</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1439250157%2FClasslikes%2F540127926" anchor-label="TileRegionsCallback" id="1439250157%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-regions-callback/index.html"><span>Tile</span><wbr></wbr><span>Regions</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1439250157%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-regions-callback/index.html">TileRegionsCallback</a></div><div class="brief ">Callback invoked when returning existing tile regions.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1306615648%2FClasslikes%2F540127926" anchor-label="TilesetDescriptor" id="1306615648%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tileset-descriptor/index.html"><span>Tileset</span><wbr></wbr><span><span>Descriptor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1306615648%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tileset-descriptor/index.html">TilesetDescriptor</a></div><div class="brief ">A bundle that encapsulates tilesets creation for the tile store implementation.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1304005136%2FClasslikes%2F540127926" anchor-label="TileStore" id="1304005136%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-store/index.html"><span>Tile</span><wbr></wbr><span><span>Store</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1304005136%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-tile-store/index.html">TileStore</a></div><div class="brief ">TileStore manages downloads and storage for requests to tile-related API endpoints, enforcing a disk usage quota: tiles available on disk may be deleted to make room for a new download.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1323312346%2FClasslikes%2F540127926" anchor-label="TileStoreObserver" id="1323312346%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-store-observer/index.html"><span>Tile</span><wbr></wbr><span>Store</span><wbr></wbr><span><span>Observer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1323312346%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-tile-store-observer/index.html">TileStoreObserver</a></div><div class="brief ">Observer for getting notified about changes to TileRegions.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1524144972%2FClasslikes%2F540127926" anchor-label="TileStoreOptions" id="-1524144972%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-tile-store-options/index.html"><span>Tile</span><wbr></wbr><span>Store</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1524144972%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-tile-store-options/index.html">TileStoreOptions</a></div><div class="brief ">These constants can be used as keys for TileStore::setOption to configure further aspects of a TileStore instance.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1905717712%2FClasslikes%2F540127926" anchor-label="ValueConverter" id="1905717712%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-value-converter/index.html"><span>Value</span><wbr></wbr><span><span>Converter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1905717712%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-value-converter/index.html">ValueConverter</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
