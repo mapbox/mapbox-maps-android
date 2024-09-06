@@ -1,13 +1,17 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
+import androidx.annotation.RestrictTo
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.RenderedQueryGeometry
+import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -27,16 +31,21 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
+import com.mapbox.maps.plugin.delegates.MapListenerDelegate
+import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.gestures.TopPriorityAsyncMapClickListener
 import com.mapbox.maps.plugin.gestures.TopPriorityOnMoveListener
-import java.util.*
+import java.lang.UnsupportedOperationException
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -590,50 +599,103 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   /**
-   * Class handle the map click event
+   * For internal usage.
+   *
+   * @suppress
    */
-  inner class MapClick : OnMapClickListener {
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  abstract inner class TopPriorityClickListenerImpl : TopPriorityAsyncMapClickListener {
+
+    private var asyncQrfCancelable: Cancelable? = null
+
     /**
-     * Called when the user clicks on the map view.
-     * Note that calling this method is blocking main thread until querying map for features is finished.
-     *
-     * @param point The projected map coordinate the user clicked on.
-     * @return True if this click should be consumed and not passed further to other listeners registered afterwards,
-     * false otherwise.
+     * For internal usage.
      */
-    override fun onMapClick(point: Point): Boolean {
-      queryMapForFeatures(point)?.let {
-        clickListeners.forEach { listener ->
-          if (listener.onAnnotationClick(it)) {
-            return true
+    abstract fun couldSkipClick(): Boolean
+
+    /**
+     * For internal usage.
+     */
+    abstract fun processAnnotation(annotation: T): Boolean
+
+    /**
+     * For internal usage.
+     */
+    override fun asyncHandleClick(point: Point, continueToNextListener: () -> Unit) {
+      if (couldSkipClick()) {
+        return
+      }
+      try {
+        asyncQrfCancelable?.cancel()
+      } catch (e: UnsatisfiedLinkError) {
+        // fastest solution to fix the unit test
+      }
+      asyncQrfCancelable = queryMapForFeaturesAsync(
+        mapCameraManagerDelegate.pixelForCoordinate(point)
+      ) { annotation, errorOrCanceled ->
+        // if ongoing QRF is canceled by a new one - QRF callback returns an error
+        // we should not then invoke `consumeCallback` in gestures as it will be invoked for the new QRF
+        // even although it did not even start
+        if (errorOrCanceled) {
+          return@queryMapForFeaturesAsync
+        }
+        annotation?.let {
+          if (processAnnotation(it)) {
+            // return early and do not invoke continueToNextListener
+            return@queryMapForFeaturesAsync
           }
         }
-        selectAnnotation(it)
+        continueToNextListener.invoke()
       }
+    }
+
+    /**
+     * Must not be used.
+     */
+    override fun onMapClick(point: Point): Boolean {
+      throw UnsupportedOperationException()
+    }
+
+    /**
+     * Must not be used.
+     */
+    override fun onMapLongClick(point: Point): Boolean {
+      throw UnsupportedOperationException()
+    }
+  }
+
+  /**
+   * Class handle the map click event.
+   *
+   * This class should not be used directly.
+   */
+  inner class MapClick : TopPriorityClickListenerImpl() {
+
+    override fun couldSkipClick() = clickListeners.isEmpty() && interactionListener.isEmpty()
+
+    override fun processAnnotation(annotation: T): Boolean {
+      clickListeners.forEach { userAnnotationClickListener ->
+        if (userAnnotationClickListener.onAnnotationClick(annotation)) {
+          return true
+        }
+      }
+      selectAnnotation(annotation)
       return false
     }
   }
 
   /**
-   * Class handle the map long click event
+   * Class handle the map long click event.
+   * This class should not be used directly.
    */
-  inner class MapLongClick : OnMapLongClickListener {
-    /**
-     * Called when the user long clicks on the map view.
-     *
-     * @param point The projected map coordinate the user clicked on.
-     * @return True if this click should be consumed and not passed further to other listeners registered afterwards,
-     * false otherwise.
-     */
-    override fun onMapLongClick(point: Point): Boolean {
-      if (longClickListeners.isEmpty()) {
-        return false
-      }
-      queryMapForFeatures(point)?.let {
-        longClickListeners.forEach { listener ->
-          if (listener.onAnnotationLongClick(it)) {
-            return true
-          }
+  inner class MapLongClick : TopPriorityClickListenerImpl() {
+
+    override fun couldSkipClick() = longClickListeners.isEmpty()
+
+    override fun processAnnotation(annotation: T): Boolean {
+      longClickListeners.forEach { userAnnotationLongClickListener ->
+        if (userAnnotationLongClickListener.onAnnotationLongClick(annotation)) {
+          return true
         }
       }
       return false
@@ -662,7 +724,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             detector.focalPoint.x.toDouble(),
             detector.focalPoint.y.toDouble()
           )
-        ) { annotation ->
+        ) { annotation, _ ->
           annotation?.let {
             startDragging(it)
           }
@@ -779,6 +841,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   /**
    * Query the rendered annotation around the point
    *
+   * Note: this method blocks main thread.
+   *
    * @param point the point for querying
    * @return the queried annotation at this point
    */
@@ -789,6 +853,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
   /**
    * Query the rendered annotation around the point
+   *
+   * Note: this method blocks main thread.
    *
    * @param screenCoordinate the screenCoordinate for querying
    * @return the queried annotation on this screenCoordinate
@@ -836,7 +902,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     return annotation
   }
 
-  private fun queryMapForFeaturesAsync(screenCoordinate: ScreenCoordinate, qrfResult: (T?) -> Unit): Cancelable {
+  private fun queryMapForFeaturesAsync(screenCoordinate: ScreenCoordinate, qrfResult: (T?, Boolean) -> Unit): Cancelable {
     val layerList = mutableListOf<String>()
     layer?.let {
       layerList.add(it.layerId)
@@ -856,11 +922,13 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           val id = annotationId.asLong
           when {
             annotationMap.containsKey(id) -> {
-              qrfResult(annotationMap[id])
+              qrfResult(annotationMap[id], false)
             }
+
             dragAnnotationMap.containsKey(id) -> {
-              qrfResult(dragAnnotationMap[id])
+              qrfResult(dragAnnotationMap[id], false)
             }
+
             else -> {
               logE(
                 TAG,
@@ -868,7 +936,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
               )
             }
           }
-        } ?: qrfResult(null)
+        } ?: run {
+        if (features.isError) {
+          // error is called when QRF is canceled
+          qrfResult(null, true)
+        } else {
+          qrfResult(null, false)
+        }
+      }
     }
   }
 

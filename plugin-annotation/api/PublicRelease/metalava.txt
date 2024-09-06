@@ -56,14 +56,22 @@ package com.mapbox.maps.plugin.annotation {
     property public final java.util.concurrent.atomic.AtomicLong ID_GENERATOR;
   }
 
-  public final class AnnotationManagerImpl.MapClick implements com.mapbox.maps.plugin.gestures.OnMapClickListener {
+  public final class AnnotationManagerImpl.MapClick implements com.mapbox.maps.plugin.gestures.TopPriorityAsyncMapClickListener {
     ctor public AnnotationManagerImpl.MapClick();
+    method public void asyncHandleClick(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function0<kotlin.Unit> continueToNextListener);
+    method public boolean couldSkipClick();
     method public boolean onMapClick(com.mapbox.geojson.Point point);
+    method public boolean onMapLongClick(com.mapbox.geojson.Point point);
+    method public boolean processAnnotation(T annotation);
   }
 
-  public final class AnnotationManagerImpl.MapLongClick implements com.mapbox.maps.plugin.gestures.OnMapLongClickListener {
+  public final class AnnotationManagerImpl.MapLongClick implements com.mapbox.maps.plugin.gestures.TopPriorityAsyncMapClickListener {
     ctor public AnnotationManagerImpl.MapLongClick();
+    method public void asyncHandleClick(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function0<kotlin.Unit> continueToNextListener);
+    method public boolean couldSkipClick();
+    method public boolean onMapClick(com.mapbox.geojson.Point point);
     method public boolean onMapLongClick(com.mapbox.geojson.Point point);
+    method public boolean processAnnotation(T annotation);
   }
 
   public final class AnnotationManagerImpl.MapMove implements com.mapbox.maps.plugin.gestures.TopPriorityOnMoveListener {

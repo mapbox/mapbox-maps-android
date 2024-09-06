@@ -18,6 +18,20 @@ fun interface OnFlingListener {
 }
 
 /**
+ * For internal usage.
+ *
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+interface TopPriorityAsyncMapClickListener : OnMapClickListener, OnMapLongClickListener {
+
+  /**
+   * For internal usage.
+   */
+  fun asyncHandleClick(point: Point, continueToNextListener: () -> Unit)
+}
+
+/**
  * Interface definition for a callback to be invoked when the user clicks on the map view.
  */
 fun interface OnMapClickListener {
