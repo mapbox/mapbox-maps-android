@@ -259,7 +259,6 @@ class GesturesActivity : AppCompatActivity() {
   }
 
   private fun fixedFocalPointEnabled(enabled: Boolean) {
-
     if (enabled) {
       focalPointLatLng = FOCAL_POINT
       pointAnnotationManager =

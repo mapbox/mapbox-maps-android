@@ -7,25 +7,66 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.InputDevice.SOURCE_CLASS_POINTER
 import android.view.MotionEvent
-import android.view.MotionEvent.*
+import android.view.MotionEvent.ACTION_DOWN
+import android.view.MotionEvent.ACTION_MOVE
+import android.view.MotionEvent.ACTION_POINTER_DOWN
+import android.view.MotionEvent.ACTION_UP
+import android.view.MotionEvent.BUTTON_SECONDARY
+import android.view.MotionEvent.TOOL_TYPE_FINGER
+import android.view.MotionEvent.obtain
 import androidx.test.core.view.PointerCoordsBuilder
 import androidx.test.core.view.PointerPropertiesBuilder
-import com.mapbox.android.gestures.*
+import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.android.gestures.RotateGestureDetector
+import com.mapbox.android.gestures.ShoveGestureDetector
+import com.mapbox.android.gestures.StandardGestureDetector
+import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapCenterAltitudeMode
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.PlatformEventInfo
+import com.mapbox.maps.PlatformEventType
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.Size
+import com.mapbox.maps.StylePropertyValue
+import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapInteractionDelegate
+import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.mockkStatic
+import io.mockk.runs
+import io.mockk.slot
+import io.mockk.unmockkAll
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,6 +98,8 @@ class GesturesPluginTest {
   private var shoveGestureDetector: ShoveGestureDetector = mockk()
   private var scaleGestureDetector: StandardScaleGestureDetector = mockk(relaxUnitFun = true)
   private var moveGestureDetector: MoveGestureDetector = mockk(relaxUnitFun = true)
+
+  private lateinit var style: MapboxStyleManager
 
   private val motionEvent1 = mockk<MotionEvent>()
   private val motionEvent2 = mockk<MotionEvent>()
@@ -115,7 +158,7 @@ class GesturesPluginTest {
     )
     every { mapCameraManagerDelegate.getCenterAltitudeMode() } returns mapCenterAltitudeMode
     every { mapCameraManagerDelegate.setCenterAltitudeMode(any()) } just runs
-    val style = mockk<MapboxStyleManager>()
+    style = mockk<MapboxStyleManager>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),
       StylePropertyValueKind.CONSTANT
@@ -622,6 +665,69 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun verifySimultaneousRotateAndPinchToZoomDisabled() {
+    // Override creation of default GesturesPluginImpl to apply custom GesturesSettings
+    every {
+      GesturesAttributeParser.parseGesturesSettings(
+        context,
+        attrs
+      )
+    } returns GesturesSettings { simultaneousRotateAndPinchToZoomEnabled = false }
+
+    presenter = GesturesPluginImpl(context, attrs, style)
+    presenter.bind(context, gesturesManager, attrs, 1f)
+    presenter.onDelegateProvider(mapDelegateProvider)
+
+    val scaleDetector = mockk<StandardScaleGestureDetector>()
+    every { scaleDetector.pointersCount } returns 2
+    every { scaleDetector.currentSpan } returns 80.0f
+    every { scaleDetector.previousSpan } returns 5000.0f
+
+    every { scaleGestureDetector.isInProgress } returns true
+    every { moveGestureDetector.isInProgress } returns false
+    every { rotateGestureDetector.isInProgress } returns false
+    every { rotateGestureDetector.deltaSinceStart } returns 0.0f
+    every { rotateGestureDetector.deltaSinceLast } returns 0.0f
+    every { rotateGestureDetector.isEnabled } returns true
+    every { scaleDetector.previousEvent } returns obtainMotionEventAction(ACTION_MOVE)
+    every { scaleDetector.currentEvent } returns obtainMotionEventActionLater(ACTION_MOVE)
+
+    presenter.handleScaleBegin(scaleDetector)
+    verify(exactly = 1) { rotateGestureDetector.setEnabled(false) }
+  }
+
+  @Test
+  fun verifySimultaneousRotateAndPinchToZoomEnabled() {
+    // Override creation of default GesturesPluginImpl to apply custom GesturesSettings
+    every {
+      GesturesAttributeParser.parseGesturesSettings(
+        context,
+        attrs
+      )
+    } returns GesturesSettings { simultaneousRotateAndPinchToZoomEnabled = true }
+
+    presenter = GesturesPluginImpl(context, attrs, style)
+    presenter.bind(context, gesturesManager, attrs, 1f)
+    presenter.onDelegateProvider(mapDelegateProvider)
+
+    val scaleDetector = mockk<StandardScaleGestureDetector>()
+    every { scaleDetector.pointersCount } returns 2
+    every { scaleDetector.currentSpan } returns 80.0f
+    every { scaleDetector.previousSpan } returns 5000.0f
+
+    every { scaleGestureDetector.isInProgress } returns true
+    every { moveGestureDetector.isInProgress } returns false
+    every { rotateGestureDetector.isInProgress } returns false
+    every { rotateGestureDetector.deltaSinceStart } returns 0.0f
+    every { rotateGestureDetector.deltaSinceLast } returns 0.0f
+    every { scaleDetector.previousEvent } returns obtainMotionEventAction(ACTION_MOVE)
+    every { scaleDetector.currentEvent } returns obtainMotionEventActionLater(ACTION_MOVE)
+
+    presenter.handleScaleBegin(scaleDetector)
+    verify(exactly = 0) { rotateGestureDetector.setEnabled(any()) }
+  }
+
+  @Test
   fun verifyScaleBeginIgnoreSpeed() {
     val scaleDetector = mockk<StandardScaleGestureDetector>()
     every { scaleDetector.pointersCount } returns 2
@@ -789,6 +895,19 @@ class GesturesPluginTest {
     val result = presenter.handleRotateBegin(rotateGestureDetector)
     assertFalse(result)
     verify(exactly = 0) { listener.onRotateBegin(any()) }
+  }
+
+  @Test
+  fun verifyRotateDisabledByThresholdIfScaleInProgress() {
+    val rotateGestureDetector = mockk<RotateGestureDetector>(relaxUnitFun = true)
+    every { scaleGestureDetector.isInProgress } returns true
+
+    every { rotateGestureDetector.deltaSinceLast } returns 150.5f
+    every { rotateGestureDetector.deltaSinceStart } returns 15.5f
+    every { rotateGestureDetector.currentEvent } returns obtainMotionEventActionLater(ACTION_MOVE)
+    every { rotateGestureDetector.previousEvent } returns obtainMotionEventAction(ACTION_MOVE)
+    val result = presenter.handleRotateBegin(rotateGestureDetector)
+    assertFalse(result)
   }
 
   @Test

@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a crash when calling `CameraAnimationsPlugin.easeTo()` with empty camera options or `CameraAnimationsPlugin.playAnimatorsSequentially()` / `CameraAnimationsPlugin.playAnimatorsTogether()` with an empty array of animators.
 * Fix ongoing animations being canceled when `CameraAnimationsPlugin.flyTo()` with empty camera options is called.
+* Fix simultaneous scale and rotation gestures not working when the first registered rotation is a scale one.
 
 # 11.7.0-beta.1 September 03, 2024
 ## Features ✨ and improvements 🏁

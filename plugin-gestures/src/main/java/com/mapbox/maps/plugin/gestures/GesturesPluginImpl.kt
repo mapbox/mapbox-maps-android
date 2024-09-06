@@ -839,7 +839,9 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
             // do not scale in case we're preferring to start rotation
             return false
           }
-          gestureState.saveAndDisable(GestureState.Type.Scale)
+          if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
+            gestureState.saveAndDisable(GestureState.Type.Scale)
+          }
         }
       } else {
         return false
@@ -1068,7 +1070,9 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       speed < 0.04 ||
       speed > 0.07 && deltaSinceStart < 5 ||
       speed > 0.15 && deltaSinceStart < 7 ||
-      speed > 0.5 && deltaSinceStart < 15
+      speed > 0.5 && deltaSinceStart < 15 ||
+      // There's a threshold to avoid unnecessary rotation on scale
+      gesturesManager.standardScaleGestureDetector.isInProgress && deltaSinceStart < 16
     ) {
       return false
     }
