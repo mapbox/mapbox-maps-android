@@ -28,6 +28,7 @@ import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import java.lang.ref.WeakReference
 
@@ -165,7 +166,11 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_accuracy_enabled -> {
-        binding.mapView.location.showAccuracyRing = true
+        val location = binding.mapView.location
+        location.showAccuracyRing = true
+        if (location.locationPuck is LocationPuck3D) {
+          showShortToast("showAccuracyRing works for 2D location puck only")
+        }
         item.isChecked = true
         return true
       }
