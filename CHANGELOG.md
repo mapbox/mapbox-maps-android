@@ -4,6 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.7.0-rc.1
+## Bug fixes 🐞
+* Fix a crash when calling `CameraAnimationsPlugin.easeTo()` with empty camera options or `CameraAnimationsPlugin.playAnimatorsSequentially()` / `CameraAnimationsPlugin.playAnimatorsTogether()` with an empty array of animators.
+* Fix ongoing animations being canceled when `CameraAnimationsPlugin.flyTo()` with empty camera options is called.
+
 # 11.7.0-beta.1 September 03, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `PointAnnotationState.iconOcclusionOpacity`, `PointAnnotationState.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
@@ -53,7 +58,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * Experimental `GeoJsonSource.autoMaxZoom` and `GeoJsonSourceState.autoMaxZoom` will return `null` value even after it's set.
-
 
 # 11.6.0 August 16, 2024
 ## Breaking changes ⚠️

@@ -9,17 +9,33 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxCameraAnimationException
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.logE
+import com.mapbox.maps.logI
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.MapCameraPlugin
 import com.mapbox.maps.plugin.animation.CameraTransform.wrapCoordinate
-import com.mapbox.maps.plugin.animation.animator.*
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.animation.animator.CameraAnchorAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
 import com.mapbox.maps.util.MathUtils
 import com.mapbox.maps.util.isEmpty
-import java.util.*
+import java.util.Objects
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -720,11 +736,17 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions?,
     animatorListener: Animator.AnimatorListener?
-  ) = startHighLevelAnimation(
-    cameraAnimationsFactory.getEaseTo(cameraOptions),
-    animationOptions,
-    animatorListener
-  )
+  ): Cancelable {
+    if (cameraOptions.isEmpty) {
+      logW(TAG, "No-op easeTo camera high-level animation as CameraOptions.isEmpty == true.")
+      return Cancelable { }
+    }
+    return startHighLevelAnimation(
+      cameraAnimationsFactory.getEaseTo(cameraOptions),
+      animationOptions,
+      animatorListener
+    )
+  }
 
   /**
    * Move the map by a given screen coordinate with optional animation.
@@ -832,11 +854,17 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions?,
     animatorListener: Animator.AnimatorListener?
-  ) = startHighLevelAnimation(
-    cameraAnimationsFactory.getFlyTo(cameraOptions),
-    animationOptions,
-    animatorListener
-  )
+  ): Cancelable {
+    if (cameraOptions.isEmpty) {
+      logW(TAG, "No-op flyTo camera high-level animation as CameraOptions.isEmpty == true.")
+      return Cancelable { }
+    }
+    return startHighLevelAnimation(
+      cameraAnimationsFactory.getFlyTo(cameraOptions),
+      animationOptions,
+      animatorListener
+    )
+  }
 
   /**
    * Create CameraZoomAnimator
@@ -920,6 +948,13 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    * @param animators Variable number of [ValueAnimator]'s
    */
   override fun playAnimatorsTogether(vararg animators: ValueAnimator) {
+    if (animators.isEmpty()) {
+      logW(
+        TAG,
+        "No-op playAnimatorsTogether() as no animators are passed"
+      )
+      return
+    }
     val cameraAnimators = mutableListOf<CameraAnimator<*>>()
     for (cameraAnimator in animators) {
       if (cameraAnimator is CameraAnimator<*>) {
@@ -945,6 +980,13 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    * @param animators Variable number of [ValueAnimator]'s
    */
   override fun playAnimatorsSequentially(vararg animators: ValueAnimator) {
+    if (animators.isEmpty()) {
+      logW(
+        TAG,
+        "No-op playAnimatorsSequentially() as no animators are passed"
+      )
+      return
+    }
     val cameraAnimators = mutableListOf<CameraAnimator<*>>()
     for (cameraAnimator in animators) {
       if (cameraAnimator is CameraAnimator<*>) {
@@ -969,6 +1011,14 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     animationOptions: MapAnimationOptions?,
     animatorListener: Animator.AnimatorListener?
   ): Cancelable {
+    if (animators.isEmpty()) {
+      logW(
+        TAG,
+        "No-op camera high-level animation as CameraOptions are empty."
+      )
+      return Cancelable { }
+    }
+
     animators.forEach {
       it.isInternal = true
       it.owner = animationOptions?.owner
