@@ -9,7 +9,14 @@ import android.os.Handler
 import android.os.Looper.getMainLooper
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.logE
+import com.mapbox.maps.logI
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -20,10 +27,25 @@ import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
-import io.mockk.*
+import com.mapbox.maps.toCameraOptions
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.mockkStatic
+import io.mockk.runs
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.unmockkObject
+import io.mockk.unmockkStatic
 import io.mockk.verify
+import io.mockk.verifyOrder
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -243,6 +265,26 @@ class CameraAnimationsPluginImplTest {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
     }
+  }
+
+  @Test
+  fun testEaseToWithEmptyCameraOptions() {
+    val cancelable = cameraAnimationsPluginImpl.easeTo(
+      cameraOptions { },
+      mapAnimationOptions { duration(DURATION) }
+    )
+    // Checking that passing empty cameraOptions doesn't throw exception
+    assertTrue(cancelable != null)
+  }
+
+  @Test
+  fun testFlyToWithEmptyCameraOptions() {
+    val cancelable = cameraAnimationsPluginImpl.flyTo(
+      cameraOptions { },
+      mapAnimationOptions { duration(DURATION) }
+    )
+    // Checking that passing empty cameraOptions doesn't throw exception
+    assertTrue(cancelable != null)
   }
 
   @Test
@@ -791,6 +833,22 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.playAnimatorsSequentially(pitch, bearing)
 
     shadowOf(getMainLooper()).idle()
+  }
+
+  @Test
+  fun testPlayEmptyAnimatorsSequentially() {
+    cameraAnimationsPluginImpl = spyk(CameraAnimationsPluginImpl())
+    cameraAnimationsPluginImpl.playAnimatorsSequentially(*emptyArray())
+
+    verify(exactly = 0) { cameraAnimationsPluginImpl.registerAnimators(any()) }
+  }
+
+  @Test
+  fun testPlayEmptyAnimatorsTogether() {
+    cameraAnimationsPluginImpl = spyk(CameraAnimationsPluginImpl())
+    cameraAnimationsPluginImpl.playAnimatorsTogether(*emptyArray())
+
+    verify(exactly = 0) { cameraAnimationsPluginImpl.registerAnimators(any()) }
   }
 
   @Test
