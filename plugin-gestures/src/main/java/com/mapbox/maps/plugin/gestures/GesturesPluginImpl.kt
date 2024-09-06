@@ -14,7 +14,14 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
-import com.mapbox.android.gestures.*
+import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.android.gestures.MultiFingerTapGestureDetector
+import com.mapbox.android.gestures.RotateGestureDetector
+import com.mapbox.android.gestures.ShoveGestureDetector
+import com.mapbox.android.gestures.StandardGestureDetector
+import com.mapbox.android.gestures.StandardScaleGestureDetector
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StylePropertyValueKind
@@ -29,14 +36,23 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
-import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.exp
+import kotlin.math.hypot
+import kotlin.math.ln
+import kotlin.math.min
+import kotlin.math.pow
 
 /**
  * Manages gestures events on a MapView.
@@ -443,10 +459,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on single tap up confirmed gesture was detected.
      */
     override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
-      if (motionEvent == null) {
-        return false
+      if (motionEvent != null) {
+        handleClickEvent(motionEvent.toScreenCoordinate())
       }
-      return handleClickEvent(motionEvent.toScreenCoordinate())
+      // always propagate false here;
+      // we have our own logic to deliver registered `OnMapClickListener` in `processNextClickListener`
+      // based on async QRFs if they are needed for annotation plugin
+      return false
     }
 
     /**
@@ -1231,27 +1250,74 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       (!internalSettings.pitchEnabled || !gesturesManager.shoveGestureDetector.isInProgress)
   }
 
-  internal fun handleLongPressEvent(screenCoordinate: ScreenCoordinate) {
-    if (!onMapLongClickListeners.isEmpty()) {
-      val clickedPoint = mapCameraManagerDelegate.coordinateForPixel(screenCoordinate)
-      for (listener in onMapLongClickListeners) {
+  private fun processNextLongClickListener(
+    clickedPoint: Point,
+    iterator: Iterator<OnMapLongClickListener>,
+  ) {
+    if (iterator.hasNext()) {
+      val listener = iterator.next()
+      if (listener is TopPriorityAsyncMapClickListener) {
+        // called when listener needs to perform async logic. For example, async QRF in annotation plugin
+        listener.asyncHandleClick(clickedPoint) {
+          processNextLongClickListener(
+            clickedPoint, iterator
+          )
+        }
+      } else {
+        // if we get to this point - it means we processed all TopPriorityAsyncMapClickListener listeners
+        // and we can call current and the rest of listeners synchronously
         if (listener.onMapLongClick(clickedPoint)) {
           return
+        }
+        while (iterator.hasNext()) {
+          if (iterator.next().onMapLongClick(clickedPoint)) {
+            return
+          }
         }
       }
     }
   }
 
-  internal fun handleClickEvent(screenCoordinate: ScreenCoordinate): Boolean {
-    if (!onMapClickListeners.isEmpty()) {
+  internal fun handleLongPressEvent(screenCoordinate: ScreenCoordinate) {
+    if (!onMapLongClickListeners.isEmpty()) {
       val clickedPoint = mapCameraManagerDelegate.coordinateForPixel(screenCoordinate)
-      for (listener in onMapClickListeners) {
+      processNextLongClickListener(clickedPoint, onMapLongClickListeners.iterator())
+    }
+  }
+
+  private fun processNextClickListener(
+    clickedPoint: Point,
+    iterator: Iterator<OnMapClickListener>,
+  ) {
+    if (iterator.hasNext()) {
+      val listener = iterator.next()
+      if (listener is TopPriorityAsyncMapClickListener) {
+        // called when listener needs to perform async logic. For example, async QRF in annotation plugin
+        listener.asyncHandleClick(clickedPoint) {
+          processNextClickListener(
+            clickedPoint, iterator
+          )
+        }
+      } else {
+        // if we get to this point - it means we processed all TopPriorityAsyncMapClickListener listeners
+        // and we can call current and the rest of listeners synchronously
         if (listener.onMapClick(clickedPoint)) {
-          return true
+          return
+        }
+        while (iterator.hasNext()) {
+          if (iterator.next().onMapClick(clickedPoint)) {
+            return
+          }
         }
       }
     }
-    return false
+  }
+
+  internal fun handleClickEvent(screenCoordinate: ScreenCoordinate) {
+    if (!onMapClickListeners.isEmpty()) {
+      val clickedPoint = mapCameraManagerDelegate.coordinateForPixel(screenCoordinate)
+      processNextClickListener(clickedPoint, onMapClickListeners.iterator())
+    }
   }
 
   internal fun handleDoubleTapEvent(
@@ -1602,7 +1668,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    * Add a callback that is invoked when the map is clicked.
    */
   override fun addOnMapClickListener(onMapClickListener: OnMapClickListener) {
-    onMapClickListeners.add(onMapClickListener)
+    if (onMapClickListener is TopPriorityAsyncMapClickListener) {
+      val (topPriority, normalPriority) = onMapClickListeners.partition { it is TopPriorityAsyncMapClickListener }
+      with(onMapClickListeners) {
+        clear()
+        addAll(topPriority)
+        add(onMapClickListener)
+        addAll(normalPriority)
+      }
+    } else {
+      onMapClickListeners.add(onMapClickListener)
+    }
   }
 
   /**
@@ -1616,7 +1692,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    * Add a callback that is invoked when the map is long clicked.
    */
   override fun addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-    onMapLongClickListeners.add(onMapLongClickListener)
+    if (onMapLongClickListener is TopPriorityAsyncMapClickListener) {
+      val (topPriority, normalPriority) = onMapLongClickListeners.partition { it is TopPriorityAsyncMapClickListener }
+      with(onMapLongClickListeners) {
+        clear()
+        addAll(topPriority)
+        add(onMapLongClickListener)
+        addAll(normalPriority)
+      }
+    } else {
+      onMapLongClickListeners.add(onMapLongClickListener)
+    }
   }
 
   /**

@@ -24,9 +24,8 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.gestures.TopPriorityAsyncMapClickListener
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -96,6 +95,7 @@ class CircleAnnotationManagerTest {
 
     every { queriedFeature.feature } returns feature
     every { queriedFeatures.value } returns queriedFeatureList
+    every { queriedFeatures.isError } returns false
     every { feature.getProperty(any()).asLong } returns 0L
     every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeQuerySlot)) } answers {
       executeQuerySlot.captured.run()
@@ -358,7 +358,7 @@ class CircleAnnotationManagerTest {
 
   @Test
   fun clickWithNoAnnotation() {
-    val captureSlot = slot<OnMapClickListener>()
+    val captureSlot = slot<TopPriorityAsyncMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
     val manager = CircleAnnotationManager(delegateProvider)
 
@@ -367,13 +367,13 @@ class CircleAnnotationManagerTest {
     manager.addClickListener(listener)
 
     every { feature.getProperty(any()) } returns null
-    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    captureSlot.captured.asyncHandleClick(Point.fromLngLat(0.0, 0.0)) { }
     verify(exactly = 0) { listener.onAnnotationClick(any()) }
   }
 
   @Test
   fun click() {
-    val captureSlot = slot<OnMapClickListener>()
+    val captureSlot = slot<TopPriorityAsyncMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
     val manager = CircleAnnotationManager(delegateProvider)
     val annotation = manager.create(
@@ -391,10 +391,10 @@ class CircleAnnotationManagerTest {
     every { interactionListener.onDeselectAnnotation(any()) } just Runs
     manager.addInteractionListener(interactionListener)
 
-    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    captureSlot.captured.asyncHandleClick(Point.fromLngLat(0.0, 0.0)) { }
     verify { listener.onAnnotationClick(annotation) }
     verify { interactionListener.onSelectAnnotation(annotation) }
-    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    captureSlot.captured.asyncHandleClick(Point.fromLngLat(0.0, 0.0)) { }
     verify { interactionListener.onDeselectAnnotation(annotation) }
 
     manager.removeClickListener(listener)
@@ -405,7 +405,7 @@ class CircleAnnotationManagerTest {
 
   @Test
   fun longClick() {
-    val captureSlot = slot<OnMapLongClickListener>()
+    val captureSlot = slot<TopPriorityAsyncMapClickListener>()
     every { gesturesPlugin.addOnMapLongClickListener(capture(captureSlot)) } just Runs
     val manager = CircleAnnotationManager(delegateProvider)
 
@@ -418,7 +418,7 @@ class CircleAnnotationManagerTest {
     val listener = mockk<OnCircleAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
     manager.addLongClickListener(listener)
-    captureSlot.captured.onMapLongClick(Point.fromLngLat(0.0, 0.0))
+    captureSlot.captured.asyncHandleClick(Point.fromLngLat(0.0, 0.0)) { }
     verify { listener.onAnnotationLongClick(annotation) }
 
     manager.removeLongClickListener(listener)

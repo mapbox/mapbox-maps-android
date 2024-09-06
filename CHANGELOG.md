@@ -2,11 +2,13 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.18.4
+## Features ✨ and improvements 🏁
+* Remove explicit main thread locking when clicking / long clicking / interacting with annotations created with `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager` that could lead to an ANR.
 
 # 10.18.3 July 22, 2024
 ## Bug fixes 🐞
 * Fix multiple annotation clusters not supported issue.
-
 
 # 10.18.2 June 24, 2024
 ## Features ✨ and improvements 🏁
