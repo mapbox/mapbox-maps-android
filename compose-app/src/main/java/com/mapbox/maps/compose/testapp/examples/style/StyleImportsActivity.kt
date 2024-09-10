@@ -17,22 +17,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
-import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.importConfigs
+import com.mapbox.maps.extension.compose.style.imports.rememberStyleImportState
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.compose.style.slotsContent
+import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.InteractiveFeature
+import org.json.JSONObject
 
 /**
  * Example to showcase usage of style imports.
  */
+@OptIn(MapboxExperimental::class)
 public class StyleImportsActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -92,10 +100,13 @@ public class StyleImportsActivity : ComponentActivity() {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = rememberMapViewportState {
-              setCameraOptions {
-                zoom(ZOOM)
-                center(CityLocations.HELSINKI)
-              }
+              setCameraOptions(
+                cameraOptions {
+                  center(Point.fromLngLat(-73.99, 40.72))
+                  zoom(11.0)
+                  pitch(45.0)
+                }
+              )
             },
             style = {
               GenericStyle(
@@ -108,16 +119,42 @@ public class StyleImportsActivity : ComponentActivity() {
                   if (showStandardImport) {
                     StyleImport(
                       importId = STANDARD_STYLE_IMPORT_ID,
-                      style = Style.STANDARD,
-                      configs = importConfigs {
-                        config("showTransitLabels", Value(false))
+                      style = "asset://fragment-realestate-NY.json",
+                      styleImportState = rememberStyleImportState {
+                        importConfigs = importConfigs {
+                          config("showTransitLabels", Value(false))
+                        }
+                        var selectedPriceLabel: InteractiveFeature<FeaturesetHolder.Featureset>? =
+                          null
+                        interactionsState
+                          .onFeaturesetClicked(featuresetId = "hotels-price") { priceLabel, _ ->
+                            if (selectedPriceLabel?.feature?.id() != priceLabel.feature.id()) {
+                              selectedPriceLabel?.removeFeatureState("active")
+                              selectedPriceLabel = priceLabel
+                            }
+                            val isActive =
+                              !JSONObject(priceLabel.state.toJson()).optBoolean("active", false)
+                            priceLabel.setFeatureState(
+                              FeatureStateValue(
+                                "active",
+                                Value.valueOf(isActive)
+                              )
+                            )
+                            return@onFeaturesetClicked true
+                          }
+                          .onMapClicked {
+                            selectedPriceLabel?.removeFeatureState("active")
+                            selectedPriceLabel = null
+                            true
+                          }
                       }
                     )
                   }
                   if (showSatelliteImport) {
                     StyleImport(
                       importId = SATELLITE_STYLE_IMPORT_ID,
-                      style = Style.SATELLITE
+                      style = Style.SATELLITE,
+                      styleImportState = rememberStyleImportState()
                     )
                   }
                 },
@@ -140,7 +177,6 @@ public class StyleImportsActivity : ComponentActivity() {
   }
 
   private companion object {
-    const val ZOOM: Double = 9.0
     const val STANDARD_STYLE_IMPORT_ID = "standard"
     const val SATELLITE_STYLE_IMPORT_ID = "satellite"
   }

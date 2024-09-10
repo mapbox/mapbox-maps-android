@@ -64,6 +64,9 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public fun <init> ()V
 	public final fun genericEvents (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getCameraChangedEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetHolder;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetHolder;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getFeatureState$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/FeaturesetHolder;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGesturesSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public final fun getMapIdleEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getMapLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
@@ -80,6 +83,11 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun getStyleLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun pixelForCoordinate (Lcom/mapbox/geojson/Point;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/BaseInteractiveFeature;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/BaseInteractiveFeature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/BaseInteractiveFeature;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun resetFeatureStates (Lcom/mapbox/maps/interactions/FeaturesetHolder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun setFeatureState (Lcom/mapbox/maps/interactions/BaseInteractiveFeature;[Lcom/mapbox/maps/interactions/FeatureStateValue;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setGesturesSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
 }
 
@@ -922,11 +930,35 @@ public final class com/mapbox/maps/extension/compose/style/StyleImportsConfig {
 
 public final class com/mapbox/maps/extension/compose/style/StyleKt {
 	public static final fun GenericStyle (Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GenericStyle (Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/style/SlotsContent;Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;Lcom/mapbox/maps/extension/compose/style/StyleState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapStyle (Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/style/StyleState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MapStyle (Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Landroidx/compose/runtime/Composer;II)V
 	public static final fun importConfigs (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/ImportConfigs;
 	public static final fun layerPositionedContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/LayerPositionedContent;
 	public static final fun slotsContent (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/SlotsContent;
 	public static final fun styleImportsConfig (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
+}
+
+public final class com/mapbox/maps/extension/compose/style/StyleState {
+	public fun <init> ()V
+	public final fun getAtmosphereState ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;
+	public final fun getLightsState ()Lcom/mapbox/maps/extension/compose/style/lights/LightsState;
+	public final fun getProjection ()Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
+	public final fun getStyleImportsConfig ()Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
+	public final fun getStyleInteractionsState ()Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
+	public final fun getTerrainState ()Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;
+	public final fun setAtmosphereState (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;)V
+	public final fun setLightsState (Lcom/mapbox/maps/extension/compose/style/lights/LightsState;)V
+	public final fun setProjection (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;)V
+	public final fun setStyleImportsConfig (Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;)V
+	public final fun setStyleInteractionsState (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;)V
+	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V
+	public final fun setTerrainState (Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/StyleStateKt {
+	public static final fun rememberStyleState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/Transition {
@@ -1019,8 +1051,84 @@ public final class com/mapbox/maps/extension/compose/style/atmosphere/generated/
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/imports/MapboxStyleImportComposable : java/lang/annotation/Annotation {
 }
 
+public final class com/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState : com/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions {
+	public fun <init> ()V
+	public final fun onFeaturesetClicked (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public static synthetic fun onFeaturesetClicked$default (Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public final fun onFeaturesetLongClicked (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public static synthetic fun onFeaturesetLongClicked$default (Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public final fun onMapClicked (Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public final fun onMapLongClicked (Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsStateKt {
+	public static final fun rememberStyleImportInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/imports/StyleImportState {
+	public fun <init> ()V
+	public final fun getImportConfigs ()Lcom/mapbox/maps/extension/compose/style/ImportConfigs;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public final fun setImportConfigs (Lcom/mapbox/maps/extension/compose/style/ImportConfigs;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/imports/StyleImportStateKt {
+	public static final fun rememberStyleImportState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/imports/StyleImportState;
+}
+
 public final class com/mapbox/maps/extension/compose/style/imports/StyleImportsScope {
 	public final fun StyleImport (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/ImportConfigs;Landroidx/compose/runtime/Composer;II)V
+	public final fun StyleImport (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/imports/StyleImportState;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract class com/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions {
+	public static final field $stable I
+	public fun <init> ()V
+	protected final fun BindToMap (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	protected final fun UpdateInteractions (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	protected final fun clickInteractionFeatureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
+	public static synthetic fun clickInteractionFeatureset$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
+	protected final fun clickInteractionLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
+	public static synthetic fun clickInteractionLayer$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
+	protected final fun clickInteractionMap (Lkotlin/jvm/functions/Function2;)V
+	protected final fun getInteractiveFeatureScope ()Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;
+	protected final fun longClickInteractionFeatureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
+	public static synthetic fun longClickInteractionFeatureset$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
+	protected final fun longClickInteractionLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
+	public static synthetic fun longClickInteractionLayer$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
+	protected final fun longClickInteractionMap (Lkotlin/jvm/functions/Function2;)V
+	protected final fun setInteractiveFeatureScope (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope {
+	public abstract fun removeFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun resetFeatureStates (Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun setFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;[Lcom/mapbox/maps/interactions/FeatureStateValue;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+}
+
+public final class com/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope$DefaultImpls {
+	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;Lcom/mapbox/maps/interactions/InteractiveFeature;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;Lcom/mapbox/maps/interactions/InteractiveFeature;[Lcom/mapbox/maps/interactions/FeatureStateValue;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+}
+
+public final class com/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState : com/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions {
+	public fun <init> ()V
+	public final fun onFeaturesetClicked (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public static synthetic fun onFeaturesetClicked$default (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun onFeaturesetLongClicked (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public static synthetic fun onFeaturesetLongClicked$default (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun onLayerClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public static synthetic fun onLayerClicked$default (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun onLayerLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public static synthetic fun onLayerLongClicked$default (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun onMapClicked (Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun onMapLongClicked (Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/interactions/StyleInteractionsStateKt {
+	public static final fun rememberStyleInteractionStates (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/Filter {
@@ -1076,6 +1184,18 @@ public final class com/mapbox/maps/extension/compose/style/layers/ImageValue {
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/ImageValue$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/LayerInteractionsState : com/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions {
+	public fun <init> ()V
+	public final fun onClicked (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
+	public static synthetic fun onClicked$default (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
+	public final fun onLongClicked (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
+	public static synthetic fun onLongClicked$default (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/LayerInteractionsStateKt {
+	public static final fun rememberLayerInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/ModelIdValue {
@@ -1159,6 +1279,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun getCircleTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;
 	public final fun getCircleTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -1186,6 +1307,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun setCircleTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;)V
 	public final fun setCircleTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -1259,6 +1381,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Clip
 	public final fun getClipLayerScope ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
 	public final fun getClipLayerTypes ()Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -1266,6 +1389,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Clip
 	public final fun setClipLayerScope (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
 	public final fun setClipLayerTypes (Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -1354,6 +1478,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillExtrusionVerticalScale ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionVerticalScaleTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -1399,6 +1524,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillExtrusionVerticalScale (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionVerticalScaleTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -1446,6 +1572,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
 	public final fun getFillTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -1465,6 +1592,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;)V
 	public final fun setFillTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -1506,6 +1634,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Heat
 	public final fun getHeatmapRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getHeatmapRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getHeatmapWeight ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -1519,6 +1648,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Heat
 	public final fun setHeatmapRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setHeatmapRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setHeatmapWeight (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -1564,6 +1694,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Hill
 	public final fun getHillshadeIlluminationDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getHillshadeShadowColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getHillshadeShadowColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -1581,6 +1712,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Hill
 	public final fun setHillshadeIlluminationDirection (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setHillshadeShadowColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setHillshadeShadowColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -1742,6 +1874,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineLayerState {
 	public fun <init> ()V
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getLineBlur ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineBlurTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineBorderColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
@@ -1785,6 +1918,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setLineBlur (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineBlurTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineBorderColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
@@ -1929,6 +2063,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelLayerState {
 	public fun <init> ()V
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getModelAmbientOcclusionIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
@@ -1960,6 +2095,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setModelAmbientOcclusionIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
@@ -2038,6 +2174,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterLayerState {
 	public fun <init> ()V
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getRasterArrayBand ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -2067,6 +2204,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setRasterArrayBand (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -2105,6 +2243,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterParticleLayerState {
 	public fun <init> ()V
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getRasterParticleArrayBand ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -2119,6 +2258,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setRasterParticleArrayBand (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
@@ -2273,6 +2413,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun getIconTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;
 	public final fun getIconTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
@@ -2361,6 +2502,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun setIconTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;)V
 	public final fun setIconTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setSourceLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V

@@ -11,8 +11,10 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraChanged
+import com.mapbox.maps.FeatureStateOperationCallback
 import com.mapbox.maps.GenericEvent
 import com.mapbox.maps.MapIdle
 import com.mapbox.maps.MapLoaded
@@ -22,6 +24,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.QueriedRenderedFeature
+import com.mapbox.maps.QueryFeatureStateCallback
 import com.mapbox.maps.RenderFrameFinished
 import com.mapbox.maps.RenderFrameStarted
 import com.mapbox.maps.RenderedQueryGeometry
@@ -53,6 +56,9 @@ import com.mapbox.maps.coroutine.styleImageRemoveUnusedEvents
 import com.mapbox.maps.coroutine.styleLoadedEvents
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.internal.applySettings
+import com.mapbox.maps.interactions.BaseInteractiveFeature
+import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.interactions.FeaturesetHolder
 import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,7 +68,9 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.parcelize.Parcelize
+import kotlin.coroutines.resume
 
 /**
  * Create and [rememberSaveable] a [MapState] using [MapState.Saver].
@@ -231,6 +239,130 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
     mapboxMapFlow.filterNotNull().first().queryRenderedFeatures(geometry, options)
 
   /**
+   * Gets the state map of a feature from a featureset asynchronously.
+   *
+   * @param featureset The featureset identifier.
+   * @param featureId The feature identifier of the feature whose state should be queried.
+   * @param featureNamespace Optional feature namespace. Defaults to NULL.
+   *  Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
+   *  If the underlying source is the same for multiple selectors within a featureset, the same [featureNamespace] should be used across those selectors.
+   *  Defining a [featureNamespace] value for the Selector is recommended, especially when multiple selectors exist in a featureset, as it can enhance the efficiency of feature operations.
+   *
+   * @return A state map wrapped in [Value] or a error string.
+   */
+  @MapboxExperimental
+  @JvmOverloads
+  public suspend fun getFeatureState(
+    featureset: FeaturesetHolder,
+    featureId: String,
+    featureNamespace: String? = null,
+  ): Expected<String, Value> {
+    mapboxMapFlow.filterNotNull().first().apply {
+      return suspendCancellableCoroutine { continuation ->
+        val cancelable = getFeatureState(
+          featureset = featureset,
+          featureId = featureId,
+          featureNamespace = featureNamespace,
+          callback = QueryFeatureStateCallback { continuation.resume(it) }
+        )
+        continuation.invokeOnCancellation {
+          cancelable.cancel()
+        }
+      }
+    }
+  }
+
+  /**
+   * Sets the state map for given [interactiveFeature] coming from an interaction callback asynchronously.
+   *
+   * @param interactiveFeature the interactive feature coming from an interaction callback.
+   * @param states describes the new states of the map for given [interactiveFeature].
+   *
+   * @return the optional error wrapped in [Expected].
+   */
+  @MapboxExperimental
+  public suspend fun <T, V> setFeatureState(
+    interactiveFeature: T,
+    vararg states: V,
+  ): Expected<String, com.mapbox.bindgen.None> where V : FeatureStateValue, T : BaseInteractiveFeature<*, V> {
+    mapboxMapFlow.filterNotNull().first().apply {
+      return suspendCancellableCoroutine { continuation ->
+        val cancelable = setFeatureState(
+          interactiveFeature = interactiveFeature,
+          states = states,
+          callback = FeatureStateOperationCallback { continuation.resume(it) }
+        )
+        continuation.invokeOnCancellation {
+          cancelable.cancel()
+        }
+      }
+    }
+  }
+
+  /**
+   * Removes entries from a feature state based on [interactiveFeature] coming from an interaction callback.
+   *
+   * Removes a specified property or all property from a feature's state object, depending on the value of
+   * [stateKey].
+   *
+   * Note that updates to feature state are asynchronous, so changes made by this method might not be
+   * immediately visible using [getFeatureState].
+   *
+   * @param interactiveFeature The interactive feature coming from an interaction callback.
+   * @param stateKey The key of the property to remove. If `null`, all feature's state object properties are removed.
+   *
+   * @return the optional error wrapped in [Expected].
+   */
+  @MapboxExperimental
+  @JvmOverloads
+  public suspend fun removeFeatureState(
+    interactiveFeature: BaseInteractiveFeature<*, *>,
+    stateKey: String? = null,
+  ): Expected<String, com.mapbox.bindgen.None> {
+    mapboxMapFlow.filterNotNull().first().apply {
+      return suspendCancellableCoroutine { continuation ->
+        val cancelable = removeFeatureState(
+          interactiveFeature = interactiveFeature,
+          stateKey = stateKey,
+          callback = FeatureStateOperationCallback { continuation.resume(it) }
+        )
+        continuation.invokeOnCancellation {
+          cancelable.cancel()
+        }
+      }
+    }
+  }
+
+  /**
+   * Reset all the feature states within a style source.
+   *
+   * Remove all feature state entries from the specified style source or source layer.
+   *
+   * Note that updates to feature state are asynchronous, so changes made by this method might not be
+   * immediately visible using [getFeatureState].
+   *
+   * @param featureset The featureset identifier.
+   *
+   * @return the optional error wrapped in [Expected].
+   */
+  @MapboxExperimental
+  public suspend fun resetFeatureStates(
+    featureset: FeaturesetHolder,
+  ): Expected<String, com.mapbox.bindgen.None> {
+    mapboxMapFlow.filterNotNull().first().apply {
+      return suspendCancellableCoroutine { continuation ->
+        val cancelable = resetFeatureStates(
+          featureset = featureset,
+          callback = FeatureStateOperationCallback { continuation.resume(it) }
+        )
+        continuation.invokeOnCancellation {
+          cancelable.cancel()
+        }
+      }
+    }
+  }
+
+  /**
    * Calculate a screen coordinate that corresponds to a geographical coordinate
    * (i.e., longitude-latitude pair).
    *
@@ -297,8 +429,8 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
         MapState(
           (
             holder.savedProperties[GESTURES_SETTINGS_KEY] as? GesturesSettings
-            ?: GesturesSettings { }
-          ).also { logD(TAG, "restore: $it") }
+              ?: GesturesSettings { }
+            ).also { logD(TAG, "restore: $it") }
         )
       }
     )

@@ -19,6 +19,7 @@ import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.FormattedValue
 import com.mapbox.maps.extension.compose.style.layers.ImageValue
+import com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -27,6 +28,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#symbol)
  */
 @Stable
+@OptIn(MapboxExperimental::class)
 public class SymbolLayerState private constructor(
   initialIconAllowOverlap: BooleanValue,
   initialIconAnchor: IconAnchorValue,
@@ -116,6 +118,7 @@ public class SymbolLayerState private constructor(
   initialMaxZoom: LongValue,
   initialSourceLayer: StringValue,
   initialFilter: Filter,
+  initialInteractionsState: LayerInteractionsState,
 ) {
   /**
    * Construct an default [SymbolLayerState].
@@ -209,7 +212,13 @@ public class SymbolLayerState private constructor(
     initialMaxZoom = LongValue.INITIAL,
     initialSourceLayer = StringValue.INITIAL,
     initialFilter = Filter.INITIAL,
+    initialInteractionsState = LayerInteractionsState(),
   )
+
+  /**
+   * The interactions associated with this layer.
+   */
+  public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
    *  If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.

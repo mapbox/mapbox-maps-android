@@ -5,8 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import com.mapbox.maps.ImportPosition
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
@@ -134,32 +136,61 @@ public class StyleImportsScope internal constructor() {
    */
   @Composable
   @MapboxStyleImportComposable
+  @Deprecated("Use overloaded StyleImport composable function with StyleImportState instead")
   public fun StyleImport(
     importId: String,
     style: String,
     configs: ImportConfigs? = null,
   ) {
+    StyleImport(
+      importId = importId,
+      style = style,
+      styleImportState = rememberStyleImportState {
+        importConfigs = configs
+      }
+    )
+  }
+
+  /**
+   * Add a Style Import to the current style.
+   *
+   * @param importId the id of the style import.
+   * @param style the style uri or style json of the style import.
+   * @param styleImportState The state holder for the [StyleImport].
+   */
+  @OptIn(MapboxExperimental::class)
+  @Composable
+  @MapboxStyleImportComposable
+  public fun StyleImport(
+    importId: String,
+    style: String,
+    styleImportState: StyleImportState = rememberStyleImportState()
+  ) {
     val applier = currentComposer.applier as? MapApplier
-    val coroutineScope = rememberCoroutineScope()
-    applier?.let {
-      // Insert a MapNode to the MapApplier node tree
-      ComposeNode<StyleImportNode, MapApplier>(
-        factory = {
-          StyleImportNode(importId, style, configs, coroutineScope)
-        },
-        update = {
-          update(importId) {
-            updateImportId(it)
-          }
-          update(style) {
-            updateStyle(it)
-          }
-          update(configs) {
-            updateConfigs(configs)
-          }
-        }
+      ?: throw IllegalStateException("Illegal use of StyleImport composable outside of MapboxMapComposable")
+    key(styleImportState.interactionsState) {
+      styleImportState.interactionsState.BindTo(
+        mapboxMap = applier.mapView.mapboxMap,
+        importId = importId
       )
     }
-      ?: throw IllegalStateException("Illegal use of StyleImport composable outside of MapboxMapComposable")
+    val coroutineScope = rememberCoroutineScope()
+    // Insert a MapNode to the MapApplier node tree
+    ComposeNode<StyleImportNode, MapApplier>(
+      factory = {
+        StyleImportNode(importId, style, styleImportState.importConfigs, coroutineScope)
+      },
+      update = {
+        update(importId) {
+          updateImportId(it)
+        }
+        update(style) {
+          updateStyle(it)
+        }
+        update(styleImportState.importConfigs) {
+          updateConfigs(styleImportState.importConfigs)
+        }
+      }
+    )
   }
 }

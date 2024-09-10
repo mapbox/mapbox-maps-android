@@ -26,4 +26,5 @@
     <string name="activity_query_rendered_feature">Query rendered feature</string>
     <string name="activity_standard_style">Standard style</string>
     <string name="activity_clip_layer">Clip layer example</string>
+    <string name="activity_interactions">Interactions example</string>
 </resources>

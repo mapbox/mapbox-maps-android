@@ -17,6 +17,7 @@ import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.ImageValue
+import com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -25,6 +26,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#fill-extrusion)
  */
 @Stable
+@OptIn(MapboxExperimental::class)
 public class FillExtrusionLayerState private constructor(
   initialFillExtrusionEdgeRadius: DoubleValue,
   initialFillExtrusionAmbientOcclusionGroundAttenuation: DoubleValue,
@@ -71,6 +73,7 @@ public class FillExtrusionLayerState private constructor(
   initialMaxZoom: LongValue,
   initialSourceLayer: StringValue,
   initialFilter: Filter,
+  initialInteractionsState: LayerInteractionsState,
 ) {
   /**
    * Construct an default [FillExtrusionLayerState].
@@ -121,7 +124,13 @@ public class FillExtrusionLayerState private constructor(
     initialMaxZoom = LongValue.INITIAL,
     initialSourceLayer = StringValue.INITIAL,
     initialFilter = Filter.INITIAL,
+    initialInteractionsState = LayerInteractionsState(),
   )
+
+  /**
+   * The interactions associated with this layer.
+   */
+  public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
    *  Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]

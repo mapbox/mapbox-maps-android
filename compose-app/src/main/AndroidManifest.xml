@@ -297,6 +297,16 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.style.InteractionsActivity"
+            android:description="@string/description_interactions"
+            android:exported="true"
+            android:label="@string/activity_interactions"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
     </application>
 
 </manifest>

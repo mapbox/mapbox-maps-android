@@ -8,6 +8,7 @@ import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
@@ -28,6 +29,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  */
 @Composable
 @MapboxMapComposable
+@OptIn(MapboxExperimental::class)
 public fun FillExtrusionLayer(
   sourceState: SourceState,
   layerId: String = remember {
@@ -66,6 +68,12 @@ public fun FillExtrusionLayer(
     }
   }
   sourceState.UpdateProperties()
+  key(fillExtrusionLayerState.interactionsState) {
+    fillExtrusionLayerState.interactionsState.BindTo(
+      mapboxMap = mapApplier.mapView.mapboxMap,
+      layerId = layerId
+    )
+  }
 }
 
 /**

@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposab
 import com.mapbox.maps.extension.compose.style.imports.StyleImportsScope
 import com.mapbox.maps.extension.compose.style.lights.LightsState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
+import com.mapbox.maps.extension.compose.style.rememberStyleState
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.styleImportsConfig
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
@@ -56,53 +57,55 @@ public fun MapboxStandardSatelliteStyle(
       middleSlot?.let { slot("middle", it) }
       bottomSlot?.let { slot("bottom", it) }
     },
-    styleImportsConfig = styleImportsConfig {
-      importConfig(importId = "basemap") {
-        with(standardSatelliteStyleConfigurationState) {
-          if (showPlaceLabels.notInitial) {
-            config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
-          }
-          if (showRoadLabels.notInitial) {
-            config(BaseStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
-          }
-          if (showPointOfInterestLabels.notInitial) {
-            config(
-              BaseStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
-              showPointOfInterestLabels.value
-            )
-          }
-          if (showTransitLabels.notInitial) {
-            config(
-              BaseStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
-              showTransitLabels.value
-            )
-          }
-          if (lightPreset.notInitial) {
-            config(BaseStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
-          }
-          if (font.notInitial) {
-            config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
-          }
-          if (showRoadsAndTransit.notInitial) {
-            config(
-              StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ROADS_AND_TRANSIT,
-              showRoadsAndTransit.value
-            )
-          }
-          if (showPedestrianRoads.notInitial) {
-            config(
-              StandardSatelliteStyleConfigurationState.CONFIG_SHOW_PEDESTRIAN_ROADS,
-              showPedestrianRoads.value
-            )
+    styleState = rememberStyleState {
+      styleImportsConfig = styleImportsConfig {
+        importConfig(importId = "basemap") {
+          with(standardSatelliteStyleConfigurationState) {
+            if (showPlaceLabels.notInitial) {
+              config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
+            }
+            if (showRoadLabels.notInitial) {
+              config(BaseStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
+            }
+            if (showPointOfInterestLabels.notInitial) {
+              config(
+                BaseStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
+                showPointOfInterestLabels.value
+              )
+            }
+            if (showTransitLabels.notInitial) {
+              config(
+                BaseStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
+                showTransitLabels.value
+              )
+            }
+            if (lightPreset.notInitial) {
+              config(BaseStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
+            }
+            if (font.notInitial) {
+              config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
+            }
+            if (showRoadsAndTransit.notInitial) {
+              config(
+                StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ROADS_AND_TRANSIT,
+                showRoadsAndTransit.value
+              )
+            }
+            if (showPedestrianRoads.notInitial) {
+              config(
+                StandardSatelliteStyleConfigurationState.CONFIG_SHOW_PEDESTRIAN_ROADS,
+                showPedestrianRoads.value
+              )
+            }
           }
         }
       }
+      this.projection = projection
+      this.atmosphereState = atmosphereState
+      this.terrainState = terrainState
+      this.lightsState = lightsState
+      this.styleTransition = styleTransition
     },
-    projection = projection,
-    atmosphereState = atmosphereState,
-    terrainState = terrainState,
-    lightsState = lightsState,
-    styleTransition = styleTransition,
   )
 }
 

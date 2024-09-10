@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.Filter
+import com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState
 import com.mapbox.maps.extension.compose.style.layers.ModelIdValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
@@ -58,6 +59,7 @@ public class ModelLayerState private constructor(
   initialMaxZoom: LongValue,
   initialSourceLayer: StringValue,
   initialFilter: Filter,
+  initialInteractionsState: LayerInteractionsState,
 ) {
   /**
    * Construct an default [ModelLayerState].
@@ -94,7 +96,13 @@ public class ModelLayerState private constructor(
     initialMaxZoom = LongValue.INITIAL,
     initialSourceLayer = StringValue.INITIAL,
     initialFilter = Filter.INITIAL,
+    initialInteractionsState = LayerInteractionsState(),
   )
+
+  /**
+   * The interactions associated with this layer.
+   */
+  public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
    *  Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".

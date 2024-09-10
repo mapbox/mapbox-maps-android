@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
@@ -16,6 +17,7 @@ import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.ImageValue
+import com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -24,6 +26,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#fill)
  */
 @Stable
+@OptIn(MapboxExperimental::class)
 public class FillLayerState private constructor(
   initialFillSortKey: DoubleValue,
   initialFillAntialias: BooleanValue,
@@ -44,6 +47,7 @@ public class FillLayerState private constructor(
   initialMaxZoom: LongValue,
   initialSourceLayer: StringValue,
   initialFilter: Filter,
+  initialInteractionsState: LayerInteractionsState,
 ) {
   /**
    * Construct an default [FillLayerState].
@@ -68,7 +72,13 @@ public class FillLayerState private constructor(
     initialMaxZoom = LongValue.INITIAL,
     initialSourceLayer = StringValue.INITIAL,
     initialFilter = Filter.INITIAL,
+    initialInteractionsState = LayerInteractionsState(),
   )
+
+  /**
+   * The interactions associated with this layer.
+   */
+  public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
    *  Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.

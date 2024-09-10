@@ -14,6 +14,17 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.7.0-rc.1
+## Features ✨ and improvements 🏁
+* [compose] Introduce experimental `StyleInteractionsState`, `StyleImportsInteractionsState`, `LayerInteractionsState` to handle interactions to the style, style imports and layers.
+* [compose] Introduce experimental `StyleImport` composable functions to accept `StyleImportsInteractionsState` as an parameter.
+* [compose] Introduce experimental `LayerInteractionsState` as part of `*LayerState` of layers that's driven by a source.
+* [compose] Introduce experimental `MapState.getFeatureState`, `MapState.setFeatureState`, `MapState.removeFeatureState` and `MapState.resetFeatureState` APIs.
+* [compose] Introduce `StyleState` that groups `StyleImportsConfig`, `StyleInteractionsState`, `Projection`, `AtmosphereState`, `TerrainState`, `LightsState`, `styleTransition`.
+* [compose] Introduce `GenericStyle` composable function that uses `StyleState` as parameter and deprecate `GenericStyle` that takes individual light/terrain/projection states.
+* [compose] Introduce `MapStyle` composable function that uses `StyleState` as parameter and deprecate `MapStyle` that takes individual light/terrain/projection states.
+* [compose] Introduce `StyleImportState` that groups `ImportConfigs` and `StyleImportInteractionsState`.
+* [compose] Introduce `StyleImport` composable function that uses `StyleImportState` as parameter and deprecate `StyleImport` that takes `ImportConfigs`.
+
 ## Bug fixes 🐞
 * Fix a crash when calling `CameraAnimationsPlugin.easeTo()` with empty camera options or `CameraAnimationsPlugin.playAnimatorsSequentially()` / `CameraAnimationsPlugin.playAnimatorsTogether()` with an empty array of animators.
 * Fix ongoing animations being canceled when `CameraAnimationsPlugin.flyTo()` with empty camera options is called.

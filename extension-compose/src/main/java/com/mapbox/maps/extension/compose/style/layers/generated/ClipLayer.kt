@@ -68,6 +68,12 @@ public fun ClipLayer(
     }
   }
   sourceState.UpdateProperties()
+  key(clipLayerState.interactionsState) {
+    clipLayerState.interactionsState.BindTo(
+      mapboxMap = mapApplier.mapView.mapboxMap,
+      layerId = layerId
+    )
+  }
 }
 
 /**
