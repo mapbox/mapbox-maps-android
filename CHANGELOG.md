@@ -4,8 +4,12 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-* Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
+# 11.6.1
+## Bug fixes 🐞
+* Fix for offline retrieval of 3D tiles for `Style.STANDARD`.
 
+## Dependencies
+* Update gl-native to v11.6.1 and common to v24.6.1.
 
 # 11.6.0 August 16, 2024
 ## Breaking changes ⚠️
