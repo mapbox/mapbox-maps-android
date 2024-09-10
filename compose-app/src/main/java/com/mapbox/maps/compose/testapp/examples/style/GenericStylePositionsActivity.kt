@@ -35,6 +35,7 @@ import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layerPositionedContent
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
+import com.mapbox.maps.extension.compose.style.rememberStyleState
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
@@ -282,9 +283,11 @@ public class GenericStylePositionsActivity : ComponentActivity() {
           }
         }
       },
-      styleImportsConfig = styleImportsConfig {
-        importConfig("basemap") {
-          config("lightPreset", Value(lightPresetConfig))
+      styleState = rememberStyleState {
+        styleImportsConfig = styleImportsConfig {
+          importConfig("basemap") {
+            config("lightPreset", Value(lightPresetConfig))
+          }
         }
       }
     )

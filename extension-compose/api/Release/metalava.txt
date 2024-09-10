@@ -42,6 +42,8 @@ package com.mapbox.maps.extension.compose {
     ctor public MapState();
     method @com.mapbox.maps.MapboxExperimental public kotlinx.coroutines.flow.Flow<com.mapbox.maps.GenericEvent> genericEvents(String eventName);
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? getFeatureState(com.mapbox.maps.interactions.FeaturesetHolder featureset, String featureId, String? featureNamespace = null, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>> = null);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? getFeatureState(com.mapbox.maps.interactions.FeaturesetHolder featureset, String featureId, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>> = null);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getGesturesSettings();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapIdle> getMapIdleEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoaded> getMapLoadedEvents();
@@ -58,6 +60,10 @@ package com.mapbox.maps.extension.compose {
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleLoaded> getStyleLoadedEvents();
     method public suspend Object? pixelForCoordinate(com.mapbox.geojson.Point coordinate, kotlin.coroutines.Continuation<? super com.mapbox.maps.ScreenCoordinate>);
     method public suspend Object? queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>>);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? removeFeatureState(com.mapbox.maps.interactions.BaseInteractiveFeature<?,?> interactiveFeature, String? stateKey = null, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>> = null);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? removeFeatureState(com.mapbox.maps.interactions.BaseInteractiveFeature<?,?> interactiveFeature, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>> = null);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? resetFeatureStates(com.mapbox.maps.interactions.FeaturesetHolder featureset, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
+    method @com.mapbox.maps.MapboxExperimental public suspend <T extends com.mapbox.maps.interactions.BaseInteractiveFeature<?, V>, V extends com.mapbox.maps.interactions.FeatureStateValue> Object? setFeatureState(T interactiveFeature, V![] states, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
     property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
@@ -1053,7 +1059,7 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = remember({ 
     return <init>()
@@ -1066,17 +1072,52 @@ package com.mapbox.maps.extension.compose.style {
     
     })
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.SlotsContent slotsContent = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent = remember({ 
+    return <init>()
+}), com.mapbox.maps.extension.compose.style.StyleState styleState = rememberStyleState());
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
     return transition({ 
     
     })
 }));
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, com.mapbox.maps.extension.compose.style.StyleState styleState = rememberStyleState());
     method public static com.mapbox.maps.extension.compose.style.ImportConfigs importConfigs(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.ImportConfigs,kotlin.Unit> init);
     method public static com.mapbox.maps.extension.compose.style.LayerPositionedContent layerPositionedContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.LayerPositionedContent,kotlin.Unit> init);
     method public static com.mapbox.maps.extension.compose.style.SlotsContent slotsContent(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.SlotsContent,kotlin.Unit> init);
     method public static com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleImportsConfig,kotlin.Unit> init);
+  }
+
+  @androidx.compose.runtime.Stable public final class StyleState {
+    ctor public StyleState();
+    method public com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getAtmosphereState();
+    method public com.mapbox.maps.extension.compose.style.lights.LightsState getLightsState();
+    method public com.mapbox.maps.extension.compose.style.projection.generated.Projection getProjection();
+    method public com.mapbox.maps.extension.compose.style.StyleImportsConfig getStyleImportsConfig();
+    method public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState getStyleInteractionsState();
+    method public com.mapbox.maps.TransitionOptions getStyleTransition();
+    method public com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState getTerrainState();
+    method public void setAtmosphereState(com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState);
+    method public void setLightsState(com.mapbox.maps.extension.compose.style.lights.LightsState);
+    method public void setProjection(com.mapbox.maps.extension.compose.style.projection.generated.Projection);
+    method public void setStyleImportsConfig(com.mapbox.maps.extension.compose.style.StyleImportsConfig);
+    method public void setStyleInteractionsState(com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState);
+    method public void setStyleTransition(com.mapbox.maps.TransitionOptions);
+    method public void setTerrainState(com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState);
+    property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState;
+    property public final com.mapbox.maps.extension.compose.style.lights.LightsState lightsState;
+    property public final com.mapbox.maps.extension.compose.style.projection.generated.Projection projection;
+    property public final com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig;
+    property public final com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState styleInteractionsState;
+    property public final com.mapbox.maps.TransitionOptions styleTransition;
+    property public final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState;
+  }
+
+  public final class StyleStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.StyleState rememberStyleState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.StyleState,kotlin.Unit> init = {});
   }
 
   public final class Transition {
@@ -1177,8 +1218,83 @@ package com.mapbox.maps.extension.compose.style.imports {
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Style Import Composable") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxStyleImportComposable {
   }
 
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StyleImportInteractionsState extends com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions {
+    ctor public StyleImportInteractionsState();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState onFeaturesetClicked(String featuresetId, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Featureset>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState onFeaturesetLongClicked(String featuresetId, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Featureset>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState onMapClicked(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState onMapLongClicked(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+  }
+
+  public final class StyleImportInteractionsStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState rememberStyleImportInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState,kotlin.Unit> init = {});
+  }
+
+  @androidx.compose.runtime.Stable public final class StyleImportState {
+    ctor public StyleImportState();
+    method public com.mapbox.maps.extension.compose.style.ImportConfigs? getImportConfigs();
+    method public com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState getInteractionsState();
+    method public void setImportConfigs(com.mapbox.maps.extension.compose.style.ImportConfigs?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState);
+    property public final com.mapbox.maps.extension.compose.style.ImportConfigs? importConfigs;
+    property public final com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState interactionsState;
+  }
+
+  public final class StyleImportStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.imports.StyleImportState rememberStyleImportState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportState,kotlin.Unit> init = {});
+  }
+
   @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class StyleImportsScope {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable public void StyleImport(String importId, String style, com.mapbox.maps.extension.compose.style.ImportConfigs? configs = null);
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable public void StyleImport(String importId, String style, com.mapbox.maps.extension.compose.style.ImportConfigs? configs = null);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.imports.MapboxStyleImportComposable public void StyleImport(String importId, String style, com.mapbox.maps.extension.compose.style.imports.StyleImportState styleImportState = rememberStyleImportState());
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.interactions {
+
+  @com.mapbox.maps.MapboxExperimental public abstract class BasicStyleInteractions {
+    ctor public BasicStyleInteractions();
+    method @androidx.compose.runtime.Composable protected final void BindToMap(com.mapbox.maps.MapboxMap map, String? importId = null);
+    method @androidx.compose.runtime.Composable protected final void UpdateInteractions(com.mapbox.maps.MapboxMap map, String? importId);
+    method protected final void clickInteractionFeatureset(String featuresetId, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Featureset>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method protected final void clickInteractionLayer(String layerId, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Layer>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method protected final void clickInteractionMap(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method protected final com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope? getInteractiveFeatureScope();
+    method protected final void longClickInteractionFeatureset(String featuresetId, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Featureset>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method protected final void longClickInteractionLayer(String layerId, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Layer>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method protected final void longClickInteractionMap(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method protected final void setInteractiveFeatureScope(com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope?);
+    property protected final com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope? interactiveFeatureScope;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public sealed interface InteractiveFeatureScope {
+    method @com.mapbox.maps.MapboxExperimental public <FH extends com.mapbox.maps.interactions.FeaturesetHolder> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.InteractiveFeature<FH>, String? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+
+
+}));
+    method @com.mapbox.maps.MapboxExperimental public <FH extends com.mapbox.maps.interactions.FeaturesetHolder> com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.InteractiveFeature<FH>, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+
+
+}));
+    method @com.mapbox.maps.MapboxExperimental public <FH extends com.mapbox.maps.interactions.FeaturesetHolder, V extends com.mapbox.maps.interactions.FeatureStateValue> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.InteractiveFeature<FH>, V![] states, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+
+
+}));
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class StyleInteractionsState extends com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions {
+    ctor public StyleInteractionsState();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState onFeaturesetClicked(String featuresetId, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Featureset>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState onFeaturesetLongClicked(String featuresetId, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Featureset>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState onLayerClicked(String layerId, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Layer>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState onLayerLongClicked(String layerId, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Layer>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState onMapClicked(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState onMapLongClicked(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+  }
+
+  public final class StyleInteractionsStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState rememberStyleInteractionStates(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState,kotlin.Unit> init = {});
   }
 
 }
@@ -1245,6 +1361,16 @@ package com.mapbox.maps.extension.compose.style.layers {
   }
 
   public static final class ImageValue.Companion {
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class LayerInteractionsState extends com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions {
+    ctor public LayerInteractionsState();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState onClicked(com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Layer>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState onLongClicked(com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope,? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeaturesetHolder.Layer>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+  }
+
+  public final class LayerInteractionsStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState rememberLayerInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState,kotlin.Unit> init = {});
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ModelIdValue {
@@ -1354,6 +1480,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue getCircleTranslateAnchor();
     method public com.mapbox.maps.extension.compose.style.Transition getCircleTranslateTransition();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -1381,6 +1508,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setCircleTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue);
     method public void setCircleTranslateTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -1408,6 +1536,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue circleTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.style.Transition circleTranslateTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
@@ -1478,6 +1607,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.StringListValue getClipLayerScope();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue getClipLayerTypes();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -1485,6 +1615,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setClipLayerScope(com.mapbox.maps.extension.compose.style.StringListValue);
     method public void setClipLayerTypes(com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue);
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -1492,6 +1623,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.StringListValue clipLayerScope;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue clipLayerTypes;
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
@@ -1580,6 +1712,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionVerticalScale();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionVerticalScaleTransition();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -1625,6 +1758,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillExtrusionVerticalScale(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillExtrusionVerticalScaleTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -1670,6 +1804,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionVerticalScale;
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionVerticalScaleTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
@@ -1720,6 +1855,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue getFillTranslateAnchor();
     method public com.mapbox.maps.extension.compose.style.Transition getFillTranslateTransition();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -1739,6 +1875,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue);
     method public void setFillTranslateTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -1758,6 +1895,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue fillTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.style.Transition fillTranslateTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
@@ -1802,6 +1940,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getHeatmapRadius();
     method public com.mapbox.maps.extension.compose.style.Transition getHeatmapRadiusTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getHeatmapWeight();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -1815,6 +1954,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setHeatmapRadius(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setHeatmapRadiusTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setHeatmapWeight(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -1828,6 +1968,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue heatmapRadius;
     property public final com.mapbox.maps.extension.compose.style.Transition heatmapRadiusTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue heatmapWeight;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
@@ -1876,6 +2017,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getHillshadeIlluminationDirection();
     method public com.mapbox.maps.extension.compose.style.ColorValue getHillshadeShadowColor();
     method public com.mapbox.maps.extension.compose.style.Transition getHillshadeShadowColorTransition();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -1893,6 +2035,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setHillshadeIlluminationDirection(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setHillshadeShadowColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setHillshadeShadowColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -1910,6 +2053,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue hillshadeIlluminationDirection;
     property public final com.mapbox.maps.extension.compose.style.ColorValue hillshadeShadowColor;
     property public final com.mapbox.maps.extension.compose.style.Transition hillshadeShadowColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
@@ -2056,6 +2200,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   @androidx.compose.runtime.Stable public final class LineLayerState {
     ctor public LineLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineBlur();
     method public com.mapbox.maps.extension.compose.style.Transition getLineBlurTransition();
     method public com.mapbox.maps.extension.compose.style.ColorValue getLineBorderColor();
@@ -2099,6 +2244,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setLineBlur(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineBlurTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineBorderColor(com.mapbox.maps.extension.compose.style.ColorValue);
@@ -2142,6 +2288,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineBlur;
     property public final com.mapbox.maps.extension.compose.style.Transition lineBlurTransition;
     property public final com.mapbox.maps.extension.compose.style.ColorValue lineBorderColor;
@@ -2327,6 +2474,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ModelLayerState {
     ctor public ModelLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getModelAmbientOcclusionIntensity();
@@ -2358,6 +2506,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setModelAmbientOcclusionIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -2389,6 +2538,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue modelAmbientOcclusionIntensity;
@@ -2467,6 +2617,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   @androidx.compose.runtime.Stable public final class RasterLayerState {
     ctor public RasterLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getRasterArrayBand();
@@ -2496,6 +2647,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setRasterArrayBand(com.mapbox.maps.extension.compose.style.StringValue);
@@ -2525,6 +2677,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue rasterArrayBand;
@@ -2569,6 +2722,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterParticleLayerState {
     ctor public RasterParticleLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getRasterParticleArrayBand();
@@ -2583,6 +2737,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setRasterParticleArrayBand(com.mapbox.maps.extension.compose.style.StringValue);
@@ -2597,6 +2752,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue rasterParticleArrayBand;
@@ -2769,6 +2925,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getIconTranslate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue getIconTranslateAnchor();
     method public com.mapbox.maps.extension.compose.style.Transition getIconTranslateTransition();
+    method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
@@ -2857,6 +3014,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setIconTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue);
     method public void setIconTranslateTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
@@ -2945,6 +3103,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue iconTranslate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue iconTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.style.Transition iconTranslateTransition;
+    property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;

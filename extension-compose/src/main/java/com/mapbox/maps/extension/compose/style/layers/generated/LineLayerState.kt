@@ -17,6 +17,7 @@ import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.Filter
 import com.mapbox.maps.extension.compose.style.layers.ImageValue
+import com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -25,6 +26,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#line)
  */
 @Stable
+@OptIn(MapboxExperimental::class)
 public class LineLayerState private constructor(
   initialLineCap: LineCapValue,
   initialLineJoin: LineJoinValue,
@@ -69,6 +71,7 @@ public class LineLayerState private constructor(
   initialMaxZoom: LongValue,
   initialSourceLayer: StringValue,
   initialFilter: Filter,
+  initialInteractionsState: LayerInteractionsState,
 ) {
   /**
    * Construct an default [LineLayerState].
@@ -117,7 +120,13 @@ public class LineLayerState private constructor(
     initialMaxZoom = LongValue.INITIAL,
     initialSourceLayer = StringValue.INITIAL,
     initialFilter = Filter.INITIAL,
+    initialInteractionsState = LayerInteractionsState(),
   )
+
+  /**
+   * The interactions associated with this layer.
+   */
+  public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
    *  The display of line endings. Default value: "butt".

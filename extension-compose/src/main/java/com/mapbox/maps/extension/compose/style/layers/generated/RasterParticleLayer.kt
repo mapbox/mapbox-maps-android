@@ -68,6 +68,12 @@ public fun RasterParticleLayer(
     }
   }
   sourceState.UpdateProperties()
+  key(rasterParticleLayerState.interactionsState) {
+    rasterParticleLayerState.interactionsState.BindTo(
+      mapboxMap = mapApplier.mapView.mapboxMap,
+      layerId = layerId
+    )
+  }
 }
 
 /**

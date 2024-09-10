@@ -66,6 +66,12 @@ public fun ModelLayer(
     }
   }
   sourceState.UpdateProperties()
+  key(modelLayerState.interactionsState) {
+    modelLayerState.interactionsState.BindTo(
+      mapboxMap = mapApplier.mapView.mapboxMap,
+      layerId = layerId
+    )
+  }
 }
 
 /**

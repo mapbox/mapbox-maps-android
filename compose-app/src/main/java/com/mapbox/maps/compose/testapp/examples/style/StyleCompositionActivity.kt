@@ -21,7 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
@@ -29,6 +31,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapStyle
@@ -41,11 +44,15 @@ import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.compose.style.rememberStyleImage
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
+import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.interactions.FeatureStateValue
+import org.json.JSONObject
 
 /**
  * Example to showcase usage of runtime styling with compose.
  */
+@OptIn(MapboxExperimental::class)
 public class StyleCompositionActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -81,7 +88,9 @@ public class StyleCompositionActivity : ComponentActivity() {
         label = "Animate location"
       )
 
-      val geoJsonSource = rememberGeoJsonSourceState()
+      val geoJsonSource = rememberGeoJsonSourceState {
+        generateId = BooleanValue(true)
+      }
       geoJsonSource.data = GeoJSONData(animatedLocation)
 
       val mapViewportState = rememberMapViewportState {
@@ -163,7 +172,29 @@ public class StyleCompositionActivity : ComponentActivity() {
               CircleLayer(
                 sourceState = geoJsonSource,
               ) {
-                circleColor = ColorValue(Color.Cyan)
+                interactionsState.onClicked { interactiveFeature, _ ->
+                  val selected =
+                    JSONObject(interactiveFeature.state.toJson()).optBoolean("selected", false)
+                  interactiveFeature.setFeatureState(
+                    FeatureStateValue(
+                      "selected",
+                      Value.valueOf(!selected)
+                    )
+                  )
+                  true
+                }
+                circleColor = ColorValue(
+                  switchCase {
+                    boolean {
+                      featureState {
+                        literal("selected")
+                      }
+                      literal(false)
+                    }
+                    literal("yellow")
+                    literal("white")
+                  }
+                )
                 circleRadius = DoubleValue(50.0)
                 circleRadiusTransition = Transition(durationMillis = 1000L)
               }

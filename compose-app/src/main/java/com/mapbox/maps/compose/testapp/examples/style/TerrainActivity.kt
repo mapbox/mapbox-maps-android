@@ -27,6 +27,7 @@ import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.rememberStyleState
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberRasterDemSourceState
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.compose.style.terrain.generated.rememberTerrainState
@@ -105,7 +106,9 @@ public class TerrainActivity : ComponentActivity() {
             style = {
               GenericStyle(
                 style = Style.SATELLITE_STREETS,
-                terrainState = currentTerrainState
+                styleState = rememberStyleState {
+                  terrainState = currentTerrainState
+                },
               )
             }
           )

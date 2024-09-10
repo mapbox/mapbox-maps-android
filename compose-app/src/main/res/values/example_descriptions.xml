@@ -26,4 +26,5 @@
     <string name="description_query_rendered_feature">Showcase usage of query rendered features</string>
     <string name="description_standard_style">Showcase usage of Standard style</string>
     <string name="description_clip_layer">Showcase the usage of clip layer.</string>
+    <string name="description_interactions">Showcase the interactions.</string>
 </resources>

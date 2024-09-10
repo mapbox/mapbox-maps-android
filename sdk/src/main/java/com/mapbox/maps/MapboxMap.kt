@@ -39,6 +39,7 @@ import kotlin.math.roundToInt
  *
  * @property style the map style.
  */
+@OptIn(MapboxExperimental::class)
 @Suppress("DEPRECATION")
 class MapboxMap :
   MapTransformDelegate,
