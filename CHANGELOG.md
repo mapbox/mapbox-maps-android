@@ -4,12 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.6.1
+
+# 11.6.1 September 10, 2024
 ## Bug fixes 🐞
 * Fix for offline retrieval of 3D tiles for `Style.STANDARD`.
 
 ## Dependencies
 * Update gl-native to v11.6.1 and common to v24.6.1.
+
 
 # 11.7.0-rc.1
 ## Bug fixes 🐞
