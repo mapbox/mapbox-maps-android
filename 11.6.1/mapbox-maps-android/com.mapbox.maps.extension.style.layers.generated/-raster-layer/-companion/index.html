@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Companion</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.style.layers.generated/RasterLayer.Companion///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../../index.html">com.mapbox.maps.extension.style.layers.generated</a><span class="delimiter">/</span><a href="../index.html">RasterLayer</a><span class="delimiter">/</span><span class="current">Companion</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Companion</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">Companion</a></div><p class="paragraph">Static variables and methods.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="1550812431%2FProperties%2F540127926" anchor-label="defaultMaxZoom" id="1550812431%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-max-zoom.html"><span>default</span><wbr></wbr><span>Max</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1550812431%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1550812431%2FProperties%2F540127926" anchor-label="defaultMaxZoom" id="1550812431%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-max-zoom.html">defaultMaxZoom</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="1550812431%2FProperties%2F540127926" anchor-label="defaultMaxZoom" id="1550812431%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-50916639%2FProperties%2F540127926" anchor-label="defaultMinZoom" id="-50916639%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-min-zoom.html"><span>default</span><wbr></wbr><span>Min</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-50916639%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-50916639%2FProperties%2F540127926" anchor-label="defaultMinZoom" id="-50916639%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-min-zoom.html">defaultMinZoom</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="-50916639%2FProperties%2F540127926" anchor-label="defaultMinZoom" id="-50916639%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1703931531%2FProperties%2F540127926" anchor-label="defaultRasterArrayBand" id="-1703931531%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-array-band.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Array</span><wbr></wbr><span><span>Band</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1703931531%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1703931531%2FProperties%2F540127926" anchor-label="defaultRasterArrayBand" id="-1703931531%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-array-band.html">defaultRasterArrayBand</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1703931531%2FProperties%2F540127926" anchor-label="defaultRasterArrayBand" id="-1703931531%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Displayed band of raster array source layer. Defaults to the first band if not set.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2132956203%2FProperties%2F540127926" anchor-label="defaultRasterArrayBandAsExpression" id="2132956203%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-array-band-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Array</span><wbr></wbr><span>Band</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2132956203%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2132956203%2FProperties%2F540127926" anchor-label="defaultRasterArrayBandAsExpression" id="2132956203%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-array-band-as-expression.html">defaultRasterArrayBandAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="2132956203%2FProperties%2F540127926" anchor-label="defaultRasterArrayBandAsExpression" id="2132956203%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Displayed band of raster array source layer. Defaults to the first band if not set.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1652377872%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMax" id="-1652377872%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-brightness-max.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Brightness</span><wbr></wbr><span><span>Max</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1652377872%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1652377872%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMax" id="-1652377872%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-brightness-max.html">defaultRasterBrightnessMax</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1652377872%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMax" id="-1652377872%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2091280090%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMaxAsExpression" id="-2091280090%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-brightness-max-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Brightness</span><wbr></wbr><span>Max</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2091280090%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-2091280090%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMaxAsExpression" id="-2091280090%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-brightness-max-as-expression.html">defaultRasterBrightnessMaxAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-2091280090%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMaxAsExpression" id="-2091280090%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-533698725%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMaxTransition" id="-533698725%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-brightness-max-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Brightness</span><wbr></wbr><span>Max</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-533698725%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-533698725%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMaxTransition" id="-533698725%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-brightness-max-transition.html">defaultRasterBrightnessMaxTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="-533698725%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMaxTransition" id="-533698725%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterBrightnessMax.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1435368898%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMin" id="1435368898%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-brightness-min.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Brightness</span><wbr></wbr><span><span>Min</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1435368898%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1435368898%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMin" id="1435368898%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-brightness-min.html">defaultRasterBrightnessMin</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="1435368898%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMin" id="1435368898%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-30984968%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMinAsExpression" id="-30984968%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-brightness-min-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Brightness</span><wbr></wbr><span>Min</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-30984968%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-30984968%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMinAsExpression" id="-30984968%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-brightness-min-as-expression.html">defaultRasterBrightnessMinAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-30984968%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMinAsExpression" id="-30984968%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-218706003%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMinTransition" id="-218706003%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-brightness-min-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Brightness</span><wbr></wbr><span>Min</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-218706003%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-218706003%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMinTransition" id="-218706003%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-brightness-min-transition.html">defaultRasterBrightnessMinTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="-218706003%2FProperties%2F540127926" anchor-label="defaultRasterBrightnessMinTransition" id="-218706003%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterBrightnessMin.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1825715458%2FProperties%2F540127926" anchor-label="defaultRasterColorMix" id="-1825715458%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-color-mix.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Mix</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1825715458%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1825715458%2FProperties%2F540127926" anchor-label="defaultRasterColorMix" id="-1825715458%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-color-mix.html">defaultRasterColorMix</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><a data-name="-1825715458%2FProperties%2F540127926" anchor-label="defaultRasterColorMix" id="-1825715458%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">When <code class="lang-kotlin">raster-color</code> is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation <code class="lang-kotlin">mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a</code>. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: 0.2126,0.7152,0.0722,0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1741617100%2FProperties%2F540127926" anchor-label="defaultRasterColorMixAsExpression" id="-1741617100%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-color-mix-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Color</span><wbr></wbr><span>Mix</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1741617100%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1741617100%2FProperties%2F540127926" anchor-label="defaultRasterColorMixAsExpression" id="-1741617100%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-color-mix-as-expression.html">defaultRasterColorMixAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1741617100%2FProperties%2F540127926" anchor-label="defaultRasterColorMixAsExpression" id="-1741617100%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">When <code class="lang-kotlin">raster-color</code> is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation <code class="lang-kotlin">mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a</code>. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: 0.2126,0.7152,0.0722,0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-23838231%2FProperties%2F540127926" anchor-label="defaultRasterColorMixTransition" id="-23838231%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-color-mix-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Color</span><wbr></wbr><span>Mix</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-23838231%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-23838231%2FProperties%2F540127926" anchor-label="defaultRasterColorMixTransition" id="-23838231%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-color-mix-transition.html">defaultRasterColorMixTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="-23838231%2FProperties%2F540127926" anchor-label="defaultRasterColorMixTransition" id="-23838231%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterColorMix.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1319996419%2FProperties%2F540127926" anchor-label="defaultRasterColorRange" id="-1319996419%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-color-range.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Range</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1319996419%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1319996419%2FProperties%2F540127926" anchor-label="defaultRasterColorRange" id="-1319996419%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-color-range.html">defaultRasterColorRange</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><a data-name="-1319996419%2FProperties%2F540127926" anchor-label="defaultRasterColorRange" id="-1319996419%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">When <code class="lang-kotlin">raster-color</code> is active, specifies the range over which <code class="lang-kotlin">raster-color</code> is tabulated. Units correspond to the computed raster value via <code class="lang-kotlin">raster-color-mix</code>. For <code class="lang-kotlin">rasterarray</code> sources, if <code class="lang-kotlin">raster-color-range</code> is unspecified, the source's stated data range is used.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="823995059%2FProperties%2F540127926" anchor-label="defaultRasterColorRangeAsExpression" id="823995059%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-color-range-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Color</span><wbr></wbr><span>Range</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="823995059%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="823995059%2FProperties%2F540127926" anchor-label="defaultRasterColorRangeAsExpression" id="823995059%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-color-range-as-expression.html">defaultRasterColorRangeAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="823995059%2FProperties%2F540127926" anchor-label="defaultRasterColorRangeAsExpression" id="823995059%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">When <code class="lang-kotlin">raster-color</code> is active, specifies the range over which <code class="lang-kotlin">raster-color</code> is tabulated. Units correspond to the computed raster value via <code class="lang-kotlin">raster-color-mix</code>. For <code class="lang-kotlin">rasterarray</code> sources, if <code class="lang-kotlin">raster-color-range</code> is unspecified, the source's stated data range is used.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="617936936%2FProperties%2F540127926" anchor-label="defaultRasterColorRangeTransition" id="617936936%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-color-range-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Color</span><wbr></wbr><span>Range</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="617936936%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="617936936%2FProperties%2F540127926" anchor-label="defaultRasterColorRangeTransition" id="617936936%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-color-range-transition.html">defaultRasterColorRangeTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="617936936%2FProperties%2F540127926" anchor-label="defaultRasterColorRangeTransition" id="617936936%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterColorRange.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-965172203%2FProperties%2F540127926" anchor-label="defaultRasterContrast" id="-965172203%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-contrast.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span><span>Contrast</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-965172203%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-965172203%2FProperties%2F540127926" anchor-label="defaultRasterContrast" id="-965172203%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-contrast.html">defaultRasterContrast</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="-965172203%2FProperties%2F540127926" anchor-label="defaultRasterContrast" id="-965172203%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the contrast of the image. Default value: 0. Value range: -1, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1429997877%2FProperties%2F540127926" anchor-label="defaultRasterContrastAsExpression" id="-1429997877%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-contrast-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Contrast</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1429997877%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1429997877%2FProperties%2F540127926" anchor-label="defaultRasterContrastAsExpression" id="-1429997877%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-contrast-as-expression.html">defaultRasterContrastAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1429997877%2FProperties%2F540127926" anchor-label="defaultRasterContrastAsExpression" id="-1429997877%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the contrast of the image. Default value: 0. Value range: -1, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1500506688%2FProperties%2F540127926" anchor-label="defaultRasterContrastTransition" id="1500506688%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-contrast-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Contrast</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1500506688%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1500506688%2FProperties%2F540127926" anchor-label="defaultRasterContrastTransition" id="1500506688%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-contrast-transition.html">defaultRasterContrastTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="1500506688%2FProperties%2F540127926" anchor-label="defaultRasterContrastTransition" id="1500506688%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterContrast.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1011285542%2FProperties%2F540127926" anchor-label="defaultRasterElevation" id="1011285542%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-elevation.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span><span>Elevation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1011285542%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1011285542%2FProperties%2F540127926" anchor-label="defaultRasterElevation" id="1011285542%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-elevation.html">defaultRasterElevation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="1011285542%2FProperties%2F540127926" anchor-label="defaultRasterElevation" id="1011285542%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1030832292%2FProperties%2F540127926" anchor-label="defaultRasterElevationAsExpression" id="-1030832292%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-elevation-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Elevation</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1030832292%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1030832292%2FProperties%2F540127926" anchor-label="defaultRasterElevationAsExpression" id="-1030832292%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-elevation-as-expression.html">defaultRasterElevationAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1030832292%2FProperties%2F540127926" anchor-label="defaultRasterElevationAsExpression" id="-1030832292%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1346002159%2FProperties%2F540127926" anchor-label="defaultRasterElevationTransition" id="-1346002159%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-elevation-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Elevation</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1346002159%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1346002159%2FProperties%2F540127926" anchor-label="defaultRasterElevationTransition" id="-1346002159%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-elevation-transition.html">defaultRasterElevationTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1346002159%2FProperties%2F540127926" anchor-label="defaultRasterElevationTransition" id="-1346002159%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterElevation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1929802271%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrength" id="1929802271%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-emissive-strength.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Emissive</span><wbr></wbr><span><span>Strength</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1929802271%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1929802271%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrength" id="1929802271%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-emissive-strength.html">defaultRasterEmissiveStrength</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="1929802271%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrength" id="1929802271%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1406466603%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrengthAsExpression" id="-1406466603%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-emissive-strength-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Emissive</span><wbr></wbr><span>Strength</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1406466603%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1406466603%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrengthAsExpression" id="-1406466603%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-emissive-strength-as-expression.html">defaultRasterEmissiveStrengthAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1406466603%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrengthAsExpression" id="-1406466603%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1384330186%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrengthTransition" id="1384330186%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-emissive-strength-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Emissive</span><wbr></wbr><span>Strength</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1384330186%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1384330186%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrengthTransition" id="1384330186%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-emissive-strength-transition.html">defaultRasterEmissiveStrengthTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="1384330186%2FProperties%2F540127926" anchor-label="defaultRasterEmissiveStrengthTransition" id="1384330186%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterEmissiveStrength.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-507617881%2FProperties%2F540127926" anchor-label="defaultRasterFadeDuration" id="-507617881%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-fade-duration.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Fade</span><wbr></wbr><span><span>Duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-507617881%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-507617881%2FProperties%2F540127926" anchor-label="defaultRasterFadeDuration" id="-507617881%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-fade-duration.html">defaultRasterFadeDuration</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="-507617881%2FProperties%2F540127926" anchor-label="defaultRasterFadeDuration" id="-507617881%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Fade duration when a new tile is added. Default value: 300. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1124735651%2FProperties%2F540127926" anchor-label="defaultRasterFadeDurationAsExpression" id="-1124735651%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-fade-duration-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Fade</span><wbr></wbr><span>Duration</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1124735651%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1124735651%2FProperties%2F540127926" anchor-label="defaultRasterFadeDurationAsExpression" id="-1124735651%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-fade-duration-as-expression.html">defaultRasterFadeDurationAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1124735651%2FProperties%2F540127926" anchor-label="defaultRasterFadeDurationAsExpression" id="-1124735651%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Fade duration when a new tile is added. Default value: 300. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="5917904%2FProperties%2F540127926" anchor-label="defaultRasterHueRotate" id="5917904%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-hue-rotate.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Hue</span><wbr></wbr><span><span>Rotate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="5917904%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="5917904%2FProperties%2F540127926" anchor-label="defaultRasterHueRotate" id="5917904%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-hue-rotate.html">defaultRasterHueRotate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="5917904%2FProperties%2F540127926" anchor-label="defaultRasterHueRotate" id="5917904%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Rotates hues around the color wheel. Default value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1361010438%2FProperties%2F540127926" anchor-label="defaultRasterHueRotateAsExpression" id="1361010438%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-hue-rotate-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Hue</span><wbr></wbr><span>Rotate</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1361010438%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1361010438%2FProperties%2F540127926" anchor-label="defaultRasterHueRotateAsExpression" id="1361010438%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-hue-rotate-as-expression.html">defaultRasterHueRotateAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="1361010438%2FProperties%2F540127926" anchor-label="defaultRasterHueRotateAsExpression" id="1361010438%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Rotates hues around the color wheel. Default value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1181623611%2FProperties%2F540127926" anchor-label="defaultRasterHueRotateTransition" id="1181623611%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-hue-rotate-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Hue</span><wbr></wbr><span>Rotate</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1181623611%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1181623611%2FProperties%2F540127926" anchor-label="defaultRasterHueRotateTransition" id="1181623611%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-hue-rotate-transition.html">defaultRasterHueRotateTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="1181623611%2FProperties%2F540127926" anchor-label="defaultRasterHueRotateTransition" id="1181623611%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterHueRotate.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1315055032%2FProperties%2F540127926" anchor-label="defaultRasterOpacity" id="1315055032%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-opacity.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span><span>Opacity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1315055032%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1315055032%2FProperties%2F540127926" anchor-label="defaultRasterOpacity" id="1315055032%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-opacity.html">defaultRasterOpacity</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="1315055032%2FProperties%2F540127926" anchor-label="defaultRasterOpacity" id="1315055032%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The opacity at which the image will be drawn. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2132730898%2FProperties%2F540127926" anchor-label="defaultRasterOpacityAsExpression" id="-2132730898%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-opacity-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Opacity</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2132730898%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-2132730898%2FProperties%2F540127926" anchor-label="defaultRasterOpacityAsExpression" id="-2132730898%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-opacity-as-expression.html">defaultRasterOpacityAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-2132730898%2FProperties%2F540127926" anchor-label="defaultRasterOpacityAsExpression" id="-2132730898%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The opacity at which the image will be drawn. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-573965277%2FProperties%2F540127926" anchor-label="defaultRasterOpacityTransition" id="-573965277%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-opacity-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Opacity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-573965277%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-573965277%2FProperties%2F540127926" anchor-label="defaultRasterOpacityTransition" id="-573965277%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-opacity-transition.html">defaultRasterOpacityTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="-573965277%2FProperties%2F540127926" anchor-label="defaultRasterOpacityTransition" id="-573965277%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterOpacity.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1510037379%2FProperties%2F540127926" anchor-label="defaultRasterResampling" id="-1510037379%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-resampling.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span><span>Resampling</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1510037379%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1510037379%2FProperties%2F540127926" anchor-label="defaultRasterResampling" id="-1510037379%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-resampling.html">defaultRasterResampling</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.layers.properties.generated/-raster-resampling/index.html">RasterResampling</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1510037379%2FProperties%2F540127926" anchor-label="defaultRasterResampling" id="-1510037379%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: &quot;linear&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1654562611%2FProperties%2F540127926" anchor-label="defaultRasterResamplingAsExpression" id="1654562611%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-resampling-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Resampling</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1654562611%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1654562611%2FProperties%2F540127926" anchor-label="defaultRasterResamplingAsExpression" id="1654562611%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-resampling-as-expression.html">defaultRasterResamplingAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="1654562611%2FProperties%2F540127926" anchor-label="defaultRasterResamplingAsExpression" id="1654562611%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: &quot;linear&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="690251461%2FProperties%2F540127926" anchor-label="defaultRasterSaturation" id="690251461%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-saturation.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span><span>Saturation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="690251461%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="690251461%2FProperties%2F540127926" anchor-label="defaultRasterSaturation" id="690251461%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-saturation.html">defaultRasterSaturation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="690251461%2FProperties%2F540127926" anchor-label="defaultRasterSaturation" id="690251461%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the saturation of the image. Default value: 0. Value range: -1, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1443810949%2FProperties%2F540127926" anchor-label="defaultRasterSaturationAsExpression" id="-1443810949%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-saturation-as-expression.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Saturation</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1443810949%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1443810949%2FProperties%2F540127926" anchor-label="defaultRasterSaturationAsExpression" id="-1443810949%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-saturation-as-expression.html">defaultRasterSaturationAsExpression</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1443810949%2FProperties%2F540127926" anchor-label="defaultRasterSaturationAsExpression" id="-1443810949%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Increase or reduce the saturation of the image. Default value: 0. Value range: -1, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1326190832%2FProperties%2F540127926" anchor-label="defaultRasterSaturationTransition" id="1326190832%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-raster-saturation-transition.html"><span>default</span><wbr></wbr><span>Raster</span><wbr></wbr><span>Saturation</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1326190832%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1326190832%2FProperties%2F540127926" anchor-label="defaultRasterSaturationTransition" id="1326190832%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-raster-saturation-transition.html">defaultRasterSaturationTransition</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="1326190832%2FProperties%2F540127926" anchor-label="defaultRasterSaturationTransition" id="1326190832%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options for RasterSaturation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1618400382%2FProperties%2F540127926" anchor-label="defaultVisibility" id="-1618400382%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-visibility.html"><span>default</span><wbr></wbr><span><span>Visibility</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1618400382%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1618400382%2FProperties%2F540127926" anchor-label="defaultVisibility" id="-1618400382%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-visibility.html">defaultVisibility</a><span class="token operator">: </span><a href="../../../com.mapbox.maps.extension.style.layers.properties.generated/-visibility/index.html">Visibility</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1618400382%2FProperties%2F540127926" anchor-label="defaultVisibility" id="-1618400382%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Visibility of the layer.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
