@@ -64,6 +64,7 @@ public class StyleState internal constructor(
   /**
    * The [StyleInteractionsState] manages the map interactions defined for the style.
    */
+  @MapboxExperimental
   public var styleInteractionsState: StyleInteractionsState by mutableStateOf(
     initialStyleInteractionsState
   )

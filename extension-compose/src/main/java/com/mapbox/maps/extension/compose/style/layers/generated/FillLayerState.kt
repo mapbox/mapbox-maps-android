@@ -78,6 +78,7 @@ public class FillLayerState private constructor(
   /**
    * The interactions associated with this layer.
    */
+  @MapboxExperimental
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
