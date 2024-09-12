@@ -336,7 +336,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -392,7 +392,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -409,7 +409,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(annotation.id),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -465,7 +465,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -535,7 +535,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(

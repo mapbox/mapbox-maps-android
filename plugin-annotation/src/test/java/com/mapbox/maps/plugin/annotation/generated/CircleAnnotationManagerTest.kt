@@ -381,7 +381,7 @@ class CircleAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -437,7 +437,7 @@ class CircleAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -454,7 +454,7 @@ class CircleAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(annotation.id),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -510,7 +510,7 @@ class CircleAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -580,7 +580,7 @@ class CircleAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(

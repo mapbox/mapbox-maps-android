@@ -87,7 +87,9 @@ class StandardStyleActivity : AppCompatActivity() {
         }
         mapboxMap.setFeatureState(
           selectedPriceLabel,
-          FeatureState.build { addBooleanState("active", true) }
+          FeatureState {
+            addBooleanState("active", true)
+          }
         ) {
           mapboxMap.getFeatureState(
             featuresetHolder = selectedPriceLabel.featuresetHolder,

@@ -711,9 +711,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 }
 
 public class com/mapbox/maps/interactions/FeatureState {
-	public static final field Companion Lcom/mapbox/maps/interactions/FeatureState$Companion;
 	public final fun asJsonString ()Ljava/lang/String;
-	public static final fun build (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/FeatureState;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBooleanState (Ljava/lang/String;)Ljava/lang/Boolean;
 	public final fun getDoubleState (Ljava/lang/String;)Ljava/lang/Double;
@@ -733,12 +731,12 @@ public final class com/mapbox/maps/interactions/FeatureState$Builder {
 	public final fun build ()Lcom/mapbox/maps/interactions/FeatureState;
 }
 
-public final class com/mapbox/maps/interactions/FeatureState$Companion {
-	public final fun build (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/FeatureState;
-}
-
 public abstract interface class com/mapbox/maps/interactions/FeatureStateCallback {
 	public abstract fun onFeatureState (Lcom/mapbox/maps/interactions/FeatureState;)V
+}
+
+public final class com/mapbox/maps/interactions/FeatureStateKt {
+	public static final synthetic fun FeatureState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/FeatureState;
 }
 
 public abstract class com/mapbox/maps/interactions/FeaturesetHolder {

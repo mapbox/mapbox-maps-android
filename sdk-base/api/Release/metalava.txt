@@ -713,12 +713,10 @@ package com.mapbox.maps.interactions {
 
   @com.mapbox.maps.MapboxExperimental public class FeatureState {
     method public final String asJsonString();
-    method @com.mapbox.maps.MapboxExperimental public static final inline com.mapbox.maps.interactions.FeatureState build(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.FeatureState.Builder,kotlin.Unit> block);
     method public final Boolean? getBooleanState(String stateName);
     method public final Double? getDoubleState(String stateName);
     method public final Long? getLongState(String stateName);
     method public final String? getStringState(String stateName);
-    field public static final com.mapbox.maps.interactions.FeatureState.Companion Companion;
   }
 
   public static final class FeatureState.Builder {
@@ -730,12 +728,12 @@ package com.mapbox.maps.interactions {
     method public com.mapbox.maps.interactions.FeatureState build();
   }
 
-  public static final class FeatureState.Companion {
-    method @com.mapbox.maps.MapboxExperimental public inline com.mapbox.maps.interactions.FeatureState build(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.FeatureState.Builder,kotlin.Unit> block);
-  }
-
   @com.mapbox.maps.MapboxExperimental public fun interface FeatureStateCallback<FS extends com.mapbox.maps.interactions.FeatureState> {
     method public void onFeatureState(FS state);
+  }
+
+  public final class FeatureStateKt {
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.FeatureState! FeatureState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.FeatureState.Builder,? extends kotlin.Unit> init);
   }
 
   @com.mapbox.maps.MapboxExperimental public abstract class FeaturesetHolder<FS extends com.mapbox.maps.interactions.FeatureState> {

@@ -124,8 +124,6 @@ import java.util.List;
 import java.util.Locale;
 
 import kotlin.Pair;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 /** @noinspection UnusedAssignment*/
 @SuppressWarnings("unused")
@@ -671,11 +669,7 @@ public class JavaInterfaceChecker {
                     (interactiveFeature, context) -> {
                       mapboxMap.setFeatureState(
                               interactiveFeature,
-                              FeatureState.build(builder -> {
-                                        builder.addBooleanState("active", true);
-                                        return null;
-                                      }
-                              )
+                              new FeatureState.Builder().addBooleanState("active", true).build()
                       );
                       mapboxMap.removeFeatureState(interactiveFeature);
                       mapboxMap.removeFeatureState(interactiveFeature.getFeaturesetHolder(), interactiveFeature.getFeature().id(), "stateKey");

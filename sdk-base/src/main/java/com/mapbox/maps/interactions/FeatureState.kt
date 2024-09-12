@@ -3,6 +3,7 @@ package com.mapbox.maps.interactions
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.interactions.FeatureState.Builder
 import com.mapbox.maps.logW
 import java.util.Objects
 
@@ -134,15 +135,15 @@ open class FeatureState internal constructor(
   /**
    * Static variable and functions.
    */
-  companion object {
+  private companion object {
     private const val TAG = "FeatureState"
-
-    /**
-     * DSL builder function to create [FeatureState].
-     */
-    @MapboxExperimental
-    @JvmStatic
-    inline fun build(block: Builder.() -> Unit): FeatureState =
-      Builder().apply(block).build()
   }
 }
+
+/**
+ * Builder function to create [FeatureState].
+ */
+@MapboxExperimental
+@JvmSynthetic
+fun FeatureState(init: Builder.() -> Unit): FeatureState =
+  Builder().apply(init).build()
