@@ -27,13 +27,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="@string/style_pack"
-                android:textSize="12sp"
                 android:gravity="center"
-                />
+                android:text="@string/satellite_style_pack"
+                android:textSize="12sp" />
 
             <ProgressBar
-                android:id="@+id/style_pack_download_progress"
+                android:id="@+id/satellite_streets_style_pack_download_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -44,6 +43,37 @@
                 android:progressTint="@android:color/holo_orange_dark"
                 android:max="100" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/standard_style_pack"
+                android:textSize="12sp"
+                android:gravity="center"
+                />
+
+            <ProgressBar
+                android:id="@+id/standard_style_pack_download_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="8"
+                android:clickable="false"
+                android:indeterminate="false"
+                android:progressTint="@android:color/holo_orange_dark"
+                android:max="100" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="fill_parent"
