@@ -1555,6 +1555,10 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public fun fillExtrusionHeight (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionHeightTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionHeightTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public fun fillExtrusionLineWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public fun fillExtrusionLineWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public fun fillExtrusionLineWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public fun fillExtrusionLineWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1624,6 +1628,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getFillExtrusionHeight ()Ljava/lang/Double;
 	public final fun getFillExtrusionHeightAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionHeightTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getFillExtrusionLineWidth ()Ljava/lang/Double;
+	public final fun getFillExtrusionLineWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getFillExtrusionLineWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getFillExtrusionOpacity ()Ljava/lang/Double;
 	public final fun getFillExtrusionOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1712,6 +1719,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getDefaultFillExtrusionHeight ()Ljava/lang/Double;
 	public final fun getDefaultFillExtrusionHeightAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionHeightTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultFillExtrusionLineWidth ()Ljava/lang/Double;
+	public final fun getDefaultFillExtrusionLineWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultFillExtrusionLineWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultFillExtrusionOpacity ()Ljava/lang/Double;
 	public final fun getDefaultFillExtrusionOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1797,6 +1807,10 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun fillExtrusionHeight (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionHeightTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionHeightTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public abstract fun fillExtrusionLineWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public abstract fun fillExtrusionLineWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public abstract fun fillExtrusionLineWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public abstract fun fillExtrusionLineWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1843,6 +1857,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public static synthetic fun fillExtrusionFloodLightIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionFloodLightWallRadius$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionHeight$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public static synthetic fun fillExtrusionLineWidth$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionRoundedRoof$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionTranslate$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;

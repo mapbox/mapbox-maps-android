@@ -1888,6 +1888,112 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  val fillExtrusionLineWidth: Double?
+    /**
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidth] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-line-width")
+    }
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidth] to set the default property.
+   *
+   * @param fillExtrusionLineWidth value of fillExtrusionLineWidth
+   */
+  @MapboxExperimental
+  override fun fillExtrusionLineWidth(fillExtrusionLineWidth: Double): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-line-width", fillExtrusionLineWidth)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * This is an Expression representation of "fill-extrusion-line-width".
+   *
+   */
+  @MapboxExperimental
+  val fillExtrusionLineWidthAsExpression: Expression?
+    /**
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     *
+     * Get the FillExtrusionLineWidth property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-line-width")?.let {
+        return it
+      }
+      fillExtrusionLineWidth?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression] to set the default property.
+   *
+   * @param fillExtrusionLineWidth value of fillExtrusionLineWidth as Expression
+   */
+  @MapboxExperimental
+  override fun fillExtrusionLineWidth(fillExtrusionLineWidth: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-line-width", fillExtrusionLineWidth)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillExtrusionLineWidth.
+   */
+  @MapboxExperimental
+  val fillExtrusionLineWidthTransition: StyleTransition?
+    /**
+     * Get the FillExtrusionLineWidth property transition options
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-line-width-transition")
+    }
+
+  /**
+   * Set the FillExtrusionLineWidth property transition options
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun fillExtrusionLineWidthTransition(options: StyleTransition): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-line-width-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillExtrusionLineWidthTransition].
+   */
+  @MapboxExperimental
+  override fun fillExtrusionLineWidthTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
+    fillExtrusionLineWidthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    */
   val fillExtrusionOpacity: Double?
@@ -3329,6 +3435,57 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-transition").silentUnwrap()
 
     /**
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionLineWidth: Double?
+      /**
+       * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+       *
+       * Get the default value of FillExtrusionLineWidth property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width").silentUnwrap()
+      }
+
+    /**
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     *
+     * This is an Expression representation of "fill-extrusion-line-width".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionLineWidthAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionLineWidth property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionLineWidth?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillExtrusionLineWidth.
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionLineWidthTransition: StyleTransition?
+      /**
+       * Get the FillExtrusionLineWidth property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width-transition").silentUnwrap()
+
+    /**
      * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
      */
     val defaultFillExtrusionOpacity: Double?
@@ -4201,6 +4358,40 @@ interface FillExtrusionLayerDsl {
    * DSL for [fillExtrusionHeightTransition].
    */
   fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * @param fillExtrusionLineWidth value of fillExtrusionLineWidth
+   */
+  @MapboxExperimental
+  fun fillExtrusionLineWidth(fillExtrusionLineWidth: Double = 0.0): FillExtrusionLayer
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * @param fillExtrusionLineWidth value of fillExtrusionLineWidth as Expression
+   */
+  @MapboxExperimental
+  fun fillExtrusionLineWidth(fillExtrusionLineWidth: Expression): FillExtrusionLayer
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * Set the FillExtrusionLineWidth property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun fillExtrusionLineWidthTransition(options: StyleTransition): FillExtrusionLayer
+
+  /**
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *
+   * DSL for [fillExtrusionLineWidthTransition].
+   */
+  @MapboxExperimental
+  fun fillExtrusionLineWidthTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
    * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]

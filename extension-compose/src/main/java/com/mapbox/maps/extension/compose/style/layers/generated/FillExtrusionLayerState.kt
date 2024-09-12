@@ -58,6 +58,8 @@ public class FillExtrusionLayerState private constructor(
   initialFillExtrusionFloodLightWallRadiusTransition: Transition,
   initialFillExtrusionHeight: DoubleValue,
   initialFillExtrusionHeightTransition: Transition,
+  initialFillExtrusionLineWidth: DoubleValue,
+  initialFillExtrusionLineWidthTransition: Transition,
   initialFillExtrusionOpacity: DoubleValue,
   initialFillExtrusionOpacityTransition: Transition,
   initialFillExtrusionPattern: ImageValue,
@@ -109,6 +111,8 @@ public class FillExtrusionLayerState private constructor(
     initialFillExtrusionFloodLightWallRadiusTransition = Transition.INITIAL,
     initialFillExtrusionHeight = DoubleValue.INITIAL,
     initialFillExtrusionHeightTransition = Transition.INITIAL,
+    initialFillExtrusionLineWidth = DoubleValue.INITIAL,
+    initialFillExtrusionLineWidthTransition = Transition.INITIAL,
     initialFillExtrusionOpacity = DoubleValue.INITIAL,
     initialFillExtrusionOpacityTransition = Transition.INITIAL,
     initialFillExtrusionPattern = ImageValue.INITIAL,
@@ -270,6 +274,16 @@ public class FillExtrusionLayerState private constructor(
    *  Defines the transition of [fillExtrusionHeight]. Default value: 0. Minimum value: 0.
    */
   public var fillExtrusionHeightTransition: Transition by mutableStateOf(initialFillExtrusionHeightTransition)
+  /**
+   *  If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  public var fillExtrusionLineWidth: DoubleValue by mutableStateOf(initialFillExtrusionLineWidth)
+  /**
+   *  Defines the transition of [fillExtrusionLineWidth]. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  public var fillExtrusionLineWidthTransition: Transition by mutableStateOf(initialFillExtrusionLineWidthTransition)
   /**
    *  The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
    */
@@ -532,6 +546,20 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillExtrusionLineWidth(layerNode: LayerNode) {
+    if (fillExtrusionLineWidth.notInitial) {
+      layerNode.setProperty("fill-extrusion-line-width", fillExtrusionLineWidth.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillExtrusionLineWidthTransition(layerNode: LayerNode) {
+    if (fillExtrusionLineWidthTransition.notInitial) {
+      layerNode.setProperty("fill-extrusion-line-width-transition", fillExtrusionLineWidthTransition.value)
+    }
+  }
+  @Composable
   private fun UpdateFillExtrusionOpacity(layerNode: LayerNode) {
     if (fillExtrusionOpacity.notInitial) {
       layerNode.setProperty("fill-extrusion-opacity", fillExtrusionOpacity.value)
@@ -660,6 +688,8 @@ public class FillExtrusionLayerState private constructor(
     UpdateFillExtrusionFloodLightWallRadiusTransition(layerNode)
     UpdateFillExtrusionHeight(layerNode)
     UpdateFillExtrusionHeightTransition(layerNode)
+    UpdateFillExtrusionLineWidth(layerNode)
+    UpdateFillExtrusionLineWidthTransition(layerNode)
     UpdateFillExtrusionOpacity(layerNode)
     UpdateFillExtrusionOpacityTransition(layerNode)
     UpdateFillExtrusionPattern(layerNode)

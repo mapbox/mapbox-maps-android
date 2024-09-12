@@ -1876,6 +1876,113 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionLineWidthSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionLineWidth(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-line-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionLineWidthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionLineWidth?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-line-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionLineWidthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionLineWidth(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-line-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionLineWidthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionLineWidthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-line-width") }
+  }
+
+  @Test
+  fun fillExtrusionLineWidthAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionLineWidthAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-line-width") }
+  }
+
+  @Test
+  fun fillExtrusionLineWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionLineWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionLineWidth!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-line-width") }
+  }
+
+  @Test
+  fun fillExtrusionLineWidthTransitionSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionLineWidthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-line-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillExtrusionLineWidthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillExtrusionLineWidthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-line-width-transition") }
+  }
+
+  @Test
+  fun fillExtrusionLineWidthTransitionSetDsl() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionLineWidthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-line-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun fillExtrusionOpacitySet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = 1.0
@@ -3272,6 +3379,50 @@ class FillExtrusionLayerTest {
 
     assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionHeightTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-transition") }
+  }
+
+  @Test
+  fun defaultFillExtrusionLineWidthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionLineWidth?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionLineWidthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width") }
+  }
+
+  @Test
+  fun defaultFillExtrusionLineWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionLineWidth!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width") }
+  }
+
+  @Test
+  fun defaultFillExtrusionLineWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionLineWidthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width-transition") }
   }
 
   @Test

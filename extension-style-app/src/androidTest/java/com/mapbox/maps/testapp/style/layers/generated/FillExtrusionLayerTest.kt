@@ -936,6 +936,65 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionLineWidthTest() {
+    val testValue = 1.0
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionLineWidth(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillExtrusionLineWidth!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionLineWidthAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionLineWidth(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillExtrusionLineWidthAsExpression.toString())
+    assertEquals(null, layer.fillExtrusionLineWidth)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionLineWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionLineWidthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionLineWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionLineWidthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionLineWidthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionLineWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionOpacityTest() {
     val testValue = 1.0
     val layer = fillExtrusionLayer("id", "source") {
@@ -1281,6 +1340,9 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionHeight should not be null", FillExtrusionLayer.defaultFillExtrusionHeight)
     assertNotNull("defaultFillExtrusionHeightAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionHeightAsExpression)
     assertNotNull("defaultFillExtrusionHeightTransition should not be null", FillExtrusionLayer.defaultFillExtrusionHeightTransition)
+    assertNotNull("defaultFillExtrusionLineWidth should not be null", FillExtrusionLayer.defaultFillExtrusionLineWidth)
+    assertNotNull("defaultFillExtrusionLineWidthAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression)
+    assertNotNull("defaultFillExtrusionLineWidthTransition should not be null", FillExtrusionLayer.defaultFillExtrusionLineWidthTransition)
     assertNotNull("defaultFillExtrusionOpacity should not be null", FillExtrusionLayer.defaultFillExtrusionOpacity)
     assertNotNull("defaultFillExtrusionOpacityAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionOpacityAsExpression)
     assertNotNull("defaultFillExtrusionOpacityTransition should not be null", FillExtrusionLayer.defaultFillExtrusionOpacityTransition)
@@ -1325,6 +1387,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionFloodLightIntensityTestValue = 1.0
     val fillExtrusionFloodLightWallRadiusTestValue = 1.0
     val fillExtrusionHeightTestValue = 1.0
+    val fillExtrusionLineWidthTestValue = 1.0
     val fillExtrusionOpacityTestValue = 1.0
     val fillExtrusionPatternTestValue = "abc"
     val fillExtrusionRoundedRoofTestValue = true
@@ -1356,6 +1419,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensityTestValue)
       fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadiusTestValue)
       fillExtrusionHeight(fillExtrusionHeightTestValue)
+      fillExtrusionLineWidth(fillExtrusionLineWidthTestValue)
       fillExtrusionOpacity(fillExtrusionOpacityTestValue)
       fillExtrusionPattern(fillExtrusionPatternTestValue)
       fillExtrusionRoundedRoof(fillExtrusionRoundedRoofTestValue)
@@ -1392,6 +1456,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionFloodLightIntensityTestValue, cachedLayer.fillExtrusionFloodLightIntensity)
     assertEquals(fillExtrusionFloodLightWallRadiusTestValue, cachedLayer.fillExtrusionFloodLightWallRadius)
     assertEquals(fillExtrusionHeightTestValue, cachedLayer.fillExtrusionHeight)
+    assertEquals(fillExtrusionLineWidthTestValue, cachedLayer.fillExtrusionLineWidth)
     assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
     assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)
     assertEquals(fillExtrusionRoundedRoofTestValue, cachedLayer.fillExtrusionRoundedRoof)

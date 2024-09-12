@@ -1691,6 +1691,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeight(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionHeight);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidth(double fillExtrusionLineWidth);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionLineWidth);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacity(double fillExtrusionOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1760,6 +1764,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getFillExtrusionHeight();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionHeightAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionHeightTransition();
+    method public Double? getFillExtrusionLineWidth();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionLineWidthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionLineWidthTransition();
     method public Double? getFillExtrusionOpacity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionOpacityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionOpacityTransition();
@@ -1840,6 +1847,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? fillExtrusionHeight;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionHeightAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionHeightTransition;
+    property public final Double? fillExtrusionLineWidth;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionLineWidthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionLineWidthTransition;
     property public final Double? fillExtrusionOpacity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionOpacityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionOpacityTransition;
@@ -1918,6 +1928,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultFillExtrusionHeight();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionHeightAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionHeightTransition();
+    method public Double? getDefaultFillExtrusionLineWidth();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionLineWidthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionLineWidthTransition();
     method public Double? getDefaultFillExtrusionOpacity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionOpacityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionOpacityTransition();
@@ -1986,6 +1999,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultFillExtrusionHeight;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionHeightAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionHeightTransition;
+    property public final Double? defaultFillExtrusionLineWidth;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionLineWidthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionLineWidthTransition;
     property public final Double? defaultFillExtrusionOpacity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionOpacityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionOpacityTransition;
@@ -2071,6 +2087,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeight(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionHeight);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidth(double fillExtrusionLineWidth = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionLineWidth);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacity(double fillExtrusionOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);

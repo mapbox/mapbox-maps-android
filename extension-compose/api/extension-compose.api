@@ -1470,6 +1470,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillExtrusionFloodLightWallRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionHeight ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionHeightTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillExtrusionLineWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionLineWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
@@ -1516,6 +1518,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillExtrusionFloodLightWallRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionHeight (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionHeightTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillExtrusionLineWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionLineWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
