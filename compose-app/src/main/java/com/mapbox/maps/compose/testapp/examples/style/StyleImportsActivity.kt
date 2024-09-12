@@ -132,7 +132,7 @@ public class StyleImportsActivity : ComponentActivity() {
                             }
                             val isActive = (priceLabel.state.getBooleanState("active") ?: false).not()
                             priceLabel.setFeatureState(
-                              FeatureState.build {
+                              FeatureState {
                                 addBooleanState("active", isActive)
                               }
                             )

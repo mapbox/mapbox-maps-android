@@ -943,9 +943,9 @@ class MapboxMapTest {
       featuresetHolder = FeaturesetHolder.Featureset(featuresetId = featuresetId, importId = importId),
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       featureNamespace = featureNamespace,
-      state = FeatureState.build { },
+      state = FeatureState { },
     )
-    val newState = FeatureState.build {
+    val newState = FeatureState {
       addStringState(newStateKey1, newStateValue1)
       addStringState(newStateKey2, newStateValue2)
     }
@@ -980,9 +980,9 @@ class MapboxMapTest {
       featuresetHolder = FeaturesetHolder.Layer(layerId = layerId),
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       featureNamespace = featureNamespace,
-      state = FeatureState.build { },
+      state = FeatureState { },
     )
-    val newState = FeatureState.build {
+    val newState = FeatureState {
       addStringState(newStateKey1, newStateValue1)
       addStringState(newStateKey2, newStateValue2)
     }
@@ -1011,7 +1011,7 @@ class MapboxMapTest {
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
     val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
-    val state = FeatureState.build { }
+    val state = FeatureState { }
     mapboxMap.setFeatureState(
       featuresetHolder,
       featureId,
@@ -1038,7 +1038,7 @@ class MapboxMapTest {
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
     val featuresetHolder = FeaturesetHolder.Layer(layerId)
-    val state = FeatureState.build { }
+    val state = FeatureState { }
     mapboxMap.setFeatureState(
       featuresetHolder,
       featureId,
@@ -1120,7 +1120,7 @@ class MapboxMapTest {
       featuresetHolder = featuresetHolder,
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       featureNamespace = featureNamespace,
-      state = FeatureState.build { },
+      state = FeatureState { },
     )
     mapboxMap.removeFeatureState(
       interactiveFeature = interactiveFeature,
@@ -1151,7 +1151,7 @@ class MapboxMapTest {
       featuresetHolder = featuresetHolder,
       feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       featureNamespace = featureNamespace,
-      state = FeatureState.build { },
+      state = FeatureState { },
     )
     mapboxMap.removeFeatureState(
       interactiveFeature = interactiveFeature,

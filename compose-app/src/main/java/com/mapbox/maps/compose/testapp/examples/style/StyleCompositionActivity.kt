@@ -173,7 +173,7 @@ public class StyleCompositionActivity : ComponentActivity() {
                 interactionsState.onClicked { interactiveFeature, _ ->
                   val selected = interactiveFeature.state.getBooleanState("selected") ?: false
                   interactiveFeature.setFeatureState(
-                    FeatureState.build {
+                    FeatureState {
                       addBooleanState("selected", !selected)
                     }
                   )

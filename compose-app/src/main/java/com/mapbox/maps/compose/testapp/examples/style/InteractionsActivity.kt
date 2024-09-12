@@ -80,7 +80,7 @@ public class InteractionsActivity : ComponentActivity() {
                         }
                         val newActiveState = priceLabel.state.getBooleanState("active")?.not() ?: true
                         priceLabel.setFeatureState(
-                          FeatureState.build {
+                          FeatureState {
                             addBooleanState("active", newActiveState)
                           }
                         ) {

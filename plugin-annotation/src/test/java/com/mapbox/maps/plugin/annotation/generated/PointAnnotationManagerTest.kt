@@ -671,7 +671,7 @@ class PointAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -727,7 +727,7 @@ class PointAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -744,7 +744,7 @@ class PointAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(annotation.id),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -800,7 +800,7 @@ class PointAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -870,7 +870,7 @@ class PointAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = FeatureState.build { }
+        state = FeatureState { }
       ),
       InteractionContext(
         CoordinateInfo(
