@@ -1703,6 +1703,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionFloodLightWallRadiusTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionHeight();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionHeightTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionLineWidth();
+    method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionLineWidthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionOpacityTransition();
     method public com.mapbox.maps.extension.compose.style.layers.ImageValue getFillExtrusionPattern();
@@ -1749,6 +1751,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillExtrusionFloodLightWallRadiusTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillExtrusionHeight(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillExtrusionHeightTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFillExtrusionLineWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setFillExtrusionLineWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillExtrusionOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillExtrusionOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillExtrusionPattern(com.mapbox.maps.extension.compose.style.layers.ImageValue);
@@ -1795,6 +1799,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionFloodLightWallRadiusTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionHeight;
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionHeightTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionLineWidth;
+    property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionLineWidthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionOpacity;
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionOpacityTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.ImageValue fillExtrusionPattern;

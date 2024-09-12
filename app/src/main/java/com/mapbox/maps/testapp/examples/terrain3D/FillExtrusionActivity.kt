@@ -7,14 +7,17 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gt
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.literal
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.lte
+import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.light.generated.ambientLight
 import com.mapbox.maps.extension.style.light.generated.directionalLight
 import com.mapbox.maps.extension.style.light.setLight
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
 
 /**
@@ -26,6 +29,7 @@ class FillExtrusionActivity : AppCompatActivity() {
   private var isRedColor: Boolean = false
   private lateinit var binding: ActivityFillExtrusionBinding
 
+  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityFillExtrusionBinding.inflate(layoutInflater)
@@ -40,11 +44,48 @@ class FillExtrusionActivity : AppCompatActivity() {
         .build()
     )
 
+    // buildings lower than 20 meters will be rendered in wall-only mode
+    val wallOnlyThreshold = 20.0
+    val extrudeFilter = eq(get("extrude"), literal("true"))
+
     mapboxMap.loadStyle(
-      Style.LIGHT
-    ) { style ->
-      setupBuildings(style)
-      setupLights3D(style)
+      style(style = Style.LIGHT) {
+        +fillExtrusionLayer("3d-buildings", "composite") {
+          sourceLayer("building")
+          filter(
+            all(
+              extrudeFilter,
+              gt(get("height"), literal(wallOnlyThreshold))
+            )
+          )
+          minZoom(15.0)
+          fillExtrusionColor(Color.parseColor("#aaaaaa"))
+          fillExtrusionHeight(get("height"))
+          fillExtrusionBase(get("min_height"))
+          fillExtrusionOpacity(0.6)
+          fillExtrusionAmbientOcclusionIntensity(0.3)
+          fillExtrusionAmbientOcclusionRadius(3.0)
+          fillExtrusionEdgeRadius(0.6)
+        }
+
+        +fillExtrusionLayer("3d-buildings-wall", "composite") {
+          sourceLayer("building")
+          filter(
+            all(
+              extrudeFilter,
+              lte(get("height"), literal(wallOnlyThreshold))
+            )
+          )
+          fillExtrusionLineWidth(2.0)
+          minZoom(15.0)
+          fillExtrusionColor(Color.parseColor("#aaaaaa"))
+          fillExtrusionHeight(get("height"))
+          fillExtrusionBase(get("min_height"))
+          fillExtrusionOpacity(0.6)
+        }
+      }
+    ) {
+      setupLights3D(it)
     }
   }
 
@@ -74,21 +115,5 @@ class FillExtrusionActivity : AppCompatActivity() {
     binding.fabLightPosition.setOnClickListener {
       directionalLight.direction(listOf(0.0, (directionalLight.direction!![1] + 5.0) % 90.0))
     }
-  }
-
-  @OptIn(MapboxExperimental::class)
-  private fun setupBuildings(style: Style) {
-    val fillExtrusionLayer = FillExtrusionLayer("3d-buildings", "composite")
-    fillExtrusionLayer.sourceLayer("building")
-    fillExtrusionLayer.filter(eq(get("extrude"), literal("true")))
-    fillExtrusionLayer.minZoom(15.0)
-    fillExtrusionLayer.fillExtrusionColor(Color.parseColor("#aaaaaa"))
-    fillExtrusionLayer.fillExtrusionHeight(get("height"))
-    fillExtrusionLayer.fillExtrusionBase(get("min_height"))
-    fillExtrusionLayer.fillExtrusionOpacity(0.6)
-    fillExtrusionLayer.fillExtrusionAmbientOcclusionIntensity(0.3)
-    fillExtrusionLayer.fillExtrusionAmbientOcclusionRadius(3.0)
-    fillExtrusionLayer.fillExtrusionEdgeRadius(0.6)
-    style.addLayer(fillExtrusionLayer)
   }
 }
