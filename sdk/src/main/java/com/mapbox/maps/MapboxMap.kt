@@ -18,9 +18,11 @@ import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.utils.transition
-import com.mapbox.maps.interactions.BaseInteractiveFeature
-import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.interactions.FeatureState
+import com.mapbox.maps.interactions.FeatureStateCallback
 import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.QueryRenderedFeatureCallback
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
@@ -2376,6 +2378,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   override fun addInteraction(interaction: MapInteraction): Cancelable {
+    checkNativeMap("addInteraction")
     val cancelable = nativeMap.addInteraction(interaction.coreInteraction)
     interactions.add(cancelable)
     return Cancelable {
@@ -2390,6 +2393,7 @@ class MapboxMap :
   @MapboxExperimental
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   override fun dispatch(platformEventInfo: PlatformEventInfo) {
+    checkNativeMap("dispatch")
     nativeMap.dispatch(platformEventInfo)
   }
 
@@ -2397,26 +2401,27 @@ class MapboxMap :
    * Sets the state map for given [interactiveFeature] coming from an interaction callback asynchronously.
    *
    * @param interactiveFeature the interactive feature coming from an interaction callback.
-   * @param states describes the new states of the map for given [interactiveFeature].
+   * @param state describes the new state of the map for given [interactiveFeature].
    * @param callback The optional [QueryFeatureStateCallback] called when the query completes.
    *
    * @return A [Cancelable] object that could be used to cancel the pending query.
    */
   @MapboxExperimental
   @JvmOverloads
-  fun <T, V> setFeatureState(
-    interactiveFeature: T,
-    vararg states: V,
+  fun <IF, FS> setFeatureState(
+    interactiveFeature: IF,
+    state: FS,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
-  ): Cancelable where V : FeatureStateValue, T : BaseInteractiveFeature<*, V> {
+  ): Cancelable where FS : FeatureState, IF : InteractiveFeature<FS> {
+    checkNativeMap("setFeatureState")
     return interactiveFeature.feature.id()?.let { id ->
       nativeMap.setFeatureState(
         interactiveFeature.featuresetHolder.toFeaturesetDescriptor(),
         FeaturesetFeatureId(
-          /* featureId */ FeatureIdentifier.valueOf(id),
+          /* featureId */ id,
           /* featureNamespace */ interactiveFeature.featureNamespace
         ),
-        Value(HashMap(states.associate { Pair(it.key, it.value) })),
+        state.internalState,
         callback
       )
     } ?: Cancelable { }.also { logE(TAG, "setFeatureState called but feature=${interactiveFeature.feature} does not have an id!") }
@@ -2425,32 +2430,34 @@ class MapboxMap :
   /**
    * Sets the state map of a feature within a style source asynchronously.
    *
-   * @param featureset The featureset identifier.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    * @param featureId The feature identifier of the feature whose state should be queried.
    * @param featureNamespace Optional feature namespace. Defaults to NULL.
    *  Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
    *  If the underlying source is the same for multiple selectors within a featureset, the same [featureNamespace] should be used across those selectors.
    *  Defining a [featureNamespace] value for the Selector is recommended, especially when multiple selectors exist in a featureset, as it can enhance the efficiency of feature operations.
+   * @param state describes the new state of the map for given feature.
    * @param callback The optional [QueryFeatureStateCallback] called when the query completes.
    *
    * @return A [Cancelable] object that could be used to cancel the pending query.
    */
   @MapboxExperimental
   @JvmOverloads
-  fun setFeatureState(
-    featureset: FeaturesetHolder,
+  fun <FS : FeatureState> setFeatureState(
+    featuresetHolder: FeaturesetHolder<FS>,
     featureId: String,
     featureNamespace: String? = null,
-    state: Value,
+    state: FS,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
   ): Cancelable {
+    checkNativeMap("setFeatureState")
     return nativeMap.setFeatureState(
-      featureset.toFeaturesetDescriptor(),
+      featuresetHolder.toFeaturesetDescriptor(),
       FeaturesetFeatureId(
-        /* featureId */ FeatureIdentifier.valueOf(featureId),
+        /* featureId */ featureId,
         /* featureNamespace */ featureNamespace
       ),
-      state,
+      state.internalState,
       callback
     )
   }
@@ -2458,32 +2465,39 @@ class MapboxMap :
   /**
    * Gets the state map of a feature from a featureset asynchronously.
    *
-   * @param featureset The featureset identifier.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    * @param featureId The feature identifier of the feature whose state should be queried.
    * @param featureNamespace Optional feature namespace. Defaults to NULL.
    *  Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
    *  If the underlying source is the same for multiple selectors within a featureset, the same [featureNamespace] should be used across those selectors.
    *  Defining a [featureNamespace] value for the Selector is recommended, especially when multiple selectors exist in a featureset, as it can enhance the efficiency of feature operations.
-   * @param callback The [QueryFeatureStateCallback] called when the query completes.
+   * @param callback The [FeatureStateCallback] called when the query completes.
    *
    * @return A [Cancelable] object that could be used to cancel the pending query.
    */
   @MapboxExperimental
   @JvmOverloads
-  fun getFeatureState(
-    featureset: FeaturesetHolder,
+  fun <FS : FeatureState> getFeatureState(
+    featuresetHolder: FeaturesetHolder<FS>,
     featureId: String,
     featureNamespace: String? = null,
-    callback: QueryFeatureStateCallback
+    callback: FeatureStateCallback<FS>
   ): Cancelable {
+    checkNativeMap("getFeatureState")
     return nativeMap.getFeatureState(
-      featureset.toFeaturesetDescriptor(),
+      featuresetHolder.toFeaturesetDescriptor(),
       FeaturesetFeatureId(
-        /* featureId */ FeatureIdentifier.valueOf(featureId),
+        /* featureId */ featureId,
         /* featureNamespace */ featureNamespace
-      ),
-      callback
-    )
+      )
+    ) {
+      // trigger callback only when no error occurred
+      it.onValue { stateAsValue ->
+        callback.onFeatureState(
+          featuresetHolder.getFeatureState(stateAsValue)
+        )
+      }
+    }
   }
 
   /**
@@ -2504,15 +2518,16 @@ class MapboxMap :
   @MapboxExperimental
   @JvmOverloads
   fun removeFeatureState(
-    interactiveFeature: BaseInteractiveFeature<*, *>,
+    interactiveFeature: InteractiveFeature<*>,
     stateKey: String? = null,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
   ): Cancelable {
+    checkNativeMap("removeFeatureState")
     return interactiveFeature.feature.id()?.let { id ->
       nativeMap.removeFeatureState(
         interactiveFeature.featuresetHolder.toFeaturesetDescriptor(),
         FeaturesetFeatureId(
-          /* featureId */ FeatureIdentifier.valueOf(id),
+          /* featureId */ id,
           /* featureNamespace */ interactiveFeature.featureNamespace
         ),
         stateKey,
@@ -2530,7 +2545,7 @@ class MapboxMap :
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using [getFeatureState].
    *
-   * @param featureset The featureset identifier.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    * @param featureId The feature identifier of the feature whose state should be removed.
    * @param stateKey The key of the property to remove. If `null`, all feature's state object properties are removed.
    * @param featureNamespace Optional feature namespace. Defaults to NULL.
@@ -2544,16 +2559,17 @@ class MapboxMap :
   @MapboxExperimental
   @JvmOverloads
   fun removeFeatureState(
-    featureset: FeaturesetHolder,
+    featuresetHolder: FeaturesetHolder<*>,
     featureId: String,
     featureNamespace: String? = null,
     stateKey: String?,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { },
   ): Cancelable {
+    checkNativeMap("removeFeatureState")
     return nativeMap.removeFeatureState(
-      featureset.toFeaturesetDescriptor(),
+      featuresetHolder.toFeaturesetDescriptor(),
       FeaturesetFeatureId(
-        /* featureId */ FeatureIdentifier.valueOf(featureId),
+        /* featureId */ featureId,
         /* featureNamespace */ featureNamespace
       ),
       stateKey,
@@ -2569,7 +2585,7 @@ class MapboxMap :
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using [getFeatureState].
    *
-   * @param featureset The featureset identifier.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    * @param callback The [FeatureStateOperationCallback] called when the operation completes or ends.
    *
    * @return A [Cancelable] object that could be used to cancel the pending operation.
@@ -2577,18 +2593,19 @@ class MapboxMap :
   @MapboxExperimental
   @JvmOverloads
   fun resetFeatureStates(
-    featureset: FeaturesetHolder,
+    featuresetHolder: FeaturesetHolder<*>,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
   ): Cancelable {
-    return nativeMap.resetFeatureStates(featureset.toFeaturesetDescriptor(), callback)
+    checkNativeMap("resetFeatureState")
+    return nativeMap.resetFeatureStates(featuresetHolder.toFeaturesetDescriptor(), callback)
   }
 
   /**
    * Queries the map for source features.
    *
-   * @param featureset [FeaturesetHolder] object representing either a featureset or a single layer.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    * @param filter an optional global filter.
-   * @param target a [FeaturesetQueryTarget] used to filter and query source features.
+   * @param tag an optional identifier.
    * @param callback The callback called when the query completes.
    * @return A `cancelable` object that could be used to cancel the pending query.
    *
@@ -2597,14 +2614,15 @@ class MapboxMap :
   @MapboxExperimental
   @JvmOverloads
   fun querySourceFeatures(
-    featureset: FeaturesetHolder,
+    featuresetHolder: FeaturesetHolder<*>,
     filter: Value? = null,
     tag: Long? = null,
     callback: QuerySourceFeaturesCallback,
   ): Cancelable {
+    checkNativeMap("querySourceFeatures")
     return nativeMap.querySourceFeatures(
       FeaturesetQueryTarget(
-        featureset.toFeaturesetDescriptor(),
+        featuresetHolder.toFeaturesetDescriptor(),
         filter,
         tag
       ),
@@ -2613,10 +2631,56 @@ class MapboxMap :
   }
 
   /**
+   * Queries the map for given [featuresetHolder] and returns typed [InteractiveFeature] in the callback.
+   *
+   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
+   * @param filter optional global filter.
+   * @param callback The [QueryRenderedFeatureCallback] called when the query operation completes.
+   *
+   * @return A `cancelable` object that could be used to cancel the pending query.
+   */
+  @MapboxExperimental
+  @JvmOverloads
+  fun <FS : FeatureState> queryRenderedFeature(
+    geometry: RenderedQueryGeometry,
+    featuresetHolder: FeaturesetHolder<FS>,
+    filter: Value? = null,
+    callback: QueryRenderedFeatureCallback<FS>,
+  ): Cancelable {
+    checkNativeMap("queryRenderedFeature")
+    return nativeMap.queryRenderedFeatures(
+      geometry,
+      listOf(
+        FeaturesetQueryTarget(
+          featuresetHolder.toFeaturesetDescriptor(),
+          filter,
+          null
+        )
+      )
+    ) {
+      it.onValue { listQueriedRenderedFeatureAsValue ->
+        if (listQueriedRenderedFeatureAsValue.isNotEmpty()) {
+          val firstRenderedFeature = listQueriedRenderedFeatureAsValue[0]
+          callback.onQueryRenderedFeature(
+            featuresetHolder.getInteractiveFeature(
+              feature = firstRenderedFeature.queriedFeature.feature,
+              featureNamespace = firstRenderedFeature.queriedFeature.featuresetFeatureId?.featureNamespace,
+              rawState = firstRenderedFeature.queriedFeature.state
+            )
+          )
+        }
+      }
+    }
+  }
+
+  /**
    * Queries the map for rendered features.
    *
    * Note: this is considered to be low-level API and should not be used in majority of use-cases.
-   *  Instead consider using [ClickInteraction], [LongClickInteraction] to interact with map elements.
+   *  Instead consider using [ClickInteraction], [LongClickInteraction] to interact with map elements or
+   *  overloaded [queryRenderedFeature] that takes single [FeaturesetHolder] as an argument and returns
+   *  a single [InteractiveFeature] implementation in the callback.
    *
    * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
    * @param targets An array of [FeaturesetQueryTarget] used to filter and query interactive features.
@@ -2631,6 +2695,7 @@ class MapboxMap :
     targets: List<FeaturesetQueryTarget>,
     callback: QueryRenderedFeaturesCallback,
   ): Cancelable {
+    checkNativeMap("queryRenderedFeatures")
     return nativeMap.queryRenderedFeatures(
       geometry,
       targets,

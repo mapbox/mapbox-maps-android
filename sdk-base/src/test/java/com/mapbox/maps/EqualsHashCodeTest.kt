@@ -2,7 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetHolder
 import com.mapbox.maps.interactions.InteractiveFeature
 import com.mapbox.maps.plugin.Plugin
@@ -144,8 +144,8 @@ class EqualsHashCodeTest {
 
   @OptIn(MapboxExperimental::class)
   @Test
-  fun `FeatureStateValue hashCode and equals test`() {
-    EqualsVerifier.forClass(FeatureStateValue::class.java)
+  fun `FeatureState hashCode and equals test`() {
+    EqualsVerifier.forClass(FeatureState::class.java)
       .usingGetClass()
       .verify()
   }

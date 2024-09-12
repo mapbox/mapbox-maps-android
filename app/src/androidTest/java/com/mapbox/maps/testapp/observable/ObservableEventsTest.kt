@@ -123,8 +123,9 @@ class ObservableEventsTest : BaseMapTest() {
       assertNotNull(eventData.message)
       assertNotNull(eventData.timestamp.time)
       assertEquals(MapLoadingErrorType.STYLE, eventData.type)
+      // TODO replace when v11.7.0-rc.1 will be out
       assertEquals(
-        "Failed to load style: Unable to resolve host \"wrongurl\": No address associated with hostname",
+        "Failed to load style: Couldn't connect to server: Exception in CronetUrlRequest: net::ERR_NAME_NOT_RESOLVED, ErrorCode=1, InternalErrorCode=-105, Retryable=false",
         eventData.message
       )
       latch.countDown()

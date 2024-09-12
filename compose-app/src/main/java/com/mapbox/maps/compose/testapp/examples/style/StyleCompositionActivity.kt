@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
@@ -46,8 +45,7 @@ import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.interactions.FeatureStateValue
-import org.json.JSONObject
+import com.mapbox.maps.interactions.FeatureState
 
 /**
  * Example to showcase usage of runtime styling with compose.
@@ -173,13 +171,11 @@ public class StyleCompositionActivity : ComponentActivity() {
                 sourceState = geoJsonSource,
               ) {
                 interactionsState.onClicked { interactiveFeature, _ ->
-                  val selected =
-                    JSONObject(interactiveFeature.state.toJson()).optBoolean("selected", false)
+                  val selected = interactiveFeature.state.getBooleanState("selected") ?: false
                   interactiveFeature.setFeatureState(
-                    FeatureStateValue(
-                      "selected",
-                      Value.valueOf(!selected)
-                    )
+                    FeatureState.build {
+                      addBooleanState("selected", !selected)
+                    }
                   )
                   true
                 }

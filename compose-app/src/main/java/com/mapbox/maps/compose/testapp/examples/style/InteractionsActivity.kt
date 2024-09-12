@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -32,10 +31,8 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.rememberStyleState
-import com.mapbox.maps.interactions.FeatureStateValue
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.InteractiveFeature
-import org.json.JSONObject
 
 public class InteractionsActivity : ComponentActivity() {
 
@@ -46,7 +43,7 @@ public class InteractionsActivity : ComponentActivity() {
     setContent {
 
       var selectedPriceLabel by remember {
-        mutableStateOf<InteractiveFeature<FeaturesetHolder.Featureset>?>(null)
+        mutableStateOf<InteractiveFeature<FeatureState>?>(null)
       }
 
       var isActive: Boolean? by remember {
@@ -81,17 +78,14 @@ public class InteractionsActivity : ComponentActivity() {
                           selectedPriceLabel?.removeFeatureState("active")
                           selectedPriceLabel = priceLabel
                         }
-                        isActive =
-                          (
-                            !JSONObject(priceLabel.state.toJson()).optBoolean("active", false)
-                            ).also {
-                              priceLabel.setFeatureState(
-                                FeatureStateValue(
-                                  "active",
-                                  Value.valueOf(it)
-                                )
-                              )
-                            }
+                        val newActiveState = priceLabel.state.getBooleanState("active")?.not() ?: true
+                        priceLabel.setFeatureState(
+                          FeatureState.build {
+                            addBooleanState("active", newActiveState)
+                          }
+                        ) {
+                          isActive = newActiveState
+                        }
                         return@onFeaturesetClicked true
                       }
                       .onMapClicked {

@@ -5,7 +5,16 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.7.0-rc.1
+## Breaking changes ⚠️
+* Experimental interactive features API changes:
+    * `FeatureStateValue` was removed in favour of generic `FeatureState`.
+    * `MapboxMap.setFeatureState` takes a single `FeatureState` class instead of vararg `FeatureStateValue`.
+    * `BaseInteractiveFeature` was removed in favour of `InteractiveFeature`.
+    * `InteractiveFeature.state` is now a generic of `FeatureState`.
+    * `MapboxMap.getFeatureState` signature changed to be generic and return typed `FeatureState` in the new `FeatureStateCallback`.
+
 ## Features ✨ and improvements 🏁
+* Introduce experimental `MapboxMap.queryRenderedFeature` allowing to get an `InteractiveFeature` for given geometry, `FeaturesetHolder` and optional filter.
 * [compose] Introduce experimental `StyleInteractionsState`, `StyleImportsInteractionsState`, `LayerInteractionsState` to handle interactions to the style, style imports and layers.
 * [compose] Introduce experimental `StyleImport` composable functions to accept `StyleImportsInteractionsState` as an parameter.
 * [compose] Introduce experimental `LayerInteractionsState` as part of `*LayerState` of layers that's driven by a source.

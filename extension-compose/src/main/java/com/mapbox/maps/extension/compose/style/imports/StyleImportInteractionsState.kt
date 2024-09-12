@@ -11,7 +11,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions
 import com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.InteractiveFeature
 
 /**
@@ -56,7 +56,7 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     clickInteractionFeatureset(
       featuresetId = featuresetId,
@@ -81,7 +81,7 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     longClickInteractionFeatureset(
       featuresetId = featuresetId,
