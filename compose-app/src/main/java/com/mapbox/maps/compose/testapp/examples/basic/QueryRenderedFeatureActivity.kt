@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.RenderedQueryGeometry
-import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -26,6 +26,7 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.interactions.FeaturesetHolder
 import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import kotlinx.coroutines.flow.first
@@ -71,9 +72,9 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
             style = {
               MapStyle(style = Style.MAPBOX_STREETS)
             },
-            onMapClickListener = {
+            onMapClickListener = { clickedPoint ->
               coroutineScope.launch {
-                highlightedBuilding = mapState.queryBuildingCoordinatesAt(it)
+                highlightedBuilding = mapState.queryBuildingCoordinatesAt(clickedPoint)
               }
               false
             },
@@ -89,16 +90,15 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
     }
   }
 
-  private suspend fun MapState.queryBuildingCoordinatesAt(point: Point): List<List<Point>> =
-    queryRenderedFeatures(
-      RenderedQueryGeometry(pixelForCoordinate(point)),
-      RenderedQueryOptions(listOf("building"), null)
-    ).value?.let { list ->
-      list.firstNotNullOfOrNull {
-        logD(TAG, "Feature properties: ${it.queriedFeature.feature.properties()}")
-        (it.queriedFeature.feature.geometry() as? Polygon)?.coordinates()?.toList()
-      } ?: emptyList()
-    } ?: emptyList()
+  @OptIn(MapboxExperimental::class)
+  private suspend fun MapState.queryBuildingCoordinatesAt(point: Point): List<List<Point>> {
+    val selectedBuilding = queryRenderedFeature(
+      geometry = RenderedQueryGeometry(pixelForCoordinate(point)),
+      featuresetHolder = FeaturesetHolder.Layer("building")
+    )
+    logD(TAG, "Feature properties: ${selectedBuilding.feature.properties()}")
+    return (selectedBuilding.feature.geometry() as? Polygon)?.coordinates()?.toList() ?: emptyList()
+  }
 
   private companion object {
     const val TAG = "QRFActivity"

@@ -7,7 +7,6 @@ import android.graphics.PointF
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -21,6 +20,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetHolder
 import com.mapbox.maps.interactions.InteractiveFeature
 import com.mapbox.maps.plugin.annotation.*
@@ -307,7 +307,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun clickWithNoAnnotation() {
     mockkObject(ClickInteraction.Companion)
-    val onClickLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val onClickLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val customLayerId = "customLayerId"
     every {
       ClickInteraction.layer(layerId = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
@@ -336,7 +336,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = Value.nullValue()
+        state = FeatureState.build { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -353,7 +353,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun click() {
     mockkObject(ClickInteraction.Companion)
-    val onClickLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val onClickLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val customLayerId = "customLayerId"
     every {
       ClickInteraction.layer(layerId = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
@@ -392,7 +392,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = Value.nullValue()
+        state = FeatureState.build { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -409,7 +409,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(annotation.id),
         feature = feature,
         featureNamespace = null,
-        state = Value.nullValue()
+        state = FeatureState.build { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -431,7 +431,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun longClick() {
     mockkObject(LongClickInteraction.Companion)
-    val onLongClickLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val onLongClickLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val customLayerId = "customLayerId"
     every {
       LongClickInteraction.layer(layerId = customLayerId, filter = any(), onLongClick = capture(onLongClickLayerIdSlot))
@@ -465,7 +465,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = Value.nullValue()
+        state = FeatureState.build { }
       ),
       InteractionContext(
         CoordinateInfo(
@@ -485,7 +485,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun drag() {
     mockkObject(DragInteraction.Companion)
-    val onDragBeginLayerIdSlot = slot<((InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean)>()
+    val onDragBeginLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val onDragSlot = slot<((InteractionContext) -> Unit)>()
     val onDragEndSlot = slot<((InteractionContext) -> Unit)>()
     val customLayerId = "customLayerId"
@@ -535,7 +535,7 @@ class PolygonAnnotationManagerTest {
         featuresetHolder = FeaturesetHolder.Layer(customLayerId),
         feature = feature,
         featureNamespace = null,
-        state = Value.nullValue()
+        state = FeatureState.build { }
       ),
       InteractionContext(
         CoordinateInfo(

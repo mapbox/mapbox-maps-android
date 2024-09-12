@@ -9,7 +9,7 @@ import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.InteractiveFeature
 
 /**
@@ -54,7 +54,7 @@ public class StyleInteractionsState : BasicStyleInteractions() {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
     clickInteractionFeatureset(
       featuresetId = featuresetId,
@@ -77,7 +77,7 @@ public class StyleInteractionsState : BasicStyleInteractions() {
   public fun onLayerClicked(
     layerId: String,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean
+    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
     clickInteractionLayer(layerId = layerId, filter = filter, onClick = onClick)
   }
@@ -97,7 +97,7 @@ public class StyleInteractionsState : BasicStyleInteractions() {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
     longClickInteractionFeatureset(
       featuresetId = featuresetId,
@@ -120,7 +120,7 @@ public class StyleInteractionsState : BasicStyleInteractions() {
   public fun onLayerLongClicked(
     layerId: String,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean
+    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
     longClickInteractionLayer(layerId = layerId, filter = filter, onLongClick = onLongClick)
   }

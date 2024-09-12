@@ -32,10 +32,8 @@ import com.mapbox.maps.extension.compose.style.importConfigs
 import com.mapbox.maps.extension.compose.style.imports.rememberStyleImportState
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.compose.style.slotsContent
-import com.mapbox.maps.interactions.FeatureStateValue
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.InteractiveFeature
-import org.json.JSONObject
 
 /**
  * Example to showcase usage of style imports.
@@ -124,7 +122,7 @@ public class StyleImportsActivity : ComponentActivity() {
                         importConfigs = importConfigs {
                           config("showTransitLabels", Value(false))
                         }
-                        var selectedPriceLabel: InteractiveFeature<FeaturesetHolder.Featureset>? =
+                        var selectedPriceLabel: InteractiveFeature<FeatureState>? =
                           null
                         interactionsState
                           .onFeaturesetClicked(featuresetId = "hotels-price") { priceLabel, _ ->
@@ -132,13 +130,11 @@ public class StyleImportsActivity : ComponentActivity() {
                               selectedPriceLabel?.removeFeatureState("active")
                               selectedPriceLabel = priceLabel
                             }
-                            val isActive =
-                              !JSONObject(priceLabel.state.toJson()).optBoolean("active", false)
+                            val isActive = (priceLabel.state.getBooleanState("active") ?: false).not()
                             priceLabel.setFeatureState(
-                              FeatureStateValue(
-                                "active",
-                                Value.valueOf(isActive)
-                              )
+                              FeatureState.build {
+                                addBooleanState("active", isActive)
+                              }
                             )
                             return@onFeaturesetClicked true
                           }

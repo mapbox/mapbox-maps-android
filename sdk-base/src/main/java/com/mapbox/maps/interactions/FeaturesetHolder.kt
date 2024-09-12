@@ -1,6 +1,8 @@
 package com.mapbox.maps.interactions
 
 import androidx.annotation.RestrictTo
+import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Feature
 import com.mapbox.maps.FeaturesetDescriptor
 import com.mapbox.maps.MapboxExperimental
 import java.util.Objects
@@ -9,13 +11,29 @@ import java.util.Objects
  * Holder class to differentiate featuresets.
  */
 @MapboxExperimental
-abstract class FeaturesetHolder private constructor() {
+abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
 
   /**
    * For internal usage.
    */
   @RestrictTo(RestrictTo.Scope.LIBRARY)
   abstract fun toFeaturesetDescriptor(): FeaturesetDescriptor
+
+  /**
+   * For internal usage.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY)
+  abstract fun getFeatureState(rawState: Value): FS
+
+  /**
+   * For internal usage.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY)
+  abstract fun getInteractiveFeature(
+    feature: Feature,
+    featureNamespace: String?,
+    rawState: Value
+  ): InteractiveFeature<FS>
 
   /**
    * Represents an actual featureset.
@@ -27,12 +45,31 @@ abstract class FeaturesetHolder private constructor() {
   class Featureset @JvmOverloads constructor(
     val featuresetId: String,
     val importId: String? = null
-  ) : FeaturesetHolder() {
+  ) : FeaturesetHolder<FeatureState>() {
 
     /**
      * For internal usage.
      */
     override fun toFeaturesetDescriptor() = FeaturesetDescriptor(featuresetId, importId, null)
+
+    /**
+     * For internal usage.
+     */
+    override fun getFeatureState(rawState: Value) = FeatureState(rawState)
+
+    /**
+     * For internal usage.
+     */
+    override fun getInteractiveFeature(
+      feature: Feature,
+      featureNamespace: String?,
+      rawState: Value
+    ) = InteractiveFeature(
+      featuresetHolder = this,
+      feature = feature,
+      featureNamespace = featureNamespace,
+      state = getFeatureState(rawState)
+    )
 
     /**
      * Overloaded equals.
@@ -65,12 +102,31 @@ abstract class FeaturesetHolder private constructor() {
   @MapboxExperimental
   class Layer(
     val layerId: String,
-  ) : FeaturesetHolder() {
+  ) : FeaturesetHolder<FeatureState>() {
 
     /**
      * For internal usage.
      */
     override fun toFeaturesetDescriptor() = FeaturesetDescriptor(null, null, layerId)
+
+    /**
+     * For internal usage.
+     */
+    override fun getFeatureState(rawState: Value) = FeatureState(rawState)
+
+    /**
+     * For internal usage.
+     */
+    override fun getInteractiveFeature(
+      feature: Feature,
+      featureNamespace: String?,
+      rawState: Value
+    ) = InteractiveFeature(
+      featuresetHolder = this,
+      feature = feature,
+      featureNamespace = featureNamespace,
+      state = getFeatureState(rawState)
+    )
 
     /**
      * Overloaded equals.

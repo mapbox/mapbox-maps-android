@@ -3,7 +3,8 @@ package com.mapbox.maps
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.ClickInteraction.Companion.featureset
 import com.mapbox.maps.ClickInteraction.Companion.invoke
-import com.mapbox.maps.interactions.BaseInteractiveFeature
+import com.mapbox.maps.ClickInteraction.Companion.layer
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetHolder
 import com.mapbox.maps.interactions.InteractiveFeature
 
@@ -25,7 +26,7 @@ import com.mapbox.maps.interactions.InteractiveFeature
  *  3. When having several [ClickInteraction]s with the same [FeaturesetDescriptor] / map surface (see point 2) - the **last** registered [ClickInteraction] will be triggered **first**.
  */
 @MapboxExperimental
-class ClickInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
+class ClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
 
   private constructor(
     featureset: FeaturesetDescriptor,
@@ -97,7 +98,7 @@ class ClickInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
       featuresetId: String,
       importId: String? = null,
       filter: Value? = null,
-      onClick: (InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+      onClick: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return ClickInteraction(
         FeaturesetDescriptor(featuresetId, importId, null),
@@ -108,7 +109,7 @@ class ClickInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
           featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId),
           feature = it.feature,
           featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = it.state
+          state = FeatureState(it.state)
         )
       }
     }
@@ -128,7 +129,7 @@ class ClickInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
     fun layer(
       layerId: String,
       filter: Value? = null,
-      onClick: (InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean
+      onClick: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return ClickInteraction(
         FeaturesetDescriptor(null, null, layerId),
@@ -139,7 +140,7 @@ class ClickInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
           featuresetHolder = FeaturesetHolder.Layer(layerId),
           feature = it.feature,
           featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = it.state
+          state = FeatureState(it.state)
         )
       }
     }

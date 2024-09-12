@@ -11,10 +11,8 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraChanged
-import com.mapbox.maps.FeatureStateOperationCallback
 import com.mapbox.maps.GenericEvent
 import com.mapbox.maps.MapIdle
 import com.mapbox.maps.MapLoaded
@@ -24,7 +22,6 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.QueriedRenderedFeature
-import com.mapbox.maps.QueryFeatureStateCallback
 import com.mapbox.maps.RenderFrameFinished
 import com.mapbox.maps.RenderFrameStarted
 import com.mapbox.maps.RenderedQueryGeometry
@@ -56,9 +53,10 @@ import com.mapbox.maps.coroutine.styleImageRemoveUnusedEvents
 import com.mapbox.maps.coroutine.styleLoadedEvents
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.internal.applySettings
-import com.mapbox.maps.interactions.BaseInteractiveFeature
-import com.mapbox.maps.interactions.FeatureStateValue
+import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.InteractiveFeature
 import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -239,31 +237,62 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
     mapboxMapFlow.filterNotNull().first().queryRenderedFeatures(geometry, options)
 
   /**
+   * Queries the map for given [featuresetHolder] and returns typed [InteractiveFeature].
+   *
+   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
+   * @param filter optional global filter.
+   *
+   * @return A typed instance of the [InteractiveFeature].
+   */
+  @MapboxExperimental
+  @JvmOverloads
+  public suspend fun <FS : FeatureState> queryRenderedFeature(
+    geometry: RenderedQueryGeometry,
+    featuresetHolder: FeaturesetHolder<FS>,
+    filter: Expression? = null,
+  ): InteractiveFeature<FS> {
+    mapboxMapFlow.filterNotNull().first().apply {
+      return suspendCancellableCoroutine { continuation ->
+        val cancelable = queryRenderedFeature(
+          geometry = geometry,
+          featuresetHolder = featuresetHolder,
+          filter = filter,
+          callback = continuation::resume
+        )
+        continuation.invokeOnCancellation {
+          cancelable.cancel()
+        }
+      }
+    }
+  }
+
+  /**
    * Gets the state map of a feature from a featureset asynchronously.
    *
-   * @param featureset The featureset identifier.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    * @param featureId The feature identifier of the feature whose state should be queried.
    * @param featureNamespace Optional feature namespace. Defaults to NULL.
    *  Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
    *  If the underlying source is the same for multiple selectors within a featureset, the same [featureNamespace] should be used across those selectors.
    *  Defining a [featureNamespace] value for the Selector is recommended, especially when multiple selectors exist in a featureset, as it can enhance the efficiency of feature operations.
    *
-   * @return A state map wrapped in [Value] or a error string.
+   * @return A concrete instance of [FeatureState].
    */
   @MapboxExperimental
   @JvmOverloads
-  public suspend fun getFeatureState(
-    featureset: FeaturesetHolder,
+  public suspend fun <FS : FeatureState> getFeatureState(
+    featuresetHolder: FeaturesetHolder<FS>,
     featureId: String,
     featureNamespace: String? = null,
-  ): Expected<String, Value> {
+  ): FS {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = getFeatureState(
-          featureset = featureset,
+          featuresetHolder = featuresetHolder,
           featureId = featureId,
           featureNamespace = featureNamespace,
-          callback = QueryFeatureStateCallback { continuation.resume(it) }
+          callback = continuation::resume
         )
         continuation.invokeOnCancellation {
           cancelable.cancel()
@@ -276,21 +305,21 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    * Sets the state map for given [interactiveFeature] coming from an interaction callback asynchronously.
    *
    * @param interactiveFeature the interactive feature coming from an interaction callback.
-   * @param states describes the new states of the map for given [interactiveFeature].
+   * @param state describes the new state of the map for given [interactiveFeature].
    *
    * @return the optional error wrapped in [Expected].
    */
   @MapboxExperimental
-  public suspend fun <T, V> setFeatureState(
-    interactiveFeature: T,
-    vararg states: V,
-  ): Expected<String, com.mapbox.bindgen.None> where V : FeatureStateValue, T : BaseInteractiveFeature<*, V> {
+  public suspend fun <IF, FS> setFeatureState(
+    interactiveFeature: IF,
+    state: FS,
+  ): Expected<String, com.mapbox.bindgen.None> where FS : FeatureState, IF : InteractiveFeature<FS> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = setFeatureState(
           interactiveFeature = interactiveFeature,
-          states = states,
-          callback = FeatureStateOperationCallback { continuation.resume(it) }
+          state = state,
+          callback = continuation::resume
         )
         continuation.invokeOnCancellation {
           cancelable.cancel()
@@ -316,7 +345,7 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   @MapboxExperimental
   @JvmOverloads
   public suspend fun removeFeatureState(
-    interactiveFeature: BaseInteractiveFeature<*, *>,
+    interactiveFeature: InteractiveFeature<*>,
     stateKey: String? = null,
   ): Expected<String, com.mapbox.bindgen.None> {
     mapboxMapFlow.filterNotNull().first().apply {
@@ -324,7 +353,7 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
         val cancelable = removeFeatureState(
           interactiveFeature = interactiveFeature,
           stateKey = stateKey,
-          callback = FeatureStateOperationCallback { continuation.resume(it) }
+          callback = continuation::resume
         )
         continuation.invokeOnCancellation {
           cancelable.cancel()
@@ -341,19 +370,19 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using [getFeatureState].
    *
-   * @param featureset The featureset identifier.
+   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
    *
    * @return the optional error wrapped in [Expected].
    */
   @MapboxExperimental
   public suspend fun resetFeatureStates(
-    featureset: FeaturesetHolder,
+    featuresetHolder: FeaturesetHolder<*>,
   ): Expected<String, com.mapbox.bindgen.None> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = resetFeatureStates(
-          featureset = featureset,
-          callback = FeatureStateOperationCallback { continuation.resume(it) }
+          featuresetHolder = featuresetHolder,
+          callback = continuation::resume
         )
         continuation.invokeOnCancellation {
           cancelable.cancel()

@@ -16,6 +16,9 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.rgb
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.interactions.FeatureState
+import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.logI
 import com.mapbox.maps.testapp.databinding.ActivityStandardStyleBinding
 
 /**
@@ -77,10 +80,22 @@ class StandardStyleActivity : AppCompatActivity() {
       ) { selectedPriceLabel, _ ->
         hotelPriceAlertBar = Snackbar.make(
           binding.mapView,
-          "Selected hotel price: ${selectedPriceLabel.feature.getNumberProperty("price")}",
+          "Last selected hotel price: ${selectedPriceLabel.feature.getNumberProperty("price")}",
           Snackbar.LENGTH_INDEFINITE
         ).apply {
           show()
+        }
+        mapboxMap.setFeatureState(
+          selectedPriceLabel,
+          FeatureState.build { addBooleanState("active", true) }
+        ) {
+          mapboxMap.getFeatureState(
+            featuresetHolder = selectedPriceLabel.featuresetHolder,
+            featureId = selectedPriceLabel.feature.id()!!,
+            featureNamespace = selectedPriceLabel.featureNamespace
+          ) {
+            logI(TAG, "getFeatureState returned state: ${it.asJsonString()}")
+          }
         }
         // return true meaning we consume this click and
         // do not dispatch it to the map interaction declared below
@@ -92,6 +107,7 @@ class StandardStyleActivity : AppCompatActivity() {
       // handle click interactions on the map itself (outside of hotels' price POIs)
       ClickInteraction { _ ->
         hotelPriceAlertBar?.dismiss()
+        mapboxMap.resetFeatureStates(FeaturesetHolder.Featureset(featuresetId = "hotels-price"))
         return@ClickInteraction true
       }
     )
@@ -193,6 +209,8 @@ class StandardStyleActivity : AppCompatActivity() {
   }
 
   companion object {
+    private const val TAG = "StandardStyleActivity"
+
     /**
      * The ID used in [STYLE_URL] that references the `standard` style.
      */

@@ -12,7 +12,7 @@ import com.mapbox.maps.MapInteraction
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.InteractiveFeature
 
 /**
@@ -72,7 +72,7 @@ public abstract class BasicStyleInteractions {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add { import ->
       ClickInteraction.featureset(
@@ -98,7 +98,7 @@ public abstract class BasicStyleInteractions {
   protected fun clickInteractionLayer(
     layerId: String,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean
+    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add {
       ClickInteraction.layer(
@@ -155,7 +155,7 @@ public abstract class BasicStyleInteractions {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean
+    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add { import ->
       LongClickInteraction.featureset(
@@ -181,7 +181,7 @@ public abstract class BasicStyleInteractions {
   protected fun longClickInteractionLayer(
     layerId: String,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean
+    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add {
       LongClickInteraction.layer(

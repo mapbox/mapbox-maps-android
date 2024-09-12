@@ -1,22 +1,20 @@
 package com.mapbox.maps.interactions
 
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
-import com.mapbox.maps.ClickInteraction
-import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapboxExperimental
 import java.util.Objects
 
 /**
- * Should not be used directly. Derived classes should be used instead.
+ * The interactive feature object returned in the callback of interactions either
+ * interactions (ClickInteraction, LongClickInteraction) or `MapboxMap.queryRenderedFeature`.
  */
 @MapboxExperimental
-abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateValue> internal constructor(
+class InteractiveFeature<FS : FeatureState>(
   /**
    * The [FeaturesetHolder] this concrete interactive feature comes from.
-   * Could be [FeaturesetHolder.Featureset] or [FeaturesetHolder.Layer].
+   * List of supported featuresets could be found in the nested classes (e.g. [FeaturesetHolder.Featureset], [FeaturesetHolder.Layer]).
    */
-  val featuresetHolder: FH,
+  val featuresetHolder: FeaturesetHolder<FS>,
   /**
    * The interactive feature data (id, geometry, properties as JSON) encapsulated in the [Feature] object.
    */
@@ -27,15 +25,14 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
    * Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
    * If the underlying source is the same for multiple selectors within a featureset, the same [featureNamespace] should be used across those selectors.
    * Defining a [featureNamespace] value for the Selector is recommended, especially when multiple selectors exist in a featureset, as it can enhance the efficiency of feature operations.
-  */
+   */
   val featureNamespace: String?,
   /**
-   * Current interactive feature state stored as a raw [Value].
+   * Current interactive feature state stored as a concrete instance of [FeatureState].
    * Note that this state is immutable and represents the interactive feature state at the precise moment of the interaction callback.
    */
-  val state: Value,
+  val state: FS,
 ) {
-
   /**
    * Override equals method.
    */
@@ -43,7 +40,7 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
 
-    other as BaseInteractiveFeature<*, *>
+    other as InteractiveFeature<*>
 
     if (featuresetHolder != other.featuresetHolder) return false
     if (feature != other.feature) return false
@@ -59,15 +56,3 @@ abstract class BaseInteractiveFeature<FH : FeaturesetHolder, V : FeatureStateVal
   override fun hashCode(): Int =
     Objects.hash(featuresetHolder, feature, state, featureNamespace)
 }
-
-/**
- * The interactive feature object returned in the callback of interactions
- * when using the `featureset` factory method (e.g. [ClickInteraction.featureset] or [LongClickInteraction.featureset]).
- */
-@MapboxExperimental
-class InteractiveFeature<FH : FeaturesetHolder>(
-  featuresetHolder: FH,
-  feature: Feature,
-  featureNamespace: String?,
-  state: Value,
-) : BaseInteractiveFeature<FH, FeatureStateValue>(featuresetHolder, feature, featureNamespace, state)

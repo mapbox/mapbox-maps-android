@@ -35,7 +35,6 @@ import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
-import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.Value;
 import com.mapbox.common.Cancelable;
 import com.mapbox.common.MapboxOptions;
@@ -46,7 +45,6 @@ import com.mapbox.maps.CameraState;
 import com.mapbox.maps.ClickInteraction;
 import com.mapbox.maps.ExtensionUtils;
 import com.mapbox.maps.FeatureStateOperationCallback;
-import com.mapbox.maps.FeaturesetDescriptor;
 import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
@@ -74,7 +72,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
-import com.mapbox.maps.interactions.FeatureStateValue;
+import com.mapbox.maps.interactions.FeatureState;
 import com.mapbox.maps.interactions.FeaturesetHolder;
 import com.mapbox.maps.module.MapTelemetry;
 import com.mapbox.maps.plugin.LocationPuck;
@@ -126,7 +124,8 @@ import java.util.List;
 import java.util.Locale;
 
 import kotlin.Pair;
-import kotlin.jvm.functions.Function2;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /** @noinspection UnusedAssignment*/
 @SuppressWarnings("unused")
@@ -670,7 +669,14 @@ public class JavaInterfaceChecker {
                     "featuresetId",
                     "importId",
                     (interactiveFeature, context) -> {
-                      mapboxMap.setFeatureState(interactiveFeature, new FeatureStateValue("key", Value.valueOf(true)));
+                      mapboxMap.setFeatureState(
+                              interactiveFeature,
+                              FeatureState.build(builder -> {
+                                        builder.addBooleanState("active", true);
+                                        return null;
+                                      }
+                              )
+                      );
                       mapboxMap.removeFeatureState(interactiveFeature);
                       mapboxMap.removeFeatureState(interactiveFeature.getFeaturesetHolder(), interactiveFeature.getFeature().id(), "stateKey");
                       return true;
@@ -683,9 +689,9 @@ public class JavaInterfaceChecker {
             ClickInteraction.layer(
                     layer.getLayerId(),
                     (interactiveFeature, context) -> {
-                      mapboxMap.setFeatureState(layer, interactiveFeature.getFeature().id(), interactiveFeature.getFeatureNamespace(), Value.nullValue());
-                      mapboxMap.getFeatureState(layer, "feaatureId", result -> {
-                        result.getValue();
+                      mapboxMap.setFeatureState(layer, interactiveFeature.getFeature().id(), interactiveFeature.getFeatureNamespace(), new FeatureState.Builder().build());
+                      mapboxMap.getFeatureState(layer, "featureId", result -> {
+                        result.getBooleanState("active");
                       });
                       return true;
                     }

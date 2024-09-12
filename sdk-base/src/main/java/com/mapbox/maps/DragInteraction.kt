@@ -2,7 +2,7 @@ package com.mapbox.maps
 
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.interactions.BaseInteractiveFeature
+import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetHolder
 import com.mapbox.maps.interactions.InteractiveFeature
 
@@ -11,7 +11,7 @@ import com.mapbox.maps.interactions.InteractiveFeature
  */
 @OptIn(MapboxExperimental::class)
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
+class DragInteraction<T : InteractiveFeature<*>> : MapInteraction {
 
   private constructor(
     featureset: FeaturesetDescriptor,
@@ -82,7 +82,7 @@ class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
       featuresetId: String,
       importId: String? = null,
       filter: Value? = null,
-      onDragBegin: (InteractiveFeature<FeaturesetHolder.Featureset>, InteractionContext) -> Boolean,
+      onDragBegin: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean,
       onDrag: (InteractionContext) -> Unit,
       onDragEnd: (InteractionContext) -> Unit,
     ): MapInteraction {
@@ -97,7 +97,7 @@ class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
           featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId),
           feature = it.feature,
           featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = it.state
+          state = FeatureState(it.state)
         )
       }
     }
@@ -111,7 +111,7 @@ class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
     fun layer(
       layerId: String,
       filter: Value? = null,
-      onDragBegin: (InteractiveFeature<FeaturesetHolder.Layer>, InteractionContext) -> Boolean,
+      onDragBegin: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean,
       onDrag: (InteractionContext) -> Unit,
       onDragEnd: (InteractionContext) -> Unit,
     ): MapInteraction {
@@ -126,7 +126,7 @@ class DragInteraction<T : BaseInteractiveFeature<*, *>> : MapInteraction {
           featuresetHolder = FeaturesetHolder.Layer(layerId),
           feature = it.feature,
           featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = it.state
+          state = FeatureState(it.state)
         )
       }
     }
