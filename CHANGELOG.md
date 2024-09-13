@@ -16,6 +16,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce experimental `MapboxMap.queryRenderedFeature` allowing to get an `InteractiveFeature` for given geometry, `FeaturesetHolder` and optional filter.
 * Introduce experimental `FillExtrusionLayer.fillExtrusionLineWidth` and `FillExtrusionLayerState.fillExtrusionLineWidth` in Compose allowing to switch fill extrusion rendering into wall rendering mode. Use this property to render the feature with the given width over the outlines of the geometry.
+* Add missing experimental annotation to `PointAnnotationManager.symbolZOffset` and `PolylineAnnotationManager.lineZOffset`
+* Deprecate `PolylineAnnotationManager.lineTrimColor` in favour of `PolylineAnnotationManager.lineTrimColorString`/`PolylineAnnotationManager.lineTrimColorInt`.
 * [compose] Introduce experimental `StyleInteractionsState`, `StyleImportsInteractionsState`, `LayerInteractionsState` to handle interactions to the style, style imports and layers.
 * [compose] Introduce experimental `StyleImport` composable functions to accept `StyleImportsInteractionsState` as an parameter.
 * [compose] Introduce experimental `LayerInteractionsState` as part of `*LayerState` of layers that's driven by a source.
