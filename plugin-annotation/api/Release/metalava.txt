@@ -1090,7 +1090,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineSortKey();
     method public java.util.List<java.lang.Double>? getLineTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
-    method public String? getLineTrimColor();
+    method @Deprecated public String? getLineTrimColor();
+    method @ColorInt public Integer? getLineTrimColorInt();
+    method public String? getLineTrimColorString();
     method public java.util.List<java.lang.Double>? getLineTrimFadeRange();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public Double? getLineWidth();
@@ -1119,7 +1121,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineSortKey(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
-    method public void setLineTrimColor(String?);
+    method @Deprecated public void setLineTrimColor(String?);
+    method public void setLineTrimColorInt(@ColorInt Integer?);
+    method public void setLineTrimColorString(String?);
     method public void setLineTrimFadeRange(java.util.List<java.lang.Double>?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     method public void setLineWidth(Double?);
@@ -1147,7 +1151,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineSortKey;
     property public final java.util.List<java.lang.Double>? lineTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
-    property public final String? lineTrimColor;
+    property @Deprecated public final String? lineTrimColor;
+    property @ColorInt public final Integer? lineTrimColorInt;
+    property public final String? lineTrimColorString;
     property public final java.util.List<java.lang.Double>? lineTrimFadeRange;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property public final Double? lineWidth;

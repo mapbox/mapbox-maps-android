@@ -2045,6 +2045,7 @@ class PointAnnotationManager(
    *
    * Specifies an uniform elevation from the ground, in meters.
    */
+  @MapboxExperimental
   var symbolZOffset: Double?
     /**
      * Get the symbolZOffset property.

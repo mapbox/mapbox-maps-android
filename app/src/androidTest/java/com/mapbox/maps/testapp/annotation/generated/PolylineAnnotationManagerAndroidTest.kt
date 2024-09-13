@@ -293,14 +293,14 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     rule.runOnUiThread {
       val expectedValue = "rgba(0, 0, 0, 1)"
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-      polylineAnnotationManager.lineTrimColor = expectedValue
-      assertEquals(expectedValue, polylineAnnotationManager.lineTrimColor)
-      polylineAnnotationManager.lineTrimColor = null
+      polylineAnnotationManager.lineTrimColorString = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTrimColorString)
+      polylineAnnotationManager.lineTrimColorString = null
       assertEquals(
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color")
           .silentUnwrap<Expression>()
           ?.let { ColorUtils.rgbaExpressionToColorString(it) },
-        polylineAnnotationManager.lineTrimColor
+        polylineAnnotationManager.lineTrimColorString
       )
     }
   }

@@ -256,7 +256,7 @@ public class PolylineAnnotationGroupState private constructor(
   @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateLineTrimColor(annotationManager: PolylineAnnotationManager) {
-    annotationManager.lineTrimColor = lineTrimColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
+    annotationManager.lineTrimColorString = lineTrimColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
   }
   @Composable
   @OptIn(MapboxExperimental::class)

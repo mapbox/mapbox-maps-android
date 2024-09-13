@@ -162,6 +162,33 @@ class PolylineAnnotationManager(
 
   // Property accessors
   /**
+   * The LineTrimColor property
+   *
+   * The color to be used for rendering the trimmed line section that is defined by the {@link PropertyFactory#lineTrimOffset} property.
+   */
+  @MapboxExperimental
+  @Deprecated(
+    "This property is deprecated, and will be removed in next major release. Use [lineTrimColorString] property instead.",
+    replaceWith = ReplaceWith("lineTrimColorString")
+  )
+  var lineTrimColor: String?
+    /**
+     * Get the lineTrimColor property.
+     * @return color value for String
+     */
+    get() {
+      return lineTrimColorString
+    }
+    /**
+     * Set the lineTrimColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      lineTrimColorString = value
+    }
+
+  /**
    * The LineCap property
    *
    * The display of line endings.
@@ -315,6 +342,7 @@ class PolylineAnnotationManager(
    *
    * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
    */
+  @MapboxExperimental
   var lineZOffset: Double?
     /**
      * Get the lineZOffset property.
@@ -858,18 +886,53 @@ class PolylineAnnotationManager(
    * The color to be used for rendering the trimmed line section that is defined by the {@link PropertyFactory#lineTrimOffset} property.
    */
   @MapboxExperimental
-  var lineTrimColor: String?
+  var lineTrimColorInt: Int?
     /**
-     * Get the LineTrimColor property
-     *
-     * @return property wrapper value around String
+     * Get the lineTrimColor property.
+     * @return color value for String
      */
-    get(): String? {
+    @ColorInt
+    get() {
+      val value = layer.lineTrimColor
+      value?.let {
+        ColorUtils.rgbaToColor(it)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the lineTrimColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(ColorUtils.colorToRgbaString(value))
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color").value
+      }
+      setLayerProperty(wrappedValue, "line-trim-color")
+    }
+
+  /**
+   * Get the LineTrimColor property
+   *
+   * The color to be used for rendering the trimmed line section that is defined by the {@link PropertyFactory#lineTrimOffset} property.
+   */
+  @MapboxExperimental
+  var lineTrimColorString: String?
+    /**
+     * Get the lineTrimColor property.
+     * @return color value for String
+     */
+    get() {
       return layer.lineTrimColor
     }
     /**
-     * Set the LineTrimColor property
-     * @param value property wrapper value around String
+     * Set the lineTrimColor property.
+     *
+     * @param value color value for String
      */
     set(value) {
       val wrappedValue = if (value != null) {

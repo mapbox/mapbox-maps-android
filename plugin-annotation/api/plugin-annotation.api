@@ -869,6 +869,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineTranslate ()Ljava/util/List;
 	public final fun getLineTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;
 	public final fun getLineTrimColor ()Ljava/lang/String;
+	public final fun getLineTrimColorInt ()Ljava/lang/Integer;
+	public final fun getLineTrimColorString ()Ljava/lang/String;
 	public final fun getLineTrimFadeRange ()Ljava/util/List;
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun getLineWidth ()Ljava/lang/Double;
@@ -897,6 +899,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineTranslate (Ljava/util/List;)V
 	public final fun setLineTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;)V
 	public final fun setLineTrimColor (Ljava/lang/String;)V
+	public final fun setLineTrimColorInt (Ljava/lang/Integer;)V
+	public final fun setLineTrimColorString (Ljava/lang/String;)V
 	public final fun setLineTrimFadeRange (Ljava/util/List;)V
 	public final fun setLineTrimOffset (Ljava/util/List;)V
 	public final fun setLineWidth (Ljava/lang/Double;)V
