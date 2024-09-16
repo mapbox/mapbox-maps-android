@@ -32,6 +32,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a crash when calling `CameraAnimationsPlugin.easeTo()` with empty camera options or `CameraAnimationsPlugin.playAnimatorsSequentially()` / `CameraAnimationsPlugin.playAnimatorsTogether()` with an empty array of animators.
 * Fix ongoing animations being canceled when `CameraAnimationsPlugin.flyTo()` with empty camera options is called.
 * Fix simultaneous scale and rotation gestures not working when the first registered rotation is a scale one.
+* Fix crash on Android tilestore where null data was returned.
+* Fix the incorrect behaviour when using `SymbolLayer.symbolZOrder` property.
+* Fix retrieval of tilesets for 3d tiles in offline mode.
+* Fix rendering errors of patterns on high zoom levels.
+* Fix a bug where style changes weren't reflected after the source layer of a layer was changed.
 
 # 11.7.0-beta.1 September 03, 2024
 ## Features ✨ and improvements 🏁
