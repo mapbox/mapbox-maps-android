@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.7.0-rc.1
+
+# 11.7.0-rc.1 September 16, 2024
 ## Breaking changes ⚠️
 * Experimental interactive features API changes:
     * `FeatureStateValue` was removed in favour of generic `FeatureState`.
@@ -37,6 +38,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix retrieval of tilesets for 3d tiles in offline mode.
 * Fix rendering errors of patterns on high zoom levels.
 * Fix a bug where style changes weren't reflected after the source layer of a layer was changed.
+
 
 # 11.6.1 September 10, 2024
 ## Bug fixes 🐞
