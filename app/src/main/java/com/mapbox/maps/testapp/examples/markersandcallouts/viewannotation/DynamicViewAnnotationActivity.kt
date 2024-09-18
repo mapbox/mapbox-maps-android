@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.lifecycle.lifecycleScope
+import com.mapbox.bindgen.Value
+import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeometryCollection
@@ -49,6 +52,7 @@ import com.mapbox.maps.testapp.utils.BitmapUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.annotatedLayerFeature
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
@@ -131,6 +135,13 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
 
     val mapView = binding.mapView
     viewAnnotationManager = mapView.viewAnnotationManager
+
+    SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT).set(
+      "com.mapbox.maps.experimental.dispatch_annotations_positions_before_rendering",
+      Value.valueOf(true)
+    )
+
+    viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
 
     lifecycleScope.launch {
       mapView.mapboxMap.setCamera(
@@ -244,7 +255,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
             .zoom(18.0)
             .padding(
               EdgeInsets(
-                /* top = */ 500.0,
+                /* top = */ 100.0,
                 /* left = */ 100.0,
                 /* bottom = */ 100.0,
                 /* right = */ 100.0
