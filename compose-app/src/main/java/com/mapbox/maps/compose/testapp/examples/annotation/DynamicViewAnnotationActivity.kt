@@ -1,5 +1,6 @@
 package com.mapbox.maps.compose.testapp.examples.annotation
 
+import android.graphics.Matrix
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
@@ -24,19 +25,30 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.asAndroidPath
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mapbox.geojson.Feature
@@ -230,7 +242,7 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
             }
 
             if (showDynamicViewAnnotations) {
-              DynamicViewAnnotations {
+              DynamicViewAnnotations(isMainActive) {
                 isMainActive = !isMainActive
               }
             }
@@ -302,7 +314,7 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
 
   @Composable
   @MapboxMapComposable
-  private fun DynamicViewAnnotations(toggleActiveRoute: () -> Unit) {
+  private fun DynamicViewAnnotations(isMainActive: Boolean, toggleActiveRoute: () -> Unit) {
     var etaViewAnnotationAnchor by remember {
       mutableStateOf(ViewAnnotationAnchor.BOTTOM_LEFT)
     }
@@ -335,7 +347,7 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
         }
       }
     ) {
-      MainDVAContent(etaViewAnnotationAnchor)
+      MainDVAContent(isInitial = isMainActive, etaViewAnnotationAnchor = etaViewAnnotationAnchor)
     }
 
     // alternative eta view
@@ -363,7 +375,11 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
         }
       }
     ) {
-      AlternativeDVAContent(alternativeEtaViewAnnotationAnchor, onClick = toggleActiveRoute)
+      AlternativeDVAContent(
+        isInitial = !isMainActive,
+        alternativeEtaViewAnnotationAnchor = alternativeEtaViewAnnotationAnchor,
+        onClick = toggleActiveRoute
+      )
     }
 
     // parking view annotation 1
@@ -411,37 +427,46 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
   @Composable
   @UiComposable
   public fun MainDVAContent(
+    isInitial: Boolean = true,
     etaViewAnnotationAnchor: ViewAnnotationAnchor = ViewAnnotationAnchor.BOTTOM_LEFT,
     onClick: () -> Unit = {}
   ) {
-    Box(
-      modifier = Modifier
-        .width(120.dp)
-        .height(60.dp)
-        .clickable(
-          interactionSource = remember { MutableInteractionSource() },
-          indication = null,
-          onClick = onClick
-        )
-    ) {
-      Image(
+    // etaViewAnnotationAnchor change did not trigger recomposition of shadow, use key composable
+    // here to trigger recomposition of the box everytime the anchor changes.
+    key(etaViewAnnotationAnchor) {
+      Box(
         modifier = Modifier
-          .fillMaxSize()
-          .scale(
-            scaleX = etaViewAnnotationAnchor.getScaleX(),
-            scaleY = etaViewAnnotationAnchor.getScaleY()
-          ),
-        painter = painterResource(id = R.drawable.bg_dva_eta),
-        contentDescription = "Eta label",
-        contentScale = ContentScale.FillBounds,
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
-      )
-      Text(
-        modifier = Modifier.align(Alignment.Center),
-        text = "25 min",
-        fontSize = 25.sp,
-        color = Color.White
-      )
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
+            .shadow(
+                elevation = 8.dp,
+                CalloutShape(etaViewAnnotationAnchor)
+            )
+            .background(MaterialTheme.colors.primary)
+            .wrapContentSize(unbounded = true)
+      ) {
+        Column(
+          modifier = Modifier
+              .align(Alignment.Center)
+              .padding(30.dp)
+        ) {
+          Text(
+            text = "25 min",
+            fontSize = 25.sp,
+            color = Color.White
+          )
+          if (isInitial) {
+            Text(
+              text = "This is the initially suggested route",
+              fontSize = 12.sp,
+              color = Color.White
+            )
+          }
+        }
+      }
     }
   }
 
@@ -449,61 +474,61 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
   @Composable
   @UiComposable
   public fun AlternativeDVAContent(
+    isInitial: Boolean = true,
     alternativeEtaViewAnnotationAnchor: ViewAnnotationAnchor = ViewAnnotationAnchor.BOTTOM_LEFT,
     onClick: () -> Unit = {}
   ) {
-    Box(
-      modifier = Modifier
-        .width(180.dp)
-        .height(70.dp)
-        .clickable(
-          interactionSource = remember { MutableInteractionSource() },
-          indication = null,
-          onClick = onClick
-        )
-    ) {
-      Image(
+    // alternativeEtaViewAnnotationAnchor change did not trigger recomposition of shadow, use key composable
+    // here to trigger recomposition of the box everytime the anchor changes.
+    key(alternativeEtaViewAnnotationAnchor) {
+      Box(
         modifier = Modifier
-          .fillMaxSize()
-          .scale(
-            scaleX = alternativeEtaViewAnnotationAnchor.getScaleX(),
-            scaleY = alternativeEtaViewAnnotationAnchor.getScaleY()
-          ),
-        contentScale = ContentScale.FillBounds,
-        painter = painterResource(id = R.drawable.bg_dva_eta),
-        contentDescription = "Alternative Eta label",
-        colorFilter = ColorFilter.tint(Color.White)
-      )
-
-      Row(
-        modifier = Modifier
-          .align(Alignment.Center)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
+            .shadow(
+                elevation = 8.dp,
+                CalloutShape(alternativeEtaViewAnnotationAnchor)
+            )
+            .background(Color.White)
+            .wrapContentSize(unbounded = true)
       ) {
-        Image(
+        Row(
           modifier = Modifier
-            .width(30.dp)
-            .height(30.dp)
-            .padding(5.dp)
-            .align(Alignment.CenterVertically),
-          painter = painterResource(id = R.drawable.arrow_straight),
-          contentDescription = "arrow",
-          colorFilter = ColorFilter.tint(Color(0xFF09AA74))
-        )
-        Column {
-          Text(
+            .align(Alignment.Center)
+            .padding(30.dp)
+        ) {
+          Image(
             modifier = Modifier
-              .wrapContentSize(),
-            text = "Save 10 min",
-            fontSize = 18.sp,
-            color = Color.Black
+                .width(30.dp)
+                .height(30.dp)
+                .padding(5.dp)
+                .align(Alignment.CenterVertically),
+            painter = painterResource(id = R.drawable.arrow_straight),
+            contentDescription = "arrow",
+            colorFilter = ColorFilter.tint(Color(0xFF09AA74))
           )
-          Text(
-            modifier = Modifier
-              .wrapContentSize(),
-            text = "Avoid traffic",
-            fontSize = 12.sp,
-            color = Color.Black
-          )
+          Column {
+            Text(
+              text = "Save 10 min",
+              fontSize = 18.sp,
+              color = Color.Black
+            )
+            Text(
+              text = "Avoid traffic",
+              fontSize = 12.sp,
+              color = Color.Black
+            )
+            if (isInitial) {
+              Text(
+                text = "This is the initially suggested route",
+                fontSize = 12.sp,
+                color = Color.Black
+              )
+            }
+          }
         }
       }
     }
@@ -515,20 +540,20 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
   public fun ParkingDVAContent(price: String = "$4/h") {
     Box(
       modifier = Modifier
-        .width(110.dp)
-        .height(40.dp)
-        .background(Color.White, shape = CircleShape)
+          .width(110.dp)
+          .height(40.dp)
+          .background(Color.White, shape = CircleShape)
     ) {
       Row(
         modifier = Modifier
-          .align(Alignment.CenterStart)
-          .padding(2.dp)
+            .align(Alignment.CenterStart)
+            .padding(2.dp)
       ) {
         Text(
           modifier = Modifier
-            .size(36.dp)
-            .align(Alignment.CenterVertically)
-            .background(MaterialTheme.colors.primary, shape = CircleShape),
+              .size(36.dp)
+              .align(Alignment.CenterVertically)
+              .background(MaterialTheme.colors.primary, shape = CircleShape),
           text = "P",
           fontSize = 25.sp,
           textAlign = TextAlign.Center,
@@ -552,8 +577,8 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
   public fun ConstructionDVAContent() {
     Text(
       modifier = Modifier
-        .size(40.dp)
-        .padding(4.dp),
+          .size(40.dp)
+          .padding(4.dp),
       text = "🚧",
       fontSize = 20.sp
     )
@@ -573,16 +598,6 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
       )!!
     )
 
-  private fun ViewAnnotationAnchor.getScaleX(): Float = when (this) {
-    ViewAnnotationAnchor.BOTTOM_RIGHT, ViewAnnotationAnchor.TOP_RIGHT -> -1f
-    else -> 1f
-  }
-
-  private fun ViewAnnotationAnchor.getScaleY(): Float = when (this) {
-    ViewAnnotationAnchor.BOTTOM_RIGHT, ViewAnnotationAnchor.BOTTOM_LEFT -> -1f
-    else -> 1f
-  }
-
   private companion object {
     const val ZOOM: Double = 2.0
     const val LAYER_MAIN_ID = "layer-main"
@@ -598,5 +613,79 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
     const val ROUTE_ALT_GEOJSON = "dva-sf-route-alternative.geojson"
     const val PARKINGS_GEOJSON = "dva-sf-parkings.geojson"
     const val CONSTRUCTION_GEOJSON = "dva-sf-construction.geojson"
+  }
+}
+
+/**
+ * Utility class to define the callout shape.
+ */
+private data class CalloutShape(private val anchor: ViewAnnotationAnchor?) : Shape {
+
+  override fun createOutline(
+    size: Size,
+    layoutDirection: LayoutDirection,
+    density: Density
+  ): Outline {
+    val path = Path()
+    val scaledSize = size / density.density
+    path.addArrow(anchor, scaledSize)
+    path.addRoundRect(RoundRect(scaledSize.toRect().deflate(delta = 12f), CornerRadius(x = 16f)))
+    val matrix = Matrix()
+    matrix.setScale(density.density, density.density)
+    path.asAndroidPath().transform(matrix)
+    return Outline.Generic(path)
+  }
+}
+
+private fun Path.addArrow(anchor: ViewAnnotationAnchor?, size: Size) {
+  when (anchor) {
+    ViewAnnotationAnchor.TOP_LEFT -> addPath(
+      Path().apply {
+        moveTo(x = 32f, y = 12f)
+        cubicTo(x1 = 26f, y1 = 12f, x2 = 24.7f, y2 = 11.5f, x3 = 21.1f, y3 = 9.7f)
+        lineTo(x = 1.4f, y = 0.1f)
+        cubicTo(x1 = 0.6f, y1 = -0.3f, x2 = -0.3f, y2 = 0.6f, x3 = 0.1f, y3 = 1.5f)
+        lineTo(x = 9.8f, y = 21f)
+        cubicTo(x1 = 11.5f, y1 = 24.7f, x2 = 12f, y2 = 26f, x3 = 12f, y3 = 32f)
+      },
+    )
+
+    ViewAnnotationAnchor.TOP_RIGHT -> addPath(
+      Path().apply {
+        moveTo(x = 20f, y = 32f)
+        cubicTo(x1 = 20f, y1 = 26f, x2 = 20.5f, y2 = 24.7f, x3 = 22.2f, y3 = 21f)
+        lineTo(x = 31.9f, y = 1.5f)
+        cubicTo(x1 = 32.3f, y1 = 0.6f, x2 = 31.4f, y2 = -0.3f, x3 = 30.6f, y3 = 0.1f)
+        lineTo(x = 10.9f, y = 9.7f)
+        cubicTo(x1 = 7.3f, y1 = 11.5f, x2 = 6f, y2 = 12f, x3 = 0f, y3 = 12f)
+      },
+      Offset(x = size.width - 32f, y = 0f),
+    )
+
+    ViewAnnotationAnchor.BOTTOM_RIGHT -> addPath(
+      Path().apply {
+        moveTo(x = 0f, y = 20f)
+        cubicTo(x1 = 6f, y1 = 20f, x2 = 7.3f, y2 = 20.5f, x3 = 10.9f, y3 = 22.3f)
+        lineTo(x = 30.6f, y = 31.9f)
+        cubicTo(x1 = 31.4f, y1 = 32.3f, x2 = 32.3f, y2 = 31.4f, x3 = 31.9f, y3 = 30.5f)
+        lineTo(x = 22.2f, y = 11f)
+        cubicTo(x1 = 20.5f, y1 = 7.3f, x2 = 20f, y2 = 6f, x3 = 20f, y3 = 0f)
+      },
+      Offset(x = size.width - 32f, y = size.height - 32f),
+    )
+
+    ViewAnnotationAnchor.BOTTOM_LEFT -> addPath(
+      Path().apply {
+        moveTo(x = 12f, y = 0f)
+        cubicTo(x1 = 12f, y1 = 6f, x2 = 11.5f, y2 = 7.3f, x3 = 9.8f, y3 = 11f)
+        lineTo(x = 0.1f, y = 30.5f)
+        cubicTo(x1 = -0.3f, y1 = 31.4f, x2 = 0.6f, y2 = 32.3f, x3 = 1.4f, y3 = 31.9f)
+        lineTo(x = 21.1f, y = 22.3f)
+        cubicTo(x1 = 24.7f, y1 = 20.5f, x2 = 26f, y2 = 20f, x3 = 32f, y3 = 20f)
+      },
+      Offset(x = 0f, y = size.height - 32f),
+    )
+
+    else -> return
   }
 }

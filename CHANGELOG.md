@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.7.0
+## Bug fixes 🐞
+* [compose] Fix `ViewAnnotation` size not being updated when content layout changes.
 
 # 11.7.0-rc.1 September 16, 2024
 ## Breaking changes ⚠️
