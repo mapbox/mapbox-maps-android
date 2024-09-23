@@ -5,6 +5,7 @@ pluginManagement {
     mavenCentral()
   }
   includeBuild("mapbox-convention-plugin")
+  includeBuild("mapbox-dummy-plugins")
 }
 
 include(
