@@ -4,9 +4,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -123,6 +125,7 @@ public fun ViewAnnotation(
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
   val currentOptions = rememberUpdatedState(options)
+  val currentComposeContext = rememberCompositionContext()
 
   ComposeNode<ViewAnnotationNode, MapApplier>(
     factory = {
@@ -138,19 +141,32 @@ public fun ViewAnnotation(
 
       composeView.apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        // Set the parent composition context for the ComposeView.
+        // So that it preserves CompositionLocals and propagate invalidations.
+        setParentCompositionContext(currentComposeContext)
         setContent {
           Box(
-            modifier.onGloballyPositioned { coordinates ->
-              viewAnnotationManager.updateViewAnnotation(
-                this,
-                with(currentOptions.value) {
-                  toBuilder()
-                    .height(height ?: coordinates.size.height.toDouble())
-                    .width(width ?: coordinates.size.width.toDouble())
-                    .build()
-                }
-              )
-            }
+              Modifier
+                  .then(modifier)
+                  // Allow the content to measure at its desired size without minimum or maximum constraints
+                  .wrapContentSize(unbounded = true)
+                  .onGloballyPositioned { coordinates ->
+                      viewAnnotationManager.updateViewAnnotation(
+                          this,
+                          with(currentOptions.value) {
+                              toBuilder()
+                                  .height(height ?: coordinates.size.height.toDouble())
+                                  .width(width ?: coordinates.size.width.toDouble())
+                                  .build()
+                          }
+                      )
+                    // Update layout params immediately and request layout
+                    layoutParams.apply {
+                      width = currentOptions.value.width?.toInt() ?: coordinates.size.width
+                      height = currentOptions.value.height?.toInt() ?: coordinates.size.height
+                    }
+                    requestLayout()
+                  }
           ) {
             content()
           }
