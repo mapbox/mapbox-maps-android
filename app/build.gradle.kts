@@ -1,5 +1,6 @@
 plugins {
   id("com.mapbox.gradle.application")
+  id("com.mapbox.gradle.plugins.common.ndk")
 }
 
 apply {
@@ -83,8 +84,6 @@ android {
       path = file("src/main/cpp/CMakeLists.txt")
     }
   }
-
-  ndkVersion = libs.versions.exampleNdkVersion.get()
 
   packagingOptions {
     if (buildFromSource.toBoolean()) {

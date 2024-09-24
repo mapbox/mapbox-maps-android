@@ -3,6 +3,7 @@ package com.mapbox.maps.gradle.plugins.extensions
 import com.android.build.gradle.LibraryExtension
 import com.mapbox.maps.gradle.plugins.internal.getVersionsCatalog
 import com.mapbox.maps.gradle.plugins.internal.newInstance
+import com.mapbox.maps.gradle.plugins.internal.setDisallowChanges
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -10,17 +11,18 @@ import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.property
 import javax.inject.Inject
 
-public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) {
+public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) :
+  MapboxDependenciesExtension(objects) {
 
-  private var jApiCmpEnabledProperty: Property<Boolean> = objects.property<Boolean>().convention(true)
+  private var jApiCmpEnabledProperty: Property<Boolean> =
+    objects.property<Boolean>().convention(true)
 
   /** Whether jApiCmpEnabled is enabled. Defaults to true. */
   @Suppress("MemberVisibilityCanBePrivate")
   public var jApiCmpEnabled: Boolean
     get() = jApiCmpEnabledProperty.get()
     set(value) {
-      jApiCmpEnabledProperty.set(value)
-      jApiCmpEnabledProperty.disallowChanges()
+      jApiCmpEnabledProperty.setDisallowChanges(value)
     }
 
   private val dokka = objects.newInstance<MapboxDokkaExtension>()
@@ -42,16 +44,17 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
     action.execute(jacoco)
   }
 
-  internal fun applyTo(project: Project) {
+  override fun applyTo(project: Project) {
+    super.applyTo(project)
     project.applyRequiredPlugins()
     val libraryExtension = project.extensions.getByName("android") as LibraryExtension
     libraryExtension.configurePublicResource(project)
     libraryExtension.setMinCompileSdkVersion(project)
     dokka.applyTo(project, libraryExtension)
-    // we allow to disable jApiCmp so firstly we have to evaluate
+    // we allow to disable jApiCmp so first we have to evaluate
     project.afterEvaluate {
       if (jApiCmpEnabledProperty.getOrElse(true)) {
-        jApiCmp.applyTo(project)
+        jApiCmp.applyTo(this)
       }
     }
     jacoco.applyTo(project)
@@ -79,7 +82,8 @@ private fun LibraryExtension.configurePublicResource(project: Project) {
 }
 
 private fun LibraryExtension.setMinCompileSdkVersion(project: Project) {
-  val androidMinCompileSdkVersion = project.getVersionsCatalog().findVersion("androidMinCompileSdkVersion")
+  val androidMinCompileSdkVersion =
+    project.getVersionsCatalog().findVersion("androidMinCompileSdkVersion")
   if (androidMinCompileSdkVersion.isPresent) {
     val minCompileSdkVersion = androidMinCompileSdkVersion.get().requiredVersion.toInt()
     project.logger.info("Set minCompileSdkVersion=$minCompileSdkVersion")

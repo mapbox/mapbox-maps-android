@@ -2,6 +2,7 @@ package com.mapbox.maps.gradle.plugins.extensions
 
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.Variant
+import com.mapbox.maps.gradle.plugins.internal.setDisallowChanges
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
@@ -30,8 +31,7 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
   public var excludes: List<String>
     get() = excludesProperty.get()
     set(value) {
-      excludesProperty.set(value)
-      excludesProperty.disallowChanges()
+      excludesProperty.setDisallowChanges(value)
     }
 
   private val xmlEnabledProperty: Property<Boolean> =
@@ -44,8 +44,7 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
   public var xmlEnabled: Boolean
     get() = xmlEnabledProperty.get()
     set(value) {
-      xmlEnabledProperty.set(value)
-      xmlEnabledProperty.disallowChanges()
+      xmlEnabledProperty.setDisallowChanges(value)
     }
 
   private val htmlEnabledProperty: Property<Boolean> =
@@ -58,8 +57,7 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
   public var htmlEnabled: Boolean
     get() = htmlEnabledProperty.get()
     set(value) {
-      htmlEnabledProperty.set(value)
-      htmlEnabledProperty.disallowChanges()
+      htmlEnabledProperty.setDisallowChanges(value)
     }
 
   private val csvEnabledProperty: Property<Boolean> =
@@ -72,8 +70,7 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
   public var csvEnabled: Boolean
     get() = csvEnabledProperty.get()
     set(value) {
-      csvEnabledProperty.set(value)
-      csvEnabledProperty.disallowChanges()
+      csvEnabledProperty.setDisallowChanges(value)
     }
 
   internal fun applyTo(project: Project) {

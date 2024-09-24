@@ -1,5 +1,6 @@
 package com.mapbox.maps.gradle.plugins.extensions
 
+import com.mapbox.maps.gradle.plugins.internal.setDisallowChanges
 import japicmp.filter.BehaviorFilter
 import japicmp.filter.ClassFilter
 import javassist.CtBehavior
@@ -30,8 +31,7 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
   public var currentVersion: String
     get() = currentVersionProperty.get()
     set(value) {
-      currentVersionProperty.set(value)
-      currentVersionProperty.disallowChanges()
+      currentVersionProperty.setDisallowChanges(value)
     }
 
   /**
@@ -41,8 +41,7 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
   public var previousVersion: String
     get() = previousVersionProperty.get()
     set(value) {
-      previousVersionProperty.set(value)
-      previousVersionProperty.disallowChanges()
+      previousVersionProperty.setDisallowChanges(value)
     }
 
   /**
@@ -52,8 +51,7 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
   public var artifactGroupId: String
     get() = artifactGroupIdProperty.get()
     set(value) {
-      artifactGroupIdProperty.set(value)
-      artifactGroupIdProperty.disallowChanges()
+      artifactGroupIdProperty.setDisallowChanges(value)
     }
 
   /**
@@ -63,8 +61,7 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
   public var artifactId: String
     get() = artifactIdProperty.get()
     set(value) {
-      artifactIdProperty.set(value)
-      artifactIdProperty.disallowChanges()
+      artifactIdProperty.setDisallowChanges(value)
     }
 
   /**
@@ -74,8 +71,7 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
   public var downloadToken: String
     get() = downloadTokenProperty.get()
     set(value) {
-      downloadTokenProperty.set(value)
-      downloadTokenProperty.disallowChanges()
+      downloadTokenProperty.setDisallowChanges(value)
     }
 
   internal fun applyTo(project: Project) {

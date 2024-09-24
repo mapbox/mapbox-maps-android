@@ -67,13 +67,17 @@ android {
     }
   }
 }
-val buildFromSource: String by project
+val buildGlNativeFromSource: Boolean = project.findProperty("buildFromSource")?.toString()?.toBoolean() ?: false
+val buildCommonFromSource: Boolean = project.findProperty("buildCommonFromSource")?.toString()?.toBoolean() ?: false
 
-if (!buildFromSource.toBoolean()) {
-  configurations.all {
-    resolutionStrategy {
-      force(libs.mapbox.coreCommon)
-    }
+mapboxLibrary {
+  glNative {
+    buildFromSource = buildGlNativeFromSource
+    configuration = "api"
+  }
+  common {
+    buildFromSource = buildCommonFromSource
+    configuration = "api"
   }
 }
 
@@ -82,17 +86,7 @@ dependencies {
   implementation(libs.mapbox.base)
   implementation(libs.androidx.annotations)
   api(libs.mapbox.gestures)
-  if (buildFromSource.toBoolean()) {
-    api(project(":maps-core"))
-    api(project(":common"))
-  } else {
-    if (libs.versions.mapboxGlNative.get().contains("-SNAPSHOT")) {
-      api(libs.mapbox.glNativeSnapshot)
-    } else {
-      api(libs.mapbox.glNative)
-    }
-    api(libs.mapbox.coreCommon)
-  }
+  // Note that GLNative and Common are brought through the `mapboxLibrary` plugin above
 
   compileOnly(libs.kotlinDataCompatAnnotation)
   ksp(libs.kotlinDataCompatProcessor)

@@ -2,6 +2,7 @@ package com.mapbox.maps.gradle.plugins.extensions
 
 import com.android.build.gradle.LibraryExtension
 import com.android.builder.model.SourceProvider
+import com.mapbox.maps.gradle.plugins.internal.setDisallowChanges
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -30,8 +31,7 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
   public var extraListOfSources: List<String>
     get() = extraListOfSourcesProperty.get()
     set(value) {
-      extraListOfSourcesProperty.set(value)
-      extraListOfSourcesProperty.disallowChanges()
+      extraListOfSourcesProperty.setDisallowChanges(value)
     }
 
   private val reportUndocumentedProperty: Property<Boolean> =
@@ -45,8 +45,7 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
   public var reportUndocumented: Boolean
     get() = reportUndocumentedProperty.get()
     set(value) {
-      reportUndocumentedProperty.set(value)
-      reportUndocumentedProperty.disallowChanges()
+      reportUndocumentedProperty.setDisallowChanges(value)
     }
 
   internal fun applyToRootProject(project: Project) {

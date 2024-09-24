@@ -2,9 +2,14 @@ package com.mapbox.maps.gradle.plugins.extensions
 
 import com.mapbox.AccessTokenExtension
 import org.gradle.api.Project
+import org.gradle.api.model.ObjectFactory
+import javax.inject.Inject
 
-public abstract class MapboxApplicationExtension {
-  internal fun applyTo(project: Project) {
+public abstract class MapboxApplicationExtension @Inject constructor(objects: ObjectFactory) :
+  MapboxDependenciesExtension(objects) {
+
+  override fun applyTo(project: Project) {
+    super.applyTo(project)
     project.applyRequiredPlugins()
     project.configureAccessTokenExtension()
   }
