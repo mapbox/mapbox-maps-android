@@ -24,22 +24,6 @@ proguard:
 fix:
 	./gradlew ktlintFormat
 
-.PHONY: sdkRegistryUpload
-sdkRegistryUpload:
-	./gradlew mapboxSDKRegistryUpload --no-parallel --no-daemon;
-
-.PHONY: sdkRegistryReleaseUpload
-sdkRegistryReleaseUpload:
-	./gradlew mapboxSDKRegistryReleaseUpload --no-parallel --no-daemon;
-
-.PHONY: sdkRegistryPublish
-sdkRegistryPublish:
-	./gradlew mapboxSDKRegistryPublishAll;
-
-.PHONY: sdkRegistryReleasePublish
-sdkRegistryReleasePublish:
-	./gradlew mapboxSDKRegistryReleasePublishAll;
-
 .PHONY: clean
 clean:
 	./gradlew clean

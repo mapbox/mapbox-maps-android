@@ -12,6 +12,16 @@ android {
   }
 }
 
+mapboxLibrary {
+  publish {
+    group = "com.mapbox.plugin"
+    artifactId = "maps-compass"
+    artifactTitle = "The compass module for the Mapbox Maps SDK"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-compass"
+  }
+}
+
 dependencies {
   implementation(project(":sdk-base"))
   implementation(libs.bundles.base.dependencies)
@@ -31,7 +41,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/pitest.gradle")
   from("$rootDir/gradle/detekt.gradle")

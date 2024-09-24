@@ -30,21 +30,13 @@ internal abstract class BaseDependency(
       } else {
         artifact
       }
-      val ndkMajor: String? = project.findProperty("ndkMajor")?.toString()
-      if (supportsNdkVariant && ndkMajor != null && project.findDefaultNdkMajor() != ndkMajor) {
-        artifactId += "-ndk$ndkMajor"
+      if (supportsNdkVariant) {
+        artifactId = project.appendNdkIfNeeded(artifactId)
       }
       val coordinates = "${group}:$artifactId:$version"
       project.dependencies.add(configuration, coordinates)
     }
   }
-
-  /**
-   * @return the `defaultNdkMajor` version defined `projects/common/platform/android/gradle/libs.versions.toml`.
-   */
-  private fun Project.findDefaultNdkMajor(): String? =
-    getVersionCatalog("commonLibs").findVersion("defaultNdkMajor").orElse(null)?.toString()
-
 }
 
 internal data class Dependency(

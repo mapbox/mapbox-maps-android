@@ -10,6 +10,8 @@ import me.champeau.gradle.japicmp.JapicmpTask
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
+import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.Exec
 import org.gradle.kotlin.dsl.property
 import org.gradle.language.base.plugins.LifecycleBasePlugin
@@ -81,6 +83,7 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
 
   private fun Project.applyRequiredPlugins() {
     plugins.apply("me.champeau.gradle.japicmp")
+    plugins.apply("maven-publish")
   }
 
   private fun Project.configure() {
@@ -89,11 +92,14 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
       Files.createDirectories(workingDir.get().asFile.toPath())
       workingDir(workingDir)
 
+      val publishing = project.extensions.getByType(PublishingExtension::class.java)
+      val releasePublication = publishing.publications.named("release").get() as MavenPublication
+
       val versionToFetch = if (previousVersionProperty.isPresent) {
         previousVersionProperty.get()
       } else {
         val currentVersion =
-          currentVersionProperty.getOrElse(project.property("versionName") as String)
+          currentVersionProperty.getOrElse(releasePublication.version as String)
         val (majorStr, minorStr, patchStr) = semverRegex.find(currentVersion)!!.destructured
         var major = majorStr.toInt()
         var minor = minorStr.toInt()
@@ -108,10 +114,11 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
 
         "$major.$minor.$patch"
       }
-      val artifactGroupId =
-        artifactGroupIdProperty.getOrElse(project.property("mapboxArtifactGroupId") as String)
+
+
+      val artifactGroupId = artifactGroupIdProperty.getOrElse(releasePublication.groupId)
       val artifactPath = artifactGroupId.replace('.', '/')
-      val artifactId = artifactIdProperty.getOrElse(project.property("mapboxArtifactId") as String)
+      val artifactId = artifactIdProperty.getOrElse(releasePublication.artifactId)
       // https://api.mapbox.com/downloads/v2/releases/maven/com/mapbox/maps/base/11.0.0/base-11.0.0.aar
       val url =
         "https://api.mapbox.com/downloads/v2/releases/maven/${artifactPath}/${artifactId}/${versionToFetch}/${artifactId}-${versionToFetch}.aar"

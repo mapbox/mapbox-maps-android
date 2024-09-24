@@ -26,6 +26,13 @@ mapboxLibrary {
       reportUndocumented = false
     }
   }
+  publish {
+    group = "com.mapbox.maps"
+    artifactId = "android"
+    artifactTitle = "Mapbox Maps SDK"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android"
+  }
 }
 
 android {
@@ -105,7 +112,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
