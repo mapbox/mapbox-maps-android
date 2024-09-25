@@ -9,7 +9,7 @@ import java.util.Objects
  * Refer to static [create] method to create an instance of [FeatureStateKey].
  */
 @MapboxExperimental
-open class FeatureStateKey<FS : FeatureState> internal constructor(
+open class FeatureStateKey internal constructor(
   /**
    * The feature state key to remove from the feature.
    */
@@ -22,7 +22,7 @@ open class FeatureStateKey<FS : FeatureState> internal constructor(
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
 
-    other as FeatureStateKey<*>
+    other as FeatureStateKey
 
     return key == other.key
   }
@@ -42,6 +42,6 @@ open class FeatureStateKey<FS : FeatureState> internal constructor(
      * Create an instance of [FeatureStateKey] to be passed to `removeFeatureState`.
      */
     @JvmStatic
-    fun create(key: String): FeatureStateKey<FeatureState> = FeatureStateKey(key)
+    fun create(key: String): FeatureStateKey = FeatureStateKey(key)
   }
 }

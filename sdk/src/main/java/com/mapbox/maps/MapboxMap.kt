@@ -2541,11 +2541,11 @@ class MapboxMap :
    */
   @MapboxExperimental
   @JvmOverloads
-  fun <FS, FSK> removeFeatureState(
+  fun <FS : FeatureState, FSK : FeatureStateKey> removeFeatureState(
     featuresetFeature: FeaturesetFeature<FS>,
     stateKey: FSK? = null,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
-  ): Cancelable where FS : FeatureState, FSK : FeatureStateKey<FS> {
+  ): Cancelable {
     checkNativeMap("removeFeatureState")
     return featuresetFeature.id?.let { id ->
       nativeMap.removeFeatureState(
@@ -2582,12 +2582,12 @@ class MapboxMap :
   @MapboxExperimental
   @MapboxDelicateApi
   @JvmOverloads
-  fun <FS, FSK> removeFeatureState(
+  fun <FS : FeatureState, FSK : FeatureStateKey> removeFeatureState(
     descriptor: TypedFeaturesetDescriptor<FS, *>,
     id: FeaturesetFeatureId,
     stateKey: FSK? = null,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { },
-  ): Cancelable where FS : FeatureState, FSK : FeatureStateKey<FS> {
+  ): Cancelable {
     checkNativeMap("removeFeatureState")
     return nativeMap.removeFeatureState(
       descriptor.toFeaturesetDescriptor(),

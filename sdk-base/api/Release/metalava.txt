@@ -734,15 +734,15 @@ package com.mapbox.maps.interactions {
     method public void onFeatureState(FS state);
   }
 
-  @com.mapbox.maps.MapboxExperimental public class FeatureStateKey<FS extends com.mapbox.maps.interactions.FeatureState> {
-    method public static final com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.FeatureState> create(String key);
+  @com.mapbox.maps.MapboxExperimental public class FeatureStateKey {
+    method public static final com.mapbox.maps.interactions.FeatureStateKey create(String key);
     method public final String getKey();
     property public final String key;
     field public static final com.mapbox.maps.interactions.FeatureStateKey.Companion Companion;
   }
 
   public static final class FeatureStateKey.Companion {
-    method public com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.FeatureState> create(String key);
+    method public com.mapbox.maps.interactions.FeatureStateKey create(String key);
   }
 
   public final class FeatureStateKt {

@@ -47,10 +47,10 @@ public sealed interface FeaturesetFeatureScope {
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
   @MapboxExperimental
-  public fun <FS, FSK> FeaturesetFeature<FS>.removeFeatureState(
+  public fun <FS : FeatureState, FSK : FeatureStateKey> FeaturesetFeature<FS>.removeFeatureState(
     stateKey: FSK? = null,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
-  ): Cancelable where FS : FeatureState, FSK : FeatureStateKey<FS>
+  ): Cancelable
 
   /**
    * Reset all the feature states within a style source.
@@ -87,10 +87,10 @@ internal class FeaturesetFeatureScopeImpl internal constructor(private val mapbo
   }
 
   @MapboxExperimental
-  override fun <FS, FSK> FeaturesetFeature<FS>.removeFeatureState(
+  override fun <FS : FeatureState, FSK : FeatureStateKey> FeaturesetFeature<FS>.removeFeatureState(
     stateKey: FSK?,
     callback: FeatureStateOperationCallback
-  ): Cancelable where FS : FeatureState, FSK : FeatureStateKey<FS> {
+  ): Cancelable {
     return mapboxMap.removeFeatureState(
       featuresetFeature = this,
       stateKey = stateKey,
