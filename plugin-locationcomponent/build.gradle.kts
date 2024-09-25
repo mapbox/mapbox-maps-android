@@ -13,6 +13,15 @@ android {
   }
 }
 
+mapboxLibrary {
+  publish {
+    group = "com.mapbox.plugin"
+    artifactId = "maps-locationcomponent"
+    artifactTitle = "The location component module for the Mapbox Maps SDK for Android"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-locationcomponent"
+  }
+}
 dependencies {
   implementation(project(":sdk-base"))
   implementation(libs.bundles.base.dependencies)
@@ -32,7 +41,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

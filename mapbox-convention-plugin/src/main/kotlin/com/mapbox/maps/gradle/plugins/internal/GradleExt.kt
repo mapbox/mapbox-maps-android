@@ -11,16 +11,14 @@ import org.gradle.kotlin.dsl.getByType
 internal inline fun <reified T : Any> ObjectFactory.newInstance(vararg parameters: Any): T =
   newInstance(T::class.java, *parameters)
 
-internal fun Project.getVersionsCatalog(name: String = "libs"): VersionCatalog {
-  return getVersionsCatalogOrNull(name) ?: error("No versions catalog found!")
+internal fun Project.getVersionCatalog(name: String = "libs"): VersionCatalog {
+  return getVersionCatalogOrNull(name) ?: error("No versions catalog found!")
 }
 
-internal fun Project.getVersionsCatalogOrNull(name: String = "libs"): VersionCatalog? {
-  return try {
-    project.extensions.getByType<VersionCatalogsExtension>().named(name)
-  } catch (ignored: Exception) {
-    null
-  }
+internal fun Project.getVersionCatalogOrNull(name: String = "libs"): VersionCatalog? = try {
+  project.extensions.getByType<VersionCatalogsExtension>().named(name)
+} catch (ignored: Exception) {
+  null
 }
 
 internal fun <T> Property<T>.setDisallowChanges(value: T?) {
@@ -33,5 +31,14 @@ internal fun <T> ListProperty<T>.setDisallowChanges(value: List<T>?) {
   disallowChanges()
 }
 
-internal fun Project.getVersionCatalog(name: String = "libs") =
-  extensions.getByType(VersionCatalogsExtension::class.java).named(name)
+/**
+ * Checks if the `ndkMajor` property is present in the project and appends it to the given [value].
+ */
+internal fun Project.appendNdkIfNeeded(value: String): String {
+  val ndkMajor: String? = project.findProperty("ndkMajor")?.toString()
+  return if (ndkMajor != null) {
+    "$value-ndk$ndkMajor"
+  } else {
+    value
+  }
+}

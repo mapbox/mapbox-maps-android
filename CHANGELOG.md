@@ -5,6 +5,10 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.7.0
+## Features ✨ and improvements 🏁
+* Publish Mapbox Maps Android artifacts using NDK 27 and [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes).
+  * The new artifacts are available by appending `-ndk27` to the artifact ID (for example, `com.mapbox.maps:android-ndk27:11.7.0`).
+
 ## Bug fixes 🐞
 * [compose] Fix `ViewAnnotation` size not being updated when content layout changes.
 

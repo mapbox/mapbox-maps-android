@@ -12,6 +12,16 @@ android {
   namespace = "com.mapbox.maps.extension.style"
 }
 
+mapboxLibrary {
+  publish {
+    group = "com.mapbox.extension"
+    artifactId = "maps-style"
+    artifactTitle = "The style extension for the Mapbox Maps SDK for Android"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-style"
+  }
+}
+
 dependencies {
   implementation(project(":sdk-base"))
   implementation(libs.mapbox.javaGeoJSON)
@@ -26,7 +36,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

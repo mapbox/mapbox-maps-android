@@ -79,6 +79,13 @@ mapboxLibrary {
     buildFromSource = buildCommonFromSource
     configuration = "api"
   }
+  publish {
+    group = "com.mapbox.maps"
+    artifactId = "base"
+    artifactTitle = "Mapbox Maps SDK Base"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-base"
+  }
 }
 
 dependencies {
@@ -98,7 +105,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

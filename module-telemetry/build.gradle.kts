@@ -13,6 +13,16 @@ android {
   }
 }
 
+mapboxLibrary {
+  publish {
+    group = "com.mapbox.module"
+    artifactId = "maps-telemetry"
+    artifactTitle = "Telemetry for the Mapbox Maps SDK"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-telemetry"
+  }
+}
+
 dependencies {
   implementation(project(":sdk-base"))
   implementation(libs.mapbox.base)
@@ -29,7 +39,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

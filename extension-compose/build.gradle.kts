@@ -37,6 +37,14 @@ android {
 mapboxLibrary {
   // we skip verifying Java binary compatibility for Compose extension as it is pure Kotlin only
   jApiCmpEnabled = false
+
+  publish {
+    group = "com.mapbox.extension"
+    artifactId = "maps-compose"
+    artifactTitle = "The Jetpack Compose extension for the Mapbox Maps SDK for Android"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-compose"
+  }
 }
 
 
@@ -73,7 +81,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

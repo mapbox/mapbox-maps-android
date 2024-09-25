@@ -17,12 +17,19 @@ android {
   }
 }
 
-mapboxLibrary{
-  jApiCmp{
+mapboxLibrary {
+  jApiCmp {
     // The first release for extension-androidauto was 11.1.0 so we force it if the current one is "11.1.0-SNAPSHOT"
     if (project.hasProperty("VERSION_NAME") && project.property("VERSION_NAME") == "11.1.0-SNAPSHOT") {
       previousVersion = "11.1.0"
     }
+  }
+  publish {
+    group = "com.mapbox.extension"
+    artifactId = "maps-androidauto"
+    artifactTitle = "The android auto extension for the Mapbox Maps SDK for Android"
+    artifactDescription = artifactTitle
+    sdkName = "mobile-maps-android-androidauto"
   }
 }
 
@@ -41,7 +48,6 @@ dependencies {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

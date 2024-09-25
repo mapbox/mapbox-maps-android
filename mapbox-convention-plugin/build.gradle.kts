@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.`kotlin-dsl`
-
 repositories {
   google()
   mavenCentral()
@@ -59,4 +57,5 @@ dependencies {
   implementation(libs.plugin.japicmp)
   implementation(libs.plugin.jacoco)
   implementation(libs.plugin.mapbox.accessToken)
+  implementation(libs.plugin.mapbox.sdkRegistry)
 }

@@ -1,7 +1,7 @@
 package com.mapbox.maps.gradle.plugins.extensions
 
 import com.android.build.gradle.LibraryExtension
-import com.mapbox.maps.gradle.plugins.internal.getVersionsCatalog
+import com.mapbox.maps.gradle.plugins.internal.getVersionCatalog
 import com.mapbox.maps.gradle.plugins.internal.newInstance
 import com.mapbox.maps.gradle.plugins.internal.setDisallowChanges
 import org.gradle.api.Action
@@ -28,6 +28,7 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
   private val dokka = objects.newInstance<MapboxDokkaExtension>()
   private val jApiCmp = objects.newInstance<MapboxJApiCmpExtension>()
   private val jacoco = objects.newInstance<MapboxJacocoExtension>()
+  private val publishLibrary = objects.newInstance<MapboxPublishLibraryExtension>()
 
   /** Configure the inner DSL object, [MapboxDokkaExtension]. */
   public fun dokka(action: Action<MapboxDokkaExtension>) {
@@ -44,10 +45,16 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
     action.execute(jacoco)
   }
 
+  /** Configure the inner DSL object, [MapboxJacocoExtension]. */
+  public fun publish(action: Action<MapboxPublishLibraryExtension>) {
+    publishLibrary.enabled = true
+    action.execute(publishLibrary)
+  }
+
   override fun applyTo(project: Project) {
-    super.applyTo(project)
     project.applyRequiredPlugins()
-    val libraryExtension = project.extensions.getByName("android") as LibraryExtension
+    val libraryExtension = project.extensions.getByType(LibraryExtension::class.java)
+    super.applyTo(project)
     libraryExtension.configurePublicResource(project)
     libraryExtension.setMinCompileSdkVersion(project)
     dokka.applyTo(project, libraryExtension)
@@ -58,6 +65,7 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
       }
     }
     jacoco.applyTo(project)
+    publishLibrary.applyTo(project)
   }
 
   private fun Project.applyRequiredPlugins() {
@@ -83,7 +91,7 @@ private fun LibraryExtension.configurePublicResource(project: Project) {
 
 private fun LibraryExtension.setMinCompileSdkVersion(project: Project) {
   val androidMinCompileSdkVersion =
-    project.getVersionsCatalog().findVersion("androidMinCompileSdkVersion")
+    project.getVersionCatalog().findVersion("androidMinCompileSdkVersion")
   if (androidMinCompileSdkVersion.isPresent) {
     val minCompileSdkVersion = androidMinCompileSdkVersion.get().requiredVersion.toInt()
     project.logger.info("Set minCompileSdkVersion=$minCompileSdkVersion")
