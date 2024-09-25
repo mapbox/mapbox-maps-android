@@ -5,11 +5,77 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 # 11.7.0
 ## Features ✨ and improvements 🏁
+* [compose] Introduce `PointAnnotationState.iconOcclusionOpacity`, `PointAnnotationState.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
+* [compose] Remove `MapboxExperimental` from `PolylineAnnotationGroupState.lineOcclusionOpacity`, `PointAnnotationGroupState.iconOcclusionOpacity`, `PointAnnotationGroupState.textOcclusionOpacity`.
+* [compose] Expose data-driven properties on `AnnotationGroupState`s. Now it's possible to set data-driven properties globally on `AnnotationGroupState` and specify per-annotation overrides in `AnnotationState`. Setting global property value on `AnnotationGroupState` could introduce performance improvements when the amount of annotations is large.
+* [compose] Remove experimental `ModelLayerState.modelFrontCutoff`.
+* [compose] Introduce experimental `GeoJsonSourceState.autoMaxZoom` property to resolve rendering artifacts for features that use wide blur (e.g. fill extrusion ground flood light or circle layer).
+* [compose] Introduce experimental `ClipLayerState.clipLayerScope` API to remove data from certain style fragments only.
+* [compose] Introduce experimental `PointAnnotationState.symbolZOffset` property.
+* [compose] Introduce experimental `PointAnnotationGroupState.symbolElevationReference` property.
+* [compose] Introduce experimental `SymbolLayerState.symbolElevationReference` and `SymbolLayerState.symbolZOffset` properties.
+* [compose] Introduce experimental `SymbolLayerState.symbolZOffsetTransition` API.
+* [compose] Introduce experimental `StyleInteractionsState`, `StyleImportsInteractionsState`, `LayerInteractionsState` to handle interactions to the style, style imports and layers.
+* [compose] Introduce experimental `StyleImport` composable functions to accept `StyleImportsInteractionsState` as an parameter.
+* [compose] Introduce experimental `LayerInteractionsState` as part of `*LayerState` of layers that's driven by a source.
+* [compose] Introduce experimental `MapState.getFeatureState`, `MapState.setFeatureState`, `MapState.removeFeatureState` and `MapState.resetFeatureState` APIs.
+* [compose] Introduce `StyleState` that groups `StyleImportsConfig`, `StyleInteractionsState`, `Projection`, `AtmosphereState`, `TerrainState`, `LightsState`, `styleTransition`.
+* [compose] Introduce `GenericStyle` composable function that uses `StyleState` as parameter and deprecate `GenericStyle` that takes individual light/terrain/projection states.
+* [compose] Introduce `MapStyle` composable function that uses `StyleState` as parameter and deprecate `MapStyle` that takes individual light/terrain/projection states.
+* [compose] Introduce `StyleImportState` that groups `ImportConfigs` and `StyleImportInteractionsState`.
+* [compose] Introduce `StyleImport` composable function that uses `StyleImportState` as parameter and deprecate `StyleImport` that takes `ImportConfigs`.
 * Publish Mapbox Maps Android artifacts using NDK 27 and [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes).
   * The new artifacts are available by appending `-ndk27` to the artifact ID (for example, `com.mapbox.maps:android-ndk27:11.7.0`).
+* Introduce experimental interactive feature elements and related APIs. Those APIs provide the convenient way to add the click / long click listener to layer / featureset / map itself with `MapboxMap.addInteraction`.
+* Expose `lineTrimColor` and `lineTrimFadeRange` on `LineLayer` which allow to set custom color for trimmed line and fade effect for trim. Update navigation example to use those properties.
+* Introduce `PointAnnotation.iconOcclusionOpacity`, `PointAnnotation.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
+* Remove `MapboxExperimental` from `SymbolLayer.iconOcclusionOpacity`, `SymbolLayer.textOcclusionOpacity` and these properties are now supported on global zoom levels with default value changed to `0`.
+* Remove `MapboxExperimental` from `PolylineAnnotationManager.lineOcclusionOpacity`, `PointAnnotationManager.iconOcclusionOpacity`, `PointAnnotationManager.textOcclusionOpacity`.
+* Expose data-driven properties on `AnnotationManager`s. Now it's possible to set data-driven properties globally on `AnnotationManager` and specify per-annotation overrides. Setting global property value on `AnnotationManager` could introduce performance improvements when the amount of annotations is large.
+* Remove experimental `ModelLayer.modelFrontCutoff`.
+* Introduce experimental `GeoJsonSource.autoMaxZoom` property to resolve rendering artifacts for features that use wide blur (e.g. fill extrusion ground flood light or circle layer).
+* Introduce static `HttpServiceFactory.setCancellationCallback` API.
+* Reduce style parsing time.
+* Enable multiple meta tiling schemes for composited sources.
+* Expose experimental `ClipLayer.clipLayerScope` API to remove data from certain style fragments only.
+* Expose experimental `PointAnnotation.symbolZOffset` property.
+* Expose experimental `PointAnnotationManager.symbolElevationReference` property.
+* Expose experimental `SymbolLayer.symbolElevationReference` and `SymbolLayer.symbolZOffset` properties.
+* Expose experimental `SymbolLayer.symbolZOffsetTransition` API.
+* Introduce experimental `MapboxMap.queryRenderedFeature` allowing to get an `InteractiveFeature` for given geometry, `FeaturesetHolder` and optional filter.
+* Introduce experimental `FillExtrusionLayer.fillExtrusionLineWidth` and `FillExtrusionLayerState.fillExtrusionLineWidth` in Compose allowing to switch fill extrusion rendering into wall rendering mode. Use this property to render the feature with the given width over the outlines of the geometry.
+* Add missing experimental annotation to `PointAnnotationManager.symbolZOffset` and `PolylineAnnotationManager.lineZOffset`
+* Deprecate `PolylineAnnotationManager.lineTrimColor` in favour of `PolylineAnnotationManager.lineTrimColorString`/`PolylineAnnotationManager.lineTrimColorInt`.
 
 ## Bug fixes 🐞
 * [compose] Fix `ViewAnnotation` size not being updated when content layout changes.
+* [compose] Fix `UnsatisfiedLinkError` issue when rendering preview.
+* Return parsing errors if runtime added style import JSON is not valid.
+* Fix color theme change before the tiles are updated.
+* Fix annotation issues with click / long click callback ordering and dragging. Now the order of triggering the callbacks / dragging is determined: from top-level rendered annotation to bottom-level one.
+* Fix `OnAnnotationInteractionListener` not triggered if any `OnAnnotationClickListener.onAnnotationClick` returns true.
+* Fix incorrect layer updates when using `ClipLayer.clipLayerTypes` or `ClipLayerState.clipLayerTypes` in Compose.
+* Fix shadow rendering issues when using `FillExtrusionLayer.fillExtrusionCutoffFadeRange` or `FillExtrusionLayerState.fillExtrusionCutoffFadeRange`.
+* Significantly reduce the rate at which raster-particle trails cross each other.
+* Fix normal offset to improve shadow accuracy.
+* Fix data synchronization between renderer and the main threads on map resize.
+* Regenerate location indicator mipmap on image change.
+* Fix landmark visibility issues near tile borders.
+* Fix elevated line depth occlusion issue in 2D mode.
+* Fix Dynamic View Annotation position update for annotated geojson feature with `allowZElevate` to be true.
+* Fix race condition between `setFeatureState` and `removeFeatureState` / `resetFeatureStates` resulting in feature state not being applied or removed.
+* Fix a crash when calling `CameraAnimationsPlugin.easeTo()` with empty camera options or `CameraAnimationsPlugin.playAnimatorsSequentially()` / `CameraAnimationsPlugin.playAnimatorsTogether()` with an empty array of animators.
+* Fix ongoing animations being canceled when `CameraAnimationsPlugin.flyTo()` with empty camera options is called.
+* Fix simultaneous scale and rotation gestures not working when the first registered rotation is a scale one.
+* Fix crash on Android tilestore where null data was returned.
+* Fix the incorrect behaviour when using `SymbolLayer.symbolZOrder` property.
+* Fix retrieval of tilesets for 3d tiles in offline mode.
+* Fix rendering errors of patterns on high zoom levels.
+* Fix a bug where style changes weren't reflected after the source layer of a layer was changed.
+
+## Dependencies
+* Update gl-native to v11.7.0 and common to v24.7.0.
+
 
 # 11.7.0-rc.1 September 16, 2024
 ## Breaking changes ⚠️
