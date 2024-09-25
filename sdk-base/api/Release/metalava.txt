@@ -1,41 +1,41 @@
 // Signature format: 3.0
 package com.mapbox.maps {
 
-  @com.mapbox.maps.MapboxExperimental public final class ClickInteraction<T extends com.mapbox.maps.interactions.InteractiveFeature<?>> extends com.mapbox.maps.MapInteraction {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String featuresetId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String layerId, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String layerId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+  @com.mapbox.maps.MapboxExperimental public final class ClickInteraction<T extends com.mapbox.maps.interactions.FeaturesetFeature<?>> extends com.mapbox.maps.MapInteraction {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String id, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method @com.mapbox.maps.MapboxExperimental public static operator com.mapbox.maps.ClickInteraction map(kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     field public static final com.mapbox.maps.ClickInteraction.Companion Companion;
   }
 
   public static final class ClickInteraction.Companion {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String featuresetId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String layerId, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String layerId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String id, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method @com.mapbox.maps.MapboxExperimental public operator com.mapbox.maps.ClickInteraction map(kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
   }
 
-  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public final class DragInteraction<T extends com.mapbox.maps.interactions.InteractiveFeature<?>> extends com.mapbox.maps.MapInteraction {
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction featureset(String featuresetId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction layer(String layerId, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction layer(String layerId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public final class DragInteraction<T extends com.mapbox.maps.interactions.FeaturesetFeature<?>> extends com.mapbox.maps.MapInteraction {
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction featureset(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction layer(String id, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static com.mapbox.maps.MapInteraction layer(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
     field public static final com.mapbox.maps.DragInteraction.Companion Companion;
   }
 
   public static final class DragInteraction.Companion {
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction featureset(String featuresetId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction featureset(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) @kotlin.jvm.JvmSynthetic public operator com.mapbox.maps.DragInteraction! invoke(kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,? extends java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,? extends kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,? extends kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction layer(String layerId, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction layer(String layerId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction layer(String id, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public com.mapbox.maps.MapInteraction layer(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onDragBegin, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDrag, kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,kotlin.Unit> onDragEnd);
   }
 
   public final class ExtensionUtils {
@@ -59,22 +59,22 @@ package com.mapbox.maps {
     method public com.mapbox.maps.ImageHolder from(android.graphics.Bitmap bitmap);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class LongClickInteraction<T extends com.mapbox.maps.interactions.InteractiveFeature<?>> extends com.mapbox.maps.MapInteraction {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String featuresetId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String layerId, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String layerId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+  @com.mapbox.maps.MapboxExperimental public final class LongClickInteraction<T extends com.mapbox.maps.interactions.FeaturesetFeature<?>> extends com.mapbox.maps.MapInteraction {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction featureset(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String id, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction layer(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method @com.mapbox.maps.MapboxExperimental public static operator com.mapbox.maps.LongClickInteraction map(kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     field public static final com.mapbox.maps.LongClickInteraction.Companion Companion;
   }
 
   public static final class LongClickInteraction.Companion {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String featuresetId, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String featuresetId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String layerId, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String layerId, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String id, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction featureset(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String id, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapInteraction layer(String id, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method @com.mapbox.maps.MapboxExperimental public operator com.mapbox.maps.LongClickInteraction map(kotlin.jvm.functions.Function1<? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
   }
 
@@ -719,64 +719,81 @@ package com.mapbox.maps.interactions {
     method public final String? getStringState(String stateName);
   }
 
-  public static final class FeatureState.Builder {
+  public static class FeatureState.Builder {
     ctor public FeatureState.Builder();
-    method public com.mapbox.maps.interactions.FeatureState.Builder addBooleanState(String stateName, boolean value);
-    method public com.mapbox.maps.interactions.FeatureState.Builder addDoubleState(String stateName, double value);
-    method public com.mapbox.maps.interactions.FeatureState.Builder addLongState(String stateName, long value);
-    method public com.mapbox.maps.interactions.FeatureState.Builder addStringState(String stateName, String value);
+    method public final com.mapbox.maps.interactions.FeatureState.Builder addBooleanState(String stateName, boolean value);
+    method public final com.mapbox.maps.interactions.FeatureState.Builder addDoubleState(String stateName, double value);
+    method public final com.mapbox.maps.interactions.FeatureState.Builder addLongState(String stateName, long value);
+    method public final com.mapbox.maps.interactions.FeatureState.Builder addStringState(String stateName, String value);
     method public com.mapbox.maps.interactions.FeatureState build();
+    method protected final java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> getRawStateMap();
+    property protected final java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> rawStateMap;
   }
 
   @com.mapbox.maps.MapboxExperimental public fun interface FeatureStateCallback<FS extends com.mapbox.maps.interactions.FeatureState> {
     method public void onFeatureState(FS state);
   }
 
+  @com.mapbox.maps.MapboxExperimental public class FeatureStateKey<FS extends com.mapbox.maps.interactions.FeatureState> {
+    method public static final com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.FeatureState> create(String key);
+    method public final String getKey();
+    property public final String key;
+    field public static final com.mapbox.maps.interactions.FeatureStateKey.Companion Companion;
+  }
+
+  public static final class FeatureStateKey.Companion {
+    method public com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.FeatureState> create(String key);
+  }
+
   public final class FeatureStateKt {
     method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.FeatureState! FeatureState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.FeatureState.Builder,? extends kotlin.Unit> init);
   }
 
-  @com.mapbox.maps.MapboxExperimental public abstract class FeaturesetHolder<FS extends com.mapbox.maps.interactions.FeatureState> {
+  @com.mapbox.maps.MapboxExperimental public class FeaturesetFeature<FS extends com.mapbox.maps.interactions.FeatureState> {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public FeaturesetFeature(com.mapbox.maps.FeaturesetFeatureId? id, com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, FS state, com.mapbox.geojson.Feature originalFeature);
+    method public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> getDescriptor();
+    method public final com.mapbox.geojson.Geometry getGeometry();
+    method public final com.mapbox.maps.FeaturesetFeatureId? getId();
+    method protected final com.mapbox.geojson.Feature getOriginalFeature();
+    method public final org.json.JSONObject getProperties();
+    method public final FS getState();
+    property public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor;
+    property public final com.mapbox.geojson.Geometry geometry;
+    property public final com.mapbox.maps.FeaturesetFeatureId? id;
+    property protected final com.mapbox.geojson.Feature originalFeature;
+    property public final org.json.JSONObject properties;
+    property public final FS state;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public fun interface QueryRenderedFeaturesetFeaturesCallback<FF extends com.mapbox.maps.interactions.FeaturesetFeature<?>> {
+    method public void onQueryRenderedFeatures(java.util.List<? extends FF> featuresetFeatures);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public abstract class TypedFeaturesetDescriptor<FS extends com.mapbox.maps.interactions.FeatureState, FF extends com.mapbox.maps.interactions.FeaturesetFeature<FS>> {
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract FS getFeatureState(com.mapbox.bindgen.Value rawState);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract com.mapbox.maps.interactions.InteractiveFeature<FS> getInteractiveFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract FF getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
   }
 
-  @com.mapbox.maps.MapboxExperimental public static final class FeaturesetHolder.Featureset extends com.mapbox.maps.interactions.FeaturesetHolder<com.mapbox.maps.interactions.FeatureState> {
-    ctor public FeaturesetHolder.Featureset(String featuresetId, String? importId = null);
-    ctor public FeaturesetHolder.Featureset(String featuresetId);
+  @com.mapbox.maps.MapboxExperimental public static final class TypedFeaturesetDescriptor.Featureset extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.FeatureState,com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>> {
+    ctor public TypedFeaturesetDescriptor.Featureset(String featuresetId, String? importId = null);
+    ctor public TypedFeaturesetDescriptor.Featureset(String featuresetId);
     method public com.mapbox.maps.interactions.FeatureState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState> getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
     method public String getFeaturesetId();
     method public String? getImportId();
-    method public com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState> getInteractiveFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
     method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
     property public final String featuresetId;
     property public final String? importId;
   }
 
-  @com.mapbox.maps.MapboxExperimental public static final class FeaturesetHolder.Layer extends com.mapbox.maps.interactions.FeaturesetHolder<com.mapbox.maps.interactions.FeatureState> {
-    ctor public FeaturesetHolder.Layer(String layerId);
+  @com.mapbox.maps.MapboxExperimental public static final class TypedFeaturesetDescriptor.Layer extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.FeatureState,com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>> {
+    ctor public TypedFeaturesetDescriptor.Layer(String layerId);
     method public com.mapbox.maps.interactions.FeatureState getFeatureState(com.mapbox.bindgen.Value rawState);
-    method public com.mapbox.maps.interactions.InteractiveFeature<com.mapbox.maps.interactions.FeatureState> getInteractiveFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState> getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
     method public String getLayerId();
     method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
     property public final String layerId;
-  }
-
-  @com.mapbox.maps.MapboxExperimental public final class InteractiveFeature<FS extends com.mapbox.maps.interactions.FeatureState> {
-    ctor public InteractiveFeature(com.mapbox.maps.interactions.FeaturesetHolder<FS> featuresetHolder, com.mapbox.geojson.Feature feature, String? featureNamespace, FS state);
-    method public com.mapbox.geojson.Feature getFeature();
-    method public String? getFeatureNamespace();
-    method public com.mapbox.maps.interactions.FeaturesetHolder<FS> getFeaturesetHolder();
-    method public FS getState();
-    property public final com.mapbox.geojson.Feature feature;
-    property public final String? featureNamespace;
-    property public final com.mapbox.maps.interactions.FeaturesetHolder<FS> featuresetHolder;
-    property public final FS state;
-  }
-
-  @com.mapbox.maps.MapboxExperimental public fun interface QueryRenderedFeatureCallback<FS extends com.mapbox.maps.interactions.FeatureState> {
-    method public void onQueryRenderedFeature(com.mapbox.maps.interactions.InteractiveFeature<FS> interactiveFeature);
   }
 
 }

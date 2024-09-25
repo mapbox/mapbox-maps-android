@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 import com.mapbox.maps.logI
 import com.mapbox.maps.testapp.databinding.ActivityStandardStyleBinding
 
@@ -76,11 +76,11 @@ class StandardStyleActivity : AppCompatActivity() {
   private fun addOnClickListeners() {
     binding.mapView.mapboxMap.addInteraction(
       ClickInteraction.featureset(
-        featuresetId = "hotels-price"
+        id = "hotels-price"
       ) { selectedPriceLabel, _ ->
         hotelPriceAlertBar = Snackbar.make(
           binding.mapView,
-          "Last selected hotel price: ${selectedPriceLabel.feature.getNumberProperty("price")}",
+          "Last selected hotel price: ${selectedPriceLabel.properties.getString("price")}",
           Snackbar.LENGTH_INDEFINITE
         ).apply {
           show()
@@ -91,11 +91,7 @@ class StandardStyleActivity : AppCompatActivity() {
             addBooleanState("active", true)
           }
         ) {
-          mapboxMap.getFeatureState(
-            featuresetHolder = selectedPriceLabel.featuresetHolder,
-            featureId = selectedPriceLabel.feature.id()!!,
-            featureNamespace = selectedPriceLabel.featureNamespace
-          ) {
+          mapboxMap.getFeatureState(selectedPriceLabel) {
             logI(TAG, "getFeatureState returned state: ${it.asJsonString()}")
           }
         }
@@ -109,7 +105,7 @@ class StandardStyleActivity : AppCompatActivity() {
       // handle click interactions on the map itself (outside of hotels' price POIs)
       ClickInteraction { _ ->
         hotelPriceAlertBar?.dismiss()
-        mapboxMap.resetFeatureStates(FeaturesetHolder.Featureset(featuresetId = "hotels-price"))
+        mapboxMap.resetFeatureStates(TypedFeaturesetDescriptor.Featureset(featuresetId = "hotels-price"))
         return@ClickInteraction true
       }
     )

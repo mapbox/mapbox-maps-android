@@ -13,10 +13,10 @@ import com.mapbox.maps.MapInteraction
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions
-import com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope
+import com.mapbox.maps.extension.compose.style.interactions.FeaturesetFeatureScope
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
  * Convenient method to create a [LayerInteractionsState] and remember it with the init block.
@@ -75,14 +75,14 @@ public class LayerInteractionsState : BasicStyleInteractions() {
   @MapboxExperimental
   public fun onClicked(
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): LayerInteractionsState = apply {
     styleLayerEntries.add { layerId ->
       ClickInteraction.layer(
-        layerId = layerId,
+        id = layerId,
         filter = filter,
         onClick = { feature, context ->
-          interactiveFeatureScope?.onClick(feature, context) ?: false
+          featuresetFeatureScope?.onClick(feature, context) ?: false
         }
       )
     }
@@ -99,14 +99,14 @@ public class LayerInteractionsState : BasicStyleInteractions() {
   @MapboxExperimental
   public fun onLongClicked(
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): LayerInteractionsState = apply {
     styleLayerEntries.add { layerId ->
       LongClickInteraction.layer(
-        layerId = layerId,
+        id = layerId,
         filter = filter,
         onLongClick = { feature, context ->
-          interactiveFeatureScope?.onLongClick(feature, context) ?: false
+          featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }
       )
     }

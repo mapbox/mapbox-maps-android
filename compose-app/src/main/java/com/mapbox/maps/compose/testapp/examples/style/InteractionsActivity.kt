@@ -32,7 +32,8 @@ import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.rememberStyleState
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeatureStateKey
+import com.mapbox.maps.interactions.FeaturesetFeature
 
 public class InteractionsActivity : ComponentActivity() {
 
@@ -43,7 +44,7 @@ public class InteractionsActivity : ComponentActivity() {
     setContent {
 
       var selectedPriceLabel by remember {
-        mutableStateOf<InteractiveFeature<FeatureState>?>(null)
+        mutableStateOf<FeaturesetFeature<FeatureState>?>(null)
       }
 
       var isActive: Boolean? by remember {
@@ -73,9 +74,9 @@ public class InteractionsActivity : ComponentActivity() {
                   style = "asset://fragment-realestate-NY.json",
                   styleState = rememberStyleState {
                     styleInteractionsState
-                      .onFeaturesetClicked(featuresetId = "hotels-price") { priceLabel, _ ->
-                        if (selectedPriceLabel?.feature?.id() != priceLabel.feature.id()) {
-                          selectedPriceLabel?.removeFeatureState("active")
+                      .onFeaturesetClicked(id = "hotels-price") { priceLabel, _ ->
+                        if (selectedPriceLabel?.id != priceLabel.id) {
+                          selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
                           selectedPriceLabel = priceLabel
                         }
                         val newActiveState = priceLabel.state.getBooleanState("active")?.not() ?: true
@@ -89,7 +90,7 @@ public class InteractionsActivity : ComponentActivity() {
                         return@onFeaturesetClicked true
                       }
                       .onMapClicked {
-                        selectedPriceLabel?.removeFeatureState("active")
+                        selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
                         selectedPriceLabel = null
                         isActive = null
                         true
@@ -109,7 +110,7 @@ public class InteractionsActivity : ComponentActivity() {
                     .padding(10.dp),
                 textAlign = TextAlign.Center,
                 color = Color.White,
-                text = "Feature with id: ${actualSelectedPriceLabel.feature.id()!!}; active: $isActive",
+                text = "Feature with id: ${actualSelectedPriceLabel.id!!}; active: $isActive",
               )
             }
           }

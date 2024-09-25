@@ -13,7 +13,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
  * Base class for Interactions, it handles the interaction entries that would be added to the map upon bind.
@@ -25,9 +25,9 @@ public abstract class BasicStyleInteractions {
   // map interaction builder entries that will be built and added to the map when the state is bind to the map.
   private val entries: MutableList<(String?) -> MapInteraction> = mutableListOf()
 
-  // the interactive feature scope is created on bind to the map, and it provides extension functions to InteractiveFeature
-  // so that user can update feature state directly on the InteractiveFeature in this scope.
-  protected var interactiveFeatureScope: InteractiveFeatureScope? = null
+  // the featureset feature scope is created on bind to the map, and it provides extension functions to FeaturesetFeature
+  // so that user can update feature state directly on the FeaturesetFeature in this scope.
+  protected var featuresetFeatureScope: FeaturesetFeatureScope? = null
 
   // Update interactions with the import id from the context
   @Composable
@@ -46,14 +46,14 @@ public abstract class BasicStyleInteractions {
     }
   }
 
-  // Bind the interactions to the map, initialising the interactive features scope, and add cached interactions to the map.
+  // Bind the interactions to the map, initialising the featureset features scope, and add cached interactions to the map.
   @Composable
   protected fun BindToMap(map: MapboxMap, importId: String? = null) {
     UpdateInteractions(map = map, importId)
     DisposableEffect(Unit) {
-      interactiveFeatureScope = InteractiveFeatureScopeImpl(map)
+      featuresetFeatureScope = FeaturesetFeatureScopeImpl(map)
       onDispose {
-        interactiveFeatureScope = null
+        featuresetFeatureScope = null
       }
     }
   }
@@ -72,15 +72,15 @@ public abstract class BasicStyleInteractions {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add { import ->
       ClickInteraction.featureset(
-        featuresetId = featuresetId,
+        id = featuresetId,
         importId = importId ?: import,
         filter = filter,
         onClick = { feature, context ->
-          interactiveFeatureScope?.onClick(feature, context) ?: false
+          featuresetFeatureScope?.onClick(feature, context) ?: false
         }
       )
     }
@@ -98,14 +98,14 @@ public abstract class BasicStyleInteractions {
   protected fun clickInteractionLayer(
     layerId: String,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add {
       ClickInteraction.layer(
-        layerId = layerId,
+        id = layerId,
         filter = filter,
         onClick = { feature, context ->
-          interactiveFeatureScope?.onClick(feature, context) ?: false
+          featuresetFeatureScope?.onClick(feature, context) ?: false
         }
       )
     }
@@ -118,10 +118,10 @@ public abstract class BasicStyleInteractions {
    *
    * @param onClick callback triggered when map surface is clicked.
    */
-  protected fun clickInteractionMap(onClick: InteractiveFeatureScope.(InteractionContext) -> Boolean) {
+  protected fun clickInteractionMap(onClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean) {
     entries.add {
       ClickInteraction { context ->
-        interactiveFeatureScope?.onClick(context) ?: false
+        featuresetFeatureScope?.onClick(context) ?: false
       }
     }
   }
@@ -133,10 +133,10 @@ public abstract class BasicStyleInteractions {
    *
    * @param onLongClick callback triggered when map surface is clicked.
    */
-  protected fun longClickInteractionMap(onLongClick: InteractiveFeatureScope.(InteractionContext) -> Boolean) {
+  protected fun longClickInteractionMap(onLongClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean) {
     entries.add {
       LongClickInteraction { context ->
-        interactiveFeatureScope?.onLongClick(context) ?: false
+        featuresetFeatureScope?.onLongClick(context) ?: false
       }
     }
   }
@@ -155,15 +155,15 @@ public abstract class BasicStyleInteractions {
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add { import ->
       LongClickInteraction.featureset(
-        featuresetId = featuresetId,
+        id = featuresetId,
         importId = importId ?: import,
         filter = filter,
         onLongClick = { feature, context ->
-          interactiveFeatureScope?.onLongClick(feature, context) ?: false
+          featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }
       )
     }
@@ -181,14 +181,14 @@ public abstract class BasicStyleInteractions {
   protected fun longClickInteractionLayer(
     layerId: String,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add {
       LongClickInteraction.layer(
-        layerId = layerId,
+        id = layerId,
         filter = filter,
         onLongClick = { feature, context ->
-          interactiveFeatureScope?.onLongClick(feature, context) ?: false
+          featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }
       )
     }

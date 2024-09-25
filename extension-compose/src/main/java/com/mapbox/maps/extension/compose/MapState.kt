@@ -55,8 +55,9 @@ import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.internal.applySettings
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeatureStateKey
+import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -237,26 +238,26 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
     mapboxMapFlow.filterNotNull().first().queryRenderedFeatures(geometry, options)
 
   /**
-   * Queries the map for given [featuresetHolder] and returns typed [InteractiveFeature].
+   * Queries the map for given [descriptor] and returns typed [FeaturesetFeature] list in the callback.
    *
    * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
-   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
+   * @param descriptor [TypedFeaturesetDescriptor] object representing either a featureset or a single layer.
    * @param filter optional global filter.
    *
-   * @return A typed instance of the [InteractiveFeature].
+   * @return A typed instance list of the [FeaturesetFeature].
    */
   @MapboxExperimental
   @JvmOverloads
-  public suspend fun <FS : FeatureState> queryRenderedFeature(
+  public suspend fun <FF : FeaturesetFeature<*>> queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
-    featuresetHolder: FeaturesetHolder<FS>,
+    descriptor: TypedFeaturesetDescriptor<*, FF>,
     filter: Expression? = null,
-  ): InteractiveFeature<FS> {
+  ): List<FF> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
-        val cancelable = queryRenderedFeature(
+        val cancelable = queryRenderedFeatures(
           geometry = geometry,
-          featuresetHolder = featuresetHolder,
+          descriptor = descriptor,
           filter = filter,
           callback = continuation::resume
         )
@@ -270,28 +271,18 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * Gets the state map of a feature from a featureset asynchronously.
    *
-   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
-   * @param featureId The feature identifier of the feature whose state should be queried.
-   * @param featureNamespace Optional feature namespace. Defaults to NULL.
-   *  Namespace represents the feature namespace defined by the Selector within a featureset to which this feature belongs.
-   *  If the underlying source is the same for multiple selectors within a featureset, the same [featureNamespace] should be used across those selectors.
-   *  Defining a [featureNamespace] value for the Selector is recommended, especially when multiple selectors exist in a featureset, as it can enhance the efficiency of feature operations.
+   * @param featuresetFeature the featureset feature coming from an interaction callback or [queryRenderedFeatures].
    *
    * @return A concrete instance of [FeatureState].
    */
   @MapboxExperimental
-  @JvmOverloads
   public suspend fun <FS : FeatureState> getFeatureState(
-    featuresetHolder: FeaturesetHolder<FS>,
-    featureId: String,
-    featureNamespace: String? = null,
+    featuresetFeature: FeaturesetFeature<FS>,
   ): FS {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = getFeatureState(
-          featuresetHolder = featuresetHolder,
-          featureId = featureId,
-          featureNamespace = featureNamespace,
+          featuresetFeature = featuresetFeature,
           callback = continuation::resume
         )
         continuation.invokeOnCancellation {
@@ -302,22 +293,22 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   }
 
   /**
-   * Sets the state map for given [interactiveFeature] coming from an interaction callback asynchronously.
+   * Sets the state map for given [featuresetFeature] coming from an interaction callback asynchronously.
    *
-   * @param interactiveFeature the interactive feature coming from an interaction callback.
-   * @param state describes the new state of the map for given [interactiveFeature].
+   * @param featuresetFeature the featureset feature coming from an interaction callback or [queryRenderedFeatures].
+   * @param state describes the new state of the map for given [featuresetFeature].
    *
    * @return the optional error wrapped in [Expected].
    */
   @MapboxExperimental
-  public suspend fun <IF, FS> setFeatureState(
-    interactiveFeature: IF,
+  public suspend fun <FS : FeatureState> setFeatureState(
+    featuresetFeature: FeaturesetFeature<FS>,
     state: FS,
-  ): Expected<String, com.mapbox.bindgen.None> where FS : FeatureState, IF : InteractiveFeature<FS> {
+  ): Expected<String, com.mapbox.bindgen.None> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = setFeatureState(
-          interactiveFeature = interactiveFeature,
+          featuresetFeature = featuresetFeature,
           state = state,
           callback = continuation::resume
         )
@@ -329,7 +320,7 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   }
 
   /**
-   * Removes entries from a feature state based on [interactiveFeature] coming from an interaction callback.
+   * Removes entries from a feature state based on [featuresetFeature] coming from an interaction callback.
    *
    * Removes a specified property or all property from a feature's state object, depending on the value of
    * [stateKey].
@@ -337,21 +328,21 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using [getFeatureState].
    *
-   * @param interactiveFeature The interactive feature coming from an interaction callback.
-   * @param stateKey The key of the property to remove. If `null`, all feature's state object properties are removed.
+   * @param featuresetFeature The featureset feature coming from an interaction callback.
+   * @param stateKey The generic key of the property to remove. If `null`, all feature's state object properties are removed.
    *
    * @return the optional error wrapped in [Expected].
    */
   @MapboxExperimental
   @JvmOverloads
-  public suspend fun removeFeatureState(
-    interactiveFeature: InteractiveFeature<*>,
-    stateKey: String? = null,
-  ): Expected<String, com.mapbox.bindgen.None> {
+  public suspend fun <FS, FSK> removeFeatureState(
+    featuresetFeature: FeaturesetFeature<FS>,
+    stateKey: FSK? = null,
+  ): Expected<String, com.mapbox.bindgen.None> where FS : FeatureState, FSK : FeatureStateKey<FS> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = removeFeatureState(
-          interactiveFeature = interactiveFeature,
+          featuresetFeature = featuresetFeature,
           stateKey = stateKey,
           callback = continuation::resume
         )
@@ -370,18 +361,18 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using [getFeatureState].
    *
-   * @param featuresetHolder [FeaturesetHolder] object representing either a featureset or a single layer.
+   * @param descriptor [TypedFeaturesetDescriptor] object representing either a featureset or a single layer.
    *
    * @return the optional error wrapped in [Expected].
    */
   @MapboxExperimental
   public suspend fun resetFeatureStates(
-    featuresetHolder: FeaturesetHolder<*>,
+    descriptor: TypedFeaturesetDescriptor<*, *>,
   ): Expected<String, com.mapbox.bindgen.None> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = resetFeatureStates(
-          featuresetHolder = featuresetHolder,
+          descriptor = descriptor,
           callback = continuation::resume
         )
         continuation.invokeOnCancellation {

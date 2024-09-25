@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Feature
 import com.mapbox.maps.ClickInteraction.Companion.featureset
 import com.mapbox.maps.ClickInteraction.Companion.invoke
 import com.mapbox.maps.ClickInteraction.Companion.layer
@@ -8,8 +9,8 @@ import com.mapbox.maps.LongClickInteraction.Companion.featureset
 import com.mapbox.maps.LongClickInteraction.Companion.invoke
 import com.mapbox.maps.LongClickInteraction.Companion.layer
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 
 /**
  * Defines the long click interaction.
@@ -29,23 +30,33 @@ import com.mapbox.maps.interactions.InteractiveFeature
  *  3. When having several [LongClickInteraction]s with the same [FeaturesetDescriptor] / map surface (see point 2) - the **last** registered [LongClickInteraction] will be triggered **first**.
  */
 @MapboxExperimental
-class LongClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
+class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
   private constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
     onLongClick: (T, InteractionContext) -> Boolean,
-    interactiveFeatureBuilder: (QueriedFeature) -> T
+    featuresetFeatureBuilder: (Feature, FeaturesetFeatureId?, Value) -> T
   ) {
     coreInteraction = Interaction(
       /* featuresetDescriptor */ featureset,
       /* filter */ filter,
       InteractionType.LONG_CLICK,
       object : InteractionHandler {
-        override fun handleBegin(feature: QueriedFeature?, context: InteractionContext): Boolean =
-          feature?.let {
-            onLongClick(interactiveFeatureBuilder(it), context)
-          } ?: false
+        override fun handleBegin(feature: QueriedFeature?, context: InteractionContext): Boolean {
+          // it is fine to have the QueriedFeature without an ID but we require the geometry
+          if (feature?.feature?.geometry() != null) {
+            return onLongClick(
+              featuresetFeatureBuilder(
+                feature.feature,
+                feature.featuresetFeatureId,
+                feature.state
+              ),
+              context
+            )
+          }
+          return false
+        }
 
         override fun handleChange(context: InteractionContext) {
           // not needed
@@ -85,11 +96,11 @@ class LongClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
   companion object {
 
     /**
-     * Create the [LongClickInteraction] for given featureset defined with [featuresetId] and optional [importId].
+     * Create the [LongClickInteraction] for given featureset defined with [id] and optional [importId].
      *
-     * When several [LongClickInteraction]s are registered for the same [featuresetId] and [importId] - the callbacks will be triggered from last to first.
+     * When several [LongClickInteraction]s are registered for the same [id] and [importId] - the callbacks will be triggered from last to first.
      *
-     * @param featuresetId mandatory featureset id.
+     * @param id mandatory featureset id.
      * @param importId optional style import id.
      * @param filter optional filter. Defaults to NULL.
      * @param onLongClick callback triggered when featureset is clicked.
@@ -98,31 +109,31 @@ class LongClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
     @JvmStatic
     @MapboxExperimental
     fun featureset(
-      featuresetId: String,
+      id: String,
       importId: String? = null,
       filter: Value? = null,
-      onLongClick: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+      onLongClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return LongClickInteraction(
-        FeaturesetDescriptor(featuresetId, importId, null),
+        FeaturesetDescriptor(id, importId, null),
         filter,
         onLongClick
-      ) {
-        InteractiveFeature(
-          featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId),
-          feature = it.feature,
-          featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = FeatureState(it.state)
+      ) { feature, featuresetFeatureId, state ->
+        FeaturesetFeature(
+          descriptor = TypedFeaturesetDescriptor.Featureset(id, importId),
+          originalFeature = feature,
+          id = featuresetFeatureId,
+          state = FeatureState(state)
         )
       }
     }
 
     /**
-     * Create the [LongClickInteraction] for given [layerId].
+     * Create the [LongClickInteraction] for given [id].
      *
-     * When several [LongClickInteraction]s are registered for the same [layerId] - the callbacks will be triggered from last to first.
+     * When several [LongClickInteraction]s are registered for the same [id] - the callbacks will be triggered from last to first.
      *
-     * @param layerId mandatory layer id.
+     * @param id mandatory layer id.
      * @param filter optional filter. Defaults to NULL.
      * @param onLongClick callback triggered when layer is clicked.
      */
@@ -130,20 +141,20 @@ class LongClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
     @JvmStatic
     @MapboxExperimental
     fun layer(
-      layerId: String,
+      id: String,
       filter: Value? = null,
-      onLongClick: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+      onLongClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return LongClickInteraction(
-        FeaturesetDescriptor(null, null, layerId),
+        FeaturesetDescriptor(null, null, id),
         filter,
         onLongClick
-      ) {
-        InteractiveFeature(
-          featuresetHolder = FeaturesetHolder.Layer(layerId),
-          feature = it.feature,
-          featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = FeatureState(it.state)
+      ) { feature, featuresetFeatureId, state ->
+        FeaturesetFeature(
+          descriptor = TypedFeaturesetDescriptor.Layer(id),
+          originalFeature = feature,
+          id = featuresetFeatureId,
+          state = FeatureState(state)
         )
       }
     }

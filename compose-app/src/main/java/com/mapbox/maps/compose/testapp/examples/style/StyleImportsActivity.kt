@@ -33,7 +33,8 @@ import com.mapbox.maps.extension.compose.style.imports.rememberStyleImportState
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.compose.style.slotsContent
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeatureStateKey
+import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
  * Example to showcase usage of style imports.
@@ -122,12 +123,12 @@ public class StyleImportsActivity : ComponentActivity() {
                         importConfigs = importConfigs {
                           config("showTransitLabels", Value(false))
                         }
-                        var selectedPriceLabel: InteractiveFeature<FeatureState>? =
+                        var selectedPriceLabel: FeaturesetFeature<FeatureState>? =
                           null
                         interactionsState
-                          .onFeaturesetClicked(featuresetId = "hotels-price") { priceLabel, _ ->
-                            if (selectedPriceLabel?.feature?.id() != priceLabel.feature.id()) {
-                              selectedPriceLabel?.removeFeatureState("active")
+                          .onFeaturesetClicked(id = "hotels-price") { priceLabel, _ ->
+                            if (selectedPriceLabel?.id != priceLabel.id) {
+                              selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
                               selectedPriceLabel = priceLabel
                             }
                             val isActive = (priceLabel.state.getBooleanState("active") ?: false).not()
@@ -139,7 +140,7 @@ public class StyleImportsActivity : ComponentActivity() {
                             return@onFeaturesetClicked true
                           }
                           .onMapClicked {
-                            selectedPriceLabel?.removeFeatureState("active")
+                            selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
                             selectedPriceLabel = null
                             true
                           }

@@ -26,7 +26,7 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.extension.compose.style.MapStyle
-import com.mapbox.maps.interactions.FeaturesetHolder
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import kotlinx.coroutines.flow.first
@@ -55,7 +55,7 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
           // wait and suspend for the first ever map idle event, meaning map is rendered.
           mapIdleEvents.first()
           highlightedBuilding =
-            queryBuildingCoordinatesAt(CityLocations.HELSINKI)
+            queryBuildingCoordinatesAt(CityLocations.HELSINKI)!!
         }
       }
       MapboxMapComposeTheme {
@@ -74,7 +74,9 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
             },
             onMapClickListener = { clickedPoint ->
               coroutineScope.launch {
-                highlightedBuilding = mapState.queryBuildingCoordinatesAt(clickedPoint)
+                mapState.queryBuildingCoordinatesAt(clickedPoint)?.let {
+                  highlightedBuilding = it
+                }
               }
               false
             },
@@ -91,13 +93,17 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
   }
 
   @OptIn(MapboxExperimental::class)
-  private suspend fun MapState.queryBuildingCoordinatesAt(point: Point): List<List<Point>> {
-    val selectedBuilding = queryRenderedFeature(
+  private suspend fun MapState.queryBuildingCoordinatesAt(point: Point): List<List<Point>>? {
+    val selectedBuildings = queryRenderedFeatures(
       geometry = RenderedQueryGeometry(pixelForCoordinate(point)),
-      featuresetHolder = FeaturesetHolder.Layer("building")
+      descriptor = TypedFeaturesetDescriptor.Layer("building")
     )
-    logD(TAG, "Feature properties: ${selectedBuilding.feature.properties()}")
-    return (selectedBuilding.feature.geometry() as? Polygon)?.coordinates()?.toList() ?: emptyList()
+    if (selectedBuildings.isEmpty()) {
+      logD(TAG, "Clicked outside of building")
+      return null
+    }
+    logD(TAG, "Feature properties: ${selectedBuildings.first().properties}")
+    return (selectedBuildings.first().geometry as? Polygon)?.coordinates()?.toList()
   }
 
   private companion object {

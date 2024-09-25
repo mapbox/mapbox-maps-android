@@ -3,7 +3,6 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-
 # 11.7.0
 ## Features ✨ and improvements 🏁
 * Publish Mapbox Maps Android artifacts using NDK 27 and [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes).

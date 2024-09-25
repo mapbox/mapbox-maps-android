@@ -2,16 +2,17 @@ package com.mapbox.maps
 
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Feature
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 
 /**
  * For internal usage.
  */
 @OptIn(MapboxExperimental::class)
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-class DragInteraction<T : InteractiveFeature<*>> : MapInteraction {
+class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
   private constructor(
     featureset: FeaturesetDescriptor,
@@ -19,17 +20,27 @@ class DragInteraction<T : InteractiveFeature<*>> : MapInteraction {
     onDragBegin: (T, InteractionContext) -> Boolean,
     onDrag: (InteractionContext) -> Unit,
     onDragEnd: (InteractionContext) -> Unit,
-    interactiveFeatureBuilder: (QueriedFeature) -> T
+    featuresetFeatureBuilder: (Feature, FeaturesetFeatureId?, Value) -> T
   ) {
     coreInteraction = Interaction(
       /* featuresetDescriptor */ featureset,
       /* filter */ filter,
       InteractionType.DRAG,
       object : InteractionHandler {
-        override fun handleBegin(feature: QueriedFeature?, context: InteractionContext): Boolean =
-          feature?.let {
-            onDragBegin(interactiveFeatureBuilder(it), context)
-          } ?: false
+        override fun handleBegin(feature: QueriedFeature?, context: InteractionContext): Boolean {
+          // it is fine to have the QueriedFeature without an ID but we require the geometry
+          if (feature?.feature?.geometry() != null) {
+            return onDragBegin(
+              featuresetFeatureBuilder(
+                feature.feature,
+                feature.featuresetFeatureId,
+                feature.state
+              ),
+              context
+            )
+          }
+          return false
+        }
 
         override fun handleChange(context: InteractionContext) {
           onDrag(context)
@@ -79,25 +90,25 @@ class DragInteraction<T : InteractiveFeature<*>> : MapInteraction {
     @JvmStatic
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     fun featureset(
-      featuresetId: String,
+      id: String,
       importId: String? = null,
       filter: Value? = null,
-      onDragBegin: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean,
+      onDragBegin: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean,
       onDrag: (InteractionContext) -> Unit,
       onDragEnd: (InteractionContext) -> Unit,
     ): MapInteraction {
       return DragInteraction(
-        FeaturesetDescriptor(featuresetId, importId, null),
+        FeaturesetDescriptor(id, importId, null),
         filter,
         onDragBegin,
         onDrag,
         onDragEnd
-      ) {
-        InteractiveFeature(
-          featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId),
-          feature = it.feature,
-          featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = FeatureState(it.state)
+      ) { feature, featuresetFeatureId, state ->
+        FeaturesetFeature(
+          descriptor = TypedFeaturesetDescriptor.Featureset(id, importId),
+          originalFeature = feature,
+          id = featuresetFeatureId,
+          state = FeatureState(state)
         )
       }
     }
@@ -109,24 +120,24 @@ class DragInteraction<T : InteractiveFeature<*>> : MapInteraction {
     @JvmStatic
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     fun layer(
-      layerId: String,
+      id: String,
       filter: Value? = null,
-      onDragBegin: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean,
+      onDragBegin: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean,
       onDrag: (InteractionContext) -> Unit,
       onDragEnd: (InteractionContext) -> Unit,
     ): MapInteraction {
       return DragInteraction(
-        FeaturesetDescriptor(null, null, layerId),
+        FeaturesetDescriptor(null, null, id),
         filter,
         onDragBegin,
         onDrag,
         onDragEnd
-      ) {
-        InteractiveFeature(
-          featuresetHolder = FeaturesetHolder.Layer(layerId),
-          feature = it.feature,
-          featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = FeatureState(it.state)
+      ) { feature, featuresetFeatureId, state ->
+        FeaturesetFeature(
+          descriptor = TypedFeaturesetDescriptor.Layer(id),
+          originalFeature = feature,
+          id = featuresetFeatureId,
+          state = FeatureState(state)
         )
       }
     }
