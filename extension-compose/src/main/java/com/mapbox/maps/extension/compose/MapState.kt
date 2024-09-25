@@ -335,10 +335,10 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    */
   @MapboxExperimental
   @JvmOverloads
-  public suspend fun <FS : FeatureState, FSK : FeatureStateKey> removeFeatureState(
+  public suspend fun <FS, FSK> removeFeatureState(
     featuresetFeature: FeaturesetFeature<FS>,
     stateKey: FSK? = null,
-  ): Expected<String, com.mapbox.bindgen.None> {
+  ): Expected<String, com.mapbox.bindgen.None> where FS : FeatureState, FSK : FeatureStateKey<FS> {
     mapboxMapFlow.filterNotNull().first().apply {
       return suspendCancellableCoroutine { continuation ->
         val cancelable = removeFeatureState(
