@@ -6,33 +6,34 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.QueryFeatureStateCallback
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeatureStateKey
+import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
- * The interactive feature scope provides extension functions to [InteractiveFeature]
- * so that user can update feature state directly on the [InteractiveFeature] within this scope.
+ * The featureset feature scope provides extension functions to [FeaturesetFeature]
+ * so that user can update feature state directly on the [FeaturesetFeature] within this scope.
  *
  * Note that this is a sealed interface, it's not expected to be implemented outside of this library.
  */
 @MapboxExperimental
-public sealed interface InteractiveFeatureScope {
+public sealed interface FeaturesetFeatureScope {
 
   /**
-   * Sets the state map for the [InteractiveFeature].
+   * Sets the state map for the [FeaturesetFeature].
    *
-   * @param state describes the new state of the map for given [InteractiveFeature].
+   * @param state describes the new state of the map for given [FeaturesetFeature].
    * @param callback The optional [QueryFeatureStateCallback] called when the query completes.
    *
    * @return A [Cancelable] object that could be used to cancel the pending query.
    */
   @MapboxExperimental
-  public fun <FS : FeatureState> InteractiveFeature<FS>.setFeatureState(
+  public fun <FS : FeatureState> FeaturesetFeature<FS>.setFeatureState(
     state: FS,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback {}
   ): Cancelable
 
   /**
-   * Removes entries from a feature state based on the [InteractiveFeature].
+   * Removes entries from a feature state based on the [FeaturesetFeature].
    *
    * Removes a specified property or all property from a feature's state object, depending on the value of
    * [stateKey].
@@ -40,16 +41,16 @@ public sealed interface InteractiveFeatureScope {
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using `getFeatureState`.
    *
-   * @param stateKey The key of the property to remove. If `null`, all feature's state object properties are removed.
+   * @param stateKey The typed key of the property to remove. If `null`, all feature's state object properties are removed.
    * @param callback The [FeatureStateOperationCallback] called when the operation completes or ends.
    *
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
   @MapboxExperimental
-  public fun <FS : FeatureState> InteractiveFeature<FS>.removeFeatureState(
-    stateKey: String? = null,
+  public fun <FS, FSK> FeaturesetFeature<FS>.removeFeatureState(
+    stateKey: FSK? = null,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
-  ): Cancelable
+  ): Cancelable where FS : FeatureState, FSK : FeatureStateKey<FS>
 
   /**
    * Reset all the feature states within a style source.
@@ -64,41 +65,41 @@ public sealed interface InteractiveFeatureScope {
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
   @MapboxExperimental
-  public fun <FS : FeatureState> InteractiveFeature<FS>.resetFeatureStates(
+  public fun <FS : FeatureState> FeaturesetFeature<FS>.resetFeatureStates(
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
   ): Cancelable
 }
 
 @OptIn(MapboxExperimental::class)
-internal class InteractiveFeatureScopeImpl internal constructor(private val mapboxMap: MapboxMap) :
-  InteractiveFeatureScope {
+internal class FeaturesetFeatureScopeImpl internal constructor(private val mapboxMap: MapboxMap) :
+  FeaturesetFeatureScope {
 
   @MapboxExperimental
-  override fun <FS : FeatureState> InteractiveFeature<FS>.setFeatureState(
+  override fun <FS : FeatureState> FeaturesetFeature<FS>.setFeatureState(
     state: FS,
     callback: FeatureStateOperationCallback
   ): Cancelable {
     return mapboxMap.setFeatureState(
-      interactiveFeature = this,
+      featuresetFeature = this,
       state = state,
       callback = callback
     )
   }
 
   @MapboxExperimental
-  override fun <FS : FeatureState> InteractiveFeature<FS>.removeFeatureState(
-    stateKey: String?,
+  override fun <FS, FSK> FeaturesetFeature<FS>.removeFeatureState(
+    stateKey: FSK?,
     callback: FeatureStateOperationCallback
-  ): Cancelable {
+  ): Cancelable where FS : FeatureState, FSK : FeatureStateKey<FS> {
     return mapboxMap.removeFeatureState(
-      interactiveFeature = this,
+      featuresetFeature = this,
       stateKey = stateKey,
       callback = callback
     )
   }
 
   @MapboxExperimental
-  override fun <FS : FeatureState> InteractiveFeature<FS>.resetFeatureStates(callback: FeatureStateOperationCallback): Cancelable {
-    return mapboxMap.resetFeatureStates(featuresetHolder = featuresetHolder, callback = callback)
+  override fun <FS : FeatureState> FeaturesetFeature<FS>.resetFeatureStates(callback: FeatureStateOperationCallback): Cancelable {
+    return mapboxMap.resetFeatureStates(descriptor = descriptor, callback = callback)
   }
 }

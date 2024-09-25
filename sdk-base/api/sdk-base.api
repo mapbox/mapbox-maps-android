@@ -1,6 +1,6 @@
 public final class com/mapbox/maps/ClickInteraction : com/mapbox/maps/MapInteraction {
 	public static final field Companion Lcom/mapbox/maps/ClickInteraction$Companion;
-	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
@@ -23,7 +23,7 @@ public final class com/mapbox/maps/ClickInteraction$Companion {
 
 public final class com/mapbox/maps/DragInteraction : com/mapbox/maps/MapInteraction {
 	public static final field Companion Lcom/mapbox/maps/DragInteraction$Companion;
-	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/MapInteraction;
@@ -80,7 +80,7 @@ public final class com/mapbox/maps/ImageHolder$Creator : android/os/Parcelable$C
 
 public final class com/mapbox/maps/LongClickInteraction : com/mapbox/maps/MapInteraction {
 	public static final field Companion Lcom/mapbox/maps/LongClickInteraction$Companion;
-	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
@@ -715,71 +715,86 @@ public class com/mapbox/maps/interactions/FeatureState {
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBooleanState (Ljava/lang/String;)Ljava/lang/Boolean;
 	public final fun getDoubleState (Ljava/lang/String;)Ljava/lang/Double;
-	public final fun getInternalState ()Lcom/mapbox/bindgen/Value;
+	public fun getInternalState ()Lcom/mapbox/bindgen/Value;
 	public final fun getLongState (Ljava/lang/String;)Ljava/lang/Long;
 	public final fun getStringState (Ljava/lang/String;)Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/interactions/FeatureState$Builder {
+public class com/mapbox/maps/interactions/FeatureState$Builder {
 	public fun <init> ()V
 	public final fun addBooleanState (Ljava/lang/String;Z)Lcom/mapbox/maps/interactions/FeatureState$Builder;
 	public final fun addDoubleState (Ljava/lang/String;D)Lcom/mapbox/maps/interactions/FeatureState$Builder;
 	public final fun addLongState (Ljava/lang/String;J)Lcom/mapbox/maps/interactions/FeatureState$Builder;
 	public final fun addStringState (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/interactions/FeatureState$Builder;
-	public final fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	protected final fun getRawStateMap ()Ljava/util/HashMap;
 }
 
 public abstract interface class com/mapbox/maps/interactions/FeatureStateCallback {
 	public abstract fun onFeatureState (Lcom/mapbox/maps/interactions/FeatureState;)V
 }
 
+public class com/mapbox/maps/interactions/FeatureStateKey {
+	public static final field Companion Lcom/mapbox/maps/interactions/FeatureStateKey$Companion;
+	public static final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/FeatureStateKey;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKey ()Ljava/lang/String;
+	public fun hashCode ()I
+}
+
+public final class com/mapbox/maps/interactions/FeatureStateKey$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/FeatureStateKey;
+}
+
 public final class com/mapbox/maps/interactions/FeatureStateKt {
 	public static final synthetic fun FeatureState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/FeatureState;
 }
 
-public abstract class com/mapbox/maps/interactions/FeaturesetHolder {
+public class com/mapbox/maps/interactions/FeaturesetFeature {
+	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/geojson/Feature;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescriptor ()Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;
+	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public final fun getId ()Lcom/mapbox/maps/FeaturesetFeatureId;
+	protected final fun getOriginalFeature ()Lcom/mapbox/geojson/Feature;
+	public final fun getProperties ()Lorg/json/JSONObject;
+	public final fun getState ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun hashCode ()I
+}
+
+public abstract interface class com/mapbox/maps/interactions/QueryRenderedFeaturesetFeaturesCallback {
+	public abstract fun onQueryRenderedFeatures (Ljava/util/List;)V
+}
+
+public abstract class com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
 	public abstract fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
-	public abstract fun getInteractiveFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/InteractiveFeature;
+	public abstract fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
 	public abstract fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
 }
 
-public final class com/mapbox/maps/interactions/FeaturesetHolder$Featureset : com/mapbox/maps/interactions/FeaturesetHolder {
+public final class com/mapbox/maps/interactions/TypedFeaturesetDescriptor$Featureset : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
 	public final fun getFeaturesetId ()Ljava/lang/String;
 	public final fun getImportId ()Ljava/lang/String;
-	public fun getInteractiveFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/InteractiveFeature;
 	public fun hashCode ()I
 	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
 }
 
-public final class com/mapbox/maps/interactions/FeaturesetHolder$Layer : com/mapbox/maps/interactions/FeaturesetHolder {
+public final class com/mapbox/maps/interactions/TypedFeaturesetDescriptor$Layer : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
 	public fun <init> (Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
-	public fun getInteractiveFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/InteractiveFeature;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
 	public final fun getLayerId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
-}
-
-public final class com/mapbox/maps/interactions/InteractiveFeature {
-	public fun <init> (Lcom/mapbox/maps/interactions/FeaturesetHolder;Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/maps/interactions/FeatureState;)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getFeature ()Lcom/mapbox/geojson/Feature;
-	public final fun getFeatureNamespace ()Ljava/lang/String;
-	public final fun getFeaturesetHolder ()Lcom/mapbox/maps/interactions/FeaturesetHolder;
-	public final fun getState ()Lcom/mapbox/maps/interactions/FeatureState;
-	public fun hashCode ()I
-}
-
-public abstract interface class com/mapbox/maps/interactions/QueryRenderedFeatureCallback {
-	public abstract fun onQueryRenderedFeature (Lcom/mapbox/maps/interactions/InteractiveFeature;)V
 }
 
 public abstract interface class com/mapbox/maps/module/MapTelemetry {

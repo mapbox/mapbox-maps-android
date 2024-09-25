@@ -9,8 +9,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeatureStateKey
+import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
@@ -939,10 +940,10 @@ class MapboxMapTest {
     val newStateValue1 = "newStateValue1"
     val newStateKey2 = "newStateKey2"
     val newStateValue2 = "newStateValue2"
-    val interactiveFeature = InteractiveFeature(
-      featuresetHolder = FeaturesetHolder.Featureset(featuresetId = featuresetId, importId = importId),
-      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      featureNamespace = featureNamespace,
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId = featuresetId, importId = importId),
+      originalFeature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       state = FeatureState { },
     )
     val newState = FeatureState {
@@ -950,7 +951,7 @@ class MapboxMapTest {
       addStringState(newStateKey2, newStateValue2)
     }
     mapboxMap.setFeatureState(
-      interactiveFeature,
+      featuresetFeature,
       newState
     )
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
@@ -976,10 +977,10 @@ class MapboxMapTest {
     val newStateValue1 = "newStateValue1"
     val newStateKey2 = "newStateKey2"
     val newStateValue2 = "newStateValue2"
-    val interactiveFeature = InteractiveFeature(
-      featuresetHolder = FeaturesetHolder.Layer(layerId = layerId),
-      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      featureNamespace = featureNamespace,
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      descriptor = TypedFeaturesetDescriptor.Layer(layerId = layerId),
+      originalFeature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       state = FeatureState { },
     )
     val newState = FeatureState {
@@ -987,7 +988,7 @@ class MapboxMapTest {
       addStringState(newStateKey2, newStateValue2)
     }
     mapboxMap.setFeatureState(
-      interactiveFeature,
+      featuresetFeature,
       newState
     )
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
@@ -1004,18 +1005,18 @@ class MapboxMapTest {
     assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
-  fun setFeatureStateFeaturesetHolderFeatureset() {
+  fun setFeatureStateTypedFeaturesetDescriptorFeatureset() {
     val featuresetId = "featuresetId"
     val importId = "importId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
-    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
     val state = FeatureState { }
     mapboxMap.setFeatureState(
-      featuresetHolder,
-      featureId,
-      featureNamespace,
+      descriptor,
+      FeaturesetFeatureId(featureId, featureNamespace),
       state
     )
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
@@ -1032,17 +1033,17 @@ class MapboxMapTest {
     assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
-  fun setFeatureStateFeaturesetHolderLayer() {
+  fun setFeatureStateTypedFeaturesetDescriptorLayer() {
     val layerId = "layerId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
-    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
     val state = FeatureState { }
     mapboxMap.setFeatureState(
-      featuresetHolder,
-      featureId,
-      featureNamespace,
+      descriptor,
+      FeaturesetFeatureId(featureId, featureNamespace),
       state
     )
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
@@ -1059,17 +1060,17 @@ class MapboxMapTest {
     assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
-  fun getFeatureStateFeaturesetHolderFeatureset() {
+  fun getFeatureStateTypedFeaturesetDescriptorFeatureset() {
     val featuresetId = "featuresetId"
     val importId = "importId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
-    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
     mapboxMap.getFeatureState(
-      featuresetHolder,
-      featureId,
-      featureNamespace
+      descriptor,
+      FeaturesetFeatureId(featureId, featureNamespace),
     ) { }
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
     verify {
@@ -1084,16 +1085,16 @@ class MapboxMapTest {
     assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
-  fun getFeatureStateFeaturesetHolderLayer() {
+  fun getFeatureStateTypedFeaturesetDescriptorLayer() {
     val layerId = "layerId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
-    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
     mapboxMap.getFeatureState(
-      featuresetHolder,
-      featureId,
-      featureNamespace
+      descriptor,
+      FeaturesetFeatureId(featureId, featureNamespace),
     ) { }
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
     verify {
@@ -1109,22 +1110,77 @@ class MapboxMapTest {
   }
 
   @Test
-  fun removeFeatureStateInteractiveFeatureFromFeatureset() {
+  fun getFeatureStateFeaturesetFeatureLayer() {
+    val layerId = "layerId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      descriptor = TypedFeaturesetDescriptor.Layer(layerId = layerId),
+      originalFeature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
+      state = FeatureState { },
+    )
+    mapboxMap.getFeatureState(
+      featuresetFeature,
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.getFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun getFeatureStateFeaturesetFeatureFeatureset() {
+    val featuresetId = "featuresetId"
+    val importId = "importId"
+    val featureId = "featureId"
+    val featureNamespace = "featureNamespace"
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId = featuresetId, importId = importId),
+      originalFeature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
+      state = FeatureState { },
+    )
+    mapboxMap.getFeatureState(
+      featuresetFeature,
+    ) { }
+    val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
+    verify {
+      nativeMap.getFeatureState(
+        FeaturesetDescriptor(/* featuresetId */ featuresetId, /* importId */ importId, /* layerId */ null),
+        // missing equals for Bindgen variant, so checking fields with a slot
+        capture(featureFeatuersetIdSlot),
+        /* callback */ any()
+      )
+    }
+    assert(featureFeatuersetIdSlot.captured.featureId == featureId)
+    assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
+  }
+
+  @Test
+  fun removeFeatureStateFeaturesetFeatureFromFeatureset() {
     val featuresetId = "featuresetId"
     val importId = "importId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
     val stateKey = "stateKey"
-    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
-    val interactiveFeature = InteractiveFeature(
-      featuresetHolder = featuresetHolder,
-      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      featureNamespace = featureNamespace,
+    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      descriptor = descriptor,
+      originalFeature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       state = FeatureState { },
     )
     mapboxMap.removeFeatureState(
-      interactiveFeature = interactiveFeature,
-      stateKey = stateKey,
+      featuresetFeature = featuresetFeature,
+      stateKey = FeatureStateKey.create(stateKey),
     ) { }
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
     verify {
@@ -1141,21 +1197,21 @@ class MapboxMapTest {
   }
 
   @Test
-  fun removeFeatureStateInteractiveFeatureFromLayer() {
+  fun removeFeatureStateFeaturesetFeatureFromLayer() {
     val layerId = "layerId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
     val stateKey = "stateKey"
-    val featuresetHolder = FeaturesetHolder.Layer(layerId)
-    val interactiveFeature = InteractiveFeature(
-      featuresetHolder = featuresetHolder,
-      feature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
-      featureNamespace = featureNamespace,
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      descriptor = descriptor,
+      originalFeature = Feature.fromGeometry(Point.fromLngLat(0.0, 0.0), null, /* id */ featureId),
       state = FeatureState { },
     )
     mapboxMap.removeFeatureState(
-      interactiveFeature = interactiveFeature,
-      stateKey = stateKey,
+      featuresetFeature = featuresetFeature,
+      stateKey = FeatureStateKey.create(stateKey),
     ) { }
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
     verify {
@@ -1171,19 +1227,19 @@ class MapboxMapTest {
     assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
-  fun removeFeatureStateFeaturesetHolderFromFeatureset() {
+  fun removeFeatureStateTypedFeaturesetDescriptorFromFeatureset() {
     val featuresetId = "featuresetId"
     val importId = "importId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
     val stateKey = "stateKey"
-    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
     mapboxMap.removeFeatureState(
-      featuresetHolder = featuresetHolder,
-      featureId = featureId,
-      featureNamespace = featureNamespace,
-      stateKey = stateKey
+      descriptor = descriptor,
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      stateKey = FeatureStateKey.create(stateKey),
     ) { }
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
     verify {
@@ -1199,18 +1255,18 @@ class MapboxMapTest {
     assert(featureFeatuersetIdSlot.captured.featureNamespace == featureNamespace)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
-  fun removeFeatureStateFeaturesetHolderFromLayer() {
+  fun removeFeatureStateTypedFeaturesetDescriptorFromLayer() {
     val layerId = "layerId"
     val featureId = "featureId"
     val featureNamespace = "featureNamespace"
     val stateKey = "stateKey"
-    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
     mapboxMap.removeFeatureState(
-      featuresetHolder = featuresetHolder,
-      featureId = featureId,
-      featureNamespace = featureNamespace,
-      stateKey = stateKey
+      descriptor = descriptor,
+      id = FeaturesetFeatureId(featureId, featureNamespace),
+      stateKey = FeatureStateKey.create(stateKey),
     ) { }
     val featureFeatuersetIdSlot = slot<FeaturesetFeatureId>()
     verify {
@@ -1227,12 +1283,12 @@ class MapboxMapTest {
   }
 
   @Test
-  fun resetFeatureStatesFeaturesetHolderFromFeatureset() {
+  fun resetFeatureStatesTypedFeaturesetDescriptorFromFeatureset() {
     val featuresetId = "featuresetId"
     val importId = "importId"
-    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
     mapboxMap.resetFeatureStates(
-      featuresetHolder = featuresetHolder,
+      descriptor = descriptor,
     ) { }
     verify {
       nativeMap.resetFeatureStates(
@@ -1243,11 +1299,11 @@ class MapboxMapTest {
   }
 
   @Test
-  fun resetFeatureStatesFeaturesetHolderFromLayer() {
+  fun resetFeatureStatesTypedFeaturesetDescriptorFromLayer() {
     val layerId = "layerId"
-    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
     mapboxMap.resetFeatureStates(
-      featuresetHolder = featuresetHolder,
+      descriptor = descriptor,
     ) { }
     verify {
       nativeMap.resetFeatureStates(
@@ -1258,14 +1314,14 @@ class MapboxMapTest {
   }
 
   @Test
-  fun querySourceFeaturesFeaturesetHolderFromFeatureset() {
+  fun querySourceFeaturesTypedFeaturesetDescriptorFromFeatureset() {
     val featuresetId = "featuresetId"
     val importId = "importId"
-    val featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId)
+    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
     val filter = Value.nullValue()
     val tag = 0L
     mapboxMap.querySourceFeatures(
-      featuresetHolder = featuresetHolder,
+      descriptor = descriptor,
       filter = filter,
       tag = tag,
     ) { }
@@ -1282,13 +1338,13 @@ class MapboxMapTest {
   }
 
   @Test
-  fun querySourceFeaturesFeaturesetHolderFromLayer() {
+  fun querySourceFeaturesTypedFeaturesetDescriptorFromLayer() {
     val layerId = "layerId"
-    val featuresetHolder = FeaturesetHolder.Layer(layerId)
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
     val filter = Value.nullValue()
     val tag = 0L
     mapboxMap.querySourceFeatures(
-      featuresetHolder = featuresetHolder,
+      descriptor = descriptor,
       filter = filter,
       tag = tag,
     ) { }
@@ -1305,13 +1361,13 @@ class MapboxMapTest {
   }
 
   @Test
-  fun queryRenderedFeature() {
+  fun queryRenderedFeatures() {
     val geometry = mockk<RenderedQueryGeometry>()
-    val featuresetHolder = mockk<FeaturesetHolder<FeatureState>>()
+    val descriptor = mockk<TypedFeaturesetDescriptor<FeatureState, *>>()
     val coreFeaturesetDescriptor = mockk<FeaturesetDescriptor>()
-    every { featuresetHolder.toFeaturesetDescriptor() } returns coreFeaturesetDescriptor
+    every { descriptor.toFeaturesetDescriptor() } returns coreFeaturesetDescriptor
     val filter = Value.nullValue()
-    mapboxMap.queryRenderedFeature(geometry, featuresetHolder, filter) { }
+    mapboxMap.queryRenderedFeatures(geometry, descriptor, filter) { }
     verify {
       nativeMap.queryRenderedFeatures(
         geometry,

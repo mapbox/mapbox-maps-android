@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Color
 import android.graphics.PointF
+import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.ExpectedFactory
@@ -22,8 +23,8 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -357,16 +358,16 @@ class PolylineAnnotationManagerTest {
   @Test
   fun clickWithNoAnnotation() {
     mockkObject(ClickInteraction.Companion)
-    val onClickLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    val onClickLayerIdSlot = slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val customLayerId = "customLayerId"
     every {
-      ClickInteraction.layer(layerId = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
+      ClickInteraction.layer(id = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
     } answers {
       mockk()
     }
     every {
       ClickInteraction.layer(
-        layerId = any(),
+        id = any(),
         filter = any(),
         onClick = { _, _ -> return@layer false }
       )
@@ -380,12 +381,17 @@ class PolylineAnnotationManagerTest {
     every { listener.onAnnotationClick(any()) } returns false
     manager.addClickListener(listener)
 
-    every { feature.getProperty(any()).asString } returns null
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty(PolylineAnnotation.ID_KEY, "incorrectId")
+    }
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+
     onClickLayerIdSlot.captured.invoke(
-      InteractiveFeature(
-        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
-        feature = feature,
-        featureNamespace = null,
+      FeaturesetFeature(
+        id = FeaturesetFeatureId(feature.id()!!, null),
+        descriptor = TypedFeaturesetDescriptor.Layer(customLayerId),
+        originalFeature = feature,
         state = FeatureState { }
       ),
       InteractionContext(
@@ -403,16 +409,16 @@ class PolylineAnnotationManagerTest {
   @Test
   fun click() {
     mockkObject(ClickInteraction.Companion)
-    val onClickLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    val onClickLayerIdSlot = slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val customLayerId = "customLayerId"
     every {
-      ClickInteraction.layer(layerId = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
+      ClickInteraction.layer(id = customLayerId, filter = any(), onClick = capture(onClickLayerIdSlot))
     } answers {
       mockk()
     }
     every {
       ClickInteraction.layer(
-        layerId = any(),
+        id = any(),
         filter = any(),
         onClick = { _, _ -> return@layer false }
       )
@@ -437,11 +443,17 @@ class PolylineAnnotationManagerTest {
     every { interactionListener.onDeselectAnnotation(any()) } just Runs
     manager.addInteractionListener(interactionListener)
 
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty(PolylineAnnotation.ID_KEY, annotation.id)
+    }
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+
    onClickLayerIdSlot.captured.invoke(
-      InteractiveFeature(
-        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
-        feature = feature,
-        featureNamespace = null,
+      FeaturesetFeature(
+        id = FeaturesetFeatureId(feature.id()!!, null),
+        descriptor = TypedFeaturesetDescriptor.Layer(customLayerId),
+        originalFeature = feature,
         state = FeatureState { }
       ),
       InteractionContext(
@@ -454,11 +466,18 @@ class PolylineAnnotationManagerTest {
     )
     verify { listener.onAnnotationClick(annotation) }
     verify { interactionListener.onSelectAnnotation(annotation) }
+
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty(PolylineAnnotation.ID_KEY, annotation.id)
+    }
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+
     onClickLayerIdSlot.captured.invoke(
-      InteractiveFeature(
-        featuresetHolder = FeaturesetHolder.Layer(annotation.id),
-        feature = feature,
-        featureNamespace = null,
+      FeaturesetFeature(
+        id = FeaturesetFeatureId(feature.id()!!, null),
+        descriptor = TypedFeaturesetDescriptor.Layer(annotation.id),
+        originalFeature = feature,
         state = FeatureState { }
       ),
       InteractionContext(
@@ -481,16 +500,16 @@ class PolylineAnnotationManagerTest {
   @Test
   fun longClick() {
     mockkObject(LongClickInteraction.Companion)
-    val onLongClickLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    val onLongClickLayerIdSlot = slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val customLayerId = "customLayerId"
     every {
-      LongClickInteraction.layer(layerId = customLayerId, filter = any(), onLongClick = capture(onLongClickLayerIdSlot))
+      LongClickInteraction.layer(id = customLayerId, filter = any(), onLongClick = capture(onLongClickLayerIdSlot))
     } answers {
       mockk()
     }
     every {
       LongClickInteraction.layer(
-        layerId = any(),
+        id = any(),
         filter = any(),
         onLongClick = { _, _ -> return@layer false }
       )
@@ -510,11 +529,18 @@ class PolylineAnnotationManagerTest {
     val listener = mockk<OnPolylineAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
     manager.addLongClickListener(listener)
+
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty(PolylineAnnotation.ID_KEY, annotation.id)
+    }
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+
     onLongClickLayerIdSlot.captured.invoke(
-      InteractiveFeature(
-        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
-        feature = feature,
-        featureNamespace = null,
+      FeaturesetFeature(
+        id = FeaturesetFeatureId(feature.id()!!, null),
+        descriptor = TypedFeaturesetDescriptor.Layer(customLayerId),
+        originalFeature = feature,
         state = FeatureState { }
       ),
       InteractionContext(
@@ -535,13 +561,13 @@ class PolylineAnnotationManagerTest {
   @Test
   fun drag() {
     mockkObject(DragInteraction.Companion)
-    val onDragBeginLayerIdSlot = slot<((InteractiveFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    val onDragBeginLayerIdSlot = slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
     val onDragSlot = slot<((InteractionContext) -> Unit)>()
     val onDragEndSlot = slot<((InteractionContext) -> Unit)>()
     val customLayerId = "customLayerId"
     every {
       DragInteraction.layer(
-        layerId = customLayerId,
+        id = customLayerId,
         filter = any(),
         onDragBegin = capture(onDragBeginLayerIdSlot),
         onDrag = capture(onDragSlot),
@@ -552,7 +578,7 @@ class PolylineAnnotationManagerTest {
     }
     every {
       DragInteraction.layer(
-        layerId = any(),
+        id = any(),
         filter = any(),
         onDragBegin = { _, _ -> return@layer false },
         onDrag = { },
@@ -580,11 +606,17 @@ class PolylineAnnotationManagerTest {
     every { moveGestureDetector.pointersCount } returns 1
     every { moveGestureDetector.focalPoint } returns pointF
 
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty(PolylineAnnotation.ID_KEY, annotation.id)
+    }
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+
     onDragBeginLayerIdSlot.captured.invoke(
-      InteractiveFeature(
-        featuresetHolder = FeaturesetHolder.Layer(customLayerId),
-        feature = feature,
-        featureNamespace = null,
+      FeaturesetFeature(
+        id = FeaturesetFeatureId(feature.id()!!, null),
+        descriptor = TypedFeaturesetDescriptor.Layer(customLayerId),
+        originalFeature = feature,
         state = FeatureState { }
       ),
       InteractionContext(

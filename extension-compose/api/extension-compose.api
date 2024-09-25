@@ -64,9 +64,7 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public fun <init> ()V
 	public final fun genericEvents (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getCameraChangedEvents ()Lkotlinx/coroutines/flow/Flow;
-	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetHolder;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetHolder;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getFeatureState$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/FeaturesetHolder;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGesturesSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public final fun getMapIdleEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getMapLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
@@ -82,15 +80,15 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun getStyleImageRemoveUnusedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getStyleLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun pixelForCoordinate (Lcom/mapbox/geojson/Point;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun queryRenderedFeature (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/FeaturesetHolder;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun queryRenderedFeature (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/FeaturesetHolder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun queryRenderedFeature$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/FeaturesetHolder;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/InteractiveFeature;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun resetFeatureStates (Lcom/mapbox/maps/interactions/FeaturesetHolder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun setFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/interactions/FeatureState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun queryRenderedFeatures$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun resetFeatureStates (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun setFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setGesturesSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
 }
 
@@ -1095,25 +1093,25 @@ public abstract class com/mapbox/maps/extension/compose/style/interactions/Basic
 	protected final fun clickInteractionLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
 	public static synthetic fun clickInteractionLayer$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
 	protected final fun clickInteractionMap (Lkotlin/jvm/functions/Function2;)V
-	protected final fun getInteractiveFeatureScope ()Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;
+	protected final fun getFeaturesetFeatureScope ()Lcom/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope;
 	protected final fun longClickInteractionFeatureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
 	public static synthetic fun longClickInteractionFeatureset$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
 	protected final fun longClickInteractionLayer (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;)V
 	public static synthetic fun longClickInteractionLayer$default (Lcom/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
 	protected final fun longClickInteractionMap (Lkotlin/jvm/functions/Function2;)V
-	protected final fun setInteractiveFeatureScope (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;)V
+	protected final fun setFeaturesetFeatureScope (Lcom/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope;)V
 }
 
-public abstract interface class com/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope {
-	public abstract fun removeFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
-	public abstract fun resetFeatureStates (Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
-	public abstract fun setFeatureState (Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+public abstract interface class com/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope {
+	public abstract fun removeFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun resetFeatureStates (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun setFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 }
 
-public final class com/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope$DefaultImpls {
-	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;Lcom/mapbox/maps/interactions/InteractiveFeature;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
-	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
-	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/InteractiveFeatureScope;Lcom/mapbox/maps/interactions/InteractiveFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+public final class com/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope$DefaultImpls {
+	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 }
 
 public final class com/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState : com/mapbox/maps/extension/compose/style/interactions/BasicStyleInteractions {

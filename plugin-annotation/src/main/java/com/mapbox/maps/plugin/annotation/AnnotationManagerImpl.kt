@@ -215,14 +215,14 @@ internal constructor(
   private fun registerInteractions() {
     val clickInteraction = { layerId: String, map: Map<String, T> ->
       ClickInteraction.layer(layerId) { selectedFeature, _ ->
-        selectedFeature.feature.getProperty(getAnnotationIdKey()).asString
-          ?.let { annotationId ->
-            map[annotationId]?.let { annotation ->
-              val consumeClick = clickListeners.any { it.onAnnotationClick(annotation) }
-              selectAnnotation(annotation)
-              return@layer consumeClick
-            }
+        val annotationId = selectedFeature.properties.optString(getAnnotationIdKey(), "")
+        if (annotationId != "") {
+          map[annotationId]?.let { annotation ->
+            val consumeClick = clickListeners.any { it.onAnnotationClick(annotation) }
+            selectAnnotation(annotation)
+            return@layer consumeClick
           }
+        }
         return@layer false
       }
     }
@@ -238,12 +238,12 @@ internal constructor(
     )
     val longClickInteraction = { layerId: String, map: Map<String, T> ->
       LongClickInteraction.layer(layerId) { selectedFeature, _ ->
-        selectedFeature.feature.getProperty(getAnnotationIdKey()).asString
-          ?.let { annotationId ->
-            map[annotationId]?.let { annotation ->
-              return@layer longClickListeners.any { it.onAnnotationLongClick(annotation) }
-            }
+        val annotationId = selectedFeature.properties.optString(getAnnotationIdKey(), "")
+        if (annotationId != "") {
+          map[annotationId]?.let { annotation ->
+            return@layer longClickListeners.any { it.onAnnotationLongClick(annotation) }
           }
+        }
         return@layer false
       }
     }
@@ -259,14 +259,14 @@ internal constructor(
     )
     val dragInteraction = { layerId: String, map: Map<String, T> ->
       DragInteraction.layer(
-        layerId = layerId,
+        id = layerId,
         onDragBegin = { selectedFeature, _ ->
-          selectedFeature.feature.getProperty(getAnnotationIdKey()).asString
-            ?.let { annotationId ->
-              map[annotationId]?.let { annotation ->
-                return@layer startDragging(annotation)
-              }
+          val annotationId = selectedFeature.properties.optString(getAnnotationIdKey(), "")
+          if (annotationId != "") {
+            map[annotationId]?.let { annotation ->
+              return@layer startDragging(annotation)
             }
+          }
           return@layer false
         },
         onDrag = { drag() },

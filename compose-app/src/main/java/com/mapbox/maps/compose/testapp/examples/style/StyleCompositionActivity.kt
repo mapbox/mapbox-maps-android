@@ -170,9 +170,9 @@ public class StyleCompositionActivity : ComponentActivity() {
               CircleLayer(
                 sourceState = geoJsonSource,
               ) {
-                interactionsState.onClicked { interactiveFeature, _ ->
-                  val selected = interactiveFeature.state.getBooleanState("selected") ?: false
-                  interactiveFeature.setFeatureState(
+                interactionsState.onClicked { featuresetFeature, _ ->
+                  val selected = featuresetFeature.state.getBooleanState("selected") ?: false
+                  featuresetFeature.setFeatureState(
                     FeatureState {
                       addBooleanState("selected", !selected)
                     }

@@ -17,7 +17,7 @@ open class FeatureState internal constructor(
    * @suppress
    */
   @get:RestrictTo(RestrictTo.Scope.LIBRARY)
-  val internalState: Value
+  open val internalState: Value
 ) {
   /**
    * Returns the state value for [stateName] if it exists
@@ -85,9 +85,9 @@ open class FeatureState internal constructor(
   /**
    * Builder class to build [FeatureState].
    */
-  class Builder {
+  open class Builder {
 
-    private val rawStateMap: HashMap<String, Value> = hashMapOf()
+    protected val rawStateMap: HashMap<String, Value> = hashMapOf()
 
     /**
      * Add a boolean state for property [stateName].
@@ -124,7 +124,7 @@ open class FeatureState internal constructor(
     /**
      * Build an instance of [FeatureState].
      */
-    fun build(): FeatureState {
+    open fun build(): FeatureState {
       if (rawStateMap.isEmpty()) {
         logW(TAG, "Constructing an empty FeatureState. Is this intended?")
       }
@@ -135,8 +135,8 @@ open class FeatureState internal constructor(
   /**
    * Static variable and functions.
    */
-  private companion object {
-    private const val TAG = "FeatureState"
+  internal companion object {
+    internal const val TAG = "FeatureState"
   }
 }
 

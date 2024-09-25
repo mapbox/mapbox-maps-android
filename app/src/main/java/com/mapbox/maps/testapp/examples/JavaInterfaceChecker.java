@@ -45,6 +45,7 @@ import com.mapbox.maps.CameraState;
 import com.mapbox.maps.ClickInteraction;
 import com.mapbox.maps.ExtensionUtils;
 import com.mapbox.maps.FeatureStateOperationCallback;
+import com.mapbox.maps.FeaturesetFeatureId;
 import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
@@ -73,7 +74,8 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
 import com.mapbox.maps.interactions.FeatureState;
-import com.mapbox.maps.interactions.FeaturesetHolder;
+import com.mapbox.maps.interactions.FeatureStateKey;
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor;
 import com.mapbox.maps.module.MapTelemetry;
 import com.mapbox.maps.plugin.LocationPuck;
 import com.mapbox.maps.plugin.LocationPuck2D;
@@ -666,25 +668,25 @@ public class JavaInterfaceChecker {
             ClickInteraction.featureset(
                     "featuresetId",
                     "importId",
-                    (interactiveFeature, context) -> {
+                    (selectedFeature, context) -> {
                       mapboxMap.setFeatureState(
-                              interactiveFeature,
+                              selectedFeature,
                               new FeatureState.Builder().addBooleanState("active", true).build()
                       );
-                      mapboxMap.removeFeatureState(interactiveFeature);
-                      mapboxMap.removeFeatureState(interactiveFeature.getFeaturesetHolder(), interactiveFeature.getFeature().id(), "stateKey");
+                      mapboxMap.removeFeatureState(selectedFeature);
+                      mapboxMap.removeFeatureState(selectedFeature.getDescriptor(), selectedFeature.getId(), FeatureStateKey.create("key"));
                       return true;
                     }
             )
     );
 
-    final FeaturesetHolder.Layer layer = new FeaturesetHolder.Layer("layerId");
+    final TypedFeaturesetDescriptor.Layer layer = new TypedFeaturesetDescriptor.Layer("layerId");
     final Cancelable cancelable2 = mapboxMap.addInteraction(
             ClickInteraction.layer(
                     layer.getLayerId(),
-                    (interactiveFeature, context) -> {
-                      mapboxMap.setFeatureState(layer, interactiveFeature.getFeature().id(), interactiveFeature.getFeatureNamespace(), new FeatureState.Builder().build());
-                      mapboxMap.getFeatureState(layer, "featureId", result -> {
+                    (selectedFeature, context) -> {
+                      mapboxMap.setFeatureState(layer, selectedFeature.getId(), new FeatureState.Builder().build());
+                      mapboxMap.getFeatureState(layer, new FeaturesetFeatureId("featureId", null), result -> {
                         result.getBooleanState("active");
                       });
                       return true;

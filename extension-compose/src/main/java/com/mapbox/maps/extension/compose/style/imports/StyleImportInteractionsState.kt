@@ -9,10 +9,10 @@ import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions
-import com.mapbox.maps.extension.compose.style.interactions.InteractiveFeatureScope
+import com.mapbox.maps.extension.compose.style.interactions.FeaturesetFeatureScope
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
  * Convenient method to create a [StyleImportInteractionsState] and remember it with the init block.
@@ -42,24 +42,24 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
   }
 
   /**
-   * Add the [ClickInteraction] for given featureset defined with [featuresetId] and optional [importId].
+   * Add the [ClickInteraction] for given featureset defined with [id] and optional [importId].
    *
-   * When several [ClickInteraction]s are registered for the same [featuresetId] and [importId] - the callbacks will be triggered from last to first.
+   * When several [ClickInteraction]s are registered for the same [id] and [importId] - the callbacks will be triggered from last to first.
    *
-   * @param featuresetId mandatory featureset id.
+   * @param id mandatory featureset id.
    * @param importId optional style import id, if not set, the ID will be taken from [StyleImport.importId].
    * @param filter optional filter. Defaults to NULL.
    * @param onClick callback triggered when featureset is clicked.
    */
   @MapboxExperimental
   public fun onFeaturesetClicked(
-    featuresetId: String,
+    id: String,
     importId: String? = null,
     filter: Expression? = null,
-    onClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     clickInteractionFeatureset(
-      featuresetId = featuresetId,
+      featuresetId = id,
       importId = importId,
       filter = filter,
       onClick = onClick
@@ -67,24 +67,24 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
   }
 
   /**
-   * Add the [LongClickInteraction] for given featureset defined with [featuresetId] and optional [importId].
+   * Add the [LongClickInteraction] for given featureset defined with [id] and optional [importId].
    *
-   * When several [LongClickInteraction]s are registered for the same [featuresetId] and [importId] - the callbacks will be triggered from last to first.
+   * When several [LongClickInteraction]s are registered for the same [id] and [importId] - the callbacks will be triggered from last to first.
    *
-   * @param featuresetId mandatory featureset id.
+   * @param id mandatory featureset id.
    * @param importId optional style import id,  if not set, the ID will be taken from [StyleImport.importId].
    * @param filter optional filter. Defaults to NULL.
    * @param onLongClick callback triggered when featureset is clicked.
    */
   @MapboxExperimental
   public fun onFeaturesetLongClicked(
-    featuresetId: String,
+    id: String,
     importId: String? = null,
     filter: Expression? = null,
-    onLongClick: InteractiveFeatureScope.(InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+    onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     longClickInteractionFeatureset(
-      featuresetId = featuresetId,
+      featuresetId = id,
       importId = importId,
       filter = filter,
       onLongClick = onLongClick
@@ -100,7 +100,7 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    */
   @MapboxExperimental
   public fun onMapClicked(
-    onClick: InteractiveFeatureScope.(InteractionContext) -> Boolean
+    onClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     clickInteractionMap(onClick)
   }
@@ -114,7 +114,7 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    */
   @MapboxExperimental
   public fun onMapLongClicked(
-    onLongClick: InteractiveFeatureScope.(InteractionContext) -> Boolean
+    onLongClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     longClickInteractionMap(onLongClick)
   }

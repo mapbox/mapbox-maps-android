@@ -4,14 +4,16 @@ import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.FeaturesetDescriptor
+import com.mapbox.maps.FeaturesetFeatureId
 import com.mapbox.maps.MapboxExperimental
 import java.util.Objects
 
 /**
- * Holder class to differentiate featuresets.
+ * Base class to differentiate featuresets.
+ * All available implementations are declared as nested classes and could be accessed as `TypedFeaturesetDescriptor.*`.
  */
 @MapboxExperimental
-abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
+abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeature<FS>> private constructor() {
 
   /**
    * For internal usage.
@@ -29,11 +31,11 @@ abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
    * For internal usage.
    */
   @RestrictTo(RestrictTo.Scope.LIBRARY)
-  abstract fun getInteractiveFeature(
+  abstract fun getFeaturesetFeature(
     feature: Feature,
     featureNamespace: String?,
     rawState: Value
-  ): InteractiveFeature<FS>
+  ): FF
 
   /**
    * Represents an actual featureset.
@@ -45,7 +47,7 @@ abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
   class Featureset @JvmOverloads constructor(
     val featuresetId: String,
     val importId: String? = null
-  ) : FeaturesetHolder<FeatureState>() {
+  ) : TypedFeaturesetDescriptor<FeatureState, FeaturesetFeature<FeatureState>>() {
 
     /**
      * For internal usage.
@@ -60,15 +62,22 @@ abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
     /**
      * For internal usage.
      */
-    override fun getInteractiveFeature(
+    override fun getFeaturesetFeature(
       feature: Feature,
       featureNamespace: String?,
       rawState: Value
-    ) = InteractiveFeature(
-      featuresetHolder = this,
-      feature = feature,
-      featureNamespace = featureNamespace,
-      state = getFeatureState(rawState)
+    ) = feature.id()?.let { featureId ->
+      FeaturesetFeature(
+        descriptor = this,
+        id = FeaturesetFeatureId(featureId, featureNamespace),
+        state = getFeatureState(rawState),
+        originalFeature = feature
+      )
+    } ?: FeaturesetFeature(
+      descriptor = this,
+      id = null,
+      state = getFeatureState(rawState),
+      originalFeature = feature
     )
 
     /**
@@ -102,7 +111,7 @@ abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
   @MapboxExperimental
   class Layer(
     val layerId: String,
-  ) : FeaturesetHolder<FeatureState>() {
+  ) : TypedFeaturesetDescriptor<FeatureState, FeaturesetFeature<FeatureState>>() {
 
     /**
      * For internal usage.
@@ -117,15 +126,22 @@ abstract class FeaturesetHolder<FS : FeatureState> private constructor() {
     /**
      * For internal usage.
      */
-    override fun getInteractiveFeature(
+    override fun getFeaturesetFeature(
       feature: Feature,
       featureNamespace: String?,
       rawState: Value
-    ) = InteractiveFeature(
-      featuresetHolder = this,
-      feature = feature,
-      featureNamespace = featureNamespace,
-      state = getFeatureState(rawState)
+    ) = feature.id()?.let { featureId ->
+      FeaturesetFeature(
+        descriptor = this,
+        id = FeaturesetFeatureId(featureId, featureNamespace),
+        state = getFeatureState(rawState),
+        originalFeature = feature
+      )
+    } ?: FeaturesetFeature(
+      descriptor = this,
+      id = null,
+      state = getFeatureState(rawState),
+      originalFeature = feature
     )
 
     /**

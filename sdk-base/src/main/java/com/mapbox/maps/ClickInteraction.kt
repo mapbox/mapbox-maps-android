@@ -1,12 +1,13 @@
 package com.mapbox.maps
 
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Feature
 import com.mapbox.maps.ClickInteraction.Companion.featureset
 import com.mapbox.maps.ClickInteraction.Companion.invoke
 import com.mapbox.maps.ClickInteraction.Companion.layer
 import com.mapbox.maps.interactions.FeatureState
-import com.mapbox.maps.interactions.FeaturesetHolder
-import com.mapbox.maps.interactions.InteractiveFeature
+import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 
 /**
  * Defines the click interaction.
@@ -26,23 +27,33 @@ import com.mapbox.maps.interactions.InteractiveFeature
  *  3. When having several [ClickInteraction]s with the same [FeaturesetDescriptor] / map surface (see point 2) - the **last** registered [ClickInteraction] will be triggered **first**.
  */
 @MapboxExperimental
-class ClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
+class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
   private constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
     onClick: (T, InteractionContext) -> Boolean,
-    interactiveFeatureBuilder: (QueriedFeature) -> T
+    featuresetFeatureBuilder: (Feature, FeaturesetFeatureId?, Value) -> T
   ) {
     coreInteraction = Interaction(
       /* featuresetDescriptor */ featureset,
       /* filter */ filter,
       InteractionType.CLICK,
       object : InteractionHandler {
-        override fun handleBegin(feature: QueriedFeature?, context: InteractionContext): Boolean =
-          feature?.let {
-            onClick(interactiveFeatureBuilder(it), context)
-          } ?: false
+        override fun handleBegin(feature: QueriedFeature?, context: InteractionContext): Boolean {
+          // it is fine to have the QueriedFeature without an ID but we require the geometry
+          if (feature?.feature?.geometry() != null) {
+            return onClick(
+              featuresetFeatureBuilder(
+                feature.feature,
+                feature.featuresetFeatureId,
+                feature.state
+              ),
+              context
+            )
+          }
+          return false
+        }
 
         override fun handleChange(context: InteractionContext) {
           // not needed
@@ -80,13 +91,12 @@ class ClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
    * Static variables and methods.
    */
   companion object {
-
     /**
-     * Create the [ClickInteraction] for given featureset defined with [featuresetId] and optional [importId].
+     * Create the [ClickInteraction] for given featureset defined with [id] and optional [importId].
      *
-     * When several [ClickInteraction]s are registered for the same [featuresetId] and [importId] - the callbacks will be triggered from last to first.
+     * When several [ClickInteraction]s are registered for the same [id] and [importId] - the callbacks will be triggered from last to first.
      *
-     * @param featuresetId mandatory featureset id.
+     * @param id mandatory featureset id.
      * @param importId optional style import id.
      * @param filter optional filter. Defaults to NULL.
      * @param onClick callback triggered when featureset is clicked.
@@ -95,31 +105,31 @@ class ClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
     @JvmStatic
     @MapboxExperimental
     fun featureset(
-      featuresetId: String,
+      id: String,
       importId: String? = null,
       filter: Value? = null,
-      onClick: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+      onClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return ClickInteraction(
-        FeaturesetDescriptor(featuresetId, importId, null),
+        FeaturesetDescriptor(id, importId, null),
         filter,
         onClick
-      ) {
-        InteractiveFeature(
-          featuresetHolder = FeaturesetHolder.Featureset(featuresetId, importId),
-          feature = it.feature,
-          featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = FeatureState(it.state)
+      ) { feature, featuresetFeatureId, state ->
+        FeaturesetFeature(
+          descriptor = TypedFeaturesetDescriptor.Featureset(id, importId),
+          originalFeature = feature,
+          id = featuresetFeatureId,
+          state = FeatureState(state)
         )
       }
     }
 
     /**
-     * Create the [ClickInteraction] for given [layerId].
+     * Create the [ClickInteraction] for given [id].
      *
-     * When several [ClickInteraction]s are registered for the same [layerId] - the callbacks will be triggered from last to first.
+     * When several [ClickInteraction]s are registered for the same [id] - the callbacks will be triggered from last to first.
      *
-     * @param layerId mandatory layer id.
+     * @param id mandatory layer id.
      * @param filter optional filter. Defaults to NULL.
      * @param onClick callback triggered when layer is clicked.
      */
@@ -127,20 +137,20 @@ class ClickInteraction<T : InteractiveFeature<*>> : MapInteraction {
     @JvmStatic
     @MapboxExperimental
     fun layer(
-      layerId: String,
+      id: String,
       filter: Value? = null,
-      onClick: (InteractiveFeature<FeatureState>, InteractionContext) -> Boolean
+      onClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return ClickInteraction(
-        FeaturesetDescriptor(null, null, layerId),
+        FeaturesetDescriptor(null, null, id),
         filter,
         onClick
-      ) {
-        InteractiveFeature(
-          featuresetHolder = FeaturesetHolder.Layer(layerId),
-          feature = it.feature,
-          featureNamespace = it.featuresetFeatureId?.featureNamespace,
-          state = FeatureState(it.state)
+      ) { feature, featuresetFeatureId, state ->
+        FeaturesetFeature(
+          descriptor = TypedFeaturesetDescriptor.Layer(id),
+          originalFeature = feature,
+          id = featuresetFeatureId,
+          state = FeatureState(state)
         )
       }
     }
