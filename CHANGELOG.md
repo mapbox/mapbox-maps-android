@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.7.0
+
+# 11.7.0 September 26, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `PointAnnotationState.iconOcclusionOpacity`, `PointAnnotationState.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
 * [compose] Remove `MapboxExperimental` from `PolylineAnnotationGroupState.lineOcclusionOpacity`, `PointAnnotationGroupState.iconOcclusionOpacity`, `PointAnnotationGroupState.textOcclusionOpacity`.
@@ -75,6 +76,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.7.0 and common to v24.7.0.
+
 
 
 # 11.7.0-rc.1 September 16, 2024
