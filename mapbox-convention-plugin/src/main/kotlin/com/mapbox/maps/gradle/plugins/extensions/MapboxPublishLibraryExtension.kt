@@ -42,21 +42,6 @@ constructor(objects: ObjectFactory) {
    */
   public var dryRun: Boolean by sdkRegistryPublication::dryRun
   /**
-   * Defines whether to publish the release when artifacts are uploaded.
-   *
-   * When enabled, the task will publish the release after the artifacts are uploaded.
-   */
-  public var publish: Boolean by sdkRegistryPublication::publish
-  /**
-   * Defines the message appending to the publish PR's description.
-   *
-   * Optional, when specified, the message would be appended to the publish PR.
-   * Use this option to add the team for review.
-   *
-   * Default: "cc @mapbox/maps-android"
-   */
-  public var publishMessage: String by sdkRegistryPublication::publishMessage
-  /**
    * Defines whether to exclude the current module from the root project level's `mapboxSDKRegistryPublishAll` task.
    *
    * If true is specified, the module related sdk-registry tasks will be ignored from root project level's `mapboxSDKRegistryPublishAll` task.
@@ -70,6 +55,8 @@ constructor(objects: ObjectFactory) {
   public var excludeFromRootProject: Boolean by sdkRegistryPublication::excludeFromRootProject
 
   private val enabledProperty: Property<Boolean> = objects.property<Boolean>().convention(false)
+  private val publishProperty: Property<Boolean> = objects.property<Boolean>().convention(true)
+  private val publishMessageProperty: Property<String> = objects.property<String>().convention("cc @mapbox/maps-android")
   private val versionNameOverrideProperty: Property<String> = objects.property<String>()
   private val snapshotOverrideProperty: Property<Boolean> = objects.property<Boolean>()
   private val groupProperty: Property<String> = objects.property<String>()
@@ -77,74 +64,76 @@ constructor(objects: ObjectFactory) {
   private val artifactTitleProperty: Property<String> = objects.property<String>()
   private val artifactDescriptionProperty: Property<String> = objects.property<String>()
   private val publishNdkVariantProperty: Property<Boolean> = objects.property<Boolean>().convention(true)
-
-  init {
-    // Default value for publishMessage
-    publishMessage = "cc @mapbox/maps-android"
-  }
+  /**
+   * Defines whether to publish the release when artifacts are uploaded.
+   *
+   * When enabled, the task will publish the release after the artifacts are uploaded.
+   *
+   * Default: true
+   */
+  public var publish: Boolean
+    get() = publishProperty.get()
+    set(value) = publishProperty.setDisallowChanges(value)
+  /**
+   * Defines the message appending to the publish PR's description.
+   *
+   * Optional, when specified, the message would be appended to the publish PR.
+   * Use this option to add the team for review.
+   *
+   * Default: "cc @mapbox/maps-android"
+   */
+  public var publishMessage: String
+    get() = publishMessageProperty.get()
+    set(value) = publishMessageProperty.setDisallowChanges(value)
 
   /**
    * Internal flag to know if this extension should be configured.
    */
   internal var enabled: Boolean
     get() = enabledProperty.get()
-    set(value) {
-      enabledProperty.setDisallowChanges(value)
-    }
+    set(value) = enabledProperty.setDisallowChanges(value)
 
   /**
    * Version name to use instead of the global one (defined in project property `VERSION_NAME`).
    */
   public var versionNameOverride: String
     get() = versionNameOverrideProperty.get()
-    set(value) {
-      versionNameOverrideProperty.setDisallowChanges(value)
-    }
+    set(value) = versionNameOverrideProperty.setDisallowChanges(value)
 
   /**
    * Group ID for this project.
    */
   public var group: String
     get() = groupProperty.get()
-    set(value) {
-      groupProperty.setDisallowChanges(value)
-    }
+    set(value) = groupProperty.setDisallowChanges(value)
 
   /**
    * Artifact ID for this project.
    */
   public var artifactId: String
     get() = artifactIdProperty.get()
-    set(value) {
-      artifactIdProperty.setDisallowChanges(value)
-    }
+    set(value) = artifactIdProperty.setDisallowChanges(value)
 
   /**
    * Force snapshot value, ignoring if version name contains `-SNAPSHOT`.
    */
   internal var snapshotOverride: Boolean
     get() = snapshotOverrideProperty.get()
-    set(value) {
-      snapshotOverrideProperty.setDisallowChanges(value)
-    }
+    set(value) = snapshotOverrideProperty.setDisallowChanges(value)
 
   /**
    * The POM description field content.
    */
   public var artifactDescription: String
     get() = artifactDescriptionProperty.get()
-    set(value) {
-      artifactDescriptionProperty.setDisallowChanges(value)
-    }
+    set(value) = artifactDescriptionProperty.setDisallowChanges(value)
 
   /**
    * The POM title field content.
    */
   public var artifactTitle: String
     get() = artifactTitleProperty.get()
-    set(value) {
-      artifactTitleProperty.setDisallowChanges(value)
-    }
+    set(value) = artifactTitleProperty.setDisallowChanges(value)
 
   /**
    * If true, the artifact ID will be suffixed by the NDK Major version if it's not the default
@@ -154,9 +143,7 @@ constructor(objects: ObjectFactory) {
    */
   public var publishNdkVariant: Boolean
     get() = publishNdkVariantProperty.get()
-    set(value) {
-      publishNdkVariantProperty.setDisallowChanges(value)
-    }
+    set(value) = publishNdkVariantProperty.setDisallowChanges(value)
 
   internal fun applyTo(project: Project) {
     project.applyRequiredPlugins()
