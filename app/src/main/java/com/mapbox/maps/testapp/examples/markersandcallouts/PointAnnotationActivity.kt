@@ -18,7 +18,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.not
-import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.toNumber
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
@@ -239,6 +238,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     binding.deleteAll.setOnClickListener {
       pointAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
+        pointAnnotationManager = null
       }
     }
     binding.changeStyle.setOnClickListener {
@@ -275,10 +275,16 @@ class PointAnnotationActivity : AppCompatActivity() {
             eq(get(idKey), literal(pointAnnotation!!.id))
           val filter = pointAnnotationManager!!.layerFilter
           if (filter != null && filter == expression) {
-            pointAnnotationManager!!.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
+            pointAnnotationManager!!.layerFilter = not(eq(get(idKey), literal("")))
           } else {
             pointAnnotationManager!!.layerFilter = expression
           }
+        } else {
+          Toast.makeText(
+            this@PointAnnotationActivity,
+            "pointAnnotationManager or pointAnnotation is null.",
+            Toast.LENGTH_LONG
+          ).show()
         }
       }
 
