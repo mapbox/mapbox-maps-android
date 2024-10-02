@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.Color
 import com.mapbox.bindgen.Value
-import java.util.*
 
 /**
  * Options to show and configure symbol clustering with using `PointAnnotationManager` or `CircleAnnotationManager`.
@@ -17,8 +16,8 @@ data class ClusterOptions @JvmOverloads constructor(
    * If the data is a collection of point features, setting this to true clusters the points
    * by radius into groups. Cluster groups become new `Point` features in the source with additional properties:
    * - `cluster` Is `true` if the point is a cluster
-   * - `cluster_id` A unqiue id for the cluster to be used in conjunction with the
-   * [cluster inspection methods](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)
+   * - `cluster_id` A unique id for the cluster to be used in conjunction with the
+   * [cluster inspection methods](https://docs.mapbox.com/mapbox-gl-js/api/sources/#geojsonsource#getclusterexpansionzoom, https://docs.mapbox.com/mapbox-gl-js/api/sources/#geojsonsource#getclusterchildren, https://docs.mapbox.com/mapbox-gl-js/api/sources/#geojsonsource#getclusterleaves)
    * - `point_count` Number of original points grouped into this cluster
    * - `point_count_abbreviated` An abbreviated point count
    */

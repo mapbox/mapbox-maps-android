@@ -106,10 +106,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotation 
 public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotation$Companion {
 }
 
-public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager : com/mapbox/maps/plugin/annotation/AnnotationManagerImpl {
+public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager : com/mapbox/maps/plugin/annotation/AnnotationManagerImpl, com/mapbox/maps/plugin/annotation/ClusterAnnotationManager {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager$Companion;
 	public fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public fun addClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
 	public final fun create (Lcom/mapbox/geojson/FeatureCollection;)Ljava/util/List;
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
@@ -128,8 +130,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public final fun getCircleTranslate ()Ljava/util/List;
 	public final fun getCircleTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;
+	public fun getClusterClickListeners ()Ljava/util/List;
+	public fun getClusterLongClickListeners ()Ljava/util/List;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSlot ()Ljava/lang/String;
+	public fun removeClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public fun removeClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColorInt (Ljava/lang/Integer;)V
 	public final fun setCircleColorString (Ljava/lang/String;)V
@@ -356,13 +362,17 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation$Companion {
 }
 
-public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationManager : com/mapbox/maps/plugin/annotation/AnnotationManagerImpl {
+public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationManager : com/mapbox/maps/plugin/annotation/AnnotationManagerImpl, com/mapbox/maps/plugin/annotation/ClusterAnnotationManager {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationManager$Companion;
 	public fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public fun addClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
 	public final fun create (Lcom/mapbox/geojson/FeatureCollection;)Ljava/util/List;
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
+	public fun getClusterClickListeners ()Ljava/util/List;
+	public fun getClusterLongClickListeners ()Ljava/util/List;
 	public final fun getIconAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColorInt ()Ljava/lang/Integer;
@@ -434,6 +444,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getTextTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTranslateAnchor;
 	public final fun getTextVariableAnchor ()Ljava/util/List;
 	public final fun getTextWritingMode ()Ljava/util/List;
+	public fun removeClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public fun removeClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
 	public final fun setIconAllowOverlap (Ljava/lang/Boolean;)V
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColorInt (Ljava/lang/Integer;)V

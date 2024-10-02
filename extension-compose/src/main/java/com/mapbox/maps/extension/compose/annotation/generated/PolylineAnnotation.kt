@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.compose.annotation.internal.generated.PolylineA
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
 
@@ -29,9 +30,35 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("PolylineAnnotation(point, polylineAnnotationState)"),
+  level = DeprecationLevel.WARNING
+)
 public fun PolylineAnnotation(
   points: List<Point>,
   onClick: (PolylineAnnotation) -> Boolean = { false },
+  polylineAnnotationState: PolylineAnnotationState = remember { PolylineAnnotationState() },
+) {
+  PolylineAnnotation(
+    points = points,
+    polylineAnnotationState = polylineAnnotationState.also {
+      it.interactionsState.onClicked(onClick = onClick)
+  }
+ )
+}
+
+/**
+ * Composable function to add a [PolylineAnnotation] to the Map. For convenience, if there's
+ * no need to hoist the [polylineAnnotationState], use `PolylineAnnotation(points, init)` with trailing lambda instead.
+ *
+ * @param points A list of Point for the line, which represents the locations of the line on the map.
+ * @param polylineAnnotationState The state holder for [PolylineAnnotation] properties.
+ */
+@Composable
+@MapboxMapComposable
+public fun PolylineAnnotation(
+  points: List<Point>,
   polylineAnnotationState: PolylineAnnotationState = remember { PolylineAnnotationState() },
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
@@ -41,21 +68,22 @@ public fun PolylineAnnotation(
     mutableStateOf<PolylineAnnotationNode?>(null)
   }
 
+  var annotationManager by remember {
+    mutableStateOf<PolylineAnnotationManager?>(null)
+  }
+
   ComposeNode<PolylineAnnotationNode, MapApplier>(
     factory = {
-      val annotationManager = mapApplier.mapView.annotations.createPolylineAnnotationManager()
+      val factoryAnnotationManager = mapApplier.mapView.annotations.createPolylineAnnotationManager().also { annotationManager = it }
       val annotationOptions: PolylineAnnotationOptions = PolylineAnnotationOptions()
         .withPoints(points)
-      val annotation = annotationManager.create(annotationOptions)
-      PolylineAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick).also { annotationNode = it }
+      val annotation = factoryAnnotationManager.create(annotationOptions)
+      PolylineAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
     update = {
-      update(onClick) {
-        onClicked = it
-      }
       update(points) {
-        annotation.points = it
-        annotationManager.update(annotation)
+        this.annotation.points = it
+        this.annotationManager.update(annotation)
       }
     }
   ) {
@@ -63,6 +91,11 @@ public fun PolylineAnnotation(
       annotationNode?.let {
         polylineAnnotationState.UpdateProperties(it)
       }
+    }
+  }
+  key(polylineAnnotationState.interactionsState) {
+    annotationManager?.let {
+      polylineAnnotationState.interactionsState.BindTo(it)
     }
   }
 }
@@ -76,6 +109,11 @@ public fun PolylineAnnotation(
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("PolylineAnnotation(point, init)"),
+  level = DeprecationLevel.WARNING
+)
 public inline fun PolylineAnnotation(
   points: List<Point>,
   noinline onClick: (PolylineAnnotation) -> Boolean = { false },
@@ -84,6 +122,26 @@ public inline fun PolylineAnnotation(
   PolylineAnnotation(
     points = points,
     onClick = onClick,
+    polylineAnnotationState = remember {
+      PolylineAnnotationState()
+    }.apply(init),
+  )
+}
+
+/**
+ * Composable function to add a [PolylineAnnotation] to the Map.
+ *
+ * @param points A list of Point for the line, which represents the locations of the line on the map.
+ * @param init the lambda that will be applied to the remembered [PolylineAnnotationState].
+ */
+@Composable
+@MapboxMapComposable
+public inline fun PolylineAnnotation(
+  points: List<Point>,
+  crossinline init: PolylineAnnotationState.() -> Unit,
+) {
+  PolylineAnnotation(
+    points = points,
     polylineAnnotationState = remember {
       PolylineAnnotationState()
     }.apply(init),

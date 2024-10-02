@@ -18,6 +18,9 @@ import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
+import com.mapbox.maps.plugin.annotation.ClusterAnnotationManager
+import com.mapbox.maps.plugin.annotation.OnClusterClickListener
+import com.mapbox.maps.plugin.annotation.OnClusterLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation.Companion.ICON_DEFAULT_NAME_PREFIX
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import java.util.Locale
@@ -32,7 +35,18 @@ class PointAnnotationManager(
 ) :
   AnnotationManagerImpl<Point, PointAnnotation, PointAnnotationOptions, OnPointAnnotationDragListener, OnPointAnnotationClickListener, OnPointAnnotationLongClickListener, OnPointAnnotationInteractionListener, SymbolLayer>(
     delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "pointAnnotation", ::SymbolLayer
-  ) {
+  ),
+  ClusterAnnotationManager {
+
+  /**
+   * The Added clusterClickListeners
+   */
+  override val clusterClickListeners: MutableList<OnClusterClickListener> = mutableListOf()
+
+  /**
+   * The Added clusterLongClickListeners
+   */
+  override val clusterLongClickListeners: MutableList<OnClusterLongClickListener> = mutableListOf()
 
   @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {

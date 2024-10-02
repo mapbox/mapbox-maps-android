@@ -13,6 +13,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
@@ -53,6 +54,14 @@ class PolygonAnnotationActivity : AppCompatActivity() {
         addClickListener(
           OnPolygonAnnotationClickListener {
             Toast.makeText(this@PolygonAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+              .show()
+            false
+          }
+        )
+
+        addLongClickListener(
+          OnPolygonAnnotationLongClickListener {
+            Toast.makeText(this@PolygonAnnotationActivity, "long click ${it.id}", Toast.LENGTH_SHORT)
               .show()
             false
           }

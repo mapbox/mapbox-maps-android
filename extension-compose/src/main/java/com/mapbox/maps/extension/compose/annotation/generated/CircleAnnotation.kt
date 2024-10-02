@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnn
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 
@@ -29,9 +30,35 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("CircleAnnotation(point, circleAnnotationState)"),
+  level = DeprecationLevel.WARNING
+)
 public fun CircleAnnotation(
   point: Point,
   onClick: (CircleAnnotation) -> Boolean = { false },
+  circleAnnotationState: CircleAnnotationState = remember { CircleAnnotationState() },
+) {
+  CircleAnnotation(
+    point = point,
+    circleAnnotationState = circleAnnotationState.also {
+      it.interactionsState.onClicked(onClick = onClick)
+  }
+ )
+}
+
+/**
+ * Composable function to add a [CircleAnnotation] to the Map. For convenience, if there's
+ * no need to hoist the [circleAnnotationState], use `CircleAnnotation(point, init)` with trailing lambda instead.
+ *
+ * @param point The Point of the circleAnnotation, which represents the location of the circleAnnotation on the map.
+ * @param circleAnnotationState The state holder for [CircleAnnotation] properties.
+ */
+@Composable
+@MapboxMapComposable
+public fun CircleAnnotation(
+  point: Point,
   circleAnnotationState: CircleAnnotationState = remember { CircleAnnotationState() },
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
@@ -41,21 +68,22 @@ public fun CircleAnnotation(
     mutableStateOf<CircleAnnotationNode?>(null)
   }
 
+  var annotationManager by remember {
+    mutableStateOf<CircleAnnotationManager?>(null)
+  }
+
   ComposeNode<CircleAnnotationNode, MapApplier>(
     factory = {
-      val annotationManager = mapApplier.mapView.annotations.createCircleAnnotationManager()
+      val factoryAnnotationManager = mapApplier.mapView.annotations.createCircleAnnotationManager().also { annotationManager = it }
       val annotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
         .withPoint(point)
-      val annotation = annotationManager.create(annotationOptions)
-      CircleAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick).also { annotationNode = it }
+      val annotation = factoryAnnotationManager.create(annotationOptions)
+      CircleAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
     update = {
-      update(onClick) {
-        onClicked = it
-      }
       update(point) {
-        annotation.point = it
-        annotationManager.update(annotation)
+        this.annotation.point = it
+        this.annotationManager.update(annotation)
       }
     }
   ) {
@@ -63,6 +91,11 @@ public fun CircleAnnotation(
       annotationNode?.let {
         circleAnnotationState.UpdateProperties(it)
       }
+    }
+  }
+  key(circleAnnotationState.interactionsState) {
+    annotationManager?.let {
+      circleAnnotationState.interactionsState.BindTo(it)
     }
   }
 }
@@ -76,6 +109,11 @@ public fun CircleAnnotation(
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("CircleAnnotation(point, init)"),
+  level = DeprecationLevel.WARNING
+)
 public inline fun CircleAnnotation(
   point: Point,
   noinline onClick: (CircleAnnotation) -> Boolean = { false },
@@ -84,6 +122,26 @@ public inline fun CircleAnnotation(
   CircleAnnotation(
     point = point,
     onClick = onClick,
+    circleAnnotationState = remember {
+      CircleAnnotationState()
+    }.apply(init),
+  )
+}
+
+/**
+ * Composable function to add a [CircleAnnotation] to the Map.
+ *
+ * @param point The Point of the circleAnnotation, which represents the location of the circleAnnotation on the map.
+ * @param init the lambda that will be applied to the remembered [CircleAnnotationState].
+ */
+@Composable
+@MapboxMapComposable
+public inline fun CircleAnnotation(
+  point: Point,
+  crossinline init: CircleAnnotationState.() -> Unit,
+) {
+  CircleAnnotation(
+    point = point,
     circleAnnotationState = remember {
       CircleAnnotationState()
     }.apply(init),

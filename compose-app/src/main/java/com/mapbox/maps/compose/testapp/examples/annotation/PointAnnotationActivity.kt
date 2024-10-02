@@ -1,6 +1,7 @@
 package com.mapbox.maps.compose.testapp.examples.annotation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -85,6 +86,14 @@ public class PointAnnotationActivity : ComponentActivity() {
             PointAnnotation(point = CityLocations.HELSINKI) {
               iconImage = marker
               textField = text
+              interactionsState.onClicked {
+                Toast.makeText(this@PointAnnotationActivity, "First", Toast.LENGTH_SHORT).show()
+                interactionsState.onClicked {
+                  Toast.makeText(this@PointAnnotationActivity, "Second", Toast.LENGTH_SHORT).show()
+                  true
+                }
+                true
+              }
             }
           }
         }

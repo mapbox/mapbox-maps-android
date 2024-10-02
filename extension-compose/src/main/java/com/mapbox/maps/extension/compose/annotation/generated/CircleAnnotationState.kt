@@ -24,6 +24,7 @@ public class CircleAnnotationState private constructor(
   initialCircleStrokeColor: Color?,
   initialCircleStrokeOpacity: Double?,
   initialCircleStrokeWidth: Double?,
+  initialCircleAnnotationInteractionsState: CircleAnnotationInteractionsState,
 ) {
 
   public constructor() : this(
@@ -34,8 +35,13 @@ public class CircleAnnotationState private constructor(
     initialCircleStrokeColor = null,
     initialCircleStrokeOpacity = null,
     initialCircleStrokeWidth = null,
-  )
+    initialCircleAnnotationInteractionsState = CircleAnnotationInteractionsState(),
+)
 
+  /**
+  * All interactions with [PointAnnotation]
+  */
+  public var interactionsState: CircleAnnotationInteractionsState by mutableStateOf(initialCircleAnnotationInteractionsState)
   /**
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
    */

@@ -3,6 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Introduce `OnClusterClickListener` and `OnClusterLongClickListener` for `CircleAnnotationManager` and `PointAnnotationManager`. These callbacks receive the clicked cluster represented by a `ClusterFeature`.
+* [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
+* [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.
+* [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
 
 # 11.7.0 September 26, 2024
 ## Features ✨ and improvements 🏁
@@ -77,8 +82,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v11.7.0 and common to v24.7.0.
 
-
-
 # 11.7.0-rc.1 September 16, 2024
 ## Breaking changes ⚠️
 * Experimental interactive features API changes:
@@ -112,7 +115,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix retrieval of tilesets for 3d tiles in offline mode.
 * Fix rendering errors of patterns on high zoom levels.
 * Fix a bug where style changes weren't reflected after the source layer of a layer was changed.
-
 
 # 11.6.1 September 10, 2024
 ## Bug fixes 🐞

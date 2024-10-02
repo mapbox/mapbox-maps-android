@@ -58,6 +58,7 @@ public class PointAnnotationState private constructor(
   initialTextHaloWidth: Double?,
   initialTextOcclusionOpacity: Double?,
   initialTextOpacity: Double?,
+  initialPointAnnotationInteractionsState: PointAnnotationInteractionsState,
 ) {
 
   public constructor() : this(
@@ -95,8 +96,13 @@ public class PointAnnotationState private constructor(
     initialTextHaloWidth = null,
     initialTextOcclusionOpacity = null,
     initialTextOpacity = null,
-  )
+    initialPointAnnotationInteractionsState = PointAnnotationInteractionsState(),
+)
 
+  /**
+  * All interactions with [PointAnnotation]
+  */
+  public var interactionsState: PointAnnotationInteractionsState by mutableStateOf(initialPointAnnotationInteractionsState)
   /**
    * Part of the icon placed closest to the anchor.
    */

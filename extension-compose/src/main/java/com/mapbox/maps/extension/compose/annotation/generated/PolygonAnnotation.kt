@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.compose.annotation.internal.generated.PolygonAn
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
 
@@ -29,9 +30,35 @@ import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManage
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("PolygonAnnotation(point, polygonAnnotationState)"),
+  level = DeprecationLevel.WARNING
+)
 public fun PolygonAnnotation(
   points: List<List<Point>>,
   onClick: (PolygonAnnotation) -> Boolean = { false },
+  polygonAnnotationState: PolygonAnnotationState = remember { PolygonAnnotationState() },
+) {
+  PolygonAnnotation(
+    points = points,
+    polygonAnnotationState = polygonAnnotationState.also {
+      it.interactionsState.onClicked(onClick = onClick)
+  }
+ )
+}
+
+/**
+ * Composable function to add a [PolygonAnnotation] to the Map. For convenience, if there's
+ * no need to hoist the [polygonAnnotationState], use `PolygonAnnotation(points, init)` with trailing lambda instead.
+ *
+ * @param points A list of lists of Point for the fill, which represents the locations of the fill on the map.
+ * @param polygonAnnotationState The state holder for [PolygonAnnotation] properties.
+ */
+@Composable
+@MapboxMapComposable
+public fun PolygonAnnotation(
+  points: List<List<Point>>,
   polygonAnnotationState: PolygonAnnotationState = remember { PolygonAnnotationState() },
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
@@ -41,21 +68,22 @@ public fun PolygonAnnotation(
     mutableStateOf<PolygonAnnotationNode?>(null)
   }
 
+  var annotationManager by remember {
+    mutableStateOf<PolygonAnnotationManager?>(null)
+  }
+
   ComposeNode<PolygonAnnotationNode, MapApplier>(
     factory = {
-      val annotationManager = mapApplier.mapView.annotations.createPolygonAnnotationManager()
+      val factoryAnnotationManager = mapApplier.mapView.annotations.createPolygonAnnotationManager().also { annotationManager = it }
       val annotationOptions: PolygonAnnotationOptions = PolygonAnnotationOptions()
         .withPoints(points)
-      val annotation = annotationManager.create(annotationOptions)
-      PolygonAnnotationNode(mapApplier.mapView.mapboxMap, annotationManager, annotation, onClick).also { annotationNode = it }
+      val annotation = factoryAnnotationManager.create(annotationOptions)
+      PolygonAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
     update = {
-      update(onClick) {
-        onClicked = it
-      }
       update(points) {
-        annotation.points = it
-        annotationManager.update(annotation)
+        this.annotation.points = it
+        this.annotationManager.update(annotation)
       }
     }
   ) {
@@ -63,6 +91,11 @@ public fun PolygonAnnotation(
       annotationNode?.let {
         polygonAnnotationState.UpdateProperties(it)
       }
+    }
+  }
+  key(polygonAnnotationState.interactionsState) {
+    annotationManager?.let {
+      polygonAnnotationState.interactionsState.BindTo(it)
     }
   }
 }
@@ -76,6 +109,11 @@ public fun PolygonAnnotation(
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("PolygonAnnotation(point, init)"),
+  level = DeprecationLevel.WARNING
+)
 public inline fun PolygonAnnotation(
   points: List<List<Point>>,
   noinline onClick: (PolygonAnnotation) -> Boolean = { false },
@@ -84,6 +122,26 @@ public inline fun PolygonAnnotation(
   PolygonAnnotation(
     points = points,
     onClick = onClick,
+    polygonAnnotationState = remember {
+      PolygonAnnotationState()
+    }.apply(init),
+  )
+}
+
+/**
+ * Composable function to add a [PolygonAnnotation] to the Map.
+ *
+ * @param points A list of lists of Point for the fill, which represents the locations of the fill on the map.
+ * @param init the lambda that will be applied to the remembered [PolygonAnnotationState].
+ */
+@Composable
+@MapboxMapComposable
+public inline fun PolygonAnnotation(
+  points: List<List<Point>>,
+  crossinline init: PolygonAnnotationState.() -> Unit,
+) {
+  PolygonAnnotation(
+    points = points,
     polygonAnnotationState = remember {
       PolygonAnnotationState()
     }.apply(init),

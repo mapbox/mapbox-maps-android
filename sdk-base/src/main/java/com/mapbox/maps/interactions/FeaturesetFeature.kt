@@ -37,7 +37,7 @@ open class FeaturesetFeature<FS : FeatureState> @RestrictTo(RestrictTo.Scope.LIB
   /**
    * For internal usage.
    */
-  protected val originalFeature: Feature,
+  internal val originalFeature: Feature,
 ) {
   /**
    * Mandatory feature [Geometry].

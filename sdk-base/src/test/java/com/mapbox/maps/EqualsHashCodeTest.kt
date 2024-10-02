@@ -9,6 +9,7 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.annotation.ClusterFeature
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -140,6 +141,18 @@ class EqualsHashCodeTest {
   fun `ScaleBarSettings hashCode and equals test`() {
     EqualsVerifier.forClass(ScaleBarSettings::class.java)
       .usingGetClass()
+      .verify()
+  }
+
+  @Test
+  fun `ClusterFeature hashCode and equals test`() {
+    EqualsVerifier.forClass(ClusterFeature::class.java)
+      .usingGetClass()
+      .withPrefabValues(
+        Feature::class.java,
+        Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)),
+        Feature.fromGeometry(Point.fromLngLat(1.0, 1.0)),
+      )
       .verify()
   }
 

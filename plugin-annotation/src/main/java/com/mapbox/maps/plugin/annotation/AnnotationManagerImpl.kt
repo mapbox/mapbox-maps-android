@@ -43,6 +43,8 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.interactions.FeatureState
+import com.mapbox.maps.interactions.FeaturesetFeature
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -432,6 +434,7 @@ internal constructor(
             )
           )
           associatedLayers.add(clusterLevelLayer.layerId)
+          initClusterListener(clusterLevelLayer.layerId)
         }
       }
       val clusterTextLayer = createClusterTextLayer(annotationSourceOptions, typeName, id)
@@ -447,6 +450,30 @@ internal constructor(
         associatedLayers.add(clusterTextLayer.layerId)
       }
     }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun initClusterListener(clusterLayerId: String) {
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        ClickInteraction.layer(clusterLayerId) { selectedFeature, _ ->
+          if (selectedFeature.isCluster() && this is ClusterAnnotationManager) {
+            return@layer clusterClickListeners.any { it.onClusterClick(ClusterFeature(selectedFeature)) }
+          }
+          return@layer false
+        }
+      )
+    )
+    interactionsCancelableSet.add(
+      mapInteractionDelegate.addInteraction(
+        LongClickInteraction.layer(clusterLayerId) { selectedFeature, _ ->
+          if (selectedFeature.isCluster() && this is ClusterAnnotationManager) {
+            return@layer clusterLongClickListeners.any { it.onClusterLongClick(ClusterFeature(selectedFeature)) }
+          }
+          return@layer false
+        }
+      )
+    )
   }
 
   private fun createClusterLevelLayer(
@@ -725,6 +752,10 @@ internal constructor(
     clickListeners.clear()
     longClickListeners.clear()
     interactionListener.clear()
+    if (this is ClusterAnnotationManager) {
+      clusterClickListeners.clear()
+      clusterLongClickListeners.clear()
+    }
   }
 
   /**
@@ -932,6 +963,11 @@ internal constructor(
      * Should not be used.
      */
     override fun onMoveEnd(detector: MoveGestureDetector) { }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun FeaturesetFeature<FeatureState>.isCluster(): Boolean {
+    return properties.optBoolean("cluster", false)
   }
 
   /**

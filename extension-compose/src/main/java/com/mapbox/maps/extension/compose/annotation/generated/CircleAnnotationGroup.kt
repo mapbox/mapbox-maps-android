@@ -28,7 +28,6 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  * because the [CircleAnnotationGroup] is added to the map as a single layer.
  *
  * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
- *
  * @param annotations List of [CircleAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [CircleAnnotationGroup].
  * @param onClick Callback to be invoked when one of the [CircleAnnotation] in the cluster is clicked. The clicked [CircleAnnotation] will be passed as parameter.
@@ -36,10 +35,43 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("CircleAnnotationGroup(annotations, annotationConfig, circleAnnotationGroupState)"),
+  level = DeprecationLevel.WARNING
+)
 public fun CircleAnnotationGroup(
   annotations: List<CircleAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
   onClick: (CircleAnnotation) -> Boolean = { false },
+  circleAnnotationGroupState: CircleAnnotationGroupState = remember { CircleAnnotationGroupState() }
+) {
+  CircleAnnotationGroup(
+    annotations,
+    annotationConfig,
+     circleAnnotationGroupState.also {
+      it.interactionsState.onClicked(onClick = onClick)
+    }
+  )
+}
+
+/**
+ * Composable function to add a [CircleAnnotationGroup] to the Map. For convenience, if there's
+ * no need to hoist the [circleAnnotationGroupState], use `CircleAnnotationGroup(annotations, annotationConfig, onClick, init)` with trailing lambda instead.
+ *
+ * The [CircleAnnotationGroup] is more performant than adding multiple [CircleAnnotation] individually,
+ * because the [CircleAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ * @param annotations List of [CircleAnnotationOptions] to be added to the group.
+ * @param annotationConfig Configuration for [CircleAnnotationGroup].
+ * @param circleAnnotationGroupState The state holder for [CircleAnnotation]Group properties.
+ */
+@Composable
+@MapboxMapComposable
+public fun CircleAnnotationGroup(
+  annotations: List<CircleAnnotationOptions>,
+  annotationConfig: AnnotationConfig? = null,
   circleAnnotationGroupState: CircleAnnotationGroupState = remember { CircleAnnotationGroupState() }
 ) {
 
@@ -55,15 +87,11 @@ public fun CircleAnnotationGroup(
       CircleAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createCircleAnnotationManager(annotationConfig).also { annotationManager = it },
-        onClick
       )
     },
     update = {
       set(annotations) {
         annotationClusterItems = it
-      }
-      update(onClick) {
-        onClicked = it
       }
     }
   ) {
@@ -71,6 +99,11 @@ public fun CircleAnnotationGroup(
       annotationManager?.let {
         circleAnnotationGroupState.UpdateProperties(it)
       }
+    }
+  }
+  key(circleAnnotationGroupState.interactionsState) {
+    annotationManager?.let {
+     circleAnnotationGroupState.interactionsState.BindTo(it)
     }
   }
 }
@@ -82,7 +115,6 @@ public fun CircleAnnotationGroup(
  * because the [CircleAnnotationGroup] is added to the map as a single layer.
  *
  * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
- *
  * @param annotations List of [CircleAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [CircleAnnotationGroup].
  * @param onClick Callback to be invoked when one of the [CircleAnnotation] in the cluster is clicked. The clicked [CircleAnnotation] will be passed as parameter.
@@ -90,6 +122,11 @@ public fun CircleAnnotationGroup(
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("CircleAnnotationGroup(annotations, annotationConfig, init)"),
+  level = DeprecationLevel.WARNING
+)
 public inline fun CircleAnnotationGroup(
   annotations: List<CircleAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
@@ -103,4 +140,30 @@ public inline fun CircleAnnotationGroup(
     circleAnnotationGroupState = remember { CircleAnnotationGroupState() }.apply(init)
   )
 }
+
+/**
+ * Composable function to add a [CircleAnnotationGroup] to the Map.
+ *
+ * The [CircleAnnotationGroup] is more performant than adding multiple [CircleAnnotation] individually,
+ * because the [CircleAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ * @param annotations List of [CircleAnnotationOptions] to be added to the group.
+ * @param annotationConfig Configuration for [CircleAnnotationGroup].
+ * @param init the lambda that will be applied to the remembered [CircleAnnotationGroupState].
+ */
+@Composable
+@MapboxMapComposable
+public inline fun CircleAnnotationGroup(
+  annotations: List<CircleAnnotationOptions>,
+  annotationConfig: AnnotationConfig? = null,
+  crossinline init: CircleAnnotationGroupState.() -> Unit
+) {
+  CircleAnnotationGroup(
+    annotations = annotations,
+    annotationConfig = annotationConfig,
+    circleAnnotationGroupState = remember { CircleAnnotationGroupState() }.apply(init)
+  )
+}
+
 // End of generated file.

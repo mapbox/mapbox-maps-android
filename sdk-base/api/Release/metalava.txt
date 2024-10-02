@@ -754,13 +754,11 @@ package com.mapbox.maps.interactions {
     method public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> getDescriptor();
     method public final com.mapbox.geojson.Geometry getGeometry();
     method public final com.mapbox.maps.FeaturesetFeatureId? getId();
-    method protected final com.mapbox.geojson.Feature getOriginalFeature();
     method public final org.json.JSONObject getProperties();
     method public final FS getState();
     property public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor;
     property public final com.mapbox.geojson.Geometry geometry;
     property public final com.mapbox.maps.FeaturesetFeatureId? id;
-    property protected final com.mapbox.geojson.Feature originalFeature;
     property public final org.json.JSONObject properties;
     property public final FS state;
   }
@@ -1270,6 +1268,29 @@ package com.mapbox.maps.plugin.annotation {
     enum_constant public static final com.mapbox.maps.plugin.annotation.AnnotationType PolylineAnnotation;
   }
 
+  public interface ClusterAnnotationManager {
+    method public default boolean addClusterClickListener(com.mapbox.maps.plugin.annotation.OnClusterClickListener clusterClickListener);
+    method public default boolean addClusterLongClickListener(com.mapbox.maps.plugin.annotation.OnClusterLongClickListener onClusterLongClickListener);
+    method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> getClusterClickListeners();
+    method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> getClusterLongClickListeners();
+    method public default boolean removeClusterClickListener(com.mapbox.maps.plugin.annotation.OnClusterClickListener clusterClickListener);
+    method public default boolean removeClusterLongClickListener(com.mapbox.maps.plugin.annotation.OnClusterLongClickListener onClusterLongClickListener);
+    property public abstract java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> clusterClickListeners;
+    property public abstract java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> clusterLongClickListeners;
+  }
+
+  public final class ClusterFeature {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public ClusterFeature(com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState> featuresetFeature);
+    method public String getClusterId();
+    method public com.mapbox.geojson.Feature getOriginalFeature();
+    method public long getPointCount();
+    method public String getPointCountAbbreviated();
+    property public final String clusterId;
+    property public final com.mapbox.geojson.Feature originalFeature;
+    property public final long pointCount;
+    property public final String pointCountAbbreviated;
+  }
+
   public final class ClusterOptions {
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, long clusterMinPoints = 2L, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)), java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties = null);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, long clusterMinPoints = 2L, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)));
@@ -1344,6 +1365,14 @@ package com.mapbox.maps.plugin.annotation {
 
   public fun interface OnAnnotationLongClickListener<T extends com.mapbox.maps.plugin.annotation.Annotation<?>> {
     method public boolean onAnnotationLongClick(T annotation);
+  }
+
+  public fun interface OnClusterClickListener {
+    method public boolean onClusterClick(com.mapbox.maps.plugin.annotation.ClusterFeature cluster);
+  }
+
+  public fun interface OnClusterLongClickListener {
+    method public boolean onClusterLongClick(com.mapbox.maps.plugin.annotation.ClusterFeature cluster);
   }
 
 }

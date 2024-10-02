@@ -16,6 +16,7 @@ import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
+import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
@@ -551,6 +552,170 @@ class CircleAnnotationManagerTest {
     manager.removeLongClickListener(listener)
     assertTrue(manager.longClickListeners.isEmpty())
     unmockkObject(LongClickInteraction.Companion)
+  }
+
+  @Test
+  fun clusterClick() {
+    val customClusterLayerId = "customClusterLayerId"
+        mockkStatic("com.mapbox.maps.extension.style.layers.generated.CircleLayerKt")
+        every { circleLayer(match { it.contains("cluster") }, any(), any()) } returns CircleLayer(
+          customClusterLayerId,
+          "clusterSource"
+        )
+
+    mockkObject(ClickInteraction.Companion)
+    val onClickLayerIdSlot =
+      slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    every {
+      ClickInteraction.layer(
+        id = customClusterLayerId,
+        filter = any(),
+        onClick = capture(onClickLayerIdSlot)
+      )
+    } answers {
+      mockk()
+    }
+    every {
+      ClickInteraction.layer(
+        id = any(),
+        filter = any(),
+        onClick = { _, _ -> return@layer false }
+      )
+    } returns mockk()
+
+    manager = CircleAnnotationManager(
+      delegateProvider,
+      AnnotationConfig(
+        annotationSourceOptions = AnnotationSourceOptions(
+          10, 20L, true, 10.0,
+          ClusterOptions(
+            clusterRadius = 30,
+            clusterMaxZoom = 15,
+            clusterMinPoints = 2,
+            clusterProperties = hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
+          )
+        )
+      )
+    )
+
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty("cluster", true)
+      addProperty("cluster_id", "22")
+      addProperty("point_count", 22)
+      addProperty("point_count_abbreviated", "22K")
+    }
+
+    val listener = mockk<OnClusterClickListener>()
+    every { listener.onClusterClick(any()) } returns true
+    manager.addClusterClickListener(listener)
+
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(feature.id()!!, null),
+      descriptor = TypedFeaturesetDescriptor.Layer(customClusterLayerId),
+      originalFeature = feature,
+      state = FeatureState { }
+    )
+
+    onClickLayerIdSlot.captured.invoke(
+      featuresetFeature,
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
+    verify { listener.onClusterClick(match { it.originalFeature == feature }) }
+
+    manager.removeClusterClickListener(listener)
+    assertTrue(manager.clusterClickListeners.isEmpty())
+    unmockkObject(ClickInteraction.Companion)
+    unmockkStatic("com.mapbox.maps.extension.style.layers.generated.CircleLayerKt")
+  }
+
+  @Test
+  fun clusterLongClick() {
+    val customClusterLayerId = "customClusterLayerId"
+    mockkStatic("com.mapbox.maps.extension.style.layers.generated.CircleLayerKt")
+    every { circleLayer(match { it.contains("cluster") }, any(), any()) } returns CircleLayer(
+      customClusterLayerId,
+      "clusterSource"
+    )
+
+    mockkObject(LongClickInteraction.Companion)
+    val onLongClickLayerIdSlot =
+      slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    every {
+      LongClickInteraction.layer(
+        id = customClusterLayerId,
+        filter = any(),
+        onLongClick = capture(onLongClickLayerIdSlot)
+      )
+    } answers {
+      mockk()
+    }
+    every {
+      LongClickInteraction.layer(
+        id = any(),
+        filter = any(),
+        onLongClick = { _, _ -> return@layer false }
+      )
+    } returns mockk()
+
+    manager = CircleAnnotationManager(
+      delegateProvider,
+      AnnotationConfig(
+        annotationSourceOptions = AnnotationSourceOptions(
+          10, 20L, true, 10.0,
+          ClusterOptions(
+            clusterRadius = 30,
+            clusterMaxZoom = 15,
+            clusterMinPoints = 2,
+            clusterProperties = hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
+          )
+        )
+      )
+    )
+
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty("cluster", true)
+      addProperty("cluster_id", "22")
+      addProperty("point_count", 22)
+      addProperty("point_count_abbreviated", "22K")
+    }
+
+    val listener = mockk<OnClusterLongClickListener>()
+    every { listener.onClusterLongClick(any()) } returns true
+    manager.addClusterLongClickListener(listener)
+
+    val featuresetFeature = FeaturesetFeature(
+      id = FeaturesetFeatureId(feature.id()!!, null),
+      descriptor = TypedFeaturesetDescriptor.Layer(customClusterLayerId),
+      originalFeature = feature,
+      state = FeatureState { }
+    )
+
+    onLongClickLayerIdSlot.captured.invoke(
+      featuresetFeature,
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
+    verify { listener.onClusterLongClick(match { it.originalFeature == feature }) }
+
+    manager.removeClusterLongClickListener(listener)
+    assertTrue(manager.clusterLongClickListeners.isEmpty())
+    unmockkObject(ClickInteraction.Companion)
+    unmockkStatic("com.mapbox.maps.extension.style.layers.generated.CircleLayerKt")
   }
 
   @Test

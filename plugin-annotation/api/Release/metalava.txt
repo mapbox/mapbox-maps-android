@@ -123,7 +123,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   public static final class CircleAnnotation.Companion {
   }
 
-  public final class CircleAnnotationManager extends com.mapbox.maps.plugin.annotation.AnnotationManagerImpl<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationDragListener,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationClickListener,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationLongClickListener,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationInteractionListener,com.mapbox.maps.extension.style.layers.generated.CircleLayer> {
+  public final class CircleAnnotationManager extends com.mapbox.maps.plugin.annotation.AnnotationManagerImpl<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationDragListener,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationClickListener,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationLongClickListener,com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationInteractionListener,com.mapbox.maps.extension.style.layers.generated.CircleLayer> implements com.mapbox.maps.plugin.annotation.ClusterAnnotationManager {
     ctor public CircleAnnotationManager(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotation> create(String json);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotation> create(com.mapbox.geojson.FeatureCollection featureCollection);
@@ -143,6 +143,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getCircleStrokeWidth();
     method public java.util.List<java.lang.Double>? getCircleTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? getCircleTranslateAnchor();
+    method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> getClusterClickListeners();
+    method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> getClusterLongClickListeners();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method public String? getSlot();
     method public void setCircleBlur(Double?);
@@ -178,6 +180,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? circleStrokeWidth;
     property public final java.util.List<java.lang.Double>? circleTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor;
+    property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> clusterClickListeners;
+    property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> clusterLongClickListeners;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager.Companion Companion;
@@ -437,11 +441,13 @@ package com.mapbox.maps.plugin.annotation.generated {
   public static final class PointAnnotation.Companion {
   }
 
-  public final class PointAnnotationManager extends com.mapbox.maps.plugin.annotation.AnnotationManagerImpl<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationDragListener,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationLongClickListener,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationInteractionListener,com.mapbox.maps.extension.style.layers.generated.SymbolLayer> {
+  public final class PointAnnotationManager extends com.mapbox.maps.plugin.annotation.AnnotationManagerImpl<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationDragListener,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationLongClickListener,com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationInteractionListener,com.mapbox.maps.extension.style.layers.generated.SymbolLayer> implements com.mapbox.maps.plugin.annotation.ClusterAnnotationManager {
     ctor public PointAnnotationManager(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotation> create(String json);
     method public java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotation> create(com.mapbox.geojson.FeatureCollection featureCollection);
     method public String getAnnotationIdKey();
+    method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> getClusterClickListeners();
+    method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> getClusterLongClickListeners();
     method public Boolean? getIconAllowOverlap();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method @ColorInt public Integer? getIconColorInt();
@@ -585,6 +591,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor?);
     method public void setTextVariableAnchor(java.util.List<java.lang.String>?);
     method public void setTextWritingMode(java.util.List<java.lang.String>?);
+    property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> clusterClickListeners;
+    property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> clusterLongClickListeners;
     property public final Boolean? iconAllowOverlap;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
     property @ColorInt public final Integer? iconColorInt;

@@ -30,6 +30,7 @@ public class PolylineAnnotationState private constructor(
   initialLineOpacity: Double?,
   initialLinePattern: String?,
   initialLineWidth: Double?,
+  initialPolylineAnnotationInteractionsState: PolylineAnnotationInteractionsState,
 ) {
 
   public constructor() : this(
@@ -44,8 +45,13 @@ public class PolylineAnnotationState private constructor(
     initialLineOpacity = null,
     initialLinePattern = null,
     initialLineWidth = null,
-  )
+    initialPolylineAnnotationInteractionsState = PolylineAnnotationInteractionsState(),
+)
 
+  /**
+  * All interactions with [PointAnnotation]
+  */
+  public var interactionsState: PolylineAnnotationInteractionsState by mutableStateOf(initialPolylineAnnotationInteractionsState)
   /**
    * The display of lines when joining.
    */

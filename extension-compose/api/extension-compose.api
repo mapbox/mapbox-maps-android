@@ -196,7 +196,21 @@ public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt
 	public static final fun ViewAnnotation (Lcom/mapbox/maps/ViewAnnotationOptions;Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun onClusterClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun onClusterLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsStateKt {
+	public static final fun rememberCircleAnnotationGroupInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupKt {
+	public static final fun CircleAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun CircleAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun CircleAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun CircleAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -216,6 +230,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public final fun getCircleTranslate ()Ljava/util/List;
 	public final fun getCircleTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setCircleEmissiveStrength (Ljava/lang/Double;)V
@@ -229,9 +244,22 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
 	public final fun setCircleTranslate (Ljava/util/List;)V
 	public final fun setCircleTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsStateKt {
+	public static final fun rememberCircleAnnotationInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationKt {
+	public static final fun CircleAnnotation (Lcom/mapbox/geojson/Point;Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun CircleAnnotation (Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun CircleAnnotation (Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun CircleAnnotation (Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -250,6 +278,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun getCircleStrokeColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
@@ -257,9 +286,24 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun setCircleStrokeColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setCircleStrokeOpacity (Ljava/lang/Double;)V
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun onClusterClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun onClusterLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsStateKt {
+	public static final fun rememberPointAnnotationGroupInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupKt {
+	public static final fun PointAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PointAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PointAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PointAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -291,6 +335,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconTextFitPadding ()Ljava/util/List;
 	public final fun getIconTranslate ()Ljava/util/List;
 	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
@@ -355,6 +400,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconTextFitPadding (Ljava/util/List;)V
 	public final fun setIconTranslate (Ljava/util/List;)V
 	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
 	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)V
 	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)V
@@ -396,7 +442,19 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setTextWritingMode (Ljava/util/List;)V
 }
 
+public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsStateKt {
+	public static final fun rememberPointAnnotationInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationKt {
+	public static final fun PointAnnotation (Lcom/mapbox/geojson/Point;Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PointAnnotation (Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun PointAnnotation (Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PointAnnotation (Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -425,6 +483,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconSize ()Ljava/lang/Double;
 	public final fun getIconTextFit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;
 	public final fun getIconTextFitPadding ()Ljava/util/List;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
 	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
@@ -459,6 +518,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconSize (Ljava/lang/Double;)V
 	public final fun setIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)V
 	public final fun setIconTextFitPadding (Ljava/util/List;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;)V
 	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
@@ -480,7 +540,19 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setTextTransform (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTransform;)V
 }
 
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsStateKt {
+	public static final fun rememberPolygonAnnotationGroupInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupKt {
+	public static final fun PolygonAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PolygonAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PolygonAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PolygonAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -496,6 +568,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
@@ -505,9 +578,22 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsStateKt {
+	public static final fun rememberPolygonAnnotationInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationKt {
+	public static final fun PolygonAnnotation (Ljava/util/List;Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PolygonAnnotation (Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun PolygonAnnotation (Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PolygonAnnotation (Ljava/util/List;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -523,19 +609,34 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getFillPattern ()Ljava/lang/String;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsStateKt {
+	public static final fun rememberPolylineAnnotationGroupInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupKt {
+	public static final fun PolylineAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PolylineAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PolylineAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PolylineAnnotationGroup (Ljava/util/List;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupState {
 	public fun <init> ()V
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
@@ -560,6 +661,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun getLineWidth ()Ljava/lang/Double;
 	public final fun getLineZOffset ()Ljava/lang/Double;
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;)V
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
@@ -586,7 +688,19 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineZOffset (Ljava/lang/Double;)V
 }
 
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState {
+	public fun <init> ()V
+	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsStateKt {
+	public static final fun rememberPolylineAnnotationInteractionsState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationKt {
+	public static final fun PolylineAnnotation (Ljava/util/List;Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationState;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PolylineAnnotation (Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun PolylineAnnotation (Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PolylineAnnotation (Ljava/util/List;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
@@ -598,6 +712,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationState {
 	public fun <init> ()V
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
@@ -609,6 +724,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLinePattern ()Ljava/lang/String;
 	public final fun getLineWidth ()Ljava/lang/Double;
 	public final fun getLineZOffset ()Ljava/lang/Double;
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;)V
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V

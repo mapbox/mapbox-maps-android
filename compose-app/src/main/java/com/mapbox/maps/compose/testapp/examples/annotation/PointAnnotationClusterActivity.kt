@@ -87,7 +87,11 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
                   )
                 )
               ),
-              onClick = {
+            ) {
+              // Apply icon image to the whole annotation group.
+              iconImage = IconImage(ICON_FIRE_STATION)
+
+              interactionsState.onClicked {
                 Toast.makeText(
                   this@PointAnnotationClusterActivity,
                   "Clicked on Point Annotation Cluster: $it",
@@ -95,9 +99,30 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            ) {
-              // Apply icon image to the whole annotation group.
-              iconImage = IconImage(ICON_FIRE_STATION)
+                .onLongClicked {
+                  Toast.makeText(
+                    this@PointAnnotationClusterActivity,
+                    "Long clicked on Circle Annotation Cluster item: $it",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
+                .onClusterClicked {
+                  Toast.makeText(
+                    this@PointAnnotationClusterActivity,
+                    "On cluster Click - ID: ${it.clusterId}, points:  ${it.pointCount}, abbreviatedCount: ${it.pointCountAbbreviated}",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
+                .onClusterLongClicked {
+                  Toast.makeText(
+                    this@PointAnnotationClusterActivity,
+                    "On cluster Long Click - ID: ${it.clusterId}, points:  ${it.pointCount}, abbreviatedCount: ${it.pointCountAbbreviated}",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
             }
           }
           LaunchedEffect(Unit) {

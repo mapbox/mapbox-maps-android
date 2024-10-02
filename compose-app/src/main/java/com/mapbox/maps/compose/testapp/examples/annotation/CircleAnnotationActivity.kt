@@ -83,15 +83,23 @@ public class CircleAnnotationActivity : ComponentActivity() {
           ) {
             CircleAnnotation(
               point = SINGLE_POINT,
-              onClick = {
+            ) {
+              interactionsState.onClicked {
                 Toast.makeText(
                   this@CircleAnnotationActivity,
-                  "Clicked on Circle Annotation: $it",
+                  "Clicked on single Circle Annotation: $it",
                   Toast.LENGTH_SHORT
                 ).show()
                 true
               }
-            ) {
+                .onLongClicked {
+                  Toast.makeText(
+                    this@CircleAnnotationActivity,
+                    "Long Clicked on single Circle Annotation: $it",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
               circleRadius = 20.0
               circleColor = Color.Blue
             }
@@ -121,8 +129,12 @@ public class CircleAnnotationActivity : ComponentActivity() {
                     )
                   )
                 )
-              ),
-              onClick = {
+              )
+            ) {
+              // Apply circle color to the whole CircleAnnotationGroup
+              circleColor = groupColor
+
+              interactionsState.onClicked {
                 Toast.makeText(
                   this@CircleAnnotationActivity,
                   "Clicked on Circle Annotation Cluster item: $it",
@@ -130,9 +142,30 @@ public class CircleAnnotationActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            ) {
-              // Apply circle color to the whole CircleAnnotationGroup
-              circleColor = groupColor
+                .onLongClicked {
+                  Toast.makeText(
+                    this@CircleAnnotationActivity,
+                    "Long clicked on Circle Annotation Cluster item: $it",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
+                .onClusterClicked {
+                  Toast.makeText(
+                    this@CircleAnnotationActivity,
+                    "On cluster Click - ID: ${it.clusterId}, points:  ${it.pointCount}, abbreviatedCount: ${it.pointCountAbbreviated}",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
+                .onClusterLongClicked {
+                  Toast.makeText(
+                    this@CircleAnnotationActivity,
+                    "On cluster Long Click - ID: ${it.clusterId}, points:  ${it.pointCount}, abbreviatedCount: ${it.pointCountAbbreviated}",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
             }
           }
         }

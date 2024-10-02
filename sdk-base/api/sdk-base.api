@@ -758,7 +758,6 @@ public class com/mapbox/maps/interactions/FeaturesetFeature {
 	public final fun getDescriptor ()Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;
 	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
 	public final fun getId ()Lcom/mapbox/maps/FeaturesetFeatureId;
-	protected final fun getOriginalFeature ()Lcom/mapbox/geojson/Feature;
 	public final fun getProperties ()Lorg/json/JSONObject;
 	public final fun getState ()Lcom/mapbox/maps/interactions/FeatureState;
 	public fun hashCode ()I
@@ -1344,6 +1343,32 @@ public final class com/mapbox/maps/plugin/annotation/AnnotationType : java/lang/
 	public static fun values ()[Lcom/mapbox/maps/plugin/annotation/AnnotationType;
 }
 
+public abstract interface class com/mapbox/maps/plugin/annotation/ClusterAnnotationManager {
+	public abstract fun addClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public abstract fun addClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
+	public abstract fun getClusterClickListeners ()Ljava/util/List;
+	public abstract fun getClusterLongClickListeners ()Ljava/util/List;
+	public abstract fun removeClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public abstract fun removeClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
+}
+
+public final class com/mapbox/maps/plugin/annotation/ClusterAnnotationManager$DefaultImpls {
+	public static fun addClusterClickListener (Lcom/mapbox/maps/plugin/annotation/ClusterAnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public static fun addClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/ClusterAnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
+	public static fun removeClusterClickListener (Lcom/mapbox/maps/plugin/annotation/ClusterAnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
+	public static fun removeClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/ClusterAnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
+}
+
+public final class com/mapbox/maps/plugin/annotation/ClusterFeature {
+	public fun <init> (Lcom/mapbox/maps/interactions/FeaturesetFeature;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClusterId ()Ljava/lang/String;
+	public final fun getOriginalFeature ()Lcom/mapbox/geojson/Feature;
+	public final fun getPointCount ()J
+	public final fun getPointCountAbbreviated ()Ljava/lang/String;
+	public fun hashCode ()I
+}
+
 public final class com/mapbox/maps/plugin/annotation/ClusterOptions {
 	public fun <init> ()V
 	public fun <init> (Z)V
@@ -1410,6 +1435,14 @@ public abstract interface class com/mapbox/maps/plugin/annotation/OnAnnotationIn
 
 public abstract interface class com/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener {
 	public abstract fun onAnnotationLongClick (Lcom/mapbox/maps/plugin/annotation/Annotation;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/OnClusterClickListener {
+	public abstract fun onClusterClick (Lcom/mapbox/maps/plugin/annotation/ClusterFeature;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/OnClusterLongClickListener {
+	public abstract fun onClusterLongClick (Lcom/mapbox/maps/plugin/annotation/ClusterFeature;)Z
 }
 
 public final class com/mapbox/maps/plugin/attribution/Attribution {

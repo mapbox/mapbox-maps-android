@@ -21,6 +21,7 @@ public class PolygonAnnotationState private constructor(
   initialFillOpacity: Double?,
   initialFillOutlineColor: Color?,
   initialFillPattern: String?,
+  initialPolygonAnnotationInteractionsState: PolygonAnnotationInteractionsState,
 ) {
 
   public constructor() : this(
@@ -28,8 +29,13 @@ public class PolygonAnnotationState private constructor(
     initialFillOpacity = null,
     initialFillOutlineColor = null,
     initialFillPattern = null,
-  )
+    initialPolygonAnnotationInteractionsState = PolygonAnnotationInteractionsState(),
+)
 
+  /**
+  * All interactions with [PointAnnotation]
+  */
+  public var interactionsState: PolygonAnnotationInteractionsState by mutableStateOf(initialPolygonAnnotationInteractionsState)
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    */

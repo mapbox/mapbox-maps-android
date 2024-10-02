@@ -174,11 +174,27 @@ package com.mapbox.maps.extension.compose.annotation {
 
 package com.mapbox.maps.extension.compose.annotation.generated {
 
+  @androidx.compose.runtime.Stable public final class CircleAnnotationGroupInteractionsState {
+    ctor public CircleAnnotationGroupInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onClusterClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onClusterLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterLongClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class CircleAnnotationGroupInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState rememberCircleAnnotationGroupInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState,kotlin.Unit> init = {});
+  }
+
   public final class CircleAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState circleAnnotationGroupState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState circleAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState circleAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupState,kotlin.Unit> init);
   }
 
   @androidx.compose.runtime.Stable public final class CircleAnnotationGroupState {
@@ -196,6 +212,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getCircleStrokeWidth();
     method public java.util.List<java.lang.Double>? getCircleTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? getCircleTranslateAnchor();
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState getInteractionsState();
     method public void setCircleBlur(Double?);
     method public void setCircleColor(androidx.compose.ui.graphics.Color?);
     method public void setCircleEmissiveStrength(Double?);
@@ -209,6 +226,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setCircleStrokeWidth(Double?);
     method public void setCircleTranslate(java.util.List<java.lang.Double>?);
     method public void setCircleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState);
     property public final Double? circleBlur;
     property public final androidx.compose.ui.graphics.Color? circleColor;
     property public final Double? circleEmissiveStrength;
@@ -222,13 +240,28 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? circleStrokeWidth;
     property public final java.util.List<java.lang.Double>? circleTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor;
+    property public final com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState interactionsState;
+  }
+
+  @androidx.compose.runtime.Stable public final class CircleAnnotationInteractionsState {
+    ctor public CircleAnnotationInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class CircleAnnotationInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState rememberCircleAnnotationInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState,kotlin.Unit> init = {});
   }
 
   public final class CircleAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState circleAnnotationState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState circleAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState circleAnnotationState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void CircleAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState,kotlin.Unit> init);
   }
 
   public final class CircleAnnotationOptionsExtKt {
@@ -245,6 +278,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public androidx.compose.ui.graphics.Color? getCircleStrokeColor();
     method public Double? getCircleStrokeOpacity();
     method public Double? getCircleStrokeWidth();
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState getInteractionsState();
     method public void setCircleBlur(Double?);
     method public void setCircleColor(androidx.compose.ui.graphics.Color?);
     method public void setCircleOpacity(Double?);
@@ -252,6 +286,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setCircleStrokeColor(androidx.compose.ui.graphics.Color?);
     method public void setCircleStrokeOpacity(Double?);
     method public void setCircleStrokeWidth(Double?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState);
     property public final Double? circleBlur;
     property public final androidx.compose.ui.graphics.Color? circleColor;
     property public final Double? circleOpacity;
@@ -259,13 +294,30 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final androidx.compose.ui.graphics.Color? circleStrokeColor;
     property public final Double? circleStrokeOpacity;
     property public final Double? circleStrokeWidth;
+    property public final com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState interactionsState;
+  }
+
+  @androidx.compose.runtime.Stable public final class PointAnnotationGroupInteractionsState {
+    ctor public PointAnnotationGroupInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onClusterClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onClusterLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterLongClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class PointAnnotationGroupInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState rememberPointAnnotationGroupInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState,kotlin.Unit> init = {});
   }
 
   public final class PointAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState pointAnnotationGroupState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState pointAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState pointAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupState,kotlin.Unit> init);
   }
 
   @androidx.compose.runtime.Stable public final class PointAnnotationGroupState {
@@ -295,6 +347,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public java.util.List<java.lang.Double>? getIconTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState getInteractionsState();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
@@ -359,6 +412,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
@@ -423,6 +477,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final java.util.List<java.lang.Double>? iconTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
+    property public final com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState interactionsState;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
@@ -464,11 +519,25 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final java.util.List<java.lang.String>? textWritingMode;
   }
 
+  @androidx.compose.runtime.Stable public final class PointAnnotationInteractionsState {
+    ctor public PointAnnotationInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class PointAnnotationInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState rememberPointAnnotationInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState,kotlin.Unit> init = {});
+  }
+
   public final class PointAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState pointAnnotationState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState pointAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState pointAnnotationState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PointAnnotation(com.mapbox.geojson.Point point, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationState,kotlin.Unit> init);
   }
 
   public final class PointAnnotationOptionsExtKt {
@@ -495,6 +564,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getIconSize();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
     method public java.util.List<java.lang.Double>? getIconTextFitPadding();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState getInteractionsState();
     method public Double? getSymbolZOffset();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
     method public androidx.compose.ui.graphics.Color? getTextColor();
@@ -529,6 +599,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconSize(Double?);
     method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState);
     method public void setSymbolZOffset(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColor(androidx.compose.ui.graphics.Color?);
@@ -563,6 +634,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? iconSize;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
+    property public final com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState interactionsState;
     property public final Double? symbolZOffset;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property public final androidx.compose.ui.graphics.Color? textColor;
@@ -584,11 +656,25 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? textTransform;
   }
 
+  @androidx.compose.runtime.Stable public final class PolygonAnnotationGroupInteractionsState {
+    ctor public PolygonAnnotationGroupInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class PolygonAnnotationGroupInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState rememberPolygonAnnotationGroupInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState,kotlin.Unit> init = {});
+  }
+
   public final class PolygonAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState polygonAnnotationGroupState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState polygonAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState polygonAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupState,kotlin.Unit> init);
   }
 
   @androidx.compose.runtime.Stable public final class PolygonAnnotationGroupState {
@@ -602,6 +688,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getFillSortKey();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState getInteractionsState();
     method public void setFillAntialias(Boolean?);
     method public void setFillColor(androidx.compose.ui.graphics.Color?);
     method public void setFillEmissiveStrength(Double?);
@@ -611,6 +698,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setFillSortKey(Double?);
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState);
     property public final Boolean? fillAntialias;
     property public final androidx.compose.ui.graphics.Color? fillColor;
     property public final Double? fillEmissiveStrength;
@@ -620,13 +708,28 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? fillSortKey;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
+    property public final com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState interactionsState;
+  }
+
+  @androidx.compose.runtime.Stable public final class PolygonAnnotationInteractionsState {
+    ctor public PolygonAnnotationInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class PolygonAnnotationInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState rememberPolygonAnnotationInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState,kotlin.Unit> init = {});
   }
 
   public final class PolygonAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState polygonAnnotationState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState polygonAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState polygonAnnotationState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationState,kotlin.Unit> init);
   }
 
   public final class PolygonAnnotationOptionsExtKt {
@@ -640,25 +743,43 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getFillOpacity();
     method public androidx.compose.ui.graphics.Color? getFillOutlineColor();
     method public String? getFillPattern();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState getInteractionsState();
     method public void setFillColor(androidx.compose.ui.graphics.Color?);
     method public void setFillOpacity(Double?);
     method public void setFillOutlineColor(androidx.compose.ui.graphics.Color?);
     method public void setFillPattern(String?);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState);
     property public final androidx.compose.ui.graphics.Color? fillColor;
     property public final Double? fillOpacity;
     property public final androidx.compose.ui.graphics.Color? fillOutlineColor;
     property public final String? fillPattern;
+    property public final com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState interactionsState;
+  }
+
+  @androidx.compose.runtime.Stable public final class PolylineAnnotationGroupInteractionsState {
+    ctor public PolylineAnnotationGroupInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class PolylineAnnotationGroupInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState rememberPolylineAnnotationGroupInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState,kotlin.Unit> init = {});
   }
 
   public final class PolylineAnnotationGroupKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState polylineAnnotationGroupState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState polylineAnnotationGroupState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState polylineAnnotationGroupState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupState,kotlin.Unit> init);
   }
 
   @androidx.compose.runtime.Stable public final class PolylineAnnotationGroupState {
     ctor public PolylineAnnotationGroupState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState getInteractionsState();
     method public Double? getLineBlur();
     method public androidx.compose.ui.graphics.Color? getLineBorderColor();
     method public Double? getLineBorderWidth();
@@ -683,6 +804,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public Double? getLineWidth();
     method public Double? getLineZOffset();
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState);
     method public void setLineBlur(Double?);
     method public void setLineBorderColor(androidx.compose.ui.graphics.Color?);
     method public void setLineBorderWidth(Double?);
@@ -707,6 +829,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     method public void setLineWidth(Double?);
     method public void setLineZOffset(Double?);
+    property public final com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState interactionsState;
     property public final Double? lineBlur;
     property public final androidx.compose.ui.graphics.Color? lineBorderColor;
     property public final Double? lineBorderWidth;
@@ -733,11 +856,25 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineZOffset;
   }
 
+  @androidx.compose.runtime.Stable public final class PolylineAnnotationInteractionsState {
+    ctor public PolylineAnnotationInteractionsState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onLongClick);
+  }
+
+  public final class PolylineAnnotationInteractionsStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState rememberPolylineAnnotationInteractionsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState,kotlin.Unit> init = {});
+  }
+
   public final class PolylineAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState polylineAnnotationState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState polylineAnnotationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState polylineAnnotationState = remember({ 
+    return <init>()
+}));
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false }, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationState,kotlin.Unit> init);
   }
 
   public final class PolylineAnnotationOptionsExtKt {
@@ -747,6 +884,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PolylineAnnotationState {
     ctor public PolylineAnnotationState();
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState getInteractionsState();
     method public Double? getLineBlur();
     method public androidx.compose.ui.graphics.Color? getLineBorderColor();
     method public Double? getLineBorderWidth();
@@ -758,6 +896,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public String? getLinePattern();
     method public Double? getLineWidth();
     method public Double? getLineZOffset();
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState);
     method public void setLineBlur(Double?);
     method public void setLineBorderColor(androidx.compose.ui.graphics.Color?);
     method public void setLineBorderWidth(Double?);
@@ -769,6 +908,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLinePattern(String?);
     method public void setLineWidth(Double?);
     method public void setLineZOffset(Double?);
+    property public final com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState interactionsState;
     property public final Double? lineBlur;
     property public final androidx.compose.ui.graphics.Color? lineBorderColor;
     property public final Double? lineBorderWidth;

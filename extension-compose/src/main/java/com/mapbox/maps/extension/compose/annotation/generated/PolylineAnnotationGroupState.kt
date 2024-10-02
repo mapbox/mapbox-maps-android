@@ -45,6 +45,7 @@ public class PolylineAnnotationGroupState private constructor(
   initialLineTrimFadeRange: List<Double>?,
   initialLineTrimOffset: List<Double>?,
   initialLineWidth: Double?,
+  initialPolylineAnnotationGroupInteractionsState: PolylineAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
     initialLineCap = null,
@@ -71,7 +72,13 @@ public class PolylineAnnotationGroupState private constructor(
     initialLineTrimFadeRange = null,
     initialLineTrimOffset = null,
     initialLineWidth = null,
+    initialPolylineAnnotationGroupInteractionsState = PolylineAnnotationGroupInteractionsState(),
   )
+
+  /**
+   * Holds all interactions with [PointAnnotationGroup]
+   */
+  public var interactionsState: PolylineAnnotationGroupInteractionsState by mutableStateOf(initialPolylineAnnotationGroupInteractionsState)
   /**
    * The display of line endings.
    */

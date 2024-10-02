@@ -97,6 +97,7 @@ public class PointAnnotationGroupState private constructor(
   initialTextOpacity: Double?,
   initialTextTranslate: List<Double>?,
   initialTextTranslateAnchor: TextTranslateAnchor?,
+  initialPointAnnotationGroupInteractionsState: PointAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
     initialIconAllowOverlap = null,
@@ -163,7 +164,13 @@ public class PointAnnotationGroupState private constructor(
     initialTextOpacity = null,
     initialTextTranslate = null,
     initialTextTranslateAnchor = null,
+    initialPointAnnotationGroupInteractionsState = PointAnnotationGroupInteractionsState(),
   )
+
+  /**
+   * Holds all interactions with [PointAnnotationGroup]
+   */
+  public var interactionsState: PointAnnotationGroupInteractionsState by mutableStateOf(initialPointAnnotationGroupInteractionsState)
   /**
    * If true, the icon will be visible even if it collides with other previously drawn symbols.
    */

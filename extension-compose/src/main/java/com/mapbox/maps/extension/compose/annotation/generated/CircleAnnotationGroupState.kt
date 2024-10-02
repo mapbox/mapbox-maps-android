@@ -33,6 +33,7 @@ public class CircleAnnotationGroupState private constructor(
   initialCircleStrokeWidth: Double?,
   initialCircleTranslate: List<Double>?,
   initialCircleTranslateAnchor: CircleTranslateAnchor?,
+  initialCircleAnnotationGroupInteractionsState: CircleAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
     initialCircleSortKey = null,
@@ -48,7 +49,13 @@ public class CircleAnnotationGroupState private constructor(
     initialCircleStrokeWidth = null,
     initialCircleTranslate = null,
     initialCircleTranslateAnchor = null,
+    initialCircleAnnotationGroupInteractionsState = CircleAnnotationGroupInteractionsState(),
   )
+
+  /**
+   * Holds all interactions with [PointAnnotationGroup]
+   */
+  public var interactionsState: CircleAnnotationGroupInteractionsState by mutableStateOf(initialCircleAnnotationGroupInteractionsState)
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */

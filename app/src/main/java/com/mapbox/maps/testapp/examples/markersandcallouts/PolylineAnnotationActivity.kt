@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
@@ -51,7 +52,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     setContentView(binding.root)
     binding.mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
-        .center(Point.fromLngLat(24.945749, 60.171924))
+        .center(Point.fromLngLat(-7.0, -1.0))
         .pitch(0.0)
         .zoom(4.0)
         .bearing(0.0)
@@ -68,6 +69,13 @@ class PolylineAnnotationActivity : AppCompatActivity() {
         addClickListener(
           OnPolylineAnnotationClickListener {
             Toast.makeText(this@PolylineAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+              .show()
+            false
+          }
+        )
+        addLongClickListener(
+          OnPolylineAnnotationLongClickListener {
+            Toast.makeText(this@PolylineAnnotationActivity, "long click ${it.id}", Toast.LENGTH_SHORT)
               .show()
             false
           }

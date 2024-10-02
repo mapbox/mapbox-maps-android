@@ -28,7 +28,6 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * because the [PointAnnotationGroup] is added to the map as a single layer.
  *
  * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
- *
  * @param annotations List of [PointAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [PointAnnotationGroup].
  * @param onClick Callback to be invoked when one of the [PointAnnotation] in the cluster is clicked. The clicked [PointAnnotation] will be passed as parameter.
@@ -36,10 +35,43 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("PointAnnotationGroup(annotations, annotationConfig, pointAnnotationGroupState)"),
+  level = DeprecationLevel.WARNING
+)
 public fun PointAnnotationGroup(
   annotations: List<PointAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
   onClick: (PointAnnotation) -> Boolean = { false },
+  pointAnnotationGroupState: PointAnnotationGroupState = remember { PointAnnotationGroupState() }
+) {
+  PointAnnotationGroup(
+    annotations,
+    annotationConfig,
+     pointAnnotationGroupState.also {
+      it.interactionsState.onClicked(onClick = onClick)
+    }
+  )
+}
+
+/**
+ * Composable function to add a [PointAnnotationGroup] to the Map. For convenience, if there's
+ * no need to hoist the [pointAnnotationGroupState], use `PointAnnotationGroup(annotations, annotationConfig, onClick, init)` with trailing lambda instead.
+ *
+ * The [PointAnnotationGroup] is more performant than adding multiple [PointAnnotation] individually,
+ * because the [PointAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ * @param annotations List of [PointAnnotationOptions] to be added to the group.
+ * @param annotationConfig Configuration for [PointAnnotationGroup].
+ * @param pointAnnotationGroupState The state holder for [PointAnnotation]Group properties.
+ */
+@Composable
+@MapboxMapComposable
+public fun PointAnnotationGroup(
+  annotations: List<PointAnnotationOptions>,
+  annotationConfig: AnnotationConfig? = null,
   pointAnnotationGroupState: PointAnnotationGroupState = remember { PointAnnotationGroupState() }
 ) {
 
@@ -55,15 +87,11 @@ public fun PointAnnotationGroup(
       PointAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createPointAnnotationManager(annotationConfig).also { annotationManager = it },
-        onClick
       )
     },
     update = {
       set(annotations) {
         annotationClusterItems = it
-      }
-      update(onClick) {
-        onClicked = it
       }
     }
   ) {
@@ -71,6 +99,11 @@ public fun PointAnnotationGroup(
       annotationManager?.let {
         pointAnnotationGroupState.UpdateProperties(it)
       }
+    }
+  }
+  key(pointAnnotationGroupState.interactionsState) {
+    annotationManager?.let {
+     pointAnnotationGroupState.interactionsState.BindTo(it)
     }
   }
 }
@@ -82,7 +115,6 @@ public fun PointAnnotationGroup(
  * because the [PointAnnotationGroup] is added to the map as a single layer.
  *
  * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
- *
  * @param annotations List of [PointAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [PointAnnotationGroup].
  * @param onClick Callback to be invoked when one of the [PointAnnotation] in the cluster is clicked. The clicked [PointAnnotation] will be passed as parameter.
@@ -90,6 +122,11 @@ public fun PointAnnotationGroup(
  */
 @Composable
 @MapboxMapComposable
+@Deprecated(
+  message = "This method is deprecated, and will be removed in next major release.",
+  replaceWith = ReplaceWith("PointAnnotationGroup(annotations, annotationConfig, init)"),
+  level = DeprecationLevel.WARNING
+)
 public inline fun PointAnnotationGroup(
   annotations: List<PointAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
@@ -103,4 +140,30 @@ public inline fun PointAnnotationGroup(
     pointAnnotationGroupState = remember { PointAnnotationGroupState() }.apply(init)
   )
 }
+
+/**
+ * Composable function to add a [PointAnnotationGroup] to the Map.
+ *
+ * The [PointAnnotationGroup] is more performant than adding multiple [PointAnnotation] individually,
+ * because the [PointAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ * @param annotations List of [PointAnnotationOptions] to be added to the group.
+ * @param annotationConfig Configuration for [PointAnnotationGroup].
+ * @param init the lambda that will be applied to the remembered [PointAnnotationGroupState].
+ */
+@Composable
+@MapboxMapComposable
+public inline fun PointAnnotationGroup(
+  annotations: List<PointAnnotationOptions>,
+  annotationConfig: AnnotationConfig? = null,
+  crossinline init: PointAnnotationGroupState.() -> Unit
+) {
+  PointAnnotationGroup(
+    annotations = annotations,
+    annotationConfig = annotationConfig,
+    pointAnnotationGroupState = remember { PointAnnotationGroupState() }.apply(init)
+  )
+}
+
 // End of generated file.

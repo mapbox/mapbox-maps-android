@@ -46,7 +46,8 @@ public class PolylineAnnotationActivity : ComponentActivity() {
           ) {
             PolylineAnnotation(
               points = POLYLINE_POINTS,
-              onClick = {
+            ) {
+              interactionsState.onClicked {
                 Toast.makeText(
                   this@PolylineAnnotationActivity,
                   "Clicked on Polygon Annotation: $it",
@@ -54,7 +55,14 @@ public class PolylineAnnotationActivity : ComponentActivity() {
                 ).show()
                 true
               }
-            ) {
+                .onLongClicked {
+                  Toast.makeText(
+                    this@PolylineAnnotationActivity,
+                    "Long Clicked on Polygon Annotation: $it",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                  true
+                }
               lineColor = Color.Red
               lineWidth = 5.0
             }

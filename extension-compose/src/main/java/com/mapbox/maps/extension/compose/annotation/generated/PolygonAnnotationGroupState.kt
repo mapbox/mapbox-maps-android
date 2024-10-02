@@ -27,6 +27,7 @@ public class PolygonAnnotationGroupState private constructor(
   initialFillPattern: String?,
   initialFillTranslate: List<Double>?,
   initialFillTranslateAnchor: FillTranslateAnchor?,
+  initialPolygonAnnotationGroupInteractionsState: PolygonAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
     initialFillSortKey = null,
@@ -38,7 +39,13 @@ public class PolygonAnnotationGroupState private constructor(
     initialFillPattern = null,
     initialFillTranslate = null,
     initialFillTranslateAnchor = null,
+    initialPolygonAnnotationGroupInteractionsState = PolygonAnnotationGroupInteractionsState(),
   )
+
+  /**
+   * Holds all interactions with [PointAnnotationGroup]
+   */
+  public var interactionsState: PolygonAnnotationGroupInteractionsState by mutableStateOf(initialPolygonAnnotationGroupInteractionsState)
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */

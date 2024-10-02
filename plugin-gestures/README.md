@@ -2,7 +2,7 @@
 
 ### Overview
 
-The Mapbox Maps Gestures Plugin for Android is an public library for handling gesture interaction with a MapView. By default the plugin provides a default gesture interaction. Gestures supported include scrolling, scaling, rotating and shoving. Please visit our [documentation](https://docs.mapbox.com/android/maps/guides/ui-settings/#gestures) for more information on interacting with gestures.
+The Mapbox Maps Gestures Plugin for Android is an public library for handling gesture interaction with a MapView. By default the plugin provides a default gesture interaction. Gestures supported include scrolling, scaling, rotating and shoving. Please visit our [documentation](https://docs.mapbox.com/android/maps/guides/user-interaction/) for more information on interacting with gestures.
 
 A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
 

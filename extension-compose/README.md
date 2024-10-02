@@ -215,18 +215,26 @@ The following example showcases adding one circle annotation to the map:
       MapboxMap(modifier = Modifier.fillMaxSize()) {
         // Add a single circle annotation at null island.
         CircleAnnotation(
-          point = Point.fromLngLat(0.0, 0.0),
-          onClick = {
+          point = Point.fromLngLat(0.0, 0.0)
+        ) {
+          interactionsState.onClicked {
             Toast.makeText(
               this@CircleAnnotationActivity,
-              "Clicked on Circle Annotation: $it",
+              "Clicked on single Circle Annotation: $it",
               Toast.LENGTH_SHORT
             ).show()
             true
           }
-        ) {
+            .onLongClicked {
+              Toast.makeText(
+                this@CircleAnnotationActivity,
+                "Long Clicked on single Circle Annotation: $it",
+                Toast.LENGTH_SHORT
+              ).show()
+              true
+            }
           circleRadius = 20.0
-          circleColor = Color.Blue
+          circleColor = Color.Blue 
         }
       }
     }
@@ -249,8 +257,9 @@ Adding multiple Annotations to the map using `AnnotationGroup` is more efficient
               .withPoint(it)
               .withCircleRadius(10.0)
               .withCircleColor(Color.RED)
-          },
-          onClick = {
+          }
+        ) {
+          interactionsState.onClicked {
             Toast.makeText(
               this@CircleAnnotationActivity,
               "Clicked on Circle Annotation Cluster item: $it",
@@ -258,7 +267,15 @@ Adding multiple Annotations to the map using `AnnotationGroup` is more efficient
             ).show()
             true
           }
-        )
+          interactionsState.onLongClicked {
+            Toast.makeText(
+              this@CircleAnnotationActivity,
+              "Long clicked on Circle Annotation Cluster item: $it",
+              Toast.LENGTH_SHORT
+            ).show()
+            true
+          }             
+        }
       }
     }
   }
@@ -277,7 +294,6 @@ The following example showcases adding multiple `PointAnnotations` with clusteri
           annotations = points.map {
             PointAnnotationOptions()
               .withPoint(it)
-              .withIconImage(ICON_FIRE_STATION)
           },
           annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
@@ -294,7 +310,11 @@ The following example showcases adding multiple `PointAnnotations` with clusteri
               )
             )
           ),
-          onClick = {
+        ) {
+          // Apply icon image to the whole annotation group.
+          iconImage = IconImage(ICON_FIRE_STATION)
+
+          interactionsState.onClicked {
             Toast.makeText(
               this@PointAnnotationClusterActivity,
               "Clicked on Point Annotation Cluster: $it",
@@ -302,7 +322,31 @@ The following example showcases adding multiple `PointAnnotations` with clusteri
             ).show()
             true
           }
-        )
+            .onLongClicked {
+              Toast.makeText(
+                this@PointAnnotationClusterActivity,
+                "Long clicked on Circle Annotation Cluster item: $it",
+                Toast.LENGTH_SHORT
+              ).show()
+              true
+            }
+            .onClusterClicked {
+              Toast.makeText(
+                this@PointAnnotationClusterActivity,
+                "On cluster Click - ID: ${it.clusterId}, points:  ${it.pointCount}",
+                Toast.LENGTH_SHORT
+              ).show()
+              true
+            }
+            .onClusterLongClicked {
+              Toast.makeText(
+                this@PointAnnotationClusterActivity,
+                "On cluster Long Click - ID: ${it.clusterId}, points:  ${it.pointCount}",
+                Toast.LENGTH_SHORT
+              ).show()
+              true
+            }
+        }
       }
     }
   }

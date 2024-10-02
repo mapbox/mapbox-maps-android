@@ -17,6 +17,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
@@ -93,7 +94,35 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
                   true
                 }
               )
+              addLongClickListener(
+                OnPointAnnotationLongClickListener {
+                  Toast.makeText(
+                    this@PointAnnotationClusterActivity,
+                    "Long Click: ${it.id}",
+                    Toast.LENGTH_SHORT
+                  )
+                    .show()
+                  true
+                }
+              )
+              addClusterClickListener {
+                Toast.makeText(
+                  this@PointAnnotationClusterActivity,
+                  "Cluster Click ID: ${it.clusterId}, points:  ${it.pointCount}, abbreviatedCount: ${it.pointCountAbbreviated}",
+                  Toast.LENGTH_SHORT
+                ).show()
+                true
+              }
+              addClusterLongClickListener {
+                Toast.makeText(
+                  this@PointAnnotationClusterActivity,
+                  "Cluster Long Click ID:${it.clusterId}, points:  ${it.pointCount}, abbreviatedCount: ${it.pointCountAbbreviated}",
+                  Toast.LENGTH_SHORT
+                ).show()
+                true
+              }
             }
+
           launch {
             loadData()
           }

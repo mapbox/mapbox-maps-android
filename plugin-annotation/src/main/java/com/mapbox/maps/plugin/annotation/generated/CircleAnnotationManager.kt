@@ -15,6 +15,9 @@ import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
+import com.mapbox.maps.plugin.annotation.ClusterAnnotationManager
+import com.mapbox.maps.plugin.annotation.OnClusterClickListener
+import com.mapbox.maps.plugin.annotation.OnClusterLongClickListener
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import java.util.concurrent.atomic.AtomicLong
 
@@ -27,7 +30,18 @@ class CircleAnnotationManager(
 ) :
   AnnotationManagerImpl<Point, CircleAnnotation, CircleAnnotationOptions, OnCircleAnnotationDragListener, OnCircleAnnotationClickListener, OnCircleAnnotationLongClickListener, OnCircleAnnotationInteractionListener, CircleLayer>(
     delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "circleAnnotation", ::CircleLayer
-  ) {
+  ),
+  ClusterAnnotationManager {
+
+  /**
+   * The Added clusterClickListeners
+   */
+  override val clusterClickListeners: MutableList<OnClusterClickListener> = mutableListOf()
+
+  /**
+   * The Added clusterLongClickListeners
+   */
+  override val clusterLongClickListeners: MutableList<OnClusterLongClickListener> = mutableListOf()
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
