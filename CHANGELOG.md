@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Introduce experimental `getStyleGlyphURL` / `setStyleGlyphURL` functions for `MapboxMap` and `Style`.
 * Introduce `OnClusterClickListener` and `OnClusterLongClickListener` for `CircleAnnotationManager` and `PointAnnotationManager`. These callbacks receive the clicked cluster represented by a `ClusterFeature`.
 * [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
 * [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.

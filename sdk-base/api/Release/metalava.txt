@@ -152,6 +152,7 @@ package com.mapbox.maps {
     method public final float getPixelRatio();
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleAtmosphereProperty(String property);
     method @CallSuper @MainThread public com.mapbox.maps.CameraOptions getStyleDefaultCamera();
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public String getStyleGlyphURL();
     method @CallSuper @MainThread public com.mapbox.maps.Image? getStyleImage(String imageId);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,java.util.HashMap<java.lang.String,com.mapbox.maps.StylePropertyValue>> getStyleImportConfigProperties(String importId);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.StylePropertyValue> getStyleImportConfigProperty(String importId, String config);
@@ -192,6 +193,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomGeometrySourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, java.util.List<com.mapbox.geojson.Feature> featureCollection);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomRasterSourceTileData(String sourceId, java.util.List<com.mapbox.maps.CustomRasterSourceTileData> tiles);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, String dataId, com.mapbox.maps.GeoJSONSourceData data);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public void setStyleGlyphURL(String url);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperty(String importId, String config, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);

@@ -1045,6 +1045,28 @@ class Style internal constructor(
     }
 
   /**
+   * Get the glyph URL of the current style in use.
+   *
+   * @return A string containing a glyph URI.
+   */
+  @MapboxExperimental
+  override fun getStyleGlyphURL(): String {
+    checkNativeStyle("getStyleGlyphURL")
+    return super.getStyleGlyphURL()
+  }
+
+  /**
+   * Load the style glyphs from a provided URL.
+   *
+   * @param url URL where the glyphs should be loaded from.
+   */
+  @MapboxExperimental
+  override fun setStyleGlyphURL(url: String) {
+    checkNativeStyle("setStyleGlyphURL")
+    super.setStyleGlyphURL(url)
+  }
+
+  /**
    * Gets style source parameters.
    * In order to convert returned value to a json string please take a look at [Value.toJson].
    *

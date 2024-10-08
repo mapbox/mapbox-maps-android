@@ -116,6 +116,32 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     }
 
   /**
+   * Get the glyph URL of the current style in use.
+   *
+   * @return A string containing a glyph URI.
+   */
+  @MapboxExperimental
+  @CallSuper
+  @MainThread
+  open fun getStyleGlyphURL(): String {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.styleGlyphURL
+  }
+
+  /**
+   * Load the style glyphs from a provided URL.
+   *
+   * @param url URL where the glyphs should be loaded from.
+   */
+  @MapboxExperimental
+  @CallSuper
+  @MainThread
+  open fun setStyleGlyphURL(url: String) {
+    ThreadChecker.throwIfNotMainThread()
+    styleManager.styleGlyphURL = url
+  }
+
+  /**
    * Returns the map style's transition options. By default, the style parser will attempt
    * to read the style default transition options, if any, fallback-ing to an immediate transition
    * otherwise. Transition options can be overridden via [setStyleTransition], but the options are

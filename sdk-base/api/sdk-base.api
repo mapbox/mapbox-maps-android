@@ -175,6 +175,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public final fun getPixelRatio ()F
 	public fun getStyleAtmosphereProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleDefaultCamera ()Lcom/mapbox/maps/CameraOptions;
+	public fun getStyleGlyphURL ()Ljava/lang/String;
 	public fun getStyleImage (Ljava/lang/String;)Lcom/mapbox/maps/Image;
 	public fun getStyleImportConfigProperties (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun getStyleImportConfigProperty (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
@@ -215,6 +216,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomRasterSourceTileData (Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleGeoJSONSourceData (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/GeoJSONSourceData;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleGlyphURL (Ljava/lang/String;)V
 	public fun setStyleImportConfigProperties (Ljava/lang/String;Ljava/util/HashMap;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleImportConfigProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleLayerProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;

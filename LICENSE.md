@@ -264,6 +264,12 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the Cronet.
+
+License: [Chromium and built-in dependencies](https://storage.cloud.google.com/chromium-cronet/android/119.0.6045.31/Release/cronet/LICENSE)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Experimental annotation.
 
 URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)
@@ -420,6 +426,30 @@ License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENS
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the play-services-base.
+
+License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the play-services-basement.
+
+License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the play-services-cronet.
+
+License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the play-services-tasks.
+
+License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Saved State.
 
 URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.0)
@@ -444,13 +474,13 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,11.7.0,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,11.8.0-SNAPSHOT,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
-Mapbox Core Maps version 10.0
+Mapbox Core Maps version 11.0
 Mapbox Core Maps SDK
 
-Copyright (c) 2021 Mapbox
+Copyright (c) 2024 Mapbox
 
 All rights reserved.
 
@@ -1183,7 +1213,7 @@ DEALINGS IN THE SOFTWARE.
 
 ---
 
-### vector-tile,1.0.4,ISC,Mapbox,https://github.com/mapbox/vector-tile
+### vector-tile-internal,1.0.4,ISC,Mapbox,https://github.com/mapbox/vector-tile-internal
 
 ```
 Copyright (c) 2016, Mapbox
@@ -1767,7 +1797,7 @@ For more information, please see
 
 ---
 
-### mapbox-base-internal,dev,BSD-3-Clause,Mapbox,https://github.com/mapbox/mapbox-base-internal
+### mapbox-base-internal,dev,BSD-3-Clause,Mapbox,https://www.mapbox.com/
 
 ```
 Copyright (c) MapBox
@@ -2067,7 +2097,7 @@ DEALINGS IN THE SOFTWARE.
 
 ---
 
-### mapbox-common,dev,Mapbox ToS,Mapbox,https://github.com/mapbox/mapbox-sdk-common
+### mapbox-common,dev,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Common SDK

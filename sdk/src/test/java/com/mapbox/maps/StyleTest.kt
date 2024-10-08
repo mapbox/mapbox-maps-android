@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
+import com.mapbox.verifyOnce
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -13,6 +14,7 @@ import io.mockk.spyk
 import io.mockk.unmockkStatic
 import io.mockk.verify
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -619,5 +621,19 @@ class StyleTest {
     val tileData = listOf<CustomRasterSourceTileData>()
     style.setStyleCustomRasterSourceTileData(sourceId, tileData)
     verify { styleManager.setStyleCustomRasterSourceTileData(sourceId, tileData) }
+  }
+
+  @Test
+  fun getStyleGlyphURL() {
+    every { styleManager.styleGlyphURL } returns "url"
+    val url = style.getStyleGlyphURL()
+    verifyOnce { styleManager.styleGlyphURL }
+    assertEquals("url", url)
+  }
+
+  @Test
+  fun setStyleGlyphURL() {
+    style.setStyleGlyphURL("url")
+    verifyOnce { styleManager.styleGlyphURL = "url" }
   }
 }
