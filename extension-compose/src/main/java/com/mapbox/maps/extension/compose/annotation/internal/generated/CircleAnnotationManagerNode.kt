@@ -13,7 +13,7 @@ internal class CircleAnnotationManagerNode(
   val annotationManager: CircleAnnotationManager,
 ) : BaseAnnotationNode(mapboxStyleManager) {
 
-  private var currentAnnotations: MutableList<CircleAnnotation> = mutableListOf()
+  internal var currentAnnotations: MutableList<CircleAnnotation> = mutableListOf()
   var annotationClusterItems: List<CircleAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {

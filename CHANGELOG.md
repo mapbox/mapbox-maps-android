@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
 * [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.
 * [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
+* [compose] Introduce `<AnnotationType>InteractionsState.isDraggable` / `<AnnotationType>GroupInteractionsState.isDraggable` API for all annotation types allowing to drag annotations. Callbacks `onDragStarted()`, `onDragged()`,`onDragFinished()` are added as well.
 
 # 11.7.0 September 26, 2024
 ## Features ✨ and improvements 🏁

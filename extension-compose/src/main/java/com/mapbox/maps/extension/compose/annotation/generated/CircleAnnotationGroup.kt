@@ -82,12 +82,20 @@ public fun CircleAnnotationGroup(
     mutableStateOf<CircleAnnotationManager?>(null)
   }
 
+  var annotationManagerNode by remember {
+    mutableStateOf<CircleAnnotationManagerNode?>(null)
+  }
+
+  if (circleAnnotationGroupState.interactionsState.isDraggable) {
+    annotations.forEach { it.withDraggable(true) }
+  }
+
   ComposeNode<CircleAnnotationManagerNode, MapApplier>(
     factory = {
       CircleAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createCircleAnnotationManager(annotationConfig).also { annotationManager = it },
-      )
+      ).also { annotationManagerNode = it }
     },
     update = {
       set(annotations) {
@@ -101,9 +109,16 @@ public fun CircleAnnotationGroup(
       }
     }
   }
-  key(circleAnnotationGroupState.interactionsState) {
-    annotationManager?.let {
-     circleAnnotationGroupState.interactionsState.BindTo(it)
+  key(circleAnnotationGroupState.interactionsState, annotationManager, annotationManagerNode) {
+    if (annotationManager != null && annotationManagerNode != null) {
+      annotationManager?.let {
+        circleAnnotationGroupState.interactionsState.BindTo(it)
+      }
+      annotationManagerNode?.let {
+        it.currentAnnotations.forEach { annotation ->
+          annotation.isDraggable = circleAnnotationGroupState.interactionsState.isDraggable
+        }
+      }
     }
   }
 }

@@ -29,6 +29,7 @@ import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGr
 import com.mapbox.maps.extension.compose.annotation.generated.withCircleColor
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
@@ -100,6 +101,12 @@ public class CircleAnnotationActivity : ComponentActivity() {
                   ).show()
                   true
                 }
+                .onDragged {
+                  logD(
+                    this.javaClass.simpleName,
+                    "Dragging single Circle Annotation: $it",
+                  )
+                }
               circleRadius = 20.0
               circleColor = Color.Blue
             }
@@ -134,10 +141,11 @@ public class CircleAnnotationActivity : ComponentActivity() {
               // Apply circle color to the whole CircleAnnotationGroup
               circleColor = groupColor
 
+              interactionsState.isDraggable = true
               interactionsState.onClicked {
                 Toast.makeText(
                   this@CircleAnnotationActivity,
-                  "Clicked on Circle Annotation Cluster item: $it",
+                  "Clicked on Circle Annotation Cluster's item: $it",
                   Toast.LENGTH_SHORT
                 ).show()
                 true
@@ -145,7 +153,7 @@ public class CircleAnnotationActivity : ComponentActivity() {
                 .onLongClicked {
                   Toast.makeText(
                     this@CircleAnnotationActivity,
-                    "Long clicked on Circle Annotation Cluster item: $it",
+                    "Long clicked on Circle Annotation Cluster's item: $it",
                     Toast.LENGTH_SHORT
                   ).show()
                   true
@@ -165,6 +173,27 @@ public class CircleAnnotationActivity : ComponentActivity() {
                     Toast.LENGTH_SHORT
                   ).show()
                   true
+                }
+                .onDragged {
+                  logD(
+                    this.javaClass.simpleName,
+                    "Dragging Circle Annotation Cluster's item: $it"
+                  )
+                }
+                .onDragStarted {
+                  Toast.makeText(
+                    this@CircleAnnotationActivity,
+                    "Dragged Started for Circle Annotation Cluster's item: $it",
+                    Toast.LENGTH_SHORT
+                  ).show()
+                }
+                .onDragFinished {
+                  interactionsState.onDragged {
+                    logD(
+                      this.javaClass.simpleName,
+                      "Updated dragging Circle Annotation Cluster's item: $it"
+                    )
+                  }
                 }
             }
           }

@@ -776,6 +776,8 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set whether this pointAnnotation should be draggable,
    * meaning it can be dragged across the screen when touched and moved.
+   * Note: If this param is used when pointAnnotation is also part of the cluster, then once pointAnnotation is dragged,
+   * it moves out of the cluster and can't be added back to it and is rendered as a separate pointAnnotation.
    *
    * @param draggable should be draggable
    */

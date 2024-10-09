@@ -242,6 +242,8 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set whether this circleAnnotation should be draggable,
    * meaning it can be dragged across the screen when touched and moved.
+   * Note: If this param is used when circleAnnotation is also part of the cluster, then once circleAnnotation is dragged,
+   * it moves out of the cluster and can't be added back to it and is rendered as a separate circleAnnotation.
    *
    * @param draggable should be draggable
    */

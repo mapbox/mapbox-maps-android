@@ -13,7 +13,7 @@ internal class PointAnnotationManagerNode(
   val annotationManager: PointAnnotationManager,
 ) : BaseAnnotationNode(mapboxStyleManager) {
 
-  private var currentAnnotations: MutableList<PointAnnotation> = mutableListOf()
+  internal var currentAnnotations: MutableList<PointAnnotation> = mutableListOf()
   var annotationClusterItems: List<PointAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {

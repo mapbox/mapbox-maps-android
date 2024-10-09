@@ -64,12 +64,14 @@ public class PolygonAnnotationActivity : ComponentActivity() {
             PolygonAnnotation(
               points = POLYGON_POINTS,
             ) {
+              interactionsState.isDraggable = true
               interactionsState.onClicked {
                 Toast.makeText(
                   this@PolygonAnnotationActivity,
                   "Clicked on Polygon Annotation: $it",
                   Toast.LENGTH_SHORT
                 ).show()
+                interactionsState.isDraggable = false
                 true
               }
                 .onLongClicked {
@@ -78,6 +80,7 @@ public class PolygonAnnotationActivity : ComponentActivity() {
                     "Long Clicked on Polygon Annotation: $it",
                     Toast.LENGTH_SHORT
                   ).show()
+                  interactionsState.isDraggable = true
                   true
                 }
               fillColor = color

@@ -198,10 +198,15 @@ public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
 	public final fun onClusterClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
 	public final fun onClusterLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsStateKt {
@@ -249,8 +254,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsStateKt {
@@ -291,10 +301,15 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
 	public final fun onClusterClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
 	public final fun onClusterLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsStateKt {
@@ -444,8 +459,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PointAnnotationInteractionsStateKt {
@@ -542,8 +562,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsStateKt {
@@ -583,8 +608,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsStateKt {
@@ -619,8 +649,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsStateKt {
@@ -690,8 +725,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState {
 	public fun <init> ()V
+	public final fun isDraggable ()Z
 	public final fun onClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+	public final fun onDragFinished (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+	public final fun onDragStarted (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+	public final fun onDragged (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
 	public final fun onLongClicked (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
+	public final fun setDraggable (Z)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsStateKt {

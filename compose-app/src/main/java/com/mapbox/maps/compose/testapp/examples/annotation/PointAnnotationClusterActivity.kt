@@ -90,11 +90,12 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
             ) {
               // Apply icon image to the whole annotation group.
               iconImage = IconImage(ICON_FIRE_STATION)
+              interactionsState.isDraggable = true
 
               interactionsState.onClicked {
                 Toast.makeText(
                   this@PointAnnotationClusterActivity,
-                  "Clicked on Point Annotation Cluster: $it",
+                  "Clicked on Point Annotation Cluster's item: $it",
                   Toast.LENGTH_SHORT
                 ).show()
                 true
@@ -102,7 +103,7 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
                 .onLongClicked {
                   Toast.makeText(
                     this@PointAnnotationClusterActivity,
-                    "Long clicked on Circle Annotation Cluster item: $it",
+                    "Long clicked on Circle Annotation Cluster's item: $it",
                     Toast.LENGTH_SHORT
                   ).show()
                   true

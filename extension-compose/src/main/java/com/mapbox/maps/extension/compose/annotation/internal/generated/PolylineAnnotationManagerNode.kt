@@ -13,7 +13,7 @@ internal class PolylineAnnotationManagerNode(
   val annotationManager: PolylineAnnotationManager,
 ) : BaseAnnotationNode(mapboxStyleManager) {
 
-  private var currentAnnotations: MutableList<PolylineAnnotation> = mutableListOf()
+  internal var currentAnnotations: MutableList<PolylineAnnotation> = mutableListOf()
   var annotationClusterItems: List<PolylineAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {

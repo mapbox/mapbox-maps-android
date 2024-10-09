@@ -27,6 +27,7 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.compose.annotation.rememberIconImage
 import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.logD
 
 /**
  * Example to showcase usage of point annotations with text and icon image.
@@ -82,7 +83,8 @@ public class PointAnnotationActivity : ComponentActivity() {
               MapStyle(style = Style.LIGHT)
             }
           ) {
-            val marker = rememberIconImage(key = markerResourceId, painter = painterResource(markerResourceId))
+            val marker =
+              rememberIconImage(key = markerResourceId, painter = painterResource(markerResourceId))
             PointAnnotation(point = CityLocations.HELSINKI) {
               iconImage = marker
               textField = text
@@ -94,6 +96,12 @@ public class PointAnnotationActivity : ComponentActivity() {
                 }
                 true
               }
+                .onDragged {
+                  logD(
+                    this.javaClass.simpleName,
+                    "onDragged"
+                  )
+                }.also { it.isDraggable = true }
             }
           }
         }

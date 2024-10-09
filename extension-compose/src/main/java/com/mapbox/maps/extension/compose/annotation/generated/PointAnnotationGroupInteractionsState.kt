@@ -9,10 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.ClusterFeature
 import com.mapbox.maps.plugin.annotation.OnClusterClickListener
 import com.mapbox.maps.plugin.annotation.OnClusterLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationDragListener
 import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
@@ -23,13 +25,59 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 @Stable
 public class PointAnnotationGroupInteractionsState {
 
-  private var onClickedListener: OnPointAnnotationClickListener? by mutableStateOf(null)
+  private val onClickedListener: OnPointAnnotationClickListener = OnPointAnnotationClickListener {
+    onClicked?.invoke(it) ?: false
+  }
 
-  private var onLongClickedListener: OnPointAnnotationLongClickListener? by mutableStateOf(null)
+  private val onLongClickedListener: OnPointAnnotationLongClickListener =
+    OnPointAnnotationLongClickListener {
+      onLongClicked?.invoke(it) ?: false
+    }
 
-  private var onClusterClickedListener: OnClusterClickListener? by mutableStateOf(null)
+  private val onClusterClickedListener: OnClusterClickListener = OnClusterClickListener {
+    onClusterClicked?.invoke(it) ?: false
+  }
 
-  private var onClusterLongClickedListener: OnClusterLongClickListener? by mutableStateOf(null)
+  private val onClusterLongClickedListener: OnClusterLongClickListener = OnClusterLongClickListener {
+    onClusterLongClicked?.invoke(it) ?: false
+  }
+
+  private val onDragListener: OnPointAnnotationDragListener =
+      object : OnPointAnnotationDragListener {
+        override fun onAnnotationDragStarted(annotation: Annotation<*>) {
+          (annotation as? PointAnnotation)?.let {
+            onDragStarted?.invoke(it)
+          }
+        }
+
+        override fun onAnnotationDrag(annotation: Annotation<*>) {
+          (annotation as? PointAnnotation)?.let {
+            onDragged?.invoke(it)
+          }
+        }
+
+        override fun onAnnotationDragFinished(annotation: Annotation<*>) {
+          (annotation as? PointAnnotation)?.let {
+            onDragFinished?.invoke(it)
+          }
+        }
+      }
+
+  private var onClicked: ((PointAnnotation) -> Boolean)? by mutableStateOf(null)
+  private var onLongClicked: ((PointAnnotation) -> Boolean)? by mutableStateOf(null)
+  private var onDragStarted: ((PointAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onDragged: ((PointAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onDragFinished: ((PointAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onClusterClicked: ((ClusterFeature) -> Boolean)? by mutableStateOf(null)
+  private var onClusterLongClicked: ((ClusterFeature) -> Boolean)? by mutableStateOf(null)
+
+  /**
+   * Set whether PointAnnotation holding this PointAnnotationGroupInteractionsState should be draggable,
+   * meaning it can be dragged across the screen when touched and moved.
+   * Note: If this param is used when PointAnnotation is also part of the cluster, then once PointAnnotation is dragged,
+   * it moves out of the cluster and can't be added back to it and is rendered as a separate PointAnnotation.
+   */
+  public var isDraggable: Boolean by mutableStateOf(false)
 
   /**
    * Set onClick Callback to be invoked when the [PointAnnotation] is clicked. The clicked [PointAnnotation] will be passed as parameter.
@@ -37,9 +85,7 @@ public class PointAnnotationGroupInteractionsState {
    */
   public fun onClicked(onClick: (PointAnnotation) -> Boolean): PointAnnotationGroupInteractionsState =
     apply {
-      onClickedListener = OnPointAnnotationClickListener {
-        onClick.invoke(it)
-      }
+      onClicked = onClick
     }
 
   /**
@@ -48,81 +94,91 @@ public class PointAnnotationGroupInteractionsState {
    */
   public fun onLongClicked(onLongClick: (PointAnnotation) -> Boolean): PointAnnotationGroupInteractionsState =
     apply {
-      onLongClickedListener = OnPointAnnotationLongClickListener {
-        onLongClick.invoke(it)
-      }
+      onLongClicked = onLongClick
     }
 
   /**
    * Set onClusterClick Callback to be invoked when one of the clusters is clicked. The clicked cluster represented by a [Feature] wrapped with [ClusterFeature] with additional properties.
-   * Returns reference to [camelize(type) GroupInteractionsState] for making chained calls.
+   * Returns reference to [PointAnnotationGroupInteractionsState] for making chained calls.
    */
   public fun onClusterClicked(onClusterClick: (ClusterFeature) -> Boolean): PointAnnotationGroupInteractionsState =
     apply {
-      this.onClusterClickedListener = OnClusterClickListener {
-        onClusterClick.invoke(it)
-      }
+      onClusterClicked = onClusterClick
     }
 
   /**
    * Set onClusterLongClick Callback to be invoked when one of the clusters is long clicked. The clicked cluster represented by a [Feature] wrapped with [ClusterFeature] with additional properties.
-   * Returns reference to [camelize(type) GroupInteractionsState] for making chained calls.
+   * Returns reference to [PointAnnotationGroupInteractionsState] for making chained calls.
    */
   public fun onClusterLongClicked(onClusterLongClick: (ClusterFeature) -> Boolean): PointAnnotationGroupInteractionsState =
     apply {
-      this.onClusterLongClickedListener = OnClusterLongClickListener {
-        onClusterLongClick.invoke(it)
-      }
+      onClusterLongClicked = onClusterLongClick
+    }
+
+  /**
+   *  Set onDragStart Callback to be invoked when one of the [PointAnnotation] dragging has started. The dragged [PointAnnotation] will be passed as parameter.
+   */
+  public fun onDragStarted(onDragStart: (PointAnnotation) -> Unit): PointAnnotationGroupInteractionsState =
+    apply {
+      onDragStarted = onDragStart
+    }
+
+  /**
+   *  Set onDrag Callback to be invoked when one of the [PointAnnotation] dragging is in progress. The dragged [PointAnnotation] will be passed as parameter.
+   */
+  public fun onDragged(onDrag: (PointAnnotation) -> Unit): PointAnnotationGroupInteractionsState =
+    apply {
+      onDragged = onDrag
+    }
+
+  /**
+   *  Set onDragFinish Callback to be invoked when one of the [PointAnnotation] dragging has finished. The dragged [PointAnnotation] will be passed as parameter.
+   */
+  public fun onDragFinished(onDragFinish: (PointAnnotation) -> Unit): PointAnnotationGroupInteractionsState =
+    apply {
+      onDragFinished = onDragFinish
     }
 
   @Composable
   internal fun BindTo(annotationManager: PointAnnotationManager) {
-    with(onClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onClicked) {
+      onClicked?.let {
+        annotationManager.addClickListener(onClickedListener)
+      }
+      onDispose {
+        annotationManager.removeClickListener(onClickedListener)
       }
     }
-    with(onLongClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addLongClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeLongClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onLongClicked) {
+      onLongClicked?.let {
+        annotationManager.addLongClickListener(onLongClickedListener)
       }
-     }
-    with(onClusterClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addClusterClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeClusterClickListener(it)
-          }
-        }
+      onDispose {
+        annotationManager.removeLongClickListener(onLongClickedListener)
       }
     }
-    with(onClusterLongClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addClusterLongClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeClusterLongClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onDragStarted, onDragged, onDragFinished) {
+      if (onDragStarted != null || onDragged != null || onDragFinished != null) {
+        annotationManager.addDragListener(onDragListener)
+      }
+      onDispose {
+        annotationManager.removeDragListener(onDragListener)
+      }
+    }
+    DisposableEffect(key1 = onClusterClicked) {
+      onClusterClicked.let {
+        annotationManager.addClusterClickListener(onClusterClickedListener)
+      }
+      onDispose {
+          annotationManager.removeClusterClickListener(onClusterClickedListener)
+      }
+    }
+    DisposableEffect(key1 = onClusterLongClicked) {
+      onClusterLongClicked.let {
+        annotationManager.addClusterLongClickListener(onClusterLongClickedListener)
+      }
+      onDispose {
+        annotationManager.removeClusterLongClickListener(onClusterLongClickedListener)
       }
     }
   }

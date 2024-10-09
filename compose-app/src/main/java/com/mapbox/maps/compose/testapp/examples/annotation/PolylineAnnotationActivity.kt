@@ -17,6 +17,7 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroup
 import com.mapbox.maps.extension.compose.annotation.generated.withLineColor
+import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import java.util.Random
@@ -63,6 +64,12 @@ public class PolylineAnnotationActivity : ComponentActivity() {
                   ).show()
                   true
                 }
+                .onDragged {
+                  logD(
+                    this.javaClass.simpleName,
+                    "Dragging Polyline Annotation: $it"
+                  )
+                }.also { it.isDraggable = true }
               lineColor = Color.Red
               lineWidth = 5.0
             }

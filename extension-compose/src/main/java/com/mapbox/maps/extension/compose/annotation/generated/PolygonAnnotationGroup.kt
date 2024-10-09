@@ -82,12 +82,20 @@ public fun PolygonAnnotationGroup(
     mutableStateOf<PolygonAnnotationManager?>(null)
   }
 
+  var annotationManagerNode by remember {
+    mutableStateOf<PolygonAnnotationManagerNode?>(null)
+  }
+
+  if (polygonAnnotationGroupState.interactionsState.isDraggable) {
+    annotations.forEach { it.withDraggable(true) }
+  }
+
   ComposeNode<PolygonAnnotationManagerNode, MapApplier>(
     factory = {
       PolygonAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createPolygonAnnotationManager(annotationConfig).also { annotationManager = it },
-      )
+      ).also { annotationManagerNode = it }
     },
     update = {
       set(annotations) {
@@ -101,9 +109,16 @@ public fun PolygonAnnotationGroup(
       }
     }
   }
-  key(polygonAnnotationGroupState.interactionsState) {
-    annotationManager?.let {
-     polygonAnnotationGroupState.interactionsState.BindTo(it)
+  key(polygonAnnotationGroupState.interactionsState, annotationManager, annotationManagerNode) {
+    if (annotationManager != null && annotationManagerNode != null) {
+      annotationManager?.let {
+        polygonAnnotationGroupState.interactionsState.BindTo(it)
+      }
+      annotationManagerNode?.let {
+        it.currentAnnotations.forEach { annotation ->
+          annotation.isDraggable = polygonAnnotationGroupState.interactionsState.isDraggable
+        }
+      }
     }
   }
 }

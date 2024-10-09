@@ -77,6 +77,7 @@ public fun PolylineAnnotation(
       val factoryAnnotationManager = mapApplier.mapView.annotations.createPolylineAnnotationManager().also { annotationManager = it }
       val annotationOptions: PolylineAnnotationOptions = PolylineAnnotationOptions()
         .withPoints(points)
+        .withDraggable(polylineAnnotationState.interactionsState.isDraggable)
       val annotation = factoryAnnotationManager.create(annotationOptions)
       PolylineAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
@@ -93,9 +94,12 @@ public fun PolylineAnnotation(
       }
     }
   }
-  key(polylineAnnotationState.interactionsState) {
-    annotationManager?.let {
-      polylineAnnotationState.interactionsState.BindTo(it)
+  key(polylineAnnotationState.interactionsState, annotationManager, annotationNode) {
+    if (annotationManager != null && annotationNode != null) {
+      annotationNode?.annotation?.isDraggable = polylineAnnotationState.interactionsState.isDraggable
+      annotationManager?.let {
+        polylineAnnotationState.interactionsState.BindTo(it)
+      }
     }
   }
 }

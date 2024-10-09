@@ -82,12 +82,20 @@ public fun PointAnnotationGroup(
     mutableStateOf<PointAnnotationManager?>(null)
   }
 
+  var annotationManagerNode by remember {
+    mutableStateOf<PointAnnotationManagerNode?>(null)
+  }
+
+  if (pointAnnotationGroupState.interactionsState.isDraggable) {
+    annotations.forEach { it.withDraggable(true) }
+  }
+
   ComposeNode<PointAnnotationManagerNode, MapApplier>(
     factory = {
       PointAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createPointAnnotationManager(annotationConfig).also { annotationManager = it },
-      )
+      ).also { annotationManagerNode = it }
     },
     update = {
       set(annotations) {
@@ -101,9 +109,16 @@ public fun PointAnnotationGroup(
       }
     }
   }
-  key(pointAnnotationGroupState.interactionsState) {
-    annotationManager?.let {
-     pointAnnotationGroupState.interactionsState.BindTo(it)
+  key(pointAnnotationGroupState.interactionsState, annotationManager, annotationManagerNode) {
+    if (annotationManager != null && annotationManagerNode != null) {
+      annotationManager?.let {
+        pointAnnotationGroupState.interactionsState.BindTo(it)
+      }
+      annotationManagerNode?.let {
+        it.currentAnnotations.forEach { annotation ->
+          annotation.isDraggable = pointAnnotationGroupState.interactionsState.isDraggable
+        }
+      }
     }
   }
 }

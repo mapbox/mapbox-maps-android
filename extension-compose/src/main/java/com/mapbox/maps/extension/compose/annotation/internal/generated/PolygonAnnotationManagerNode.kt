@@ -13,7 +13,7 @@ internal class PolygonAnnotationManagerNode(
   val annotationManager: PolygonAnnotationManager,
 ) : BaseAnnotationNode(mapboxStyleManager) {
 
-  private var currentAnnotations: MutableList<PolygonAnnotation> = mutableListOf()
+  internal var currentAnnotations: MutableList<PolygonAnnotation> = mutableListOf()
   var annotationClusterItems: List<PolygonAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {

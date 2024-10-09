@@ -262,19 +262,19 @@ Adding multiple Annotations to the map using `AnnotationGroup` is more efficient
           interactionsState.onClicked {
             Toast.makeText(
               this@CircleAnnotationActivity,
-              "Clicked on Circle Annotation Cluster item: $it",
+              "Clicked on Circle Annotation Cluster's item: $it",
               Toast.LENGTH_SHORT
             ).show()
             true
           }
-          interactionsState.onLongClicked {
-            Toast.makeText(
-              this@CircleAnnotationActivity,
-              "Long clicked on Circle Annotation Cluster item: $it",
-              Toast.LENGTH_SHORT
-            ).show()
-            true
-          }             
+            .onLongClicked {
+              Toast.makeText(
+                this@CircleAnnotationActivity,
+                "Long clicked on Circle Annotation Cluster's item: $it",
+                Toast.LENGTH_SHORT
+              ).show()
+              true
+            }             
         }
       }
     }
@@ -325,7 +325,7 @@ The following example showcases adding multiple `PointAnnotations` with clusteri
             .onLongClicked {
               Toast.makeText(
                 this@PointAnnotationClusterActivity,
-                "Long clicked on Circle Annotation Cluster item: $it",
+                "Long clicked on Circle Annotation Cluster's item: $it",
                 Toast.LENGTH_SHORT
               ).show()
               true

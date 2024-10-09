@@ -77,6 +77,7 @@ public fun PolygonAnnotation(
       val factoryAnnotationManager = mapApplier.mapView.annotations.createPolygonAnnotationManager().also { annotationManager = it }
       val annotationOptions: PolygonAnnotationOptions = PolygonAnnotationOptions()
         .withPoints(points)
+        .withDraggable(polygonAnnotationState.interactionsState.isDraggable)
       val annotation = factoryAnnotationManager.create(annotationOptions)
       PolygonAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
@@ -93,9 +94,12 @@ public fun PolygonAnnotation(
       }
     }
   }
-  key(polygonAnnotationState.interactionsState) {
-    annotationManager?.let {
-      polygonAnnotationState.interactionsState.BindTo(it)
+  key(polygonAnnotationState.interactionsState, annotationManager, annotationNode) {
+    if (annotationManager != null && annotationNode != null) {
+      annotationNode?.annotation?.isDraggable = polygonAnnotationState.interactionsState.isDraggable
+      annotationManager?.let {
+        polygonAnnotationState.interactionsState.BindTo(it)
+      }
     }
   }
 }

@@ -82,12 +82,20 @@ public fun PolylineAnnotationGroup(
     mutableStateOf<PolylineAnnotationManager?>(null)
   }
 
+  var annotationManagerNode by remember {
+    mutableStateOf<PolylineAnnotationManagerNode?>(null)
+  }
+
+  if (polylineAnnotationGroupState.interactionsState.isDraggable) {
+    annotations.forEach { it.withDraggable(true) }
+  }
+
   ComposeNode<PolylineAnnotationManagerNode, MapApplier>(
     factory = {
       PolylineAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createPolylineAnnotationManager(annotationConfig).also { annotationManager = it },
-      )
+      ).also { annotationManagerNode = it }
     },
     update = {
       set(annotations) {
@@ -101,9 +109,16 @@ public fun PolylineAnnotationGroup(
       }
     }
   }
-  key(polylineAnnotationGroupState.interactionsState) {
-    annotationManager?.let {
-     polylineAnnotationGroupState.interactionsState.BindTo(it)
+  key(polylineAnnotationGroupState.interactionsState, annotationManager, annotationManagerNode) {
+    if (annotationManager != null && annotationManagerNode != null) {
+      annotationManager?.let {
+        polylineAnnotationGroupState.interactionsState.BindTo(it)
+      }
+      annotationManagerNode?.let {
+        it.currentAnnotations.forEach { annotation ->
+          annotation.isDraggable = polylineAnnotationGroupState.interactionsState.isDraggable
+        }
+      }
     }
   }
 }

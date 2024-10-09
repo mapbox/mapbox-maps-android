@@ -9,9 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationDragListener
 import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationLongClickListener
 
 /**
@@ -20,9 +22,49 @@ import com.mapbox.maps.plugin.annotation.generated.OnCircleAnnotationLongClickLi
 @Stable
 public class CircleAnnotationInteractionsState {
 
-  private var onClickedListener: OnCircleAnnotationClickListener? by mutableStateOf(null)
+  private val onClickedListener: OnCircleAnnotationClickListener = OnCircleAnnotationClickListener {
+    onClicked?.invoke(it) ?: false
+  }
 
-  private var onLongClickedListener: OnCircleAnnotationLongClickListener? by mutableStateOf(null)
+  private val onLongClickedListener: OnCircleAnnotationLongClickListener =
+    OnCircleAnnotationLongClickListener {
+      onLongClicked?.invoke(it) ?: false
+    }
+
+  private val onDragListener: OnCircleAnnotationDragListener =
+      object : OnCircleAnnotationDragListener {
+        override fun onAnnotationDragStarted(annotation: Annotation<*>) {
+          (annotation as? CircleAnnotation)?.let {
+            onDragStarted?.invoke(it)
+          }
+        }
+
+        override fun onAnnotationDrag(annotation: Annotation<*>) {
+          (annotation as? CircleAnnotation)?.let {
+            onDragged?.invoke(it)
+          }
+        }
+
+        override fun onAnnotationDragFinished(annotation: Annotation<*>) {
+          (annotation as? CircleAnnotation)?.let {
+            onDragFinished?.invoke(it)
+          }
+        }
+      }
+
+  private var onClicked: ((CircleAnnotation) -> Boolean)? by mutableStateOf(null)
+  private var onLongClicked: ((CircleAnnotation) -> Boolean)? by mutableStateOf(null)
+  private var onDragStarted: ((CircleAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onDragged: ((CircleAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onDragFinished: ((CircleAnnotation) -> Unit)? by mutableStateOf(null)
+
+  /**
+   * Set whether CircleAnnotation holding this CircleAnnotationInteractionsState should be draggable,
+   * meaning it can be dragged across the screen when touched and moved.
+   * Note: If this param is used when CircleAnnotation is also part of the cluster, then once CircleAnnotation is dragged,
+   * it moves out of the cluster and can't be added back to it and is rendered as a separate CircleAnnotation.
+   */
+  public var isDraggable: Boolean by mutableStateOf(false)
 
   /**
    * Set onClick Callback to be invoked when the [CircleAnnotation] is clicked. The clicked [CircleAnnotation] will be passed as parameter.
@@ -30,9 +72,7 @@ public class CircleAnnotationInteractionsState {
    */
   public fun onClicked(onClick: (CircleAnnotation) -> Boolean): CircleAnnotationInteractionsState =
     apply {
-      onClickedListener = OnCircleAnnotationClickListener {
-        onClick.invoke(it)
-      }
+      onClicked = onClick
     }
 
   /**
@@ -41,35 +81,57 @@ public class CircleAnnotationInteractionsState {
    */
   public fun onLongClicked(onLongClick: (CircleAnnotation) -> Boolean): CircleAnnotationInteractionsState =
     apply {
-      onLongClickedListener = OnCircleAnnotationLongClickListener {
-        onLongClick.invoke(it)
-      }
+      onLongClicked = onLongClick
+    }
+
+  /**
+   *  Set onDragStart Callback to be invoked when one of the [CircleAnnotation] dragging has started. The dragged [CircleAnnotation] will be passed as parameter.
+   */
+  public fun onDragStarted(onDragStart: (CircleAnnotation) -> Unit): CircleAnnotationInteractionsState =
+    apply {
+      onDragStarted = onDragStart
+    }
+
+  /**
+   *  Set onDrag Callback to be invoked when one of the [CircleAnnotation] dragging is in progress. The dragged [CircleAnnotation] will be passed as parameter.
+   */
+  public fun onDragged(onDrag: (CircleAnnotation) -> Unit): CircleAnnotationInteractionsState =
+    apply {
+      onDragged = onDrag
+    }
+
+  /**
+   *  Set onDragFinish Callback to be invoked when one of the [CircleAnnotation] dragging has finished. The dragged [CircleAnnotation] will be passed as parameter.
+   */
+  public fun onDragFinished(onDragFinish: (CircleAnnotation) -> Unit): CircleAnnotationInteractionsState =
+    apply {
+      onDragFinished = onDragFinish
     }
 
   @Composable
   internal fun BindTo(annotationManager: CircleAnnotationManager) {
-    with(onClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onClicked) {
+      onClicked?.let {
+        annotationManager.addClickListener(onClickedListener)
+      }
+      onDispose {
+        annotationManager.removeClickListener(onClickedListener)
       }
     }
-    with(onLongClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addLongClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeLongClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onLongClicked) {
+      onLongClicked?.let {
+        annotationManager.addLongClickListener(onLongClickedListener)
+      }
+      onDispose {
+        annotationManager.removeLongClickListener(onLongClickedListener)
+      }
+    }
+    DisposableEffect(key1 = onDragStarted, onDragged, onDragFinished) {
+      if (onDragStarted != null || onDragged != null || onDragFinished != null) {
+        annotationManager.addDragListener(onDragListener)
+      }
+      onDispose {
+        annotationManager.removeDragListener(onDragListener)
       }
     }
   }

@@ -9,7 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationDragListener
 import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationLongClickListener
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
@@ -20,9 +22,49 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 @Stable
 public class PolylineAnnotationInteractionsState {
 
-  private var onClickedListener: OnPolylineAnnotationClickListener? by mutableStateOf(null)
+  private val onClickedListener: OnPolylineAnnotationClickListener = OnPolylineAnnotationClickListener {
+    onClicked?.invoke(it) ?: false
+  }
 
-  private var onLongClickedListener: OnPolylineAnnotationLongClickListener? by mutableStateOf(null)
+  private val onLongClickedListener: OnPolylineAnnotationLongClickListener =
+    OnPolylineAnnotationLongClickListener {
+      onLongClicked?.invoke(it) ?: false
+    }
+
+  private val onDragListener: OnPolylineAnnotationDragListener =
+      object : OnPolylineAnnotationDragListener {
+        override fun onAnnotationDragStarted(annotation: Annotation<*>) {
+          (annotation as? PolylineAnnotation)?.let {
+            onDragStarted?.invoke(it)
+          }
+        }
+
+        override fun onAnnotationDrag(annotation: Annotation<*>) {
+          (annotation as? PolylineAnnotation)?.let {
+            onDragged?.invoke(it)
+          }
+        }
+
+        override fun onAnnotationDragFinished(annotation: Annotation<*>) {
+          (annotation as? PolylineAnnotation)?.let {
+            onDragFinished?.invoke(it)
+          }
+        }
+      }
+
+  private var onClicked: ((PolylineAnnotation) -> Boolean)? by mutableStateOf(null)
+  private var onLongClicked: ((PolylineAnnotation) -> Boolean)? by mutableStateOf(null)
+  private var onDragStarted: ((PolylineAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onDragged: ((PolylineAnnotation) -> Unit)? by mutableStateOf(null)
+  private var onDragFinished: ((PolylineAnnotation) -> Unit)? by mutableStateOf(null)
+
+  /**
+   * Set whether PolylineAnnotation holding this PolylineAnnotationInteractionsState should be draggable,
+   * meaning it can be dragged across the screen when touched and moved.
+   * Note: If this param is used when PolylineAnnotation is also part of the cluster, then once PolylineAnnotation is dragged,
+   * it moves out of the cluster and can't be added back to it and is rendered as a separate PolylineAnnotation.
+   */
+  public var isDraggable: Boolean by mutableStateOf(false)
 
   /**
    * Set onClick Callback to be invoked when the [PolylineAnnotation] is clicked. The clicked [PolylineAnnotation] will be passed as parameter.
@@ -30,9 +72,7 @@ public class PolylineAnnotationInteractionsState {
    */
   public fun onClicked(onClick: (PolylineAnnotation) -> Boolean): PolylineAnnotationInteractionsState =
     apply {
-      onClickedListener = OnPolylineAnnotationClickListener {
-        onClick.invoke(it)
-      }
+      onClicked = onClick
     }
 
   /**
@@ -41,35 +81,57 @@ public class PolylineAnnotationInteractionsState {
    */
   public fun onLongClicked(onLongClick: (PolylineAnnotation) -> Boolean): PolylineAnnotationInteractionsState =
     apply {
-      onLongClickedListener = OnPolylineAnnotationLongClickListener {
-        onLongClick.invoke(it)
-      }
+      onLongClicked = onLongClick
+    }
+
+  /**
+   *  Set onDragStart Callback to be invoked when one of the [PolylineAnnotation] dragging has started. The dragged [PolylineAnnotation] will be passed as parameter.
+   */
+  public fun onDragStarted(onDragStart: (PolylineAnnotation) -> Unit): PolylineAnnotationInteractionsState =
+    apply {
+      onDragStarted = onDragStart
+    }
+
+  /**
+   *  Set onDrag Callback to be invoked when one of the [PolylineAnnotation] dragging is in progress. The dragged [PolylineAnnotation] will be passed as parameter.
+   */
+  public fun onDragged(onDrag: (PolylineAnnotation) -> Unit): PolylineAnnotationInteractionsState =
+    apply {
+      onDragged = onDrag
+    }
+
+  /**
+   *  Set onDragFinish Callback to be invoked when one of the [PolylineAnnotation] dragging has finished. The dragged [PolylineAnnotation] will be passed as parameter.
+   */
+  public fun onDragFinished(onDragFinish: (PolylineAnnotation) -> Unit): PolylineAnnotationInteractionsState =
+    apply {
+      onDragFinished = onDragFinish
     }
 
   @Composable
   internal fun BindTo(annotationManager: PolylineAnnotationManager) {
-    with(onClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onClicked) {
+      onClicked?.let {
+        annotationManager.addClickListener(onClickedListener)
+      }
+      onDispose {
+        annotationManager.removeClickListener(onClickedListener)
       }
     }
-    with(onLongClickedListener) {
-      DisposableEffect(key1 = this) {
-        this@with?.let {
-          annotationManager.addLongClickListener(it)
-        }
-        onDispose {
-          this@with?.let {
-            annotationManager.removeLongClickListener(it)
-          }
-        }
+    DisposableEffect(key1 = onLongClicked) {
+      onLongClicked?.let {
+        annotationManager.addLongClickListener(onLongClickedListener)
+      }
+      onDispose {
+        annotationManager.removeLongClickListener(onLongClickedListener)
+      }
+    }
+    DisposableEffect(key1 = onDragStarted, onDragged, onDragFinished) {
+      if (onDragStarted != null || onDragged != null || onDragFinished != null) {
+        annotationManager.addDragListener(onDragListener)
+      }
+      onDispose {
+        annotationManager.removeDragListener(onDragListener)
       }
     }
   }

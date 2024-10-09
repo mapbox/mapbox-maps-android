@@ -77,6 +77,7 @@ public fun CircleAnnotation(
       val factoryAnnotationManager = mapApplier.mapView.annotations.createCircleAnnotationManager().also { annotationManager = it }
       val annotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
         .withPoint(point)
+        .withDraggable(circleAnnotationState.interactionsState.isDraggable)
       val annotation = factoryAnnotationManager.create(annotationOptions)
       CircleAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
@@ -93,9 +94,12 @@ public fun CircleAnnotation(
       }
     }
   }
-  key(circleAnnotationState.interactionsState) {
-    annotationManager?.let {
-      circleAnnotationState.interactionsState.BindTo(it)
+  key(circleAnnotationState.interactionsState, annotationManager, annotationNode) {
+    if (annotationManager != null && annotationNode != null) {
+      annotationNode?.annotation?.isDraggable = circleAnnotationState.interactionsState.isDraggable
+      annotationManager?.let {
+        circleAnnotationState.interactionsState.BindTo(it)
+      }
     }
   }
 }

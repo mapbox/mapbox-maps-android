@@ -77,6 +77,7 @@ public fun PointAnnotation(
       val factoryAnnotationManager = mapApplier.mapView.annotations.createPointAnnotationManager().also { annotationManager = it }
       val annotationOptions: PointAnnotationOptions = PointAnnotationOptions()
         .withPoint(point)
+        .withDraggable(pointAnnotationState.interactionsState.isDraggable)
       val annotation = factoryAnnotationManager.create(annotationOptions)
       PointAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
     },
@@ -93,9 +94,12 @@ public fun PointAnnotation(
       }
     }
   }
-  key(pointAnnotationState.interactionsState) {
-    annotationManager?.let {
-      pointAnnotationState.interactionsState.BindTo(it)
+  key(pointAnnotationState.interactionsState, annotationManager, annotationNode) {
+    if (annotationManager != null && annotationNode != null) {
+      annotationNode?.annotation?.isDraggable = pointAnnotationState.interactionsState.isDraggable
+      annotationManager?.let {
+        pointAnnotationState.interactionsState.BindTo(it)
+      }
     }
   }
 }

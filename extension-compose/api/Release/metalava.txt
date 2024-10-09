@@ -176,10 +176,16 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class CircleAnnotationGroupInteractionsState {
     ctor public CircleAnnotationGroupInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onClusterClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterClick);
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onClusterLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterLongClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class CircleAnnotationGroupInteractionsStateKt {
@@ -245,8 +251,14 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class CircleAnnotationInteractionsState {
     ctor public CircleAnnotationInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class CircleAnnotationInteractionsStateKt {
@@ -299,10 +311,16 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PointAnnotationGroupInteractionsState {
     ctor public PointAnnotationGroupInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onClusterClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterClick);
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onClusterLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.ClusterFeature,java.lang.Boolean> onClusterLongClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class PointAnnotationGroupInteractionsStateKt {
@@ -521,8 +539,14 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PointAnnotationInteractionsState {
     ctor public PointAnnotationInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class PointAnnotationInteractionsStateKt {
@@ -658,8 +682,14 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PolygonAnnotationGroupInteractionsState {
     ctor public PolygonAnnotationGroupInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class PolygonAnnotationGroupInteractionsStateKt {
@@ -713,8 +743,14 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PolygonAnnotationInteractionsState {
     ctor public PolygonAnnotationInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class PolygonAnnotationInteractionsStateKt {
@@ -758,8 +794,14 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PolylineAnnotationGroupInteractionsState {
     ctor public PolylineAnnotationGroupInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class PolylineAnnotationGroupInteractionsStateKt {
@@ -858,8 +900,14 @@ package com.mapbox.maps.extension.compose.annotation.generated {
 
   @androidx.compose.runtime.Stable public final class PolylineAnnotationInteractionsState {
     ctor public PolylineAnnotationInteractionsState();
+    method public boolean isDraggable();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onDragFinished(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,kotlin.Unit> onDragFinish);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onDragStarted(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,kotlin.Unit> onDragStart);
+    method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onDragged(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,kotlin.Unit> onDrag);
     method public com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationInteractionsState onLongClicked(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onLongClick);
+    method public void setDraggable(boolean);
+    property public final boolean isDraggable;
   }
 
   public final class PolylineAnnotationInteractionsStateKt {
