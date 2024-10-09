@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:name=".MapboxApplication"
@@ -393,6 +395,19 @@
             android:description="@string/description_location_basic_pulsing_circle"
             android:exported="true"
             android:label="@string/activity_basic_location_pulsing_circle">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_location" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.geofence.GeofencingActivity"
+            android:description="@string/description_geofencing"
+            android:exported="true"
+            android:label="@string/activity_geofencing"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_location" />
