@@ -11,6 +11,13 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
 * [compose] Introduce `<AnnotationType>InteractionsState.isDraggable` / `<AnnotationType>GroupInteractionsState.isDraggable` API for all annotation types allowing to drag annotations. Callbacks `onDragStarted()`, `onDragged()`,`onDragFinished()` are added as well.
 
+# 11.7.1
+## Bug fixes 🐞
+* Respect polygons with holes on querying rendered features.
+
+## Dependencies
+* Update gl-native to v11.7.1 and common to v24.7.1.
+
 # 11.7.0 September 26, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `PointAnnotationState.iconOcclusionOpacity`, `PointAnnotationState.textOcclusionOpacity` to control occlusion opacity for individual point annotation.
