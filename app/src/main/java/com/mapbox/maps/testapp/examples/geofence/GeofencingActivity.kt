@@ -15,6 +15,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -119,6 +120,7 @@ class GeofencingActivity : AppCompatActivity() {
   private var exitFeature: Feature? = null
   private val datastoreBaseUrl =
     "https://opendata.arcgis.com/datasets/89b6b5142a9b4bb9a5c5f4404ff28963_0.geojson"
+
   // NOTE: You need to grant location permissions before initialising GeofencingService with getOrCreate()
   private val geofencing by lazy {
     GeofencingFactory.getOrCreate()
@@ -239,6 +241,11 @@ class GeofencingActivity : AppCompatActivity() {
 
     override fun onError(error: GeofencingError) {
       logD(TAG, "onError() called with: error = $error")
+    }
+
+    override fun onUserConsentChanged(isConsentGiven: Boolean) {
+      logD(TAG, "onUserConsentChanged() called with: isConsentGiven = $isConsentGiven")
+      userRevokedConsentUi(isConsentGiven)
     }
   }
 
@@ -549,6 +556,18 @@ class GeofencingActivity : AppCompatActivity() {
             }
           }
         }
+      }
+    }
+  }
+
+  private fun userRevokedConsentUi(isConsentGiven: Boolean) = lifecycleScope.launch {
+    with(binding) {
+      if (isConsentGiven) {
+        buttonLoadGeofenceZones.visibility = View.VISIBLE
+        textGeofencesDisabled.visibility = View.GONE
+      } else {
+        buttonLoadGeofenceZones.visibility = View.GONE
+        textGeofencesDisabled.visibility = View.VISIBLE
       }
     }
   }

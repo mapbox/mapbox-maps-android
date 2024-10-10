@@ -48,6 +48,10 @@ class MapboxApplication : MultiDexApplication() {
     override fun onError(error: GeofencingError) {
       logD("MapboxApplication", "onError() called with: error = $error")
     }
+
+    override fun onUserConsentChanged(isConsentGiven: Boolean) {
+      logW("MapboxApplication", "onUserConsentChanged() called with: isConsentGiven = $isConsentGiven")
+    }
   }
 
   // TODO: temporary workaround to avoid double adding of listener if we don't
