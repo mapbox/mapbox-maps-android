@@ -51,7 +51,9 @@ import kotlinx.coroutines.launch
  */
 class OfflineActivity : AppCompatActivity() {
   // We use the default tile store
-  private val tileStore: TileStore = MapboxOptions.mapsOptions.tileStore!!
+  private val tileStore: TileStore by lazy {
+    MapboxOptions.mapsOptions.tileStore!!
+  }
   private val offlineManager: OfflineManager = OfflineManager()
   private val offlineLogsAdapter: OfflineLogsAdapter = OfflineLogsAdapter()
   private lateinit var binding: ActivityOfflineBinding
