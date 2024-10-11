@@ -34,8 +34,8 @@ public inline fun rememberExperimentalStandardStyleState(crossinline init: Exper
 /**
  * Experimental state holder for the Mapbox Standard Style.
  */
-@MapboxExperimental
 @Stable
+@MapboxExperimental
 public class ExperimentalStandardStyleState internal constructor(
   initialStyleInteractionsState: StandardStyleInteractionsState,
   initialProjection: Projection,
@@ -67,6 +67,7 @@ public class ExperimentalStandardStyleState internal constructor(
   /**
    * The [StyleInteractionsState] manages the map interactions defined for the style.
    */
+  @MapboxExperimental
   public var interactionsState: StandardStyleInteractionsState by mutableStateOf(
     initialStyleInteractionsState
   )
@@ -74,5 +75,6 @@ public class ExperimentalStandardStyleState internal constructor(
   /**
    * Configuration state options to be applied to Mapbox Standard Style.
    */
+  @MapboxExperimental
   public var configurationsState: StandardStyleConfigurationState by mutableStateOf(initialConfigurationState)
 }

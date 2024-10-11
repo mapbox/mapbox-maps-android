@@ -1490,9 +1490,9 @@ package com.mapbox.maps.extension.compose.style.interactions.generated {
 
 
 }));
-    method public default void setStandardBuildingsState(com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,kotlin.Unit> init);
-    method public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
-    method public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
+    method @com.mapbox.maps.MapboxExperimental public default void setStandardBuildingsState(com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,kotlin.Unit> init);
+    method @com.mapbox.maps.MapboxExperimental public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
+    method @com.mapbox.maps.MapboxExperimental public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
   }
 
 }
@@ -4235,7 +4235,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
 package com.mapbox.maps.extension.compose.style.standard {
 
-  @androidx.compose.runtime.Stable public class BaseStandardStyleState {
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public class BaseStandardStyleState {
     ctor protected BaseStandardStyleState(com.mapbox.maps.extension.compose.style.projection.generated.Projection initialProjection, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState initialAtmosphereState, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState initialTerrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState initialLightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions initialStyleTransition);
     method public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getAtmosphereState();
     method public final com.mapbox.maps.extension.compose.style.lights.LightsState getLightsState();

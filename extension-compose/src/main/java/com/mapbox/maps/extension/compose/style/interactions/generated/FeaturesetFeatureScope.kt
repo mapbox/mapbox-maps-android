@@ -33,6 +33,7 @@ public sealed interface FeaturesetFeatureScope {
    * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
    * Refer to [setFeatureState] if the callback is required.
    */
+  @MapboxExperimental
   public fun StandardPoiFeature.setStandardPoiState(
     init: StandardPoiState.Builder.() -> Unit,
   ) {
@@ -46,6 +47,7 @@ public sealed interface FeaturesetFeatureScope {
    * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
    * Refer to [setFeatureState] if the callback is required.
    */
+  @MapboxExperimental
   public fun StandardPlaceLabelsFeature.setStandardPlaceLabelsState(
     init: StandardPlaceLabelsState.Builder.() -> Unit,
   ) {
@@ -59,6 +61,7 @@ public sealed interface FeaturesetFeatureScope {
    * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
    * Refer to [setFeatureState] if the callback is required.
    */
+  @MapboxExperimental
   public fun StandardBuildingsFeature.setStandardBuildingsState(
     init: StandardBuildingsState.Builder.() -> Unit,
   ) {

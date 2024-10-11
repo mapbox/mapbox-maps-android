@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.lights.LightsState
@@ -14,6 +15,7 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
  * The base state holder for the Standard Style.
  */
 @Stable
+@MapboxExperimental
 public open class BaseStandardStyleState protected constructor(
   initialProjection: Projection,
   initialAtmosphereState: AtmosphereState,
