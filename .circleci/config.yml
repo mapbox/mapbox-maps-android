@@ -262,7 +262,8 @@ commands:
                   --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                   --device model=blueline,version=28,locale=en,orientation=portrait \
                   --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
-                  --num-uniform-shards 3
+                  --num-uniform-shards 3 \
+                  --client-details matrixLabel="${CIRCLE_JOB} ${CIRCLE_SHA1:0:6}"
               else
                 if << parameters.multiple_devices >> ; then
                   gcloud beta firebase test android run --type instrumentation \
@@ -273,14 +274,16 @@ commands:
                     --device model=redfin,version=30,locale=en,orientation=portrait \
                     --device model=oriole,version=33,locale=en,orientation=portrait \
                     --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
-                    --num-uniform-shards 4
+                    --num-uniform-shards 4 \
+                    --client-details matrixLabel="${CIRCLE_JOB} ${CIRCLE_SHA1:0:6}"
                 else
                   gcloud beta firebase test android run --type instrumentation \
                     --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                     --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                     --device model=redfin,version=30,locale=en,orientation=portrait \
                     --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
-                    --num-uniform-shards 4
+                    --num-uniform-shards 4 \
+                    --client-details matrixLabel="${CIRCLE_JOB} ${CIRCLE_SHA1:0:6}"
                 fi
               fi
             fi
@@ -305,12 +308,14 @@ commands:
                   --device model=Pixel2,version=29,locale=en,orientation=portrait \
                   --device model=redfin,version=30,locale=en,orientation=portrait \
                   --device model=oriole,version=33,locale=en,orientation=portrait \
-                  --timeout 90s
+                  --timeout 90s \
+                  --client-details matrixLabel="${CIRCLE_JOB} ${CIRCLE_SHA1:0:6}"
               else
                 gcloud firebase test android run --type robo \
                   --app app/build/outputs/apk/release/app-release.apk \
                   --device model=redfin,version=30,locale=en,orientation=portrait \
-                  --timeout 90s
+                  --timeout 90s \
+                  --client-details matrixLabel="${CIRCLE_JOB} ${CIRCLE_SHA1:0:6}"
               fi
             fi
 
