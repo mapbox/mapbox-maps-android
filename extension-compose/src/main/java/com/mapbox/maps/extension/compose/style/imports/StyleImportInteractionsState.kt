@@ -9,7 +9,7 @@ import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions
-import com.mapbox.maps.extension.compose.style.interactions.FeaturesetFeatureScope
+import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetFeature

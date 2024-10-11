@@ -76,6 +76,8 @@ import com.mapbox.maps.extension.style.types.FormattedSection;
 import com.mapbox.maps.interactions.FeatureState;
 import com.mapbox.maps.interactions.FeatureStateKey;
 import com.mapbox.maps.interactions.TypedFeaturesetDescriptor;
+import com.mapbox.maps.interactions.standard.generated.StandardBuildingsState;
+import com.mapbox.maps.interactions.standard.generated.StandardInteractions;
 import com.mapbox.maps.module.MapTelemetry;
 import com.mapbox.maps.plugin.LocationPuck;
 import com.mapbox.maps.plugin.LocationPuck2D;
@@ -698,6 +700,30 @@ public class JavaInterfaceChecker {
             ClickInteraction.map(context ->
                     !context.getScreenCoordinate().equals(new ScreenCoordinate(0.0, 0.0))
             )
+    );
+
+    mapboxMap.loadStyle(Style.STANDARD_EXPERIMENTAL);
+    mapboxMap.addInteraction(
+            StandardInteractions.standardBuildings(
+                    ClickInteraction.Companion,
+                    (clickedBuilding, context) -> {
+                      mapboxMap.setFeatureState(
+                              clickedBuilding,
+                              new StandardBuildingsState.Builder()
+                                      .highlight(true)
+                                      .build()
+                      );
+                      return true;
+                    }
+            )
+    );
+
+    StandardInteractions.standardPlaceLabels(
+            ClickInteraction.Companion,
+            (placeLabelsFeature, context) -> {
+              placeLabelsFeature.getClass();
+              return true;
+            }
     );
   }
 }

@@ -1323,6 +1323,15 @@ class Style internal constructor(
     const val STANDARD = "mapbox://styles/mapbox/standard"
 
     /**
+     * Mapbox Standard experimental style supporting featuresets and map interactions.
+     * Minimal supported SDK version: v11.8.0-beta.1.
+     *
+     * **Important: this style should not be used in production as the style definition on backend is a subject to change after v11.8.0 stable release!**
+     */
+    @MapboxExperimental
+    const val STANDARD_EXPERIMENTAL = "mapbox://styles/mapbox-map-design/standard-experimental-ime"
+
+    /**
      * Mapbox Standard Satellite: Combines updated satellite imagery and vector layers to offer users improved clarity and detail.
      */
     const val STANDARD_SATELLITE = "mapbox://styles/mapbox/standard-satellite"

@@ -1,4 +1,6 @@
-package com.mapbox.maps.extension.compose.style.interactions
+// This file is generated.
+
+package com.mapbox.maps.extension.compose.style.interactions.generated
 
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.FeatureStateOperationCallback
@@ -8,6 +10,12 @@ import com.mapbox.maps.QueryFeatureStateCallback
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeatureStateKey
 import com.mapbox.maps.interactions.FeaturesetFeature
+import com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature
+import com.mapbox.maps.interactions.standard.generated.StandardBuildingsState
+import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature
+import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState
+import com.mapbox.maps.interactions.standard.generated.StandardPoiFeature
+import com.mapbox.maps.interactions.standard.generated.StandardPoiState
 
 /**
  * The featureset feature scope provides extension functions to [FeaturesetFeature]
@@ -17,6 +25,45 @@ import com.mapbox.maps.interactions.FeaturesetFeature
  */
 @MapboxExperimental
 public sealed interface FeaturesetFeatureScope {
+
+  /**
+   * Extension function allowing to set the [StandardPoiState] for [StandardPoiFeature]
+   * in the most convenient way.
+   *
+   * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
+   * Refer to [setFeatureState] if the callback is required.
+   */
+  public fun StandardPoiFeature.setStandardPoiState(
+    init: StandardPoiState.Builder.() -> Unit,
+  ) {
+    setFeatureState(StandardPoiState(init)) { }
+  }
+
+  /**
+   * Extension function allowing to set the [StandardPlaceLabelsState] for [StandardPlaceLabelsFeature]
+   * in the most convenient way.
+   *
+   * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
+   * Refer to [setFeatureState] if the callback is required.
+   */
+  public fun StandardPlaceLabelsFeature.setStandardPlaceLabelsState(
+    init: StandardPlaceLabelsState.Builder.() -> Unit,
+  ) {
+    setFeatureState(StandardPlaceLabelsState(init)) { }
+  }
+
+  /**
+   * Extension function allowing to set the [StandardBuildingsState] for [StandardBuildingsFeature]
+   * in the most convenient way.
+   *
+   * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
+   * Refer to [setFeatureState] if the callback is required.
+   */
+  public fun StandardBuildingsFeature.setStandardBuildingsState(
+    init: StandardBuildingsState.Builder.() -> Unit,
+  ) {
+    setFeatureState(StandardBuildingsState(init)) { }
+  }
 
   /**
    * Sets the state map for the [FeaturesetFeature].

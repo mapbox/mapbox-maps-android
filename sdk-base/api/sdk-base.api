@@ -1,6 +1,5 @@
 public final class com/mapbox/maps/ClickInteraction : com/mapbox/maps/MapInteraction {
 	public static final field Companion Lcom/mapbox/maps/ClickInteraction$Companion;
-	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
@@ -80,7 +79,6 @@ public final class com/mapbox/maps/ImageHolder$Creator : android/os/Parcelable$C
 
 public final class com/mapbox/maps/LongClickInteraction : com/mapbox/maps/MapInteraction {
 	public static final field Companion Lcom/mapbox/maps/LongClickInteraction$Companion;
-	public synthetic fun <init> (Lcom/mapbox/maps/FeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun featureset (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
@@ -758,7 +756,7 @@ public class com/mapbox/maps/interactions/FeaturesetFeature {
 	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/geojson/Feature;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescriptor ()Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;
-	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public fun getGeometry ()Lcom/mapbox/geojson/Geometry;
 	public final fun getId ()Lcom/mapbox/maps/FeaturesetFeatureId;
 	public final fun getProperties ()Lorg/json/JSONObject;
 	public final fun getState ()Lcom/mapbox/maps/interactions/FeatureState;
@@ -770,6 +768,7 @@ public abstract interface class com/mapbox/maps/interactions/QueryRenderedFeatur
 }
 
 public abstract class com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
+	protected fun <init> ()V
 	public abstract fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
 	public abstract fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
 	public abstract fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
@@ -796,6 +795,187 @@ public final class com/mapbox/maps/interactions/TypedFeaturesetDescriptor$Layer 
 	public final fun getLayerId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildings : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
+	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState;
+	public synthetic fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature;
+	public final fun getImportId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature : com/mapbox/maps/interactions/FeaturesetFeature {
+	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState;)V
+	public final fun getGroup ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsState : com/mapbox/maps/interactions/FeatureState {
+	public final fun getHighlight ()Ljava/lang/Boolean;
+	public fun getInternalState ()Lcom/mapbox/bindgen/Value;
+	public final fun getSelect ()Ljava/lang/Boolean;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsState$Builder : com/mapbox/maps/interactions/FeatureState$Builder {
+	public fun <init> ()V
+	public synthetic fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun build ()Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState;
+	public final fun highlight (Z)Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState$Builder;
+	public final fun select (Z)Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState$Builder;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKey : com/mapbox/maps/interactions/FeatureStateKey {
+	public static final field Companion Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKey$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKey$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKey;
+	public final fun getHIGHLIGHT ()Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKey;
+	public final fun getSELECT ()Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKey;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsStateKt {
+	public static final synthetic fun StandardBuildingsState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardInteractions {
+	public static final fun standardBuildings (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardBuildings (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardBuildings (Lcom/mapbox/maps/ClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardBuildings (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardBuildings (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardBuildings (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardBuildings$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardBuildings$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPlaceLabels (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPlaceLabels (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPlaceLabels (Lcom/mapbox/maps/ClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPlaceLabels (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPlaceLabels (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPlaceLabels (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardPlaceLabels$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardPlaceLabels$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPoi (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPoi (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPoi (Lcom/mapbox/maps/ClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPoi (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPoi (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardPoi (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardPoi$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardPoi$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabels : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
+	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState;
+	public synthetic fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;
+	public final fun getImportId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature : com/mapbox/maps/interactions/FeaturesetFeature {
+	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState;)V
+	public final fun getClass ()Ljava/lang/String;
+	public synthetic fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public fun getGeometry ()Lcom/mapbox/geojson/Point;
+	public final fun getName ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState : com/mapbox/maps/interactions/FeatureState {
+	public final fun getHide ()Ljava/lang/Boolean;
+	public final fun getHighlight ()Ljava/lang/Boolean;
+	public fun getInternalState ()Lcom/mapbox/bindgen/Value;
+	public final fun getSelect ()Ljava/lang/Boolean;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState$Builder : com/mapbox/maps/interactions/FeatureState$Builder {
+	public fun <init> ()V
+	public synthetic fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun build ()Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState;
+	public final fun hide (Z)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState$Builder;
+	public final fun highlight (Z)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState$Builder;
+	public final fun select (Z)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState$Builder;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey : com/mapbox/maps/interactions/FeatureStateKey {
+	public static final field Companion Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey;
+	public final fun getHIDE ()Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey;
+	public final fun getHIGHLIGHT ()Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey;
+	public final fun getSELECT ()Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKey;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsStateKt {
+	public static final synthetic fun StandardPlaceLabelsState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsState;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoi : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
+	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState;
+	public synthetic fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;
+	public final fun getImportId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoiFeature : com/mapbox/maps/interactions/FeaturesetFeature {
+	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState;)V
+	public final fun getAirportRef ()Ljava/lang/String;
+	public final fun getClass ()Ljava/lang/String;
+	public final fun getGroup ()Ljava/lang/String;
+	public final fun getMaki ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getTransitMode ()Ljava/lang/String;
+	public final fun getTransitNetwork ()Ljava/lang/String;
+	public final fun getTransitStopType ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoiState : com/mapbox/maps/interactions/FeatureState {
+	public final fun getHide ()Ljava/lang/Boolean;
+	public fun getInternalState ()Lcom/mapbox/bindgen/Value;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoiState$Builder : com/mapbox/maps/interactions/FeatureState$Builder {
+	public fun <init> ()V
+	public synthetic fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun build ()Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState;
+	public final fun hide (Z)Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState$Builder;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoiStateKey : com/mapbox/maps/interactions/FeatureStateKey {
+	public static final field Companion Lcom/mapbox/maps/interactions/standard/generated/StandardPoiStateKey$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoiStateKey$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/standard/generated/StandardPoiStateKey;
+	public final fun getHIDE ()Lcom/mapbox/maps/interactions/standard/generated/StandardPoiStateKey;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardPoiStateKt {
+	public static final synthetic fun StandardPoiState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState;
 }
 
 public abstract interface class com/mapbox/maps/module/MapTelemetry {

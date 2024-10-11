@@ -754,12 +754,12 @@ package com.mapbox.maps.interactions {
   @com.mapbox.maps.MapboxExperimental public class FeaturesetFeature<FS extends com.mapbox.maps.interactions.FeatureState> {
     ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public FeaturesetFeature(com.mapbox.maps.FeaturesetFeatureId? id, com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, FS state, com.mapbox.geojson.Feature originalFeature);
     method public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> getDescriptor();
-    method public final com.mapbox.geojson.Geometry getGeometry();
+    method public com.mapbox.geojson.Geometry getGeometry();
     method public final com.mapbox.maps.FeaturesetFeatureId? getId();
     method public final org.json.JSONObject getProperties();
     method public final FS getState();
     property public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor;
-    property public final com.mapbox.geojson.Geometry geometry;
+    property public com.mapbox.geojson.Geometry geometry;
     property public final com.mapbox.maps.FeaturesetFeatureId? id;
     property public final org.json.JSONObject properties;
     property public final FS state;
@@ -770,6 +770,7 @@ package com.mapbox.maps.interactions {
   }
 
   @com.mapbox.maps.MapboxExperimental public abstract class TypedFeaturesetDescriptor<FS extends com.mapbox.maps.interactions.FeatureState, FF extends com.mapbox.maps.interactions.FeaturesetFeature<FS>> {
+    ctor protected TypedFeaturesetDescriptor();
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract FS getFeatureState(com.mapbox.bindgen.Value rawState);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract FF getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public abstract com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
@@ -794,6 +795,187 @@ package com.mapbox.maps.interactions {
     method public String getLayerId();
     method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
     property public final String layerId;
+  }
+
+}
+
+package com.mapbox.maps.interactions.standard.generated {
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardBuildings extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardBuildingsState,com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature> {
+    ctor public StandardBuildings(String? importId = null);
+    ctor public StandardBuildings();
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public String? getImportId();
+    method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
+    property public final String? importId;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardBuildingsFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardBuildingsState> {
+    ctor public StandardBuildingsFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardBuildingsState state);
+    method public String? getGroup();
+    property public final String? group;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardBuildingsState extends com.mapbox.maps.interactions.FeatureState {
+    method public Boolean? getHighlight();
+    method public Boolean? getSelect();
+    property public final Boolean? highlight;
+    property public final Boolean? select;
+  }
+
+  public static final class StandardBuildingsState.Builder extends com.mapbox.maps.interactions.FeatureState.Builder {
+    ctor public StandardBuildingsState.Builder();
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsState build();
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder highlight(boolean highlight);
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder select(boolean select);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardBuildingsStateKey extends com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.standard.generated.StandardBuildingsState> {
+    field public static final com.mapbox.maps.interactions.standard.generated.StandardBuildingsStateKey.Companion Companion;
+  }
+
+  public static final class StandardBuildingsStateKey.Companion {
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.interactions.standard.generated.StandardBuildingsStateKey create(String key);
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsStateKey getHIGHLIGHT();
+    method public com.mapbox.maps.interactions.standard.generated.StandardBuildingsStateKey getSELECT();
+    property public final com.mapbox.maps.interactions.standard.generated.StandardBuildingsStateKey HIGHLIGHT;
+    property public final com.mapbox.maps.interactions.standard.generated.StandardBuildingsStateKey SELECT;
+  }
+
+  public final class StandardBuildingsStateKt {
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardBuildingsState! StandardBuildingsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,? extends kotlin.Unit> init);
+  }
+
+  public final class StandardInteractions {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.ClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.ClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.ClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPlaceLabels extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState,com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature> {
+    ctor public StandardPlaceLabels(String? importId = null);
+    ctor public StandardPlaceLabels();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public String? getImportId();
+    method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
+    property public final String? importId;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPlaceLabelsFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState> {
+    ctor public StandardPlaceLabelsFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState state);
+    method public String? getClass();
+    method public com.mapbox.geojson.Point getGeometry();
+    method public String? getName();
+    property public final String? class;
+    property public com.mapbox.geojson.Point geometry;
+    property public final String? name;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPlaceLabelsState extends com.mapbox.maps.interactions.FeatureState {
+    method public Boolean? getHide();
+    method public Boolean? getHighlight();
+    method public Boolean? getSelect();
+    property public final Boolean? hide;
+    property public final Boolean? highlight;
+    property public final Boolean? select;
+  }
+
+  public static final class StandardPlaceLabelsState.Builder extends com.mapbox.maps.interactions.FeatureState.Builder {
+    ctor public StandardPlaceLabelsState.Builder();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState build();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder hide(boolean hide);
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder highlight(boolean highlight);
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder select(boolean select);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPlaceLabelsStateKey extends com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState> {
+    field public static final com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey.Companion Companion;
+  }
+
+  public static final class StandardPlaceLabelsStateKey.Companion {
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey create(String key);
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey getHIDE();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey getHIGHLIGHT();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey getSELECT();
+    property public final com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey HIDE;
+    property public final com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey HIGHLIGHT;
+    property public final com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsStateKey SELECT;
+  }
+
+  public final class StandardPlaceLabelsStateKt {
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState! StandardPlaceLabelsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,? extends kotlin.Unit> init);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPoi extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardPoiState,com.mapbox.maps.interactions.standard.generated.StandardPoiFeature> {
+    ctor public StandardPoi(String? importId = null);
+    ctor public StandardPoi();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPoiState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.standard.generated.StandardPoiFeature getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public String? getImportId();
+    method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
+    property public final String? importId;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPoiFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardPoiState> {
+    ctor public StandardPoiFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardPoiState state);
+    method public String? getAirportRef();
+    method public String? getClass();
+    method public String? getGroup();
+    method public String? getMaki();
+    method public String? getName();
+    method public String? getTransitMode();
+    method public String? getTransitNetwork();
+    method public String? getTransitStopType();
+    property public final String? airportRef;
+    property public final String? class;
+    property public final String? group;
+    property public final String? maki;
+    property public final String? name;
+    property public final String? transitMode;
+    property public final String? transitNetwork;
+    property public final String? transitStopType;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPoiState extends com.mapbox.maps.interactions.FeatureState {
+    method public Boolean? getHide();
+    property public final Boolean? hide;
+  }
+
+  public static final class StandardPoiState.Builder extends com.mapbox.maps.interactions.FeatureState.Builder {
+    ctor public StandardPoiState.Builder();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPoiState build();
+    method public com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder hide(boolean hide);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class StandardPoiStateKey extends com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.standard.generated.StandardPoiState> {
+    field public static final com.mapbox.maps.interactions.standard.generated.StandardPoiStateKey.Companion Companion;
+  }
+
+  public static final class StandardPoiStateKey.Companion {
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.interactions.standard.generated.StandardPoiStateKey create(String key);
+    method public com.mapbox.maps.interactions.standard.generated.StandardPoiStateKey getHIDE();
+    property public final com.mapbox.maps.interactions.standard.generated.StandardPoiStateKey HIDE;
+  }
+
+  public final class StandardPoiStateKt {
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardPoiState! StandardPoiState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,? extends kotlin.Unit> init);
   }
 
 }

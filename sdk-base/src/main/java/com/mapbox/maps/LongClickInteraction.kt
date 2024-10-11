@@ -11,14 +11,16 @@ import com.mapbox.maps.LongClickInteraction.Companion.layer
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetFeature
 import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
+import com.mapbox.maps.interactions.standard.generated.standardPoi
 
 /**
  * Defines the long click interaction.
  *
  * Refer to static factory methods to create the [LongClickInteraction]:
- *  1. [featureset] to register the long click interaction for given `featuresetId` and optional `importId` (when defining the interaction for an imported style).
- *  2. [layer] to register the long click list interaction for give `layerId`.
- *  3. [invoke] (meaning empty constructor in Kotlin and static method `map` in Java) to register the long click interaction for the map surface itself.
+ *  1. Mapbox Standard Style interactive features in defined as `LongClickInteraction.standard<featureset_name>` (e.g. [LongClickInteraction.Companion.standardPoi]).
+ *  2. [featureset] to register the long click interaction for given `featuresetId` and optional `importId` (when defining the interaction for an imported style).
+ *  3. [layer] to register the long click interaction for given `layerId`.
+ *  4. [invoke] (meaning empty constructor in Kotlin and static method `map` in Java) to register the long click interaction for the map surface itself.
  *
  * Long click interaction callback requires returning `true` | `false` where `true` means that the interaction
  * has been consumed and other registered long click interactions will not have the callback invoked and `false` means
@@ -32,7 +34,7 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 @MapboxExperimental
 class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
-  private constructor(
+  internal constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
     onLongClick: (T, InteractionContext) -> Boolean,

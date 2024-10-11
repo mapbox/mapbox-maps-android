@@ -45,7 +45,7 @@ open class FeaturesetFeature<FS : FeatureState> @RestrictTo(RestrictTo.Scope.LIB
    * Based on the feature type this should be casted to the concrete implementation
    * like [Point], [Polygon] etc.
    */
-  val geometry: Geometry = originalFeature.geometry()!!
+  open val geometry: Geometry = originalFeature.geometry()!!
 
   /**
    * The feature properties stored in [JSONObject].

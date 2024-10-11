@@ -8,14 +8,16 @@ import com.mapbox.maps.ClickInteraction.Companion.layer
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetFeature
 import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
+import com.mapbox.maps.interactions.standard.generated.standardPoi
 
 /**
  * Defines the click interaction.
  *
  * Refer to static factory methods to create the [ClickInteraction]:
- *  1. [featureset] to register the click interaction for given `featuresetId` and optional `importId` (when defining the interaction for an imported style).
- *  2. [layer] to register the click list interaction for give `layerId`.
- *  3. [invoke] (meaning empty constructor in Kotlin and static method `map` in Java) to register the click interaction for the map surface itself.
+ *  1. Mapbox Standard Style interactive features in defined as `ClickInteraction.standard<featureset_name>` (e.g. [ClickInteraction.Companion.standardPoi]).
+ *  2. [featureset] to register the click interaction for given `featuresetId` and optional `importId` (when defining the interaction for an imported style).
+ *  3. [layer] to register the click interaction for given `layerId`.
+ *  4. [invoke] (meaning empty constructor in Kotlin and static method `map` in Java) to register the click interaction for the map surface itself.
  *
  * Click interaction callback requires returning `true` | `false` where `true` means that the interaction
  * has been consumed and other registered click interactions will not have the callback invoked and `false` means
@@ -29,7 +31,7 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 @MapboxExperimental
 class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
-  private constructor(
+  internal constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
     onClick: (T, InteractionContext) -> Boolean,

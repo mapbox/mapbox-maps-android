@@ -4,16 +4,18 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Introduce `Style.STANDARD_EXPERIMENTAL` style supporting featuresets and map interactions. **Important: this style should not be used in production as the style definition on backend is a subject to change after v11.8.0 stable release!**
+* Introduce fully typed map click and long click interactions working with `Style.STANDARD_EXPERIMENTAL`: `standardPoi`, `standardPlaceLabels`, `standardBuildings`.
+* Introduce `OnClusterClickListener` and `OnClusterLongClickListener` for `CircleAnnotationManager` and `PointAnnotationManager`. These callbacks receive the clicked cluster represented by a `ClusterFeature`.
+* Introduce experimental `getStyleGlyphURL` / `setStyleGlyphURL` functions for `MapboxMap` and `Style`.
+* Make `fill-extrusion-emissive-strength` property data-driven.
+* Dispatch view annotations update before rendering, so that view annotations and map layers are rendered simultaneously and thus decreasing the view annotations latency when using `ViewAnnotationUpdateMode.MAP_FIXED_DELAY` mode.
+* Overscale composited tile components in offline.
+* Skip rendering landmarks when the camera is inside them.
 * [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
 * [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.
 * [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
 * [compose] Introduce `<AnnotationType>InteractionsState.isDraggable` / `<AnnotationType>GroupInteractionsState.isDraggable` API for all annotation types allowing to drag annotations. Callbacks `onDragStarted()`, `onDragged()`,`onDragFinished()` are added as well.
-* Introduce experimental `getStyleGlyphURL` / `setStyleGlyphURL` functions for `MapboxMap` and `Style`.
-* Introduce `OnClusterClickListener` and `OnClusterLongClickListener` for `CircleAnnotationManager` and `PointAnnotationManager`. These callbacks receive the clicked cluster represented by a `ClusterFeature`.
-* Make `fill-extrusion-emissive-strength` property data-driven.
-* Dispatch view annotations update before rendering, so that view annotations and map layers are rendered simultaneously and thus decreasing the view annotations latency when using `ViewAnnotationUpdateMode.MAP_FIXED_DELAY` mode.
-* Overscale composited tile components in Offline.
-* Skip rendering landmarks when the camera is inside them.
 
 ## Bug fixes 🐞
 * Improve zooming performance on dynamic Standard terrain and optimize terrain re-rendering performance on e.g routeline `line-trim-offset` change.
@@ -21,20 +23,20 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix self-overlap of line corners when large `line-width` is used.
 * Adjust conflation intersection test padding to fix disappearing `fill-extrusion`.
 * Fix TileCover bug with polygon horizontal edges.
-* Fixing a bug with image dependent paint properties not getting a correct value after image become available.
+* Fix a bug with image dependent paint properties not getting a correct value after image become available.
 * Clear tile pyramid on color theme change before the tiles are updated.
-* Fixed missing images notifications for images within coalesce expression when other images in coalesce are present. Image expressions with two arguments are no longer being considered present if only second image is present.
+* Fix missing images notifications for images within coalesce expression when other images in coalesce are present. Image expressions with two arguments are no longer being considered present if only second image is present.
 * Return operation error for featurestate related API in case the featureset is not valid.
 * Fix crash on style pack load when no access token is set.
 * Fix crash in TerrainRenderer when using snapshotter.
 * Fix crash on re-creation of a custom raster source when different options are provided.
 * Return parsing errors if runtime added style import JSON is not valid.
-* Fix missing models in rendering result if reduceMemoryUse is called before taking snapshot.
-* Compilation error due to dynamic_cast on embedded linux.
+* Fix missing models in rendering result if `reduceMemoryUse` is called before taking snapshot.
 * Fix the incorrect behaviour when using `symbol-z-oder` property.
 * Fix `raster-particle` trail discontinuity at the antimeridian.
 
-
+## Dependencies
+* Update gl-native to v11.8.0-beta.1 and common to v24.8.0-beta.1.
 
 # 11.7.1 October 10, 2024
 ## Bug fixes 🐞

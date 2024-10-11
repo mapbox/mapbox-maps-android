@@ -109,4 +109,5 @@
     <string name="actvity_slot_layer">Slot layer example</string>
     <string name="activity_raster_particles">Raster Particles</string>
     <string name="activity_clip_layer">Clip layer example</string>
+    <string name="activity_standard_interactions">Standard Style interactions</string>
 </resources>

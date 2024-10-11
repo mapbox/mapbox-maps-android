@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -32,14 +33,16 @@ import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardSatelliteStyle
-import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyleExperimental
 import com.mapbox.maps.extension.compose.style.standard.ThemeValue
+import com.mapbox.maps.extension.compose.style.standard.rememberExperimentalStandardStyleState
 import com.mapbox.maps.extension.style.utils.transition
 
 /**
  * Example to showcase usage of the configs of `MapboxStandardStyle`.
  */
 public class StandardStyleActivity : ComponentActivity() {
+  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -88,11 +91,11 @@ public class StandardStyleActivity : ComponentActivity() {
               ) {
                 FloatingActionButton(
                   modifier = Modifier
-                      .defaultMinSize(
-                          minWidth = ButtonDefaults.MinWidth,
-                          minHeight = ButtonDefaults.MinHeight
-                      )
-                      .padding(end = 4.dp),
+                    .defaultMinSize(
+                      minWidth = ButtonDefaults.MinWidth,
+                      minHeight = ButtonDefaults.MinHeight
+                    )
+                    .padding(end = 4.dp),
                   onClick = {
                     enablePlaceLabels = !enablePlaceLabels
                   },
@@ -105,10 +108,10 @@ public class StandardStyleActivity : ComponentActivity() {
                 }
                 FloatingActionButton(
                   modifier = Modifier
-                    .defaultMinSize(
-                      minWidth = ButtonDefaults.MinWidth,
-                      minHeight = ButtonDefaults.MinHeight
-                    ),
+                  .defaultMinSize(
+                    minWidth = ButtonDefaults.MinWidth,
+                    minHeight = ButtonDefaults.MinHeight
+                  ),
                   onClick = {
                     enableRoadLabels = !enableRoadLabels
                   },
@@ -124,12 +127,12 @@ public class StandardStyleActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth()
               ) {
                 FloatingActionButton(
-                  modifier = Modifier
-                      .defaultMinSize(
-                          minWidth = ButtonDefaults.MinWidth,
-                          minHeight = ButtonDefaults.MinHeight
-                      )
-                      .padding(end = 4.dp),
+                modifier = Modifier
+                  .defaultMinSize(
+                    minWidth = ButtonDefaults.MinWidth,
+                    minHeight = ButtonDefaults.MinHeight
+                  )
+                  .padding(end = 4.dp),
                   onClick = {
                     enableTransitLabels = !enableTransitLabels
                   },
@@ -350,23 +353,30 @@ public class StandardStyleActivity : ComponentActivity() {
                   showPedestrianRoads = BooleanValue(enablePedestrianRoads)
                 }
               } else {
-                MapboxStandardStyle(
-                  styleTransition = remember {
-                    transition {
+                MapboxStandardStyleExperimental(
+                  experimentalStandardStyleState = rememberExperimentalStandardStyleState {
+                    interactionsState.onBuildingsClicked { clickedBuilding, _ ->
+                      clickedBuilding.setStandardBuildingsState {
+                        highlight(true)
+                      }
+                      return@onBuildingsClicked true
+                    }
+                    styleTransition = transition {
                       duration(1_000)
                       enablePlacementTransitions(true)
                     }
+                    configurationsState.apply {
+                      showPlaceLabels = BooleanValue(enablePlaceLabels)
+                      showRoadLabels = BooleanValue(enableRoadLabels)
+                      showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)
+                      showTransitLabels = BooleanValue(enableTransitLabels)
+                      lightPreset = selectedLightPreset
+                      font = StringValue(selectedFont)
+                      theme = selectedTheme
+                      show3dObjects = BooleanValue(enable3dObjects)
+                    }
                   }
-                ) {
-                  showPlaceLabels = BooleanValue(enablePlaceLabels)
-                  showRoadLabels = BooleanValue(enableRoadLabels)
-                  showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)
-                  showTransitLabels = BooleanValue(enableTransitLabels)
-                  lightPreset = selectedLightPreset
-                  font = StringValue(selectedFont)
-                  theme = selectedTheme
-                  show3dObjects = BooleanValue(enable3dObjects)
-                }
+                )
               }
             }
           )

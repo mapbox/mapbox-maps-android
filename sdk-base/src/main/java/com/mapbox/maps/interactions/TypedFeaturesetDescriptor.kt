@@ -6,14 +6,17 @@ import com.mapbox.geojson.Feature
 import com.mapbox.maps.FeaturesetDescriptor
 import com.mapbox.maps.FeaturesetFeatureId
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.interactions.standard.generated.StandardBuildings
 import java.util.Objects
 
 /**
  * Base class to differentiate featuresets.
- * All available implementations are declared as nested classes and could be accessed as `TypedFeaturesetDescriptor.*`.
+ *
+ * See generated predefined featuresets (e.g. [StandardBuildings]) to use with Mapbox Standard Style.
+ * See [TypedFeaturesetDescriptor.Featureset] and [TypedFeaturesetDescriptor.Layer] to define a fully custom FeaturesetDescriptor.
  */
 @MapboxExperimental
-abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeature<FS>> private constructor() {
+abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeature<FS>> protected constructor() {
 
   /**
    * For internal usage.
@@ -162,5 +165,9 @@ abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeatu
     override fun hashCode(): Int {
       return layerId.hashCode()
     }
+  }
+
+  internal companion object {
+    internal const val DEFAULT_IMPORT_ID = "basemap"
   }
 }

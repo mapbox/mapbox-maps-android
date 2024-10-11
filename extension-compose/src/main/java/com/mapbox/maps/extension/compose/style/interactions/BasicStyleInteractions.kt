@@ -11,6 +11,8 @@ import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapInteraction
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope
+import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScopeImpl
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetFeature
@@ -23,7 +25,8 @@ import com.mapbox.maps.interactions.FeaturesetFeature
 @MapboxExperimental
 public abstract class BasicStyleInteractions {
   // map interaction builder entries that will be built and added to the map when the state is bind to the map.
-  private val entries: MutableList<(String?) -> MapInteraction> = mutableListOf()
+  // this property is used directly by generated Standard interactions and then lambda represents (importId? -> MapInteraction)
+  protected val entries: MutableList<(String?) -> MapInteraction> = mutableListOf()
 
   // the featureset feature scope is created on bind to the map, and it provides extension functions to FeaturesetFeature
   // so that user can update feature state directly on the FeaturesetFeature in this scope.
