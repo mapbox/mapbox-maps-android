@@ -604,8 +604,10 @@ public final class com/mapbox/maps/attribution/AttributionParser$Options {
 	public final fun build ()Lcom/mapbox/maps/attribution/AttributionParser;
 	public final fun withAttributionData ([Ljava/lang/String;)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 	public final fun withCopyrightSign (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
+	public final fun withExtraAttributions (Ljava/util/List;)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 	public final fun withImproveMap (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 	public final fun withMapboxAttribution (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
+	public final fun withMapboxGeofencingConsent (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 	public final fun withMapboxPrivacyPolicy (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 	public final fun withTelemetryAttribution (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 }

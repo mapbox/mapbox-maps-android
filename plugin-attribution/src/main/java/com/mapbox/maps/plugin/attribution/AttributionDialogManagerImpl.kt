@@ -17,6 +17,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
+import com.mapbox.common.experimental.geofencing.GeofencingUtilsUserConsentResponseCallback
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.geofencing.MapGeofencingConsent
+import com.mapbox.maps.logW
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 
@@ -37,16 +41,23 @@ class AttributionDialogManagerImpl(
   internal var dialog: AlertDialog? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var telemetryDialog: AlertDialog? = null
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var geofencingDialog: AlertDialog? = null
   private var mapAttributionDelegate: MapAttributionDelegate? = null
   private var telemetry: MapTelemetry? = null
+  @OptIn(MapboxExperimental::class)
+  private var geofencingConsent: MapGeofencingConsent? = null
   /**
    * Invoked when the map attribution should be shown to the end user
    */
+  @OptIn(MapboxExperimental::class)
   override fun showAttribution(mapAttributionDelegate: MapAttributionDelegate) {
     this.mapAttributionDelegate = mapAttributionDelegate
     this.telemetry = mapAttributionDelegate.telemetry()
+    this.geofencingConsent = mapAttributionDelegate.geofencingConsent()
+    val withMapboxGeofencingConsent = geofencingConsent?.shouldShowConsent() ?: false
     this.attributionList =
-      mapAttributionDelegate.parseAttributions(context, AttributionParserConfig())
+      mapAttributionDelegate.parseAttributions(context, AttributionParserConfig(withMapboxGeofencingConsent = withMapboxGeofencingConsent))
     var isActivityFinishing = false
     if (context is Activity) {
       isActivityFinishing = context.isFinishing
@@ -94,10 +105,10 @@ class AttributionDialogManagerImpl(
    */
   override fun onClick(dialog: DialogInterface, which: Int) {
     val attribution = attributionList[which]
-    if (attribution.url == Attribution.ABOUT_TELEMETRY_URL) {
-      showTelemetryDialog()
-    } else {
-      showMapAttributionWebPage(attribution.url)
+    when (attribution.url) {
+        Attribution.ABOUT_TELEMETRY_URL -> showTelemetryDialog()
+        Attribution.GEOFENCING_URL_MARKER -> showGeofencingConsentDialog()
+        else -> showMapAttributionWebPage(attribution.url)
     }
   }
 
@@ -107,6 +118,7 @@ class AttributionDialogManagerImpl(
   override fun onStop() {
     dialog?.takeIf { it.isShowing }?.dismiss()
     telemetryDialog?.takeIf { it.isShowing }?.dismiss()
+    geofencingDialog?.takeIf { it.isShowing }?.dismiss()
   }
 
   private fun showTelemetryDialog() {
@@ -126,6 +138,30 @@ class AttributionDialogManagerImpl(
       dialog.cancel()
     }
     telemetryDialog = builder.show()
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun showGeofencingConsentDialog() {
+    val builder = prepareDialogBuilder()
+    builder.setTitle(R.string.mapbox_attributionGeofencingTitle)
+    builder.setMessage(R.string.mapbox_attributionGeofencingMessage)
+    val isUserConsentGiven = geofencingConsent?.getUserConsent() ?: false
+    val positiveTextRes = if (isUserConsentGiven) R.string.mapbox_attributionGeofencingConsentedPositive else R.string.mapbox_attributionGeofencingRevokedPositive
+    val negativeTextRes = if (isUserConsentGiven) R.string.mapbox_attributionGeofencingConsentedNegative else R.string.mapbox_attributionGeofencingRevokedNegative
+    val callback = GeofencingUtilsUserConsentResponseCallback { result ->
+        result.error?.let { error ->
+          logW("GeofencingConsent", "Unable to set user consent: ${error.type}")
+        }
+      }
+    builder.setPositiveButton(positiveTextRes) { dialog, _ ->
+      geofencingConsent?.setUserConsent(true, callback)
+      dialog.cancel()
+    }
+    builder.setNegativeButton(negativeTextRes) { dialog, _ ->
+      geofencingConsent?.setUserConsent(false, callback)
+      dialog.cancel()
+    }
+    geofencingDialog = builder.show()
   }
 
   private fun showMapAttributionWebPage(attributionUrl: String) {

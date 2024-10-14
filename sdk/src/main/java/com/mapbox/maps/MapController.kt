@@ -63,6 +63,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   override val mapboxMap: MapboxMap
     get() = _mapboxMap
 
+  @OptIn(MapboxExperimental::class)
   constructor(
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
@@ -88,7 +89,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       this,
       MapProvider.getMapTelemetryInstance(
         mapInitOptions.context
-      )
+      ),
+      MapProvider.getMapGeofencingConsent(),
     )
     this.cameraChangedCallback = CameraChangedCallback {
       pluginRegistry.onCameraMove(it.cameraState)

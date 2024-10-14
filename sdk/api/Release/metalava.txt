@@ -538,8 +538,10 @@ package com.mapbox.maps.attribution {
     method public com.mapbox.maps.attribution.AttributionParser build();
     method public com.mapbox.maps.attribution.AttributionParser.Options withAttributionData(java.lang.String... attributionData);
     method public com.mapbox.maps.attribution.AttributionParser.Options withCopyrightSign(boolean withCopyrightSign);
+    method public com.mapbox.maps.attribution.AttributionParser.Options withExtraAttributions(java.util.List<com.mapbox.maps.plugin.attribution.Attribution> attributions);
     method public com.mapbox.maps.attribution.AttributionParser.Options withImproveMap(boolean withImproveMap);
     method public com.mapbox.maps.attribution.AttributionParser.Options withMapboxAttribution(boolean withMapboxAttribution);
+    method public com.mapbox.maps.attribution.AttributionParser.Options withMapboxGeofencingConsent(boolean withMapboxGeofencingConsent);
     method public com.mapbox.maps.attribution.AttributionParser.Options withMapboxPrivacyPolicy(boolean withMapboxPrivacyPolicy);
     method public com.mapbox.maps.attribution.AttributionParser.Options withTelemetryAttribution(boolean withTelemetryAttribution);
     field public static final String HTML_STYLE_REGEX = "<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>";

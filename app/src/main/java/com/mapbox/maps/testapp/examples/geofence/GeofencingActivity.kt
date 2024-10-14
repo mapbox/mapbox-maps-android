@@ -2,21 +2,15 @@ package com.mapbox.maps.testapp.examples.geofence
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -54,10 +48,7 @@ import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.attribution.Attribution
-import com.mapbox.maps.plugin.attribution.AttributionDialogManager
-import com.mapbox.maps.plugin.attribution.AttributionParserConfig
 import com.mapbox.maps.plugin.attribution.attribution
-import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -362,8 +353,12 @@ class GeofencingActivity : AppCompatActivity() {
         return@ClickInteraction true
       }
     )
-    binding.mapView.attribution.setCustomAttributionDialogManager(CustomAttributionDialog(this))
-
+    binding.mapView.attribution.getMapAttributionDelegate().extraAttributions = listOf(
+      Attribution(
+        "Geofence boundaries courtesy Helsingin seuden liiken HSL (CC-BY)",
+        "https://hri.fi/data/en_GB/dataset/hsl-n-taksavyohykkeet"
+      )
+    )
     handleGeofenceIntent(intent)
   }
 
@@ -602,78 +597,6 @@ class GeofencingActivity : AppCompatActivity() {
         logD(TAG, "geofence.$functionName() error $geofenceError")
       }
     }
-
-  /***
-   * Custom attribution to show the link to HSL public dataset
-   */
-  inner class CustomAttributionDialog(
-    private val context: Context,
-  ) : AttributionDialogManager, DialogInterface.OnClickListener {
-
-    private lateinit var attributionList: MutableList<Attribution>
-    private var dialog: AlertDialog? = null
-    private var mapAttributionDelegate: MapAttributionDelegate? = null
-
-    override fun showAttribution(mapAttributionDelegate: MapAttributionDelegate) {
-      this.mapAttributionDelegate = mapAttributionDelegate
-      attributionList =
-        mapAttributionDelegate.parseAttributions(
-          context,
-          AttributionParserConfig()
-        ).toMutableList()
-
-      // HSL Attribution
-      attributionList.add(
-        0,
-        Attribution(
-          "Geofence boundaries courtesy Helsingin seuden liiken HSL (CC-BY)",
-          "https://hri.fi/data/en_GB/dataset/hsl-n-taksavyohykkeet"
-        )
-      )
-      var isActivityFinishing = false
-      if (context is Activity) {
-        isActivityFinishing = context.isFinishing
-      }
-      if (!isActivityFinishing) {
-        val attributionTitles = attributionList.map { it.title }.toTypedArray()
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle(com.mapbox.maps.plugin.attribution.R.string.mapbox_attributionsDialogTitle)
-        builder.setAdapter(
-          ArrayAdapter(
-            context,
-            com.mapbox.maps.plugin.attribution.R.layout.mapbox_attribution_list_item,
-            attributionTitles
-          ),
-          this
-        )
-        dialog = builder.show()
-      }
-    }
-
-    override fun onStop() {
-      dialog?.takeIf { it.isShowing }?.dismiss()
-    }
-
-    override fun onClick(dialog: DialogInterface?, which: Int) {
-      showWebPage(attributionList[which].url)
-    }
-
-    private fun showWebPage(url: String) {
-      if (context is Activity) {
-        try {
-          val intent = Intent(Intent.ACTION_VIEW)
-          intent.data = Uri.parse(url)
-          context.startActivity(intent)
-        } catch (exception: ActivityNotFoundException) {
-          Toast.makeText(
-            context,
-            com.mapbox.maps.plugin.attribution.R.string.mapbox_attributionErrorNoBrowser,
-            Toast.LENGTH_LONG
-          ).show()
-        }
-      }
-    }
-  }
 
   companion object {
     private const val TAG = "GeofencingActivity"

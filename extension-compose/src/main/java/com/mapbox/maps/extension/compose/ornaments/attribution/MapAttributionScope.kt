@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxScope
@@ -43,13 +44,18 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import com.mapbox.common.experimental.geofencing.GeofencingError
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.ornaments.attribution.internal.AttributionComposePlugin
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 /**
  * A [MapAttributionScope] provides a scope for adding [Attribution] ornament.
@@ -72,6 +78,7 @@ public class MapAttributionScope internal constructor(
    * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Attribution] within the Map.
    * @param attributionDialog Defines AlertDialog when the attribution is clicked.
+   * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
    */
   @Composable
   public fun Attribution(
@@ -104,6 +111,82 @@ public class MapAttributionScope internal constructor(
       )
     }
   ) {
+    Attribution(
+      modifier,
+      contentPadding,
+      alignment,
+      iconColor,
+      attributionDialog,
+      telemetryDialog,
+      { onDismissRequest, onDisagree, onAgree, currentUserConsent ->
+        GeofencingConsentDialog(
+          onDismissRequest = onDismissRequest,
+          onDisagree = onDisagree,
+          onAgree = onAgree,
+          currentUserConsent = currentUserConsent
+        )
+      }
+    )
+  }
+  /**
+   * Add a [Attribution] ornament to the map.
+   *
+   * Please note that it's **required** to show Mapbox Attribution button in your map. See [Mapbox ToS](https://www.mapbox.com/legal/tos)
+   *
+   * By default, the [Attribution] will be placed to the [Alignment.BottomStart] of the map with padding of 92dp, 4dp, 4dp, 4dp.
+   *
+   * @param modifier Modifier to be applied to the [Attribution].
+   * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
+   * @param alignment The alignment of the [Attribution] within the Map.
+   * @param attributionDialog Defines AlertDialog when the attribution is clicked.
+   * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
+   * @param geofencingConsentDialog Defines GeofencingConsentDialog when the Mapbox Geofencing is clicked.
+   */
+  @MapboxExperimental
+  @Composable
+  public fun Attribution(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp),
+    alignment: Alignment = Alignment.BottomStart,
+    iconColor: Color = Color(0xFF1E8CAB),
+    attributionDialog: @Composable (
+      attributions: List<Attribution>,
+      onDismissRequest: () -> Unit,
+      onAttributionClick: (Attribution) -> Unit
+    ) -> Unit = { attributions, onDismissRequest, onAttributionClick ->
+      AttributionDialog(
+        attributions = attributions,
+        onDismissRequest = onDismissRequest,
+        onAttributionClick = onAttributionClick
+      )
+    },
+    telemetryDialog: @Composable (
+      onDismissRequest: () -> Unit,
+      onMoreInfo: () -> Unit,
+      onDisagree: () -> Unit,
+      onAgree: () -> Unit
+    ) -> Unit = { onDismissRequest, onMoreInfo, onDisagree, onAgree ->
+      TelemetryDialog(
+        onDismissRequest = onDismissRequest,
+        onMoreInfo = onMoreInfo,
+        onDisagree = onDisagree,
+        onAgree = onAgree
+      )
+    },
+    geofencingConsentDialog: @Composable (
+      onDismissRequest: () -> Unit,
+      onDisagree: () -> Unit,
+      onAgree: () -> Unit,
+      currentUserConsent: Boolean
+    ) -> Unit = { onDismissRequest, onDisagree, onAgree, currentUserConsent ->
+      GeofencingConsentDialog(
+        onDismissRequest = onDismissRequest,
+        onDisagree = onDisagree,
+        onAgree = onAgree,
+        currentUserConsent = currentUserConsent,
+      )
+    }
+  ) {
     val pluginId = remember {
       getNextId()
     }
@@ -116,11 +199,18 @@ public class MapAttributionScope internal constructor(
     var showTelemetryDialog by remember {
       mutableStateOf(false)
     }
+    var showGeofencingConsentDialog by remember {
+      mutableStateOf(false)
+    }
+
     var mapboxFeedbackUrl by remember {
       mutableStateOf("")
     }
 
     var telemetryEnableState by remember {
+      mutableStateOf(true)
+    }
+    var geofencingUserConsentState by remember {
       mutableStateOf(true)
     }
 
@@ -132,6 +222,10 @@ public class MapAttributionScope internal constructor(
           instance = AttributionComposePlugin()
         )
       )
+      // propagate the initial geofencing user consent
+      mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
+        geofencingUserConsentState = it.mapAttributionDelegate.geofencingConsent().getUserConsent()
+      }
       onDispose {
         // Remove AttributionComposePlugin when leaving composition
         mapView.removePlugin(pluginId)
@@ -142,6 +236,20 @@ public class MapAttributionScope internal constructor(
     LaunchedEffect(telemetryEnableState) {
       mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
         it.mapAttributionDelegate.telemetry().userTelemetryRequestState = telemetryEnableState
+      }
+    }
+
+    // Whenever geofencingUserConsentState is updated by the user, pass it through to mapAttributionDelegate.
+    LaunchedEffect(geofencingUserConsentState) {
+      mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
+        val error: GeofencingError? = suspendCancellableCoroutine { continuation ->
+          it.mapAttributionDelegate.geofencingConsent().setUserConsent(geofencingUserConsentState) {
+            continuation.resume(it.error)
+          }
+        }
+        error?.let {
+          logW("GeofencingConsent", "Unable to set user consent: ${it.type}")
+        }
       }
     }
 
@@ -169,15 +277,17 @@ public class MapAttributionScope internal constructor(
         },
         onAttributionClick = { attribution ->
           showAttributionDialog = false
-          if (attribution.url == Attribution.ABOUT_TELEMETRY_URL) {
-            showTelemetryDialog = true
-          } else {
-            val url = if (attribution.url.contains(FEEDBACK_KEY_WORD)) {
-              mapboxFeedbackUrl
-            } else attribution.url
-            if (url.isNotEmpty()) {
-              showWebPage(url)
-            }
+          when (attribution.url) {
+              Attribution.ABOUT_TELEMETRY_URL -> showTelemetryDialog = true
+              Attribution.GEOFENCING_URL_MARKER -> showGeofencingConsentDialog = true
+              else -> {
+                  val url = if (attribution.url.contains(FEEDBACK_KEY_WORD)) {
+                    mapboxFeedbackUrl
+                  } else attribution.url
+                  if (url.isNotEmpty()) {
+                    showWebPage(url)
+                  }
+              }
           }
         }
       )
@@ -203,6 +313,25 @@ public class MapAttributionScope internal constructor(
         }
       )
     }
+
+    // Show Geofencing consent Dialog
+    if (showGeofencingConsentDialog) {
+      geofencingConsentDialog(
+        onDismissRequest = {
+          showGeofencingConsentDialog = false
+        },
+        onDisagree = {
+          geofencingUserConsentState = false
+          showGeofencingConsentDialog = false
+        },
+        onAgree = {
+          geofencingUserConsentState = true
+          showGeofencingConsentDialog = false
+        },
+        geofencingUserConsentState
+      )
+    }
+
     // Show Attribution image button.
     Image(
       modifier = with(boxScope) {
@@ -272,7 +401,7 @@ public class MapAttributionScope internal constructor(
   }
 
   /**
-   * Build an [TelemetryDialog] to be added to the [AttributionDialog] when telemetry settings is clicked.
+   * Build a [TelemetryDialog] to be added to the [AttributionDialog] when telemetry settings is clicked.
    *
    * @param onDismissRequest The callback to be invoked when the attribution is dismissed.
    * @param onMoreInfo The callback to be invoked when more information is needed.
@@ -286,6 +415,69 @@ public class MapAttributionScope internal constructor(
     onDisagree: () -> Unit,
     onAgree: () -> Unit
   ) {
+    UserConsentDialog(
+      onDismissRequest = onDismissRequest,
+      onMoreInfo = onMoreInfo,
+      onDisagree = onDisagree,
+      onAgree = onAgree,
+      neutralStringId = R.string.mapbox_attributionTelemetryNeutral,
+      disagreeStringId = R.string.mapbox_attributionTelemetryNegative,
+      agreeStringId = R.string.mapbox_attributionTelemetryPositive,
+      titleId = R.string.mapbox_attributionTelemetryTitle,
+      bodyId = R.string.mapbox_attributionTelemetryMessage
+      )
+  }
+
+  /**
+   * Build a [GeofencingConsentDialog] to be added to the [AttributionDialog] when geofencing settings is clicked.
+   *
+   * @param onDismissRequest The callback to be invoked when the dialog is dismissed.
+   * @param onDisagree The callback to be invoked when user revokes consent for geofencing.
+   * @param onAgree The callback to be invoked when user grants consent for geofencing.
+   * @param currentUserConsent The current state of the user consent.
+   */
+  @Composable
+  public fun GeofencingConsentDialog(
+    onDismissRequest: () -> Unit,
+    onDisagree: () -> Unit,
+    onAgree: () -> Unit,
+    currentUserConsent: Boolean
+  ) {
+    val disagreeStringId = if (currentUserConsent) R.string.mapbox_attributionGeofencingConsentedNegative else R.string.mapbox_attributionGeofencingRevokedNegative
+    val agreeStringId = if (currentUserConsent) R.string.mapbox_attributionGeofencingConsentedPositive else R.string.mapbox_attributionGeofencingRevokedPositive
+    UserConsentDialog(
+      onDismissRequest = onDismissRequest,
+      onDisagree = onDisagree,
+      onAgree = onAgree,
+      disagreeStringId = disagreeStringId,
+      agreeStringId = agreeStringId,
+      titleId = R.string.mapbox_attributionGeofencingTitle,
+      bodyId = R.string.mapbox_attributionGeofencingMessage
+      )
+  }
+
+  @Composable
+  private fun UserConsentDialog(
+    onDismissRequest: () -> Unit,
+    onMoreInfo: (() -> Unit)? = null,
+    onDisagree: () -> Unit,
+    onAgree: () -> Unit,
+    @StringRes
+    neutralStringId: Int? = null,
+    @StringRes
+    disagreeStringId: Int,
+    @StringRes
+    agreeStringId: Int,
+    @StringRes
+    titleId: Int,
+    @StringRes
+    bodyId: Int,
+  ) {
+    val dialogButton = @Composable { onClick: () -> Unit, textResId: Int ->
+      TextButton(onClick) {
+        Text(stringResource(id = textResId).uppercase())
+      }
+    }
     AlertDialog(
       onDismissRequest = onDismissRequest,
       buttons = {
@@ -296,34 +488,16 @@ public class MapAttributionScope internal constructor(
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         ) {
-          TextButton(
-            onClick = { onMoreInfo() }
-          ) {
-            Text(stringResource(id = R.string.mapbox_attributionTelemetryNeutral).uppercase())
+          if (onMoreInfo != null && neutralStringId != null) {
+            dialogButton(onMoreInfo, neutralStringId)
           }
 
-          TextButton(
-            onClick = { onDisagree() }
-          ) {
-            Text(stringResource(id = R.string.mapbox_attributionTelemetryNegative).uppercase())
-          }
-
-          TextButton(
-            onClick = { onAgree() }
-          ) {
-            Text(stringResource(id = R.string.mapbox_attributionTelemetryPositive).uppercase())
-          }
+          dialogButton(onDisagree, disagreeStringId)
+          dialogButton(onAgree, agreeStringId)
         }
       },
-      title = {
-        Text(
-          text = stringResource(id = R.string.mapbox_attributionTelemetryTitle),
-          fontWeight = FontWeight.Bold
-        )
-      },
-      text = {
-        Text(text = stringResource(id = R.string.mapbox_attributionTelemetryMessage))
-      }
+      title = { Text(text = stringResource(id = titleId), fontWeight = FontWeight.Bold) },
+      text = { Text(text = stringResource(id = bodyId)) }
     )
   }
 

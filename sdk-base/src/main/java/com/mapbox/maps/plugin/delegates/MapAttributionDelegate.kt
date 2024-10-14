@@ -1,6 +1,8 @@
 package com.mapbox.maps.plugin.delegates
 
 import android.content.Context
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
@@ -33,4 +35,20 @@ interface MapAttributionDelegate {
    * @param context the context
    */
   fun buildMapBoxFeedbackUrl(context: Context): String
+
+  /**
+   * Request an instance of geofencing consent utilities
+   *
+   * @return utilities related to geofencing consent
+   */
+  fun geofencingConsent(): MapGeofencingConsent
+
+  /**
+   * List of extra attributions for the data shown in the map.
+   * Pass empty list to remove any extra attribution.
+   */
+  @MapboxExperimental
+  var extraAttributions: List<Attribution>
+    get() = emptyList()
+    set(_) = throw NotImplementedError()
 }

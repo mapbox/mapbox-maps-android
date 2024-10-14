@@ -12,10 +12,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Dispatch view annotations update before rendering, so that view annotations and map layers are rendered simultaneously and thus decreasing the view annotations latency when using `ViewAnnotationUpdateMode.MAP_FIXED_DELAY` mode.
 * Overscale composited tile components in offline.
 * Skip rendering landmarks when the camera is inside them.
+* Introduce experimental Geofencing API. Implementation example: [GeofencingActivity.kt](app/src/main/java/com/mapbox/maps/testapp/examples/geofence/GeofencingActivity.kt)
 * [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
 * [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.
 * [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
 * [compose] Introduce `<AnnotationType>InteractionsState.isDraggable` / `<AnnotationType>GroupInteractionsState.isDraggable` API for all annotation types allowing to drag annotations. Callbacks `onDragStarted()`, `onDragged()`,`onDragFinished()` are added as well.
+* [compose] Introduce experimental `Attribution(..., geofencingDialog)` compose function to customize Geofencing consent dialog.
+* Introduce experimental `MapView.attribution..getMapAttributionDelegate().extraAttributions` to add custom attributions to the attribution dialog.
 
 ## Bug fixes 🐞
 * Improve zooming performance on dynamic Standard terrain and optimize terrain re-rendering performance on e.g routeline `line-trim-offset` change.

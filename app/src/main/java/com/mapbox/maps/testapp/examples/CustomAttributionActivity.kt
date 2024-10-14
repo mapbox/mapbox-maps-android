@@ -49,11 +49,12 @@ class CustomAttributionActivity : AppCompatActivity() {
     binding.customAttributionFab.setOnClickListener {
       Toast.makeText(this, R.string.custom_attribution_custom, Toast.LENGTH_LONG).show()
       val config = AttributionParserConfig(
-        checkBoxes[0].isChecked,
-        checkBoxes[1].isChecked,
-        checkBoxes[2].isChecked,
-        checkBoxes[3].isChecked,
-        checkBoxes[4].isChecked,
+        withImproveMap = checkBoxes[0].isChecked,
+        withCopyrightSign = checkBoxes[1].isChecked,
+        withTelemetryAttribution = checkBoxes[2].isChecked,
+        withMapboxAttribution = checkBoxes[3].isChecked,
+        withMapboxPrivacyPolicy = checkBoxes[4].isChecked,
+        withMapboxGeofencingConsent = false // This custom dialog does not support geofencing user consent
       )
       attributionPlugin.setCustomAttributionDialogManager(
         CustomAttributionDialog(this, config)

@@ -27,7 +27,7 @@ public class AttributionParseTest {
       .build();
 
     Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 4, attributionList.size());
+    assertEquals("Size of list should match", 5, attributionList.size());
 
     int counter = 0;
     for (Attribution attribution : attributionList) {
@@ -61,7 +61,7 @@ public class AttributionParseTest {
       .build();
 
     Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 3, attributionList.size());
+    assertEquals("Size of list should match", 4, attributionList.size());
 
     int counter = 0;
     for (Attribution attribution : attributionList) {
@@ -91,7 +91,7 @@ public class AttributionParseTest {
       .build();
 
     Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 3, attributionList.size());
+    assertEquals("Size of list should match", 4, attributionList.size());
 
     int counter = 0;
     for (Attribution attribution : attributionList) {
@@ -105,6 +105,10 @@ public class AttributionParseTest {
           assertEquals("Title improve map should match", "Improve This Map", attribution.getTitle());
           break;
         case 2:
+          assertEquals(Attribution.GEOFENCING_URL_MARKER, attribution.getUrl());
+          assertEquals(Attribution.GEOFENCING, attribution.getTitle());
+          break;
+        case 3:
           assertEquals("URL improve map should match", "https://www.mapbox.com/legal/privacy#product-privacy-policy/", attribution.getUrl());
           assertEquals("Title improve map should match", "Mapbox Privacy Policy", attribution.getTitle());
           break;
@@ -119,7 +123,7 @@ public class AttributionParseTest {
       .withAttributionData(new String[] {STREETS_ATTRIBUTION, "", SATELLITE_ATTRIBUTION})
       .build();
     Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 5, attributionList.size());
+    assertEquals("Size of list should match", 6, attributionList.size());
 
     int counter = 0;
     for (Attribution attribution : attributionList) {
@@ -141,6 +145,10 @@ public class AttributionParseTest {
           assertEquals("Title digital globe should match", "© DigitalGlobe", attribution.getTitle());
           break;
         case 4:
+          assertEquals(Attribution.GEOFENCING_URL_MARKER, attribution.getUrl());
+          assertEquals(Attribution.GEOFENCING, attribution.getTitle());
+          break;
+        case 5:
           assertEquals("URL improve map should match", "https://www.mapbox.com/legal/privacy#product-privacy-policy/", attribution.getUrl());
           assertEquals("Title improve map should match", "Mapbox Privacy Policy", attribution.getTitle());
           break;
@@ -157,7 +165,7 @@ public class AttributionParseTest {
       .withMapboxPrivacyPolicy(false)
       .build();
     Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 3, attributionList.size());
+    assertEquals("Size of list should match", 4, attributionList.size());
 
     int counter = 0;
     for (Attribution attribution : attributionList) {
@@ -186,7 +194,7 @@ public class AttributionParseTest {
       .withCopyrightSign(false)
       .build();
     Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 5, attributionList.size());
+    assertEquals("Size of list should match", 6, attributionList.size());
 
     int counter = 0;
     for (Attribution attribution : attributionList) {
@@ -208,6 +216,10 @@ public class AttributionParseTest {
           assertEquals("Title digital globe should match", "DigitalGlobe", attribution.getTitle());
           break;
         case 4:
+          assertEquals(Attribution.GEOFENCING_URL_MARKER, attribution.getUrl());
+          assertEquals(Attribution.GEOFENCING, attribution.getTitle());
+          break;
+        case 5:
           assertEquals("URL improve map should match", "https://www.mapbox.com/legal/privacy#product-privacy-policy/", attribution.getUrl());
           assertEquals("Title improve map should match", "Mapbox Privacy Policy", attribution.getTitle());
           break;
@@ -223,6 +235,7 @@ public class AttributionParseTest {
       .withCopyrightSign(false)
       .withImproveMap(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -239,6 +252,7 @@ public class AttributionParseTest {
       .withAttributionData(STREETS_ATTRIBUTION)
       .withImproveMap(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -256,6 +270,7 @@ public class AttributionParseTest {
       .withImproveMap(false)
       .withMapboxAttribution(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -272,6 +287,7 @@ public class AttributionParseTest {
       .withImproveMap(false)
       .withMapboxAttribution(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -289,6 +305,7 @@ public class AttributionParseTest {
       .withCopyrightSign(false)
       .withMapboxAttribution(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -306,6 +323,7 @@ public class AttributionParseTest {
       .withCopyrightSign(false)
       .withMapboxAttribution(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -322,6 +340,7 @@ public class AttributionParseTest {
       .withImproveMap(false)
       .withCopyrightSign(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -338,6 +357,7 @@ public class AttributionParseTest {
       .withImproveMap(true)
       .withCopyrightSign(false)
       .withMapboxPrivacyPolicy(false)
+      .withMapboxGeofencingConsent(false)
       .build();
 
     assertEquals(
@@ -355,16 +375,20 @@ public class AttributionParseTest {
             .build();
 
     final Set<Attribution> attributionList = attributionParser.getAttributions();
-    assertEquals("Size of list should match", 2, attributionList.size());
+    assertEquals("Size of list should match", 3, attributionList.size());
 
     int counter = 0;
     for (final Attribution attribution : attributionList) {
       switch (counter) {
         case 0:
+          assertEquals(Attribution.GEOFENCING_URL_MARKER, attribution.getUrl());
+          assertEquals(Attribution.GEOFENCING, attribution.getTitle());
+          break;
+        case 1:
           assertEquals("URL should match", "", attribution.getUrl());
           assertEquals("Title should match", "© Custom Contributors", attribution.getTitle());
           break;
-        case 1:
+        case 2:
           assertEquals("URL should match", "", attribution.getUrl());
           assertEquals("Title should match", "OpenStreetMap CC-BY-SA", attribution.getTitle());
           break;

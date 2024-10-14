@@ -782,24 +782,18 @@ public final class com/mapbox/maps/extension/compose/ornaments/attribution/Compo
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/ornaments/attribution/ComposableSingletons$MapAttributionScopeKt;
 	public static field lambda-1 Lkotlin/jvm/functions/Function2;
 	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function3;
-	public static field lambda-4 Lkotlin/jvm/functions/Function3;
-	public static field lambda-5 Lkotlin/jvm/functions/Function3;
-	public static field lambda-6 Lkotlin/jvm/functions/Function2;
-	public static field lambda-7 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function4;
 	public fun <init> ()V
 	public final fun getLambda-1$extension_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-2$extension_compose_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$extension_compose_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-4$extension_compose_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-5$extension_compose_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-6$extension_compose_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-7$extension_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$extension_compose_release ()Lkotlin/jvm/functions/Function4;
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope {
 	public final fun Attribution-fWhpE4E (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JLkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function6;Landroidx/compose/runtime/Composer;II)V
+	public final fun Attribution-hYmLsZ8 (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JLkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function6;Lkotlin/jvm/functions/Function6;Landroidx/compose/runtime/Composer;II)V
 	public final fun AttributionDialog (Ljava/util/List;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public final fun GeofencingConsentDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ZLandroidx/compose/runtime/Composer;I)V
 	public final fun TelemetryDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 }
 

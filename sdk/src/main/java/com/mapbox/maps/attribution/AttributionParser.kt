@@ -28,7 +28,8 @@ open class AttributionParser internal constructor(
   private val withTelemetryAttribution: Boolean,
   private val withMapboxAttribution: Boolean,
   private val withMapboxPrivacyPolicy: Boolean,
-
+  private val withMapboxGeofencingConsent: Boolean,
+  private val extraAttributions: List<Attribution>,
 ) {
   private val attributions: MutableSet<Attribution> = LinkedHashSet()
 
@@ -227,19 +228,28 @@ open class AttributionParser internal constructor(
     if (withTelemetryAttribution) {
       attributions.add(
         Attribution(
-          if (context != null) context.getString(R.string.mapbox_telemetrySettings) else Attribution.TELEMETRY_SETTINGS,
+          context?.getString(R.string.mapbox_telemetrySettings) ?: Attribution.TELEMETRY_SETTINGS,
           Attribution.ABOUT_TELEMETRY_URL
+        )
+      )
+    }
+    if (withMapboxGeofencingConsent) {
+      attributions.add(
+        Attribution(
+          context?.getString(R.string.mapbox_geofencing_consent) ?: Attribution.GEOFENCING,
+          Attribution.GEOFENCING_URL_MARKER
         )
       )
     }
     if (withMapboxPrivacyPolicy) {
       attributions.add(
         Attribution(
-          if (context != null) context.getString(R.string.mapbox_privacy_policy) else Attribution.PRIVACY_POLICY,
+          context?.getString(R.string.mapbox_privacy_policy) ?: Attribution.PRIVACY_POLICY,
           Attribution.PRIVACY_POLICY_URL
         )
       )
     }
+    attributions.addAll(extraAttributions)
   }
 
   /**
@@ -294,8 +304,10 @@ open class AttributionParser internal constructor(
     private var withTelemetryAttribution = false
     private var withMapboxAttribution = true
     private var withMapboxPrivacyPolicy = true
+    private var withMapboxGeofencingConsent = true
     private var attributionDataStringArray: Array<String>? = null
     private var stringLiteralArray = mutableListOf<String>()
+    private var extraAttributions = emptyList<Attribution>()
 
     /**
      * Adds attribution data to the attribution parser builder
@@ -304,6 +316,11 @@ open class AttributionParser internal constructor(
       attributionDataStringArray = arrayOf(*attributionData)
       return this
     }
+
+    /**
+     * Adds extra attributions to the attribution dialog
+     */
+    fun withExtraAttributions(attributions: List<Attribution>) = this.apply { extraAttributions = attributions }
 
     /**
      * Flag indicating to add improve this map to the attribution dialog
@@ -346,6 +363,15 @@ open class AttributionParser internal constructor(
     }
 
     /**
+     * Flag indicating to show Geofencing user consent option.
+     * Note that the entry will be shown only if the Geofencing is currently active or the user has
+     * previously opted out.
+     */
+    fun withMapboxGeofencingConsent(withMapboxGeofencingConsent: Boolean): Options = this.apply {
+      this.withMapboxGeofencingConsent = withMapboxGeofencingConsent
+    }
+
+    /**
      * Build the attribution parser
      */
     fun build(): AttributionParser {
@@ -360,6 +386,8 @@ open class AttributionParser internal constructor(
           withTelemetryAttribution,
           withMapboxAttribution,
           withMapboxPrivacyPolicy,
+          withMapboxGeofencingConsent,
+          extraAttributions
         )
       attributionParser.parse()
       // parse string literals provided by source attribution.

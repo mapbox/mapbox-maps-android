@@ -711,6 +711,16 @@ package com.mapbox.maps.extension.style {
 
 }
 
+package com.mapbox.maps.geofencing {
+
+  @com.mapbox.maps.MapboxExperimental public interface MapGeofencingConsent {
+    method @com.mapbox.maps.MapboxExperimental public boolean getUserConsent();
+    method @com.mapbox.maps.MapboxExperimental public void setUserConsent(boolean isConsentGiven, com.mapbox.common.experimental.geofencing.GeofencingUtilsUserConsentResponseCallback callback);
+    method @com.mapbox.maps.MapboxExperimental public boolean shouldShowConsent();
+  }
+
+}
+
 package com.mapbox.maps.interactions {
 
   @com.mapbox.maps.MapboxExperimental public class FeatureState {
@@ -1577,6 +1587,8 @@ package com.mapbox.maps.plugin.attribution {
     field public static final String ABOUT_MAPS_URL = "https://www.mapbox.com/about/maps/";
     field public static final String ABOUT_TELEMETRY_URL = "https://www.mapbox.com/telemetry/";
     field public static final com.mapbox.maps.plugin.attribution.Attribution.Companion Companion;
+    field public static final String GEOFENCING = "Mapbox Geofencing";
+    field public static final String GEOFENCING_URL_MARKER = "geofencing_url_marker";
     field public static final String OSM = "OpenStreetMap";
     field public static final String OSM_ABBR = "OSM";
     field public static final String PRIVACY_POLICY = "Mapbox Privacy Policy";
@@ -1593,6 +1605,7 @@ package com.mapbox.maps.plugin.attribution {
   }
 
   public final class AttributionParserConfig {
+    ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true, @com.mapbox.maps.MapboxExperimental boolean withMapboxGeofencingConsent = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true);
@@ -1602,16 +1615,19 @@ package com.mapbox.maps.plugin.attribution {
     method public boolean getWithCopyrightSign();
     method public boolean getWithImproveMap();
     method public boolean getWithMapboxAttribution();
+    method public boolean getWithMapboxGeofencingConsent();
     method public boolean getWithMapboxPrivacyPolicy();
     method public boolean getWithTelemetryAttribution();
     method public void setWithCopyrightSign(boolean);
     method public void setWithImproveMap(boolean);
     method public void setWithMapboxAttribution(boolean);
+    method public void setWithMapboxGeofencingConsent(boolean);
     method public void setWithMapboxPrivacyPolicy(boolean);
     method public void setWithTelemetryAttribution(boolean);
     property public final boolean withCopyrightSign;
     property public final boolean withImproveMap;
     property public final boolean withMapboxAttribution;
+    property public final boolean withMapboxGeofencingConsent;
     property public final boolean withMapboxPrivacyPolicy;
     property public final boolean withTelemetryAttribution;
   }
@@ -1959,8 +1975,12 @@ package com.mapbox.maps.plugin.delegates {
 
   public interface MapAttributionDelegate {
     method public String buildMapBoxFeedbackUrl(android.content.Context context);
+    method public com.mapbox.maps.geofencing.MapGeofencingConsent geofencingConsent();
+    method public default java.util.List<com.mapbox.maps.plugin.attribution.Attribution> getExtraAttributions();
     method public java.util.List<com.mapbox.maps.plugin.attribution.Attribution> parseAttributions(android.content.Context context, com.mapbox.maps.plugin.attribution.AttributionParserConfig config);
+    method public default void setExtraAttributions(java.util.List<com.mapbox.maps.plugin.attribution.Attribution>);
     method public com.mapbox.maps.module.MapTelemetry telemetry();
+    property public default java.util.List<com.mapbox.maps.plugin.attribution.Attribution> extraAttributions;
   }
 
   public interface MapCameraManagerDelegate {

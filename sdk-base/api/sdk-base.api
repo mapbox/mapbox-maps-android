@@ -710,6 +710,12 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 	public abstract fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
 }
 
+public abstract interface class com/mapbox/maps/geofencing/MapGeofencingConsent {
+	public abstract fun getUserConsent ()Z
+	public abstract fun setUserConsent (ZLcom/mapbox/common/experimental/geofencing/GeofencingUtilsUserConsentResponseCallback;)V
+	public abstract fun shouldShowConsent ()Z
+}
+
 public class com/mapbox/maps/interactions/FeatureState {
 	public final fun asJsonString ()Ljava/lang/String;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1631,6 +1637,8 @@ public final class com/mapbox/maps/plugin/attribution/Attribution {
 	public static final field ABOUT_MAPS_URL Ljava/lang/String;
 	public static final field ABOUT_TELEMETRY_URL Ljava/lang/String;
 	public static final field Companion Lcom/mapbox/maps/plugin/attribution/Attribution$Companion;
+	public static final field GEOFENCING Ljava/lang/String;
+	public static final field GEOFENCING_URL_MARKER Ljava/lang/String;
 	public static final field OSM Ljava/lang/String;
 	public static final field OSM_ABBR Ljava/lang/String;
 	public static final field PRIVACY_POLICY Ljava/lang/String;
@@ -1664,15 +1672,18 @@ public final class com/mapbox/maps/plugin/attribution/AttributionParserConfig {
 	public fun <init> (ZZZ)V
 	public fun <init> (ZZZZ)V
 	public fun <init> (ZZZZZ)V
-	public synthetic fun <init> (ZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZZZZZ)V
+	public synthetic fun <init> (ZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getWithCopyrightSign ()Z
 	public final fun getWithImproveMap ()Z
 	public final fun getWithMapboxAttribution ()Z
+	public final fun getWithMapboxGeofencingConsent ()Z
 	public final fun getWithMapboxPrivacyPolicy ()Z
 	public final fun getWithTelemetryAttribution ()Z
 	public final fun setWithCopyrightSign (Z)V
 	public final fun setWithImproveMap (Z)V
 	public final fun setWithMapboxAttribution (Z)V
+	public final fun setWithMapboxGeofencingConsent (Z)V
 	public final fun setWithMapboxPrivacyPolicy (Z)V
 	public final fun setWithTelemetryAttribution (Z)V
 }
@@ -2001,8 +2012,16 @@ public final class com/mapbox/maps/plugin/compass/generated/CompassSettingsKt {
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapAttributionDelegate {
 	public abstract fun buildMapBoxFeedbackUrl (Landroid/content/Context;)Ljava/lang/String;
+	public abstract fun geofencingConsent ()Lcom/mapbox/maps/geofencing/MapGeofencingConsent;
+	public abstract fun getExtraAttributions ()Ljava/util/List;
 	public abstract fun parseAttributions (Landroid/content/Context;Lcom/mapbox/maps/plugin/attribution/AttributionParserConfig;)Ljava/util/List;
+	public abstract fun setExtraAttributions (Ljava/util/List;)V
 	public abstract fun telemetry ()Lcom/mapbox/maps/module/MapTelemetry;
+}
+
+public final class com/mapbox/maps/plugin/delegates/MapAttributionDelegate$DefaultImpls {
+	public static fun getExtraAttributions (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)Ljava/util/List;
+	public static fun setExtraAttributions (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;Ljava/util/List;)V
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate {

@@ -11,6 +11,7 @@ import com.mapbox.common.TelemetryService
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.base.BuildConfig
+import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -39,11 +40,13 @@ internal object MapProvider {
     pixelRatio: Float
   ) = MapboxMap(nativeMap, nativeObserver, pixelRatio)
 
+  @OptIn(MapboxExperimental::class)
   fun getMapPluginRegistry(
     mapboxMap: MapboxMap,
     mapController: MapController,
-    telemetry: MapTelemetry
-  ) = MapPluginRegistry(MapDelegateProviderImpl(mapboxMap, mapController, telemetry))
+    telemetry: MapTelemetry,
+    mapGeofencingConsent: MapGeofencingConsent,
+  ) = MapPluginRegistry(MapDelegateProviderImpl(mapboxMap, mapController, telemetry, mapGeofencingConsent))
 
   fun getMapTelemetryInstance(context: Context): MapTelemetry {
     if (!::mapTelemetry.isInitialized) {
@@ -56,6 +59,9 @@ internal object MapProvider {
     }
     return mapTelemetry
   }
+
+  @OptIn(MapboxExperimental::class)
+  fun getMapGeofencingConsent(): MapGeofencingConsent = MapGeofencingConsentImpl()
 
   fun flushPendingEvents() {
     val eventsServerOptions =

@@ -5,8 +5,10 @@ import androidx.test.core.app.ApplicationProvider
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapAttributionDelegateImpl
+import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import io.mockk.every
@@ -22,14 +24,19 @@ import org.robolectric.RobolectricTestRunner
 class MapAttributionDelegateImplTest {
   private val mapboxMap: MapboxMap = mockk()
   private val mapTelemetry: MapTelemetry = mockk()
+  @OptIn(MapboxExperimental::class)
+  private val mapGeofencingConsent: MapGeofencingConsent = mockk()
   private val style: Style = mockk()
   private lateinit var mapAttributionDelegate: MapAttributionDelegate
   private lateinit var context: Context
 
+  @OptIn(MapboxExperimental::class)
   @Before
   fun setUp() {
     context = ApplicationProvider.getApplicationContext()
-    mapAttributionDelegate = MapAttributionDelegateImpl(mapboxMap, mapTelemetry)
+    every { mapGeofencingConsent.shouldShowConsent() } returns true
+    mapAttributionDelegate =
+      MapAttributionDelegateImpl(mapboxMap, mapTelemetry, mapGeofencingConsent)
     every { mapboxMap.getAttributions() } returns listOf(ATTRIBUTION)
     every { mapboxMap.style } returns style
     every { style.styleURI } returns STYLE_URL
@@ -66,6 +73,7 @@ class MapAttributionDelegateImplTest {
         withTelemetryAttribution = false,
         withMapboxAttribution = false,
         withMapboxPrivacyPolicy = false,
+        withMapboxGeofencingConsent = false,
       )
     )
     assertEquals(1, attributions.size)
@@ -85,6 +93,7 @@ class MapAttributionDelegateImplTest {
         withTelemetryAttribution = false,
         withMapboxAttribution = false,
         withMapboxPrivacyPolicy = false,
+        withMapboxGeofencingConsent = false,
       )
     )
     assertEquals(2, attributions.size)
@@ -104,6 +113,7 @@ class MapAttributionDelegateImplTest {
         withTelemetryAttribution = true,
         withMapboxAttribution = false,
         withMapboxPrivacyPolicy = false,
+        withMapboxGeofencingConsent = false,
       )
     )
 
@@ -122,8 +132,30 @@ class MapAttributionDelegateImplTest {
       AttributionParserConfig(
         withImproveMap = false,
         withTelemetryAttribution = false,
+        withMapboxAttribution = false,
+        withMapboxPrivacyPolicy = false,
+        withMapboxGeofencingConsent = true,
+      )
+    )
+
+    assertEquals(2, attributions.size)
+    assertEquals(
+      "Geofencing Consent URL should match", Attribution.GEOFENCING_URL_MARKER,
+      attributions.last().url
+    )
+    assertEquals(
+      "Geofencing Consent title should match", Attribution.GEOFENCING,
+      attributions.last().title
+    )
+
+    attributions = mapAttributionDelegate.parseAttributions(
+      context,
+      AttributionParserConfig(
+        withImproveMap = false,
+        withTelemetryAttribution = false,
         withMapboxAttribution = true,
         withMapboxPrivacyPolicy = false,
+        withMapboxGeofencingConsent = false,
       )
     )
 
@@ -136,8 +168,26 @@ class MapAttributionDelegateImplTest {
       "Title mapbox should match", "© Mapbox", attributions.first().title
     )
 
+    mapAttributionDelegate.extraAttributions = listOf(Attribution("Custom One", "https://www.custom.com"))
+    attributions = mapAttributionDelegate.parseAttributions(
+      context,
+      AttributionParserConfig(
+        withImproveMap = false,
+        withTelemetryAttribution = false,
+        withMapboxAttribution = false,
+        withMapboxPrivacyPolicy = false,
+        withMapboxGeofencingConsent = false,
+      )
+    )
+
+    assertEquals(2, attributions.size)
+    assertEquals("https://www.custom.com", attributions.last().url)
+    assertEquals("Custom One", attributions.last().title)
+
+    mapAttributionDelegate.extraAttributions = emptyList()
     attributions = mapAttributionDelegate.parseAttributions(context, AttributionParserConfig())
-    assertEquals(5, attributions.size)
+    println(attributions)
+    assertEquals(6, attributions.size)
     var counter = 0
     for ((title, url) in attributions) {
       when (counter) {
@@ -179,6 +229,16 @@ class MapAttributionDelegateImplTest {
           )
         }
         4 -> {
+          assertEquals(
+            "Geofencing consent URL should match", Attribution.GEOFENCING_URL_MARKER,
+            url
+          )
+          assertEquals(
+            "Geofencing consent title should match", Attribution.GEOFENCING,
+            title
+          )
+        }
+        5 -> {
           assertEquals(
             "Telemetry URL should match", "https://www.mapbox.com/legal/privacy#product-privacy-policy/",
             url
