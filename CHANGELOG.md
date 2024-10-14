@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.8.0-beta.1 October 14, 2024
 ## Features ✨ and improvements 🏁
 * Introduce `Style.STANDARD_EXPERIMENTAL` style supporting featuresets and map interactions. **Important: this style should not be used in production as the style definition on backend is a subject to change after v11.8.0 stable release!**
 * Introduce fully typed map click and long click interactions working with `Style.STANDARD_EXPERIMENTAL`: `standardPoi`, `standardPlaceLabels`, `standardBuildings`.
@@ -40,6 +42,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.8.0-beta.1 and common to v24.8.0-beta.1.
+
 
 # 11.7.1 October 10, 2024
 ## Bug fixes 🐞
