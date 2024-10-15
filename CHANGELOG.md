@@ -3,6 +3,10 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+# 11.8.0-rc.1
+## Bug fixes 🐞
+* Fix an Android 12 specific bug where location puck custom animator options lambda without explicit `ValueAnimator.duration` resulted in `duration = 0`.
+* Fix rare `android.content.res.Resources$NotFoundException` happening when creating a `MapView`.
 
 # 11.8.0-beta.1 October 14, 2024
 ## Features ✨ and improvements 🏁
@@ -15,12 +19,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Overscale composited tile components in offline.
 * Skip rendering landmarks when the camera is inside them.
 * Introduce experimental Geofencing API. Implementation example: [GeofencingActivity.kt](app/src/main/java/com/mapbox/maps/testapp/examples/geofence/GeofencingActivity.kt)
+* Introduce experimental `MapView.attribution.getMapAttributionDelegate().extraAttributions` to add custom attributions to the attribution dialog.
 * [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
 * [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.
 * [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
 * [compose] Introduce `<AnnotationType>InteractionsState.isDraggable` / `<AnnotationType>GroupInteractionsState.isDraggable` API for all annotation types allowing to drag annotations. Callbacks `onDragStarted()`, `onDragged()`,`onDragFinished()` are added as well.
 * [compose] Introduce experimental `Attribution(..., geofencingDialog)` compose function to customize Geofencing consent dialog.
-* Introduce experimental `MapView.attribution..getMapAttributionDelegate().extraAttributions` to add custom attributions to the attribution dialog.
 
 ## Bug fixes 🐞
 * Improve zooming performance on dynamic Standard terrain and optimize terrain re-rendering performance on e.g routeline `line-trim-offset` change.

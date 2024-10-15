@@ -42,6 +42,9 @@ internal abstract class PuckAnimator<T>(
     duration = LocationComponentConstants.DEFAULT_INTERVAL_MILLIS
     interpolator = DEFAULT_INTERPOLATOR
     userConfiguredAnimator = clone()
+    // workaround for bug in Android 12 described in
+    // https://github.com/mapbox/mapbox-maps-android/issues/1446
+    userConfiguredAnimator.duration = duration
   }
 
   /**
