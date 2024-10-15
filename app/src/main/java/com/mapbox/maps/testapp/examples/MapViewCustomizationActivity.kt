@@ -27,6 +27,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    val initialTileStore = MapboxOptions.mapsOptions.tileStore
+    val initialTileStoreUsageMode = MapboxOptions.mapsOptions.tileStoreUsageMode
     // Set tile store and tile store usage mode so that all MapViews created from now on will apply
     // these settings.
     MapboxOptions.mapsOptions.tileStore = tileStore
@@ -40,6 +42,10 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     // But you can also add your style to the map layout with xml attribute `app:mapbox_styleUri="mapbox://styles/mapbox/dark-v11"`
     binding.mapView.mapboxMap.loadStyle(Style.DARK)
     configureMapViewFromCode()
+
+    // Reset to original state
+    MapboxOptions.mapsOptions.tileStore = initialTileStore
+    MapboxOptions.mapsOptions.tileStoreUsageMode = initialTileStoreUsageMode
   }
 
   private fun configureMapViewFromCode() {
