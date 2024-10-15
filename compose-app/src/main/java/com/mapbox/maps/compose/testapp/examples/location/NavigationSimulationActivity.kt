@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -38,7 +37,6 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
-import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue
@@ -260,8 +258,6 @@ public class NavigationSimulationActivity : ComponentActivity() {
                 }
               }
             )
-            lineTrimColor = ColorValue(Color(6, 1, 255, 51))
-            lineTrimFadeRange = DoubleRangeValue(0.0, 0.0001)
           }
           LineLayer(
             sourceState = geoJsonSource

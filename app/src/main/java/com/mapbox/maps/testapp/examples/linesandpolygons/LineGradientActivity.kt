@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
@@ -19,6 +20,7 @@ import com.mapbox.maps.testapp.databinding.ActivityLineGradientBinding
 
 class LineGradientActivity : AppCompatActivity() {
 
+  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityLineGradientBinding.inflate(layoutInflater)
@@ -29,7 +31,11 @@ class LineGradientActivity : AppCompatActivity() {
       binding.trimOffsetButton.setOnClickListener {
         val lineLayer = style.getLayerAs<LineLayer>(LAYER_ID)
         val lastTrimPosition = lineLayer?.lineTrimOffset?.last() ?: 0.0
-        lineLayer?.lineTrimOffset(listOf(0.0, (lastTrimPosition + 0.05).coerceAtMost(1.0)))
+        lineLayer?.let { layer ->
+          layer.lineTrimOffset(listOf(0.0, (lastTrimPosition + 0.05).coerceAtMost(1.0)))
+          layer.lineTrimColor("rgba(6, 1, 255, 0.2)")
+          layer.lineTrimFadeRange(listOf(0.0, 0.0001))
+        }
       }
     }
   }
