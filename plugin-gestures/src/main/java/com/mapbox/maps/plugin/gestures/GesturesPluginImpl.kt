@@ -19,7 +19,6 @@ import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.android.gestures.MultiFingerTapGestureDetector
 import com.mapbox.android.gestures.RotateGestureDetector
 import com.mapbox.android.gestures.ShoveGestureDetector
-import com.mapbox.android.gestures.StandardGestureDetector
 import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraOptions
@@ -445,20 +444,21 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   /**
    * Standard gesture listener, receives callbacks for gestures detected by AndroidGesturesManager.
    */
-  private inner class StandardGestureListener internal constructor(private val doubleTapMovementThreshold: Float) :
-    StandardGestureDetector.SimpleStandardOnGestureListener() {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal inner class StandardGestureListener internal constructor(private val doubleTapMovementThreshold: Float) :
+    StandardGestureListenerShim() {
 
     /**
      * Called when an on down gesture was detected.
      */
-    override fun onDown(motionEvent: MotionEvent): Boolean {
+    override fun onDown(motionEvent: MotionEvent?): Boolean {
       return true
     }
 
     /**
      * Called when an on single tap up gesture was detected.
      */
-    override fun onSingleTapUp(motionEvent: MotionEvent): Boolean {
+    override fun onSingleTapUp(motionEvent: MotionEvent?): Boolean {
       return handleSingleTapUpEvent()
     }
 
@@ -466,9 +466,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
      * Called when an on single tap up confirmed gesture was detected.
      */
     @OptIn(MapboxExperimental::class)
-    override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
-      // this callback comes from the Java library and could still be NULL
-      @Suppress("SENSELESS_COMPARISON")
+    override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
       if (motionEvent == null) {
         return false
       }
@@ -486,9 +484,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     /**
      * Called when an on double tap gesture was detected.
      */
-    override fun onDoubleTapEvent(motionEvent: MotionEvent): Boolean {
-      // this callback comes from the Java library and could still be NULL
-      @Suppress("SENSELESS_COMPARISON")
+    override fun onDoubleTapEvent(motionEvent: MotionEvent?): Boolean {
       if (motionEvent == null) {
         return false
       }
@@ -501,9 +497,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
      * Called when an on long press gesture was detected.
      */
     @OptIn(MapboxExperimental::class)
-    override fun onLongPress(motionEvent: MotionEvent) {
-      // this callback comes from the Java library and could still be NULL
-      @Suppress("SENSELESS_COMPARISON")
+    override fun onLongPress(motionEvent: MotionEvent?) {
       if (motionEvent == null) {
         return
       }
@@ -519,13 +513,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
      * Called when an on fling gesture was detected.
      */
     override fun onFling(
-      e1: MotionEvent,
-      e2: MotionEvent,
+      e1: MotionEvent?,
+      e2: MotionEvent?,
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      // this callback comes from the Java library and could still be NULL
-      @Suppress("SENSELESS_COMPARISON")
       if (e1 == null || e2 == null) {
         return false
       }
