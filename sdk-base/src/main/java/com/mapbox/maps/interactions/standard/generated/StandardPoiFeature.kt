@@ -3,6 +3,8 @@
 package com.mapbox.maps.interactions.standard.generated
 
 import com.mapbox.geojson.Feature
+import com.mapbox.geojson.Geometry
+import com.mapbox.geojson.Point
 import com.mapbox.maps.FeaturesetFeatureId
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeaturesetFeature
@@ -65,4 +67,9 @@ class StandardPoiFeature(
    * A short identifier code of the airport. Expected to be null for non-airport points of interest
    */
   val airportRef get(): String? = originalFeature.getStringProperty("airport_ref")
+
+  /**
+   * Mandatory feature [Geometry] represented as a [Point].
+   */
+  override val geometry: Point get() = super.geometry as Point
 }

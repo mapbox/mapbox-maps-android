@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix an Android 12 specific bug where location puck custom animator options lambda without explicit `ValueAnimator.duration` resulted in `duration = 0`.
 * Fix rare `android.content.res.Resources$NotFoundException` happening when creating a `MapView`.
 * Fix a rare `NullPointerException` happening when fling gesture event is recognized.
+* Fix `StandardPoiFeature.geometry` to have a concrete `Point` type instead of `Geometry` interface.
 
 # 11.8.0-beta.1 October 14, 2024
 ## Features ✨ and improvements 🏁

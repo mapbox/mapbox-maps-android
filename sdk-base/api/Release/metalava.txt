@@ -947,6 +947,7 @@ package com.mapbox.maps.interactions.standard.generated {
     ctor public StandardPoiFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardPoiState state);
     method public String? getAirportRef();
     method public String? getClass();
+    method public com.mapbox.geojson.Point getGeometry();
     method public String? getGroup();
     method public String? getMaki();
     method public String? getName();
@@ -955,6 +956,7 @@ package com.mapbox.maps.interactions.standard.generated {
     method public String? getTransitStopType();
     property public final String? airportRef;
     property public final String? class;
+    property public com.mapbox.geojson.Point geometry;
     property public final String? group;
     property public final String? maki;
     property public final String? name;

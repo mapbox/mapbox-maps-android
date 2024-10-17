@@ -950,6 +950,8 @@ public final class com/mapbox/maps/interactions/standard/generated/StandardPoiFe
 	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState;)V
 	public final fun getAirportRef ()Ljava/lang/String;
 	public final fun getClass ()Ljava/lang/String;
+	public synthetic fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public fun getGeometry ()Lcom/mapbox/geojson/Point;
 	public final fun getGroup ()Ljava/lang/String;
 	public final fun getMaki ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
