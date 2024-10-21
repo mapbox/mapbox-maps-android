@@ -14,7 +14,7 @@ internal object MapboxDependencies {
     artifact = "android-core",
     versionRef = "mapboxGlNative",
     sourceProject = ":maps-core",
-    snapshotArtifact = "android-core-internal",
+    snapshotArtifact = "android-core", // use "android-core-internal" for snapshots older than TODO, ref: https://github.com/mapbox/mapbox-maps-android/pull/2499
     supportsNdkVariant = true
   )
 }

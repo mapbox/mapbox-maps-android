@@ -34,7 +34,7 @@ japicmp = "0.4.1"
 # Dependencies
 
 # GlNative and Common are used by the convention plugin
-mapboxGlNative = "11.8.0-beta.1"
+mapboxGlNative = "11.8.0-beta.1" #change GlNative.snapshotArtifact if you use snapshots older than TODO, ref: https://github.com/mapbox/mapbox-maps-android/pull/2499
 mapboxCommon = "24.8.0-beta.1"
 
 mapboxBase = "0.11.0"
