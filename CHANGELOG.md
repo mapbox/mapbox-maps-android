@@ -8,13 +8,18 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix an Android 12 specific bug where location puck custom animator options lambda without explicit `ValueAnimator.duration` resulted in `duration = 0`.
 * Fix rare `android.content.res.Resources$NotFoundException` happening when creating a `MapView`.
 * Fix a rare `NullPointerException` happening when fling gesture event is recognized.
-* Fix `StandardPoiFeature.geometry` to be have a concrete `Point` type instead of `Geometry` interface.
+* Fix `StandardPoiFeature.geometry` to have a concrete `Point` type instead of `Geometry` interface.
+* Fix a bug in `GeoJsonSource.autoMaxZoom` leading to rendering artifacts with long dotted line layers.
+* Fix a crash if Cronet failed to init on device by fallbacking to OkHttp.
+
+## Dependencies
+* Update gl-native to v11.8.0-rc.1 and common to v24.8.0-rc.1.
 
 # 11.8.0-beta.1 October 14, 2024
 ## Features ✨ and improvements 🏁
 * Introduce `Style.STANDARD_EXPERIMENTAL` style supporting featuresets and map interactions. **Important: this style should not be used in production as the style definition on backend is a subject to change after v11.8.0 stable release!**
 * Introduce fully typed map click and long click interactions working with `Style.STANDARD_EXPERIMENTAL`: `standardPoi`, `standardPlaceLabels`, `standardBuildings`.
-* Use [Cronet](https://developer.android.com/develop/connectivity/cronet) as the default network stack. If Cronet is not available, network stack defaults to [OkHttp](https://square.github.io/okhttp/) used in previous versions.
+* Use [Cronet](https://developer.android.com/develop/connectivity/cronet) as the default network stack. If Cronet is not available, network stack defaults to [OkHttp](https://square.github.io/okhttp/) used in previous versions. More information available [here](https://docs.mapbox.com/android/maps/guides/install/#managing-google-play).
 * Introduce `OnClusterClickListener` and `OnClusterLongClickListener` for `CircleAnnotationManager` and `PointAnnotationManager`. These callbacks receive the clicked cluster represented by a `ClusterFeature`.
 * Introduce experimental `getStyleGlyphURL` / `setStyleGlyphURL` functions for `MapboxMap` and `Style`.
 * Make `fill-extrusion-emissive-strength` property data-driven.
@@ -49,7 +54,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.8.0-beta.1 and common to v24.8.0-beta.1.
-
 
 # 11.7.1 October 10, 2024
 ## Bug fixes 🐞
