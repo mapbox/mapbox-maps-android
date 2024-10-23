@@ -475,6 +475,7 @@ open class Snapshotter {
         .withImproveMap(false)
         .withMapboxPrivacyPolicy(false)
         .withTelemetryAttribution(false)
+        .withMapboxGeofencingConsent(false)
         .build()
       return attributionParser.createAttributionString(shortText)
     }
