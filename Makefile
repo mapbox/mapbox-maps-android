@@ -30,7 +30,7 @@ clean:
 
 .PHONY: codecoverage
 codecoverage:
-	./gradlew sdk:jacocoTestDebugUnitTestReport && google-chrome sdk/build/jacoco/jacocoHtml/index.html
+	./gradlew maps-sdk:jacocoTestDebugUnitTestReport && google-chrome maps-sdk/build/jacoco/jacocoHtml/index.html
 
 .PHONY: unit-tests
 unit-tests:
@@ -38,7 +38,7 @@ unit-tests:
 
 .PHONY: instrumentation-tests
 instrumentation-tests:
-	./gradlew sdk:connectedDebugAndroidTest && ./gradlew app:connectedDebugAndroidTest
+	./gradlew maps-sdk:connectedDebugAndroidTest && ./gradlew app:connectedDebugAndroidTest
 
 .PHONY: instrumentation-clean
 instrumentation-clean:

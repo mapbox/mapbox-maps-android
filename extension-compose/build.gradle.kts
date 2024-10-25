@@ -50,7 +50,7 @@ mapboxLibrary {
 
 dependencies {
   dependencies {
-    compileOnly(project(":sdk"))
+    compileOnly(project(":maps-sdk"))
     implementation(platform(libs.compose.bom))
     implementation(libs.mapbox.javaGeoJSON)
     implementation(libs.compose.ui)
@@ -67,11 +67,11 @@ dependencies {
     androidTestImplementation(libs.androidx.testJUnit)
     androidTestImplementation(libs.androidx.espresso)
     androidTestImplementation(libs.androidx.uiAutomator)
-    androidTestImplementation(project(":sdk"))
+    androidTestImplementation(project(":maps-sdk"))
     androidTestImplementation(libs.compose.uiTest)
 
     testImplementation(libs.bundles.base.dependenciesTests)
-    testImplementation(project(":sdk"))
+    testImplementation(project(":maps-sdk"))
     testImplementation(libs.junit)
 
     detektPlugins(libs.detektFormatting)

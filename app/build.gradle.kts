@@ -7,7 +7,6 @@ apply {
   from("$rootDir/gradle/script-git-version.gradle")
   from("$rootDir/gradle/play-publisher.gradle")
 }
-val buildFromSource: String by project
 
 android {
   compileSdk = libs.versions.exampleCompileSdkVersion.get().toInt()
@@ -84,16 +83,10 @@ android {
       path = file("src/main/cpp/CMakeLists.txt")
     }
   }
-
-  packagingOptions {
-    if (buildFromSource.toBoolean()) {
-      jniLibs.pickFirsts.add("**/libc++_shared.so")
-    }
-  }
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  implementation(project(":maps-sdk"))
   implementation(libs.kotlin)
   implementation(libs.mapbox.javaTurf)
   implementation(libs.mapbox.javaGeoJSON)

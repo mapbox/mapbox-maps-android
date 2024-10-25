@@ -149,8 +149,8 @@ This module enables us to independently develop other modules against interfaces
 on any concrete implementation. By having this strict decoupling, we makes sure we think well about
 the contracts a module has with other and what public API it exposes to consumers.
 
-#### sdk
-The sdk module is the main module developers integrate in their project. It contains the most
+#### maps-sdk
+The maps-sdk module is the main module developers integrate in their project. It contains the most
 important building blocks of the product that couldn't have been decoupled from the underlying
 c++ implementation at this time.
 
@@ -247,7 +247,7 @@ The CircleCI bot will wait for the Firebase test to finish, collect the results,
 publish them as build artifact and fail/succeed accordingly.
 
 Instrumentation tests are divided across 3 modules:
- - sdk: contains instrumentation tests that validate C++ integration of the SDK
+ - maps-sdk: contains instrumentation tests that validate C++ integration of the SDK
  - app: contains instrumentation tests that validate specific feature integrations
  - extension-style-app: contains instrumentation tests for validating the style integration
 
