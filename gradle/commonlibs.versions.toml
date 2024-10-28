@@ -1,0 +1,7 @@
+[versions]
+
+# Mapbox NDK Gradle Plugin will read these versions to figure out what NDK versions are supported in
+# this codebase.
+defaultNdkMajor = "23"
+ndkMajor23 = "23.2.8568313"
+ndkMajor27 = "27.0.12077973"

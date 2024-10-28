@@ -1,6 +1,6 @@
 plugins {
   id("com.mapbox.gradle.application")
-  id("com.mapbox.gradle.plugins.common.ndk")
+  id("com.mapbox.gradle.plugins.ndk")
 }
 
 apply {

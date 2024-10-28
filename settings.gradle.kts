@@ -5,7 +5,14 @@ pluginManagement {
     mavenCentral()
   }
   includeBuild("mapbox-convention-plugin")
-  includeBuild("mapbox-dummy-plugins")
+}
+
+dependencyResolutionManagement {
+  versionCatalogs {
+    create("commonLibs") {
+      from(files("gradle/commonlibs.versions.toml"))
+    }
+  }
 }
 
 include(
