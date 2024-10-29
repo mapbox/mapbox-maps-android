@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+# 11.8.0
+## Bug fixes 🐞
+* Disable false-positive lint error "Incorrect number of expressions".
 
 # 11.8.0-rc.1 October 23, 2024
 ## Bug fixes 🐞

@@ -2,7 +2,6 @@ package com.mapbox.maps.lint.style
 
 import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.client.api.Vendor
-import com.mapbox.maps.lint.style.expressions.IllegalNumberOfArgumentsDetector
 import com.mapbox.maps.lint.style.expressions.UnusedLiteralDetector
 
 class StyleIssueRegistry : IssueRegistry() {
@@ -10,7 +9,8 @@ class StyleIssueRegistry : IssueRegistry() {
   override val issues = listOf(
     // Expression issues
     UnusedLiteralDetector.ISSUE,
-    IllegalNumberOfArgumentsDetector.ISSUE,
+    // TODO revisit this later; perhaps when we bump to AGP 8 and / or bump some related deps
+//    IllegalNumberOfArgumentsDetector.ISSUE,
     // Style DSL issues
     UnusedStyleDslDetector.ISSUE,
   )
