@@ -1065,4 +1065,21 @@ class MapboxRenderThreadTest {
       mapboxRenderer.destroyRenderer()
     }
   }
+
+  @Test
+  fun noLogSpamDuringPauseTest() {
+    initRenderThread()
+    provideValidSurface()
+    mapboxRenderThread.pause()
+    // easiest way to simulate that Android surface is not valid
+    mapboxRenderThread.surface = null
+    mapboxRenderThread.eglContextMadeCurrent = false
+    idleHandler()
+    // make sure we do not print any logI
+    every { logI(any(), any()) } answers { throw RuntimeException() }
+    // simulate engine sending request render while we are paused
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
+  }
 }

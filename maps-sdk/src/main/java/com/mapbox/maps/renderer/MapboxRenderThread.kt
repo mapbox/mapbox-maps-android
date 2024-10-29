@@ -64,7 +64,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
-  private var surface: Surface? = null
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglSurface: EGLSurface
   private var width: Int = 0
@@ -663,7 +664,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           logI(TAG, "Setting up render thread failed, check logs above.")
         }
       }
-    } else {
+    } else if (!paused) {
       logI(TAG, "renderThreadPrepared=false and Android surface is not valid (isValid=${surface?.isValid}). Waiting for new one.")
     }
   }
