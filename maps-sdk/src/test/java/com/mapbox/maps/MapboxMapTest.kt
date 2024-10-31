@@ -1367,7 +1367,7 @@ class MapboxMapTest {
     val coreFeaturesetDescriptor = mockk<FeaturesetDescriptor>()
     every { descriptor.toFeaturesetDescriptor() } returns coreFeaturesetDescriptor
     val filter = Value.nullValue()
-    mapboxMap.queryRenderedFeatures(geometry, descriptor, filter) { }
+    mapboxMap.queryRenderedFeatures(descriptor, geometry, filter) { }
     verify {
       nativeMap.queryRenderedFeatures(
         geometry,
@@ -1381,6 +1381,33 @@ class MapboxMapTest {
         /* callback */ any()
       )
     }
+  }
+
+  @Test
+  fun queryRenderedFeaturesNoGeometry() {
+    val descriptor = mockk<TypedFeaturesetDescriptor<FeatureState, *>>()
+    val coreFeaturesetDescriptor = mockk<FeaturesetDescriptor>()
+    every { descriptor.toFeaturesetDescriptor() } returns coreFeaturesetDescriptor
+    every { nativeMap.getSize() } returns Size(10f, 20f)
+    mapboxMap.queryRenderedFeatures(descriptor) { }
+    val geometrySlot = slot<RenderedQueryGeometry>()
+    verify {
+      nativeMap.queryRenderedFeatures(
+        capture(geometrySlot),
+        listOf(
+          FeaturesetQueryTarget(
+            coreFeaturesetDescriptor,
+            null,
+            null,
+          )
+        ),
+        /* callback */ any()
+      )
+    }
+    assertEquals(0.0, geometrySlot.captured.screenBox.min.x, 0.0001)
+    assertEquals(0.0, geometrySlot.captured.screenBox.min.y, 0.0001)
+    assertEquals(10.0, geometrySlot.captured.screenBox.max.x, 0.0001)
+    assertEquals(20.0, geometrySlot.captured.screenBox.max.y, 0.0001)
   }
 
   @OptIn(MapboxDelicateApi::class)

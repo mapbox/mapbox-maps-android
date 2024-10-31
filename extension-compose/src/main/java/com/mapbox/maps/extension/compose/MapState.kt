@@ -27,6 +27,7 @@ import com.mapbox.maps.RenderFrameStarted
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ResourceRequest
+import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.SourceAdded
 import com.mapbox.maps.SourceDataLoaded
@@ -238,9 +239,10 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
     mapboxMapFlow.filterNotNull().first().queryRenderedFeatures(geometry, options)
 
   /**
-   * Queries the map for given [descriptor] and returns typed [FeaturesetFeature] list in the callback.
+   * Queries the map for given [descriptor] and returns typed [FeaturesetFeature] list of rendered features.
    *
-   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
+   * @param geometry The optional geometry ([ScreenCoordinate], [ScreenBox] or list of [ScreenCoordinate]s) to query for rendered features.
+   *  Passing NULL is equivalent to passing a bounding box encompassing the entire map viewport.
    * @param descriptor [TypedFeaturesetDescriptor] object representing either a featureset or a single layer.
    * @param filter optional global filter.
    *
@@ -249,8 +251,8 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   @MapboxExperimental
   @JvmOverloads
   public suspend fun <FF : FeaturesetFeature<*>> queryRenderedFeatures(
-    geometry: RenderedQueryGeometry,
     descriptor: TypedFeaturesetDescriptor<*, FF>,
+    geometry: RenderedQueryGeometry? = null,
     filter: Expression? = null,
   ): List<FF> {
     mapboxMapFlow.filterNotNull().first().apply {
