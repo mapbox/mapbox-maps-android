@@ -2623,8 +2623,9 @@ class MapboxMap :
   /**
    * Queries the map for given [descriptor] and returns typed [FeaturesetFeature] list in the callback.
    *
-   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
    * @param descriptor [TypedFeaturesetDescriptor] object representing either a featureset or a single layer.
+   * @param geometry The optional geometry ([ScreenCoordinate], [ScreenBox] or list of [ScreenCoordinate]s) to query for rendered features.
+   *  Passing NULL is equivalent to passing a bounding box encompassing the entire map viewport.
    * @param filter optional global filter.
    * @param callback The [QueryRenderedFeaturesetFeaturesCallback] called when the query operation completes.
    *
@@ -2633,14 +2634,19 @@ class MapboxMap :
   @MapboxExperimental
   @JvmOverloads
   fun <FF : FeaturesetFeature<*>> queryRenderedFeatures(
-    geometry: RenderedQueryGeometry,
     descriptor: TypedFeaturesetDescriptor<*, FF>,
+    geometry: RenderedQueryGeometry? = null,
     filter: Value? = null,
     callback: QueryRenderedFeaturesetFeaturesCallback<FF>,
   ): Cancelable {
     checkNativeMap("queryRenderedFeatures")
     return nativeMap.queryRenderedFeatures(
-      geometry,
+      geometry ?: RenderedQueryGeometry.valueOf(
+        ScreenBox(
+          ScreenCoordinate(0.0, 0.0),
+          ScreenCoordinate(getSize().width.toDouble(), getSize().height.toDouble())
+        )
+      ),
       listOf(
         FeaturesetQueryTarget(
           descriptor.toFeaturesetDescriptor(),

@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 # 11.8.0
+## Breaking changes ⚠️
+* Change the signature of experimental `MapboxMap.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Value?, QueryRenderedFeaturesetFeaturesCallback)` to `MapboxMap.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Value?, QueryRenderedFeaturesetFeaturesCallback)`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
+* [compose] Change the signature of experimental `MapState.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Expression?): List` to `MapState.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Expression?): List`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
+
 ## Bug fixes 🐞
 * Disable false-positive lint error "Incorrect number of expressions".
 
