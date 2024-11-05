@@ -14,6 +14,17 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Disable false-positive lint error "Incorrect number of expressions".
 
+
+# 11.7.2
+## Bug fixes 🐞
+* Fix terrain related snapshotter crash.
+* Handle empty payloads for offline resources.
+* Do not modify file description structure when reading resource files.
+
+## Dependencies
+* Update gl-native to v11.7.2 and common to v24.7.2.
+
+
 # 11.8.0-rc.1 October 23, 2024
 ## Bug fixes 🐞
 * Fix an Android 12 specific bug where location puck custom animator options lambda without explicit `ValueAnimator.duration` resulted in `duration = 0`.
