@@ -143,6 +143,8 @@ public final class com/mapbox/maps/extension/compose/animation/viewport/MapViewp
 	public fun <init> ()V
 	public fun <init> (Lcom/mapbox/maps/CameraState;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/CameraState;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun cameraForCoordinates$default (Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun easeTo (Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
 	public static synthetic fun easeTo$default (Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
 	public final fun flyTo (Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V

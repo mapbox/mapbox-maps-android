@@ -19,6 +19,7 @@ import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -40,6 +41,8 @@ import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.toCameraOptions
 import kotlinx.coroutines.channels.Channel
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * Create and [rememberSaveable] a [MapViewportState] using [MapViewportState.Saver].
@@ -178,6 +181,38 @@ public class MapViewportState(
   @UiThread
   public fun setCameraOptions(block: CameraOptions.Builder.() -> Unit) {
     setCameraOptions(cameraOptions(block))
+  }
+
+  /**
+   * Convenience method that returns the [CameraOptions] object for given parameters.
+   *
+   * @param coordinates The `coordinates` representing the bounds of the camera.
+   * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
+   * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
+   *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
+   * @param maxZoom The maximum zoom level allowed in the returned camera options.
+   * @param offset The center of the given bounds relative to map center in pixels.
+   *
+   * @return The [CameraOptions] object representing the provided parameters.
+   */
+  @UiThread
+  public suspend fun cameraForCoordinates(
+    coordinates: List<Point>,
+    camera: CameraOptions = cameraOptions { },
+    coordinatesPadding: EdgeInsets? = null,
+    maxZoom: Double? = null,
+    offset: ScreenCoordinate? = null,
+  ): CameraOptions = suspendCoroutine { continuation ->
+    viewportActionChannel.trySend { mapView ->
+      mapView.mapboxMap.cameraForCoordinates(
+        coordinates,
+        camera,
+        coordinatesPadding,
+        maxZoom,
+        offset,
+        continuation::resume
+      )
+    }
   }
 
   /**

@@ -126,6 +126,9 @@ package com.mapbox.maps.extension.compose.animation.viewport {
 
   @androidx.compose.runtime.Stable public final class MapViewportState {
     ctor public MapViewportState(com.mapbox.maps.CameraState initialCameraState = com.mapbox.maps.extension.compose.animation.viewport.MapViewportState.INIT_CAMERA_STATE);
+    method @UiThread public suspend Object? cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera = cameraOptions({ 
+
+}), com.mapbox.maps.EdgeInsets? coordinatesPadding = null, Double? maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null, kotlin.coroutines.Continuation<? super com.mapbox.maps.CameraOptions> = null);
     method public void easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     method public void flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     method public com.mapbox.maps.CameraState? getCameraState();

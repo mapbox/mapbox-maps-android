@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* [compose] Expose `MapViewportState.cameraForCoordinates` method.
+
 # 11.8.0
 ## Breaking changes ⚠️
 * Change the signature of experimental `MapboxMap.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Value?, QueryRenderedFeaturesetFeaturesCallback)` to `MapboxMap.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Value?, QueryRenderedFeaturesetFeaturesCallback)`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.

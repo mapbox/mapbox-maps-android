@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -53,6 +55,30 @@ public class InteractionsActivity : ComponentActivity() {
       }
 
       val mapState = rememberMapState()
+      val mapViewportState = rememberMapViewportState {
+        setCameraOptions(
+          cameraOptions {
+            center(Point.fromLngLat(-73.99, 40.72))
+            zoom(11.0)
+            pitch(45.0)
+          }
+        )
+      }
+
+      LaunchedEffect(selectedPriceLabel) {
+        selectedPriceLabel?.let {
+          val camera = mapViewportState.cameraForCoordinates(
+            listOf(it.geometry as Point),
+            cameraOptions {
+              padding(
+                EdgeInsets(100.0, 100.0, 100.0, 100.0)
+              )
+            },
+            maxZoom = 11.0
+          )
+          mapViewportState.flyTo(camera)
+        }
+      }
 
       MapboxMapComposeTheme {
         ExampleScaffold {
@@ -60,15 +86,7 @@ public class InteractionsActivity : ComponentActivity() {
             MapboxMap(
               modifier = Modifier.fillMaxSize(),
               mapState = mapState,
-              mapViewportState = rememberMapViewportState {
-                setCameraOptions(
-                  cameraOptions {
-                    center(Point.fromLngLat(-73.99, 40.72))
-                    zoom(11.0)
-                    pitch(45.0)
-                  }
-                )
-              },
+              mapViewportState = mapViewportState,
               style = {
                 GenericStyle(
                   style = "asset://fragment-realestate-NY.json",
@@ -102,12 +120,12 @@ public class InteractionsActivity : ComponentActivity() {
             selectedPriceLabel?.let { actualSelectedPriceLabel ->
               Text(
                 modifier = Modifier
-                    .wrapContentWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(40.dp)
-                    .border(2.dp, MaterialTheme.colors.secondary, CircleShape)
-                    .background(MaterialTheme.colors.primary, CircleShape)
-                    .padding(10.dp),
+                  .wrapContentWidth()
+                  .align(Alignment.BottomCenter)
+                  .padding(40.dp)
+                  .border(2.dp, MaterialTheme.colors.secondary, CircleShape)
+                  .background(MaterialTheme.colors.primary, CircleShape)
+                  .padding(10.dp),
                 textAlign = TextAlign.Center,
                 color = Color.White,
                 text = "Feature with id: ${actualSelectedPriceLabel.id!!}; active: $isActive",
