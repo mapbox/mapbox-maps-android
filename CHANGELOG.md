@@ -15,7 +15,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Disable false-positive lint error "Incorrect number of expressions".
 
 
-# 11.7.2
+
+# 11.7.2 November 05, 2024
 ## Bug fixes 🐞
 * Fix terrain related snapshotter crash.
 * Handle empty payloads for offline resources.
@@ -23,6 +24,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.7.2 and common to v24.7.2.
+
 
 
 # 11.8.0-rc.1 October 23, 2024
