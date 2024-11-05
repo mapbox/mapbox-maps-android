@@ -5,7 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 
-# 11.7.2
+
+# 11.7.2 November 05, 2024
 ## Bug fixes 🐞
 * Fix terrain related snapshotter crash.
 * Handle empty payloads for offline resources.
@@ -13,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.7.2 and common to v24.7.2.
+
 
 
 # 11.7.1 October 10, 2024
