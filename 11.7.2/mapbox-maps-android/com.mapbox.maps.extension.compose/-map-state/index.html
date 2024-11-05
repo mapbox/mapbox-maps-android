@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MapState</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.compose/MapState///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.compose</a><span class="delimiter">/</span><span class="current">MapState</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Map</span><wbr></wbr><span><span>State</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Stable.html"><span class="token annotation builtin">Stable</span></a></div></div><span class="token keyword">class </span><a href="index.html">MapState</a></div><p class="paragraph">The <a href="index.html">MapState</a> that can be hoisted to observe map events, query rendered features and control gestures settings.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-271274241%2FConstructors%2F540127926" anchor-label="MapState" id="-271274241%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-map-state.html"><span>Map</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-271274241%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-map-state.html"><span class="token function">MapState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Constructor for the <a href="index.html">MapState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="-52335219%2FClasslikes%2F540127926" anchor-label="Companion" id="-52335219%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-52335219%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div><div class="brief "><p class="paragraph">Public companion object of <a href="index.html">MapState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="828028445%2FClasslikes%2F540127926" anchor-label="Holder" id="828028445%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-holder/index.html"><span><span>Holder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="828028445%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-holder/index.html">Holder</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>savedProperties<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><div class="brief "><p class="paragraph"><a href="index.html">MapState</a> Holder class to be used within <a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/saveable/Saver.html">Saver</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="520892622%2FFunctions%2F540127926" anchor-label="genericEvents" id="520892622%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="generic-events.html"><span>generic</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="520892622%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="generic-events.html"><span class="token function">genericEvents</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">eventName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-generic-event/index.html">GenericEvent</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-generic-event/index.html">GenericEvent</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-generic-event.html">MapboxMap.subscribeGenericEvent</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1056483106%2FFunctions%2F540127926" anchor-label="getFeatureState" id="-1056483106%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-feature-state.html"><span>get</span><wbr></wbr><span>Feature</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1056483106%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="get-feature-state.html">FS</a><span class="token operator"> : </span><a href="../../com.mapbox.maps.interactions/-feature-state/index.html">FeatureState</a><span class="token operator">&gt; </span><a href="get-feature-state.html"><span class="token function">getFeatureState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">featuresetFeature<span class="token operator">: </span><a href="../../com.mapbox.maps.interactions/-featureset-feature/index.html">FeaturesetFeature</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="get-feature-state.html">FS</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-feature-state.html">FS</a></div><div class="brief "><p class="paragraph">Gets the state map of a feature from a featureset asynchronously.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1941434576%2FFunctions%2F540127926" anchor-label="pixelForCoordinate" id="1941434576%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="pixel-for-coordinate.html"><span>pixel</span><wbr></wbr><span>For</span><wbr></wbr><span><span>Coordinate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1941434576%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="pixel-for-coordinate.html"><span class="token function">pixelForCoordinate</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">coordinate<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.maps/-screen-coordinate/index.html">ScreenCoordinate</a></div><div class="brief "><p class="paragraph">Calculate a screen coordinate that corresponds to a geographical coordinate (i.e., longitude-latitude pair).</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1958266104%2FFunctions%2F540127926" anchor-label="queryRenderedFeatures" id="1958266104%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="query-rendered-features.html"><span>query</span><wbr></wbr><span>Rendered</span><wbr></wbr><span><span>Features</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1958266104%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="query-rendered-features.html"><span class="token function">queryRenderedFeatures</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">geometry<span class="token operator">: </span><a href="../../com.mapbox.maps/-rendered-query-geometry/index.html">RenderedQueryGeometry</a><span class="token punctuation">, </span></span><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps/-rendered-query-options/index.html">RenderedQueryOptions</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.bindgen/-expected/index.html">Expected</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-queried-rendered-feature/index.html">QueriedRenderedFeature</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Queries the map for rendered features.</p></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="query-rendered-features.html">FF</a><span class="token operator"> : </span><a href="../../com.mapbox.maps.interactions/-featureset-feature/index.html">FeaturesetFeature</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="query-rendered-features.html"><span class="token function">queryRenderedFeatures</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">geometry<span class="token operator">: </span><a href="../../com.mapbox.maps/-rendered-query-geometry/index.html">RenderedQueryGeometry</a><span class="token punctuation">, </span></span><span class="parameter ">descriptor<span class="token operator">: </span><a href="../../com.mapbox.maps.interactions/-typed-featureset-descriptor/index.html">TypedFeaturesetDescriptor</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="query-rendered-features.html">FF</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">filter<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="query-rendered-features.html">FF</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Queries the map for given <a href="query-rendered-features.html">descriptor</a> and returns typed <a href="../../com.mapbox.maps.interactions/-featureset-feature/index.html">FeaturesetFeature</a> list in the callback.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1757723237%2FFunctions%2F540127926" anchor-label="removeFeatureState" id="-1757723237%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-feature-state.html"><span>remove</span><wbr></wbr><span>Feature</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1757723237%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="remove-feature-state.html">FS</a><span class="token operator"> : </span><a href="../../com.mapbox.maps.interactions/-feature-state/index.html">FeatureState</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="remove-feature-state.html">FSK</a><span class="token operator"> : </span><a href="../../com.mapbox.maps.interactions/-feature-state-key/index.html">FeatureStateKey</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="remove-feature-state.html">FS</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="remove-feature-state.html"><span class="token function">removeFeatureState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">featuresetFeature<span class="token operator">: </span><a href="../../com.mapbox.maps.interactions/-featureset-feature/index.html">FeaturesetFeature</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="remove-feature-state.html">FS</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">stateKey<span class="token operator">: </span><a href="remove-feature-state.html">FSK</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.bindgen/-expected/index.html">Expected</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../com.mapbox.bindgen/-none/index.html">None</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Removes entries from a feature state based on <a href="remove-feature-state.html">featuresetFeature</a> coming from an interaction callback.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="535469124%2FFunctions%2F540127926" anchor-label="resetFeatureStates" id="535469124%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="reset-feature-states.html"><span>reset</span><wbr></wbr><span>Feature</span><wbr></wbr><span><span>States</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="535469124%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="reset-feature-states.html"><span class="token function">resetFeatureStates</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">descriptor<span class="token operator">: </span><a href="../../com.mapbox.maps.interactions/-typed-featureset-descriptor/index.html">TypedFeaturesetDescriptor</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.bindgen/-expected/index.html">Expected</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../com.mapbox.bindgen/-none/index.html">None</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Reset all the feature states within a style source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-128473466%2FFunctions%2F540127926" anchor-label="setFeatureState" id="-128473466%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="set-feature-state.html"><span>set</span><wbr></wbr><span>Feature</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-128473466%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="set-feature-state.html">FS</a><span class="token operator"> : </span><a href="../../com.mapbox.maps.interactions/-feature-state/index.html">FeatureState</a><span class="token operator">&gt; </span><a href="set-feature-state.html"><span class="token function">setFeatureState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">featuresetFeature<span class="token operator">: </span><a href="../../com.mapbox.maps.interactions/-featureset-feature/index.html">FeaturesetFeature</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="set-feature-state.html">FS</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">state<span class="token operator">: </span><a href="set-feature-state.html">FS</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.bindgen/-expected/index.html">Expected</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../com.mapbox.bindgen/-none/index.html">None</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Sets the state map for given <a href="set-feature-state.html">featuresetFeature</a> coming from an interaction callback asynchronously.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="1859030078%2FProperties%2F540127926" anchor-label="cameraChangedEvents" id="1859030078%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="camera-changed-events.html"><span>camera</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1859030078%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1859030078%2FProperties%2F540127926" anchor-label="cameraChangedEvents" id="1859030078%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="camera-changed-events.html">cameraChangedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-camera-changed/index.html">CameraChanged</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="1859030078%2FProperties%2F540127926" anchor-label="cameraChangedEvents" id="1859030078%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-camera-changed/index.html">CameraChanged</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-camera-changed.html">MapboxMap.subscribeCameraChanged</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="353318183%2FProperties%2F540127926" anchor-label="gesturesSettings" id="353318183%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="gestures-settings.html"><span>gestures</span><wbr></wbr><span><span>Settings</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="353318183%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="353318183%2FProperties%2F540127926" anchor-label="gesturesSettings" id="353318183%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="gestures-settings.html">gesturesSettings</a><span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures.generated/-gestures-settings/index.html">GesturesSettings</a></div><div class="brief "><a data-name="353318183%2FProperties%2F540127926" anchor-label="gesturesSettings" id="353318183%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Gesture configuration allows to control the user touch interaction.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1198182237%2FProperties%2F540127926" anchor-label="mapIdleEvents" id="1198182237%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="map-idle-events.html"><span>map</span><wbr></wbr><span>Idle</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1198182237%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1198182237%2FProperties%2F540127926" anchor-label="mapIdleEvents" id="1198182237%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="map-idle-events.html">mapIdleEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-map-idle/index.html">MapIdle</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="1198182237%2FProperties%2F540127926" anchor-label="mapIdleEvents" id="1198182237%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-map-idle/index.html">MapIdle</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-map-idle.html">MapboxMap.subscribeMapIdle</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-33224244%2FProperties%2F540127926" anchor-label="mapLoadedEvents" id="-33224244%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="map-loaded-events.html"><span>map</span><wbr></wbr><span>Loaded</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-33224244%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-33224244%2FProperties%2F540127926" anchor-label="mapLoadedEvents" id="-33224244%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="map-loaded-events.html">mapLoadedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-map-loaded/index.html">MapLoaded</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-33224244%2FProperties%2F540127926" anchor-label="mapLoadedEvents" id="-33224244%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-map-loaded/index.html">MapLoaded</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-map-loaded.html">MapboxMap.subscribeMapLoaded</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1089306885%2FProperties%2F540127926" anchor-label="mapLoadingErrorEvents" id="1089306885%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="map-loading-error-events.html"><span>map</span><wbr></wbr><span>Loading</span><wbr></wbr><span>Error</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1089306885%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1089306885%2FProperties%2F540127926" anchor-label="mapLoadingErrorEvents" id="1089306885%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="map-loading-error-events.html">mapLoadingErrorEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-map-loading-error/index.html">MapLoadingError</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="1089306885%2FProperties%2F540127926" anchor-label="mapLoadingErrorEvents" id="1089306885%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-map-loading-error/index.html">MapLoadingError</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-map-loading-error.html">MapboxMap.subscribeMapLoadingError</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1638671612%2FProperties%2F540127926" anchor-label="renderFrameFinishedEvents" id="-1638671612%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="render-frame-finished-events.html"><span>render</span><wbr></wbr><span>Frame</span><wbr></wbr><span>Finished</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1638671612%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1638671612%2FProperties%2F540127926" anchor-label="renderFrameFinishedEvents" id="-1638671612%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="render-frame-finished-events.html">renderFrameFinishedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-render-frame-finished/index.html">RenderFrameFinished</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1638671612%2FProperties%2F540127926" anchor-label="renderFrameFinishedEvents" id="-1638671612%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-render-frame-finished/index.html">RenderFrameFinished</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-render-frame-finished.html">MapboxMap.subscribeRenderFrameFinished</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-933278543%2FProperties%2F540127926" anchor-label="renderFrameStartedEvents" id="-933278543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="render-frame-started-events.html"><span>render</span><wbr></wbr><span>Frame</span><wbr></wbr><span>Started</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-933278543%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-933278543%2FProperties%2F540127926" anchor-label="renderFrameStartedEvents" id="-933278543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="render-frame-started-events.html">renderFrameStartedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-render-frame-started/index.html">RenderFrameStarted</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-933278543%2FProperties%2F540127926" anchor-label="renderFrameStartedEvents" id="-933278543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-render-frame-started/index.html">RenderFrameStarted</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-render-frame-started.html">MapboxMap.subscribeRenderFrameStarted</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1133485292%2FProperties%2F540127926" anchor-label="resourceRequestEvents" id="1133485292%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="resource-request-events.html"><span>resource</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1133485292%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1133485292%2FProperties%2F540127926" anchor-label="resourceRequestEvents" id="1133485292%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="resource-request-events.html">resourceRequestEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-resource-request/index.html">ResourceRequest</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="1133485292%2FProperties%2F540127926" anchor-label="resourceRequestEvents" id="1133485292%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-resource-request/index.html">ResourceRequest</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-resource-request.html">MapboxMap.subscribeResourceRequest</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1076231704%2FProperties%2F540127926" anchor-label="sourceAddedEvents" id="-1076231704%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="source-added-events.html"><span>source</span><wbr></wbr><span>Added</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1076231704%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1076231704%2FProperties%2F540127926" anchor-label="sourceAddedEvents" id="-1076231704%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="source-added-events.html">sourceAddedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-source-added/index.html">SourceAdded</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1076231704%2FProperties%2F540127926" anchor-label="sourceAddedEvents" id="-1076231704%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-source-added/index.html">SourceAdded</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-source-added.html">MapboxMap.subscribeSourceAdded</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1864119631%2FProperties%2F540127926" anchor-label="sourceDataLoadedEvents" id="-1864119631%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="source-data-loaded-events.html"><span>source</span><wbr></wbr><span>Data</span><wbr></wbr><span>Loaded</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1864119631%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1864119631%2FProperties%2F540127926" anchor-label="sourceDataLoadedEvents" id="-1864119631%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="source-data-loaded-events.html">sourceDataLoadedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-source-data-loaded/index.html">SourceDataLoaded</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1864119631%2FProperties%2F540127926" anchor-label="sourceDataLoadedEvents" id="-1864119631%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-source-data-loaded/index.html">SourceDataLoaded</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-source-data-loaded.html">MapboxMap.subscribeSourceDataLoaded</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2000903560%2FProperties%2F540127926" anchor-label="sourceRemovedEvents" id="2000903560%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="source-removed-events.html"><span>source</span><wbr></wbr><span>Removed</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2000903560%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2000903560%2FProperties%2F540127926" anchor-label="sourceRemovedEvents" id="2000903560%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="source-removed-events.html">sourceRemovedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-source-removed/index.html">SourceRemoved</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="2000903560%2FProperties%2F540127926" anchor-label="sourceRemovedEvents" id="2000903560%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-source-removed/index.html">SourceRemoved</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-source-removed.html">MapboxMap.subscribeSourceRemoved</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2130289971%2FProperties%2F540127926" anchor-label="styleDataLoadedEvents" id="-2130289971%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="style-data-loaded-events.html"><span>style</span><wbr></wbr><span>Data</span><wbr></wbr><span>Loaded</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2130289971%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-2130289971%2FProperties%2F540127926" anchor-label="styleDataLoadedEvents" id="-2130289971%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="style-data-loaded-events.html">styleDataLoadedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-style-data-loaded/index.html">StyleDataLoaded</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-2130289971%2FProperties%2F540127926" anchor-label="styleDataLoadedEvents" id="-2130289971%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-style-data-loaded/index.html">StyleDataLoaded</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-style-data-loaded.html">MapboxMap.subscribeStyleDataLoaded</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="322215441%2FProperties%2F540127926" anchor-label="styleImageMissingEvents" id="322215441%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="style-image-missing-events.html"><span>style</span><wbr></wbr><span>Image</span><wbr></wbr><span>Missing</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="322215441%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="322215441%2FProperties%2F540127926" anchor-label="styleImageMissingEvents" id="322215441%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="style-image-missing-events.html">styleImageMissingEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-style-image-missing/index.html">StyleImageMissing</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="322215441%2FProperties%2F540127926" anchor-label="styleImageMissingEvents" id="322215441%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-style-image-missing/index.html">StyleImageMissing</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-style-image-missing.html">MapboxMap.subscribeStyleImageMissing</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="831488567%2FProperties%2F540127926" anchor-label="styleImageRemoveUnusedEvents" id="831488567%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="style-image-remove-unused-events.html"><span>style</span><wbr></wbr><span>Image</span><wbr></wbr><span>Remove</span><wbr></wbr><span>Unused</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="831488567%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="831488567%2FProperties%2F540127926" anchor-label="styleImageRemoveUnusedEvents" id="831488567%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="style-image-remove-unused-events.html">styleImageRemoveUnusedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-style-image-remove-unused/index.html">StyleImageRemoveUnused</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="831488567%2FProperties%2F540127926" anchor-label="styleImageRemoveUnusedEvents" id="831488567%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-style-image-remove-unused/index.html">StyleImageRemoveUnused</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-style-image-remove-unused.html">MapboxMap.subscribeStyleImageRemoveUnused</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1417657257%2FProperties%2F540127926" anchor-label="styleLoadedEvents" id="-1417657257%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="style-loaded-events.html"><span>style</span><wbr></wbr><span>Loaded</span><wbr></wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1417657257%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1417657257%2FProperties%2F540127926" anchor-label="styleLoadedEvents" id="-1417657257%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="style-loaded-events.html">styleLoadedEvents</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps/-style-loaded/index.html">StyleLoaded</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1417657257%2FProperties%2F540127926" anchor-label="styleLoadedEvents" id="-1417657257%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> of <a href="../../com.mapbox.maps/-style-loaded/index.html">StyleLoaded</a> updates from <a href="../../com.mapbox.maps/-mapbox-map/subscribe-style-loaded.html">MapboxMap.subscribeStyleLoaded</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
