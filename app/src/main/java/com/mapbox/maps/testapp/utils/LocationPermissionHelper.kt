@@ -18,7 +18,14 @@ class LocationPermissionHelper(val activityRef: WeakReference<Activity>) {
         onMapReady()
       } else {
         permissionsManager = createPermissionsManager(onMapReady)
-        permissionsManager.requestLocationPermissions(activity)
+        // TODO: temporary workaround to fix broken request foreground permissions
+        val permissions: List<String> = buildList {
+          add(Manifest.permission.ACCESS_FINE_LOCATION)
+          add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+        ActivityCompat.requestPermissions(activity, permissions.toTypedArray(), 0)
+        // TODO: uncomment after the fix
+        // permissionsManager.requestLocationPermissions(activity)
       }
     }
   }

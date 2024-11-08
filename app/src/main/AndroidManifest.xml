@@ -403,10 +403,23 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.geofence.GeofencingActivity"
-            android:description="@string/description_geofencing"
+            android:name=".examples.geofence.SimpleGeofencingActivity"
+            android:description="@string/description_simple_geofencing"
             android:exported="true"
-            android:label="@string/activity_geofencing"
+            android:label="@string/activity_simple_geofencing"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_location" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.geofence.ExtendedGeofencingActivity"
+            android:description="@string/description_extended_geofencing"
+            android:exported="true"
+            android:label="@string/activity_extended_geofencing"
             android:launchMode="singleTask">
             <meta-data
                 android:name="@string/category"
