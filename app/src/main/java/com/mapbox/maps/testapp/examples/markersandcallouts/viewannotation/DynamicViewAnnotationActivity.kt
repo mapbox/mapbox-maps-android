@@ -495,7 +495,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     return BitmapDrawable(
       resources,
       BitmapUtils.drawableToBitmap(
-        getDrawable(this, R.drawable.bg_dva_eta),
+        getDrawable(this, R.drawable.bg_dva_eta)!!,
         flipX = flipX,
         flipY = flipY,
         tint = tint,

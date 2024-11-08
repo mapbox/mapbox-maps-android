@@ -1395,6 +1395,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
+  @OptIn(MapboxDelicateApi::class)
   @CallSuper
   @MainThread
   fun addImage(

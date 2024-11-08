@@ -4,7 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -12,10 +17,13 @@ import androidx.annotation.IntDef
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mapbox.android.gestures.*
+import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.android.gestures.RotateGestureDetector
+import com.mapbox.android.gestures.ShoveGestureDetector
+import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
@@ -25,10 +33,15 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
-import com.mapbox.maps.plugin.gestures.*
+import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.gestures.OnRotateListener
+import com.mapbox.maps.plugin.gestures.OnScaleListener
+import com.mapbox.maps.plugin.gestures.OnShoveListener
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
-import java.util.*
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 
 /**
  * Test activity showcasing APIs around gestures implementation.
@@ -138,7 +151,7 @@ class GesturesActivity : AppCompatActivity() {
         .build()
     )
     mapboxMap.loadStyle(Style.STANDARD) {
-      it.addImage(MARKER_IMAGE_ID, ContextCompat.getDrawable(this, R.drawable.ic_red_marker)!!.toBitmap())
+      it.addImage(MARKER_IMAGE_ID, bitmapFromDrawableRes(R.drawable.ic_red_marker))
     }
 
     binding.mapView.waitForLayout {

@@ -1,6 +1,11 @@
 package com.mapbox.maps.testapp.examples
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity

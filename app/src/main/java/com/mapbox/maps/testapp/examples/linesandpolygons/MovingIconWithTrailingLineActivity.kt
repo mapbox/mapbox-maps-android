@@ -20,6 +20,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.Style
 import com.mapbox.maps.coroutine.awaitCameraForCoordinates
 import com.mapbox.maps.coroutine.awaitStyle
@@ -38,6 +39,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimati
 import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDdsMovingIconWithTrailingLineBinding
+import com.mapbox.maps.toMapboxImage
 import com.mapbox.turf.TurfMeasurement
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -80,8 +82,8 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
    * @param featureCollection returned GeoJSON FeatureCollection from the Directions API route request
    */
   private fun initData(style: Style, featureCollection: FeatureCollection) {
-    featureCollection.features()?.let {
-      (it[0].geometry() as? LineString)?.let { lineString ->
+    featureCollection.features()?.firstOrNull()?.geometry()?.let {
+      (it as? LineString)?.let { lineString ->
         routeCoordinateList = lineString.coordinates()
         initSources(style, featureCollection)
         initSymbolLayer(style)
@@ -219,7 +221,9 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
    * Add the marker icon SymbolLayer.
    */
   private fun initSymbolLayer(style: Style) {
-    style.addImage(MARKER_ID, BitmapFactory.decodeResource(resources, R.drawable.pink_dot))
+    @OptIn(MapboxDelicateApi::class)
+    val image = BitmapFactory.decodeResource(resources, R.drawable.pink_dot).toMapboxImage()
+    style.addImage(MARKER_ID, image)
     style.addLayer(
       symbolLayer(SYMBOL_LAYER_ID, DOT_SOURCE_ID) {
         iconImage(MARKER_ID)

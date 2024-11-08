@@ -175,6 +175,7 @@ class CircleAnnotationManagerTest {
 
   @Test
   fun createWithClusterOptions() {
+    @Suppress("UNCHECKED_CAST")
     manager = CircleAnnotationManager(
       delegateProvider,
       AnnotationConfig(
@@ -583,6 +584,7 @@ class CircleAnnotationManagerTest {
       )
     } returns mockk()
 
+    @Suppress("UNCHECKED_CAST")
     manager = CircleAnnotationManager(
       delegateProvider,
       AnnotationConfig(
@@ -665,6 +667,7 @@ class CircleAnnotationManagerTest {
       )
     } returns mockk()
 
+    @Suppress("UNCHECKED_CAST")
     manager = CircleAnnotationManager(
       delegateProvider,
       AnnotationConfig(

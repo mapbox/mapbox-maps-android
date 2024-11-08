@@ -17,23 +17,20 @@ object BitmapUtils {
   /**
    * Convert given drawable id to bitmap.
    */
-  fun bitmapFromDrawableRes(context: Context, @DrawableRes resourceId: Int) =
-    drawableToBitmap(AppCompatResources.getDrawable(context, resourceId))
+  fun Context.bitmapFromDrawableRes(@DrawableRes resourceId: Int): Bitmap =
+    drawableToBitmap(AppCompatResources.getDrawable(this, resourceId)!!)
 
   fun drawableToBitmap(
-    sourceDrawable: Drawable?,
+    sourceDrawable: Drawable,
     flipX: Boolean = false,
     flipY: Boolean = false,
     @ColorInt tint: Int? = null,
-  ): Bitmap? {
-    if (sourceDrawable == null) {
-      return null
-    }
+  ): Bitmap {
     return if (sourceDrawable is BitmapDrawable) {
       sourceDrawable.bitmap
     } else {
       // copying drawable object to not manipulate on the same reference
-      val constantState = sourceDrawable.constantState ?: return null
+      val constantState = sourceDrawable.constantState!!
       val drawable = constantState.newDrawable().mutate()
       val bitmap = Bitmap.createBitmap(
         drawable.intrinsicWidth, drawable.intrinsicHeight,

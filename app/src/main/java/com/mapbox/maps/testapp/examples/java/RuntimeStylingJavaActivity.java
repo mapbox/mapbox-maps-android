@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableKt;
@@ -24,6 +25,7 @@ import com.mapbox.bindgen.Value;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.maps.ExtensionUtils;
 import com.mapbox.maps.MapView;
+import com.mapbox.maps.MapboxDelicateApi;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
@@ -342,6 +344,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         LayerUtils.addLayer(style, raster);
     }
 
+    @OptIn(markerClass = MapboxDelicateApi.class)
     private void addLayerWithoutStyleExtension(Style style) {
         final Drawable drawable = ContextCompat.getDrawable(this, R.drawable.android_symbol);
         final Bitmap bitmap = DrawableKt.toBitmap(drawable, 64, 64, null);

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.res.imageResource
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -21,7 +22,9 @@ import com.mapbox.maps.extension.compose.style.sources.generated.rememberImageSo
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
+import com.mapbox.maps.toMapboxImage
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 /**
  * Load a raster image to a style using ImageSource and display it on a map as
@@ -29,6 +32,7 @@ import kotlinx.coroutines.delay
  */
 public class AnimatedImageSourceActivity : ComponentActivity() {
 
+  @OptIn(MapboxDelicateApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -44,19 +48,19 @@ public class AnimatedImageSourceActivity : ComponentActivity() {
               }
             }
           ) {
-            val bitmaps = listOf(
-              ImageBitmap.imageResource(R.drawable.southeast_radar_0).asAndroidBitmap(),
-              ImageBitmap.imageResource(R.drawable.southeast_radar_1).asAndroidBitmap(),
-              ImageBitmap.imageResource(R.drawable.southeast_radar_2).asAndroidBitmap(),
-              ImageBitmap.imageResource(R.drawable.southeast_radar_3).asAndroidBitmap(),
+            val images = listOf(
+              ImageBitmap.imageResource(R.drawable.southeast_radar_0).asAndroidBitmap().toMapboxImage(),
+              ImageBitmap.imageResource(R.drawable.southeast_radar_1).asAndroidBitmap().toMapboxImage(),
+              ImageBitmap.imageResource(R.drawable.southeast_radar_2).asAndroidBitmap().toMapboxImage(),
+              ImageBitmap.imageResource(R.drawable.southeast_radar_3).asAndroidBitmap().toMapboxImage(),
             )
             MapEffect(Unit) {
               val imageSource: ImageSource = it.mapboxMap.getSourceAs(ID_IMAGE_SOURCE)!!
               var index = 0
-              while (true) {
-                imageSource.updateImage(bitmaps[index])
-                delay(1000)
-                index = (index + 1) % 4
+              while (isActive) {
+                imageSource.updateImage(images[index++])
+                index %= images.size
+                delay(1000L)
               }
             }
             RasterLayer(

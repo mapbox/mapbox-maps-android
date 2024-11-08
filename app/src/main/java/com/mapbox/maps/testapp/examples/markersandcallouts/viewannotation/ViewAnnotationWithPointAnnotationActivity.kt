@@ -19,11 +19,15 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationDragListener
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
-import com.mapbox.maps.testapp.utils.BitmapUtils
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.annotationAnchor
@@ -47,17 +51,12 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
     binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    val iconBitmap = BitmapUtils.bitmapFromDrawableRes(
-      this@ViewAnnotationWithPointAnnotationActivity,
-      R.drawable.ic_blue_marker
-    )!!
-
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
     resetCamera()
 
     binding.mapView.mapboxMap.loadStyle(Style.STANDARD) {
-      prepareAnnotationMarker(binding.mapView, iconBitmap)
+      prepareAnnotationMarker(binding.mapView, bitmapFromDrawableRes(R.drawable.ic_blue_marker))
       prepareViewAnnotation()
       // show / hide view annotation based on a marker click
       pointAnnotationManager.addClickListener { clickedAnnotation ->
@@ -69,7 +68,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       // show / hide view annotation based on marker visibility
       binding.fabStyleToggle.setOnClickListener {
         if (pointAnnotation.iconImage == null) {
-          pointAnnotation.iconImageBitmap = iconBitmap
+          pointAnnotation.iconImageBitmap = bitmapFromDrawableRes(R.drawable.ic_blue_marker)
           viewAnnotation.isVisible = true
         } else {
           pointAnnotation.iconImageBitmap = null

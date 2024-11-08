@@ -20,6 +20,7 @@ import com.mapbox.maps.extension.style.StyleContract
   replaceWith = ReplaceWith("image(imageId, image, block)")
 )
 fun image(imageId: String, block: ImageExtensionImpl.Builder.() -> Unit): ImageExtensionImpl =
+  @Suppress("DEPRECATION")
   ImageExtensionImpl.Builder(imageId).apply(block).build()
 
 /**

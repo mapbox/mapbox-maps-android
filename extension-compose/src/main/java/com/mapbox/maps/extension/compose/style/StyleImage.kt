@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.toMapboxImage
 
 /**
@@ -52,6 +53,7 @@ public data class StyleImage(
  *
  * @return a [StyleImage]
  */
+@OptIn(MapboxDelicateApi::class)
 @Composable
 public fun rememberStyleImage(
   imageId: String,
@@ -89,6 +91,7 @@ public fun rememberStyleImage(
  *
  * @return a [StyleImage]
  */
+@OptIn(MapboxDelicateApi::class)
 @Composable
 public fun rememberStyleImage(
   key: Any?,

@@ -6,6 +6,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.toMapboxImage
 import java.nio.ByteBuffer
@@ -15,11 +16,14 @@ import java.nio.ByteOrder
  * Adds an 9-patch image to be used in the style.
  * X-stretches, Y-stretches and padding will be calculated from [Bitmap.getNinePatchChunk].
  *
+ * Important: This method will allocate native memory outside the JVM heap on every call.
+ *
  * @param imageId ID of the image.
  * @param bitmap Bitmap data of the image.
  *
  * @return A string describing an error if the operation was not successful, empty otherwise.
  */
+@OptIn(MapboxDelicateApi::class)
 @JvmOverloads
 fun MapboxStyleManager.addImage9Patch(
   imageId: String,
@@ -43,9 +47,13 @@ fun MapboxStyleManager.addImage9Patch(
  * Utility function returning [NinePatchImage] from a given [Bitmap].
  *
  * [Bitmap] has to be in 9-patch format (.9.png) or [RuntimeException] will be thrown.
+ *
+ * Important: This method will allocate native memory outside the JVM heap on every call.
  */
+@OptIn(MapboxDelicateApi::class)
 fun Bitmap.parse9PatchBitmap() = decodeNinePatchChunk(this)
 
+@MapboxDelicateApi
 private fun decodeNinePatchChunk(bitmap: Bitmap): NinePatchImage {
   val ninePatchChunk = bitmap.ninePatchChunk
     ?: throw IllegalArgumentException("Given bitmap must be a 9-patch drawable (.9.png)!")

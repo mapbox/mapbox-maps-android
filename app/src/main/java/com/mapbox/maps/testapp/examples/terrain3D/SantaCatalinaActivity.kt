@@ -85,17 +85,11 @@ class SantaCatalinaActivity : AppCompatActivity() {
         }
         +image(
           FOREGROUND_ICON,
-          bitmapFromDrawableRes(
-            this@SantaCatalinaActivity,
-            R.drawable.mapbox_mylocation_icon_default
-          )!!
+          bitmapFromDrawableRes(R.drawable.mapbox_mylocation_icon_default)
         )
         +image(
           BACKGROUND_ICON,
-          bitmapFromDrawableRes(
-            this@SantaCatalinaActivity,
-            R.drawable.mapbox_mylocation_bg_shape
-          )!!
+          bitmapFromDrawableRes(R.drawable.mapbox_mylocation_bg_shape)
         )
       }
     ) { style ->

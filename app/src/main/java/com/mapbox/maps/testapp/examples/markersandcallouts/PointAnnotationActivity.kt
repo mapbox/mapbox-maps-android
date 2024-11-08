@@ -160,62 +160,39 @@ class PointAnnotationActivity : AppCompatActivity() {
           }
         })
 
-        val airplaneBitmap = bitmapFromDrawableRes(
-          this@PointAnnotationActivity,
-          R.drawable.ic_airplanemode_active_black_24dp
-        )
-        airplaneBitmap?.let {
-          // create a symbol
-          val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
-            .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
-            .withIconImage(it)
-            .withTextField(ID_ICON_AIRPORT)
-            .withTextOffset(listOf(0.0, -2.0))
-            .withTextColor(Color.RED)
-            .withIconSize(1.3)
-            .withIconOffset(listOf(0.0, -5.0))
-            .withSymbolSortKey(10.0)
-            .withDraggable(true)
-          pointAnnotation = create(pointAnnotationOptions)
+        val airplaneBitmap = bitmapFromDrawableRes(R.drawable.ic_airplanemode_active_black_24dp)
+        // create a symbol
+        val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
+          .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
+          .withIconImage(airplaneBitmap)
+          .withTextField(ID_ICON_AIRPORT)
+          .withTextOffset(listOf(0.0, -2.0))
+          .withTextColor(Color.RED)
+          .withIconSize(1.3)
+          .withIconOffset(listOf(0.0, -5.0))
+          .withSymbolSortKey(10.0)
+          .withDraggable(true)
+        pointAnnotation = create(pointAnnotationOptions)
 
-          // random add symbols across the globe
-          val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-          for (i in 0..5) {
-            pointAnnotationOptionsList.add(
-              PointAnnotationOptions()
-                .withPoint(AnnotationUtils.createRandomPoint())
-                .withIconImage(it)
-                .withDraggable(true)
-            )
-          }
-          create(pointAnnotationOptionsList)
-        }
+        blueBitmap = bitmapFromDrawableRes(R.drawable.mapbox_user_icon)
+        // create nearby symbols
+        val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
+          .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
+          .withIconImage(blueBitmap)
+          .withIconSize(2.5)
+          .withTextField(ID_ICON_AIRPORT)
+          .withSymbolSortKey(5.0)
+          .withDraggable(true)
+        create(nearbyOptions)
 
-        bitmapFromDrawableRes(
-          this@PointAnnotationActivity,
-          R.drawable.mapbox_user_icon
-        )?.let {
-          blueBitmap = it
-          // create nearby symbols
-          val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
-            .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
-            .withIconImage(it)
-            .withIconSize(2.5)
-            .withTextField(ID_ICON_AIRPORT)
-            .withSymbolSortKey(5.0)
-            .withDraggable(true)
-          create(nearbyOptions)
-        }
         // random add symbols across the globe
-        airplaneBitmap?.let {
-          val pointAnnotationOptionsList = List(20) {
-            PointAnnotationOptions()
-              .withPoint(AnnotationUtils.createRandomPoint())
-              .withIconImage(airplaneBitmap)
-              .withDraggable(true)
-          }
-          create(pointAnnotationOptionsList)
+        val pointAnnotationOptionsList = List(25) {
+          PointAnnotationOptions()
+            .withPoint(AnnotationUtils.createRandomPoint())
+            .withIconImage(airplaneBitmap)
+            .withDraggable(true)
         }
+        create(pointAnnotationOptionsList)
         lifecycleScope.launch {
           val featureCollection = withContext(Dispatchers.Default) {
             FeatureCollection.fromJson(
