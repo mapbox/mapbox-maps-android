@@ -7,6 +7,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.maps.CanonicalTileID
 import com.mapbox.maps.CustomRasterSourceTileData
 import com.mapbox.maps.Image
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.MapboxStyleManager
@@ -68,6 +69,7 @@ class CustomRasterSourceTest {
     verify { style.setStyleCustomRasterSourceTileData("testId", tileData) }
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @Test
   fun setTileDataBitmapTest() {
     val tileID: CanonicalTileID = mockk()

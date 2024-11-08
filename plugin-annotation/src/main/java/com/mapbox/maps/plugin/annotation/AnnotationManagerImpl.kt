@@ -638,19 +638,25 @@ internal constructor(
   // Add icons to style from PointAnnotation.
   private fun addIconToStyle(style: MapboxStyleManager, annotations: Collection<T>) {
     // Add icon image bitmap from point annotation
-    annotations
-      .filter { it.getType() == AnnotationType.PointAnnotation }
-      .forEach {
-        val symbol = it as PointAnnotation
-        symbol.iconImage?.let { image ->
-          if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
-            // User set the bitmap icon, add the icon to style
-            symbol.iconImageBitmap?.let { bitmap ->
-              style.addImage(image(image, bitmap))
+    annotations.forEach { annotation ->
+      (annotation as? PointAnnotation)?.let { symbol ->
+        symbol.iconImage?.let { imageId ->
+          if (imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
+            /*
+             * Basically if an image with the `imageId` already exists we don't add it again. The
+             * reason we can do that is because the `imageId` starts with `ICON_DEFAULT_NAME_PREFIX`
+             * which means it has unique ID per bitmap.
+             */
+            if (!style.hasStyleImage(imageId)) {
+              // User set the bitmap icon, add the icon to style
+              symbol.iconImageBitmap?.let { mapboxImage ->
+                style.addImage(image(imageId, mapboxImage))
+              }
             }
           }
         }
       }
+    }
   }
 
   // Extension function on the JsonObject that annotation defines.

@@ -11,9 +11,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Change the signature of experimental `MapboxMap.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Value?, QueryRenderedFeaturesetFeaturesCallback)` to `MapboxMap.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Value?, QueryRenderedFeaturesetFeaturesCallback)`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
 * [compose] Change the signature of experimental `MapState.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Expression?): List` to `MapState.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Expression?): List`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
 
+## Features ✨ and improvements 🏁
+* Annotate `Bitmap.toMapboxImage()` and related as delicate API due to its native memory allocation.
+
 ## Bug fixes 🐞
 * Disable false-positive lint error "Incorrect number of expressions".
-
+* Fix possible out of memory in native heap during annotation manager annotation updates (`AnnotationManager.update(...)`).
 
 
 # 11.7.2 November 05, 2024

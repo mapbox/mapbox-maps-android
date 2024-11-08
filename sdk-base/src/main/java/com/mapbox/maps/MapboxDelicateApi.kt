@@ -13,6 +13,6 @@ package com.mapbox.maps
     " Make sure you fully read and understand documentation of the declaration that is marked as a delicate API."
 )
 @Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY, AnnotationTarget.CONSTRUCTOR)
 @MustBeDocumented
 annotation class MapboxDelicateApi

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.res.imageResource
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
@@ -23,6 +24,7 @@ import com.mapbox.maps.extension.compose.style.sources.generated.rememberImageSo
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
+import com.mapbox.maps.toMapboxImage
 
 /**
  * Example to showcase usage of ImageSource.
@@ -47,10 +49,10 @@ public class ImageSourceActivity : ComponentActivity() {
               MapStyle(style = Style.DARK)
             }
           ) {
-            val bitmap = ImageBitmap.imageResource(R.drawable.miami_beach).asAndroidBitmap()
+            @OptIn(MapboxDelicateApi::class)
+            val bitmap = ImageBitmap.imageResource(R.drawable.miami_beach).asAndroidBitmap().toMapboxImage()
             MapEffect(Unit) {
-              val imageSource: ImageSource =
-                it.mapboxMap.getSourceAs(ID_IMAGE_SOURCE)!!
+              val imageSource: ImageSource = it.mapboxMap.getSourceAs(ID_IMAGE_SOURCE)!!
               imageSource.updateImage(bitmap)
             }
             RasterLayer(

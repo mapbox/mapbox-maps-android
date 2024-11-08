@@ -36,10 +36,8 @@ class ImageSourceActivity : AppCompatActivity() {
         +rasterLayer(ID_IMAGE_LAYER, ID_IMAGE_SOURCE) {}
       }
     ) {
-      bitmapFromDrawableRes(this, R.drawable.miami_beach)?.let { bitmap ->
-        val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
-        imageSource.updateImage(bitmap)
-      }
+      val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
+      imageSource.updateImage(bitmapFromDrawableRes(R.drawable.miami_beach))
     }
   }
 

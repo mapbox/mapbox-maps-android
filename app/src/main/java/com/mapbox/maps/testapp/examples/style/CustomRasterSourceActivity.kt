@@ -5,12 +5,12 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CanonicalTileID
 import com.mapbox.maps.CustomRasterSourceClient
 import com.mapbox.maps.CustomRasterSourceTileData
 import com.mapbox.maps.CustomRasterSourceTileStatus
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
@@ -22,9 +22,6 @@ import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.databinding.ActivityCustomRasterSourceBinding
 import com.mapbox.maps.toMapboxImage
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 /**
  * Example of using custom raster source.
@@ -86,16 +83,13 @@ class CustomRasterSourceActivity : AppCompatActivity() {
   }
 
   private fun refresh(requiredTiles: List<CanonicalTileID>) {
-    lifecycleScope.launch {
-      RasterTileProvider.createTiles(
-        requiredTiles,
-        nextColor,
-        TILE_SIZE,
-        TILE_SIZE
-      ) { tiles ->
-        customRasterSource.setTileData(tiles)
-      }
-    }
+    val tiles = RasterTileProvider.createTiles(
+      requiredTiles,
+      nextColor,
+      TILE_SIZE,
+      TILE_SIZE
+    )
+    customRasterSource.setTileData(tiles)
   }
 
   companion object {
@@ -127,22 +121,16 @@ class CustomRasterSourceActivity : AppCompatActivity() {
  * Utility to provide raster tiles.
  */
 object RasterTileProvider {
-  suspend fun createTiles(
+  @OptIn(MapboxDelicateApi::class)
+  fun createTiles(
     requiredTiles: List<CanonicalTileID>,
     color: Int,
     width: Int,
     height: Int,
-    callback: (List<CustomRasterSourceTileData>) -> Unit
-  ) {
+  ): List<CustomRasterSourceTileData> {
     val image = createBitmap(color, width, height).toMapboxImage()
-    coroutineScope {
-      async {
-        requiredTiles.map {
-          CustomRasterSourceTileData(it, image)
-        }
-      }.await().also {
-        callback(it)
-      }
+    return requiredTiles.map {
+      CustomRasterSourceTileData(it, image)
     }
   }
 

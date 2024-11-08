@@ -6,12 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapLongClickListener
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.BitmapUtils
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import java.text.DecimalFormat
 
 /**
@@ -33,10 +32,7 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
     mapView = MapView(this)
     setContentView(mapView)
 
-    icon = BitmapUtils.bitmapFromDrawableRes(
-      this@InfoWindowActivity,
-      R.drawable.ic_blue_marker
-    )!!
+    icon = bitmapFromDrawableRes(R.drawable.ic_blue_marker)
     mapView.mapboxMap.apply {
       setCamera(
         cameraOptions {

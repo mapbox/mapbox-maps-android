@@ -329,12 +329,13 @@ class RuntimeStylingActivity : AppCompatActivity() {
     style.addLayer(raster)
   }
 
+  @OptIn(MapboxDelicateApi::class)
   private fun addLayerWithoutStyleExtension(style: Style) {
-    val bitmap = ContextCompat.getDrawable(this, R.drawable.android_symbol)?.toBitmap(64, 64)
+    val bitmap = ContextCompat.getDrawable(this, R.drawable.android_symbol)!!.toBitmap(64, 64)
     val expected = style.addStyleImage(
       "myImage",
       1f,
-      bitmap!!.toMapboxImage(),
+      bitmap.toMapboxImage(),
       false,
       mutableListOf(),
       mutableListOf(),

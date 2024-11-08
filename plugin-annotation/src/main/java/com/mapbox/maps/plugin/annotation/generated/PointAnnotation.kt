@@ -64,12 +64,15 @@ class PointAnnotation(
      */
     set(value) {
       if (value != null) {
-        field = value
-        if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
-          // User does not set iconImage, update iconImage to this new bitmap
-          iconImage = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
+        if (field != value) {
+          field = value
+          if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
+            // User does not set iconImage, update iconImage to this new bitmap
+            iconImage = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
+          }
         }
       } else {
+        field = null
         jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
       }
     }

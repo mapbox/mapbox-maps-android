@@ -58,9 +58,7 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
 
         addClusteredGeoJsonSource(it)
 
-        bitmapFromDrawableRes(this, R.drawable.ic_cross)?.let { bitmap ->
-          it.addImage(CROSS_ICON_ID, bitmap, true)
-        }
+        it.addImage(CROSS_ICON_ID, bitmapFromDrawableRes(R.drawable.ic_cross), true)
 
         Toast.makeText(
           this@CircleLayerClusteringActivity,

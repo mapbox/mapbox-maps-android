@@ -77,6 +77,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * @param imageId the id the the image extension
      * @param bitmap the bitmap data of the image.
      */
+    @OptIn(MapboxDelicateApi::class)
     constructor(imageId: String, bitmap: Bitmap) {
       this.imageId = imageId
       this.internalImage = bitmap.toMapboxImage()
@@ -123,6 +124,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     /**
      * Set bitmap data of the image.
      */
+    @OptIn(MapboxDelicateApi::class)
     @Suppress("DeprecatedCallableAddReplaceWith")
     @Deprecated("Configuring image through `bitmap` function is deprecated, pass image to the `Builder(imageId: String, bitmap: Bitmap)` constructor instead.")
     fun bitmap(bitmap: Bitmap): Builder = apply {
