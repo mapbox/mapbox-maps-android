@@ -19,10 +19,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.google.gson.JsonObject
+import com.mapbox.api.isochrone.IsochroneCriteria
+import com.mapbox.api.isochrone.MapboxIsochrone
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.experimental.geofencing.GeofencingError
 import com.mapbox.common.experimental.geofencing.GeofencingEvent
@@ -47,8 +47,6 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearing
-import com.mapbox.maps.plugin.attribution.Attribution
-import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -56,33 +54,26 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.MapboxApplication
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivityGeofencingBinding
+import com.mapbox.maps.testapp.databinding.ActivityExtendedGeofencingBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
-import com.mapbox.turf.TurfConstants
-import com.mapbox.turf.TurfTransformation
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.ref.WeakReference
 import java.util.Date
 
 /**
  * This example shows how to get updates from the geofence engine.
- * Initially dataset is downloaded to the device from the network and is persisted in the geofence engine
- * so that geofencing works even without network.
+ * Every tap onto the map calls [MapboxIsochrone] service to create a [Feature] that connects points of equal travel time around a given location.
+ * Every returned [Feature] is persisted in the geofence engine so that geofencing works even without network.
  * Geofence callbacks are called when device location enters, dwells, or leaves any loaded geofence zone.
- * Each aforementioned event is accompanied by rendering received feature (Blue, Green, Red colors )
- * onto the map and showing a notification.
+ * Each aforementioned event is accompanied by rendering received feature (Blue, Green, Red colors ) onto the map and showing a notification.
  * Subscription to notifications happens in [MapboxApplication] class to have the ability to receive geofence notifications in the background,
- * even when GeofenceActivity is closed.
+ * even when GeofenceActivity or the whole app is closed.
  * [MapboxApplication.ENABLE_BACKGROUND_GEOFENCING] flag turns ON/OFF showcase of background behavior of the geofence engine.
  */
-class GeofencingActivity : AppCompatActivity() {
+class ExtendedGeofencingActivity : AppCompatActivity() {
 
   private var requestNotificationPermissionLauncher: ActivityResultLauncher<String> =
     registerForActivityResult(
@@ -100,17 +91,16 @@ class GeofencingActivity : AppCompatActivity() {
       }
     }
   private lateinit var locationPermissionHelper: LocationPermissionHelper
-  private lateinit var binding: ActivityGeofencingBinding
+  private lateinit var binding: ActivityExtendedGeofencingBinding
 
   private lateinit var mapboxMap: MapboxMap
-  private var importGeofencesJob: Job? = null
-  private var customZonesFeatures = mutableListOf<Feature>()
 
   private var entryFeatures = mutableListOf<Feature>()
   private var dwellFeatures = mutableListOf<Feature>()
   private var exitFeature: Feature? = null
-  private val datastoreBaseUrl =
-    "https://opendata.arcgis.com/datasets/89b6b5142a9b4bb9a5c5f4404ff28963_0.geojson"
+  private var justAddedFeature: Feature? = null
+
+  private var geofencingStarted: Boolean = false
 
   // NOTE: You need to grant location permissions before initialising GeofencingService with getOrCreate()
   private val geofencing by lazy {
@@ -121,58 +111,32 @@ class GeofencingActivity : AppCompatActivity() {
     override fun onEntry(event: GeofencingEvent) {
       logD(TAG, "onEntry() called with: feature id = ${event.feature.id()} at ${event.timestamp}")
 
-      if (exitFeature?.id() == event.feature.id()) {
-        lifecycleScope.launch {
-          mapboxMap.getStyle { style ->
-            exitFeature.removeFeature(style, EXIT_SOURCE_ID, EXIT_DATA_ID)
-            exitFeature = null
+      removeExitFeatureIfNeeded(event)
+      lifecycleScope.launch {
+        mapboxMap.getStyle { style ->
+          val isNewFeature = justAddedFeature?.id() == event.feature.id()
+          if (isNewFeature) {
+            justAddedFeature.removeFeature(style, JUST_ADDED_ZONE_SOURCE_ID, CUSTOM_ZONE_DATA_ID)
+            justAddedFeature = null
           }
-        }
-      }
-
-      if (event.feature.geometry() is Point) {
-        var customZone = customZonesFeatures.find { it.id() == event.feature.id() }
-        if (customZone == null) {
-          customZone = circleFeature(event.feature.geometry() as Point, event.feature.id() ?: "")
-        }
-        customZone.let {
-          customZonesFeatures.remove(customZone)
-          lifecycleScope.launch {
-            mapboxMap.getStyle { style ->
-              customZone.removeFeature(style, CUSTOM_ZONE_SOURCE_ID, CUSTOM_ZONE_DATA_ID)
-              customZone?.addFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
-              entryFeatures.add(it)
-              moveCameraToActiveFeatures()
-            }
-          }
-        }
-      } else {
-        lifecycleScope.launch {
-          mapboxMap.getStyle { style ->
-            event.feature.addFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
-            entryFeatures.add(event.feature)
-            moveCameraToActiveFeatures()
-          }
+          event.feature.addFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
+          entryFeatures.add(event.feature)
+          moveCameraToActiveFeatures()
         }
       }
     }
 
     override fun onDwell(event: GeofencingEvent) {
       logD(TAG, "onDwell() called with:  feature id = ${event.feature.id()} at ${event.timestamp}")
-      val feature = if (event.feature.geometry() is Point) {
-        entryFeatures.find { it.id() == event.feature.id() }
-      } else {
-        event.feature
-      }
-      feature?.let {
-        lifecycleScope.launch {
-          mapboxMap.getStyle { style ->
-            entryFeatures.remove(feature)
-            feature.removeFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
-            feature.addFeature(style, DWELL_SOURCE_ID, DWELL_DATA_ID)
-            dwellFeatures.add(feature)
-            moveCameraToActiveFeatures()
-          }
+
+      removeExitFeatureIfNeeded(event)
+      lifecycleScope.launch {
+        mapboxMap.getStyle { style ->
+          entryFeatures.remove(event.feature)
+          event.feature.removeFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
+          event.feature.addFeature(style, DWELL_SOURCE_ID, DWELL_DATA_ID)
+          dwellFeatures.add(event.feature)
+          moveCameraToActiveFeatures()
         }
       }
     }
@@ -186,45 +150,28 @@ class GeofencingActivity : AppCompatActivity() {
         exitFeature = newFeature
       }
 
-      if (event.feature.geometry() is Point) {
-        var customZone = entryFeatures.find { it.id() == event.feature.id() }
-        if (customZone != null) {
-          entryFeatures.remove(customZone)
-          lifecycleScope.launch {
-            mapboxMap.getStyle { style ->
-              customZone?.removeFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
-              customZone?.let {
-                updateExitFeature(style, it)
-              }
-            }
-            moveCameraToActiveFeatures()
+      lifecycleScope.launch {
+        mapboxMap.getStyle { style ->
+          if (entryFeatures.contains(event.feature)) {
+            entryFeatures.remove(event.feature)
+            event.feature.removeFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
           }
-        } else {
-          customZone = dwellFeatures.find { it.id() == event.feature.id() }
-          dwellFeatures.remove(customZone)
-          lifecycleScope.launch {
-            mapboxMap.getStyle { style ->
-              customZone?.removeFeature(style, DWELL_SOURCE_ID, DWELL_DATA_ID)
-              customZone?.let {
-                updateExitFeature(style, it)
-              }
-            }
-            moveCameraToActiveFeatures()
+          if (dwellFeatures.contains(event.feature)) {
+            dwellFeatures.remove(event.feature)
+            event.feature.removeFeature(style, DWELL_SOURCE_ID, DWELL_DATA_ID)
           }
+          updateExitFeature(style, event.feature)
+          moveCameraToActiveFeatures()
         }
-      } else {
+      }
+    }
+
+    private fun removeExitFeatureIfNeeded(event: GeofencingEvent) {
+      if (exitFeature?.id() == event.feature.id()) {
         lifecycleScope.launch {
           mapboxMap.getStyle { style ->
-            if (entryFeatures.contains(event.feature)) {
-              entryFeatures.remove(event.feature)
-              event.feature.removeFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
-            }
-            if (dwellFeatures.contains(event.feature)) {
-              dwellFeatures.remove(event.feature)
-              event.feature.removeFeature(style, DWELL_SOURCE_ID, DWELL_DATA_ID)
-            }
-            updateExitFeature(style, event.feature)
-            moveCameraToActiveFeatures()
+            exitFeature.removeFeature(style, EXIT_SOURCE_ID, EXIT_DATA_ID)
+            exitFeature = null
           }
         }
       }
@@ -240,9 +187,7 @@ class GeofencingActivity : AppCompatActivity() {
     }
   }
 
-  private var geofencingStarted: Boolean = false
-
-  fun moveCameraToActiveFeatures() {
+  private fun moveCameraToActiveFeatures() {
     val geometries = buildList {
       addAll(entryFeatures.map { it.geometry() })
       add(exitFeature?.geometry())
@@ -270,16 +215,9 @@ class GeofencingActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    binding = ActivityGeofencingBinding.inflate(layoutInflater)
+    binding = ActivityExtendedGeofencingBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.mapboxMap
-
-    if (getPreferences(Context.MODE_PRIVATE).getBoolean("network_geofences_loaded", false)) {
-      binding.buttonLoadGeofenceZones.text = "Reload GeoJson zones"
-    }
-    binding.buttonLoadGeofenceZones.setOnClickListener {
-      loadGeofences()
-    }
 
     mapboxMap.setCamera(
       CameraOptions.Builder().center(
@@ -301,8 +239,7 @@ class GeofencingActivity : AppCompatActivity() {
 
       requestNotificationPermission()
 
-      // Postpone access to applySettings() until we get location permissions
-      // Otherwise puck doesn't move until the app is restarted
+      // Once we've location permission enable location puck
       with(binding.mapView) {
         location.locationPuck = createDefault2DPuck()
         location.enabled = true
@@ -310,6 +247,7 @@ class GeofencingActivity : AppCompatActivity() {
         val onIndicatorPositionChangedListener = object : OnIndicatorPositionChangedListener {
           override fun onIndicatorPositionChanged(point: Point) {
             mapboxMap.setCamera(CameraOptions.Builder().center(point).zoom(ZOOM).pitch(0.0).build())
+            // We use only the first location to move camera so remove the listener immediate
             location.removeOnIndicatorPositionChangedListener(this)
           }
         }
@@ -321,7 +259,7 @@ class GeofencingActivity : AppCompatActivity() {
           +geoJsonSource(DWELL_SOURCE_ID)
           +geoJsonSource(ENTRY_SOURCE_ID)
           +geoJsonSource(EXIT_SOURCE_ID)
-          +geoJsonSource(CUSTOM_ZONE_SOURCE_ID)
+          +geoJsonSource(JUST_ADDED_ZONE_SOURCE_ID)
 
           +fillLayer(layerId = ENTRY_LAYER_ID, sourceId = ENTRY_SOURCE_ID) {
             fillColor(DARK_BLUE)
@@ -338,7 +276,7 @@ class GeofencingActivity : AppCompatActivity() {
             fillOpacity(LAYER_OPACITY)
             fillOutlineColor(LAYER_OUTLINE_COLOR)
           }
-          +fillLayer(layerId = CUSTOM_ZONE_LAYER_ID, sourceId = CUSTOM_ZONE_SOURCE_ID) {
+          +fillLayer(layerId = JUST_ADDED_ZONE_LAYER_ID, sourceId = JUST_ADDED_ZONE_SOURCE_ID) {
             fillColor(YELLOW)
             fillOpacity(LAYER_OPACITY)
             fillOutlineColor(LAYER_OUTLINE_COLOR)
@@ -349,50 +287,69 @@ class GeofencingActivity : AppCompatActivity() {
 
     binding.mapView.mapboxMap.addInteraction(
       ClickInteraction { interactionContext ->
-        loadCustomGeofence(interactionContext)
+        loadIsochroneGeofence(interactionContext)
         return@ClickInteraction true
       }
-    )
-    binding.mapView.attribution.getMapAttributionDelegate().extraAttributions = listOf(
-      Attribution(
-        "Geofence boundaries courtesy Helsingin seuden liiken HSL (CC-BY)",
-        "https://hri.fi/data/en_GB/dataset/hsl-n-taksavyohykkeet"
-      )
     )
     handleGeofenceIntent(intent)
   }
 
-  private fun loadCustomGeofence(interactionContext: InteractionContext) {
-    val featureId = System.currentTimeMillis().toString()
-    val circleFeature = circleFeature(interactionContext.coordinateInfo.coordinate, featureId)
+  private fun loadIsochroneGeofence(interactionContext: InteractionContext) {
+    showProgress(true)
 
-    val properties = JsonObject()
-    properties.addProperty(GeofencingPropertiesKeys.DWELL_TIME_KEY, DWELL_TIME)
-    // for geofences represented by Point the defaultRadius from [GeofencingOptions] is used.
-    val pointFeature = Feature.fromGeometry(
-      interactionContext.coordinateInfo.coordinate,
-      properties,
-      featureId
-    )
+    val mapboxIsochroneRequest = MapboxIsochrone.builder()
+      .accessToken(resources.getString(R.string.mapbox_access_token))
+      .profile(IsochroneCriteria.PROFILE_DRIVING)
+      .addContoursMinutes(ISOCHRONE_CONTOURS_MINUTES)
+      .polygons(true)
+      .denoise(ISOCHRONE_DENOISE)
+      .coordinates(interactionContext.coordinateInfo.coordinate)
+      .build()
 
-    mapboxMap.getStyle { style ->
-      geofencing.addFeature(pointFeature, logGeofencingError<String>("addCustomFeature"))
-      circleFeature.addFeature(style, CUSTOM_ZONE_SOURCE_ID, CUSTOM_ZONE_DATA_ID)
-      customZonesFeatures.add(circleFeature)
-    }
+    mapboxIsochroneRequest.enqueueCall(object : Callback<FeatureCollection> {
+      override fun onResponse(
+        call: Call<FeatureCollection>,
+        response: Response<FeatureCollection>
+      ) {
+        val responseFeature = response.body()?.features()?.first()
+        if (responseFeature == null) {
+          Toast.makeText(
+            this@ExtendedGeofencingActivity,
+            "Isochrone request returned empty feature",
+            Toast.LENGTH_LONG
+          ).show()
+          logD(TAG, "Isochrone request returned empty feature")
+        } else {
+          val properties = responseFeature.properties()!!
+          properties.addProperty(GeofencingPropertiesKeys.DWELL_TIME_KEY, DWELL_TIME)
+          val featureId = System.currentTimeMillis().toString()
+          val isoFeature = Feature.fromGeometry(
+            responseFeature.geometry(),
+            properties,
+            featureId
+          )
+
+          geofencing.addFeature(isoFeature, logGeofencingError<String>("addIsochroneFeature"))
+          mapboxMap.getStyle { style ->
+            isoFeature.addFeature(style, JUST_ADDED_ZONE_SOURCE_ID, CUSTOM_ZONE_DATA_ID)
+            justAddedFeature.removeFeature(style, JUST_ADDED_ZONE_SOURCE_ID, CUSTOM_ZONE_DATA_ID)
+            justAddedFeature = isoFeature
+          }
+          showProgress(false)
+        }
+      }
+
+      override fun onFailure(call: Call<FeatureCollection>, t: Throwable) {
+        showProgress(false)
+        Toast.makeText(
+          this@ExtendedGeofencingActivity,
+          "Isochrone request failed",
+          Toast.LENGTH_LONG
+        ).show()
+        logD(TAG, "Isochrone request failed")
+      }
+    })
   }
-
-  private fun circleFeature(
-    point: Point,
-    featureId: String
-  ): Feature = Feature.fromGeometry(
-    TurfTransformation.circle(
-      point, CUSTOM_GEOFENCE_RADIUS.toDouble(),
-      TurfConstants.UNIT_METERS
-    ),
-    JsonObject(),
-    featureId
-  )
 
   private fun requestNotificationPermission() {
     if (ContextCompat.checkSelfPermission(
@@ -419,83 +376,10 @@ class GeofencingActivity : AppCompatActivity() {
     locationPermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
   }
 
-  @SuppressLint("SetTextI18n")
-  private fun loadGeofences() {
-    showProgress(true)
-    importGeofencesJob?.cancel()
-    clearGeofences()
-    mapboxMap.getStyle { style ->
-      removeFeaturesFromMap(style)
-    }
-    importGeofencesJob = lifecycleScope.launch {
-      try {
-        withContext(Dispatchers.IO) {
-          loadGeofencesFromNetwork()
-        }
-        getPreferences(Context.MODE_PRIVATE).edit {
-          putBoolean("network_geofences_loaded", true)
-        }
-        binding.buttonLoadGeofenceZones.text = "Reload GeoJson zones"
-      } catch (e: Exception) {
-        logD(TAG, "exception handler: $e")
-      } finally {
-        showProgress(false)
-      }
-    }
-  }
-
-  private fun removeFeaturesFromMap(style: Style) {
-    dwellFeatures.forEach {
-      it.removeFeature(style, DWELL_SOURCE_ID, DWELL_DATA_ID)
-    }
-    entryFeatures.forEach {
-      it.removeFeature(style, ENTRY_SOURCE_ID, ENTRY_DATA_ID)
-    }
-    exitFeature.removeFeature(style, EXIT_SOURCE_ID, EXIT_DATA_ID)
-  }
-
-  private fun CoroutineScope.loadGeofencesFromNetwork() {
-    val dataSet = loadDataSetFromNetwork()
-    ensureActive()
-    val features = FeatureCollection.fromJson(dataSet)
-    loadDataToGeofenceEngine(features.features())
-  }
-
-  private fun CoroutineScope.loadDataToGeofenceEngine(features: List<Feature>?) {
-    val logGeofencingErrorFunction = logGeofencingError<String>("addFeature")
-    var counter = 0
-    features?.forEach { feature ->
-      if (counter++ % 500 == 0) {
-        ensureActive()
-      }
-      val properties = feature.properties()!!
-      val id =
-        properties.get("FID")!!.asString + "-" + properties.get("Fid_1")!!.asString + properties.get(
-          "Id"
-        )!!.asString
-      properties.addProperty(GeofencingPropertiesKeys.DWELL_TIME_KEY, DWELL_TIME)
-      val featureWithId = Feature.fromGeometry(
-        feature.geometry(), properties, id
-      )
-      geofencing.addFeature(featureWithId, logGeofencingErrorFunction)
-    }
-  }
-
   private fun showProgress(inProgress: Boolean) {
     with(binding) {
-      buttonLoadGeofenceZones.isEnabled = !inProgress
       progress.isVisible = inProgress
     }
-  }
-
-  private fun loadDataSetFromNetwork(): String {
-    val client = OkHttpClient()
-    val request = Request.Builder()
-      .url(datastoreBaseUrl)
-      .build()
-
-    val response = client.newCall(request).execute()
-    return response.body?.string() ?: ""
   }
 
   private fun startGeofencing() {
@@ -558,10 +442,8 @@ class GeofencingActivity : AppCompatActivity() {
   private fun userRevokedConsentUi(isConsentGiven: Boolean) = lifecycleScope.launch {
     with(binding) {
       if (isConsentGiven) {
-        buttonLoadGeofenceZones.visibility = View.VISIBLE
         textGeofencesDisabled.visibility = View.GONE
       } else {
-        buttonLoadGeofenceZones.visibility = View.GONE
         textGeofencesDisabled.visibility = View.VISIBLE
       }
     }
@@ -610,10 +492,12 @@ class GeofencingActivity : AppCompatActivity() {
     private const val EXIT_SOURCE_ID = "exit_source_id"
     private const val EXIT_LAYER_ID = "exit_layer_id"
     private const val EXIT_DATA_ID = "exit_data_id"
-    private const val CUSTOM_ZONE_SOURCE_ID = "custom_zone_source_id"
-    private const val CUSTOM_ZONE_LAYER_ID = "custom_zone_layer_id"
+    private const val JUST_ADDED_ZONE_SOURCE_ID = "custom_zone_source_id"
+    private const val JUST_ADDED_ZONE_LAYER_ID = "custom_zone_layer_id"
     private const val CUSTOM_ZONE_DATA_ID = "custom_zone_data_id"
     private const val CUSTOM_GEOFENCE_RADIUS = 500
+    private const val ISOCHRONE_CONTOURS_MINUTES = 5
+    private const val ISOCHRONE_DENOISE = .4f
     private const val DWELL_TIME = 0.5
     private const val LAYER_OPACITY = 0.6
     private const val LAYER_OUTLINE_COLOR = "#000"
@@ -641,7 +525,7 @@ class GeofencingActivity : AppCompatActivity() {
       featureType: String
     ) {
 
-      val intent = Intent(appContext, GeofencingActivity::class.java).apply {
+      val intent = Intent(appContext, ExtendedGeofencingActivity::class.java).apply {
         flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         putExtra(NOTIFICATION_FEATURE_ID, featureId)
         putExtra(NOTIFICATION_FEATURE_TYPE, featureType)

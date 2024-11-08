@@ -9,7 +9,7 @@ import com.mapbox.common.experimental.geofencing.GeofencingFactory
 import com.mapbox.common.experimental.geofencing.GeofencingObserver
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
-import com.mapbox.maps.testapp.examples.geofence.GeofencingActivity
+import com.mapbox.maps.testapp.examples.geofence.ExtendedGeofencingActivity
 
 /**
  * Application class of the test application.
@@ -19,29 +19,29 @@ class MapboxApplication : MultiDexApplication() {
   private val geofencingObserver: GeofencingObserver = object : GeofencingObserver {
 
     override fun onEntry(event: GeofencingEvent) {
-      GeofencingActivity.showNotification(
+      ExtendedGeofencingActivity.showNotification(
         this@MapboxApplication,
         "Entry into feature id = ${event.feature.id()} at ${event.timestamp}",
         event.feature.id(),
-        GeofencingActivity.NOTIFICATION_FEATURE_ENTRY
+        ExtendedGeofencingActivity.NOTIFICATION_FEATURE_ENTRY
       )
     }
 
     override fun onExit(event: GeofencingEvent) {
-      GeofencingActivity.showNotification(
+      ExtendedGeofencingActivity.showNotification(
         this@MapboxApplication,
         "Exit from feature id = ${event.feature.id()} at ${event.timestamp}",
         event.feature.id(),
-        GeofencingActivity.NOTIFICATION_FEATURE_EXIT
+        ExtendedGeofencingActivity.NOTIFICATION_FEATURE_EXIT
       )
     }
 
     override fun onDwell(event: GeofencingEvent) {
-      GeofencingActivity.showNotification(
+      ExtendedGeofencingActivity.showNotification(
         this@MapboxApplication,
         "Dwell into feature id = ${event.feature.id()} at ${event.timestamp}",
         event.feature.id(),
-        GeofencingActivity.NOTIFICATION_FEATURE_DWELL
+        ExtendedGeofencingActivity.NOTIFICATION_FEATURE_DWELL
       )
     }
 

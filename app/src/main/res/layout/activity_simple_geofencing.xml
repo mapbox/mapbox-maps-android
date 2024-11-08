@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".examples.geofence.GeofencingActivity">
+    tools:context=".examples.geofence.ExtendedGeofencingActivity">
 
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
@@ -19,38 +19,15 @@
         android:id="@+id/text_geofences_disabled"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:visibility="gone"
         android:layout_marginBottom="20dp"
         android:background="@color/design_default_color_secondary"
+        android:padding="8dp"
         android:text="User consent revoked"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_load_geofence_zones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Load GeoJson zones"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:clickable="false"
-        android:indeterminate="true"
-        android:progressTint="@android:color/holo_orange_dark"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/button_load_geofence_zones"
-        app:layout_constraintEnd_toEndOf="@id/button_load_geofence_zones"
-        app:layout_constraintStart_toStartOf="@id/button_load_geofence_zones" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
