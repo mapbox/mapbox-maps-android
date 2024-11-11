@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.8.0
+
+# 11.8.0 November 11, 2024
 ## Breaking changes ⚠️
 * Change the signature of experimental `MapboxMap.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Value?, QueryRenderedFeaturesetFeaturesCallback)` to `MapboxMap.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Value?, QueryRenderedFeaturesetFeaturesCallback)`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
 * [compose] Change the signature of experimental `MapState.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Expression?): List` to `MapState.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Expression?): List`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
@@ -62,6 +63,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.8.0 and common to v24.8.0.
+
 
 
 # 11.7.2 November 05, 2024
