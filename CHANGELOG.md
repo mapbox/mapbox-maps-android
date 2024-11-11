@@ -9,11 +9,59 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Change the signature of experimental `MapState.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Expression?): List` to `MapState.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Expression?): List`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
 
 ## Features ✨ and improvements 🏁
+* Introduce `Style.STANDARD_EXPERIMENTAL` style supporting featuresets and map interactions. **Important: this style should not be used in production as the style definition on backend is a subject to change after v11.8.0 stable release!**
+* Introduce fully typed map click and long click interactions working with `Style.STANDARD_EXPERIMENTAL`: `standardPoi`, `standardPlaceLabels`, `standardBuildings`.
+* Use [Cronet](https://developer.android.com/develop/connectivity/cronet) as the default network stack. If Cronet is not available, network stack defaults to [OkHttp](https://square.github.io/okhttp/) used in previous versions. More information available [here](https://docs.mapbox.com/android/maps/guides/install/#managing-google-play).
+* Introduce `OnClusterClickListener` and `OnClusterLongClickListener` for `CircleAnnotationManager` and `PointAnnotationManager`. These callbacks receive the clicked cluster represented by a `ClusterFeature`.
+* Introduce experimental `getStyleGlyphURL` / `setStyleGlyphURL` functions for `MapboxMap` and `Style`.
+* Make `fill-extrusion-emissive-strength` property data-driven.
+* Dispatch view annotations update before rendering, so that view annotations and map layers are rendered simultaneously and thus decreasing the view annotations latency when using `ViewAnnotationUpdateMode.MAP_FIXED_DELAY` mode.
+* Overscale composited tile components in offline.
+* Skip rendering landmarks when the camera is inside them.
+* Introduce experimental Geofencing API. Implementation example: [GeofencingActivity.kt](app/src/main/java/com/mapbox/maps/testapp/examples/geofence/GeofencingActivity.kt)
+* Introduce experimental `MapView.attribution.getMapAttributionDelegate().extraAttributions` to add custom attributions to the attribution dialog.
+* [compose] Deprecate all `Annotation` and `AnnotationGroup` composables that take `onClick` parameter. Now all annotation interactions could be set with appropriate `AnnotationInteractionsState` or `AnnotationGroupInteractionsState` stored in `AnnotationGroupState`.
+* [compose] Introduce `AnnotationInteractionsState` and `AnnotationGroupInteractionsState` states that allow to set callbacks for annotation interactions via `onClicked()` and `onLongClicked()`.`PointAnnotationGroupInteractionsState` and `CircleAnnotationGroupInteractionsState` also provide ability to set callbacks for interactions with clusters via `onClusterClicked` and `onClusterLongClicked`.
+* [compose] Introduce `remember` (e.g. `rememberPolylineAnnotationGroupInteractionsState` and `rememberPolylineAnnotationInteractionsState`) composable functions to create, init and remember all types of `AnnotationInteractionsState` and `AnnotationGroupInteractionsState`.
+* [compose] Introduce `<AnnotationType>InteractionsState.isDraggable` / `<AnnotationType>GroupInteractionsState.isDraggable` API for all annotation types allowing to drag annotations. Callbacks `onDragStarted()`, `onDragged()`,`onDragFinished()` are added as well.
+* [compose] Introduce experimental `Attribution(..., geofencingDialog)` compose function to customize Geofencing consent dialog.
 * Annotate `Bitmap.toMapboxImage()` and related as delicate API due to its native memory allocation.
+* Use fallback engine if cronet fails to load.
 
 ## Bug fixes 🐞
+* Fix terrain related snapshotter crash.
+* Handle empty payloads for offline resources.
+* Improve zooming performance on dynamic Standard terrain and optimize terrain re-rendering performance on e.g routeline `line-trim-offset` change.
+* Respect polygons with holes on querying rendered features.
+* Fix self-overlap of line corners when large `line-width` is used.
+* Adjust conflation intersection test padding to fix disappearing `fill-extrusion`.
+* Fix TileCover bug with polygon horizontal edges.
+* Fix a bug with image dependent paint properties not getting a correct value after image become available.
+* Clear tile pyramid on color theme change before the tiles are updated.
+* Fix missing images notifications for images within coalesce expression when other images in coalesce are present. Image expressions with two arguments are no longer being considered present if only second image is present.
+* Return operation error for featurestate related API in case the featureset is not valid.
+* Fix crash on style pack load when no access token is set.
+* Fix crash in TerrainRenderer when using snapshotter.
+* Fix crash on re-creation of a custom raster source when different options are provided.
+* Return parsing errors if runtime added style import JSON is not valid.
+* Fix missing models in rendering result if `reduceMemoryUse` is called before taking snapshot.
+* Fix the incorrect behaviour when using `symbol-z-oder` property.
+* Fix `raster-particle` trail discontinuity at the antimeridian.
+* Fix an Android 12 specific bug where location puck custom animator options lambda without explicit `ValueAnimator.duration` resulted in `duration = 0`.
+* Fix a rare `android.content.res.Resources$NotFoundException` happening when creating a `MapView`.
+* Fix a rare `NullPointerException` happening when fling gesture event is recognized.
+* Fix `StandardPoiFeature.geometry` to have a concrete `Point` type instead of `Geometry` interface.
+* Fix a bug in `GeoJsonSource.autoMaxZoom` leading to rendering artifacts with long dotted line layers.
+* Fix a crash if Cronet failed to init on device by fallbacking to OkHttp.
 * Disable false-positive lint error "Incorrect number of expressions".
 * Fix possible out of memory in native heap during annotation manager annotation updates (`AnnotationManager.update(...)`).
+* Fix CronetProviderInstaller proguard missing rule.
+* Fix rare crash due to native library not loaded when receiving background locations.
+* Do not modify file description structure when reading resource files.
+* Fix lifecycle calculation in case activity destruction is in progress.
+
+## Dependencies
+* Update gl-native to v11.8.0 and common to v24.8.0.
 
 
 # 11.7.2 November 05, 2024
