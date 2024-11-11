@@ -67,16 +67,12 @@ android {
     }
   }
 }
-val buildGlNativeFromSource: Boolean = project.findProperty("buildFromSource")?.toString()?.toBoolean() ?: false
-val buildCommonFromSource: Boolean = project.findProperty("buildCommonFromSource")?.toString()?.toBoolean() ?: false
 
 mapboxLibrary {
   glNative {
-    buildFromSource = buildGlNativeFromSource
     configuration = "api"
   }
   common {
-    buildFromSource = buildCommonFromSource
     configuration = "api"
   }
   publish {

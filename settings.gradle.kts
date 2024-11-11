@@ -31,7 +31,7 @@ include(
   ":plugin-overlay",
   ":plugin-scalebar",
   ":plugin-viewport",
-  ":sdk",
+  ":maps-sdk",
   ":sdk-base"
 )
 rootProject.name = "Mapbox Maps Android"

@@ -3,7 +3,6 @@ plugins {
   id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
-val buildFromSource: String by project
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
@@ -54,19 +53,13 @@ android {
     }
   }
 
-  packagingOptions {
-    if (buildFromSource.toBoolean()) {
-      jniLibs.pickFirsts.add("**/libc++_shared.so")
-    }
-  }
-
   buildFeatures {
     compose = true
   }
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  implementation(project(":maps-sdk"))
   implementation(project(":extension-compose"))
   implementation(platform(libs.compose.bom))
   implementation(libs.compose.ui)

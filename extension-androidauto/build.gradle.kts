@@ -34,7 +34,7 @@ mapboxLibrary {
 }
 
 dependencies {
-  api(project(":sdk"))
+  api(project(":maps-sdk"))
   api(libs.googleCarAppLibrary)
   implementation(libs.kotlin)
   implementation(libs.androidx.coreKtx)

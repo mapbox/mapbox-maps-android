@@ -2,7 +2,6 @@ plugins {
   id("com.mapbox.gradle.application")
 }
 
-val buildFromSource: String by project
 
 android {
   compileSdk = libs.versions.autoCompileSdkVersion.get().toInt()
@@ -27,12 +26,6 @@ android {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
   }
-
-  packagingOptions {
-    if (buildFromSource.toBoolean()) {
-      jniLibs.pickFirsts.add("**/libc++_shared.so")
-    }
-  }
 }
 
 dependencies {
@@ -41,7 +34,7 @@ dependencies {
 
   // Please review the compatibility guide. This app is showcasing the latest features with latest Maps SDK main branch.
   // https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v11
-  implementation(project(":sdk"))
+  implementation(project(":maps-sdk"))
 
   implementation(libs.kotlin)
   implementation(libs.androidx.appCompat)

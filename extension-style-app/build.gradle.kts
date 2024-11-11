@@ -3,7 +3,6 @@ plugins {
   id("com.mapbox.maps.token")
 }
 
-val buildFromSource: String by project
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
@@ -29,15 +28,10 @@ android {
     }
   }
 
-  packagingOptions {
-    if (buildFromSource.toBoolean()) {
-      jniLibs.pickFirsts.add("**/libc++_shared.so")
-    }
-  }
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  implementation(project(":maps-sdk"))
   implementation(libs.kotlin)
   implementation(libs.androidx.appCompat)
   androidTestUtil(libs.androidx.orchestrator)

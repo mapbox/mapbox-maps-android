@@ -19,8 +19,6 @@ internal constructor(
   private val enabledProperty: Property<Boolean> = objects.property<Boolean>().convention(false)
   private val configurationProperty: ListProperty<String> =
     objects.listProperty<String>().convention(listOf("implementation"))
-  private val buildFromSourceProperty: Property<Boolean> =
-    objects.property<Boolean>().convention(false)
 
   /**
    * True if this dependency should be added.
@@ -54,20 +52,10 @@ internal constructor(
       configurationProperty.setDisallowChanges(value)
     }
 
-  /**
-   * True if this dependency should instead be built from source.
-   */
-  @Suppress("MemberVisibilityCanBePrivate")
-  public var buildFromSource: Boolean
-    get() = buildFromSourceProperty.get()
-    set(value) {
-      buildFromSourceProperty.setDisallowChanges(value)
-    }
-
   internal fun applyTo(project: Project) = project.afterEvaluate {
     if (enabled) {
       this@MapboxDependencyExtension.configurations.forEach { configuration ->
-        dependency.add(this, configuration, buildFromSource)
+        dependency.add(this, configuration)
       }
     }
   }

@@ -5,8 +5,6 @@ plugins {
   //id("com.mapbox.android.sdk.versions")
 }
 
-val buildFromSource: String by project
-
 mapboxLibrary {
   dokka {
     // Include extra list of files to generate documentation if available

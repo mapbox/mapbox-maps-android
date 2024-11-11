@@ -5,7 +5,6 @@ internal object MapboxDependencies {
     group = "com.mapbox.common",
     artifact = "common",
     versionRef = "mapboxCommon",
-    sourceProject = ":common",
     supportsNdkVariant = true
   )
 
@@ -13,7 +12,6 @@ internal object MapboxDependencies {
     group = "com.mapbox.maps",
     artifact = "android-core",
     versionRef = "mapboxGlNative",
-    sourceProject = ":maps-core",
     snapshotArtifact = "android-core-internal",
     supportsNdkVariant = true
   )
