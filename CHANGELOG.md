@@ -6,6 +6,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Expose `MapViewportState.cameraForCoordinates` method.
 
+# 11.7.3
+## Bug fixes 🐞
+* Fix map flickering on some Mali and PowerVR GPUs.
+
+## Dependencies
+* Update gl-native to v11.7.3.
 
 # 11.8.0 November 11, 2024
 ## Breaking changes ⚠️
