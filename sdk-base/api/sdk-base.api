@@ -712,7 +712,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 
 public abstract interface class com/mapbox/maps/geofencing/MapGeofencingConsent {
 	public abstract fun getUserConsent ()Z
-	public abstract fun setUserConsent (ZLcom/mapbox/common/experimental/geofencing/GeofencingUtilsUserConsentResponseCallback;)V
+	public abstract fun setUserConsent (ZLcom/mapbox/common/geofencing/GeofencingUtilsUserConsentResponseCallback;)V
 	public abstract fun shouldShowConsent ()Z
 }
 

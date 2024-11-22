@@ -6,13 +6,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.JsonObject
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.bindgen.Expected
-import com.mapbox.common.experimental.geofencing.GeofencingError
-import com.mapbox.common.experimental.geofencing.GeofencingEvent
-import com.mapbox.common.experimental.geofencing.GeofencingFactory
-import com.mapbox.common.experimental.geofencing.GeofencingObserver
-import com.mapbox.common.experimental.geofencing.GeofencingOptions
-import com.mapbox.common.experimental.geofencing.GeofencingPropertiesKeys
+import com.mapbox.common.geofencing.GeofencingError
+import com.mapbox.common.geofencing.GeofencingEvent
+import com.mapbox.common.geofencing.GeofencingFactory
+import com.mapbox.common.geofencing.GeofencingObserver
+import com.mapbox.common.geofencing.GeofencingOptions
+import com.mapbox.common.geofencing.GeofencingPropertiesKeys
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.GeometryCollection
 import com.mapbox.geojson.Point
@@ -45,6 +46,7 @@ import java.lang.ref.WeakReference
  * Geofence callbacks are called when device location enters, dwells, or leaves loaded geofence zone.
  * Each aforementioned event is accompanied by rendering received feature (Blue, Green, Red colors ).
  */
+@MapboxExperimental
 class SimpleGeofencingActivity : AppCompatActivity() {
 
   private lateinit var locationPermissionHelper: LocationPermissionHelper
@@ -129,7 +131,10 @@ class SimpleGeofencingActivity : AppCompatActivity() {
     locationPermissionHelper.checkPermissions {
       // Postpone access to Geofence engine until we get location permissions
       geofencing.configure(
-        GeofencingOptions(CUSTOM_GEOFENCE_RADIUS, 300_000),
+        GeofencingOptions.Builder().apply {
+          defaultRadius = CUSTOM_GEOFENCE_RADIUS
+          maximumMonitoredFeatures = 300_000
+        }.build(),
         logGeofencingError("configure")
       )
       startGeofencing()

@@ -44,7 +44,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.mapbox.common.experimental.geofencing.GeofencingError
+import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
@@ -142,6 +142,7 @@ public class MapAttributionScope internal constructor(
    * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
    * @param geofencingConsentDialog Defines GeofencingConsentDialog when the Mapbox Geofencing is clicked.
    */
+  @com.mapbox.annotation.MapboxExperimental
   @MapboxExperimental
   @Composable
   public fun Attribution(

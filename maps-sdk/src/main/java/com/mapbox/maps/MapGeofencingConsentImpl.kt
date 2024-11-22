@@ -1,10 +1,10 @@
 package com.mapbox.maps
 
-import com.mapbox.common.experimental.geofencing.GeofencingUtils
-import com.mapbox.common.experimental.geofencing.GeofencingUtilsUserConsentResponseCallback
+import com.mapbox.common.geofencing.GeofencingUtils
+import com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback
 import com.mapbox.maps.geofencing.MapGeofencingConsent
 
-@OptIn(MapboxExperimental::class)
+@OptIn(MapboxExperimental::class, com.mapbox.annotation.MapboxExperimental::class)
 internal class MapGeofencingConsentImpl : MapGeofencingConsent {
   override fun setUserConsent(
     isConsentGiven: Boolean,

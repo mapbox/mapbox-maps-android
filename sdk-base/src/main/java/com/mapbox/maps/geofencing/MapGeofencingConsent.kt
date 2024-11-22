@@ -1,11 +1,12 @@
 package com.mapbox.maps.geofencing
 
-import com.mapbox.common.experimental.geofencing.GeofencingUtilsUserConsentResponseCallback
+import com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback
 import com.mapbox.maps.MapboxExperimental
 
 /**
  * Definition of map Geofencing consent utilities
  */
+@com.mapbox.annotation.MapboxExperimental
 @MapboxExperimental
 interface MapGeofencingConsent {
 

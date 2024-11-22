@@ -24,12 +24,12 @@ import androidx.lifecycle.lifecycleScope
 import com.mapbox.api.isochrone.IsochroneCriteria
 import com.mapbox.api.isochrone.MapboxIsochrone
 import com.mapbox.bindgen.Expected
-import com.mapbox.common.experimental.geofencing.GeofencingError
-import com.mapbox.common.experimental.geofencing.GeofencingEvent
-import com.mapbox.common.experimental.geofencing.GeofencingFactory
-import com.mapbox.common.experimental.geofencing.GeofencingObserver
-import com.mapbox.common.experimental.geofencing.GeofencingOptions
-import com.mapbox.common.experimental.geofencing.GeofencingPropertiesKeys
+import com.mapbox.common.geofencing.GeofencingError
+import com.mapbox.common.geofencing.GeofencingEvent
+import com.mapbox.common.geofencing.GeofencingFactory
+import com.mapbox.common.geofencing.GeofencingObserver
+import com.mapbox.common.geofencing.GeofencingOptions
+import com.mapbox.common.geofencing.GeofencingPropertiesKeys
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeometryCollection
@@ -73,6 +73,8 @@ import java.util.Date
  * even when GeofenceActivity or the whole app is closed.
  * [MapboxApplication.ENABLE_BACKGROUND_GEOFENCING] flag turns ON/OFF showcase of background behavior of the geofence engine.
  */
+
+@com.mapbox.annotation.MapboxExperimental
 class ExtendedGeofencingActivity : AppCompatActivity() {
 
   private var requestNotificationPermissionLauncher: ActivityResultLauncher<String> =
@@ -231,7 +233,10 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
     locationPermissionHelper.checkBackgroundPermission {
       // Postpone access to Geofence engine until we get location permissions
       geofencing.configure(
-        GeofencingOptions(CUSTOM_GEOFENCE_RADIUS, 300_000),
+        GeofencingOptions.Builder().apply {
+          defaultRadius = CUSTOM_GEOFENCE_RADIUS
+          maximumMonitoredFeatures = 300_000
+        }.build(),
         logGeofencingError("configure")
       )
       startGeofencing()
@@ -422,10 +427,11 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
     featureId?.let {
       geofencing.getFeature(featureId) {
         it.value?.let { geofenceState ->
-          val geofencingEvent = GeofencingEvent(
-            geofenceState.feature,
-            geofenceState.timestamp ?: Date(),
-          )
+
+          val geofencingEvent = GeofencingEvent.Builder().apply {
+            feature = geofenceState.feature
+            timestamp = geofenceState.timestamp ?: Date()
+          }.build()
           when (featureType) {
             NOTIFICATION_FEATURE_EXIT -> observer.onExit(geofencingEvent)
             NOTIFICATION_FEATURE_ENTRY -> observer.onEntry(geofencingEvent)

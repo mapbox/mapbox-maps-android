@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Breaking changes ⚠️
+* Expose Geofencing with `com.mapbox.annotation.MapboxExperimental` annotation.
+
 ## Features ✨ and improvements 🏁
 * Introduce experimental `FillExtrusionLayer.fillExtrusionBaseAlignment` and `FillExtrusionLayer.fillExtrusionHeightAlignment` APIs to control the behavior of fill extrusion base over terrain and the behavior of fill extrusion height over terrain respectively.
 * Introduce experimental `FillLayer.fillZOffset` and `FillLayer.fillZOffsetTransition` APIs to specify a uniform elevation in meters and define the transition of `fillZOffset` respectively.

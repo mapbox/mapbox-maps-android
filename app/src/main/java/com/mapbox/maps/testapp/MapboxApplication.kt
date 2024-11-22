@@ -3,10 +3,11 @@ package com.mapbox.maps.testapp
 import android.os.StrictMode
 import androidx.multidex.MultiDexApplication
 import com.mapbox.android.core.permissions.PermissionsManager
-import com.mapbox.common.experimental.geofencing.GeofencingError
-import com.mapbox.common.experimental.geofencing.GeofencingEvent
-import com.mapbox.common.experimental.geofencing.GeofencingFactory
-import com.mapbox.common.experimental.geofencing.GeofencingObserver
+import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.common.geofencing.GeofencingError
+import com.mapbox.common.geofencing.GeofencingEvent
+import com.mapbox.common.geofencing.GeofencingFactory
+import com.mapbox.common.geofencing.GeofencingObserver
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 import com.mapbox.maps.testapp.examples.geofence.ExtendedGeofencingActivity
@@ -16,6 +17,7 @@ import com.mapbox.maps.testapp.examples.geofence.ExtendedGeofencingActivity
  **/
 class MapboxApplication : MultiDexApplication() {
 
+  @MapboxExperimental
   private val geofencingObserver: GeofencingObserver = object : GeofencingObserver {
 
     override fun onEntry(event: GeofencingEvent) {
@@ -81,6 +83,7 @@ class MapboxApplication : MultiDexApplication() {
     )
   }
 
+  @MapboxExperimental
   fun registerGeofencingObserver() {
     if (PermissionsManager.areLocationPermissionsGranted(this) && !isObserverAdded) {
       val geofencing = GeofencingFactory.getOrCreate()

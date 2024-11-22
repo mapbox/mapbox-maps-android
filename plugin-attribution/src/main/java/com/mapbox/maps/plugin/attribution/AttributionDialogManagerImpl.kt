@@ -17,7 +17,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
-import com.mapbox.common.experimental.geofencing.GeofencingUtilsUserConsentResponseCallback
+import com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.logW
@@ -140,7 +140,7 @@ class AttributionDialogManagerImpl(
     telemetryDialog = builder.show()
   }
 
-  @OptIn(MapboxExperimental::class)
+  @OptIn(MapboxExperimental::class, com.mapbox.annotation.MapboxExperimental::class)
   private fun showGeofencingConsentDialog() {
     val builder = prepareDialogBuilder()
     builder.setTitle(R.string.mapbox_attributionGeofencingTitle)
