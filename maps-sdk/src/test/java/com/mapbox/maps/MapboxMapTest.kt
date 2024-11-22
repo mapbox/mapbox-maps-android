@@ -1314,53 +1314,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun querySourceFeaturesTypedFeaturesetDescriptorFromFeatureset() {
-    val featuresetId = "featuresetId"
-    val importId = "importId"
-    val descriptor = TypedFeaturesetDescriptor.Featureset(featuresetId, importId)
-    val filter = Value.nullValue()
-    val tag = 0L
-    mapboxMap.querySourceFeatures(
-      descriptor = descriptor,
-      filter = filter,
-      tag = tag,
-    ) { }
-    verify {
-      nativeMap.querySourceFeatures(
-        FeaturesetQueryTarget(
-          FeaturesetDescriptor(featuresetId, importId, /* layerId */ null),
-          filter,
-          tag,
-        ),
-        /* callback */ any()
-      )
-    }
-  }
-
-  @Test
-  fun querySourceFeaturesTypedFeaturesetDescriptorFromLayer() {
-    val layerId = "layerId"
-    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
-    val filter = Value.nullValue()
-    val tag = 0L
-    mapboxMap.querySourceFeatures(
-      descriptor = descriptor,
-      filter = filter,
-      tag = tag,
-    ) { }
-    verify {
-      nativeMap.querySourceFeatures(
-        FeaturesetQueryTarget(
-          FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
-          filter,
-          tag,
-        ),
-        /* callback */ any()
-      )
-    }
-  }
-
-  @Test
   fun queryRenderedFeatures() {
     val geometry = mockk<RenderedQueryGeometry>()
     val descriptor = mockk<TypedFeaturesetDescriptor<FeatureState, *>>()
@@ -1408,17 +1361,6 @@ class MapboxMapTest {
     assertEquals(0.0, geometrySlot.captured.screenBox.min.y, 0.0001)
     assertEquals(10.0, geometrySlot.captured.screenBox.max.x, 0.0001)
     assertEquals(20.0, geometrySlot.captured.screenBox.max.y, 0.0001)
-  }
-
-  @OptIn(MapboxDelicateApi::class)
-  @Test
-  fun queryRenderedFeaturesFromFeaturesetQueryTargets() {
-    val geometry = mockk<RenderedQueryGeometry>()
-    val targets = listOf(mockk<FeaturesetQueryTarget>())
-    mapboxMap.queryRenderedFeatures(geometry, targets) { }
-    verify {
-      nativeMap.queryRenderedFeatures(geometry, targets, any())
-    }
   }
 
   @Test

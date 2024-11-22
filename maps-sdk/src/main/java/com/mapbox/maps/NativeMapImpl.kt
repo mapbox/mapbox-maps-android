@@ -753,13 +753,6 @@ internal class NativeMapImpl(val map: Map) {
     return map.resetFeatureStates(featureset, callback)
   }
 
-  fun querySourceFeatures(
-    target: FeaturesetQueryTarget,
-    callback: QuerySourceFeaturesCallback
-  ): Cancelable {
-    return map.querySourceFeatures(target, callback)
-  }
-
   fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     targets: List<FeaturesetQueryTarget>,

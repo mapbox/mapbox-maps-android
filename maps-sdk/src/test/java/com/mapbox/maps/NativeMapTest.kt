@@ -724,31 +724,12 @@ class NativeMapTest {
   }
 
   @Test
-  fun queryRenderedFeaturesFeaturesetQueryTargets() {
-    val callback = mockk<QueryRenderedFeaturesCallback>()
-    val geometry = mockk<RenderedQueryGeometry>()
-    val featuresetQueryTargets = listOf(mockk<FeaturesetQueryTarget>())
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.queryRenderedFeatures(geometry, featuresetQueryTargets, callback)
-    verify { map.queryRenderedFeatures(geometry, featuresetQueryTargets, callback) }
-  }
-
-  @Test
   fun querySourceFeatures() {
     val callback = mockk<QuerySourceFeaturesCallback>()
     val queryOptions = mockk<SourceQueryOptions>()
     val nativeMap = NativeMapImpl(map)
     nativeMap.querySourceFeatures("foo", queryOptions, callback)
     verify { map.querySourceFeatures("foo", queryOptions, callback) }
-  }
-
-  @Test
-  fun querySourceFeaturesFeaturesetQueryTarget() {
-    val callback = mockk<QuerySourceFeaturesCallback>()
-    val featuresetQueryTarget = mockk<FeaturesetQueryTarget>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.querySourceFeatures(featuresetQueryTarget, callback)
-    verify { map.querySourceFeatures(featuresetQueryTarget, callback) }
   }
 
   @Test

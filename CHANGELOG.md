@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Breaking changes ⚠️
 * Expose Geofencing with `com.mapbox.annotation.MapboxExperimental` annotation.
+* Remove experimental `MapboxMap.queryRenderedFeatures` and `MapboxMap.querySourceFeatures` that used `FeaturesetQueryTarget` as an argument.
 
 ## Features ✨ and improvements 🏁
 * Introduce experimental `FillExtrusionLayer.fillExtrusionBaseAlignment` and `FillExtrusionLayer.fillExtrusionHeightAlignment` APIs to control the behavior of fill extrusion base over terrain and the behavior of fill extrusion height over terrain respectively.

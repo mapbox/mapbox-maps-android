@@ -2673,65 +2673,6 @@ class MapboxMap :
   }
 
   /**
-   * Queries the map for rendered features.
-   *
-   * Note: this is considered to be low-level API and should not be used in majority of use-cases.
-   *  Instead consider using [ClickInteraction], [LongClickInteraction] to interact with map elements or
-   *  overloaded [queryRenderedFeatures] that takes a single [TypedFeaturesetDescriptor] as an argument and returns
-   *  a single [FeaturesetFeature] implementation in the callback.
-   *
-   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
-   * @param targets An array of [FeaturesetQueryTarget] used to filter and query features.
-   * @param callback The `query features callback` called when the query operation completes.
-   *
-   * @return A `cancelable` object that could be used to cancel the pending query.
-   */
-  @MapboxExperimental
-  @MapboxDelicateApi
-  fun queryRenderedFeatures(
-    geometry: RenderedQueryGeometry,
-    targets: List<FeaturesetQueryTarget>,
-    callback: QueryRenderedFeaturesCallback,
-  ): Cancelable {
-    checkNativeMap("queryRenderedFeatures")
-    return nativeMap.queryRenderedFeatures(
-      geometry,
-      targets,
-      callback
-    )
-  }
-
-  /**
-   * Queries the map for source features.
-   *
-   * @param descriptor [TypedFeaturesetDescriptor] object representing either a featureset or a single layer.
-   * @param filter an optional global filter.
-   * @param tag an optional identifier.
-   * @param callback The callback called when the query completes.
-   * @return A `cancelable` object that could be used to cancel the pending query.
-   *
-   * Note: In order to get expected results, the corresponding source needs to be in use and the query shall be made after the corresponding source data is loaded.
-   */
-  @MapboxExperimental
-  @JvmOverloads
-  fun querySourceFeatures(
-    descriptor: TypedFeaturesetDescriptor<*, *>,
-    filter: Value? = null,
-    tag: Long? = null,
-    callback: QuerySourceFeaturesCallback,
-  ): Cancelable {
-    checkNativeMap("querySourceFeatures")
-    return nativeMap.querySourceFeatures(
-      FeaturesetQueryTarget(
-        descriptor.toFeaturesetDescriptor(),
-        filter,
-        tag
-      ),
-      callback
-    )
-  }
-
-  /**
    * A convenience object to access MapboxMap's static utilities.
    */
   companion object {
