@@ -460,6 +460,59 @@ class IconTextFit private constructor(override val value: String) : LayerPropert
     }
   }
 }
+// SYMBOL_ELEVATION_REFERENCE: Selects the base of symbol-elevation.
+/**
+ * Selects the base of symbol-elevation.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class SymbolElevationReference private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is SymbolElevationReference &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "SymbolElevationReference(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Elevate symbols relative to the sea level.
+     */
+    @JvmField
+    val SEA = SymbolElevationReference("sea")
+    /**
+     * Elevate symbols relative to the ground's height below them.
+     */
+    @JvmField
+    val GROUND = SymbolElevationReference("ground")
+
+    /**
+     * Utility function to get [SymbolElevationReference] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): SymbolElevationReference {
+      return when (value) {
+        "SEA" -> SEA
+        "GROUND" -> GROUND
+        else -> throw RuntimeException("SymbolElevationReference.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // SYMBOL_PLACEMENT: Label placement relative to its geometry.
 /**
  * Label placement relative to its geometry.
@@ -1064,59 +1117,6 @@ class IconTranslateAnchor private constructor(override val value: String) : Laye
     }
   }
 }
-// SYMBOL_ELEVATION_REFERENCE: Selects the base of symbol-elevation.
-/**
- * Selects the base of symbol-elevation.
- *
- * @param value String value of this property
- */
-@MapboxExperimental
-class SymbolElevationReference private constructor(override val value: String) : LayerProperty {
-
-  /**
-   * Indicates whether some other object is "equal to" this one.
-   */
-  override fun equals(other: Any?) = other is SymbolElevationReference &&
-    value == other.value
-
-  /**
-   * Returns a hash code value for the object.
-   */
-  override fun hashCode() = value.hashCode()
-
-  /**
-   * Returns a String for the object.
-   */
-  override fun toString() = "SymbolElevationReference(value=$value)"
-
-  /**
-   * Static methods and variables.
-   */
-  companion object {
-    /**
-     * Elevate symbols relative to the sea level.
-     */
-    @JvmField
-    val SEA = SymbolElevationReference("sea")
-    /**
-     * Elevate symbols relative to the ground's height below them.
-     */
-    @JvmField
-    val GROUND = SymbolElevationReference("ground")
-
-    /**
-     * Utility function to get [SymbolElevationReference] instance from given [value].
-     */
-    @JvmStatic
-    fun valueOf(value: String): SymbolElevationReference {
-      return when (value) {
-        "SEA" -> SEA
-        "GROUND" -> GROUND
-        else -> throw RuntimeException("SymbolElevationReference.valueOf does not support [$value]")
-      }
-    }
-  }
-}
 // TEXT_TRANSLATE_ANCHOR: Controls the frame of reference for `text-translate`.
 /**
  * Controls the frame of reference for `text-translate`.
@@ -1321,6 +1321,112 @@ class CircleTranslateAnchor private constructor(override val value: String) : La
         "MAP" -> MAP
         "VIEWPORT" -> VIEWPORT
         else -> throw RuntimeException("CircleTranslateAnchor.valueOf does not support [$value]")
+      }
+    }
+  }
+}
+// FILL_EXTRUSION_BASE_ALIGNMENT: Controls the behavior of fill extrusion base over terrain
+/**
+ * Controls the behavior of fill extrusion base over terrain
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class FillExtrusionBaseAlignment private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is FillExtrusionBaseAlignment &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "FillExtrusionBaseAlignment(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * The fill extrusion base follows terrain slope.
+     */
+    @JvmField
+    val TERRAIN = FillExtrusionBaseAlignment("terrain")
+    /**
+     * The fill extrusion base is flat over terrain.
+     */
+    @JvmField
+    val FLAT = FillExtrusionBaseAlignment("flat")
+
+    /**
+     * Utility function to get [FillExtrusionBaseAlignment] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): FillExtrusionBaseAlignment {
+      return when (value) {
+        "TERRAIN" -> TERRAIN
+        "FLAT" -> FLAT
+        else -> throw RuntimeException("FillExtrusionBaseAlignment.valueOf does not support [$value]")
+      }
+    }
+  }
+}
+// FILL_EXTRUSION_HEIGHT_ALIGNMENT: Controls the behavior of fill extrusion height over terrain
+/**
+ * Controls the behavior of fill extrusion height over terrain
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class FillExtrusionHeightAlignment private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is FillExtrusionHeightAlignment &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "FillExtrusionHeightAlignment(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * The fill extrusion height follows terrain slope.
+     */
+    @JvmField
+    val TERRAIN = FillExtrusionHeightAlignment("terrain")
+    /**
+     * The fill extrusion height is flat over terrain.
+     */
+    @JvmField
+    val FLAT = FillExtrusionHeightAlignment("flat")
+
+    /**
+     * Utility function to get [FillExtrusionHeightAlignment] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): FillExtrusionHeightAlignment {
+      return when (value) {
+        "TERRAIN" -> TERRAIN
+        "FLAT" -> FLAT
+        else -> throw RuntimeException("FillExtrusionHeightAlignment.valueOf does not support [$value]")
       }
     }
   }
@@ -1587,6 +1693,58 @@ class ModelType private constructor(override val value: String) : LayerProperty 
     }
   }
 }
+// BACKGROUND_PITCH_ALIGNMENT: Orientation of background layer.
+/**
+ * Orientation of background layer.
+ *
+ * @param value String value of this property
+ */
+class BackgroundPitchAlignment private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is BackgroundPitchAlignment &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "BackgroundPitchAlignment(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * The background is aligned to the plane of the map.
+     */
+    @JvmField
+    val MAP = BackgroundPitchAlignment("map")
+    /**
+     * The background is aligned to the plane of the viewport, covering the whole screen.
+     */
+    @JvmField
+    val VIEWPORT = BackgroundPitchAlignment("viewport")
+
+    /**
+     * Utility function to get [BackgroundPitchAlignment] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): BackgroundPitchAlignment {
+      return when (value) {
+        "MAP" -> MAP
+        "VIEWPORT" -> VIEWPORT
+        else -> throw RuntimeException("BackgroundPitchAlignment.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // SKY_TYPE: The type of the sky
 /**
  * The type of the sky
@@ -1673,7 +1831,7 @@ class Anchor private constructor(override val value: String) : LayerProperty {
     @JvmField
     val MAP = Anchor("map")
     /**
-     * The position of the light source is aligned to the rotation of the viewport.
+     * The position of the light source is aligned to the rotation of the viewport. If terrain is enabled, performance regressions may occur in certain scenarios, particularly on lower-end hardware. Ensure that you test your target scenarios on the appropriate hardware to verify performance.
      */
     @JvmField
     val VIEWPORT = Anchor("viewport")

@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class FillLayerTest {
@@ -1046,6 +1048,113 @@ class FillLayerTest {
   }
 
   @Test
+  fun fillZOffsetSet() {
+    val layer = fillLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillZOffset(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-z-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillZOffsetGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillZOffset?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-z-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillZOffsetAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillZOffset(expression)
+    verify { style.setStyleLayerProperty("id", "fill-z-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillZOffsetAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillZOffsetAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-z-offset") }
+  }
+
+  @Test
+  fun fillZOffsetAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillZOffsetAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-z-offset") }
+  }
+
+  @Test
+  fun fillZOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillZOffsetAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillZOffset!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-z-offset") }
+  }
+
+  @Test
+  fun fillZOffsetTransitionSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillZOffsetTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-z-offset-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillZOffsetTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillZOffsetTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-z-offset-transition") }
+  }
+
+  @Test
+  fun fillZOffsetTransitionSetDsl() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillZOffsetTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-z-offset-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun visibilitySet() {
     val layer = fillLayer("id", "source") {}
     layer.bindTo(style)
@@ -1521,6 +1630,50 @@ class FillLayerTest {
     assertEquals(FillTranslateAnchor.MAP.value, FillLayer.defaultFillTranslateAnchorAsExpression.toString())
     assertEquals(FillTranslateAnchor.MAP, FillLayer.defaultFillTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor") }
+  }
+
+  @Test
+  fun defaultFillZOffsetTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillLayer.defaultFillZOffset?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-z-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillZOffsetAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillZOffsetAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-z-offset") }
+  }
+
+  @Test
+  fun defaultFillZOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillLayer.defaultFillZOffsetAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillLayer.defaultFillZOffset!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-z-offset") }
+  }
+
+  @Test
+  fun defaultFillZOffsetTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillLayer.defaultFillZOffsetTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-z-offset-transition") }
   }
 
   @Test

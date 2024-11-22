@@ -228,6 +228,29 @@ class BackgroundLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun backgroundPitchAlignmentTest() {
+    val layer = backgroundLayer("id") {
+      backgroundPitchAlignment(BackgroundPitchAlignment.MAP)
+    }
+    setupLayer(layer)
+    assertEquals(BackgroundPitchAlignment.MAP, layer.backgroundPitchAlignment)
+  }
+
+  @Test
+  @UiThreadTest
+  fun backgroundPitchAlignmentAsExpressionTest() {
+    val expression = literal("map")
+    val layer = backgroundLayer("id") {
+      backgroundPitchAlignment(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.backgroundPitchAlignmentAsExpression.toString())
+    assertEquals(BackgroundPitchAlignment.MAP, layer.backgroundPitchAlignment!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun visibilityTest() {
     val layer = backgroundLayer("id") {
       visibility(Visibility.NONE)
@@ -271,6 +294,8 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertNotNull("defaultBackgroundOpacityTransition should not be null", BackgroundLayer.defaultBackgroundOpacityTransition)
     assertNotNull("defaultBackgroundPattern should not be null", BackgroundLayer.defaultBackgroundPattern)
     assertNotNull("defaultBackgroundPatternAsExpression should not be null", BackgroundLayer.defaultBackgroundPatternAsExpression)
+    assertNotNull("defaultBackgroundPitchAlignment should not be null", BackgroundLayer.defaultBackgroundPitchAlignment)
+    assertNotNull("defaultBackgroundPitchAlignmentAsExpression should not be null", BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression)
   }
 
   @Test
@@ -280,12 +305,14 @@ class BackgroundLayerTest : BaseStyleTest() {
     val backgroundEmissiveStrengthTestValue = 1.0
     val backgroundOpacityTestValue = 1.0
     val backgroundPatternTestValue = "abc"
+    val backgroundPitchAlignmentTestValue = BackgroundPitchAlignment.MAP
 
     val layer = backgroundLayer("id") {
       backgroundColor(backgroundColorTestValue)
       backgroundEmissiveStrength(backgroundEmissiveStrengthTestValue)
       backgroundOpacity(backgroundOpacityTestValue)
       backgroundPattern(backgroundPatternTestValue)
+      backgroundPitchAlignment(backgroundPitchAlignmentTestValue)
     }
 
     setupLayer(layer)
@@ -299,6 +326,7 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertEquals(backgroundEmissiveStrengthTestValue, cachedLayer.backgroundEmissiveStrength)
     assertEquals(backgroundOpacityTestValue, cachedLayer.backgroundOpacity)
     assertEquals(backgroundPatternTestValue, cachedLayer.backgroundPattern)
+    assertEquals(backgroundPitchAlignmentTestValue, cachedLayer.backgroundPitchAlignment)
   }
 }
 

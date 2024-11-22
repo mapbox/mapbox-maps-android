@@ -48,6 +48,7 @@ public class PointAnnotationGroupState private constructor(
   initialIconTextFit: IconTextFit?,
   initialIconTextFitPadding: List<Double>?,
   initialSymbolAvoidEdges: Boolean?,
+  initialSymbolElevationReference: SymbolElevationReference?,
   initialSymbolPlacement: SymbolPlacement?,
   initialSymbolSortKey: Double?,
   initialSymbolSpacing: Double?,
@@ -86,7 +87,6 @@ public class PointAnnotationGroupState private constructor(
   initialIconOpacity: Double?,
   initialIconTranslate: List<Double>?,
   initialIconTranslateAnchor: IconTranslateAnchor?,
-  initialSymbolElevationReference: SymbolElevationReference?,
   initialSymbolZOffset: Double?,
   initialTextColor: Color?,
   initialTextEmissiveStrength: Double?,
@@ -115,6 +115,7 @@ public class PointAnnotationGroupState private constructor(
     initialIconTextFit = null,
     initialIconTextFitPadding = null,
     initialSymbolAvoidEdges = null,
+    initialSymbolElevationReference = null,
     initialSymbolPlacement = null,
     initialSymbolSortKey = null,
     initialSymbolSpacing = null,
@@ -153,7 +154,6 @@ public class PointAnnotationGroupState private constructor(
     initialIconOpacity = null,
     initialIconTranslate = null,
     initialIconTranslateAnchor = null,
-    initialSymbolElevationReference = null,
     initialSymbolZOffset = null,
     initialTextColor = null,
     initialTextEmissiveStrength = null,
@@ -231,6 +231,11 @@ public class PointAnnotationGroupState private constructor(
    * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
    */
   public var symbolAvoidEdges: Boolean? by mutableStateOf(initialSymbolAvoidEdges)
+  /**
+   * Selects the base of symbol-elevation.
+   */
+  @MapboxExperimental
+  public var symbolElevationReference: SymbolElevationReference? by mutableStateOf(initialSymbolElevationReference)
   /**
    * Label placement relative to its geometry.
    */
@@ -384,11 +389,6 @@ public class PointAnnotationGroupState private constructor(
    */
   public var iconTranslateAnchor: IconTranslateAnchor? by mutableStateOf(initialIconTranslateAnchor)
   /**
-   * Selects the base of symbol-elevation.
-   */
-  @MapboxExperimental
-  public var symbolElevationReference: SymbolElevationReference? by mutableStateOf(initialSymbolElevationReference)
-  /**
    * Specifies an uniform elevation from the ground, in meters.
    */
   @MapboxExperimental
@@ -496,6 +496,11 @@ public class PointAnnotationGroupState private constructor(
   @Composable
   private fun UpdateSymbolAvoidEdges(annotationManager: PointAnnotationManager) {
     annotationManager.symbolAvoidEdges = symbolAvoidEdges
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolElevationReference(annotationManager: PointAnnotationManager) {
+    annotationManager.symbolElevationReference = symbolElevationReference
   }
   @Composable
   private fun UpdateSymbolPlacement(annotationManager: PointAnnotationManager) {
@@ -651,11 +656,6 @@ public class PointAnnotationGroupState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateSymbolElevationReference(annotationManager: PointAnnotationManager) {
-    annotationManager.symbolElevationReference = symbolElevationReference
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateSymbolZOffset(annotationManager: PointAnnotationManager) {
     annotationManager.symbolZOffset = symbolZOffset
   }
@@ -713,6 +713,7 @@ public class PointAnnotationGroupState private constructor(
     UpdateIconTextFit(annotationManager)
     UpdateIconTextFitPadding(annotationManager)
     UpdateSymbolAvoidEdges(annotationManager)
+    UpdateSymbolElevationReference(annotationManager)
     UpdateSymbolPlacement(annotationManager)
     UpdateSymbolSortKey(annotationManager)
     UpdateSymbolSpacing(annotationManager)
@@ -751,7 +752,6 @@ public class PointAnnotationGroupState private constructor(
     UpdateIconOpacity(annotationManager)
     UpdateIconTranslate(annotationManager)
     UpdateIconTranslateAnchor(annotationManager)
-    UpdateSymbolElevationReference(annotationManager)
     UpdateSymbolZOffset(annotationManager)
     UpdateTextColor(annotationManager)
     UpdateTextEmissiveStrength(annotationManager)

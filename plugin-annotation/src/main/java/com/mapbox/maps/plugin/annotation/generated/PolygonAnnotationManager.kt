@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import androidx.annotation.ColorInt
 import com.mapbox.geojson.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -29,6 +30,7 @@ class PolygonAnnotationManager(
     delegateProvider, annotationConfig, ID_GENERATOR.incrementAndGet(), "polygonAnnotation", ::FillLayer
   ) {
 
+  @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY -> {
@@ -51,6 +53,10 @@ class PolygonAnnotationManager(
         layer.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
         dragLayer.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
       }
+      PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET -> {
+        layer.fillZOffset(get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET))
+        dragLayer.fillZOffset(get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET))
+      }
     }
   }
 
@@ -65,6 +71,7 @@ class PolygonAnnotationManager(
    * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET - Double
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -88,6 +95,7 @@ class PolygonAnnotationManager(
    * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET - Double
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -469,6 +477,41 @@ class PolygonAnnotationManager(
     }
 
   /**
+   * The default fillZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   */
+  @MapboxExperimental
+  var fillZOffset: Double?
+    /**
+     * Get the fillZOffset property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the fillZOffset property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The Slot property
    *
    * The slot this layer is assigned to. If specified, and a slot with that name exists, it will be placed at that position in the layer order.
@@ -523,6 +566,7 @@ class PolygonAnnotationManager(
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OPACITY] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_PATTERN] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET] = false
   }
 
   /**

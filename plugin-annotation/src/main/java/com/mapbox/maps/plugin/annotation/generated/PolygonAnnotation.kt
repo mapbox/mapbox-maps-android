@@ -283,6 +283,39 @@ class PolygonAnnotation(
     }
 
   /**
+   * The fillZOffset property
+   *
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   */
+  var fillZOffset: Double?
+    /**
+     * Get the fillZOffset property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the fillZOffset property
+     *
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -330,6 +363,9 @@ class PolygonAnnotation(
     }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)
+    }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
     }
   }
 

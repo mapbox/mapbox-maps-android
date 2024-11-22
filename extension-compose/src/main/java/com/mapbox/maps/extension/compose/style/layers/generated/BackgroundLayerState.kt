@@ -28,6 +28,7 @@ public class BackgroundLayerState private constructor(
   initialBackgroundOpacity: DoubleValue,
   initialBackgroundOpacityTransition: Transition,
   initialBackgroundPattern: ImageValue,
+  initialBackgroundPitchAlignment: BackgroundPitchAlignmentValue,
   initialVisibility: VisibilityValue,
   initialMinZoom: LongValue,
   initialMaxZoom: LongValue,
@@ -43,6 +44,7 @@ public class BackgroundLayerState private constructor(
     initialBackgroundOpacity = DoubleValue.INITIAL,
     initialBackgroundOpacityTransition = Transition.INITIAL,
     initialBackgroundPattern = ImageValue.INITIAL,
+    initialBackgroundPitchAlignment = BackgroundPitchAlignmentValue.INITIAL,
     initialVisibility = VisibilityValue.INITIAL,
     initialMinZoom = LongValue.INITIAL,
     initialMaxZoom = LongValue.INITIAL,
@@ -76,6 +78,10 @@ public class BackgroundLayerState private constructor(
    *  Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   public var backgroundPattern: ImageValue by mutableStateOf(initialBackgroundPattern)
+  /**
+   *  Orientation of background layer. Default value: "map".
+   */
+  public var backgroundPitchAlignment: BackgroundPitchAlignmentValue by mutableStateOf(initialBackgroundPitchAlignment)
   /**
    *  Whether this layer is displayed. Default value: "visible".
    */
@@ -135,6 +141,12 @@ public class BackgroundLayerState private constructor(
     }
   }
   @Composable
+  private fun UpdateBackgroundPitchAlignment(layerNode: LayerNode) {
+    if (backgroundPitchAlignment.notInitial) {
+      layerNode.setProperty("background-pitch-alignment", backgroundPitchAlignment.value)
+    }
+  }
+  @Composable
   private fun UpdateVisibility(layerNode: LayerNode) {
     if (visibility.notInitial) {
       layerNode.setProperty("visibility", visibility.value)
@@ -162,6 +174,7 @@ public class BackgroundLayerState private constructor(
     UpdateBackgroundOpacity(layerNode)
     UpdateBackgroundOpacityTransition(layerNode)
     UpdateBackgroundPattern(layerNode)
+    UpdateBackgroundPitchAlignment(layerNode)
     UpdateVisibility(layerNode)
     UpdateMinZoom(layerNode)
     UpdateMaxZoom(layerNode)

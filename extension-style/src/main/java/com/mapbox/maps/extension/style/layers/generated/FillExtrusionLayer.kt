@@ -932,6 +932,78 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   */
+  @MapboxExperimental
+  val fillExtrusionBaseAlignment: FillExtrusionBaseAlignment?
+    /**
+     * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAlignment] to get the default property.
+     *
+     * @return FillExtrusionBaseAlignment
+     */
+    get() {
+      getPropertyValue<String?>("fill-extrusion-base-alignment")?.let {
+        return FillExtrusionBaseAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAlignment] to set the default property.
+   *
+   * @param fillExtrusionBaseAlignment value of fillExtrusionBaseAlignment
+   */
+  @MapboxExperimental
+  override fun fillExtrusionBaseAlignment(fillExtrusionBaseAlignment: FillExtrusionBaseAlignment): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-base-alignment", fillExtrusionBaseAlignment)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   *
+   * This is an Expression representation of "fill-extrusion-base-alignment".
+   *
+   */
+  @MapboxExperimental
+  val fillExtrusionBaseAlignmentAsExpression: Expression?
+    /**
+     * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+     *
+     * Get the FillExtrusionBaseAlignment property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression] to get the default property.
+     *
+     * @return FillExtrusionBaseAlignment
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-base-alignment")?.let {
+        return it
+      }
+      fillExtrusionBaseAlignment?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression] to set the default property.
+   *
+   * @param fillExtrusionBaseAlignment value of fillExtrusionBaseAlignment as Expression
+   */
+  @MapboxExperimental
+  override fun fillExtrusionBaseAlignment(fillExtrusionBaseAlignment: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-base-alignment", fillExtrusionBaseAlignment)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    */
   val fillExtrusionColor: String?
@@ -1885,6 +1957,78 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   override fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionHeightTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   */
+  @MapboxExperimental
+  val fillExtrusionHeightAlignment: FillExtrusionHeightAlignment?
+    /**
+     * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAlignment] to get the default property.
+     *
+     * @return FillExtrusionHeightAlignment
+     */
+    get() {
+      getPropertyValue<String?>("fill-extrusion-height-alignment")?.let {
+        return FillExtrusionHeightAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAlignment] to set the default property.
+   *
+   * @param fillExtrusionHeightAlignment value of fillExtrusionHeightAlignment
+   */
+  @MapboxExperimental
+  override fun fillExtrusionHeightAlignment(fillExtrusionHeightAlignment: FillExtrusionHeightAlignment): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-height-alignment", fillExtrusionHeightAlignment)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   *
+   * This is an Expression representation of "fill-extrusion-height-alignment".
+   *
+   */
+  @MapboxExperimental
+  val fillExtrusionHeightAlignmentAsExpression: Expression?
+    /**
+     * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+     *
+     * Get the FillExtrusionHeightAlignment property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression] to get the default property.
+     *
+     * @return FillExtrusionHeightAlignment
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-height-alignment")?.let {
+        return it
+      }
+      fillExtrusionHeightAlignment?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression] to set the default property.
+   *
+   * @param fillExtrusionHeightAlignment value of fillExtrusionHeightAlignment as Expression
+   */
+  @MapboxExperimental
+  override fun fillExtrusionHeightAlignment(fillExtrusionHeightAlignment: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-height-alignment", fillExtrusionHeightAlignment)
+    setProperty(propertyValue)
   }
 
   /**
@@ -2960,6 +3104,48 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-transition").silentUnwrap()
 
     /**
+     * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionBaseAlignment: FillExtrusionBaseAlignment?
+      /**
+       * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+       *
+       * Get the default value of FillExtrusionBaseAlignment property
+       *
+       * @return FillExtrusionBaseAlignment
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-alignment").silentUnwrap<String>()?.let {
+          return FillExtrusionBaseAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+     *
+     * This is an Expression representation of "fill-extrusion-base-alignment".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionBaseAlignmentAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionBaseAlignment property as an Expression
+       *
+       * @return FillExtrusionBaseAlignment
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-alignment").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionBaseAlignment?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
      * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      */
     val defaultFillExtrusionColor: String?
@@ -3433,6 +3619,48 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-transition").silentUnwrap()
+
+    /**
+     * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionHeightAlignment: FillExtrusionHeightAlignment?
+      /**
+       * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+       *
+       * Get the default value of FillExtrusionHeightAlignment property
+       *
+       * @return FillExtrusionHeightAlignment
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-alignment").silentUnwrap<String>()?.let {
+          return FillExtrusionHeightAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+     *
+     * This is an Expression representation of "fill-extrusion-height-alignment".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionHeightAlignmentAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionHeightAlignment property as an Expression
+       *
+       * @return FillExtrusionHeightAlignment
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-alignment").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionHeightAlignment?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
 
     /**
      * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
@@ -4071,6 +4299,22 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionBaseTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
+   * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   *
+   * @param fillExtrusionBaseAlignment value of fillExtrusionBaseAlignment
+   */
+  @MapboxExperimental
+  fun fillExtrusionBaseAlignment(fillExtrusionBaseAlignment: FillExtrusionBaseAlignment = FillExtrusionBaseAlignment.TERRAIN): FillExtrusionLayer
+
+  /**
+   * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   *
+   * @param fillExtrusionBaseAlignment value of fillExtrusionBaseAlignment as Expression
+   */
+  @MapboxExperimental
+  fun fillExtrusionBaseAlignment(fillExtrusionBaseAlignment: Expression): FillExtrusionLayer
+
+  /**
    * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    *
    * @param fillExtrusionColor value of fillExtrusionColor
@@ -4358,6 +4602,22 @@ interface FillExtrusionLayerDsl {
    * DSL for [fillExtrusionHeightTransition].
    */
   fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
+
+  /**
+   * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   *
+   * @param fillExtrusionHeightAlignment value of fillExtrusionHeightAlignment
+   */
+  @MapboxExperimental
+  fun fillExtrusionHeightAlignment(fillExtrusionHeightAlignment: FillExtrusionHeightAlignment = FillExtrusionHeightAlignment.FLAT): FillExtrusionLayer
+
+  /**
+   * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   *
+   * @param fillExtrusionHeightAlignment value of fillExtrusionHeightAlignment as Expression
+   */
+  @MapboxExperimental
+  fun fillExtrusionHeightAlignment(fillExtrusionHeightAlignment: Expression): FillExtrusionLayer
 
   /**
    * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.

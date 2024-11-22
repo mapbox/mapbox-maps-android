@@ -1235,6 +1235,78 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   */
+  @MapboxExperimental
+  val symbolElevationReference: SymbolElevationReference?
+    /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     *
+     * Use static method [SymbolLayer.defaultSymbolElevationReference] to get the default property.
+     *
+     * @return SymbolElevationReference
+     */
+    get() {
+      getPropertyValue<String?>("symbol-elevation-reference")?.let {
+        return SymbolElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * Use static method [SymbolLayer.defaultSymbolElevationReference] to set the default property.
+   *
+   * @param symbolElevationReference value of symbolElevationReference
+   */
+  @MapboxExperimental
+  override fun symbolElevationReference(symbolElevationReference: SymbolElevationReference): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-elevation-reference", symbolElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * This is an Expression representation of "symbol-elevation-reference".
+   *
+   */
+  @MapboxExperimental
+  val symbolElevationReferenceAsExpression: Expression?
+    /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     *
+     * Get the SymbolElevationReference property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to get the default property.
+     *
+     * @return SymbolElevationReference
+     */
+    get() {
+      getPropertyValue<Expression>("symbol-elevation-reference")?.let {
+        return it
+      }
+      symbolElevationReference?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to set the default property.
+   *
+   * @param symbolElevationReference value of symbolElevationReference as Expression
+   */
+  @MapboxExperimental
+  override fun symbolElevationReference(symbolElevationReference: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-elevation-reference", symbolElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Label placement relative to its geometry. Default value: "point".
    */
   val symbolPlacement: SymbolPlacement?
@@ -4170,78 +4242,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Selects the base of symbol-elevation. Default value: "ground".
-   */
-  @MapboxExperimental
-  val symbolElevationReference: SymbolElevationReference?
-    /**
-     * Selects the base of symbol-elevation. Default value: "ground".
-     *
-     * Use static method [SymbolLayer.defaultSymbolElevationReference] to get the default property.
-     *
-     * @return SymbolElevationReference
-     */
-    get() {
-      getPropertyValue<String?>("symbol-elevation-reference")?.let {
-        return SymbolElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
-      }
-      return null
-    }
-
-  /**
-   * Selects the base of symbol-elevation. Default value: "ground".
-   *
-   * Use static method [SymbolLayer.defaultSymbolElevationReference] to set the default property.
-   *
-   * @param symbolElevationReference value of symbolElevationReference
-   */
-  @MapboxExperimental
-  override fun symbolElevationReference(symbolElevationReference: SymbolElevationReference): SymbolLayer = apply {
-    val propertyValue = PropertyValue("symbol-elevation-reference", symbolElevationReference)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Selects the base of symbol-elevation. Default value: "ground".
-   *
-   * This is an Expression representation of "symbol-elevation-reference".
-   *
-   */
-  @MapboxExperimental
-  val symbolElevationReferenceAsExpression: Expression?
-    /**
-     * Selects the base of symbol-elevation. Default value: "ground".
-     *
-     * Get the SymbolElevationReference property as an Expression
-     *
-     * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to get the default property.
-     *
-     * @return SymbolElevationReference
-     */
-    get() {
-      getPropertyValue<Expression>("symbol-elevation-reference")?.let {
-        return it
-      }
-      symbolElevationReference?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
-
-  /**
-   * Selects the base of symbol-elevation. Default value: "ground".
-   *
-   * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to set the default property.
-   *
-   * @param symbolElevationReference value of symbolElevationReference as Expression
-   */
-  @MapboxExperimental
-  override fun symbolElevationReference(symbolElevationReference: Expression): SymbolLayer = apply {
-    val propertyValue = PropertyValue("symbol-elevation-reference", symbolElevationReference)
-    setProperty(propertyValue)
-  }
-
-  /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
@@ -5896,6 +5896,48 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     */
+    @MapboxExperimental
+    val defaultSymbolElevationReference: SymbolElevationReference?
+      /**
+       * Selects the base of symbol-elevation. Default value: "ground".
+       *
+       * Get the default value of SymbolElevationReference property
+       *
+       * @return SymbolElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<String>()?.let {
+          return SymbolElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of symbol-elevation. Default value: "ground".
+     *
+     * This is an Expression representation of "symbol-elevation-reference".
+     *
+     */
+    @MapboxExperimental
+    val defaultSymbolElevationReferenceAsExpression: Expression?
+      /**
+       * Get default value of the SymbolElevationReference property as an Expression
+       *
+       * @return SymbolElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultSymbolElevationReference?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
      * Label placement relative to its geometry. Default value: "point".
      */
     val defaultSymbolPlacement: SymbolPlacement?
@@ -7492,48 +7534,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Selects the base of symbol-elevation. Default value: "ground".
-     */
-    @MapboxExperimental
-    val defaultSymbolElevationReference: SymbolElevationReference?
-      /**
-       * Selects the base of symbol-elevation. Default value: "ground".
-       *
-       * Get the default value of SymbolElevationReference property
-       *
-       * @return SymbolElevationReference
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<String>()?.let {
-          return SymbolElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
-        }
-        return null
-      }
-
-    /**
-     * Selects the base of symbol-elevation. Default value: "ground".
-     *
-     * This is an Expression representation of "symbol-elevation-reference".
-     *
-     */
-    @MapboxExperimental
-    val defaultSymbolElevationReferenceAsExpression: Expression?
-      /**
-       * Get default value of the SymbolElevationReference property as an Expression
-       *
-       * @return SymbolElevationReference
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultSymbolElevationReference?.let {
-          return Expression.literal(it.value)
-        }
-        return null
-      }
-
-    /**
      * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
      */
     @MapboxExperimental
@@ -8334,6 +8334,22 @@ interface SymbolLayerDsl {
   fun symbolAvoidEdges(symbolAvoidEdges: Expression): SymbolLayer
 
   /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * @param symbolElevationReference value of symbolElevationReference
+   */
+  @MapboxExperimental
+  fun symbolElevationReference(symbolElevationReference: SymbolElevationReference = SymbolElevationReference.GROUND): SymbolLayer
+
+  /**
+   * Selects the base of symbol-elevation. Default value: "ground".
+   *
+   * @param symbolElevationReference value of symbolElevationReference as Expression
+   */
+  @MapboxExperimental
+  fun symbolElevationReference(symbolElevationReference: Expression): SymbolLayer
+
+  /**
    * Label placement relative to its geometry. Default value: "point".
    *
    * @param symbolPlacement value of symbolPlacement
@@ -9054,22 +9070,6 @@ interface SymbolLayerDsl {
    * @param iconTranslateAnchor value of iconTranslateAnchor as Expression
    */
   fun iconTranslateAnchor(iconTranslateAnchor: Expression): SymbolLayer
-
-  /**
-   * Selects the base of symbol-elevation. Default value: "ground".
-   *
-   * @param symbolElevationReference value of symbolElevationReference
-   */
-  @MapboxExperimental
-  fun symbolElevationReference(symbolElevationReference: SymbolElevationReference = SymbolElevationReference.GROUND): SymbolLayer
-
-  /**
-   * Selects the base of symbol-elevation. Default value: "ground".
-   *
-   * @param symbolElevationReference value of symbolElevationReference as Expression
-   */
-  @MapboxExperimental
-  fun symbolElevationReference(symbolElevationReference: Expression): SymbolLayer
 
   /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.

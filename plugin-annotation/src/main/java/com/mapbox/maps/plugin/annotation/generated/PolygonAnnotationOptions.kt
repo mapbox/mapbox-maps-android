@@ -138,6 +138,24 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   }
 
   /**
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   */
+  var fillZOffset: Double? = null
+
+  /**
+   * Set fill-z-offset to initialise the polygonAnnotation with.
+   *
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   *
+   * @param fillZOffset the fill-z-offset value
+   * @return this
+   */
+  fun withFillZOffset(fillZOffset: Double): PolygonAnnotationOptions {
+    this.fillZOffset = fillZOffset
+    return this
+  }
+
+  /**
    * Set a list of lists of Point for the fill, which represents the locations of the fill on the map
    *
    * @param points a list of a lists of the locations of the line in a longitude and latitude pairs
@@ -247,6 +265,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
     fillPattern?.let {
       jsonObject.addProperty(PROPERTY_FILL_PATTERN, it)
     }
+    fillZOffset?.let {
+      jsonObject.addProperty(PROPERTY_FILL_Z_OFFSET, it)
+    }
     val polygonAnnotation = PolygonAnnotation(id, annotationManager, jsonObject, geometry!!)
     polygonAnnotation.isDraggable = isDraggable
     polygonAnnotation.setData(data)
@@ -272,6 +293,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
     /** The property for fill-pattern */
     const val PROPERTY_FILL_PATTERN = "fill-pattern"
+
+    /** The property for fill-z-offset */
+    const val PROPERTY_FILL_Z_OFFSET = "fill-z-offset"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -305,6 +329,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_FILL_PATTERN)) {
         options.fillPattern = feature.getProperty(PROPERTY_FILL_PATTERN).asString
+      }
+      if (feature.hasProperty(PROPERTY_FILL_Z_OFFSET)) {
+        options.fillZOffset = feature.getProperty(PROPERTY_FILL_Z_OFFSET).asDouble
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

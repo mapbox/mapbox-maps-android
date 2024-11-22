@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.StringValue
@@ -39,6 +40,8 @@ public class LocationIndicatorLayerState private constructor(
   initialBearingImageSizeTransition: Transition,
   initialEmphasisCircleColor: ColorValue,
   initialEmphasisCircleColorTransition: Transition,
+  initialEmphasisCircleGlowRange: DoubleRangeValue,
+  initialEmphasisCircleGlowRangeTransition: Transition,
   initialEmphasisCircleRadius: DoubleValue,
   initialEmphasisCircleRadiusTransition: Transition,
   initialImagePitchDisplacement: DoubleValue,
@@ -76,6 +79,8 @@ public class LocationIndicatorLayerState private constructor(
     initialBearingImageSizeTransition = Transition.INITIAL,
     initialEmphasisCircleColor = ColorValue.INITIAL,
     initialEmphasisCircleColorTransition = Transition.INITIAL,
+    initialEmphasisCircleGlowRange = DoubleRangeValue.INITIAL,
+    initialEmphasisCircleGlowRangeTransition = Transition.INITIAL,
     initialEmphasisCircleRadius = DoubleValue.INITIAL,
     initialEmphasisCircleRadiusTransition = Transition.INITIAL,
     initialImagePitchDisplacement = DoubleValue.INITIAL,
@@ -132,7 +137,7 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var accuracyRadiusColorTransition: Transition by mutableStateOf(initialAccuracyRadiusColorTransition)
   /**
-   *  The bearing of the location indicator. Default value: 0.
+   *  The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    */
   public var bearing: DoubleValue by mutableStateOf(initialBearing)
   /**
@@ -156,6 +161,14 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var emphasisCircleColorTransition: Transition by mutableStateOf(initialEmphasisCircleColorTransition)
   /**
+   *  Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   */
+  public var emphasisCircleGlowRange: DoubleRangeValue by mutableStateOf(initialEmphasisCircleGlowRange)
+  /**
+   *  Defines the transition of [emphasisCircleGlowRange]. Default value: [0,0].
+   */
+  public var emphasisCircleGlowRangeTransition: Transition by mutableStateOf(initialEmphasisCircleGlowRangeTransition)
+  /**
    *  The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
    */
   public var emphasisCircleRadius: DoubleValue by mutableStateOf(initialEmphasisCircleRadius)
@@ -168,7 +181,7 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var imagePitchDisplacement: DoubleValue by mutableStateOf(initialImagePitchDisplacement)
   /**
-   *  An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   *  An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    */
   public var location: DoubleListValue by mutableStateOf(initialLocation)
   /**
@@ -324,6 +337,18 @@ public class LocationIndicatorLayerState private constructor(
     }
   }
   @Composable
+  private fun UpdateEmphasisCircleGlowRange(layerNode: LayerNode) {
+    if (emphasisCircleGlowRange.notInitial) {
+      layerNode.setProperty("emphasis-circle-glow-range", emphasisCircleGlowRange.value)
+    }
+  }
+  @Composable
+  private fun UpdateEmphasisCircleGlowRangeTransition(layerNode: LayerNode) {
+    if (emphasisCircleGlowRangeTransition.notInitial) {
+      layerNode.setProperty("emphasis-circle-glow-range-transition", emphasisCircleGlowRangeTransition.value)
+    }
+  }
+  @Composable
   private fun UpdateEmphasisCircleRadius(layerNode: LayerNode) {
     if (emphasisCircleRadius.notInitial) {
       layerNode.setProperty("emphasis-circle-radius", emphasisCircleRadius.value)
@@ -443,6 +468,8 @@ public class LocationIndicatorLayerState private constructor(
     UpdateBearingImageSizeTransition(layerNode)
     UpdateEmphasisCircleColor(layerNode)
     UpdateEmphasisCircleColorTransition(layerNode)
+    UpdateEmphasisCircleGlowRange(layerNode)
+    UpdateEmphasisCircleGlowRangeTransition(layerNode)
     UpdateEmphasisCircleRadius(layerNode)
     UpdateEmphasisCircleRadiusTransition(layerNode)
     UpdateImagePitchDisplacement(layerNode)

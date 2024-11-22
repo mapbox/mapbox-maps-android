@@ -578,6 +578,74 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
+   * Orientation of background layer. Default value: "map".
+   */
+  val backgroundPitchAlignment: BackgroundPitchAlignment?
+    /**
+     * Orientation of background layer. Default value: "map".
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundPitchAlignment] to get the default property.
+     *
+     * @return BackgroundPitchAlignment
+     */
+    get() {
+      getPropertyValue<String?>("background-pitch-alignment")?.let {
+        return BackgroundPitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Orientation of background layer. Default value: "map".
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundPitchAlignment] to set the default property.
+   *
+   * @param backgroundPitchAlignment value of backgroundPitchAlignment
+   */
+  override fun backgroundPitchAlignment(backgroundPitchAlignment: BackgroundPitchAlignment): BackgroundLayer = apply {
+    val propertyValue = PropertyValue("background-pitch-alignment", backgroundPitchAlignment)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Orientation of background layer. Default value: "map".
+   *
+   * This is an Expression representation of "background-pitch-alignment".
+   *
+   */
+  val backgroundPitchAlignmentAsExpression: Expression?
+    /**
+     * Orientation of background layer. Default value: "map".
+     *
+     * Get the BackgroundPitchAlignment property as an Expression
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression] to get the default property.
+     *
+     * @return BackgroundPitchAlignment
+     */
+    get() {
+      getPropertyValue<Expression>("background-pitch-alignment")?.let {
+        return it
+      }
+      backgroundPitchAlignment?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Orientation of background layer. Default value: "map".
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression] to set the default property.
+   *
+   * @param backgroundPitchAlignment value of backgroundPitchAlignment as Expression
+   */
+  override fun backgroundPitchAlignment(backgroundPitchAlignment: Expression): BackgroundLayer = apply {
+    val propertyValue = PropertyValue("background-pitch-alignment", backgroundPitchAlignment)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Get the type of this layer
    *
    * @return Type of the layer as [String]
@@ -835,6 +903,46 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
         }
         return null
       }
+
+    /**
+     * Orientation of background layer. Default value: "map".
+     */
+    val defaultBackgroundPitchAlignment: BackgroundPitchAlignment?
+      /**
+       * Orientation of background layer. Default value: "map".
+       *
+       * Get the default value of BackgroundPitchAlignment property
+       *
+       * @return BackgroundPitchAlignment
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pitch-alignment").silentUnwrap<String>()?.let {
+          return BackgroundPitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Orientation of background layer. Default value: "map".
+     *
+     * This is an Expression representation of "background-pitch-alignment".
+     *
+     */
+    val defaultBackgroundPitchAlignmentAsExpression: Expression?
+      /**
+       * Get default value of the BackgroundPitchAlignment property as an Expression
+       *
+       * @return BackgroundPitchAlignment
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pitch-alignment").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultBackgroundPitchAlignment?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
   }
 }
 
@@ -1003,6 +1111,20 @@ interface BackgroundLayerDsl {
    * @param backgroundPattern value of backgroundPattern as Expression
    */
   fun backgroundPattern(backgroundPattern: Expression): BackgroundLayer
+
+  /**
+   * Orientation of background layer. Default value: "map".
+   *
+   * @param backgroundPitchAlignment value of backgroundPitchAlignment
+   */
+  fun backgroundPitchAlignment(backgroundPitchAlignment: BackgroundPitchAlignment = BackgroundPitchAlignment.MAP): BackgroundLayer
+
+  /**
+   * Orientation of background layer. Default value: "map".
+   *
+   * @param backgroundPitchAlignment value of backgroundPitchAlignment as Expression
+   */
+  fun backgroundPitchAlignment(backgroundPitchAlignment: Expression): BackgroundLayer
 }
 
 /**

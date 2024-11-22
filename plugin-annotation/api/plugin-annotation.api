@@ -704,6 +704,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillOutlineColorString ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
+	public final fun getFillZOffset ()Ljava/lang/Double;
 	public synthetic fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Geometry;
 	public fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Polygon;
 	public final fun getPoints ()Ljava/util/List;
@@ -715,6 +716,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillOutlineColorString (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
+	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setPoints (Ljava/util/List;)V
 	public fun setUsedDataDrivenProperties ()V
 }
@@ -740,6 +742,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
+	public final fun getFillZOffset ()Ljava/lang/Double;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSlot ()Ljava/lang/String;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
@@ -753,6 +756,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
+	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun setSlot (Ljava/lang/String;)V
 }
@@ -774,6 +778,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public static final field PROPERTY_FILL_OUTLINE_COLOR Ljava/lang/String;
 	public static final field PROPERTY_FILL_PATTERN Ljava/lang/String;
 	public static final field PROPERTY_FILL_SORT_KEY Ljava/lang/String;
+	public static final field PROPERTY_FILL_Z_OFFSET Ljava/lang/String;
 	public fun <init> ()V
 	public synthetic fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
 	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotation;
@@ -784,6 +789,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillOutlineColor ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
+	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getGeometry ()Lcom/mapbox/geojson/Polygon;
 	public final fun getPoints ()Ljava/util/List;
 	public final fun setFillColor (Ljava/lang/String;)V
@@ -791,6 +797,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillOutlineColor (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
+	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun withData (Lcom/google/gson/JsonElement;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withDraggable (Z)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
@@ -800,6 +807,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun withFillOutlineColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillPattern (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillSortKey (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillZOffset (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withGeometry (Lcom/mapbox/geojson/Polygon;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withPoints (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 }

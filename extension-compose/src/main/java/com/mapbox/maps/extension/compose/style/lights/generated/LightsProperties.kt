@@ -54,7 +54,7 @@ public data class AnchorValue(public val value: Value) {
     public val MAP: AnchorValue = AnchorValue(Value("map"))
 
     /**
-     * The position of the light source is aligned to the rotation of the viewport.
+     * The position of the light source is aligned to the rotation of the viewport. If terrain is enabled, performance regressions may occur in certain scenarios, particularly on lower-end hardware. Ensure that you test your target scenarios on the appropriate hardware to verify performance.
      */
     @JvmField
     public val VIEWPORT: AnchorValue = AnchorValue(Value("viewport"))

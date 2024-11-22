@@ -463,6 +463,29 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun symbolElevationReferenceTest() {
+    val layer = symbolLayer("id", "source") {
+      symbolElevationReference(SymbolElevationReference.SEA)
+    }
+    setupLayer(layer)
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolElevationReferenceAsExpressionTest() {
+    val expression = literal("sea")
+    val layer = symbolLayer("id", "source") {
+      symbolElevationReference(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.symbolElevationReferenceAsExpression.toString())
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun symbolPlacementTest() {
     val layer = symbolLayer("id", "source") {
       symbolPlacement(SymbolPlacement.POINT)
@@ -1863,29 +1886,6 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun symbolElevationReferenceTest() {
-    val layer = symbolLayer("id", "source") {
-      symbolElevationReference(SymbolElevationReference.SEA)
-    }
-    setupLayer(layer)
-    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
-  }
-
-  @Test
-  @UiThreadTest
-  fun symbolElevationReferenceAsExpressionTest() {
-    val expression = literal("sea")
-    val layer = symbolLayer("id", "source") {
-      symbolElevationReference(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.symbolElevationReferenceAsExpression.toString())
-    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference!!)
-  }
-
-  @Test
-  @UiThreadTest
   fun symbolZOffsetTest() {
     val testValue = 1.0
     val layer = symbolLayer("id", "source") {
@@ -2517,6 +2517,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconTextFitPaddingAsExpression should not be null", SymbolLayer.defaultIconTextFitPaddingAsExpression)
     assertNotNull("defaultSymbolAvoidEdges should not be null", SymbolLayer.defaultSymbolAvoidEdges)
     assertNotNull("defaultSymbolAvoidEdgesAsExpression should not be null", SymbolLayer.defaultSymbolAvoidEdgesAsExpression)
+    assertNotNull("defaultSymbolElevationReference should not be null", SymbolLayer.defaultSymbolElevationReference)
+    assertNotNull("defaultSymbolElevationReferenceAsExpression should not be null", SymbolLayer.defaultSymbolElevationReferenceAsExpression)
     assertNotNull("defaultSymbolPlacement should not be null", SymbolLayer.defaultSymbolPlacement)
     assertNotNull("defaultSymbolPlacementAsExpression should not be null", SymbolLayer.defaultSymbolPlacementAsExpression)
     assertNotNull("defaultSymbolSortKey should not be null", SymbolLayer.defaultSymbolSortKey)
@@ -2607,8 +2609,6 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconTranslateTransition should not be null", SymbolLayer.defaultIconTranslateTransition)
     assertNotNull("defaultIconTranslateAnchor should not be null", SymbolLayer.defaultIconTranslateAnchor)
     assertNotNull("defaultIconTranslateAnchorAsExpression should not be null", SymbolLayer.defaultIconTranslateAnchorAsExpression)
-    assertNotNull("defaultSymbolElevationReference should not be null", SymbolLayer.defaultSymbolElevationReference)
-    assertNotNull("defaultSymbolElevationReferenceAsExpression should not be null", SymbolLayer.defaultSymbolElevationReferenceAsExpression)
     assertNotNull("defaultSymbolZOffset should not be null", SymbolLayer.defaultSymbolZOffset)
     assertNotNull("defaultSymbolZOffsetAsExpression should not be null", SymbolLayer.defaultSymbolZOffsetAsExpression)
     assertNotNull("defaultSymbolZOffsetTransition should not be null", SymbolLayer.defaultSymbolZOffsetTransition)
@@ -2666,6 +2666,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconTextFitTestValue = IconTextFit.NONE
     val iconTextFitPaddingTestValue = listOf(0.0, 1.0, 2.0, 3.0)
     val symbolAvoidEdgesTestValue = true
+    val symbolElevationReferenceTestValue = SymbolElevationReference.SEA
     val symbolPlacementTestValue = SymbolPlacement.POINT
     val symbolSortKeyTestValue = 1.0
     val symbolSpacingTestValue = 1.0
@@ -2721,7 +2722,6 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconOpacityTestValue = 1.0
     val iconTranslateTestValue = listOf(0.0, 1.0)
     val iconTranslateAnchorTestValue = IconTranslateAnchor.MAP
-    val symbolElevationReferenceTestValue = SymbolElevationReference.SEA
     val symbolZOffsetTestValue = 1.0
     val textColorTestValue = "rgba(0, 0, 0, 1)"
     val textEmissiveStrengthTestValue = 1.0
@@ -2755,6 +2755,7 @@ class SymbolLayerTest : BaseStyleTest() {
       iconTextFit(iconTextFitTestValue)
       iconTextFitPadding(iconTextFitPaddingTestValue)
       symbolAvoidEdges(symbolAvoidEdgesTestValue)
+      symbolElevationReference(symbolElevationReferenceTestValue)
       symbolPlacement(symbolPlacementTestValue)
       symbolSortKey(symbolSortKeyTestValue)
       symbolSpacing(symbolSpacingTestValue)
@@ -2793,7 +2794,6 @@ class SymbolLayerTest : BaseStyleTest() {
       iconOpacity(iconOpacityTestValue)
       iconTranslate(iconTranslateTestValue)
       iconTranslateAnchor(iconTranslateAnchorTestValue)
-      symbolElevationReference(symbolElevationReferenceTestValue)
       symbolZOffset(symbolZOffsetTestValue)
       textColor(textColorTestValue)
       textEmissiveStrength(textEmissiveStrengthTestValue)
@@ -2832,6 +2832,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(iconTextFitTestValue, cachedLayer.iconTextFit)
     assertEquals(iconTextFitPaddingTestValue, cachedLayer.iconTextFitPadding)
     assertEquals(symbolAvoidEdgesTestValue, cachedLayer.symbolAvoidEdges)
+    assertEquals(symbolElevationReferenceTestValue, cachedLayer.symbolElevationReference)
     assertEquals(symbolPlacementTestValue, cachedLayer.symbolPlacement)
     assertEquals(symbolSortKeyTestValue, cachedLayer.symbolSortKey)
     assertEquals(symbolSpacingTestValue, cachedLayer.symbolSpacing)
@@ -2870,7 +2871,6 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(iconOpacityTestValue, cachedLayer.iconOpacity)
     assertEquals(iconTranslateTestValue, cachedLayer.iconTranslate)
     assertEquals(iconTranslateAnchorTestValue, cachedLayer.iconTranslateAnchor)
-    assertEquals(symbolElevationReferenceTestValue, cachedLayer.symbolElevationReference)
     assertEquals(symbolZOffsetTestValue, cachedLayer.symbolZOffset)
     assertEquals(textColorTestValue, cachedLayer.textColor)
     assertEquals(textEmissiveStrengthTestValue, cachedLayer.textEmissiveStrength)

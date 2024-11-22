@@ -486,6 +486,74 @@ class BackgroundLayerTest {
   }
 
   @Test
+  fun backgroundPitchAlignmentSet() {
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    layer.backgroundPitchAlignment(BackgroundPitchAlignment.MAP)
+    verify { style.setStyleLayerProperty("id", "background-pitch-alignment", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "map")
+  }
+
+  @Test
+  fun backgroundPitchAlignmentGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("map")
+
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(BackgroundPitchAlignment.MAP, layer.backgroundPitchAlignment)
+    verify { style.getStyleLayerProperty("id", "background-pitch-alignment") }
+  }
+  // Expression Tests
+
+  @Test
+  fun backgroundPitchAlignmentAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    layer.backgroundPitchAlignment(expression)
+    verify { style.setStyleLayerProperty("id", "background-pitch-alignment", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun backgroundPitchAlignmentAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.backgroundPitchAlignmentAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "background-pitch-alignment") }
+  }
+
+  @Test
+  fun backgroundPitchAlignmentAsExpressionGetNull() {
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.backgroundPitchAlignmentAsExpression)
+    verify { style.getStyleLayerProperty("id", "background-pitch-alignment") }
+  }
+
+  @Test
+  fun backgroundPitchAlignmentAsExpressionGetFromLiteral() {
+    val value = "map"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.backgroundPitchAlignmentAsExpression?.toString())
+    assertEquals(BackgroundPitchAlignment.MAP.value, layer.backgroundPitchAlignmentAsExpression.toString())
+    assertEquals(BackgroundPitchAlignment.MAP, layer.backgroundPitchAlignment)
+    verify { style.getStyleLayerProperty("id", "background-pitch-alignment") }
+  }
+
+  @Test
   fun visibilitySet() {
     val layer = backgroundLayer("id") {}
     layer.bindTo(style)
@@ -741,6 +809,39 @@ class BackgroundLayerTest {
     assertEquals("abc", BackgroundLayer.defaultBackgroundPatternAsExpression.toString())
     assertEquals("abc", BackgroundLayer.defaultBackgroundPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pattern") }
+  }
+
+  @Test
+  fun defaultBackgroundPitchAlignmentTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("map")
+
+    assertEquals(BackgroundPitchAlignment.MAP, BackgroundLayer.defaultBackgroundPitchAlignment)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pitch-alignment") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultBackgroundPitchAlignmentAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pitch-alignment") }
+  }
+
+  @Test
+  fun defaultBackgroundPitchAlignmentAsExpressionGetFromLiteral() {
+    val value = "map"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression?.toString())
+    assertEquals(BackgroundPitchAlignment.MAP.value, BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression.toString())
+    assertEquals(BackgroundPitchAlignment.MAP, BackgroundLayer.defaultBackgroundPitchAlignment)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pitch-alignment") }
   }
 
   @Test

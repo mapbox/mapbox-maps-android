@@ -570,6 +570,60 @@ public data class IconTextFitValue(public val value: Value) {
 }
 
 /**
+ * Selects the base of symbol-elevation. Default value: "ground".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class SymbolElevationReferenceValue(public val value: Value) {
+  /**
+   * Construct the [SymbolElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value.valueOf("SymbolElevationReferenceValue.INITIAL"))
+
+    /**
+     * Default value for [SymbolElevationReferenceValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value.nullValue())
+
+    /**
+     * Elevate symbols relative to the sea level.
+     */
+    @JvmField
+    public val SEA: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("sea"))
+
+    /**
+     * Elevate symbols relative to the ground's height below them.
+     */
+    @JvmField
+    public val GROUND: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("ground"))
+  }
+}
+
+/**
  * Label placement relative to its geometry. Default value: "point".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
@@ -1264,60 +1318,6 @@ public data class IconTranslateAnchorValue(public val value: Value) {
 }
 
 /**
- * Selects the base of symbol-elevation. Default value: "ground".
- *
- * @param value the property wrapped in [Value] to be used with native renderer.
- */
-@Immutable
-@MapboxExperimental
-public data class SymbolElevationReferenceValue(public val value: Value) {
-  /**
-   * Construct the [SymbolElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
-   */
-  public constructor(expression: Expression) : this(expression as Value)
-
-  /**
-   * True if the this value is not [INITIAL]
-   */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
-
-  /**
-   * Public companion object.
-   */
-  public companion object {
-    /**
-     * Use this constant to signal that no property should be set to the Maps engine.
-     * This is needed because sending nullValue resets the value of the property to the default one
-     * defined by the Maps engine, which results in overriding the value from the loaded style.
-     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
-     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
-     * to differentiate them because they use [equals].
-     */
-    @JvmField
-    internal val INITIAL: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value.valueOf("SymbolElevationReferenceValue.INITIAL"))
-
-    /**
-     * Default value for [SymbolElevationReferenceValue], setting default will result in restoring the property value defined in the style.
-     */
-    @JvmField
-    public val DEFAULT: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value.nullValue())
-
-    /**
-     * Elevate symbols relative to the sea level.
-     */
-    @JvmField
-    public val SEA: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("sea"))
-
-    /**
-     * Elevate symbols relative to the ground's height below them.
-     */
-    @JvmField
-    public val GROUND: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("ground"))
-  }
-}
-
-/**
  * Controls the frame of reference for `text-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
@@ -1526,6 +1526,114 @@ public data class CircleTranslateAnchorValue(public val value: Value) {
      */
     @JvmField
     public val VIEWPORT: CircleTranslateAnchorValue = CircleTranslateAnchorValue(Value("viewport"))
+  }
+}
+
+/**
+ * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class FillExtrusionBaseAlignmentValue(public val value: Value) {
+  /**
+   * Construct the [FillExtrusionBaseAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: FillExtrusionBaseAlignmentValue = FillExtrusionBaseAlignmentValue(Value.valueOf("FillExtrusionBaseAlignmentValue.INITIAL"))
+
+    /**
+     * Default value for [FillExtrusionBaseAlignmentValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: FillExtrusionBaseAlignmentValue = FillExtrusionBaseAlignmentValue(Value.nullValue())
+
+    /**
+     * The fill extrusion base follows terrain slope.
+     */
+    @JvmField
+    public val TERRAIN: FillExtrusionBaseAlignmentValue = FillExtrusionBaseAlignmentValue(Value("terrain"))
+
+    /**
+     * The fill extrusion base is flat over terrain.
+     */
+    @JvmField
+    public val FLAT: FillExtrusionBaseAlignmentValue = FillExtrusionBaseAlignmentValue(Value("flat"))
+  }
+}
+
+/**
+ * Controls the behavior of fill extrusion height over terrain Default value: "flat".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class FillExtrusionHeightAlignmentValue(public val value: Value) {
+  /**
+   * Construct the [FillExtrusionHeightAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: FillExtrusionHeightAlignmentValue = FillExtrusionHeightAlignmentValue(Value.valueOf("FillExtrusionHeightAlignmentValue.INITIAL"))
+
+    /**
+     * Default value for [FillExtrusionHeightAlignmentValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: FillExtrusionHeightAlignmentValue = FillExtrusionHeightAlignmentValue(Value.nullValue())
+
+    /**
+     * The fill extrusion height follows terrain slope.
+     */
+    @JvmField
+    public val TERRAIN: FillExtrusionHeightAlignmentValue = FillExtrusionHeightAlignmentValue(Value("terrain"))
+
+    /**
+     * The fill extrusion height is flat over terrain.
+     */
+    @JvmField
+    public val FLAT: FillExtrusionHeightAlignmentValue = FillExtrusionHeightAlignmentValue(Value("flat"))
   }
 }
 
@@ -1793,6 +1901,59 @@ public data class ModelTypeValue(public val value: Value) {
      */
     @JvmField
     public val LOCATION_INDICATOR: ModelTypeValue = ModelTypeValue(Value("location-indicator"))
+  }
+}
+
+/**
+ * Orientation of background layer. Default value: "map".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+public data class BackgroundPitchAlignmentValue(public val value: Value) {
+  /**
+   * Construct the [BackgroundPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: BackgroundPitchAlignmentValue = BackgroundPitchAlignmentValue(Value.valueOf("BackgroundPitchAlignmentValue.INITIAL"))
+
+    /**
+     * Default value for [BackgroundPitchAlignmentValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: BackgroundPitchAlignmentValue = BackgroundPitchAlignmentValue(Value.nullValue())
+
+    /**
+     * The background is aligned to the plane of the map.
+     */
+    @JvmField
+    public val MAP: BackgroundPitchAlignmentValue = BackgroundPitchAlignmentValue(Value("map"))
+
+    /**
+     * The background is aligned to the plane of the viewport, covering the whole screen.
+     */
+    @JvmField
+    public val VIEWPORT: BackgroundPitchAlignmentValue = BackgroundPitchAlignmentValue(Value("viewport"))
   }
 }
 

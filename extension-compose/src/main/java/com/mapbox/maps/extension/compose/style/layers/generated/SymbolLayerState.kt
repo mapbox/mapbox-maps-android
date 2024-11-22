@@ -45,6 +45,7 @@ public class SymbolLayerState private constructor(
   initialIconTextFit: IconTextFitValue,
   initialIconTextFitPadding: DoubleListValue,
   initialSymbolAvoidEdges: BooleanValue,
+  initialSymbolElevationReference: SymbolElevationReferenceValue,
   initialSymbolPlacement: SymbolPlacementValue,
   initialSymbolSortKey: DoubleValue,
   initialSymbolSpacing: DoubleValue,
@@ -93,7 +94,6 @@ public class SymbolLayerState private constructor(
   initialIconTranslate: DoubleListValue,
   initialIconTranslateTransition: Transition,
   initialIconTranslateAnchor: IconTranslateAnchorValue,
-  initialSymbolElevationReference: SymbolElevationReferenceValue,
   initialSymbolZOffset: DoubleValue,
   initialSymbolZOffsetTransition: Transition,
   initialTextColor: ColorValue,
@@ -139,6 +139,7 @@ public class SymbolLayerState private constructor(
     initialIconTextFit = IconTextFitValue.INITIAL,
     initialIconTextFitPadding = DoubleListValue.INITIAL,
     initialSymbolAvoidEdges = BooleanValue.INITIAL,
+    initialSymbolElevationReference = SymbolElevationReferenceValue.INITIAL,
     initialSymbolPlacement = SymbolPlacementValue.INITIAL,
     initialSymbolSortKey = DoubleValue.INITIAL,
     initialSymbolSpacing = DoubleValue.INITIAL,
@@ -187,7 +188,6 @@ public class SymbolLayerState private constructor(
     initialIconTranslate = DoubleListValue.INITIAL,
     initialIconTranslateTransition = Transition.INITIAL,
     initialIconTranslateAnchor = IconTranslateAnchorValue.INITIAL,
-    initialSymbolElevationReference = SymbolElevationReferenceValue.INITIAL,
     initialSymbolZOffset = DoubleValue.INITIAL,
     initialSymbolZOffsetTransition = Transition.INITIAL,
     initialTextColor = ColorValue.INITIAL,
@@ -281,6 +281,11 @@ public class SymbolLayerState private constructor(
    *  If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    */
   public var symbolAvoidEdges: BooleanValue by mutableStateOf(initialSymbolAvoidEdges)
+  /**
+   *  Selects the base of symbol-elevation. Default value: "ground".
+   */
+  @MapboxExperimental
+  public var symbolElevationReference: SymbolElevationReferenceValue by mutableStateOf(initialSymbolElevationReference)
   /**
    *  Label placement relative to its geometry. Default value: "point".
    */
@@ -474,11 +479,6 @@ public class SymbolLayerState private constructor(
    */
   public var iconTranslateAnchor: IconTranslateAnchorValue by mutableStateOf(initialIconTranslateAnchor)
   /**
-   *  Selects the base of symbol-elevation. Default value: "ground".
-   */
-  @MapboxExperimental
-  public var symbolElevationReference: SymbolElevationReferenceValue by mutableStateOf(initialSymbolElevationReference)
-  /**
    *  Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
@@ -668,6 +668,13 @@ public class SymbolLayerState private constructor(
   private fun UpdateSymbolAvoidEdges(layerNode: LayerNode) {
     if (symbolAvoidEdges.notInitial) {
       layerNode.setProperty("symbol-avoid-edges", symbolAvoidEdges.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSymbolElevationReference(layerNode: LayerNode) {
+    if (symbolElevationReference.notInitial) {
+      layerNode.setProperty("symbol-elevation-reference", symbolElevationReference.value)
     }
   }
   @Composable
@@ -960,13 +967,6 @@ public class SymbolLayerState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateSymbolElevationReference(layerNode: LayerNode) {
-    if (symbolElevationReference.notInitial) {
-      layerNode.setProperty("symbol-elevation-reference", symbolElevationReference.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateSymbolZOffset(layerNode: LayerNode) {
     if (symbolZOffset.notInitial) {
       layerNode.setProperty("symbol-z-offset", symbolZOffset.value)
@@ -1129,6 +1129,7 @@ public class SymbolLayerState private constructor(
     UpdateIconTextFit(layerNode)
     UpdateIconTextFitPadding(layerNode)
     UpdateSymbolAvoidEdges(layerNode)
+    UpdateSymbolElevationReference(layerNode)
     UpdateSymbolPlacement(layerNode)
     UpdateSymbolSortKey(layerNode)
     UpdateSymbolSpacing(layerNode)
@@ -1177,7 +1178,6 @@ public class SymbolLayerState private constructor(
     UpdateIconTranslate(layerNode)
     UpdateIconTranslateTransition(layerNode)
     UpdateIconTranslateAnchor(layerNode)
-    UpdateSymbolElevationReference(layerNode)
     UpdateSymbolZOffset(layerNode)
     UpdateSymbolZOffsetTransition(layerNode)
     UpdateTextColor(layerNode)

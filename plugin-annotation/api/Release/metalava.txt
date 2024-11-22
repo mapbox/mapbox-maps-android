@@ -884,6 +884,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getFillOutlineColorString();
     method public String? getFillPattern();
     method public Double? getFillSortKey();
+    method public Double? getFillZOffset();
     method public com.mapbox.geojson.Polygon? getOffsetGeometry(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate, com.mapbox.android.gestures.MoveDistancesObject moveDistancesObject);
     method public java.util.List<java.util.List<com.mapbox.geojson.Point>> getPoints();
     method public com.mapbox.maps.plugin.annotation.AnnotationType getType();
@@ -894,6 +895,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillOutlineColorString(String?);
     method public void setFillPattern(String?);
     method public void setFillSortKey(Double?);
+    method public void setFillZOffset(Double?);
     method public void setPoints(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>>);
     method public void setUsedDataDrivenProperties();
     property @ColorInt public final Integer? fillColorInt;
@@ -903,6 +905,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? fillOutlineColorString;
     property public final String? fillPattern;
     property public final Double? fillSortKey;
+    property public final Double? fillZOffset;
     property public final java.util.List<java.util.List<com.mapbox.geojson.Point>> points;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation.Companion Companion;
     field public static final String ID_KEY = "PolygonAnnotation";
@@ -927,6 +930,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getFillSortKey();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
+    method public Double? getFillZOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method public String? getSlot();
     method protected void setDataDrivenPropertyIsUsed(String property);
@@ -941,6 +945,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillSortKey(Double?);
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
+    method public void setFillZOffset(Double?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     method public void setSlot(String?);
     property public final Boolean? fillAntialias;
@@ -954,6 +959,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? fillSortKey;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
+    property public final Double? fillZOffset;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager.Companion Companion;
@@ -979,6 +985,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getFillOutlineColor();
     method public String? getFillPattern();
     method public Double? getFillSortKey();
+    method public Double? getFillZOffset();
     method public com.mapbox.geojson.Polygon? getGeometry();
     method public java.util.List<java.util.List<com.mapbox.geojson.Point>> getPoints();
     method public void setFillColor(String?);
@@ -986,6 +993,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillOutlineColor(String?);
     method public void setFillPattern(String?);
     method public void setFillSortKey(Double?);
+    method public void setFillZOffset(Double?);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withData(com.google.gson.JsonElement jsonElement);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withDraggable(boolean draggable);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillColor(String fillColor);
@@ -995,6 +1003,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillOutlineColor(@ColorInt int fillOutlineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillPattern(String fillPattern);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillSortKey(double fillSortKey);
+    method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillZOffset(double fillZOffset);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withGeometry(com.mapbox.geojson.Polygon geometry);
     method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withPoints(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points);
     property public final String? fillColor;
@@ -1002,12 +1011,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? fillOutlineColor;
     property public final String? fillPattern;
     property public final Double? fillSortKey;
+    property public final Double? fillZOffset;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions.Companion Companion;
     field public static final String PROPERTY_FILL_COLOR = "fill-color";
     field public static final String PROPERTY_FILL_OPACITY = "fill-opacity";
     field public static final String PROPERTY_FILL_OUTLINE_COLOR = "fill-outline-color";
     field public static final String PROPERTY_FILL_PATTERN = "fill-pattern";
     field public static final String PROPERTY_FILL_SORT_KEY = "fill-sort-key";
+    field public static final String PROPERTY_FILL_Z_OFFSET = "fill-z-offset";
   }
 
   public static final class PolygonAnnotationOptions.Companion {

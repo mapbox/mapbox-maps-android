@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
@@ -27,6 +28,7 @@ public class PolygonAnnotationGroupState private constructor(
   initialFillPattern: String?,
   initialFillTranslate: List<Double>?,
   initialFillTranslateAnchor: FillTranslateAnchor?,
+  initialFillZOffset: Double?,
   initialPolygonAnnotationGroupInteractionsState: PolygonAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
@@ -39,6 +41,7 @@ public class PolygonAnnotationGroupState private constructor(
     initialFillPattern = null,
     initialFillTranslate = null,
     initialFillTranslateAnchor = null,
+    initialFillZOffset = null,
     initialPolygonAnnotationGroupInteractionsState = PolygonAnnotationGroupInteractionsState(),
   )
 
@@ -82,6 +85,11 @@ public class PolygonAnnotationGroupState private constructor(
    * Controls the frame of reference for {@link PropertyFactory#fillTranslate}.
    */
   public var fillTranslateAnchor: FillTranslateAnchor? by mutableStateOf(initialFillTranslateAnchor)
+  /**
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   */
+  @MapboxExperimental
+  public var fillZOffset: Double? by mutableStateOf(initialFillZOffset)
 
   @Composable
   private fun UpdateFillSortKey(annotationManager: PolygonAnnotationManager) {
@@ -119,6 +127,11 @@ public class PolygonAnnotationGroupState private constructor(
   private fun UpdateFillTranslateAnchor(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillTranslateAnchor = fillTranslateAnchor
   }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillZOffset(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillZOffset = fillZOffset
+  }
 
   @Composable
   internal fun UpdateProperties(annotationManager: PolygonAnnotationManager) {
@@ -131,6 +144,7 @@ public class PolygonAnnotationGroupState private constructor(
     UpdateFillPattern(annotationManager)
     UpdateFillTranslate(annotationManager)
     UpdateFillTranslateAnchor(annotationManager)
+    UpdateFillZOffset(annotationManager)
   }
 }
 

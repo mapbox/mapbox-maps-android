@@ -792,6 +792,34 @@ class PointAnnotationManager(
     }
 
   /**
+   * The SymbolElevationReference property
+   *
+   * Selects the base of symbol-elevation.
+   */
+  @MapboxExperimental
+  var symbolElevationReference: SymbolElevationReference?
+    /**
+     * Get the SymbolElevationReference property
+     *
+     * @return property wrapper value around SymbolElevationReference
+     */
+    get(): SymbolElevationReference? {
+      return layer.symbolElevationReference
+    }
+    /**
+     * Set the SymbolElevationReference property
+     * @param value property wrapper value around SymbolElevationReference
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").value
+      }
+      setLayerProperty(wrappedValue, "symbol-elevation-reference")
+    }
+
+  /**
    * The SymbolPlacement property
    *
    * Label placement relative to its geometry.
@@ -2026,34 +2054,6 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").value
       }
       setLayerProperty(wrappedValue, "icon-translate-anchor")
-    }
-
-  /**
-   * The SymbolElevationReference property
-   *
-   * Selects the base of symbol-elevation.
-   */
-  @MapboxExperimental
-  var symbolElevationReference: SymbolElevationReference?
-    /**
-     * Get the SymbolElevationReference property
-     *
-     * @return property wrapper value around SymbolElevationReference
-     */
-    get(): SymbolElevationReference? {
-      return layer.symbolElevationReference
-    }
-    /**
-     * Set the SymbolElevationReference property
-     * @param value property wrapper value around SymbolElevationReference
-     */
-    set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
-      } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").value
-      }
-      setLayerProperty(wrappedValue, "symbol-elevation-reference")
     }
 
   /**

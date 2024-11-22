@@ -220,6 +220,19 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSymbolElevationReference() {
+    rule.runOnUiThread {
+      val expectedValue = SymbolElevationReference.SEA
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.symbolElevationReference = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.symbolElevationReference)
+      pointAnnotationManager.symbolElevationReference = null
+      val expectedDefaultValue = SymbolElevationReference.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, pointAnnotationManager.symbolElevationReference)
+    }
+  }
+
+  @Test
   fun testSymbolPlacement() {
     rule.runOnUiThread {
       val expectedValue = SymbolPlacement.POINT
@@ -683,19 +696,6 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconTranslateAnchor = null
       val expectedDefaultValue = IconTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconTranslateAnchor)
-    }
-  }
-
-  @Test
-  fun testSymbolElevationReference() {
-    rule.runOnUiThread {
-      val expectedValue = SymbolElevationReference.SEA
-      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
-      pointAnnotationManager.symbolElevationReference = expectedValue
-      assertEquals(expectedValue, pointAnnotationManager.symbolElevationReference)
-      pointAnnotationManager.symbolElevationReference = null
-      val expectedDefaultValue = SymbolElevationReference.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      assertEquals(expectedDefaultValue, pointAnnotationManager.symbolElevationReference)
     }
   }
 

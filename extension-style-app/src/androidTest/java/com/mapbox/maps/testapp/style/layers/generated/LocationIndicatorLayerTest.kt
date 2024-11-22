@@ -473,6 +473,61 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun emphasisCircleGlowRangeTest() {
+    val testValue = listOf(0.0, 1.0)
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleGlowRange(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.emphasisCircleGlowRange?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun emphasisCircleGlowRangeAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleGlowRange(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.emphasisCircleGlowRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.emphasisCircleGlowRange!!)
+  }
+
+  @Test
+  @UiThreadTest
+  fun emphasisCircleGlowRangeTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleGlowRangeTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.emphasisCircleGlowRangeTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun emphasisCircleGlowRangeTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleGlowRangeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.emphasisCircleGlowRangeTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun emphasisCircleRadiusTest() {
     val testValue = 1.0
     val layer = locationIndicatorLayer("id") {
@@ -854,6 +909,9 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultEmphasisCircleColorAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorAsExpression)
     assertNotNull("defaultEmphasisCircleColorAsColorInt should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorAsColorInt)
     assertNotNull("defaultEmphasisCircleColorTransition should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorTransition)
+    assertNotNull("defaultEmphasisCircleGlowRange should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRange)
+    assertNotNull("defaultEmphasisCircleGlowRangeAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRangeAsExpression)
+    assertNotNull("defaultEmphasisCircleGlowRangeTransition should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRangeTransition)
     assertNotNull("defaultEmphasisCircleRadius should not be null", LocationIndicatorLayer.defaultEmphasisCircleRadius)
     assertNotNull("defaultEmphasisCircleRadiusAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleRadiusAsExpression)
     assertNotNull("defaultEmphasisCircleRadiusTransition should not be null", LocationIndicatorLayer.defaultEmphasisCircleRadiusTransition)
@@ -887,6 +945,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     val bearingTestValue = 1.0
     val bearingImageSizeTestValue = 1.0
     val emphasisCircleColorTestValue = "rgba(0, 0, 0, 1)"
+    val emphasisCircleGlowRangeTestValue = listOf(0.0, 1.0)
     val emphasisCircleRadiusTestValue = 1.0
     val imagePitchDisplacementTestValue = 1.0
     val locationTestValue = listOf(0.0, 1.0, 2.0)
@@ -905,6 +964,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
       bearing(bearingTestValue)
       bearingImageSize(bearingImageSizeTestValue)
       emphasisCircleColor(emphasisCircleColorTestValue)
+      emphasisCircleGlowRange(emphasisCircleGlowRangeTestValue)
       emphasisCircleRadius(emphasisCircleRadiusTestValue)
       imagePitchDisplacement(imagePitchDisplacementTestValue)
       location(locationTestValue)
@@ -930,6 +990,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(bearingTestValue, cachedLayer.bearing)
     assertEquals(bearingImageSizeTestValue, cachedLayer.bearingImageSize)
     assertEquals(emphasisCircleColorTestValue, cachedLayer.emphasisCircleColor)
+    assertEquals(emphasisCircleGlowRangeTestValue, cachedLayer.emphasisCircleGlowRange)
     assertEquals(emphasisCircleRadiusTestValue, cachedLayer.emphasisCircleRadius)
     assertEquals(imagePitchDisplacementTestValue, cachedLayer.imagePitchDisplacement)
     assertEquals(locationTestValue, cachedLayer.location)

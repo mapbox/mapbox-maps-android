@@ -596,6 +596,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
+	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
@@ -606,6 +607,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
+	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;)V
 }
 
@@ -642,11 +644,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getFillPattern ()Ljava/lang/String;
+	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
+	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;)V
 }
 
@@ -1395,6 +1399,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Back
 	public final fun getBackgroundOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getBackgroundOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getBackgroundPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getBackgroundPitchAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
@@ -1405,9 +1410,29 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Back
 	public final fun setBackgroundOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setBackgroundOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setBackgroundPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setBackgroundPitchAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
+	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
+	public static final field VIEWPORT Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue$Companion {
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleLayerKt {
@@ -1591,6 +1616,44 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Clip
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
+	public static final field FLAT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
+	public static final field TERRAIN Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
+	public static final field FLAT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
+	public static final field TERRAIN Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerKt {
 	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
@@ -1609,6 +1672,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillExtrusionAmbientOcclusionWallRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionAmbientOcclusionWallRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionBase ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionBaseAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
 	public final fun getFillExtrusionBaseTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getFillExtrusionColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -1627,6 +1691,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillExtrusionFloodLightWallRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionFloodLightWallRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionHeight ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillExtrusionHeightAlignment ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
 	public final fun getFillExtrusionHeightTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionLineWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionLineWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -1657,6 +1722,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillExtrusionAmbientOcclusionWallRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionAmbientOcclusionWallRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionBase (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionBaseAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;)V
 	public final fun setFillExtrusionBaseTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setFillExtrusionColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
@@ -1675,6 +1741,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillExtrusionFloodLightWallRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionFloodLightWallRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionHeight (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillExtrusionHeightAlignment (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;)V
 	public final fun setFillExtrusionHeightTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionLineWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionLineWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
@@ -1736,6 +1803,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
 	public final fun getFillTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillZOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFillZOffsetTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
@@ -1756,6 +1825,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;)V
 	public final fun setFillTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillZOffset (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFillZOffsetTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
@@ -2167,6 +2238,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Loca
 	public final fun getBearingTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getEmphasisCircleColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getEmphasisCircleColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getEmphasisCircleGlowRange ()Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;
+	public final fun getEmphasisCircleGlowRangeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getEmphasisCircleRadius ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getEmphasisCircleRadiusTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
@@ -2199,6 +2272,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Loca
 	public final fun setBearingTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setEmphasisCircleColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setEmphasisCircleColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setEmphasisCircleGlowRange (Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;)V
+	public final fun setEmphasisCircleGlowRangeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setEmphasisCircleRadius (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setEmphasisCircleRadiusTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V

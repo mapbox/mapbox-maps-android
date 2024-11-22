@@ -1153,6 +1153,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(String backgroundPattern);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPattern);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment backgroundPitchAlignment);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPitchAlignment);
     method public String? getBackgroundColor();
     method @ColorInt public Integer? getBackgroundColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBackgroundColorAsExpression();
@@ -1165,6 +1167,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getBackgroundOpacityTransition();
     method public String? getBackgroundPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBackgroundPatternAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment? getBackgroundPitchAlignment();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBackgroundPitchAlignmentAsExpression();
     method public String getLayerId();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
@@ -1188,6 +1192,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? backgroundOpacityTransition;
     property public final String? backgroundPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? backgroundPatternAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment? backgroundPitchAlignment;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? backgroundPitchAlignmentAsExpression;
     property public String layerId;
     property public Double? maxZoom;
     property public Double? minZoom;
@@ -1210,6 +1216,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultBackgroundOpacityTransition();
     method public String? getDefaultBackgroundPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultBackgroundPatternAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment? getDefaultBackgroundPitchAlignment();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultBackgroundPitchAlignmentAsExpression();
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
@@ -1225,6 +1233,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultBackgroundOpacityTransition;
     property public final String? defaultBackgroundPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultBackgroundPatternAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment? defaultBackgroundPitchAlignment;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultBackgroundPitchAlignmentAsExpression;
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
@@ -1246,6 +1256,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(String backgroundPattern);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPattern);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment backgroundPitchAlignment = com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment.MAP);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPitchAlignment);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer slot(String slot);
@@ -1651,6 +1663,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionWallRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(double fillExtrusionBase);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionBase);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseAlignment(com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment fillExtrusionBaseAlignment);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionBaseAlignment);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionColor(String fillExtrusionColor);
@@ -1689,6 +1703,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightWallRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeight(double fillExtrusionHeight);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeight(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionHeight);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightAlignment(com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment fillExtrusionHeightAlignment);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionHeightAlignment);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidth(double fillExtrusionLineWidth);
@@ -1732,6 +1748,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionAmbientOcclusionWallRadiusAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionAmbientOcclusionWallRadiusTransition();
     method public Double? getFillExtrusionBase();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment? getFillExtrusionBaseAlignment();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionBaseAlignmentAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionBaseAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionBaseTransition();
     method public String? getFillExtrusionColor();
@@ -1762,6 +1780,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionFloodLightWallRadiusAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionFloodLightWallRadiusTransition();
     method public Double? getFillExtrusionHeight();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment? getFillExtrusionHeightAlignment();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionHeightAlignmentAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionHeightAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionHeightTransition();
     method public Double? getFillExtrusionLineWidth();
@@ -1815,6 +1835,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionAmbientOcclusionWallRadiusAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionAmbientOcclusionWallRadiusTransition;
     property public final Double? fillExtrusionBase;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment? fillExtrusionBaseAlignment;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionBaseAlignmentAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionBaseAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionBaseTransition;
     property public final String? fillExtrusionColor;
@@ -1845,6 +1867,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionFloodLightWallRadiusAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionFloodLightWallRadiusTransition;
     property public final Double? fillExtrusionHeight;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment? fillExtrusionHeightAlignment;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionHeightAlignmentAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionHeightAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionHeightTransition;
     property public final Double? fillExtrusionLineWidth;
@@ -1896,6 +1920,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionAmbientOcclusionWallRadiusAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionAmbientOcclusionWallRadiusTransition();
     method public Double? getDefaultFillExtrusionBase();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment? getDefaultFillExtrusionBaseAlignment();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionBaseAlignmentAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionBaseAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionBaseTransition();
     method public String? getDefaultFillExtrusionColor();
@@ -1926,6 +1952,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionFloodLightWallRadiusAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionFloodLightWallRadiusTransition();
     method public Double? getDefaultFillExtrusionHeight();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment? getDefaultFillExtrusionHeightAlignment();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionHeightAlignmentAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionHeightAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionHeightTransition();
     method public Double? getDefaultFillExtrusionLineWidth();
@@ -1967,6 +1995,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionAmbientOcclusionWallRadiusAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionAmbientOcclusionWallRadiusTransition;
     property public final Double? defaultFillExtrusionBase;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment? defaultFillExtrusionBaseAlignment;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionBaseAlignmentAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionBaseAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionBaseTransition;
     property public final String? defaultFillExtrusionColor;
@@ -1997,6 +2027,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionFloodLightWallRadiusAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionFloodLightWallRadiusTransition;
     property public final Double? defaultFillExtrusionHeight;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment? defaultFillExtrusionHeightAlignment;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionHeightAlignmentAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionHeightAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionHeightTransition;
     property public final Double? defaultFillExtrusionLineWidth;
@@ -2047,6 +2079,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionWallRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(double fillExtrusionBase = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionBase);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseAlignment(com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment fillExtrusionBaseAlignment = com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment.TERRAIN);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionBaseAlignment);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionColor(String fillExtrusionColor = "#000000");
@@ -2085,6 +2119,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightWallRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeight(double fillExtrusionHeight = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeight(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionHeight);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightAlignment(com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment fillExtrusionHeightAlignment = com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment.FLAT);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionHeightAlignment);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionHeightTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionLineWidth(double fillExtrusionLineWidth = 0.0);
@@ -2156,6 +2192,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(double fillZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression fillZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffsetTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public Boolean? getFillAntialias();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillAntialiasAsExpression();
@@ -2182,6 +2222,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillTranslateAnchorAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillTranslateAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillTranslateTransition();
+    method public Double? getFillZOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillZOffsetAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillZOffsetTransition();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFilter();
     method public String getLayerId();
     method public Double? getMaxZoom();
@@ -2222,6 +2265,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillTranslateAnchorAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillTranslateAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillTranslateTransition;
+    property public final Double? fillZOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillZOffsetAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillZOffsetTransition;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? filter;
     property public String layerId;
     property public Double? maxZoom;
@@ -2260,6 +2306,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillTranslateAnchorAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillTranslateAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillTranslateTransition();
+    method public Double? getDefaultFillZOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillZOffsetAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillZOffsetTransition();
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
@@ -2288,6 +2337,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillTranslateAnchorAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillTranslateAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillTranslateTransition;
+    property public final Double? defaultFillZOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillZOffsetAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillZOffsetTransition;
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
@@ -2324,6 +2376,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(double fillZOffset = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression fillZOffset);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffsetTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer minZoom(double minZoom);
@@ -3157,6 +3213,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(@ColorInt int emphasisCircleColor);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRange(java.util.List<java.lang.Double> emphasisCircleGlowRange);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRange(com.mapbox.maps.extension.style.expressions.generated.Expression emphasisCircleGlowRange);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRangeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRangeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadius(double emphasisCircleRadius);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadius(com.mapbox.maps.extension.style.expressions.generated.Expression emphasisCircleRadius);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadiusTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3184,6 +3244,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @ColorInt public Integer? getEmphasisCircleColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getEmphasisCircleColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getEmphasisCircleColorTransition();
+    method public java.util.List<java.lang.Double>? getEmphasisCircleGlowRange();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getEmphasisCircleGlowRangeAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getEmphasisCircleGlowRangeTransition();
     method public Double? getEmphasisCircleRadius();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getEmphasisCircleRadiusAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getEmphasisCircleRadiusTransition();
@@ -3265,6 +3328,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property @ColorInt public final Integer? emphasisCircleColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? emphasisCircleColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? emphasisCircleColorTransition;
+    property public final java.util.List<java.lang.Double>? emphasisCircleGlowRange;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? emphasisCircleGlowRangeAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? emphasisCircleGlowRangeTransition;
     property public final Double? emphasisCircleRadius;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? emphasisCircleRadiusAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? emphasisCircleRadiusTransition;
@@ -3321,6 +3387,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @ColorInt public Integer? getDefaultEmphasisCircleColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultEmphasisCircleColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultEmphasisCircleColorTransition();
+    method public java.util.List<java.lang.Double>? getDefaultEmphasisCircleGlowRange();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultEmphasisCircleGlowRangeAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultEmphasisCircleGlowRangeTransition();
     method public Double? getDefaultEmphasisCircleRadius();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultEmphasisCircleRadiusAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultEmphasisCircleRadiusTransition();
@@ -3370,6 +3439,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property @ColorInt public final Integer? defaultEmphasisCircleColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultEmphasisCircleColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultEmphasisCircleColorTransition;
+    property public final java.util.List<java.lang.Double>? defaultEmphasisCircleGlowRange;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultEmphasisCircleGlowRangeAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultEmphasisCircleGlowRangeTransition;
     property public final Double? defaultEmphasisCircleRadius;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultEmphasisCircleRadiusAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultEmphasisCircleRadiusTransition;
@@ -3428,6 +3500,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(@ColorInt int emphasisCircleColor);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRange(java.util.List<java.lang.Double> emphasisCircleGlowRange = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRange(com.mapbox.maps.extension.style.expressions.generated.Expression emphasisCircleGlowRange);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRangeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleGlowRangeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadius(double emphasisCircleRadius = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadius(com.mapbox.maps.extension.style.expressions.generated.Expression emphasisCircleRadius);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadiusTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -5480,6 +5556,19 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor valueOf(String value);
   }
 
+  public final class BackgroundPitchAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment VIEWPORT;
+  }
+
+  public static final class BackgroundPitchAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment valueOf(String value);
+  }
+
   public final class CirclePitchAlignment {
     method public String getValue();
     method public static com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment valueOf(String value);
@@ -5530,6 +5619,32 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
   public static final class ClipLayerTypes.Companion {
     method public com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class FillExtrusionBaseAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment FLAT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment TERRAIN;
+  }
+
+  public static final class FillExtrusionBaseAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionBaseAlignment valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class FillExtrusionHeightAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment FLAT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment TERRAIN;
+  }
+
+  public static final class FillExtrusionHeightAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionHeightAlignment valueOf(String value);
   }
 
   public final class FillExtrusionTranslateAnchor {

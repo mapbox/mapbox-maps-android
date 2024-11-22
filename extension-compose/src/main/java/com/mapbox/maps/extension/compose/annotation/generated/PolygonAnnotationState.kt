@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PolygonAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation
 
@@ -21,6 +22,7 @@ public class PolygonAnnotationState private constructor(
   initialFillOpacity: Double?,
   initialFillOutlineColor: Color?,
   initialFillPattern: String?,
+  initialFillZOffset: Double?,
   initialPolygonAnnotationInteractionsState: PolygonAnnotationInteractionsState,
 ) {
 
@@ -29,6 +31,7 @@ public class PolygonAnnotationState private constructor(
     initialFillOpacity = null,
     initialFillOutlineColor = null,
     initialFillPattern = null,
+    initialFillZOffset = null,
     initialPolygonAnnotationInteractionsState = PolygonAnnotationInteractionsState(),
 )
 
@@ -52,6 +55,11 @@ public class PolygonAnnotationState private constructor(
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   public var fillPattern: String? by mutableStateOf(initialFillPattern)
+  /**
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   */
+  @MapboxExperimental
+  public var fillZOffset: Double? by mutableStateOf(initialFillZOffset)
 
   @Composable
   private fun UpdateFillColor(
@@ -93,6 +101,16 @@ public class PolygonAnnotationState private constructor(
       }
     )
   }
+  @Composable
+  private fun UpdateFillZOffset(
+    annotationNode: PolygonAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.fillZOffset = fillZOffset
+      }
+    )
+  }
 
   @Composable
   internal fun UpdateProperties(
@@ -102,6 +120,7 @@ public class PolygonAnnotationState private constructor(
     UpdateFillOpacity(annotationNode)
     UpdateFillOutlineColor(annotationNode)
     UpdateFillPattern(annotationNode)
+    UpdateFillZOffset(annotationNode)
   }
 }
 

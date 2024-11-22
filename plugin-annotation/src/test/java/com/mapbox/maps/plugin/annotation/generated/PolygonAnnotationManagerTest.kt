@@ -99,6 +99,8 @@ class PolygonAnnotationManagerTest {
     every { dragLayer.fillOutlineColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillPattern(any<Expression>()) } answers { layer }
     every { dragLayer.fillPattern(any<Expression>()) } answers { dragLayer }
+    every { layer.fillZOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.fillZOffset(any<Expression>()) } answers { dragLayer }
   }
 
   @After
@@ -248,6 +250,11 @@ class PolygonAnnotationManagerTest {
     assertEquals("pedestrian-polygon", annotation.fillPattern)
     annotation.fillPattern = null
     assertNull(annotation.fillPattern)
+
+    annotation.fillZOffset = 0.0
+    assertEquals(0.0, annotation.fillZOffset)
+    annotation.fillZOffset = null
+    assertNull(annotation.fillZOffset)
   }
 
   @Test
@@ -795,5 +802,34 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
     verify(exactly = 1) { manager.dragLayer.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+  }
+
+  @Test
+  fun testFillZOffsetLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillZOffset(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+  }
+
+  @Test
+  fun testFillZOffsetInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillZOffset = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
   }
 }

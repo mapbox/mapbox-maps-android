@@ -430,6 +430,29 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionBaseAlignmentTest() {
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionBaseAlignment(FillExtrusionBaseAlignment.TERRAIN)
+    }
+    setupLayer(layer)
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN, layer.fillExtrusionBaseAlignment)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionBaseAlignmentAsExpressionTest() {
+    val expression = literal("terrain")
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionBaseAlignment(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillExtrusionBaseAlignmentAsExpression.toString())
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN, layer.fillExtrusionBaseAlignment!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionColorTest() {
     val testValue = "rgba(0, 0, 0, 1)"
     val layer = fillExtrusionLayer("id", "source") {
@@ -535,14 +558,18 @@ class FillExtrusionLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun fillExtrusionEmissiveStrengthAsExpressionTest() {
-    val expression = literal(1.0)
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
     val layer = fillExtrusionLayer("id", "source") {
       fillExtrusionEmissiveStrength(expression)
     }
     setupLayer(layer)
 
-    assertEquals(1.0, layer.fillExtrusionEmissiveStrengthAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.fillExtrusionEmissiveStrength!!, 1E-5)
+    assertEquals(expression.toString(), layer.fillExtrusionEmissiveStrengthAsExpression.toString())
+    assertEquals(null, layer.fillExtrusionEmissiveStrength)
   }
 
   @Test
@@ -936,6 +963,29 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionHeightAlignmentTest() {
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionHeightAlignment(FillExtrusionHeightAlignment.TERRAIN)
+    }
+    setupLayer(layer)
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN, layer.fillExtrusionHeightAlignment)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionHeightAlignmentAsExpressionTest() {
+    val expression = literal("terrain")
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionHeightAlignment(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillExtrusionHeightAlignmentAsExpression.toString())
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN, layer.fillExtrusionHeightAlignment!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionLineWidthTest() {
     val testValue = 1.0
     val layer = fillExtrusionLayer("id", "source") {
@@ -1312,6 +1362,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionBase should not be null", FillExtrusionLayer.defaultFillExtrusionBase)
     assertNotNull("defaultFillExtrusionBaseAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionBaseAsExpression)
     assertNotNull("defaultFillExtrusionBaseTransition should not be null", FillExtrusionLayer.defaultFillExtrusionBaseTransition)
+    assertNotNull("defaultFillExtrusionBaseAlignment should not be null", FillExtrusionLayer.defaultFillExtrusionBaseAlignment)
+    assertNotNull("defaultFillExtrusionBaseAlignmentAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression)
     assertNotNull("defaultFillExtrusionColor should not be null", FillExtrusionLayer.defaultFillExtrusionColor)
     assertNotNull("defaultFillExtrusionColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsExpression)
     assertNotNull("defaultFillExtrusionColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsColorInt)
@@ -1340,6 +1392,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionHeight should not be null", FillExtrusionLayer.defaultFillExtrusionHeight)
     assertNotNull("defaultFillExtrusionHeightAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionHeightAsExpression)
     assertNotNull("defaultFillExtrusionHeightTransition should not be null", FillExtrusionLayer.defaultFillExtrusionHeightTransition)
+    assertNotNull("defaultFillExtrusionHeightAlignment should not be null", FillExtrusionLayer.defaultFillExtrusionHeightAlignment)
+    assertNotNull("defaultFillExtrusionHeightAlignmentAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression)
     assertNotNull("defaultFillExtrusionLineWidth should not be null", FillExtrusionLayer.defaultFillExtrusionLineWidth)
     assertNotNull("defaultFillExtrusionLineWidthAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression)
     assertNotNull("defaultFillExtrusionLineWidthTransition should not be null", FillExtrusionLayer.defaultFillExtrusionLineWidthTransition)
@@ -1378,6 +1432,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
     val fillExtrusionAmbientOcclusionWallRadiusTestValue = 1.0
     val fillExtrusionBaseTestValue = 1.0
+    val fillExtrusionBaseAlignmentTestValue = FillExtrusionBaseAlignment.TERRAIN
     val fillExtrusionColorTestValue = "rgba(0, 0, 0, 1)"
     val fillExtrusionCutoffFadeRangeTestValue = 1.0
     val fillExtrusionEmissiveStrengthTestValue = 1.0
@@ -1387,6 +1442,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionFloodLightIntensityTestValue = 1.0
     val fillExtrusionFloodLightWallRadiusTestValue = 1.0
     val fillExtrusionHeightTestValue = 1.0
+    val fillExtrusionHeightAlignmentTestValue = FillExtrusionHeightAlignment.TERRAIN
     val fillExtrusionLineWidthTestValue = 1.0
     val fillExtrusionOpacityTestValue = 1.0
     val fillExtrusionPatternTestValue = "abc"
@@ -1410,6 +1466,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadiusTestValue)
       fillExtrusionAmbientOcclusionWallRadius(fillExtrusionAmbientOcclusionWallRadiusTestValue)
       fillExtrusionBase(fillExtrusionBaseTestValue)
+      fillExtrusionBaseAlignment(fillExtrusionBaseAlignmentTestValue)
       fillExtrusionColor(fillExtrusionColorTestValue)
       fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRangeTestValue)
       fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrengthTestValue)
@@ -1419,6 +1476,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensityTestValue)
       fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadiusTestValue)
       fillExtrusionHeight(fillExtrusionHeightTestValue)
+      fillExtrusionHeightAlignment(fillExtrusionHeightAlignmentTestValue)
       fillExtrusionLineWidth(fillExtrusionLineWidthTestValue)
       fillExtrusionOpacity(fillExtrusionOpacityTestValue)
       fillExtrusionPattern(fillExtrusionPatternTestValue)
@@ -1447,6 +1505,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionRadius)
     assertEquals(fillExtrusionAmbientOcclusionWallRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionWallRadius)
     assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
+    assertEquals(fillExtrusionBaseAlignmentTestValue, cachedLayer.fillExtrusionBaseAlignment)
     assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
     assertEquals(fillExtrusionCutoffFadeRangeTestValue, cachedLayer.fillExtrusionCutoffFadeRange)
     assertEquals(fillExtrusionEmissiveStrengthTestValue, cachedLayer.fillExtrusionEmissiveStrength)
@@ -1456,6 +1515,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionFloodLightIntensityTestValue, cachedLayer.fillExtrusionFloodLightIntensity)
     assertEquals(fillExtrusionFloodLightWallRadiusTestValue, cachedLayer.fillExtrusionFloodLightWallRadius)
     assertEquals(fillExtrusionHeightTestValue, cachedLayer.fillExtrusionHeight)
+    assertEquals(fillExtrusionHeightAlignmentTestValue, cachedLayer.fillExtrusionHeightAlignment)
     assertEquals(fillExtrusionLineWidthTestValue, cachedLayer.fillExtrusionLineWidth)
     assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
     assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)

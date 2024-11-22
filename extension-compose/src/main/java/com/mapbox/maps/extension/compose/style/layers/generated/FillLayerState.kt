@@ -42,6 +42,8 @@ public class FillLayerState private constructor(
   initialFillTranslate: DoubleListValue,
   initialFillTranslateTransition: Transition,
   initialFillTranslateAnchor: FillTranslateAnchorValue,
+  initialFillZOffset: DoubleValue,
+  initialFillZOffsetTransition: Transition,
   initialVisibility: VisibilityValue,
   initialMinZoom: LongValue,
   initialMaxZoom: LongValue,
@@ -67,6 +69,8 @@ public class FillLayerState private constructor(
     initialFillTranslate = DoubleListValue.INITIAL,
     initialFillTranslateTransition = Transition.INITIAL,
     initialFillTranslateAnchor = FillTranslateAnchorValue.INITIAL,
+    initialFillZOffset = DoubleValue.INITIAL,
+    initialFillZOffsetTransition = Transition.INITIAL,
     initialVisibility = VisibilityValue.INITIAL,
     initialMinZoom = LongValue.INITIAL,
     initialMaxZoom = LongValue.INITIAL,
@@ -137,6 +141,16 @@ public class FillLayerState private constructor(
    *  Controls the frame of reference for `fill-translate`. Default value: "map".
    */
   public var fillTranslateAnchor: FillTranslateAnchorValue by mutableStateOf(initialFillTranslateAnchor)
+  /**
+   *  Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  public var fillZOffset: DoubleValue by mutableStateOf(initialFillZOffset)
+  /**
+   *  Defines the transition of [fillZOffset]. Default value: 0. Minimum value: 0.
+   */
+  @MapboxExperimental
+  public var fillZOffsetTransition: Transition by mutableStateOf(initialFillZOffsetTransition)
   /**
    *  Whether this layer is displayed. Default value: "visible".
    */
@@ -246,6 +260,20 @@ public class FillLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillZOffset(layerNode: LayerNode) {
+    if (fillZOffset.notInitial) {
+      layerNode.setProperty("fill-z-offset", fillZOffset.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillZOffsetTransition(layerNode: LayerNode) {
+    if (fillZOffsetTransition.notInitial) {
+      layerNode.setProperty("fill-z-offset-transition", fillZOffsetTransition.value)
+    }
+  }
+  @Composable
   private fun UpdateVisibility(layerNode: LayerNode) {
     if (visibility.notInitial) {
       layerNode.setProperty("visibility", visibility.value)
@@ -292,6 +320,8 @@ public class FillLayerState private constructor(
     UpdateFillTranslate(layerNode)
     UpdateFillTranslateTransition(layerNode)
     UpdateFillTranslateAnchor(layerNode)
+    UpdateFillZOffset(layerNode)
+    UpdateFillZOffsetTransition(layerNode)
     UpdateVisibility(layerNode)
     UpdateMinZoom(layerNode)
     UpdateMaxZoom(layerNode)

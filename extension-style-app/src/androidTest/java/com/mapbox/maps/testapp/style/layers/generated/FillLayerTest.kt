@@ -5,6 +5,7 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for FillLayer
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class FillLayerTest : BaseStyleTest() {
 
@@ -482,6 +484,65 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillZOffsetTest() {
+    val testValue = 1.0
+    val layer = fillLayer("id", "source") {
+      fillZOffset(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillZOffset!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillZOffsetAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = fillLayer("id", "source") {
+      fillZOffset(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillZOffsetAsExpression.toString())
+    assertEquals(null, layer.fillZOffset)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillZOffsetTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillZOffsetTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillZOffsetTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillZOffsetTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillZOffsetTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillZOffsetTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun visibilityTest() {
     val layer = fillLayer("id", "source") {
       visibility(Visibility.NONE)
@@ -538,6 +599,9 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillTranslateTransition should not be null", FillLayer.defaultFillTranslateTransition)
     assertNotNull("defaultFillTranslateAnchor should not be null", FillLayer.defaultFillTranslateAnchor)
     assertNotNull("defaultFillTranslateAnchorAsExpression should not be null", FillLayer.defaultFillTranslateAnchorAsExpression)
+    assertNotNull("defaultFillZOffset should not be null", FillLayer.defaultFillZOffset)
+    assertNotNull("defaultFillZOffsetAsExpression should not be null", FillLayer.defaultFillZOffsetAsExpression)
+    assertNotNull("defaultFillZOffsetTransition should not be null", FillLayer.defaultFillZOffsetTransition)
   }
 
   @Test
@@ -558,6 +622,7 @@ class FillLayerTest : BaseStyleTest() {
     val fillPatternTestValue = "abc"
     val fillTranslateTestValue = listOf(0.0, 1.0)
     val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
+    val fillZOffsetTestValue = 1.0
 
     val minZoomTestValue = 10.0
     val maxZoomTestValue = 20.0
@@ -575,6 +640,7 @@ class FillLayerTest : BaseStyleTest() {
       fillPattern(fillPatternTestValue)
       fillTranslate(fillTranslateTestValue)
       fillTranslateAnchor(fillTranslateAnchorTestValue)
+      fillZOffset(fillZOffsetTestValue)
     }
 
     setupLayer(layer)
@@ -597,6 +663,7 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(fillPatternTestValue, cachedLayer.fillPattern)
     assertEquals(fillTranslateTestValue, cachedLayer.fillTranslate)
     assertEquals(fillTranslateAnchorTestValue, cachedLayer.fillTranslateAnchor)
+    assertEquals(fillZOffsetTestValue, cachedLayer.fillZOffset)
   }
 }
 

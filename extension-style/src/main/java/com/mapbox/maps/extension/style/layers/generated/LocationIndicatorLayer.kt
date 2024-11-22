@@ -739,11 +739,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    */
   val bearing: Double?
     /**
-     * The bearing of the location indicator. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
      *
      * Use static method [LocationIndicatorLayer.defaultBearing] to get the default property.
      *
@@ -754,7 +754,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * Use static method [LocationIndicatorLayer.defaultBearing] to set the default property.
    *
@@ -766,14 +766,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * This is an Expression representation of "bearing".
    *
    */
   val bearingAsExpression: Expression?
     /**
-     * The bearing of the location indicator. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
      *
      * Get the Bearing property as an Expression
      *
@@ -792,7 +792,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * Use static method [LocationIndicatorLayer.defaultBearingAsExpression] to set the default property.
    *
@@ -1067,6 +1067,105 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   */
+  val emphasisCircleGlowRange: List<Double>?
+    /**
+     * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+     *
+     * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRange] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("emphasis-circle-glow-range")
+    }
+
+  /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRange] to set the default property.
+   *
+   * @param emphasisCircleGlowRange value of emphasisCircleGlowRange
+   */
+  override fun emphasisCircleGlowRange(emphasisCircleGlowRange: List<Double>): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("emphasis-circle-glow-range", emphasisCircleGlowRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * This is an Expression representation of "emphasis-circle-glow-range".
+   *
+   */
+  val emphasisCircleGlowRangeAsExpression: Expression?
+    /**
+     * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+     *
+     * Get the EmphasisCircleGlowRange property as an Expression
+     *
+     * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRangeAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("emphasis-circle-glow-range")?.let {
+        return it
+      }
+      emphasisCircleGlowRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRangeAsExpression] to set the default property.
+   *
+   * @param emphasisCircleGlowRange value of emphasisCircleGlowRange as Expression
+   */
+  override fun emphasisCircleGlowRange(emphasisCircleGlowRange: Expression): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("emphasis-circle-glow-range", emphasisCircleGlowRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for EmphasisCircleGlowRange.
+   */
+  val emphasisCircleGlowRangeTransition: StyleTransition?
+    /**
+     * Get the EmphasisCircleGlowRange property transition options
+     *
+     * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRangeTransition] to get the default property.
+     *
+     * @return transition options for List<Double>
+     */
+    get() {
+      return getPropertyValue("emphasis-circle-glow-range-transition")
+    }
+
+  /**
+   * Set the EmphasisCircleGlowRange property transition options
+   *
+   * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRangeTransition] to set the default property.
+   *
+   * @param options transition options for List<Double>
+   */
+  override fun emphasisCircleGlowRangeTransition(options: StyleTransition): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("emphasis-circle-glow-range-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [emphasisCircleGlowRangeTransition].
+   */
+  override fun emphasisCircleGlowRangeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
+    emphasisCircleGlowRangeTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
    */
   val emphasisCircleRadius: Double?
@@ -1231,11 +1330,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    */
   val location: List<Double>?
     /**
-     * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+     * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
      *
      * Use static method [LocationIndicatorLayer.defaultLocation] to get the default property.
      *
@@ -1246,7 +1345,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * Use static method [LocationIndicatorLayer.defaultLocation] to set the default property.
    *
@@ -1258,14 +1357,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * This is an Expression representation of "location".
    *
    */
   val locationAsExpression: Expression?
     /**
-     * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+     * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
      *
      * Get the Location property as an Expression
      *
@@ -1284,7 +1383,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * Use static method [LocationIndicatorLayer.defaultLocationAsExpression] to set the default property.
    *
@@ -2044,11 +2143,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-transition").silentUnwrap()
 
     /**
-     * The bearing of the location indicator. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
      */
     val defaultBearing: Double?
       /**
-       * The bearing of the location indicator. Default value: 0.
+       * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
        *
        * Get the default value of Bearing property
        *
@@ -2059,7 +2158,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The bearing of the location indicator. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
      *
      * This is an Expression representation of "bearing".
      *
@@ -2207,6 +2306,54 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color-transition").silentUnwrap()
 
     /**
+     * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+     */
+    val defaultEmphasisCircleGlowRange: List<Double>?
+      /**
+       * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+       *
+       * Get the default value of EmphasisCircleGlowRange property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-glow-range").silentUnwrap()
+      }
+
+    /**
+     * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+     *
+     * This is an Expression representation of "emphasis-circle-glow-range".
+     *
+     */
+    val defaultEmphasisCircleGlowRangeAsExpression: Expression?
+      /**
+       * Get default value of the EmphasisCircleGlowRange property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-glow-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultEmphasisCircleGlowRange?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for EmphasisCircleGlowRange.
+     */
+    val defaultEmphasisCircleGlowRangeTransition: StyleTransition?
+      /**
+       * Get the EmphasisCircleGlowRange property transition options
+       *
+       * @return transition options for List<Double>
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-glow-range-transition").silentUnwrap()
+
+    /**
      * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
      */
     val defaultEmphasisCircleRadius: Double?
@@ -2292,11 +2439,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+     * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
      */
     val defaultLocation: List<Double>?
       /**
-       * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+       * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
        *
        * Get the default value of Location property
        *
@@ -2307,7 +2454,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+     * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
      *
      * This is an Expression representation of "location".
      *
@@ -2724,21 +2871,21 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * @param bearing value of bearing
    */
   fun bearing(bearing: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * @param bearing value of bearing as Expression
    */
   fun bearing(bearing: Expression): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * Set the Bearing property transition options
    *
@@ -2747,7 +2894,7 @@ interface LocationIndicatorLayerDsl {
   fun bearingTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
    *
    * DSL for [bearingTransition].
    */
@@ -2821,6 +2968,36 @@ interface LocationIndicatorLayerDsl {
   fun emphasisCircleColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * @param emphasisCircleGlowRange value of emphasisCircleGlowRange
+   */
+  fun emphasisCircleGlowRange(emphasisCircleGlowRange: List<Double> = listOf(0.0, 0.0)): LocationIndicatorLayer
+
+  /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * @param emphasisCircleGlowRange value of emphasisCircleGlowRange as Expression
+   */
+  fun emphasisCircleGlowRange(emphasisCircleGlowRange: Expression): LocationIndicatorLayer
+
+  /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * Set the EmphasisCircleGlowRange property transition options
+   *
+   * @param options transition options for List<Double>
+   */
+  fun emphasisCircleGlowRangeTransition(options: StyleTransition): LocationIndicatorLayer
+
+  /**
+   * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
+   *
+   * DSL for [emphasisCircleGlowRangeTransition].
+   */
+  fun emphasisCircleGlowRangeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
+
+  /**
    * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius
@@ -2865,21 +3042,21 @@ interface LocationIndicatorLayerDsl {
   fun imagePitchDisplacement(imagePitchDisplacement: Expression): LocationIndicatorLayer
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * @param location value of location
    */
   fun location(location: List<Double> = listOf(0.0, 0.0, 0.0)): LocationIndicatorLayer
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * @param location value of location as Expression
    */
   fun location(location: Expression): LocationIndicatorLayer
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * Set the Location property transition options
    *
@@ -2888,7 +3065,7 @@ interface LocationIndicatorLayerDsl {
   fun locationTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * An array of [latitude, longitude, altitude] position of the location indicator. Default value: [0,0,0].
+   * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
    *
    * DSL for [locationTransition].
    */

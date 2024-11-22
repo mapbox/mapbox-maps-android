@@ -4,6 +4,17 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Introduce experimental `FillExtrusionLayer.fillExtrusionBaseAlignment` and `FillExtrusionLayer.fillExtrusionHeightAlignment` APIs to control the behavior of fill extrusion base over terrain and the behavior of fill extrusion height over terrain respectively.
+* Introduce experimental `FillLayer.fillZOffset` and `FillLayer.fillZOffsetTransition` APIs to specify a uniform elevation in meters and define the transition of `fillZOffset` respectively.
+* Adds support for `fillZOffset` in `PolygonAnnotation`, `PolygonAnnotationManager`, `PolygonAnnotationOptions`.
+* Introduce `BackgroundLayer.backgroundPitchAlignment` API to configure the orientation of background layer.
+* Introduce `LocationIndicatorLayer.emphasisCircleGlowRange` and `LocationIndicatorLayer.emphasisCircleGlowRangeTransition` APIs to control the glow effect of the emphasis circle from the solid start to the fully transparent end and to set the transition options for the `emphasisCircleGlowRange` property, respectively.
+
+* [compose] Introduce `LocationIndicatorLayerState.emphasisCircleGlowRange` and `LocationIndicatorLayerState.emphasisCircleGlowRangeTransition` properties.
+* [compose] Introduce `FillLayerState.fillZOffset` and `FillLayerState.fillZOffsetTransition` properties.
+* [compose] Introduce `FillExtrusionLayerState.fillExtrusionBaseAlignment` and `FillExtrusionLayerState.fillExtrusionHeightAlignment` properties.
+* [compose] Introduce `BackgroundLayerState.backgroundPitchAlignment` property.
+* [compose] Adds support for `fillZOffset` in `PolygonAnnotationState`, `PolygonAnnotationGroupState`.
 * [compose] Expose `MapViewportState.cameraForCoordinates` method.
 
 # 11.7.3

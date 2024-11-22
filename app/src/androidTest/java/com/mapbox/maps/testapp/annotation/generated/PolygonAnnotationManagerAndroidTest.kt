@@ -154,6 +154,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillZOffset() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillZOffset = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillZOffset)
+      polygonAnnotationManager.fillZOffset = null
+      assertEquals(null, polygonAnnotationManager.fillZOffset)
+    }
+  }
+
+  @Test
   fun testSlot() {
     rule.runOnUiThread {
       val expectedValue = "abc"

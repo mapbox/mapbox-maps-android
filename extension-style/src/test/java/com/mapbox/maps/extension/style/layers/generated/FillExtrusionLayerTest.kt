@@ -869,6 +869,74 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionBaseAlignmentSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionBaseAlignment(FillExtrusionBaseAlignment.TERRAIN)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-base-alignment", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "terrain")
+  }
+
+  @Test
+  fun fillExtrusionBaseAlignmentGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("terrain")
+
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN, layer.fillExtrusionBaseAlignment)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-base-alignment") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionBaseAlignmentAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionBaseAlignment(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-base-alignment", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionBaseAlignmentAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionBaseAlignmentAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-base-alignment") }
+  }
+
+  @Test
+  fun fillExtrusionBaseAlignmentAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionBaseAlignmentAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-base-alignment") }
+  }
+
+  @Test
+  fun fillExtrusionBaseAlignmentAsExpressionGetFromLiteral() {
+    val value = "terrain"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.fillExtrusionBaseAlignmentAsExpression?.toString())
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN.value, layer.fillExtrusionBaseAlignmentAsExpression.toString())
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN, layer.fillExtrusionBaseAlignment)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-base-alignment") }
+  }
+
+  @Test
   fun fillExtrusionColorSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -1873,6 +1941,74 @@ class FillExtrusionLayerTest {
     }
     verify { style.setStyleLayerProperty("id", "fill-extrusion-height-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillExtrusionHeightAlignmentSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionHeightAlignment(FillExtrusionHeightAlignment.TERRAIN)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-height-alignment", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "terrain")
+  }
+
+  @Test
+  fun fillExtrusionHeightAlignmentGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("terrain")
+
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN, layer.fillExtrusionHeightAlignment)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-height-alignment") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionHeightAlignmentAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionHeightAlignment(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-height-alignment", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionHeightAlignmentAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionHeightAlignmentAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-height-alignment") }
+  }
+
+  @Test
+  fun fillExtrusionHeightAlignmentAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionHeightAlignmentAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-height-alignment") }
+  }
+
+  @Test
+  fun fillExtrusionHeightAlignmentAsExpressionGetFromLiteral() {
+    val value = "terrain"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.fillExtrusionHeightAlignmentAsExpression?.toString())
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN.value, layer.fillExtrusionHeightAlignmentAsExpression.toString())
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN, layer.fillExtrusionHeightAlignment)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-height-alignment") }
   }
 
   @Test
@@ -2937,6 +3073,39 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun defaultFillExtrusionBaseAlignmentTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("terrain")
+
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN, FillExtrusionLayer.defaultFillExtrusionBaseAlignment)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-alignment") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionBaseAlignmentAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-alignment") }
+  }
+
+  @Test
+  fun defaultFillExtrusionBaseAlignmentAsExpressionGetFromLiteral() {
+    val value = "terrain"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression?.toString())
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN.value, FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression.toString())
+    assertEquals(FillExtrusionBaseAlignment.TERRAIN, FillExtrusionLayer.defaultFillExtrusionBaseAlignment)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-alignment") }
+  }
+
+  @Test
   fun defaultFillExtrusionColorTest() {
     val expression = rgba {
       literal(0)
@@ -3379,6 +3548,39 @@ class FillExtrusionLayerTest {
 
     assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionHeightTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-transition") }
+  }
+
+  @Test
+  fun defaultFillExtrusionHeightAlignmentTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("terrain")
+
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN, FillExtrusionLayer.defaultFillExtrusionHeightAlignment)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-alignment") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionHeightAlignmentAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-alignment") }
+  }
+
+  @Test
+  fun defaultFillExtrusionHeightAlignmentAsExpressionGetFromLiteral() {
+    val value = "terrain"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression?.toString())
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN.value, FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression.toString())
+    assertEquals(FillExtrusionHeightAlignment.TERRAIN, FillExtrusionLayer.defaultFillExtrusionHeightAlignment)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-height-alignment") }
   }
 
   @Test

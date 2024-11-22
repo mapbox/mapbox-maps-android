@@ -41,6 +41,7 @@ public class FillExtrusionLayerState private constructor(
   initialFillExtrusionAmbientOcclusionWallRadiusTransition: Transition,
   initialFillExtrusionBase: DoubleValue,
   initialFillExtrusionBaseTransition: Transition,
+  initialFillExtrusionBaseAlignment: FillExtrusionBaseAlignmentValue,
   initialFillExtrusionColor: ColorValue,
   initialFillExtrusionColorTransition: Transition,
   initialFillExtrusionCutoffFadeRange: DoubleValue,
@@ -58,6 +59,7 @@ public class FillExtrusionLayerState private constructor(
   initialFillExtrusionFloodLightWallRadiusTransition: Transition,
   initialFillExtrusionHeight: DoubleValue,
   initialFillExtrusionHeightTransition: Transition,
+  initialFillExtrusionHeightAlignment: FillExtrusionHeightAlignmentValue,
   initialFillExtrusionLineWidth: DoubleValue,
   initialFillExtrusionLineWidthTransition: Transition,
   initialFillExtrusionOpacity: DoubleValue,
@@ -94,6 +96,7 @@ public class FillExtrusionLayerState private constructor(
     initialFillExtrusionAmbientOcclusionWallRadiusTransition = Transition.INITIAL,
     initialFillExtrusionBase = DoubleValue.INITIAL,
     initialFillExtrusionBaseTransition = Transition.INITIAL,
+    initialFillExtrusionBaseAlignment = FillExtrusionBaseAlignmentValue.INITIAL,
     initialFillExtrusionColor = ColorValue.INITIAL,
     initialFillExtrusionColorTransition = Transition.INITIAL,
     initialFillExtrusionCutoffFadeRange = DoubleValue.INITIAL,
@@ -111,6 +114,7 @@ public class FillExtrusionLayerState private constructor(
     initialFillExtrusionFloodLightWallRadiusTransition = Transition.INITIAL,
     initialFillExtrusionHeight = DoubleValue.INITIAL,
     initialFillExtrusionHeightTransition = Transition.INITIAL,
+    initialFillExtrusionHeightAlignment = FillExtrusionHeightAlignmentValue.INITIAL,
     initialFillExtrusionLineWidth = DoubleValue.INITIAL,
     initialFillExtrusionLineWidthTransition = Transition.INITIAL,
     initialFillExtrusionOpacity = DoubleValue.INITIAL,
@@ -197,6 +201,11 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionBaseTransition: Transition by mutableStateOf(initialFillExtrusionBaseTransition)
   /**
+   *  Controls the behavior of fill extrusion base over terrain Default value: "terrain".
+   */
+  @MapboxExperimental
+  public var fillExtrusionBaseAlignment: FillExtrusionBaseAlignmentValue by mutableStateOf(initialFillExtrusionBaseAlignment)
+  /**
    *  The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    */
   public var fillExtrusionColor: ColorValue by mutableStateOf(initialFillExtrusionColor)
@@ -274,6 +283,11 @@ public class FillExtrusionLayerState private constructor(
    *  Defines the transition of [fillExtrusionHeight]. Default value: 0. Minimum value: 0.
    */
   public var fillExtrusionHeightTransition: Transition by mutableStateOf(initialFillExtrusionHeightTransition)
+  /**
+   *  Controls the behavior of fill extrusion height over terrain Default value: "flat".
+   */
+  @MapboxExperimental
+  public var fillExtrusionHeightAlignment: FillExtrusionHeightAlignmentValue by mutableStateOf(initialFillExtrusionHeightAlignment)
   /**
    *  If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
    */
@@ -434,6 +448,13 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillExtrusionBaseAlignment(layerNode: LayerNode) {
+    if (fillExtrusionBaseAlignment.notInitial) {
+      layerNode.setProperty("fill-extrusion-base-alignment", fillExtrusionBaseAlignment.value)
+    }
+  }
+  @Composable
   private fun UpdateFillExtrusionColor(layerNode: LayerNode) {
     if (fillExtrusionColor.notInitial) {
       layerNode.setProperty("fill-extrusion-color", fillExtrusionColor.value)
@@ -543,6 +564,13 @@ public class FillExtrusionLayerState private constructor(
   private fun UpdateFillExtrusionHeightTransition(layerNode: LayerNode) {
     if (fillExtrusionHeightTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-height-transition", fillExtrusionHeightTransition.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillExtrusionHeightAlignment(layerNode: LayerNode) {
+    if (fillExtrusionHeightAlignment.notInitial) {
+      layerNode.setProperty("fill-extrusion-height-alignment", fillExtrusionHeightAlignment.value)
     }
   }
   @Composable
@@ -671,6 +699,7 @@ public class FillExtrusionLayerState private constructor(
     UpdateFillExtrusionAmbientOcclusionWallRadiusTransition(layerNode)
     UpdateFillExtrusionBase(layerNode)
     UpdateFillExtrusionBaseTransition(layerNode)
+    UpdateFillExtrusionBaseAlignment(layerNode)
     UpdateFillExtrusionColor(layerNode)
     UpdateFillExtrusionColorTransition(layerNode)
     UpdateFillExtrusionCutoffFadeRange(layerNode)
@@ -688,6 +717,7 @@ public class FillExtrusionLayerState private constructor(
     UpdateFillExtrusionFloodLightWallRadiusTransition(layerNode)
     UpdateFillExtrusionHeight(layerNode)
     UpdateFillExtrusionHeightTransition(layerNode)
+    UpdateFillExtrusionHeightAlignment(layerNode)
     UpdateFillExtrusionLineWidth(layerNode)
     UpdateFillExtrusionLineWidthTransition(layerNode)
     UpdateFillExtrusionOpacity(layerNode)

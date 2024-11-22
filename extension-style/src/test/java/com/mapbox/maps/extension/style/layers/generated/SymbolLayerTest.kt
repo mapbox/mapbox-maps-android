@@ -1173,6 +1173,74 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun symbolElevationReferenceSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolElevationReference(SymbolElevationReference.SEA)
+    verify { style.setStyleLayerProperty("id", "symbol-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "sea")
+  }
+
+  @Test
+  fun symbolElevationReferenceGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
+
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun symbolElevationReferenceAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolElevationReference(expression)
+    verify { style.setStyleLayerProperty("id", "symbol-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun symbolElevationReferenceAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.symbolElevationReferenceAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun symbolElevationReferenceAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.symbolElevationReferenceAsExpression)
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun symbolElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "sea"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.symbolElevationReferenceAsExpression?.toString())
+    assertEquals(SymbolElevationReference.SEA.value, layer.symbolElevationReferenceAsExpression.toString())
+    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
+    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
+  }
+
+  @Test
   fun symbolPlacementSet() {
     val layer = symbolLayer("id", "source") {}
     layer.bindTo(style)
@@ -4364,74 +4432,6 @@ class SymbolLayerTest {
   }
 
   @Test
-  fun symbolElevationReferenceSet() {
-    val layer = symbolLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.symbolElevationReference(SymbolElevationReference.SEA)
-    verify { style.setStyleLayerProperty("id", "symbol-elevation-reference", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "sea")
-  }
-
-  @Test
-  fun symbolElevationReferenceGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
-
-    val layer = symbolLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
-    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
-  }
-  // Expression Tests
-
-  @Test
-  fun symbolElevationReferenceAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = symbolLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.symbolElevationReference(expression)
-    verify { style.setStyleLayerProperty("id", "symbol-elevation-reference", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun symbolElevationReferenceAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = symbolLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.symbolElevationReferenceAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
-  }
-
-  @Test
-  fun symbolElevationReferenceAsExpressionGetNull() {
-    val layer = symbolLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.symbolElevationReferenceAsExpression)
-    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
-  }
-
-  @Test
-  fun symbolElevationReferenceAsExpressionGetFromLiteral() {
-    val value = "sea"
-    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
-
-    val layer = symbolLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(value.toString(), layer.symbolElevationReferenceAsExpression?.toString())
-    assertEquals(SymbolElevationReference.SEA.value, layer.symbolElevationReferenceAsExpression.toString())
-    assertEquals(SymbolElevationReference.SEA, layer.symbolElevationReference)
-    verify { style.getStyleLayerProperty("id", "symbol-elevation-reference") }
-  }
-
-  @Test
   fun symbolZOffsetSet() {
     val layer = symbolLayer("id", "source") {}
     val testValue = 1.0
@@ -6094,6 +6094,39 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun defaultSymbolElevationReferenceTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
+
+    assertEquals(SymbolElevationReference.SEA, SymbolLayer.defaultSymbolElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultSymbolElevationReferenceAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultSymbolElevationReferenceAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
+  }
+
+  @Test
+  fun defaultSymbolElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "sea"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), SymbolLayer.defaultSymbolElevationReferenceAsExpression?.toString())
+    assertEquals(SymbolElevationReference.SEA.value, SymbolLayer.defaultSymbolElevationReferenceAsExpression.toString())
+    assertEquals(SymbolElevationReference.SEA, SymbolLayer.defaultSymbolElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
+  }
+
+  @Test
   fun defaultSymbolPlacementTest() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("point")
 
@@ -7576,39 +7609,6 @@ class SymbolLayerTest {
     assertEquals(IconTranslateAnchor.MAP.value, SymbolLayer.defaultIconTranslateAnchorAsExpression.toString())
     assertEquals(IconTranslateAnchor.MAP, SymbolLayer.defaultIconTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor") }
-  }
-
-  @Test
-  fun defaultSymbolElevationReferenceTest() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
-
-    assertEquals(SymbolElevationReference.SEA, SymbolLayer.defaultSymbolElevationReference)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultSymbolElevationReferenceAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), SymbolLayer.defaultSymbolElevationReferenceAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
-  }
-
-  @Test
-  fun defaultSymbolElevationReferenceAsExpressionGetFromLiteral() {
-    val value = "sea"
-    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
-
-    assertEquals(value.toString(), SymbolLayer.defaultSymbolElevationReferenceAsExpression?.toString())
-    assertEquals(SymbolElevationReference.SEA.value, SymbolLayer.defaultSymbolElevationReferenceAsExpression.toString())
-    assertEquals(SymbolElevationReference.SEA, SymbolLayer.defaultSymbolElevationReference)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-elevation-reference") }
   }
 
   @Test
