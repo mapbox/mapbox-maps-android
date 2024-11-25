@@ -37,6 +37,7 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
   internal constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
+    radius: Double? = null,
     onLongClick: (T, InteractionContext) -> Boolean,
     featuresetFeatureBuilder: (Feature, FeaturesetFeatureId?, Value) -> T
   ) {
@@ -67,7 +68,8 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
         override fun handleEnd(context: InteractionContext) {
           // not needed
         }
-      }
+      },
+      radius
     )
   }
 
@@ -88,7 +90,8 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
         override fun handleEnd(context: InteractionContext) {
           // not needed
         }
-      }
+      },
+      null
     )
   }
 
@@ -105,6 +108,7 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      * @param id mandatory featureset id.
      * @param importId optional style import id.
      * @param filter optional filter. Defaults to NULL.
+     * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
      * @param onLongClick callback triggered when featureset is clicked.
      */
     @JvmOverloads
@@ -114,11 +118,13 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
       id: String,
       importId: String? = null,
       filter: Value? = null,
+      radius: Double? = null,
       onLongClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return LongClickInteraction(
         FeaturesetDescriptor(id, importId, null),
         filter,
+        radius,
         onLongClick
       ) { feature, featuresetFeatureId, state ->
         FeaturesetFeature(
@@ -137,6 +143,7 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      *
      * @param id mandatory layer id.
      * @param filter optional filter. Defaults to NULL.
+     * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
      * @param onLongClick callback triggered when layer is clicked.
      */
     @JvmOverloads
@@ -145,11 +152,13 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
     fun layer(
       id: String,
       filter: Value? = null,
+      radius: Double? = null,
       onLongClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return LongClickInteraction(
         FeaturesetDescriptor(null, null, id),
         filter,
+        radius,
         onLongClick
       ) { feature, featuresetFeatureId, state ->
         FeaturesetFeature(

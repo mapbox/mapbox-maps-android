@@ -70,17 +70,20 @@ public class LayerInteractionsState : BasicStyleInteractions() {
    * When several [ClickInteraction]s are registered for the same layer - the callbacks will be triggered from last to first.
    *
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when layer is clicked.
    */
   @MapboxExperimental
   public fun onClicked(
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): LayerInteractionsState = apply {
     styleLayerEntries.add { layerId ->
       ClickInteraction.layer(
         id = layerId,
         filter = filter,
+        radius = radius,
         onClick = { feature, context ->
           featuresetFeatureScope?.onClick(feature, context) ?: false
         }
@@ -94,17 +97,20 @@ public class LayerInteractionsState : BasicStyleInteractions() {
    * When several [LongClickInteraction]s are registered for the same layer - the callbacks will be triggered from last to first.
    *
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when layer is clicked.
    */
   @MapboxExperimental
   public fun onLongClicked(
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): LayerInteractionsState = apply {
     styleLayerEntries.add { layerId ->
       LongClickInteraction.layer(
         id = layerId,
         filter = filter,
+        radius = radius,
         onLongClick = { feature, context ->
           featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }

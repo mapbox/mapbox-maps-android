@@ -49,6 +49,7 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    * @param id mandatory featureset id.
    * @param importId optional style import id, if not set, the ID will be taken from [StyleImport.importId].
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when featureset is clicked.
    */
   @MapboxExperimental
@@ -56,12 +57,14 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
     id: String,
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     clickInteractionFeatureset(
       featuresetId = id,
       importId = importId,
       filter = filter,
+      radius = radius,
       onClick = onClick
     )
   }
@@ -74,6 +77,7 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    * @param id mandatory featureset id.
    * @param importId optional style import id,  if not set, the ID will be taken from [StyleImport.importId].
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when featureset is clicked.
    */
   @MapboxExperimental
@@ -81,12 +85,14 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
     id: String,
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
     longClickInteractionFeatureset(
       featuresetId = id,
       importId = importId,
       filter = filter,
+      radius = radius,
       onLongClick = onLongClick
     )
   }

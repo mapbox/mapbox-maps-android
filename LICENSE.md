@@ -402,6 +402,14 @@ License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos/)
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the mapbox-base-annotation.
+
+URL: [https://github.com/mapbox/mapbox-maps-android](https://github.com/mapbox/mapbox-maps-android)
+
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos/)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the okhttp.
 
 URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)
@@ -474,7 +482,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,11.8.0,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,11.9.0-beta.1,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Core Maps version 11.0

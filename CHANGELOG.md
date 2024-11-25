@@ -13,14 +13,14 @@ Mapbox welcomes participation and contributions from everyone.
 * Adds support for `fillZOffset` in `PolygonAnnotation`, `PolygonAnnotationManager`, `PolygonAnnotationOptions`.
 * Introduce `BackgroundLayer.backgroundPitchAlignment` API to configure the orientation of background layer.
 * Introduce `LocationIndicatorLayer.emphasisCircleGlowRange` and `LocationIndicatorLayer.emphasisCircleGlowRangeTransition` APIs to control the glow effect of the emphasis circle from the solid start to the fully transparent end and to set the transition options for the `emphasisCircleGlowRange` property, respectively.
-
+* Introduce `radius` parameter for `ClickInteraction` and `LongClickInteraction` to support an extra area around the interaction.
 * [compose] Introduce `LocationIndicatorLayerState.emphasisCircleGlowRange` and `LocationIndicatorLayerState.emphasisCircleGlowRangeTransition` properties.
 * [compose] Introduce `FillLayerState.fillZOffset` and `FillLayerState.fillZOffsetTransition` properties.
 * [compose] Introduce `FillExtrusionLayerState.fillExtrusionBaseAlignment` and `FillExtrusionLayerState.fillExtrusionHeightAlignment` properties.
 * [compose] Introduce `BackgroundLayerState.backgroundPitchAlignment` property.
 * [compose] Adds support for `fillZOffset` in `PolygonAnnotationState`, `PolygonAnnotationGroupState`.
 * [compose] Expose `MapViewportState.cameraForCoordinates` method.
-
+* [compose] Introduce `radius` parameter for all relevant compose functions for interactions to support an extra area around the interaction.
 
 # 11.7.3 November 19, 2024
 ## Bug fixes 🐞

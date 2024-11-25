@@ -19,6 +19,7 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
  *
  * @param importId optional style import id. Defaults to NULL.
  * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
  * @param onClick callback triggered when the `poi` featureset is clicked.
  */
 @JvmOverloads
@@ -26,6 +27,7 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 fun ClickInteraction.Companion.standardPoi(
   importId: String? = null,
   filter: Value? = null,
+  radius: Double? = null,
   onClick: (StandardPoiFeature, InteractionContext) -> Boolean
 ): MapInteraction {
   return ClickInteraction(
@@ -35,6 +37,7 @@ fun ClickInteraction.Companion.standardPoi(
       /* layerId */null
     ),
     filter,
+    radius,
     onClick
   ) { feature, featuresetFeatureId, state ->
     StandardPoiFeature(
@@ -53,6 +56,7 @@ fun ClickInteraction.Companion.standardPoi(
  *
  * @param importId optional style import id. Defaults to NULL.
  * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
  * @param onLongClick callback triggered when the `poi` featureset is long clicked.
  */
 @JvmOverloads
@@ -60,6 +64,7 @@ fun ClickInteraction.Companion.standardPoi(
 fun LongClickInteraction.Companion.standardPoi(
   importId: String? = null,
   filter: Value? = null,
+  radius: Double? = null,
   onLongClick: (StandardPoiFeature, InteractionContext) -> Boolean
 ): MapInteraction {
   return LongClickInteraction(
@@ -69,6 +74,7 @@ fun LongClickInteraction.Companion.standardPoi(
       /* layerId */null
     ),
     filter,
+    radius,
     onLongClick
   ) { feature, featuresetFeatureId, state ->
     StandardPoiFeature(
@@ -86,6 +92,7 @@ fun LongClickInteraction.Companion.standardPoi(
  *
  * @param importId optional style import id. Defaults to NULL.
  * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
  * @param onClick callback triggered when the `place-labels` featureset is clicked.
  */
 @JvmOverloads
@@ -93,6 +100,7 @@ fun LongClickInteraction.Companion.standardPoi(
 fun ClickInteraction.Companion.standardPlaceLabels(
   importId: String? = null,
   filter: Value? = null,
+  radius: Double? = null,
   onClick: (StandardPlaceLabelsFeature, InteractionContext) -> Boolean
 ): MapInteraction {
   return ClickInteraction(
@@ -102,6 +110,7 @@ fun ClickInteraction.Companion.standardPlaceLabels(
       /* layerId */null
     ),
     filter,
+    radius,
     onClick
   ) { feature, featuresetFeatureId, state ->
     StandardPlaceLabelsFeature(
@@ -120,6 +129,7 @@ fun ClickInteraction.Companion.standardPlaceLabels(
  *
  * @param importId optional style import id. Defaults to NULL.
  * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
  * @param onLongClick callback triggered when the `place-labels` featureset is long clicked.
  */
 @JvmOverloads
@@ -127,6 +137,7 @@ fun ClickInteraction.Companion.standardPlaceLabels(
 fun LongClickInteraction.Companion.standardPlaceLabels(
   importId: String? = null,
   filter: Value? = null,
+  radius: Double? = null,
   onLongClick: (StandardPlaceLabelsFeature, InteractionContext) -> Boolean
 ): MapInteraction {
   return LongClickInteraction(
@@ -136,6 +147,7 @@ fun LongClickInteraction.Companion.standardPlaceLabels(
       /* layerId */null
     ),
     filter,
+    radius,
     onLongClick
   ) { feature, featuresetFeatureId, state ->
     StandardPlaceLabelsFeature(
@@ -153,6 +165,7 @@ fun LongClickInteraction.Companion.standardPlaceLabels(
  *
  * @param importId optional style import id. Defaults to NULL.
  * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
  * @param onClick callback triggered when the `buildings` featureset is clicked.
  */
 @JvmOverloads
@@ -160,6 +173,7 @@ fun LongClickInteraction.Companion.standardPlaceLabels(
 fun ClickInteraction.Companion.standardBuildings(
   importId: String? = null,
   filter: Value? = null,
+  radius: Double? = null,
   onClick: (StandardBuildingsFeature, InteractionContext) -> Boolean
 ): MapInteraction {
   return ClickInteraction(
@@ -169,6 +183,7 @@ fun ClickInteraction.Companion.standardBuildings(
       /* layerId */null
     ),
     filter,
+    radius,
     onClick
   ) { feature, featuresetFeatureId, state ->
     StandardBuildingsFeature(
@@ -187,6 +202,7 @@ fun ClickInteraction.Companion.standardBuildings(
  *
  * @param importId optional style import id. Defaults to NULL.
  * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
  * @param onLongClick callback triggered when the `buildings` featureset is long clicked.
  */
 @JvmOverloads
@@ -194,6 +210,7 @@ fun ClickInteraction.Companion.standardBuildings(
 fun LongClickInteraction.Companion.standardBuildings(
   importId: String? = null,
   filter: Value? = null,
+  radius: Double? = null,
   onLongClick: (StandardBuildingsFeature, InteractionContext) -> Boolean
 ): MapInteraction {
   return LongClickInteraction(
@@ -203,6 +220,7 @@ fun LongClickInteraction.Companion.standardBuildings(
       /* layerId */null
     ),
     filter,
+    radius,
     onLongClick
   ) { feature, featuresetFeatureId, state ->
     StandardBuildingsFeature(

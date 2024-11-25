@@ -36,18 +36,21 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    *
    * @param importId optional Standard style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when the Standard featureset is clicked.
    */
   @MapboxExperimental
   public fun onPoiClicked(
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(StandardPoiFeature, InteractionContext) -> Boolean
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       ClickInteraction.standardPoi(
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onClick = { feature, context ->
           featuresetFeatureScope?.onClick(feature, context) ?: false
         }
@@ -62,18 +65,21 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    *
    * @param importId optional Standard style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when the Standard featureset is long clicked.
    */
   @MapboxExperimental
   public fun onPoiLongClicked(
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(StandardPoiFeature, InteractionContext) -> Boolean
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       LongClickInteraction.standardPoi(
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onLongClick = { feature, context ->
           featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }
@@ -88,18 +94,21 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    *
    * @param importId optional Standard style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when the Standard featureset is clicked.
    */
   @MapboxExperimental
   public fun onPlaceLabelsClicked(
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(StandardPlaceLabelsFeature, InteractionContext) -> Boolean
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       ClickInteraction.standardPlaceLabels(
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onClick = { feature, context ->
           featuresetFeatureScope?.onClick(feature, context) ?: false
         }
@@ -114,18 +123,21 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    *
    * @param importId optional Standard style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when the Standard featureset is long clicked.
    */
   @MapboxExperimental
   public fun onPlaceLabelsLongClicked(
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(StandardPlaceLabelsFeature, InteractionContext) -> Boolean
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       LongClickInteraction.standardPlaceLabels(
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onLongClick = { feature, context ->
           featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }
@@ -140,18 +152,21 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    *
    * @param importId optional Standard style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when the Standard featureset is clicked.
    */
   @MapboxExperimental
   public fun onBuildingsClicked(
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(StandardBuildingsFeature, InteractionContext) -> Boolean
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       ClickInteraction.standardBuildings(
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onClick = { feature, context ->
           featuresetFeatureScope?.onClick(feature, context) ?: false
         }
@@ -166,18 +181,21 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    *
    * @param importId optional Standard style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when the Standard featureset is long clicked.
    */
   @MapboxExperimental
   public fun onBuildingsLongClicked(
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(StandardBuildingsFeature, InteractionContext) -> Boolean
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       LongClickInteraction.standardBuildings(
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onLongClick = { feature, context ->
           featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }

@@ -34,6 +34,7 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
   internal constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
+    radius: Double? = null,
     onClick: (T, InteractionContext) -> Boolean,
     featuresetFeatureBuilder: (Feature, FeaturesetFeatureId?, Value) -> T
   ) {
@@ -64,7 +65,8 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
         override fun handleEnd(context: InteractionContext) {
           // not needed
         }
-      }
+      },
+      radius
     )
   }
 
@@ -85,7 +87,8 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
         override fun handleEnd(context: InteractionContext) {
           // not needed
         }
-      }
+      },
+      null
     )
   }
 
@@ -101,6 +104,7 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      * @param id mandatory featureset id.
      * @param importId optional style import id.
      * @param filter optional filter. Defaults to NULL.
+     * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
      * @param onClick callback triggered when featureset is clicked.
      */
     @JvmOverloads
@@ -110,11 +114,13 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
       id: String,
       importId: String? = null,
       filter: Value? = null,
+      radius: Double? = null,
       onClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return ClickInteraction(
         FeaturesetDescriptor(id, importId, null),
         filter,
+        radius,
         onClick
       ) { feature, featuresetFeatureId, state ->
         FeaturesetFeature(
@@ -133,6 +139,7 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      *
      * @param id mandatory layer id.
      * @param filter optional filter. Defaults to NULL.
+     * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
      * @param onClick callback triggered when layer is clicked.
      */
     @JvmOverloads
@@ -141,11 +148,13 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
     fun layer(
       id: String,
       filter: Value? = null,
+      radius: Double? = null,
       onClick: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
     ): MapInteraction {
       return ClickInteraction(
         FeaturesetDescriptor(null, null, id),
         filter,
+        radius,
         onClick
       ) { feature, featuresetFeatureId, state ->
         FeaturesetFeature(

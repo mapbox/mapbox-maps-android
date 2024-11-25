@@ -17,6 +17,7 @@ class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
   private constructor(
     featureset: FeaturesetDescriptor,
     filter: Value? = null,
+    radius: Double? = null,
     onDragBegin: (T, InteractionContext) -> Boolean,
     onDrag: (InteractionContext) -> Unit,
     onDragEnd: (InteractionContext) -> Unit,
@@ -49,7 +50,8 @@ class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
         override fun handleEnd(context: InteractionContext) {
           onDragEnd(context)
         }
-      }
+      },
+      radius
     )
   }
 
@@ -74,7 +76,8 @@ class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
         override fun handleEnd(context: InteractionContext) {
           onDragEnd(context)
         }
-      }
+      },
+      null
     )
   }
 
@@ -93,13 +96,15 @@ class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
       id: String,
       importId: String? = null,
       filter: Value? = null,
+      radius: Double? = null,
       onDragBegin: (FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean,
       onDrag: (InteractionContext) -> Unit,
       onDragEnd: (InteractionContext) -> Unit,
     ): MapInteraction {
       return DragInteraction(
-        FeaturesetDescriptor(id, importId, null),
-        filter,
+        featureset = FeaturesetDescriptor(id, importId, null),
+        filter = filter,
+        radius = radius,
         onDragBegin,
         onDrag,
         onDragEnd
@@ -127,8 +132,9 @@ class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
       onDragEnd: (InteractionContext) -> Unit,
     ): MapInteraction {
       return DragInteraction(
-        FeaturesetDescriptor(null, null, id),
-        filter,
+        featureset = FeaturesetDescriptor(null, null, id),
+        filter = filter,
+        radius = null,
         onDragBegin,
         onDrag,
         onDragEnd

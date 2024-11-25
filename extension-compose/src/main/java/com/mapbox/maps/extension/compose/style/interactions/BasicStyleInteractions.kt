@@ -69,12 +69,14 @@ public abstract class BasicStyleInteractions {
    * @param featuresetId mandatory featureset id.
    * @param importId optional style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when featureset is clicked.
    */
   protected fun clickInteractionFeatureset(
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double?,
     onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add { import ->
@@ -82,6 +84,7 @@ public abstract class BasicStyleInteractions {
         id = featuresetId,
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onClick = { feature, context ->
           featuresetFeatureScope?.onClick(feature, context) ?: false
         }
@@ -96,17 +99,20 @@ public abstract class BasicStyleInteractions {
    *
    * @param layerId mandatory layer id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when layer is clicked.
    */
   protected fun clickInteractionLayer(
     layerId: String,
     filter: Expression? = null,
+    radius: Double?,
     onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add {
       ClickInteraction.layer(
         id = layerId,
         filter = filter,
+        radius = radius,
         onClick = { feature, context ->
           featuresetFeatureScope?.onClick(feature, context) ?: false
         }
@@ -152,12 +158,14 @@ public abstract class BasicStyleInteractions {
    * @param featuresetId mandatory featureset id.
    * @param importId optional style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when featureset is clicked.
    */
   protected fun longClickInteractionFeatureset(
     featuresetId: String,
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double?,
     onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add { import ->
@@ -165,6 +173,7 @@ public abstract class BasicStyleInteractions {
         id = featuresetId,
         importId = importId ?: import,
         filter = filter,
+        radius = radius,
         onLongClick = { feature, context ->
           featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }
@@ -179,17 +188,20 @@ public abstract class BasicStyleInteractions {
    *
    * @param layerId mandatory layer id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when layer is clicked.
    */
   protected fun longClickInteractionLayer(
     layerId: String,
     filter: Expression? = null,
+    radius: Double?,
     onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ) {
     entries.add {
       LongClickInteraction.layer(
         id = layerId,
         filter = filter,
+        radius = radius,
         onLongClick = { feature, context ->
           featuresetFeatureScope?.onLongClick(feature, context) ?: false
         }

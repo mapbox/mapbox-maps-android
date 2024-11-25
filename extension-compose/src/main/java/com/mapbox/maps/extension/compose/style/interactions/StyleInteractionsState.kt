@@ -48,6 +48,7 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    * @param id mandatory featureset id.
    * @param importId optional style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when featureset is clicked.
    */
   @MapboxExperimental
@@ -55,12 +56,14 @@ public class StyleInteractionsState : BasicStyleInteractions() {
     id: String,
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
     clickInteractionFeatureset(
       featuresetId = id,
       importId = importId,
       filter = filter,
+      radius = radius,
       onClick = onClick
     )
   }
@@ -72,15 +75,17 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    *
    * @param id mandatory layer id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when layer is clicked.
    */
   @MapboxExperimental
   public fun onLayerClicked(
     id: String,
     filter: Expression? = null,
+    radius: Double? = null,
     onClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
-    clickInteractionLayer(layerId = id, filter = filter, onClick = onClick)
+    clickInteractionLayer(layerId = id, filter = filter, radius = radius, onClick = onClick)
   }
 
   /**
@@ -91,6 +96,7 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    * @param id mandatory featureset id.
    * @param importId optional style import id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when featureset is clicked.
    */
   @MapboxExperimental
@@ -98,12 +104,14 @@ public class StyleInteractionsState : BasicStyleInteractions() {
     id: String,
     importId: String? = null,
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
     longClickInteractionFeatureset(
       featuresetId = id,
       importId = importId,
       filter = filter,
+      radius = radius,
       onLongClick = onLongClick
     )
   }
@@ -115,15 +123,17 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    *
    * @param id mandatory layer id.
    * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when layer is clicked.
    */
   @MapboxExperimental
   public fun onLayerLongClicked(
     id: String,
     filter: Expression? = null,
+    radius: Double? = null,
     onLongClick: FeaturesetFeatureScope.(FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
-    longClickInteractionLayer(layerId = id, filter = filter, onLongClick = onLongClick)
+    longClickInteractionLayer(layerId = id, filter = filter, radius = radius, onLongClick = onLongClick)
   }
 
   /**
