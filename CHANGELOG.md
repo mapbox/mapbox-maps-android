@@ -3,10 +3,12 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.9.0-beta.1 November 28, 2024
 ## Breaking changes ⚠️
-* Expose Geofencing with `com.mapbox.annotation.MapboxExperimental`.
-* Move geofencing classes to `com.mapbox.common.geofencing` package from `com.mapbox.common.experimental.geofencing`.
-* Make constructor of `GeofencingOptions`, `GeofencingEvent` and other geofencing classes holding data private. Associated `Builder()` classes should be used instead.
+* Expose experimental Geofencing with `com.mapbox.annotation.MapboxExperimental`.
+* Move experimental geofencing classes to `com.mapbox.common.geofencing` package from `com.mapbox.common.experimental.geofencing`.
+* Make constructor of experimental `GeofencingOptions`, `GeofencingEvent` and other geofencing classes holding data private. Associated `Builder()` classes should be used instead.
 * Remove experimental `MapboxMap.queryRenderedFeatures` and `MapboxMap.querySourceFeatures` that used `FeaturesetQueryTarget` as an argument.
 
 ## Features ✨ and improvements 🏁
@@ -54,6 +56,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * Custom (non Mapbox-hosted) sprites could fail to load in some scenarios.
+
 
 # 11.7.3 November 19, 2024
 ## Bug fixes 🐞
