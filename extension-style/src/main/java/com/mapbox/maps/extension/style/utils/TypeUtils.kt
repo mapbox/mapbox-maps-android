@@ -271,6 +271,12 @@ fun Value.unwrapToExpression(): Expression {
             return Expression.literal(resultMap as HashMap<String, Any>)
           }
         }
+      } else if ("image" == operator) {
+        val builder = Expression.ImageBuilder()
+        listValue.drop(1).forEach {
+          builder.addArgument(it.unwrapToExpression())
+        }
+        return builder.build()
       }
       val argList = listValue.drop(1)
       val expressionBuilder = Expression.ExpressionBuilder(operator)

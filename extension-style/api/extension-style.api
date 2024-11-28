@@ -368,6 +368,8 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public static final fun hsl ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun hsla ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun id ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun image (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/util/Map;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun image (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/util/Map;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/util/Map;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun image ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun inExpression (DLcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun inExpression (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -579,6 +581,8 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public final fun hsla (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun hsla ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun id ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun image (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/util/Map;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun image (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/util/Map;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/util/Map;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun image (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun image ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun inExpression (DLcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -888,6 +892,11 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public final fun textFont (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$FormatSectionBuilder;
 	public final fun textFont (Ljava/util/List;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$FormatSectionBuilder;
 	public final fun textFont (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$FormatSectionBuilder;
+}
+
+public final class com/mapbox/maps/extension/style/expressions/generated/Expression$ImageBuilder : com/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder {
+	public fun <init> ()V
+	public final fun imageOptions ([Lkotlin/Pair;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ImageBuilder;
 }
 
 public final class com/mapbox/maps/extension/style/expressions/generated/Expression$InterpolatorBuilder : com/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder {

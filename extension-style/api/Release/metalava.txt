@@ -241,7 +241,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression hsl(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression hsla(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression id();
-    method public static com.mapbox.maps.extension.style.expressions.generated.Expression image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ImageBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(String needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(double needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
@@ -399,6 +399,8 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression hsla(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression id();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression image(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.expressions.generated.Expression image(com.mapbox.maps.extension.style.expressions.generated.Expression image, java.util.Map<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression> options);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.expressions.generated.Expression image(com.mapbox.maps.extension.style.expressions.generated.Expression image, java.util.Map<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression> options, com.mapbox.maps.extension.style.expressions.generated.Expression image2, java.util.Map<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression> options2);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(String needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(double needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
@@ -605,7 +607,9 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression hsla(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression id();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression image(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.expressions.generated.Expression image(com.mapbox.maps.extension.style.expressions.generated.Expression image, java.util.Map<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression> options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.expressions.generated.Expression image(com.mapbox.maps.extension.style.expressions.generated.Expression image, java.util.Map<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression> options, com.mapbox.maps.extension.style.expressions.generated.Expression image2, java.util.Map<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression> options2);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ImageBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression inExpression(String needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
@@ -796,7 +800,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder hsl(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder hsla(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder id();
-    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ImageBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder inExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder inExpression(String needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder inExpression(double needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
@@ -911,6 +915,11 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression.FormatSectionBuilder textFont(java.util.List<java.lang.String> textFont);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression.FormatSectionBuilder textFont(com.mapbox.maps.extension.style.expressions.generated.Expression textFont);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression.FormatSectionBuilder textFont(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+  }
+
+  @com.mapbox.maps.extension.style.types.ExpressionDsl public static final class Expression.ImageBuilder extends com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder {
+    ctor public Expression.ImageBuilder();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.expressions.generated.Expression.ImageBuilder imageOptions(kotlin.Pair<java.lang.String,com.mapbox.maps.extension.style.expressions.generated.Expression>... pairs);
   }
 
   @com.mapbox.maps.extension.style.types.ExpressionDsl public static final class Expression.InterpolatorBuilder extends com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder {

@@ -14,6 +14,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `BackgroundLayer.backgroundPitchAlignment` API to configure the orientation of background layer.
 * Introduce `LocationIndicatorLayer.emphasisCircleGlowRange` and `LocationIndicatorLayer.emphasisCircleGlowRangeTransition` APIs to control the glow effect of the emphasis circle from the solid start to the fully transparent end and to set the transition options for the `emphasisCircleGlowRange` property, respectively.
 * Introduce `radius` parameter for `ClickInteraction` and `LongClickInteraction` to support an extra area around the interaction.
+* Add a way to specify options for `Expression.image()`.
+
 * [compose] Introduce `LocationIndicatorLayerState.emphasisCircleGlowRange` and `LocationIndicatorLayerState.emphasisCircleGlowRangeTransition` properties.
 * [compose] Introduce `FillLayerState.fillZOffset` and `FillLayerState.fillZOffsetTransition` properties.
 * [compose] Introduce `FillExtrusionLayerState.fillExtrusionBaseAlignment` and `FillExtrusionLayerState.fillExtrusionHeightAlignment` properties.

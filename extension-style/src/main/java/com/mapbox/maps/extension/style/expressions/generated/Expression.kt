@@ -15,9 +15,9 @@ import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.take
 import com.mapbox.maps.extension.style.utils.unwrapFromLiteralArray
 import com.mapbox.maps.extension.style.utils.unwrapToExpression
-import java.util.HashMap
 import java.util.Locale
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * An expression defines a formula for computing the value of any layout property, paint property,
@@ -559,7 +559,7 @@ class Expression : Value {
      * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
      * argument in the `'image'` expression.
      */
-    fun image(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+    fun image(block: ImageBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.image(block))
     }
 
@@ -1850,6 +1850,24 @@ class Expression : Value {
   }
 
   /**
+   * Builder for Image expression options
+   */
+  @ExpressionDsl
+  class ImageBuilder : ExpressionBuilder("image") {
+
+    /**
+     * Parameters to apply to the image.
+     * Currently, only applies to vector images and only color parameters are supported.
+     *
+     * @param pairs options for the image
+     */
+    @MapboxExperimental
+    fun imageOptions(vararg pairs: Pair<String, Expression>): ImageBuilder = apply {
+      arguments.add(Expression(hashMapOf("params" to valueOf(hashMapOf(*pairs)))))
+    }
+  }
+
+  /**
    * Static variables and methods.
    */
   companion object {
@@ -2704,10 +2722,54 @@ class Expression : Value {
     }
 
     /**
+     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
+     * currently in the style. This validation process is synchronous and requires the image to have been
+     * added to the style before requesting it in the `'image'` argument. To implement crossfading between two
+     * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
+     * argument in the `'image'` expression.
+     */
+    @MapboxExperimental
+    @JvmStatic
+    fun image(
+      image: Expression,
+      options: Map<String, Expression>
+    ): Expression {
+      val builder = ImageBuilder()
+      builder.addArgument(image)
+      builder.imageOptions(*options.map { it.key to it.value }.toTypedArray())
+      return builder.build()
+    }
+
+    /**
+     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
+     * currently in the style. This validation process is synchronous and requires the image to have been
+     * added to the style before requesting it in the `'image'` argument. To implement crossfading between two
+     * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
+     * argument in the `'image'` expression.
+     */
+    @MapboxExperimental
+    @JvmStatic
+    fun image(
+      image: Expression,
+      options: Map<String, Expression>,
+      image2: Expression,
+      options2: Map<String, Expression>
+    ): Expression {
+      val builder = ImageBuilder()
+        builder.addArgument(image)
+        builder.imageOptions(*options.map { it.key to it.value }.toTypedArray())
+        builder.addArgument(image2)
+        builder.imageOptions(*options2.map { it.key to it.value }.toTypedArray())
+        return builder.build()
+    }
+
+    /**
      * DSL function for "image".
      */
-    fun image(block: ExpressionBuilder.() -> Unit): Expression =
-      ExpressionBuilder("image").apply(block).build()
+    fun image(block: ImageBuilder.() -> Unit): Expression =
+      ImageBuilder().apply(block).build()
 
     /**
      * Determines whether an item exists in an array or a substring exists in a string. In

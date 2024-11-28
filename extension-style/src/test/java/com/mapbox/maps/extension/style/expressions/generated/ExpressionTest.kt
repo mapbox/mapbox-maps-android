@@ -676,17 +676,61 @@ class ExpressionTest {
 
   @Test
   fun dsl_expression_image() {
-    val expression = image {
-      // test builder function
-      image {}
+    val empty = image { }
+    val oneImage = image {
+      literal("image-name")
     }
-    assertEquals("assert image expression", "[image, [image]]", expression.toString())
+    val oneImageWithOptios = image {
+      literal("image-name")
+      imageOptions("foo" to Expression.literal("bar"))
+    }
+    val twoImages = image {
+      literal("image-name")
+      literal("image-name-2")
+    }
+    val twoImagesWithOptios = image {
+      literal("image-name")
+      imageOptions("foo" to Expression.literal("bar"))
+      literal("image-name-2")
+      imageOptions("foo" to Expression.get("bar"))
+    }
+    val twoImagesOneOptions = image {
+      literal("image-name")
+      literal("image-name-2")
+      imageOptions("foo" to Expression.get("bar"))
+    }
+
+    assertEquals("assert empty image expression", "[image]", empty.toString())
+    assertEquals("assert one image expression", "[image, image-name]", oneImage.toString())
+    assertEquals(
+      "assert one image with options expression",
+      "[image, image-name, {params={foo=bar}}]",
+      oneImageWithOptios.toString()
+    )
+    assertEquals("assert two images expression", "[image, image-name, image-name-2]", twoImages.toString())
+    assertEquals("assert two images two options expression", "[image, image-name, {params={foo=bar}}, image-name-2, {params={foo=[get, bar]}}]", twoImagesWithOptios.toString())
+    assertEquals("assert two images one options expression", "[image, image-name, image-name-2, {params={foo=[get, bar]}}]", twoImagesOneOptions.toString())
   }
 
   @Test
   fun expression_image() {
-    val expression = Expression.image(Expression.literal("abc"))
-    assertEquals("assert image expression", "[image, abc]", expression.toString())
+    val oneImage = Expression.image(Expression.literal("abc"))
+    val oneImageWithOptions = Expression.image(Expression.literal("abc"), mapOf("foo" to Expression.literal("bar")))
+    val twoImages = Expression.image(Expression.literal("abc"), Expression.literal("def"))
+    val twoImagesWithOptions = Expression.image(
+      Expression.literal("abc"), mapOf("foo" to Expression.literal("bar")),
+      Expression.literal("foo"), mapOf("option" to Expression.literal("value"))
+    )
+    val twoImagesOneOptions = Expression.image(
+      Expression.literal("abc"), mapOf(),
+      Expression.literal("foo"), mapOf("option" to Expression.literal("value"))
+    )
+
+    assertEquals("assert one image expression", "[image, abc]", oneImage.toString())
+    assertEquals("assert one image with options expression", "[image, abc, {params={foo=bar}}]", oneImageWithOptions.toString())
+    assertEquals("assert two images expression", "[image, abc, def]", twoImages.toString())
+    assertEquals("assert two images two options expression", "[image, abc, {params={foo=bar}}, foo, {params={option=value}}]", twoImagesWithOptions.toString())
+    assertEquals("assert two images one options expression", "[image, abc, {params={}}, foo, {params={option=value}}]", twoImagesOneOptions.toString())
   }
 
   @Test

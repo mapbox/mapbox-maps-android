@@ -642,5 +642,76 @@ class TypeUtilsTest {
     assertEquals(expressionString, expression.toJson())
   }
 
+  @Test
+  fun unwrapImageExpression_empty() {
+    val actual = """
+      ["image"]
+      """.trimIndent()
+    val expected = image { }
+    assertEquals(expected, Value.fromJson(actual).value!!.unwrapToExpression())
+  }
+
+  @Test
+  fun unwrapImageExpression_single() {
+    val actual = """
+      ["image", "image-name"]
+    """.trimIndent()
+    val expected = image {
+      literal("image-name")
+    }
+    assertEquals(expected, Value.fromJson(actual).value!!.unwrapToExpression())
+  }
+
+  @Test
+  fun unwrapImageExpression_with_options() {
+    val actual = """
+      ["image", "image-name", {"params" : {"foo" : "bar"}}]
+    """.trimIndent()
+    val expected = image {
+      literal("image-name")
+      imageOptions("foo" to Expression.literal("bar"))
+    }
+    assertEquals(expected, Value.fromJson(actual).value!!.unwrapToExpression())
+  }
+
+  @Test
+  fun unwrapImageExpression_two_images() {
+    val actual = """
+      ["image", "image-name", "image-name-2"]
+    """.trimIndent()
+    val expected = image {
+      literal("image-name")
+      literal("image-name-2")
+    }
+    assertEquals(expected, Value.fromJson(actual).value!!.unwrapToExpression())
+  }
+
+  @Test
+  fun unwrapImageExpression_two_images_with_options() {
+    val actual = """
+      ["image", "image-name", {"params" : {"foo" : "bar"}}, "image-name-2", {"params" : {"foo" : ["get", "bar"]}}]
+    """.trimIndent()
+    val expected = image {
+      literal("image-name")
+      imageOptions("foo" to Expression.literal("bar"))
+      literal("image-name-2")
+      imageOptions("foo" to Expression.get("bar"))
+    }
+    assertEquals(expected, Value.fromJson(actual).value!!.unwrapToExpression())
+  }
+
+  @Test
+  fun unwrapImageExpression_two_images_one_options() {
+    val actual = """
+      ["image", "image-name", "image-name-2", {"params" : {"foo" : ["get", "bar"]}}]
+    """.trimIndent()
+    val expected = image {
+      literal("image-name")
+      literal("image-name-2")
+      imageOptions("foo" to Expression.get("bar"))
+    }
+    assertEquals(expected, Value.fromJson(actual).value!!.unwrapToExpression())
+  }
+
   internal data class MockData(val a: Int, val b: String)
 }
