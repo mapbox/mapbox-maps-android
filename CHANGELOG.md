@@ -4,7 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Breaking changes ⚠️
-* Expose Geofencing with `com.mapbox.annotation.MapboxExperimental` annotation.
+* Expose Geofencing with `com.mapbox.annotation.MapboxExperimental`.
+* Move geofencing classes to `com.mapbox.common.geofencing` package from `com.mapbox.common.experimental.geofencing`.
+* Make constructor of `GeofencingOptions`, `GeofencingEvent` and other geofencing classes holding data private. Associated `Builder()` classes should be used instead.
 * Remove experimental `MapboxMap.queryRenderedFeatures` and `MapboxMap.querySourceFeatures` that used `FeaturesetQueryTarget` as an argument.
 
 ## Features ✨ and improvements 🏁
@@ -15,7 +17,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `LocationIndicatorLayer.emphasisCircleGlowRange` and `LocationIndicatorLayer.emphasisCircleGlowRangeTransition` APIs to control the glow effect of the emphasis circle from the solid start to the fully transparent end and to set the transition options for the `emphasisCircleGlowRange` property, respectively.
 * Introduce `radius` parameter for `ClickInteraction` and `LongClickInteraction` to support an extra area around the interaction.
 * Add a way to specify options for `Expression.image()`.
-
+* Introduce experimental `AnimatableModel`, `ModelMaterialPart`, `ModelNodePart` APIs to style the 3D location puck's overridable parts. [Implementation example](app/src/main/java/com/mapbox/maps/testapp/examples/LocationComponentModelAnimationActivity.kt).
+* Introduce `modelRotationExpression`, `modelColor`, `modelColorExpression`, `modelColorMixIntensity`, `modelColorMixIntensityExpression`, `modelOpacityExpression` on `LocationPuck3D`.
+* Introduce experimental `LocationPuck3D.materialOverrides` and `LocationPuck3D.nodeOverrides` API to allow model parts overrides.
+* Add vector icons support: SDK will now download vector icons and rasterize them locally, which will results in better icon quality for icons resized via icon-size. Changeable colors support: icon expression can now have optional parameter to change named colors described in SVG icons metadata.
+* Add support for shadows from elevated structures. 
 * [compose] Introduce `LocationIndicatorLayerState.emphasisCircleGlowRange` and `LocationIndicatorLayerState.emphasisCircleGlowRangeTransition` properties.
 * [compose] Introduce `FillLayerState.fillZOffset` and `FillLayerState.fillZOffsetTransition` properties.
 * [compose] Introduce `FillExtrusionLayerState.fillExtrusionBaseAlignment` and `FillExtrusionLayerState.fillExtrusionHeightAlignment` properties.
@@ -23,9 +29,31 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Adds support for `fillZOffset` in `PolygonAnnotationState`, `PolygonAnnotationGroupState`.
 * [compose] Expose `MapViewportState.cameraForCoordinates` method.
 * [compose] Introduce `radius` parameter for all relevant compose functions for interactions to support an extra area around the interaction.
-* Introduce experimental `AnimatableModel`, `ModelMaterialPart`, `ModelNodePart` APIs to style the 3D location puck's overridable parts.
-* Introduce `modelRotationExpression`, `modelColor` `modelColorExpression`, `modelColorMixIntensity`, `modelColorMixIntensityExpression`, `modelOpacityExpression` on `LocationPuck3D`.
-* Introduce experimental `LocationPuck3D.materialOverrides` and `LocationPuck3D.nodeOverrides` API to allow model parts overrides.
+
+## Bug fixes 🐞
+* Fix dark shades caused by corner case light directions when `FillLayer.fillExtrusionEmissiveStrength` is set to high values (closer to 1).
+* Fix rendering of interleaved SDF and non-SDF icons in the same layer.
+* Fix `LineLayer.lineEmissiveStrength` not being applied to patterned lines.
+* Fix map flickering on some Mali and PowerVR GPUs.
+* Fix shader fog computation being incorrectly enabled for landmarks.
+* Handle empty payloads for offline resources.
+* Encapsulate config expression in assertion expression when expected return type is known.
+* Fixes a bug which caused icon shifts in some cases.
+* Fix feature state update if layer contains data driven `measureLight` expression.
+* Fix the owning thread log error prints on legacy `OfflineRegion` creation.
+* Fix a crash in interpolate expression.
+* Resolve usage of `GeoJsonSource.autoMaxZoom` for single feature. 
+* Resolve dotted line issue with very long lines.
+* Fix texture gather for shadows not being selected correctly by default.
+* Performance improvements for runtime-added images.
+* Fix `AndroidDeviceLocationProvider` reporting an error when location permissions are not granted.
+* Improve exception handling inside Cronet providers when Cronet library failed to load.
+
+## Dependencies
+* Update gl-native to v11.9.0-beta.1 and common to v24.9.0-beta.1.
+
+## Known issues
+* Custom (non Mapbox-hosted) sprites could fail to load in some scenarios.
 
 # 11.7.3 November 19, 2024
 ## Bug fixes 🐞
