@@ -23,6 +23,9 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Adds support for `fillZOffset` in `PolygonAnnotationState`, `PolygonAnnotationGroupState`.
 * [compose] Expose `MapViewportState.cameraForCoordinates` method.
 * [compose] Introduce `radius` parameter for all relevant compose functions for interactions to support an extra area around the interaction.
+* Introduce experimental `AnimatableModel`, `ModelMaterialPart`, `ModelNodePart` APIs to style the 3D location puck's overridable parts.
+* Introduce `modelRotationExpression`, `modelColor` `modelColorExpression`, `modelColorMixIntensity`, `modelColorMixIntensityExpression`, `modelOpacityExpression` on `LocationPuck3D`.
+* Introduce experimental `LocationPuck3D.materialOverrides` and `LocationPuck3D.nodeOverrides` API to allow model parts overrides.
 
 # 11.7.3 November 19, 2024
 ## Bug fixes 🐞

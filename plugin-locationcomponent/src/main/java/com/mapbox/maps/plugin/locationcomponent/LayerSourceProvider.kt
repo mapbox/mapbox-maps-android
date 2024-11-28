@@ -19,25 +19,33 @@ internal object LayerSourceProvider {
       throw IllegalArgumentException("Model Url must not be empty!")
     }
     return ModelSourceWrapper(
-      MODEL_SOURCE,
-      locationModelLayerOptions.modelUri,
-      locationModelLayerOptions.position.map { it.toDouble() }
+      sourceId = MODEL_SOURCE,
+      url = locationModelLayerOptions.modelUri,
+      position = locationModelLayerOptions.position.map { it.toDouble() },
+      materialOverrides = locationModelLayerOptions.materialOverrides,
+      nodeOverrides = locationModelLayerOptions.nodeOverrides
     )
   }
 
   fun getModelLayer(locationModelLayerOptions: LocationPuck3D) =
     ModelLayerWrapper(
-      MODEL_LAYER,
-      MODEL_SOURCE,
-      locationModelLayerOptions.modelScale.map { it.toDouble() },
-      locationModelLayerOptions.modelRotation.map { it.toDouble() },
-      locationModelLayerOptions.modelTranslation.map { it.toDouble() },
-      locationModelLayerOptions.modelCastShadows,
-      locationModelLayerOptions.modelReceiveShadows,
-      locationModelLayerOptions.modelOpacity.toDouble(),
-      locationModelLayerOptions.modelScaleMode,
-      locationModelLayerOptions.modelEmissiveStrength.toDouble(),
-      locationModelLayerOptions.modelEmissiveStrengthExpression?.let { Value.fromJson(it).take() }
+      layerId = MODEL_LAYER,
+      sourceId = MODEL_SOURCE,
+      modelScale = locationModelLayerOptions.modelScale.map { it.toDouble() },
+      modelRotation = locationModelLayerOptions.modelRotation.map { it.toDouble() },
+      modelRotationExpression = locationModelLayerOptions.modelRotationExpression?.let { Value.fromJson(it).take() },
+      modelTranslation = locationModelLayerOptions.modelTranslation.map { it.toDouble() },
+      modelCastShadows = locationModelLayerOptions.modelCastShadows,
+      modelReceiveShadows = locationModelLayerOptions.modelReceiveShadows,
+      modelOpacity = locationModelLayerOptions.modelOpacity.toDouble(),
+      modelOpacityExpression = locationModelLayerOptions.modelOpacityExpression?.let { Value.fromJson(it).take() },
+      modelScaleMode = locationModelLayerOptions.modelScaleMode,
+      modelEmissiveStrength = locationModelLayerOptions.modelEmissiveStrength.toDouble(),
+      modelEmissiveStrengthExpression = locationModelLayerOptions.modelEmissiveStrengthExpression?.let { Value.fromJson(it).take() },
+      modelColor = locationModelLayerOptions.modelColor,
+      modelColorExpression = locationModelLayerOptions.modelColorExpression?.let { Value.fromJson(it).take() },
+      modelColorMixIntensity = locationModelLayerOptions.modelColorMixIntensity.toDouble(),
+      modelColorMixIntensityExpression = locationModelLayerOptions.modelColorMixIntensityExpression?.let { Value.fromJson(it).take() }
     )
 
   fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)

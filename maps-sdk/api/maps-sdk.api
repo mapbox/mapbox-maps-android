@@ -159,7 +159,7 @@ public final class com/mapbox/maps/MapboxConstants {
 	public static final fun getMAPBOX_LOCALE ()Ljava/util/Locale;
 }
 
-public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManager, com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate, com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate, com/mapbox/maps/plugin/delegates/MapInteractionDelegate, com/mapbox/maps/plugin/delegates/MapListenerDelegate, com/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate, com/mapbox/maps/plugin/delegates/MapProjectionDelegate, com/mapbox/maps/plugin/delegates/MapTransformDelegate {
+public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManager, com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate, com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate, com/mapbox/maps/plugin/delegates/MapFeatureStateDelegate, com/mapbox/maps/plugin/delegates/MapInteractionDelegate, com/mapbox/maps/plugin/delegates/MapListenerDelegate, com/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate, com/mapbox/maps/plugin/delegates/MapProjectionDelegate, com/mapbox/maps/plugin/delegates/MapTransformDelegate {
 	public static final field Companion Lcom/mapbox/maps/MapboxMap$Companion;
 	public synthetic fun <init> (Lcom/mapbox/maps/NativeMapImpl;Lcom/mapbox/maps/NativeObserver;FLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/NativeMapImpl;Lcom/mapbox/maps/NativeObserver;Lcom/mapbox/maps/StyleObserver;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -209,8 +209,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun getFeatureState (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/FeatureStateCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun getFeatureState (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/QueryFeatureStateCallback;)Lcom/mapbox/common/Cancelable;
-	public final fun getFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/QueryFeatureStateCallback;)Lcom/mapbox/common/Cancelable;
-	public static synthetic fun getFeatureState$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/QueryFeatureStateCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public fun getFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/QueryFeatureStateCallback;)Lcom/mapbox/common/Cancelable;
 	public fun getFreeCameraOptions ()Lcom/mapbox/maps/FreeCameraOptions;
 	public final fun getGeoJsonClusterChildren (Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/QueryFeatureExtensionCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun getGeoJsonClusterExpansionZoom (Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/QueryFeatureExtensionCallback;)Lcom/mapbox/common/Cancelable;
@@ -271,10 +270,9 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/FeatureStateKey;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun removeFeatureState (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun removeFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
-	public final fun removeFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public fun removeFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/FeatureStateKey;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
-	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public fun removeOnCameraChangeListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnCameraChangeListener;)V
 	public fun removeOnMapIdleListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapIdleListener;)V
 	public fun removeOnMapLoadErrorListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
@@ -291,9 +289,8 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun resetFeatureStates (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;)Lcom/mapbox/common/Cancelable;
 	public final fun resetFeatureStates (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun resetFeatureStates (Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
-	public final fun resetFeatureStates (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public fun resetFeatureStates (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
-	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public fun setBounds (Lcom/mapbox/maps/CameraBoundsOptions;)Lcom/mapbox/bindgen/Expected;
 	public fun setCamera (Lcom/mapbox/maps/CameraOptions;)V
 	public fun setCamera (Lcom/mapbox/maps/FreeCameraOptions;)V
@@ -305,10 +302,9 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun setFeatureState (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/FeatureState;)Lcom/mapbox/common/Cancelable;
 	public final fun setFeatureState (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun setFeatureState (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
-	public final fun setFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public fun setFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/FeaturesetFeatureId;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
-	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public fun setGestureInProgress (Z)V
 	public fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V
 	public final fun setPrefetchZoomDelta (B)V

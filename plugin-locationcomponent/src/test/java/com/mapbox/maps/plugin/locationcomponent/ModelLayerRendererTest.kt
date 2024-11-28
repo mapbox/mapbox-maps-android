@@ -5,7 +5,9 @@ import com.mapbox.bindgen.None
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.plugin.LocationPuck3D
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 
@@ -65,9 +67,6 @@ class ModelLayerRendererTest {
     locationLayerRenderer.addLayers(positionManager)
 
     verify { positionManager.addLayerToMap(layerWrapper) }
-    verify(exactly = 1) { option.modelOpacity }
-    verify(exactly = 1) { layerWrapper.modelOpacity(0.5) }
-    verify(exactly = 1) { layerWrapper.modelRotation(listOf(0.0, 0.0, 0.0)) }
   }
 
   @Test

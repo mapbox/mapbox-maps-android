@@ -8,6 +8,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.RenderedQueryGeometry
@@ -19,6 +20,7 @@ import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
+import com.mapbox.maps.plugin.locationcomponent.model.AnimatableModel
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -394,5 +396,10 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
     val puckBearingSource =
       internalSettings.puckBearing.takeIf { internalSettings.puckBearingEnabled }
     updatePuckBearing(puckBearingSource)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  internal fun bindToAnimatableModel(animatableModel: AnimatableModel) {
+    animatableModel.bindTo(delegateProvider.mapFeatureStateDelegate)
   }
 }

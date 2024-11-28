@@ -42,3 +42,54 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentUti
 	public static final fun getLocationComponent (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;
 }
 
+public final class com/mapbox/maps/plugin/locationcomponent/model/AnimatableModel {
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getColorMixIntensity ()D
+	public final fun getEmissiveStrength ()D
+	public final fun getLocationPuck3D ()Lcom/mapbox/maps/plugin/LocationPuck3D;
+	public final fun getModelUri ()Ljava/lang/String;
+	public final fun getOpacity ()D
+	public final fun getRotation ()Ljava/util/List;
+	public final fun setColor (Ljava/lang/String;)V
+	public final fun setColorMixIntensity (D)V
+	public final fun setEmissiveStrength (D)V
+	public final fun setOpacity (D)V
+	public final fun setRotation (Ljava/util/List;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/model/AnimatableModelKt {
+	public static final fun createAnimatableModel (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/maps/plugin/locationcomponent/model/AnimatableModel;
+}
+
+public class com/mapbox/maps/plugin/locationcomponent/model/ModelMaterialPart : com/mapbox/maps/plugin/locationcomponent/model/ModelPart {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getColorMixIntensity ()D
+	public final fun getEmissiveStrength ()D
+	public final fun getMaterialOverrides ()Ljava/util/List;
+	public final fun getOpacity ()D
+	public final fun resetColor ()V
+	public final fun setColor (Ljava/lang/String;)V
+	public final fun setColorMixIntensity (D)V
+	public final fun setEmissiveStrength (D)V
+	public final fun setOpacity (D)V
+	public final fun updateColor (ID)V
+	public static synthetic fun updateColor$default (Lcom/mapbox/maps/plugin/locationcomponent/model/ModelMaterialPart;IDILjava/lang/Object;)V
+}
+
+public class com/mapbox/maps/plugin/locationcomponent/model/ModelNodePart : com/mapbox/maps/plugin/locationcomponent/model/ModelPart {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun getNodeOverrides ()Ljava/util/List;
+	public final fun getRotation ()Ljava/util/List;
+	public final fun setRotation (Ljava/util/List;)V
+}
+
+public abstract class com/mapbox/maps/plugin/locationcomponent/model/ModelPart {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getFeatureStateId ()Ljava/lang/String;
+	protected final fun getUpdateFeatureState ()Lkotlin/jvm/functions/Function1;
+	protected final fun setUpdateFeatureState (Lkotlin/jvm/functions/Function1;)V
+}
+

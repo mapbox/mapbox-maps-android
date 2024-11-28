@@ -1402,5 +1402,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.LocationComponentModelAnimationActivity"
+            android:description="@string/description_location_component_model_animation"
+            android:exported="true"
+            android:label="@string/activity_location_component_model_animation">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_location" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>

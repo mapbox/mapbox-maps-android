@@ -1,14 +1,23 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.ModelScaleMode
 import com.mapbox.maps.plugin.locationcomponent.utils.take
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -17,34 +26,47 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
+@OptIn(MapboxExperimental::class)
 class ModelLayerWrapperTest {
 
   private val style: MapboxStyleManager = mockk(relaxed = true)
   private val layer = ModelLayerWrapper(
-    MODEL_LAYER_ID,
-    MODEL_SOURCE_ID,
-    INITIAL_SCALE,
-    INITIAL_ROTATION,
-    INITIAL_TRANSLATION,
-    INITIAL_CAST_SHADOWS,
-    INITIAL_RECEIVE_SHADOWS,
-    INITIAL_OPACITY,
-    INITIAL_SCALE_MODE,
-    INITIAL_MODEL_EMISSIVE_STENGTH,
-    null
+    layerId = MODEL_LAYER_ID,
+    sourceId = MODEL_SOURCE_ID,
+    modelScale = INITIAL_SCALE,
+    modelRotation = INITIAL_ROTATION,
+    modelRotationExpression = null,
+    modelTranslation = INITIAL_TRANSLATION,
+    modelCastShadows = INITIAL_CAST_SHADOWS,
+    modelReceiveShadows = INITIAL_RECEIVE_SHADOWS,
+    modelOpacity = INITIAL_OPACITY,
+    modelOpacityExpression = null,
+    modelScaleMode = INITIAL_SCALE_MODE,
+    modelEmissiveStrength = INITIAL_MODEL_EMISSIVE_STENGTH,
+    modelEmissiveStrengthExpression = null,
+    modelColor = INITIAL_MODEL_COLOR,
+    modelColorExpression = null,
+    modelColorMixIntensity = INITIAL_MODEL_COLOR_MIX_INTENSITY,
+    modelColorMixIntensityExpression = null
   )
-  private val layerWithEmissiveStrengthExpression = ModelLayerWrapper(
-    MODEL_LAYER_ID,
-    MODEL_SOURCE_ID,
-    INITIAL_SCALE,
-    INITIAL_ROTATION,
-    INITIAL_TRANSLATION,
-    INITIAL_CAST_SHADOWS,
-    INITIAL_RECEIVE_SHADOWS,
-    INITIAL_OPACITY,
-    INITIAL_SCALE_MODE,
-    INITIAL_MODEL_EMISSIVE_STENGTH,
-    INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION
+  private val layerWithExpression = ModelLayerWrapper(
+    layerId = MODEL_LAYER_ID,
+    sourceId = MODEL_SOURCE_ID,
+    modelScale = INITIAL_SCALE,
+    modelRotation = INITIAL_ROTATION,
+    modelRotationExpression = INITIAL_ROTATION_EXPRESSION,
+    modelTranslation = INITIAL_TRANSLATION,
+    modelCastShadows = INITIAL_CAST_SHADOWS,
+    modelReceiveShadows = INITIAL_RECEIVE_SHADOWS,
+    modelOpacity = INITIAL_OPACITY,
+    modelOpacityExpression = INITIAL_OPACITY_EXPRESSION,
+    modelScaleMode = INITIAL_SCALE_MODE,
+    modelEmissiveStrength = INITIAL_MODEL_EMISSIVE_STENGTH,
+    modelEmissiveStrengthExpression = INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION,
+    modelColor = INITIAL_MODEL_COLOR,
+    modelColorExpression = INITIAL_MODEL_COLOR_EXPRESSION,
+    modelColorMixIntensity = INITIAL_MODEL_COLOR_MIX_INTENSITY,
+    modelColorMixIntensityExpression = INITIAL_MODEL_COLOR_MIX_INTENSITY_EXPRESSION
   )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -80,21 +102,23 @@ class ModelLayerWrapperTest {
         "model-cast-shadows" to INITIAL_CAST_SHADOWS,
         "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
         "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
-        "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH
+        "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH,
+        "model-color" to colorIntToRgbaExpression(INITIAL_MODEL_COLOR),
+        "model-color-mix-intensity" to INITIAL_MODEL_COLOR_MIX_INTENSITY,
       ).toValue(),
       layer.toValue(),
     )
   }
 
   @Test
-  fun testInitialPropertiesWithEmissiveStrengthExpression() {
+  fun testInitialPropertiesWithExpressions() {
     assertEquals(
       hashMapOf(
         "model-type" to "location-indicator",
-        "model-rotation" to INITIAL_ROTATION,
+        "model-rotation" to INITIAL_ROTATION_EXPRESSION,
         "model-scale" to INITIAL_SCALE,
         "model-translation" to INITIAL_TRANSLATION,
-        "model-opacity" to INITIAL_OPACITY,
+        "model-opacity" to INITIAL_OPACITY_EXPRESSION,
         "model-scale-mode" to INITIAL_SCALE_MODE.value,
         "id" to MODEL_LAYER_ID,
         "source" to MODEL_SOURCE_ID,
@@ -103,9 +127,11 @@ class ModelLayerWrapperTest {
         "model-cast-shadows" to INITIAL_CAST_SHADOWS,
         "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
         "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
-        "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION
+        "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION,
+        "model-color" to INITIAL_MODEL_COLOR_EXPRESSION,
+        "model-color-mix-intensity" to INITIAL_MODEL_COLOR_MIX_INTENSITY_EXPRESSION,
       ).toValue(),
-      layerWithEmissiveStrengthExpression.toValue(),
+      layerWithExpression.toValue(),
     )
   }
 
@@ -225,15 +251,37 @@ class ModelLayerWrapperTest {
     private const val MODEL_SOURCE_ID = "modelSourceId"
     private val INITIAL_SCALE = arrayListOf(6.0)
     private val INITIAL_ROTATION = arrayListOf(8.0)
+    private val INITIAL_ROTATION_EXPRESSION = Value.fromJson(
+      """
+      ["get", "rotation"]
+    """.trimIndent()
+    ).take()
     private val INITIAL_TRANSLATION = arrayListOf(0.0)
     private val INITIAL_CAST_SHADOWS = true
     private val INITIAL_RECEIVE_SHADOWS = true
     private const val INITIAL_OPACITY = 1.0
+    private val INITIAL_OPACITY_EXPRESSION = Value.fromJson(
+      """
+      ["get", "opacity"]
+    """.trimIndent()
+    ).take()
     private val INITIAL_SCALE_MODE = ModelScaleMode.VIEWPORT
     private val INITIAL_MODEL_EMISSIVE_STENGTH = 1.0
     private val INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION = Value.fromJson(
       """
       ["get", "emissivelight"]
+    """.trimIndent()
+    ).take()
+    private const val INITIAL_MODEL_COLOR = Color.WHITE
+    private val INITIAL_MODEL_COLOR_EXPRESSION = Value.fromJson(
+      """
+      ["get", "color"]
+    """.trimIndent()
+    ).take()
+    private const val INITIAL_MODEL_COLOR_MIX_INTENSITY = 1.0
+    private val INITIAL_MODEL_COLOR_MIX_INTENSITY_EXPRESSION = Value.fromJson(
+      """
+      ["get", "colorMixIntensity"]
     """.trimIndent()
     ).take()
   }

@@ -1,7 +1,10 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.*
+import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxLocationComponentException
+import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.logE
 
 internal open class LocationLayerWrapper(val layerId: String) {
 

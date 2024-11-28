@@ -56,6 +56,11 @@ interface MapDelegateProvider {
   val mapListenerDelegate: MapListenerDelegate
 
   /**
+   * Delegate used to use feature state APIs.
+   */
+  val mapFeatureStateDelegate: MapFeatureStateDelegate
+
+  /**
    * Delegate used to manage interactions (click gestures for example).
    */
   @MapboxExperimental

@@ -11,7 +11,9 @@ import com.mapbox.maps.logE
 internal class ModelSourceWrapper(
   val sourceId: String,
   private var url: String,
-  position: List<Double>
+  position: List<Double>,
+  materialOverrides: List<String>,
+  nodeOverrides: List<String>
 ) {
 
   private var sourceProperties = HashMap<String, Value>()
@@ -22,6 +24,8 @@ internal class ModelSourceWrapper(
     modelProperties[URL] = Value(url)
     modelProperties[POSITION] = Value(position.map(::Value))
     modelProperties[ORIENTATION] = Value(listOf(0.0, 0.0, 0.0).map(::Value))
+    modelProperties[MATERIAL_OVERRIDES] = Value(materialOverrides.map(::Value))
+    modelProperties[NODE_OVERRIDES] = Value(nodeOverrides.map(::Value))
 
     val models = HashMap<String, Value>()
     models[DEFAULT_MODEL_NAME] = Value(modelProperties)
@@ -87,6 +91,10 @@ internal class ModelSourceWrapper(
 
     /** The property key of orientation*/
     const val ORIENTATION = "orientation"
+
+    const val MATERIAL_OVERRIDES = "materialOverrides"
+
+    const val NODE_OVERRIDES = "nodeOverrides"
 
     private const val TAG = "Mbgl-ModelSourceWrapper"
   }

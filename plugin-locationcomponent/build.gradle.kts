@@ -24,6 +24,7 @@ mapboxLibrary {
 }
 dependencies {
   implementation(project(":sdk-base"))
+  implementation(project(":extension-style"))
   implementation(libs.bundles.base.dependencies)
   implementation(libs.mapbox.javaGeoJSON)
   implementation(libs.coroutines)

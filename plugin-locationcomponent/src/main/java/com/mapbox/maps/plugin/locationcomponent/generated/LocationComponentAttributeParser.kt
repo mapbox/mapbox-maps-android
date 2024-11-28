@@ -66,6 +66,22 @@ internal object LocationComponentAttributeParser {
             modelScaleMode = ModelScaleMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode, ModelScaleMode.VIEWPORT.ordinal)],
             modelEmissiveStrength = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrength, 1f),
             modelEmissiveStrengthExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrengthExpression),
+            modelOpacityExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelOpacityExpression),
+            modelRotationExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotationExpression),
+            modelColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelColor, Color.parseColor("#ffffff")),
+            modelColorExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelColorExpression),
+            modelColorMixIntensity = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelColorMixIntensity, 0f),
+            modelColorMixIntensityExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelColorMixIntensityExpression),
+            materialOverrides = try {
+              typedArray.resources.getStringArray(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DMaterialOverrides, 0)).toList()
+            } catch (e: Exception) {
+              emptyList()
+            },
+            nodeOverrides = try {
+              typedArray.resources.getStringArray(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DNodeOverrides, 0)).toList()
+            } catch (e: Exception) {
+              emptyList()
+            },
           )
           else -> createDefault2DPuck(withBearing = puckBearingEnabled)
         }

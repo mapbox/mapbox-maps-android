@@ -6,7 +6,13 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -36,14 +42,26 @@ class ModelSourceWrapperTest {
 
   @Test
   fun testValue() {
-    val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
+    val modelSource = ModelSourceWrapper(
+      sourceId = SOURCE_ID,
+      url = "uri",
+      position = listOf(1.0, 2.0),
+      nodeOverrides = listOf("node1", "node2"),
+      materialOverrides = listOf("material1", "material2")
+    )
     val value = modelSource.toValue()
-    assertEquals("{models={defaultModel={orientation=[0.0, 0.0, 0.0], position=[1.0, 2.0], uri=uri}}, type=model}", value.toString())
+    assertEquals("{models={defaultModel={orientation=[0.0, 0.0, 0.0], nodeOverrides=[node1, node2], position=[1.0, 2.0], materialOverrides=[material1, material2], uri=uri}}, type=model}", value.toString())
   }
 
   @Test
   fun testSetPosition() {
-    val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
+    val modelSource = ModelSourceWrapper(
+      sourceId = SOURCE_ID,
+      url = "uri",
+      position = listOf(1.0, 2.0),
+      nodeOverrides = listOf("node1", "node2"),
+      materialOverrides = listOf("material1", "material2")
+    )
     modelSource.bindTo(style)
 
     val position = arrayListOf(5.0, 5.0)
@@ -60,7 +78,13 @@ class ModelSourceWrapperTest {
 
   @Test
   fun testSetPropertyFailed() {
-    val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
+    val modelSource = ModelSourceWrapper(
+      sourceId = SOURCE_ID,
+      url = "uri",
+      position = listOf(1.0, 2.0),
+      nodeOverrides = listOf("node1", "node2"),
+      materialOverrides = listOf("material1", "material2")
+    )
     every { style.setStyleSourceProperty(any(), any(), any()) } returns ExpectedFactory.createError("error")
     modelSource.bindTo(style)
 
@@ -79,7 +103,13 @@ class ModelSourceWrapperTest {
 
   @Test
   fun testUpdateStyle() {
-    val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
+    val modelSource = ModelSourceWrapper(
+      sourceId = SOURCE_ID,
+      url = "uri",
+      position = listOf(1.0, 2.0),
+      nodeOverrides = listOf("node1", "node2"),
+      materialOverrides = listOf("material1", "material2")
+    )
     modelSource.bindTo(style)
     val newStyle = mockk<MapboxStyleManager>()
     every { newStyle.addStyleSource(any(), any()) } returns expected

@@ -11,6 +11,7 @@ import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
+import com.mapbox.maps.plugin.delegates.MapFeatureStateDelegate
 import com.mapbox.maps.plugin.delegates.MapInteractionDelegate
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -34,6 +35,7 @@ internal class MapDelegateProviderImpl(
   override val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mapboxMap
   override val mapPluginProviderDelegate: MapPluginProviderDelegate = mapController
   override val mapListenerDelegate: MapListenerDelegate = mapboxMap
+  override val mapFeatureStateDelegate: MapFeatureStateDelegate = mapboxMap
 
   override fun getStyle(callback: (MapboxStyleManager) -> Unit) {
     mapboxMap.getStyle { style -> callback(style) }

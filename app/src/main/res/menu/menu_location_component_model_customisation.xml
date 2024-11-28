@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_hood"
+        android:title="Toggle hood"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_trunk"
+        android:title="Toggle trunk"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_doorsFrontLeft"
+        android:title="Toggle doors front left"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_doorsFrontRight"
+        android:title="Toggle doors front right"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_doorsBackLeft"
+        android:title="Toggle doors back left"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_doorsBackRight"
+        android:title="Toggle doors back right"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_headlights"
+        android:title="Toggle head lights"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_breaking"
+        android:title="Toggle breaking lights"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_indicatorLeft"
+        android:title="Toggle left indicator"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/action_indicatorRight"
+        android:title="Toggle right indicator"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+    <item android:id="@+id/action_rotate_wheels"
+        android:title="Toggle wheel rotation"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+    <item android:id="@+id/action_body_color"
+        android:title="Toggle body color"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+    <item android:id="@+id/action_simulate_route"
+        android:title="Toggle simulating navigation"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+</menu>

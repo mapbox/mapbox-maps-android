@@ -9,7 +9,10 @@ import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class LayerSourceProviderTest {
 
   @Test(expected = RuntimeException::class)
@@ -30,10 +33,12 @@ class LayerSourceProviderTest {
           "defaultModel" to mapOf(
             "orientation" to listOf(0.0, 0.0, 0.0),
             "position" to listOf(0.0, 0.0),
-            "uri" to "testurl"
+            "uri" to "testurl",
+            "nodeOverrides" to emptyList<String>(),
+            "materialOverrides" to emptyList<String>()
           )
         ),
-        "type" to "model",
+        "type" to "model"
       ).toValue(),
       modelSource.toValue(),
     )
@@ -65,6 +70,9 @@ class LayerSourceProviderTest {
         "model-cast-shadows" to true,
         "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
         "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-emissive-strength" to 1.0,
+        "model-color" to listOf("rgba", 255, 255, 255, 1.0),
+        "model-color-mix-intensity" to 0.0,
         "model-emissive-strength" to 1.0
       ).toValue(),
       modelLayer.toValue()

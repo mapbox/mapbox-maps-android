@@ -45,6 +45,75 @@ package com.mapbox.maps.plugin.locationcomponent {
 
 }
 
+package com.mapbox.maps.plugin.locationcomponent.model {
+
+  @com.mapbox.maps.MapboxExperimental public final class AnimatableModel {
+    method public String getColor();
+    method public double getColorMixIntensity();
+    method public double getEmissiveStrength();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck3D getLocationPuck3D();
+    method public String getModelUri();
+    method public double getOpacity();
+    method public java.util.List<java.lang.Double> getRotation();
+    method public void setColor(String);
+    method public void setColorMixIntensity(double);
+    method public void setEmissiveStrength(double);
+    method public void setOpacity(double);
+    method public void setRotation(java.util.List<java.lang.Double>);
+    property public final String color;
+    property public final double colorMixIntensity;
+    property public final double emissiveStrength;
+    property public final String modelUri;
+    property public final double opacity;
+    property public final java.util.List<java.lang.Double> rotation;
+  }
+
+  public final class AnimatableModelKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.plugin.locationcomponent.model.AnimatableModel createAnimatableModel(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, String modelUri, java.util.List<? extends com.mapbox.maps.plugin.locationcomponent.model.ModelPart> modelParts);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public class ModelMaterialPart extends com.mapbox.maps.plugin.locationcomponent.model.ModelPart {
+    ctor public ModelMaterialPart(String featureStateId, java.util.List<java.lang.String> materialOverrides);
+    ctor public ModelMaterialPart(String materialOverride);
+    method public final String getColor();
+    method public final double getColorMixIntensity();
+    method public final double getEmissiveStrength();
+    method public final java.util.List<java.lang.String> getMaterialOverrides();
+    method public final double getOpacity();
+    method @com.mapbox.maps.MapboxExperimental public final void resetColor();
+    method public final void setColor(String);
+    method public final void setColorMixIntensity(double);
+    method public final void setEmissiveStrength(double);
+    method public final void setOpacity(double);
+    method @com.mapbox.maps.MapboxExperimental public final void updateColor(@ColorInt int color, double colorMixIntensity = 1.0);
+    property public final String color;
+    property public final double colorMixIntensity;
+    property public final double emissiveStrength;
+    property public final java.util.List<java.lang.String> materialOverrides;
+    property public final double opacity;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public class ModelNodePart extends com.mapbox.maps.plugin.locationcomponent.model.ModelPart {
+    ctor public ModelNodePart(String featureStateId, java.util.List<java.lang.String> nodeOverrides);
+    ctor public ModelNodePart(String nodeOverride);
+    method public final java.util.List<java.lang.String> getNodeOverrides();
+    method public final java.util.List<java.lang.Double> getRotation();
+    method public final void setRotation(java.util.List<java.lang.Double>);
+    property public final java.util.List<java.lang.String> nodeOverrides;
+    property public final java.util.List<java.lang.Double> rotation;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public abstract class ModelPart {
+    ctor public ModelPart(String featureStateId);
+    method public final String getFeatureStateId();
+    method protected final kotlin.jvm.functions.Function1<com.mapbox.bindgen.Value,java.lang.Boolean> getUpdateFeatureState();
+    method protected final void setUpdateFeatureState(kotlin.jvm.functions.Function1<? super com.mapbox.bindgen.Value,java.lang.Boolean>);
+    property public final String featureStateId;
+    property protected final kotlin.jvm.functions.Function1<com.mapbox.bindgen.Value,java.lang.Boolean> updateFeatureState;
+  }
+
+}
+
 package com.mapbox.maps.plugin.locationcomponent.utils {
 
   public final class ExpectedUtilsKt {

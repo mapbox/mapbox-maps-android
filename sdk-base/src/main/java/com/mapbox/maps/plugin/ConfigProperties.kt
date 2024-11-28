@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin
 
+import android.graphics.Color
 import android.os.Parcelable
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapboxExperimental
@@ -124,13 +125,47 @@ data class LocationPuck3D @JvmOverloads constructor(
   @MapboxExperimental
   var modelScaleMode: ModelScaleMode = ModelScaleMode.VIEWPORT,
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Default value: 1. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 5]
    */
   var modelEmissiveStrength: Float = 1f,
   /**
-   * Strength of the emission as Expression string, note that when [modelEmissiveStrengthExpression] is specified, it will overwrite the [modelEmissiveStrength] property. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors).
+   * The emissive strength expression of the model, which will overwrite the default model emissive strength.
    */
   var modelEmissiveStrengthExpression: String? = null,
+  /**
+   * The opacity expression of the model, which will overwrite the default model opacity.
+   */
+  var modelOpacityExpression: String? = null,
+  /**
+   * The rotation expression of the model, which will overwrite the default model rotation.
+   */
+  var modelRotationExpression: String? = null,
+  /**
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
+   */
+  var modelColor: Int = Color.parseColor("#ffffff"),
+  /**
+   * The color expression of the model, which will overwrite the default model color.
+   */
+  var modelColorExpression: String? = null,
+  /**
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
+   */
+  var modelColorMixIntensity: Float = 0f,
+  /**
+   * The color mix expression of the model, which will overwrite the default model color mix.
+   */
+  var modelColorMixIntensityExpression: String? = null,
+  /**
+   * The material overrides for the model. Default value: [].
+   */
+  @MapboxExperimental
+  var materialOverrides: List<String> = emptyList(),
+  /**
+   * The node overrides for the model. Default value: [].
+   */
+  @MapboxExperimental
+  var nodeOverrides: List<String> = emptyList(),
 ) : LocationPuck()
 
 /**

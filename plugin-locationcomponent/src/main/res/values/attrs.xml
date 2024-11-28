@@ -81,10 +81,26 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows" format="boolean"/>
         <!-- Defines scaling mode. Only applies to location-indicator type layers. Default value: "map". -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode" format="enum"/>
-        <!-- Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Default value: 1. Value range: [0, 5] -->
+        <!-- Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 5] -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrength" format="float"/>
-        <!-- Strength of the emission as Expression string, note that when [modelEmissiveStrengthExpression] is specified, it will overwrite the [modelEmissiveStrength] property. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). -->
+        <!-- The emissive strength expression of the model, which will overwrite the default model emissive strength. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrengthExpression" format="string"/>
+        <!-- The opacity expression of the model, which will overwrite the default model opacity. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelOpacityExpression" format="string"/>
+        <!-- The rotation expression of the model, which will overwrite the default model rotation. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotationExpression" format="string"/>
+        <!-- The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff". -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelColor" format="color"/>
+        <!-- The color expression of the model, which will overwrite the default model color. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorExpression" format="string"/>
+        <!-- Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1] -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorMixIntensity" format="float"/>
+        <!-- The color mix expression of the model, which will overwrite the default model color mix. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorMixIntensityExpression" format="string"/>
+        <!-- The material overrides for the model. Default value: []. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DMaterialOverrides" format="reference"/>
+        <!-- The node overrides for the model. Default value: []. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DNodeOverrides" format="reference"/>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->
