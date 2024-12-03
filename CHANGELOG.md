@@ -4,6 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.8.1
+## Bug fixes 🐞
+* Fix map flickering on some Mali and PowerVR GPUs.
+
+## Dependencies
+* Update gl-native to v11.8.1.
+
+
 # 11.8.0 November 11, 2024
 ## Breaking changes ⚠️
 * Change the signature of experimental `MapboxMap.queryRenderedFeatures(RenderedQueryGeometry, TypedFeaturesetDescriptor, Value?, QueryRenderedFeaturesetFeaturesCallback)` to `MapboxMap.queryRenderedFeatures(TypedFeaturesetDescriptor, RenderedQueryGeometry?, Value?, QueryRenderedFeaturesetFeaturesCallback)`. `RenderedQueryGeometry` being NULL is equivalent to passing a bounding box encompassing the entire map viewport.
