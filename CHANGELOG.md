@@ -4,12 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.8.1
+
+# 11.8.1 December 03, 2024
 ## Bug fixes 🐞
 * Fix map flickering on some Mali and PowerVR GPUs.
 
 ## Dependencies
 * Update gl-native to v11.8.1.
+
 
 # 11.9.0-beta.1 November 28, 2024
 ## Breaking changes ⚠️
