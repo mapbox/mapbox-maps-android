@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.8.1
+
+# 11.8.1 December 03, 2024
 ## Bug fixes 🐞
 * Fix map flickering on some Mali and PowerVR GPUs.
 
