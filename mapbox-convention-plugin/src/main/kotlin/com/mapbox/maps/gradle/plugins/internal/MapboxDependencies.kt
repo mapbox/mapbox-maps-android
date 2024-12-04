@@ -10,9 +10,9 @@ internal object MapboxDependencies {
 
   internal val GlNative = VersionCatalogDependency(
     group = "com.mapbox.maps",
+    // v11.9 snapshots or earlier should use `android-core-internal` as `artifact`.
     artifact = "android-core",
     versionRef = "mapboxGlNative",
-    snapshotArtifact = "android-core-internal",
     supportsNdkVariant = true
   )
 }
