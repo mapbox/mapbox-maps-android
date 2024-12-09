@@ -2,8 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.9.0-rc.1
 
+* Add `toHsla` expression.
 
 # 11.8.1 December 03, 2024
 ## Bug fixes 🐞

@@ -1458,6 +1458,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_toHsla() {
+    val expression = toHsla {
+      // test builder function
+      toHsla {}
+    }
+    assertEquals("assert to-hsla expression", "[to-hsla, [to-hsla]]", expression.toString())
+  }
+
+  @Test
+  fun expression_toHsla() {
+    val expression = Expression.toHsla(Expression.literal("abc"))
+    assertEquals("assert to-hsla expression", "[to-hsla, abc]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_toNumber() {
     val expression = toNumber {
       // test builder function

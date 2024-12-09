@@ -470,6 +470,11 @@ fun toBoolean(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expr
 fun toColor(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.toColor(block)
 
 /**
+ * Returns a four-element array containing the input color's Hue, Saturation, Luminance and alpha components, in that order.
+ */
+fun toHsla(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.toHsla(block)
+
+/**
  * Converts the input value to a number, if possible. If the input is `null` or `false`, the result is 0. If the input is `true`, the result is 1. If the input is a string, it is converted to a number as specified by the ["ToNumber Applied to the String Type" algorithm](https://tc39.github.io/ecma262/#sec-tonumber-applied-to-the-string-type) of the ECMAScript Language Specification. If multiple values are provided, each one is evaluated in order until the first successful conversion is obtained. If none of the inputs can be converted, the expression is an error.
  */
 fun toNumber(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.toNumber(block)
