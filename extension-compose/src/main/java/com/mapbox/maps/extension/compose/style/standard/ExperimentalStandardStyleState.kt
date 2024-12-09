@@ -11,6 +11,8 @@ import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState
 import com.mapbox.maps.extension.compose.style.lights.LightsState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.RainState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
@@ -40,16 +42,20 @@ public class ExperimentalStandardStyleState internal constructor(
   initialStyleInteractionsState: StandardStyleInteractionsState,
   initialProjection: Projection,
   initialAtmosphereState: AtmosphereState,
+  initialRainState: RainState,
+  initialSnowState: SnowState,
   initialTerrainState: TerrainState = TerrainState.INITIAL,
   initialLightsState: LightsState = LightsState.INITIAL,
   initialStyleTransition: TransitionOptions,
   initialConfigurationState: StandardStyleConfigurationState,
 ) : BaseStandardStyleState(
-  initialProjection,
-  initialAtmosphereState,
-  initialTerrainState,
-  initialLightsState,
-  initialStyleTransition,
+  initialProjection = initialProjection,
+  initialAtmosphereState = initialAtmosphereState,
+  initialRainState = initialRainState,
+  initialSnowState = initialSnowState,
+  initialTerrainState = initialTerrainState,
+  initialLightsState = initialLightsState,
+  initialStyleTransition = initialStyleTransition,
 ) {
   /**
    * Construct a default [ExperimentalStandardStyleState].
@@ -58,6 +64,8 @@ public class ExperimentalStandardStyleState internal constructor(
     initialStyleInteractionsState = StandardStyleInteractionsState(),
     initialProjection = Projection.INITIAL,
     initialAtmosphereState = AtmosphereState(),
+    initialRainState = RainState(),
+    initialSnowState = SnowState(),
     initialTerrainState = TerrainState.INITIAL,
     initialLightsState = LightsState.INITIAL,
     initialStyleTransition = transition { },

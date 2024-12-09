@@ -307,6 +307,16 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.style.PrecipitationsActivity"
+            android:description="@string/description_precipitations"
+            android:exported="true"
+            android:label="@string/activity_precipitations"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
     </application>
 
 </manifest>

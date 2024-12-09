@@ -68,6 +68,18 @@ interface StyleContract {
      * Transition options applied when loading the style.
      */
     val transition: TransitionOptions?
+
+    /**
+     * The rain precipitation of the style.
+     */
+    @MapboxExperimental
+    val rain: StyleRainExtension?
+
+    /**
+     * The snow precipitation of the style.
+     */
+    @MapboxExperimental
+    val snow: StyleSnowExtension?
   }
 
   /**
@@ -162,6 +174,32 @@ interface StyleContract {
   fun interface StyleModelExtension {
     /**
      * Bind the model to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: MapboxStyleManager)
+  }
+
+  /**
+   * Define the interfaces for the Snow plugin.
+   */
+  @MapboxExperimental
+  fun interface StyleSnowExtension {
+    /**
+     * Bind the snow to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: MapboxStyleManager)
+  }
+
+  /**
+   * Define the interfaces for the Rain plugin.
+   */
+  @MapboxExperimental
+  fun interface StyleRainExtension {
+    /**
+     * Bind the rain to the Style.
      *
      * @param delegate The style delegate
      */

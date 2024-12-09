@@ -1297,6 +1297,8 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getAtmosphereState();
     method public com.mapbox.maps.extension.compose.style.lights.LightsState getLightsState();
     method public com.mapbox.maps.extension.compose.style.projection.generated.Projection getProjection();
+    method public com.mapbox.maps.extension.compose.style.precipitations.generated.RainState getRainState();
+    method public com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState getSnowState();
     method public com.mapbox.maps.extension.compose.style.StyleImportsConfig getStyleImportsConfig();
     method public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState getStyleInteractionsState();
     method public com.mapbox.maps.TransitionOptions getStyleTransition();
@@ -1304,6 +1306,8 @@ package com.mapbox.maps.extension.compose.style {
     method public void setAtmosphereState(com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState);
     method public void setLightsState(com.mapbox.maps.extension.compose.style.lights.LightsState);
     method public void setProjection(com.mapbox.maps.extension.compose.style.projection.generated.Projection);
+    method public void setRainState(com.mapbox.maps.extension.compose.style.precipitations.generated.RainState);
+    method public void setSnowState(com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState);
     method public void setStyleImportsConfig(com.mapbox.maps.extension.compose.style.StyleImportsConfig);
     method public void setStyleInteractionsState(com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState);
     method public void setStyleTransition(com.mapbox.maps.TransitionOptions);
@@ -1311,6 +1315,8 @@ package com.mapbox.maps.extension.compose.style {
     property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState;
     property public final com.mapbox.maps.extension.compose.style.lights.LightsState lightsState;
     property public final com.mapbox.maps.extension.compose.style.projection.generated.Projection projection;
+    property public final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState rainState;
+    property public final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState snowState;
     property public final com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig;
     property public final com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState styleInteractionsState;
     property public final com.mapbox.maps.TransitionOptions styleTransition;
@@ -3838,6 +3844,151 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
 
 }
 
+package com.mapbox.maps.extension.compose.style.precipitations {
+
+  public final class RainStateApplierKt {
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.style.precipitations.generated {
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RainState {
+    ctor public RainState();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getCenterThinning();
+    method public com.mapbox.maps.extension.compose.style.Transition getCenterThinningTransition();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getDensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
+    method public com.mapbox.maps.extension.compose.style.Transition getDirectionTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getOpacity();
+    method public com.mapbox.maps.extension.compose.style.Transition getOpacityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getVignette();
+    method public com.mapbox.maps.extension.compose.style.Transition getVignetteTransition();
+    method public void setCenterThinning(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setCenterThinningTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setDensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
+    method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setVignette(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setVignetteTransition(com.mapbox.maps.extension.compose.style.Transition);
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue centerThinning;
+    property public final com.mapbox.maps.extension.compose.style.Transition centerThinningTransition;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue density;
+    property public final com.mapbox.maps.extension.compose.style.Transition densityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
+    property public final com.mapbox.maps.extension.compose.style.Transition directionTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
+    property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue opacity;
+    property public final com.mapbox.maps.extension.compose.style.Transition opacityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue vignette;
+    property public final com.mapbox.maps.extension.compose.style.Transition vignetteTransition;
+    field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState DISABLED;
+  }
+
+  public static final class RainState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.precipitations.generated.RainState,com.mapbox.maps.extension.compose.style.precipitations.generated.RainState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.precipitations.generated.RainState,com.mapbox.maps.extension.compose.style.precipitations.generated.RainState.Holder> Saver;
+  }
+
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class RainState.Holder implements android.os.Parcelable {
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
+    method public boolean component2();
+    method public com.mapbox.maps.extension.compose.style.precipitations.generated.RainState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties, boolean enabled);
+    method public boolean getEnabled();
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
+    property public final boolean enabled;
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
+  }
+
+  public final class RainStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.precipitations.generated.RainState rememberRainState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.precipitations.generated.RainState,kotlin.Unit> init = {});
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class SnowState {
+    ctor public SnowState();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getCenterThinning();
+    method public com.mapbox.maps.extension.compose.style.Transition getCenterThinningTransition();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getDensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
+    method public com.mapbox.maps.extension.compose.style.Transition getDirectionTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
+    method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getOpacity();
+    method public com.mapbox.maps.extension.compose.style.Transition getOpacityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getVignette();
+    method public com.mapbox.maps.extension.compose.style.Transition getVignetteTransition();
+    method public void setCenterThinning(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setCenterThinningTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setDensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
+    method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setVignette(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setVignetteTransition(com.mapbox.maps.extension.compose.style.Transition);
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue centerThinning;
+    property public final com.mapbox.maps.extension.compose.style.Transition centerThinningTransition;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue color;
+    property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue density;
+    property public final com.mapbox.maps.extension.compose.style.Transition densityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
+    property public final com.mapbox.maps.extension.compose.style.Transition directionTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
+    property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue opacity;
+    property public final com.mapbox.maps.extension.compose.style.Transition opacityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue vignette;
+    property public final com.mapbox.maps.extension.compose.style.Transition vignetteTransition;
+    field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState DISABLED;
+  }
+
+  public static final class SnowState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState,com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState,com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState.Holder> Saver;
+  }
+
+  @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler public static final class SnowState.Holder implements android.os.Parcelable {
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component1();
+    method public boolean component2();
+    method public com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState.Holder copy(java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> savedProperties, boolean enabled);
+    method public boolean getEnabled();
+    method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> getSavedProperties();
+    property public final boolean enabled;
+    property public final java.util.Map<java.lang.String,com.mapbox.bindgen.Value> savedProperties;
+  }
+
+  public final class SnowStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState rememberSnowState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState,kotlin.Unit> init = {});
+  }
+
+}
+
 package com.mapbox.maps.extension.compose.style.projection.generated {
 
   @androidx.compose.runtime.Immutable public final class Projection {
@@ -4317,20 +4468,26 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 package com.mapbox.maps.extension.compose.style.standard {
 
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public class BaseStandardStyleState {
-    ctor protected BaseStandardStyleState(com.mapbox.maps.extension.compose.style.projection.generated.Projection initialProjection, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState initialAtmosphereState, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState initialTerrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState initialLightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions initialStyleTransition);
+    ctor protected BaseStandardStyleState(com.mapbox.maps.extension.compose.style.projection.generated.Projection initialProjection, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState initialAtmosphereState, com.mapbox.maps.extension.compose.style.precipitations.generated.RainState initialRainState, com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState initialSnowState, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState initialTerrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState initialLightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions initialStyleTransition);
     method public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getAtmosphereState();
     method public final com.mapbox.maps.extension.compose.style.lights.LightsState getLightsState();
     method public final com.mapbox.maps.extension.compose.style.projection.generated.Projection getProjection();
+    method public final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState getRainState();
+    method public final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState getSnowState();
     method public final com.mapbox.maps.TransitionOptions getStyleTransition();
     method public final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState getTerrainState();
     method public final void setAtmosphereState(com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState);
     method public final void setLightsState(com.mapbox.maps.extension.compose.style.lights.LightsState);
     method public final void setProjection(com.mapbox.maps.extension.compose.style.projection.generated.Projection);
+    method public final void setRainState(com.mapbox.maps.extension.compose.style.precipitations.generated.RainState);
+    method public final void setSnowState(com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState);
     method public final void setStyleTransition(com.mapbox.maps.TransitionOptions);
     method public final void setTerrainState(com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState);
     property public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState;
     property public final com.mapbox.maps.extension.compose.style.lights.LightsState lightsState;
     property public final com.mapbox.maps.extension.compose.style.projection.generated.Projection projection;
+    property public final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState rainState;
+    property public final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState snowState;
     property public final com.mapbox.maps.TransitionOptions styleTransition;
     property public final com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState;
   }

@@ -27,4 +27,5 @@
     <string name="activity_standard_style">Standard style</string>
     <string name="activity_clip_layer">Clip layer example</string>
     <string name="activity_interactions">Interactions example</string>
+    <string name="activity_precipitations">Precipitations example</string>
 </resources>

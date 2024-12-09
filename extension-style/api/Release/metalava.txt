@@ -9,6 +9,8 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> getLayers();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.projection.generated.Projection? getProjection();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleRainExtension? getRain();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleSnowExtension? getSnow();
     method public java.util.List<com.mapbox.maps.extension.style.sources.Source> getSources();
     method public String getStyle();
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
@@ -20,6 +22,8 @@ package com.mapbox.maps.extension.style {
     property public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> layers;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public com.mapbox.maps.extension.style.projection.generated.Projection? projection;
+    property public com.mapbox.maps.extension.style.StyleContract.StyleRainExtension? rain;
+    property public com.mapbox.maps.extension.style.StyleContract.StyleSnowExtension? snow;
     property public java.util.List<com.mapbox.maps.extension.style.sources.Source> sources;
     property public String style;
     property public com.mapbox.maps.extension.style.terrain.generated.Terrain? terrain;
@@ -44,6 +48,8 @@ package com.mapbox.maps.extension.style {
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.FlatLight);
     method public operator void setLight(com.mapbox.maps.extension.style.light.DynamicLight);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
+    method public operator void setRain(com.mapbox.maps.extension.style.precipitations.generated.Rain);
+    method public operator void setSnow(com.mapbox.maps.extension.style.precipitations.generated.Snow);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
     method public operator void setTransition(com.mapbox.maps.TransitionOptions);
     property public final String style;
@@ -6300,6 +6306,250 @@ package com.mapbox.maps.extension.style.model {
 
 }
 
+package com.mapbox.maps.extension.style.precipitations.generated {
+
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class Rain implements com.mapbox.maps.extension.style.precipitations.generated.RainDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleRainExtension {
+    ctor public Rain();
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(double centerThinning);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(com.mapbox.maps.extension.style.expressions.generated.Expression centerThinning);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinningTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinningTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(@ColorInt int color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(String color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(double density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain direction(java.util.List<java.lang.Double> direction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public Double? getCenterThinning();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCenterThinningAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getCenterThinningTransition();
+    method public String? getColor();
+    method @ColorInt public Integer? getColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public Double? getDensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDensityTransition();
+    method public java.util.List<java.lang.Double>? getDirection();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDirectionAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDirectionTransition();
+    method public Double? getIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
+    method public Double? getOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getOpacityTransition();
+    method public Double? getVignette();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVignetteAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getVignetteTransition();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(double intensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(double opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(double vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    property public final Double? centerThinning;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? centerThinningAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? centerThinningTransition;
+    property public final String? color;
+    property @ColorInt public final Integer? colorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final Double? density;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? densityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? densityTransition;
+    property public final java.util.List<java.lang.Double>? direction;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? directionAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? directionTransition;
+    property public final Double? intensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
+    property public final Double? opacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? opacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? opacityTransition;
+    property public final Double? vignette;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? vignetteAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? vignetteTransition;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.RainDsl public interface RainDslReceiver {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(double centerThinning = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(com.mapbox.maps.extension.style.expressions.generated.Expression centerThinning);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinningTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinningTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(@ColorInt int color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(String color = "#ffffff");
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(double density = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain direction(java.util.List<java.lang.Double> direction = listOf(0.0, 80.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(double intensity = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(double opacity = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(double vignette = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+  }
+
+  public final class RainKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.precipitations.generated.Rain rain(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.precipitations.generated.RainDslReceiver,kotlin.Unit> block);
+  }
+
+  public final class RainUtils {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.precipitations.generated.Rain getRain(com.mapbox.maps.MapboxStyleManager);
+    method @com.mapbox.maps.MapboxExperimental public static void removeRain(com.mapbox.maps.MapboxStyleManager);
+    method @com.mapbox.maps.MapboxExperimental public static void setRain(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleRainExtension rain);
+  }
+
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class Snow implements com.mapbox.maps.extension.style.precipitations.generated.SnowDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleSnowExtension {
+    ctor public Snow();
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(double centerThinning);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(com.mapbox.maps.extension.style.expressions.generated.Expression centerThinning);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinningTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinningTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(@ColorInt int color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(String color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(double density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(java.util.List<java.lang.Double> direction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public Double? getCenterThinning();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCenterThinningAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getCenterThinningTransition();
+    method public String? getColor();
+    method @ColorInt public Integer? getColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public Double? getDensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDensityTransition();
+    method public java.util.List<java.lang.Double>? getDirection();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDirectionAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDirectionTransition();
+    method public Double? getIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
+    method public Double? getOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getOpacityTransition();
+    method public Double? getVignette();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVignetteAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getVignetteTransition();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(double intensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(double opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(double vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    property public final Double? centerThinning;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? centerThinningAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? centerThinningTransition;
+    property public final String? color;
+    property @ColorInt public final Integer? colorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final Double? density;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? densityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? densityTransition;
+    property public final java.util.List<java.lang.Double>? direction;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? directionAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? directionTransition;
+    property public final Double? intensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
+    property public final Double? opacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? opacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? opacityTransition;
+    property public final Double? vignette;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? vignetteAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? vignetteTransition;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.SnowDsl public interface SnowDslReceiver {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(double centerThinning = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(com.mapbox.maps.extension.style.expressions.generated.Expression centerThinning);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinningTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinningTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(@ColorInt int color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(String color = "#ffffff");
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(double density = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(java.util.List<java.lang.Double> direction = listOf(0.0, 90.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(double intensity = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(double opacity = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(double vignette = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+  }
+
+  public final class SnowKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.precipitations.generated.Snow snow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.precipitations.generated.SnowDslReceiver,kotlin.Unit> block);
+  }
+
+  public final class SnowUtils {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.precipitations.generated.Snow getSnow(com.mapbox.maps.MapboxStyleManager);
+    method @com.mapbox.maps.MapboxExperimental public static void removeSnow(com.mapbox.maps.MapboxStyleManager);
+    method @com.mapbox.maps.MapboxExperimental public static void setSnow(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleSnowExtension snow);
+  }
+
+}
+
 package com.mapbox.maps.extension.style.projection.generated {
 
   @UiThread public final class Projection implements com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension {
@@ -7039,6 +7289,12 @@ package com.mapbox.maps.extension.style.types {
   }
 
   public static final class PromoteId.Companion {
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlin.DslMarker public @interface RainDsl {
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlin.DslMarker public @interface SnowDsl {
   }
 
   @kotlin.DslMarker public @interface SourceDsl {

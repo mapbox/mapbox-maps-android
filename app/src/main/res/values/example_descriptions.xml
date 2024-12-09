@@ -110,4 +110,5 @@
     <string name="description_clip_layer">Showcase the usage of clip layer.</string>
     <string name="description_standard_interactions">Showcase of the Standard Style interactions.</string>
     <string name="description_location_component_model_animation">Animate 3D location puck on the map</string>
+    <string name="description_precipitation">Showcase rain and snow effects.</string>
 </resources>

@@ -11,6 +11,8 @@ import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
 import com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState
 import com.mapbox.maps.extension.compose.style.lights.LightsState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.RainState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.style.utils.transition
@@ -39,6 +41,8 @@ public class StyleState internal constructor(
   initialStyleInteractionsState: StyleInteractionsState,
   initialProjection: Projection,
   initialAtmosphereState: AtmosphereState,
+  initialRainState: RainState,
+  initialSnowState: SnowState,
   initialTerrainState: TerrainState = TerrainState.INITIAL,
   initialLightsState: LightsState = LightsState.INITIAL,
   initialStyleTransition: TransitionOptions,
@@ -51,6 +55,8 @@ public class StyleState internal constructor(
     initialStyleInteractionsState = StyleInteractionsState(),
     initialProjection = Projection.INITIAL,
     initialAtmosphereState = AtmosphereState(),
+    initialRainState = RainState(),
+    initialSnowState = SnowState(),
     initialTerrainState = TerrainState.INITIAL,
     initialLightsState = LightsState.INITIAL,
     initialStyleTransition = transition { }
@@ -78,6 +84,18 @@ public class StyleState internal constructor(
    * The atmosphere to be set to the map. By default, no changes to the current atmosphere.
    */
   public var atmosphereState: AtmosphereState by mutableStateOf(initialAtmosphereState)
+
+  /**
+   * The snow effect to be set to the map. By default, no changes to the current snow.
+   */
+  @MapboxExperimental
+  public var snowState: SnowState by mutableStateOf(initialSnowState)
+
+  /**
+   * The rain effect to be set to the map. By default, no changes to the current rain.
+   */
+  @MapboxExperimental
+  public var rainState: RainState by mutableStateOf(initialRainState)
 
   /**
    * The terrain to be set to the map. Defaults to initial state meaning no custom terrain is added, default value is taken from [style] definition.

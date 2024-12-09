@@ -329,6 +329,8 @@ public fun GenericStyle(
           mapboxMap = mapApplier.mapView.mapboxMap,
           projection = styleState.projection,
           atmosphereState = styleState.atmosphereState,
+          rainState = styleState.rainState,
+          snowState = styleState.snowState,
           terrainState = styleState.terrainState,
         )
       },
@@ -339,6 +341,12 @@ public fun GenericStyle(
         update(styleState.atmosphereState) {
           updateAtmosphere(styleState.atmosphereState)
         }
+        update(styleState.rainState) {
+          updateRain(styleState.rainState)
+        }
+        update(styleState.snowState) {
+          updateSnow(styleState.snowState)
+        }
         update(styleState.terrainState) {
           updateTerrain(styleState.terrainState)
         }
@@ -348,6 +356,8 @@ public fun GenericStyle(
       }
     ) {
       styleState.atmosphereState.UpdateProperties()
+      styleState.rainState.UpdateProperties()
+      styleState.snowState.UpdateProperties()
       styleState.terrainState.UpdateProperties()
       styleState.lightsState.BindToMap(mapboxMap = mapApplier.mapView.mapboxMap)
       val styleImportsScope = remember {
