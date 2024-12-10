@@ -1414,5 +1414,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.style.PrecipitationActivity"
+            android:description="@string/description_precipitation"
+            android:exported="true"
+            android:label="@string/activity_precipitation">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>

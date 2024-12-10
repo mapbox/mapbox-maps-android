@@ -3,6 +3,32 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+# 11.9.0-rc.1
+## Features ✨ and improvements 🏁
+* Add `toHsla` expression.
+* Introduce experimental `Snow` and `Rain` APIs to show the snow or rain effect on the map.
+* [compose] Introduce experimental `SnowState` and `RainState` APIs to show the snow or rain effect on the map.
+
+## Bug fixes 🐞
+* Improve character spacing for text offsets.
+* Fixed crash on Android API level < 26.
+* Do not load vector icons for client-provided sprites.
+* Fall back to the feature's original ID when promoteId is an object and the source layer is not specified as a key in the object.
+* Fixed crash caused by a repeated command buffer commit call.
+
+## Dependencies
+* Update gl-native to v11.9.0-rc.1 and common to v24.9.0-rc.1.
+# 11.9.0-rc.1
+
+* Add `toHsla` expression.
+
+# 11.8.1 December 03, 2024
+## Bug fixes 🐞
+* Fix map flickering on some Mali and PowerVR GPUs.
+
+## Dependencies
+* Update gl-native to v11.8.1.
+
 
 # 11.9.0-beta.1 November 28, 2024
 ## Breaking changes ⚠️

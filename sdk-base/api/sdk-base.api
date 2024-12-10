@@ -197,7 +197,9 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun getStyleLights ()Ljava/util/List;
 	public final fun getStyleManager ()Lcom/mapbox/maps/StyleManager;
 	public fun getStyleProjectionProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
+	public final fun getStyleRainProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleSlots ()Ljava/util/List;
+	public final fun getStyleSnowProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleSourceProperties (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun getStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleSources ()Ljava/util/List;
@@ -233,6 +235,10 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun setStyleLights (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleProjection (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleProjectionProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public final fun setStyleRain (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public final fun setStyleRainProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleSnow (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleSnowProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleSourceProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleTerrain (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
@@ -682,6 +688,8 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 	public abstract fun getLayers ()Ljava/util/List;
 	public abstract fun getModels ()Ljava/util/List;
 	public abstract fun getProjection ()Lcom/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension;
+	public abstract fun getRain ()Lcom/mapbox/maps/extension/style/StyleContract$StyleRainExtension;
+	public abstract fun getSnow ()Lcom/mapbox/maps/extension/style/StyleContract$StyleSnowExtension;
 	public abstract fun getSources ()Ljava/util/List;
 	public abstract fun getStyle ()Ljava/lang/String;
 	public abstract fun getTerrain ()Lcom/mapbox/maps/extension/style/StyleContract$StyleTerrainExtension;
@@ -709,6 +717,14 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 }
 
 public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleRainExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleSnowExtension {
 	public abstract fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
 }
 

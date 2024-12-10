@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose.style.internal
 
 import android.util.Log
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleDataLoadedType
@@ -8,6 +9,8 @@ import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.RainState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.logD
@@ -24,11 +27,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 
+@OptIn(MapboxExperimental::class)
 internal class MapStyleNode(
   val style: String,
   val mapboxMap: MapboxMap,
   private val projection: Projection,
   var atmosphereState: AtmosphereState,
+  var rainState: RainState,
+  var snowState: SnowState,
   var terrainState: TerrainState,
 ) : MapNode() {
 
@@ -67,6 +73,8 @@ internal class MapStyleNode(
     updateStyle(style)
     updateProjection(projection)
     updateAtmosphere(atmosphereState)
+    updateRain(rainState)
+    updateSnow(snowState)
     updateTerrain(terrainState)
   }
 
@@ -91,6 +99,8 @@ internal class MapStyleNode(
   override fun onClear() {
     super.onClear()
     atmosphereState.applier.detach()
+    rainState.applier.detach()
+    snowState.applier.detach()
     terrainState.applier.detach()
     children.forEach { it.onClear() }
   }
@@ -133,6 +143,30 @@ internal class MapStyleNode(
     coroutineScope.launch {
       styleDataLoaded.collect {
         atmosphereState.applier.attachTo(mapboxMap)
+      }
+    }
+  }
+
+  internal fun updateRain(rainState: RainState) {
+    // we have to detach (in a sense of cancelling property collector jobs) the previous state
+    // before attaching the new state; otherwise the jobs will be duplicated
+    this.rainState.applier.detach()
+    this.rainState = rainState
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        rainState.applier.attachTo(mapboxMap)
+      }
+    }
+  }
+
+  internal fun updateSnow(snowState: SnowState) {
+    // we have to detach (in a sense of cancelling property collector jobs) the previous state
+    // before attaching the new state; otherwise the jobs will be duplicated
+    this.snowState.applier.detach()
+    this.snowState = snowState
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        snowState.applier.attachTo(mapboxMap)
       }
     }
   }

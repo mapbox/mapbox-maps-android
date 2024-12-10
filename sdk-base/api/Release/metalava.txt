@@ -176,7 +176,9 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLights();
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.StyleManager getStyleManager();
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleProjectionProperty(String property);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public final com.mapbox.maps.StylePropertyValue getStyleRainProperty(String property);
     method @CallSuper @MainThread public java.util.List<java.lang.String> getStyleSlots();
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public final com.mapbox.maps.StylePropertyValue getStyleSnowProperty(String property);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleSourceProperties(String sourceId);
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleSourceProperty(String sourceId, String property);
     method @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleSources();
@@ -212,6 +214,10 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLights(com.mapbox.bindgen.Value lights);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjection(com.mapbox.bindgen.Value properties);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjectionProperty(String property, com.mapbox.bindgen.Value value);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleRain(com.mapbox.bindgen.Value properties);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleRainProperty(String property, com.mapbox.bindgen.Value value);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSnow(com.mapbox.bindgen.Value properties);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSnowProperty(String property, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperties(String sourceId, com.mapbox.bindgen.Value properties);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperty(String sourceId, String property, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrain(com.mapbox.bindgen.Value properties);
@@ -674,6 +680,8 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> getLayers();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? getProjection();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleRainExtension? getRain();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleSnowExtension? getSnow();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
     method public String getStyle();
     method public com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? getTerrain();
@@ -685,6 +693,8 @@ package com.mapbox.maps.extension.style {
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? projection;
+    property public abstract com.mapbox.maps.extension.style.StyleContract.StyleRainExtension? rain;
+    property public abstract com.mapbox.maps.extension.style.StyleContract.StyleSnowExtension? snow;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> sources;
     property public abstract String style;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? terrain;
@@ -708,6 +718,14 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleProjectionExtension {
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public static fun interface StyleContract.StyleRainExtension {
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public static fun interface StyleContract.StyleSnowExtension {
     method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
   }
 

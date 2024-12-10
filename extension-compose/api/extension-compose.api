@@ -1102,6 +1102,8 @@ public final class com/mapbox/maps/extension/compose/style/StyleState {
 	public final fun getAtmosphereState ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;
 	public final fun getLightsState ()Lcom/mapbox/maps/extension/compose/style/lights/LightsState;
 	public final fun getProjection ()Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
+	public final fun getRainState ()Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
+	public final fun getSnowState ()Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
 	public final fun getStyleImportsConfig ()Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
 	public final fun getStyleInteractionsState ()Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
 	public final fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
@@ -1109,6 +1111,8 @@ public final class com/mapbox/maps/extension/compose/style/StyleState {
 	public final fun setAtmosphereState (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;)V
 	public final fun setLightsState (Lcom/mapbox/maps/extension/compose/style/lights/LightsState;)V
 	public final fun setProjection (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;)V
+	public final fun setRainState (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;)V
+	public final fun setSnowState (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;)V
 	public final fun setStyleImportsConfig (Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;)V
 	public final fun setStyleInteractionsState (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;)V
 	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V
@@ -3250,6 +3254,146 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Flat
 	public static final fun rememberFlatLightState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/lights/generated/FlatLightState;
 }
 
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/RainState {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Companion;
+	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
+	public fun <init> ()V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/RainStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCenterThinning ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCenterThinningTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getDensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getDirectionTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getVignette ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public fun hashCode ()I
+	public final fun setCenterThinning (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCenterThinningTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setDensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setDensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setDirectionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setVignette (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setVignetteTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public final fun component1 ()Ljava/util/Map;
+	public final fun component2 ()Z
+	public final fun copy (Ljava/util/Map;Z)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder;Ljava/util/Map;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getSavedProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/RainStateKt {
+	public static final fun rememberRainState (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/SnowState {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Companion;
+	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
+	public fun <init> ()V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/SnowStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCenterThinning ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getCenterThinningTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getDensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
+	public final fun getDirectionTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getVignette ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public fun hashCode ()I
+	public final fun setCenterThinning (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setCenterThinningTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setDensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setDensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
+	public final fun setDirectionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setVignette (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setVignetteTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public final fun component1 ()Ljava/util/Map;
+	public final fun component2 ()Z
+	public final fun copy (Ljava/util/Map;Z)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder;Ljava/util/Map;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getSavedProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/style/precipitations/generated/SnowStateKt {
+	public static final fun rememberSnowState (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
+}
+
 public final class com/mapbox/maps/extension/compose/style/projection/generated/Projection {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
@@ -3689,16 +3833,20 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vec
 }
 
 public class com/mapbox/maps/extension/compose/style/standard/BaseStandardStyleState {
-	protected fun <init> (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;)V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	protected fun <init> (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAtmosphereState ()Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;
 	public final fun getLightsState ()Lcom/mapbox/maps/extension/compose/style/lights/LightsState;
 	public final fun getProjection ()Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
+	public final fun getRainState ()Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
+	public final fun getSnowState ()Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
 	public final fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
 	public final fun getTerrainState ()Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;
 	public final fun setAtmosphereState (Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;)V
 	public final fun setLightsState (Lcom/mapbox/maps/extension/compose/style/lights/LightsState;)V
 	public final fun setProjection (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;)V
+	public final fun setRainState (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;)V
+	public final fun setSnowState (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;)V
 	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V
 	public final fun setTerrainState (Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;)V
 }

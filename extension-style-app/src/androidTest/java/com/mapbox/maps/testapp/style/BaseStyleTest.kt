@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
@@ -19,6 +20,10 @@ import com.mapbox.maps.extension.style.light.generated.DirectionalLight
 import com.mapbox.maps.extension.style.light.generated.FlatLight
 import com.mapbox.maps.extension.style.light.getLight
 import com.mapbox.maps.extension.style.light.setLight
+import com.mapbox.maps.extension.style.precipitations.generated.Rain
+import com.mapbox.maps.extension.style.precipitations.generated.Snow
+import com.mapbox.maps.extension.style.precipitations.generated.setRain
+import com.mapbox.maps.extension.style.precipitations.generated.setSnow
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.terrain.generated.setTerrain
 import org.junit.After
@@ -107,6 +112,16 @@ abstract class BaseStyleTest {
 
   fun setupLight(ambientLight: AmbientLight, directionalLight: DirectionalLight) {
     style.setLight(ambientLight, directionalLight)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  fun setupSnow(snow: Snow) {
+    style.setSnow(snow)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  fun setupRain(rain: Rain) {
+    style.setRain(rain)
   }
 
   fun getLayer(id: String): Layer? {

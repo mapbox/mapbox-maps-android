@@ -4,19 +4,21 @@ import android.opengl.GLES20
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.TransitionOptions
-import com.mapbox.maps.extension.style.StyleExtensionImpl.*
+import com.mapbox.maps.extension.style.StyleExtensionImpl.Builder
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.image.ImageExtensionImpl
 import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
-import com.mapbox.maps.extension.style.layers.*
+import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.light.DynamicLight
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
 import com.mapbox.maps.extension.style.light.generated.FlatLight
 import com.mapbox.maps.extension.style.model.ModelExtensionImpl
+import com.mapbox.maps.extension.style.precipitations.generated.Rain
+import com.mapbox.maps.extension.style.precipitations.generated.Snow
 import com.mapbox.maps.extension.style.projection.generated.Projection
-import com.mapbox.maps.extension.style.sources.*
+import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.terrain.generated.Terrain
 import com.mapbox.maps.extension.style.utils.StyleTelemetryEvents
 
@@ -84,6 +86,18 @@ class StyleExtensionImpl private constructor(
   override val transition: TransitionOptions? = builder.transition
 
   /**
+   * The rain effect of the style.
+   */
+  @MapboxExperimental
+  override val rain: StyleContract.StyleRainExtension? = builder.rain
+
+  /**
+   * The snow effect of the style.
+   */
+  @MapboxExperimental
+  override val snow: StyleContract.StyleSnowExtension? = builder.snow
+
+  /**
    * The builder for style extension.
    */
   class Builder(
@@ -104,6 +118,10 @@ class StyleExtensionImpl private constructor(
     internal var atmosphere: Atmosphere? = null
     internal var projection: Projection? = null
     internal var transition: TransitionOptions? = null
+    @OptIn(MapboxExperimental::class)
+    internal var snow: Snow? = null
+    @OptIn(MapboxExperimental::class)
+    internal var rain: Rain? = null
 
     /**
      * Extension function for [Layer] to overload Unary operations.
@@ -195,6 +213,28 @@ class StyleExtensionImpl private constructor(
     @JvmName("setTransition")
     operator fun TransitionOptions.unaryPlus() {
       transition = this
+    }
+
+    /**
+     * Extension function for [Snow] to overload Unary operations.
+     *
+     * Apply +[Snow] will add specific snow effect to the [StyleExtensionImpl].
+     */
+    @OptIn(MapboxExperimental::class)
+    @JvmName("setSnow")
+    operator fun Snow.unaryPlus() {
+      snow = this
+    }
+
+    /**
+     * Extension function for [Rain] to overload Unary operations.
+     *
+     * Apply +[Rain] will add specific snow effect to the [StyleExtensionImpl].
+     */
+    @OptIn(MapboxExperimental::class)
+    @JvmName("setRain")
+    operator fun Rain.unaryPlus() {
+      rain = this
     }
 
     /**

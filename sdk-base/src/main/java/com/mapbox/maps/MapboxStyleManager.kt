@@ -907,6 +907,96 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   }
 
   /**
+   * Experimental. Sets the style global snow properties.
+   *
+   * @param properties A map of style snow properties values, with their names as a key.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setStyleSnow(properties: Value): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.setStyleSnow(properties)
+  }
+
+  /**
+   * Gets the value of a style snow property.
+   *
+   * @param property The style snow property name.
+   * @return The style snow property value.
+   */
+  @MainThread
+  @CallSuper
+  @MapboxExperimental
+  fun getStyleSnowProperty(property: String): StylePropertyValue {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.getStyleSnowProperty(property)
+  }
+
+  /**
+   * Experimental. Sets the style global snow property.
+   *
+   * @param property the property name
+   * @param value the property value
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setStyleSnowProperty(property: String, value: Value): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.setStyleSnowProperty(property, value)
+  }
+
+  /**
+   * Experimental. Sets the style global rain properties.
+   *
+   * @param properties A map of style rain properties values, with their names as a key.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @CallSuper
+  @MapboxExperimental
+  fun setStyleRain(properties: Value): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.setStyleRain(properties)
+  }
+
+  /**
+   * Gets the value of a style rain property.
+   *
+   * @param property The style rain property name.
+   * @return The style rain property value.
+   */
+  @MainThread
+  @CallSuper
+  @MapboxExperimental
+  fun getStyleRainProperty(property: String): StylePropertyValue {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.getStyleRainProperty(property)
+  }
+
+  /**
+   * Experimental. Sets the style global rain property.
+   *
+   * @param property the property name
+   * @param value the property value
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @CallSuper
+  @MapboxExperimental
+  fun setStyleRainProperty(property: String, value: Value): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.setStyleRainProperty(property, value)
+  }
+
+  /**
    * Sets the style global [terrain](https://docs.mapbox.com/mapbox-gl-js/style-spec/#terrain) properties.
    *
    * @param properties A map of style terrain properties values, with their names as a key.

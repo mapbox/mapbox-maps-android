@@ -929,6 +929,14 @@ class Expression : Value {
     }
 
     /**
+     * Returns a four-element array containing the input color's Hue, Saturation, Luminance and alpha components, in that
+     * order.
+     */
+    fun toHsla(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.toHsla(block))
+    }
+
+    /**
      * Converts the input value to a number, if possible. If the input is `null` or `false`,
      * the result is 0. If the input is `true`, the result is 1. If the input
      * is a string, it is converted to a number as specified by the ["ToNumber Applied to
@@ -3463,6 +3471,25 @@ class Expression : Value {
      */
     fun toColor(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("to-color").apply(block).build()
+
+    /**
+     * Returns a four-element array containing the input color's Hue, Saturation, Luminance and alpha components, in that
+     * order.
+     */
+    @JvmStatic
+    fun toHsla(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("to-hsla")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "to-hsla".
+     */
+    fun toHsla(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("to-hsla").apply(block).build()
 
     /**
      * Converts the input value to a number, if possible. If the input is `null` or `false`,

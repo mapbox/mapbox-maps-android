@@ -1,5 +1,7 @@
 package com.mapbox.maps.extension.style.types
 
+import com.mapbox.maps.MapboxExperimental
+
 /**
  * Dsl marker for Light.
  *
@@ -47,3 +49,21 @@ annotation class TerrainDsl
  */
 @DslMarker
 annotation class AtmosphereDsl
+
+/**
+ * Dsl marker for Snow.
+ *
+ * Controls the scope of the Snow Dsl.
+ */
+@DslMarker
+@MapboxExperimental
+annotation class SnowDsl
+
+/**
+ * Dsl marker for Rain.
+ *
+ * Controls the scope of the Rain Dsl.
+ */
+@DslMarker
+@MapboxExperimental
+annotation class RainDsl
