@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.9.0-rc.1
+
+# 11.9.0-rc.1 December 10, 2024
 ## Features ✨ and improvements 🏁
 * Add `toHsla` expression.
 * Introduce experimental `Snow` and `Rain` APIs to show the snow or rain effect on the map.
@@ -18,7 +19,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.9.0-rc.1 and common to v24.9.0-rc.1.
-# 11.9.0-rc.1
+
+
 
 * Add `toHsla` expression.
 
