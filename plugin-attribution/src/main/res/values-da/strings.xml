@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Stop med at deltage</string>
     <string name="mapbox_attributionTelemetryNeutral">Mere info</string>
     <string name="mapbox_warning_attribution_disabled">Tilskrivning skal være aktiveret, hvis du bruger data fra kilder, der kræver det. Se https://docs.mapbox.com/help/getting-started/attribution/ for flere detaljer.</string>
+    <string name="mapbox_attributionGeofencingTitle">Tillad denne app at bruge Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Denne app bruger Mapbox Geofencing til at registrere din enheds tilstedeværelse i områder, appudvikleren har defineret. Kun appudvikleren kan se, hvor disse områder er. Du har mulighed for at deaktivere Mapbox Geofencing, hvilket kan påvirke appens funktionalitet.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Hold Geofencing aktiveret</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Deaktiver Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Aktiver Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Hold Geofencing deaktiveret</string>
 </resources>

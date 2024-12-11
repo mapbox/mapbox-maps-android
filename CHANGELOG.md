@@ -2,6 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+* Localize geofencing attribution dialog.
+
 
 # 11.9.0-rc.1 December 10, 2024
 ## Features ✨ and improvements 🏁

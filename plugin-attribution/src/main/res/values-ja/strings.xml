@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">参加をやめる</string>
     <string name="mapbox_attributionTelemetryNeutral">より詳しい情報</string>
     <string name="mapbox_warning_attribution_disabled">アトリビューションを必要とするソースからのデータを使用する場合は、アトリビューションを有効にする必要があります。詳細については、https://docs.mapbox.com/help/getting-started/attribution/ を参照してください。</string>
+    <string name="mapbox_attributionGeofencingTitle">このアプリにジオフェンシングの使用を許可する</string>
+    <string name="mapbox_attributionGeofencingMessage">このアプリは、Mapbox ジオフェンシングを使用して、アプリ開発者が定義したエリア内でのデバイスの存在を検出します。これらのエリアの場所を確認できるのはアプリ開発者のみです。Mapbox ジオフェンシングを無効にするオプションがありますが、これによりアプリの機能に影響が出る可能性があります。</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">ジオフェンシングを有効にしておく</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">ジオフェンシングを無効にする</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">ジオフェンシングを有効にする</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">ジオフェンシングを無効のままにする</string>
 </resources>

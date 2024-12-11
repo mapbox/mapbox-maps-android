@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Ngừng tham gia</string>
     <string name="mapbox_attributionTelemetryNeutral">Thêm thông tin</string>
     <string name="mapbox_warning_attribution_disabled">Thuộc tính phải được bật nếu bạn sử dụng dữ liệu từ các nguồn yêu cầu nó. Xem https://docs.mapbox.com/help/getting-started/attribution/ để biết thêm chi tiết.</string>
+    <string name="mapbox_attributionGeofencingTitle">Cho phép ứng dụng này sử dụng Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Ứng dụng này sử dụng Mapbox Geofencing để phát hiện sự hiện diện của thiết bị của bạn trong các khu vực mà nhà phát triển ứng dụng đã xác định. Chỉ nhà phát triển ứng dụng mới có thể thấy những khu vực đó. Bạn có tùy chọn tắt Mapbox Geofencing, điều này có thể ảnh hưởng đến chức năng của ứng dụng.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Giữ cho Geofencing được bật</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Vô hiệu hóa Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Bật Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Giữ Geofencing ở trạng thái vô hiệu hóa</string>
 </resources>

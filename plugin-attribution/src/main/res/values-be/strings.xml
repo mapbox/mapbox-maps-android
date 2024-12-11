@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Спыніць удзел</string>
     <string name="mapbox_attributionTelemetryNeutral">Дадатковая інфармацыя</string>
     <string name="mapbox_warning_attribution_disabled">Атрыбуцыя павінна быць уключана пры выкарыстанні даных з крыніц, якія патрабуюць гэтага. Дадатковая інфармацыя: https://docs.mapbox.com/help/getting-started/attribution/.</string>
+    <string name="mapbox_attributionGeofencingTitle">Дазволіць гэтай праграме выкарыстоўваць Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Гэта праграма выкарыстоўвае Mapbox Geofencing для выяўлення прысутнасці вашай прылады ў раёнах, вызначаных распрацоўшчыкам праграмы. Толькі распрацоўшчык праграмы можа бачыць, дзе знаходзяцца гэтыя вобласці. У вас ёсць магчымасць адключыць Mapbox Geofencing, што можа паўплываць на функцыянальнасць праграмы.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Захаваць Geofencing уключаным</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Адключыць Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Уключыць Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Захаваць Geofencing адключаным</string>
 </resources>

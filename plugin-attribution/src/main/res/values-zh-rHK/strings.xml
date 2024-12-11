@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">不再參與</string>
     <string name="mapbox_attributionTelemetryNeutral">更多資訊</string>
     <string name="mapbox_warning_attribution_disabled">如果您使用來自需要歸因的來源的數據，則必須啟用歸因。有關更多詳細信息，請參閱 https://docs.mapbox.com/help/getting-started/attribution/。</string>
+    <string name="mapbox_attributionGeofencingTitle">允許此應用程式使用地理圍欄</string>
+    <string name="mapbox_attributionGeofencingMessage">此應用程式使用 Mapbox 地理圍欄來偵測您的裝置是否存在於應用程式開發人員定義的區域中。只有應用程式開發人員才能看到這些區域的位置。您可以選擇停用 Mapbox 地理圍欄，這可能會影響應用程式功能。</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">保持地理圍籬啟用</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">禁用地理圍欄</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">啟用地理圍欄</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">保持地理圍欄禁用</string>
 </resources>

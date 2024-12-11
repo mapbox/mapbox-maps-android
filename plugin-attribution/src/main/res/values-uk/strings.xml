@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Припинити участь</string>
     <string name="mapbox_attributionTelemetryNeutral">Більше інформації</string>
     <string name="mapbox_warning_attribution_disabled">Атрибуцію потрібно ввімкнути, якщо ви використовуєте дані з джерел, які її потребують. Додаткову інформацію див. на сторінці https://docs.mapbox.com/help/getting-started/attribution/.</string>
+    <string name="mapbox_attributionGeofencingTitle">Дозволити цій програмі використовувати геофенсинг</string>
+    <string name="mapbox_attributionGeofencingMessage">Ця програма використовує Mapbox Геофенсинг для виявлення присутності вашого пристрою в зонах, визначених розробником програми.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Залишити геофенсинг увімкнутим</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Вимкнути геофенсинг</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Увімкнути геофенсинг</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Залишити геофенсинг вимкненим</string>
 </resources>

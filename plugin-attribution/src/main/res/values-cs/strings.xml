@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Přestat se účastnit</string>
     <string name="mapbox_attributionTelemetryNeutral">Více informací</string>
     <string name="mapbox_warning_attribution_disabled">Pokud používáte data ze zdrojů, které to vyžadují, musí být atribuce povolena. Další podrobnosti najdete na https://docs.mapbox.com/help/getting-started/attribution/.</string>
+    <string name="mapbox_attributionGeofencingTitle">Povolit této aplikaci používat Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Tato aplikace používá Mapbox Geofencing ke zjištění přítomnosti vašeho zařízení v oblastech, které definoval vývojář aplikace. Pouze vývojář aplikace vidí, kde se tyto oblasti nacházejí. Máte možnost deaktivovat Mapbox Geofencing, což může ovlivnit funkčnost aplikace.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Ponechte funkci Geofencing povolenou</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Zakázat Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Povolit Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Ponechat geofencing vypnutý</string>
 </resources>

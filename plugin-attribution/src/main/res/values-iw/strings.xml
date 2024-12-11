@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">תפסיק להשתתף</string>
     <string name="mapbox_attributionTelemetryNeutral">עוד מידע</string>
     <string name="mapbox_warning_attribution_disabled">יש להפעיל ייחוס אם אתה משתמש בנתונים ממקורות הדורשים זאת. ראה https://docs.mapbox.com/help/getting-started/attribution/ לפרטים נוספים.</string>
+    <string name="mapbox_attributionGeofencingTitle">אפשר לאפליקציה הזו להשתמש ב-Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">אפליקציה זו משתמשת ב- Mapbox Geofencing כדי לזהות את נוכחות המכשיר שלך באזורים שמפתח האפליקציה הגדיר. רק מפתח האפליקציה יכול לראות היכן נמצאים האזורים הללו. יש לך אפשרות להשבית את Mapbox Geofencing, מה שעשוי להשפיע על פונקציונליות האפליקציה.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">השאר גיאופנסינג מופעל</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">השבת גיאופנסינג</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">אפשר גיאופנסינג</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">השאר גיאופנסינג מושבת</string>
 </resources>

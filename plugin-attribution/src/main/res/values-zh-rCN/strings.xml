@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">不再参与</string>
     <string name="mapbox_attributionTelemetryNeutral">更多信息</string>
     <string name="mapbox_warning_attribution_disabled">如果您使用需要标注归属的数据源，则必须启用归属信息。有关更多详细信息，请参阅 https://docs.mapbox.com/help/getting-started/attribution/。</string>
+    <string name="mapbox_attributionGeofencingTitle">允许此应用使用地理围栏</string>
+    <string name="mapbox_attributionGeofencingMessage">此应用使用 Mapbox 地理围栏来检测您的设备是否位于应用开发人员定义的区域中。只有应用开发人员才能看到这些区域的位置。您可以选择禁用 Mapbox 地理围栏，但这可能会影响应用功能。</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">保持地理围栏处于启用状态</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">禁用地理围栏</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">启用地理围栏</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">保持地理围栏禁用</string>
 </resources>

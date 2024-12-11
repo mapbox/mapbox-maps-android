@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Nustokite dalyvauti</string>
     <string name="mapbox_attributionTelemetryNeutral">Daugiau informacijos</string>
     <string name="mapbox_warning_attribution_disabled">Priskyrimas turi būti įgalintas, jei naudojate duomenis iš šaltinių, kuriems to reikia. Daugiau informacijos rasite adresu https://docs.mapbox.com/help/getting-started/attribution/.</string>
+    <string name="mapbox_attributionGeofencingTitle">Leiskite šiai programai naudoti geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Ši programa naudoja „Mapbox Geofencing“, kad nustatytų jūsų įrenginio buvimą programos kūrėjo nustatytose srityse. Tik programos kūrėjas gali matyti, kur yra šios sritys. Turite galimybę išjungti „Mapbox Geofencing“, kuri gali turėti įtakos programos funkcionalumui.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Laikykite įjungtą geotvorą</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Išjungti geotvorą</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Įgalinti Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Išjunkite geotvorą</string>
 </resources>

@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Przestań brać udział</string>
     <string name="mapbox_attributionTelemetryNeutral">Więcej informacji</string>
     <string name="mapbox_warning_attribution_disabled">Atrybucja musi być włączona, jeśli korzystasz z danych ze źródeł, które tego wymagają. Więcej szczegółów można znaleźć na stronie https://docs.mapbox.com/help/getting-started/attribution/.</string>
+    <string name="mapbox_attributionGeofencingTitle">Zezwól tej aplikacji na korzystanie z funkcji Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Ta aplikacja używa Mapbox Geofencing do wykrywania obecności Twojego urządzenia w obszarach zdefiniowanych przez programistę aplikacji. Tylko programista aplikacji może zobaczyć, gdzie znajdują się te obszary. Masz możliwość wyłączenia Mapbox Geofencing, co może mieć wpływ na funkcjonalność aplikacji.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Pozostaw włączoną funkcję Geofencing</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Wyłącz geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Włącz geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Pozostaw geofencing wyłączony</string>
 </resources>

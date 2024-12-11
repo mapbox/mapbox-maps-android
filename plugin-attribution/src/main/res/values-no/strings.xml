@@ -8,4 +8,10 @@
     <string name="mapbox_attributionTelemetryNegative">Slutt å delta</string>
     <string name="mapbox_attributionTelemetryNeutral">Mer informasjon</string>
     <string name="mapbox_warning_attribution_disabled">Attribusjon må være aktivert hvis du bruker data fra kilder som krever det. Se https://docs.mapbox.com/help/getting-started/attribution/ for mer informasjon.</string>
+    <string name="mapbox_attributionGeofencingTitle">Tillat denne appen å bruke Geofencing</string>
+    <string name="mapbox_attributionGeofencingMessage">Denne appen bruker Mapbox Geofencing for å oppdage enhetens tilstedeværelse i områder apputvikleren har definert. Bare apputvikleren kan se hvor disse områdene er. Du har muligheten til å deaktivere Mapbox Geofencing, noe som kan påvirke appfunksjonaliteten.</string>
+    <string name="mapbox_attributionGeofencingConsentedPositive">Hold Geofencing aktivert</string>
+    <string name="mapbox_attributionGeofencingConsentedNegative">Deaktiver Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedPositive">Aktiver Geofencing</string>
+    <string name="mapbox_attributionGeofencingRevokedNegative">Hold Geofencing deaktivert</string>
 </resources>
