@@ -28,6 +28,7 @@ object Plugins {
   const val mapboxAccessToken = "com.mapbox.gradle.plugins:access-token:${Versions.mapboxAccessToken}"
   const val mapboxSdkRegistry = "com.mapbox.gradle.plugins:sdk-registry:${Versions.mapboxSdkRegistry}"
   const val mapboxSdkVersionsPlugin = "com.mapbox.mapboxsdk:mapbox-android-sdk-versions:${Versions.mapboxSdkVersionsPlugin}"
+  const val mapboxNdkPlugin = "com.mapbox.gradle.plugins:ndk:${Versions.mapboxNdkPlugin}"
   const val dokkaId = "org.jetbrains.dokka"
   const val binaryCompatibilityValidatorId = "org.jetbrains.kotlinx.binary-compatibility-validator"
   const val taskTreeId = "com.dorongold.task-tree"
@@ -37,15 +38,18 @@ object Plugins {
   const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
 }
 
+object Modules {
+  const val mapboxGlNative = "com.mapbox.maps:android-core"
+  const val mapboxCoreCommon = "com.mapbox.common:common"
+  const val mapboxOkHttp = "com.mapbox.common:okhttp"
+}
+
 object Dependencies {
   const val mapboxBase = "com.mapbox.base:common:${Versions.mapboxBase}"
   const val mapboxAnnotations = "com.mapbox.base:annotations:${Versions.mapboxBase}"
   const val mapboxAnnotationsProcessor = "com.mapbox.base:annotations-processor:${Versions.mapboxBase}"
   const val mapboxJavaGeoJSON = "com.mapbox.mapboxsdk:mapbox-sdk-geojson:${Versions.mapboxJavaServices}"
   const val mapboxServices = "com.mapbox.mapboxsdk:mapbox-sdk-services:${Versions.mapboxJavaServices}"
-  const val mapboxGlNative = "com.mapbox.maps:android-core:${Versions.mapboxGlNative}"
-  const val mapboxCoreCommon = "com.mapbox.common:common:${Versions.mapboxCommon}"
-  const val mapboxOkHttp = "com.mapbox.common:okhttp:${Versions.mapboxCommon}"
   const val mapboxJavaTurf = "com.mapbox.mapboxsdk:mapbox-sdk-turf:${Versions.mapboxJavaServices}"
   const val mapboxGestures = "com.mapbox.mapboxsdk:mapbox-android-gestures:${Versions.mapboxGestures}"
   const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppcompat}"
@@ -114,8 +118,8 @@ object Versions {
   const val mapboxGestures = "0.9.1" // Required to support compile SDK 30
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "10.19.1"
-  const val mapboxCommon = "23.11.0"
+  const val mapboxGlNative = "10.19.2"
+  const val mapboxCommon = "23.11.2"
   const val androidxCore = "1.6.0" // Latest version that supports compile SDK 30
   const val androidxFragmentTesting = "1.3.6" // Latest version that supports compile SDK 30
   const val androidxAnnotation = "1.1.0"
@@ -147,6 +151,7 @@ object Versions {
   const val equalsVerifier = "3.10.1"
   const val asyncInflater = "1.0.0"
   const val mapboxSdkVersionsPlugin = "1.1.3"
+  const val mapboxNdkPlugin = "0.1.1"
   const val pitest = "0.2.8"
   const val detekt = "1.20.0"
   const val compose = "1.1.0-beta03"

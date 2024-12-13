@@ -3,11 +3,16 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 10.19.0
+## Features ✨ and improvements 🏁
+* Publish Mapbox Maps Android artifacts using NDK 27 and [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes).
+    * The new artifacts are available by appending `-ndk27` to the artifact ID (for example, `com.mapbox.maps:android-ndk27:10.19.0`).
+
 ## Bug fixes 🐞
 * Fix rare `android.content.res.Resources$NotFoundException` happening when creating a `MapView`.
+* Fix tile prefetch for GeoJSON sources
 
 ## Dependencies
-* Update gl-native to v10.19.1 and common to v23.11.0.
+* Update gl-native to v10.19.2 and common to v23.11.2.
 
 # 10.18.4 September 06, 2024
 ## Features ✨ and improvements 🏁

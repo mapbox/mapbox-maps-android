@@ -6,10 +6,15 @@ version = project.ext.versionName
 group = project.ext.mapboxArtifactGroupId
 afterEvaluate {
     def isSnapshot = project.ext.versionName.contains("-SNAPSHOT")
+    def ndkMajor = project.findProperty("ndkMajor")?.toString()
+    def mapboxArtifactId = project.ext.mapboxArtifactId + ((ndkMajor != null) ? "-ndk$ndkMajor" : "")
+    def mapboxRegistrySdkName = project.ext.mapboxRegistrySdkName + ((ndkMajor != null) ? "-ndk$ndkMajor" : "")
+    logger.lifecycle("Artifact ID: $mapboxArtifactId")
     components.findAll { it.name.endsWith("Release") }.forEach { currentComponent ->
         def flavor = currentComponent.name.substring(0, currentComponent.name.length() - "Release".length())
         // Append `-private` if we're publishing a privateRelease variant
-        def componentRegistrySdkName = project.ext.mapboxRegistrySdkName + (flavor == "private" ? "-private" : "")
+        def componentRegistrySdkName = mapboxRegistrySdkName + (flavor == "private" ? "-private" : "")
+        logger.lifecycle("componentRegistrySdkName: $componentRegistrySdkName")
         registry {
             registryPublications {
                 "${currentComponent.name}" {
@@ -53,7 +58,7 @@ afterEvaluate {
                 "$currentComponent.name"(MavenPublication) {
                     from currentComponent
                     groupId this.group
-                    artifactId project.ext.mapboxArtifactId
+                    artifactId mapboxArtifactId
                     version this.version
 
                     artifact(tasks.findByName("androidSources${currentComponent.name}Jar"))

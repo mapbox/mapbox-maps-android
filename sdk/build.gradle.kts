@@ -65,7 +65,8 @@ dependencies {
   if (buildFromSource.toBoolean()) {
     api(project(":okhttp"))
   } else {
-    api(Dependencies.mapboxOkHttp)
+    val ndkMajorSuffix = project.findProperty("ndkMajor")?.toString()?.run { "-ndk$this" } ?: ""
+    api("${Modules.mapboxOkHttp}${ndkMajorSuffix}:${Versions.mapboxCommon}")
   }
 
   implementation(Dependencies.mapboxAnnotations)

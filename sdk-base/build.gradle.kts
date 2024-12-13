@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
@@ -47,8 +46,9 @@ dependencies {
     api(project(":maps-core"))
     api(project(":common"))
   } else {
-    api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+    val ndkMajorSuffix = project.findProperty("ndkMajor")?.toString()?.run { "-ndk$this" } ?: ""
+    api("${Modules.mapboxGlNative}${ndkMajorSuffix}:${Versions.mapboxGlNative}")
+    api("${Modules.mapboxCoreCommon}${ndkMajorSuffix}:${Versions.mapboxCommon}")
   }
 
   testImplementation(Dependencies.junit)

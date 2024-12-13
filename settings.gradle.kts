@@ -6,6 +6,14 @@ pluginManagement {
   }
 }
 
+dependencyResolutionManagement {
+  versionCatalogs {
+    create("commonLibs") {
+      from(files("gradle/commonlibs.versions.toml"))
+    }
+  }
+}
+
 include(
   ":android-auto-app",
   ":compose-app",

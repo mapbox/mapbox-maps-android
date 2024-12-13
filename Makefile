@@ -13,6 +13,11 @@ sdk-build:
 	./gradlew assembleRelease -x app:assembleRelease -x android-auto-app:assembleRelease\
 		-x compose-app:assembleRelease -x extension-style-app:assembleRelease
 
+.PHONY: sdk-build-ndk27
+sdk-build-ndk27:
+	./gradlew -PndkMajor=27 assembleRelease -x app:assembleRelease -x android-auto-app:assembleRelease\
+		-x compose-app:assembleRelease -x extension-style-app:assembleRelease
+
 # Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
 # Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
 .PHONY: checkApi
@@ -41,35 +46,35 @@ fix:
 
 .PHONY: sdkRegistryUpload
 sdkRegistryUpload:
-	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload --no-parallel --no-daemon;
+	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload --no-parallel --no-daemon $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryPublicReleaseUpload
 sdkRegistryPublicReleaseUpload:
-	./gradlew mapboxSDKRegistryPublicReleaseUpload -x extension-androidauto:mapboxSDKRegistryPublicReleaseUpload --no-parallel --no-daemon;
+	./gradlew mapboxSDKRegistryPublicReleaseUpload -x extension-androidauto:mapboxSDKRegistryPublicReleaseUpload --no-parallel --no-daemon $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryPrivateReleaseUpload
 sdkRegistryPrivateReleaseUpload:
-	./gradlew mapboxSDKRegistryPrivateReleaseUpload -x extension-androidauto:mapboxSDKRegistryPrivateReleaseUpload --no-parallel --no-daemon;
+	./gradlew mapboxSDKRegistryPrivateReleaseUpload -x extension-androidauto:mapboxSDKRegistryPrivateReleaseUpload --no-parallel --no-daemon $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
-	./gradlew mapboxSDKRegistryPublishAll;
+	./gradlew mapboxSDKRegistryPublishAll $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryPublicReleasePublish
 sdkRegistryPublicReleasePublish:
-	./gradlew mapboxSDKRegistryPublicReleasePublishAll;
+	./gradlew mapboxSDKRegistryPublicReleasePublishAll $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryPrivateReleasePublish
 sdkRegistryPrivateReleasePublish:
-	./gradlew mapboxSDKRegistryPrivateReleasePublishAll;
+	./gradlew mapboxSDKRegistryPrivateReleasePublishAll $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryUploadPublicReleaseAndroidAutoExtension
 sdkRegistryUploadPublicReleaseAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleaseUpload;
+	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleaseUpload $(NDK_MAJOR_PARAM);
 
 .PHONY: sdkRegistryPublishPublicReleaseAndroidAutoExtension
 sdkRegistryPublishPublicReleaseAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleasePublish;
+	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleasePublish $(NDK_MAJOR_PARAM);
 
 .PHONY: clean
 clean:

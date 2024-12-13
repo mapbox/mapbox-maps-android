@@ -3,6 +3,7 @@ plugins {
   kotlin("android")
   id("com.mapbox.maps.token")
   id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+  id("com.mapbox.gradle.plugins.ndk")
 }
 
 apply {
