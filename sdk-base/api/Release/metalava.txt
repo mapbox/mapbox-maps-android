@@ -158,6 +158,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleLayer(com.mapbox.bindgen.Value parameters, com.mapbox.maps.LayerPosition? position);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleModel(String modelId, String modelUri);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleSource(String sourceId, com.mapbox.bindgen.Value properties);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.FeaturesetDescriptor> getFeaturesets();
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.MapLoadingErrorDelegate getMapLoadingErrorDelegate();
     method public final float getPixelRatio();
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleAtmosphereProperty(String property);

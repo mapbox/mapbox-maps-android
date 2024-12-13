@@ -2,7 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.9.0
+## Features ✨ and improvements 🏁
+* Expose experimental `getFeaturesets` for `MapboxMap` and `Style`.
 
 # 11.9.0-rc.1 December 10, 2024
 ## Features ✨ and improvements 🏁
