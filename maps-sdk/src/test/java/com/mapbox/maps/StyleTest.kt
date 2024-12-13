@@ -636,4 +636,13 @@ class StyleTest {
     style.setStyleGlyphURL("url")
     verifyOnce { styleManager.styleGlyphURL = "url" }
   }
+
+  @Test
+  fun getFeaturesets() {
+    val featuresets = mockk<List<FeaturesetDescriptor>>()
+    every { styleManager.styleFeaturesets } returns featuresets
+    val actualFeaturesets = style.getFeaturesets()
+    verifyOnce { styleManager.styleFeaturesets }
+    assertEquals(featuresets, actualFeaturesets)
+  }
 }

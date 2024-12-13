@@ -1521,4 +1521,17 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     imageId: String,
     bitmap: Bitmap
   ): Expected<String, None> = addImage(imageId, bitmap, false)
+
+  /**
+   * Returns the available featuresets in the currently loaded style.
+   *
+   * Note: This function should only be called after the style is fully loaded; otherwise, the result may be unreliable.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun getFeaturesets(): List<FeaturesetDescriptor> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.styleFeaturesets
+  }
 }

@@ -1301,6 +1301,18 @@ class Style internal constructor(
     return super.setStyleCustomRasterSourceTileData(sourceId, tiles)
   }
 
+  /**
+   * Returns the available featuresets in the currently loaded style.
+   *
+   * Note: This function should only be called after the style is fully loaded; otherwise, the result may be unreliable.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun getFeaturesets(): List<FeaturesetDescriptor> {
+    checkNativeStyle("getFeaturesets")
+    return super.getFeaturesets()
+  }
+
   private fun checkNativeStyle(methodName: String) {
     if (!isStyleValid) {
       logW(

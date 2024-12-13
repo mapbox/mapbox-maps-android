@@ -482,6 +482,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun addStyleLayer (Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleModel (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleSource (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun getFeaturesets ()Ljava/util/List;
 	public fun getStyleAtmosphereProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleDefaultCamera ()Lcom/mapbox/maps/CameraOptions;
 	public fun getStyleGlyphURL ()Ljava/lang/String;
