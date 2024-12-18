@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.9.0
+
+# 11.9.0 December 18, 2024
 ## Breaking changes ⚠️
 * Expose experimental Geofencing with `com.mapbox.annotation.MapboxExperimental`.
 * Move experimental geofencing classes to `com.mapbox.common.geofencing` package from `com.mapbox.common.experimental.geofencing`.
@@ -62,6 +63,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.9.0 and common to v24.9.0.
+
 
 
 # 11.9.0-rc.1 December 10, 2024
