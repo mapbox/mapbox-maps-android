@@ -3,8 +3,66 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 11.9.0
+## Breaking changes ⚠️
+* Expose experimental Geofencing with `com.mapbox.annotation.MapboxExperimental`.
+* Move experimental geofencing classes to `com.mapbox.common.geofencing` package from `com.mapbox.common.experimental.geofencing`.
+* Make constructor of experimental `GeofencingOptions`, `GeofencingEvent` and other geofencing classes holding data private. Associated `Builder()` classes should be used instead.
+* Remove experimental `MapboxMap.queryRenderedFeatures` and `MapboxMap.querySourceFeatures` that used `FeaturesetQueryTarget` as an argument.
+
 ## Features ✨ and improvements 🏁
+* Introduce experimental `FillExtrusionLayer.fillExtrusionBaseAlignment` and `FillExtrusionLayer.fillExtrusionHeightAlignment` APIs to control the behavior of fill extrusion base over terrain and the behavior of fill extrusion height over terrain respectively.
+* Introduce experimental `FillLayer.fillZOffset` and `FillLayer.fillZOffsetTransition` APIs to specify a uniform elevation in meters and define the transition of `fillZOffset` respectively.
+* Adds support for `fillZOffset` in `PolygonAnnotation`, `PolygonAnnotationManager`, `PolygonAnnotationOptions`.
+* Introduce `BackgroundLayer.backgroundPitchAlignment` API to configure the orientation of background layer.
+* Introduce `LocationIndicatorLayer.emphasisCircleGlowRange` and `LocationIndicatorLayer.emphasisCircleGlowRangeTransition` APIs to control the glow effect of the emphasis circle from the solid start to the fully transparent end and to set the transition options for the `emphasisCircleGlowRange` property, respectively.
+* Introduce `radius` parameter for `ClickInteraction` and `LongClickInteraction` to support an extra area around the interaction.
+* Add a way to specify options for `Expression.image()`.
+* Introduce experimental `AnimatableModel`, `ModelMaterialPart`, `ModelNodePart` APIs to style the 3D location puck's overridable parts. [Implementation example](app/src/main/java/com/mapbox/maps/testapp/examples/LocationComponentModelAnimationActivity.kt).
+* Introduce `modelRotationExpression`, `modelColor`, `modelColorExpression`, `modelColorMixIntensity`, `modelColorMixIntensityExpression`, `modelOpacityExpression` on `LocationPuck3D`.
+* Introduce experimental `LocationPuck3D.materialOverrides` and `LocationPuck3D.nodeOverrides` API to allow model parts overrides.
+* Add vector icons support: SDK will now download vector icons and rasterize them locally, which will results in better icon quality for icons resized via icon-size. Changeable colors support: icon expression can now have optional parameter to change named colors described in SVG icons metadata.
+* Add support for shadows from elevated structures.
+* Add `toHsla` expression.
+* Introduce experimental `Snow` and `Rain` APIs to show the snow or rain effect on the map.
 * Expose experimental `getFeaturesets` for `MapboxMap` and `Style`.
+* Remove`MapboxExperimental` from `ClipLayer`.
+* [compose] Introduce `LocationIndicatorLayerState.emphasisCircleGlowRange` and `LocationIndicatorLayerState.emphasisCircleGlowRangeTransition` properties.
+* [compose] Introduce `FillLayerState.fillZOffset` and `FillLayerState.fillZOffsetTransition` properties.
+* [compose] Introduce `FillExtrusionLayerState.fillExtrusionBaseAlignment` and `FillExtrusionLayerState.fillExtrusionHeightAlignment` properties.
+* [compose] Introduce `BackgroundLayerState.backgroundPitchAlignment` property.
+* [compose] Adds support for `fillZOffset` in `PolygonAnnotationState`, `PolygonAnnotationGroupState`.
+* [compose] Expose `MapViewportState.cameraForCoordinates` method.
+* [compose] Introduce `radius` parameter for all relevant compose functions for interactions to support an extra area around the interaction.
+* [compose] Introduce experimental `SnowState` and `RainState` APIs to show the snow or rain effect on the map.
+
+## Bug fixes 🐞
+* Fix dark shades caused by corner case light directions when `FillLayer.fillExtrusionEmissiveStrength` is set to high values (closer to 1).
+* Fix rendering of interleaved SDF and non-SDF icons in the same layer.
+* Fix `LineLayer.lineEmissiveStrength` not being applied to patterned lines.
+* Fix map flickering on some Mali and PowerVR GPUs.
+* Fix shader fog computation being incorrectly enabled for landmarks.
+* Handle empty payloads for offline resources.
+* Encapsulate config expression in assertion expression when expected return type is known.
+* Fixes a bug which caused icon shifts in some cases.
+* Fix feature state update if layer contains data driven `measureLight` expression.
+* Fix the owning thread log error prints on legacy `OfflineRegion` creation.
+* Fix a crash in interpolate expression.
+* Resolve usage of `GeoJsonSource.autoMaxZoom` for single feature.
+* Resolve dotted line issue with very long lines.
+* Fix texture gather for shadows not being selected correctly by default.
+* Performance improvements for runtime-added images.
+* Fix `AndroidDeviceLocationProvider` reporting an error when location permissions are not granted.
+* Improve exception handling inside Cronet providers when Cronet library failed to load.
+* Improve character spacing for text offsets.
+* Fixed crash on Android API level < 26.
+* Do not load vector icons for client-provided sprites.
+* Fall back to the feature's original ID when promoteId is an object and the source layer is not specified as a key in the object.
+* Fixed crash caused by a repeated command buffer commit call.
+* Fixed invalid processing of icon-size 0, using biggest of two image sizes with interpolated icon-size during vector icons rasterization.
+
+## Dependencies
+* Update gl-native to v11.9.0 and common to v24.9.0.
+
 
 # 11.9.0-rc.1 December 10, 2024
 ## Features ✨ and improvements 🏁

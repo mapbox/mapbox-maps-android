@@ -29,7 +29,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
+@OptIn(MapboxExperimental::class)
 public fun ClipLayer(
   sourceState: SourceState,
   layerId: String = remember {
@@ -89,7 +89,6 @@ public fun ClipLayer(
  */
 @Composable
 @MapboxMapComposable
-@MapboxExperimental
 public inline fun ClipLayer(
   sourceState: SourceState,
   layerId: String = remember {

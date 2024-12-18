@@ -21,7 +21,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#clip)
  */
 @Stable
-@MapboxExperimental
+@OptIn(MapboxExperimental::class)
 public class ClipLayerState private constructor(
   initialClipLayerScope: StringListValue,
   initialClipLayerTypes: ClipLayerTypesListValue,

@@ -22,7 +22,6 @@ import java.util.*
  * @param sourceId the ID of the source
  */
 @UiThread
-@MapboxExperimental
 class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerDsl, Layer() {
   init {
     internalSourceId = sourceId
@@ -527,7 +526,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
  * Separated the DSL receiver class to this interface to avoid IDE code suggestion for
  * property getters.
  */
-@MapboxExperimental
 @LayersDsl
 interface ClipLayerDsl {
   /**
@@ -633,7 +631,6 @@ interface ClipLayerDsl {
 /**
  * DSL function for creating a [ClipLayer].
  */
-@MapboxExperimental
 fun clipLayer(layerId: String, sourceId: String, block: ClipLayerDsl.() -> Unit): ClipLayer = ClipLayer(layerId, sourceId).apply(block)
 
 // End of generated file.

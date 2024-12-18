@@ -49,7 +49,7 @@ class RainTest {
     }
     rain.bindTo(style)
     verify { style.setStyleRain(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("centerThinning=1.0"))
+    assertTrue(valueSlot.captured.toString().contains("center-thinning=1.0"))
   }
 
   @Test
@@ -57,7 +57,7 @@ class RainTest {
     val rain = rain { }
     rain.bindTo(style)
     rain.centerThinning(1.0)
-    verify { style.setStyleRainProperty("centerThinning", capture(valueSlot)) }
+    verify { style.setStyleRainProperty("center-thinning", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("1.0"))
   }
 
@@ -68,7 +68,7 @@ class RainTest {
     val rain = rain { }
     rain.bindTo(style)
     assertEquals(1.0.toString(), rain.centerThinning!!.toString())
-    verify { style.getStyleRainProperty("centerThinning") }
+    verify { style.getStyleRainProperty("center-thinning") }
   }
 
   // Expression Tests
@@ -78,7 +78,7 @@ class RainTest {
     val rain = rain { }
     rain.bindTo(style)
     assertEquals(null, rain.centerThinningAsExpression)
-    verify { style.getStyleRainProperty("centerThinning") }
+    verify { style.getStyleRainProperty("center-thinning") }
   }
 
   @Test
@@ -88,7 +88,7 @@ class RainTest {
     rain.bindTo(style)
     assertEquals(1.0, rain.centerThinningAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, rain.centerThinning!!, 1E-5)
-    verify { style.getStyleRainProperty("centerThinning") }
+    verify { style.getStyleRainProperty("center-thinning") }
   }
 
   @Test
@@ -103,7 +103,7 @@ class RainTest {
     }
     rain.bindTo(style)
     verify { style.setStyleRain(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("centerThinning-transition={duration=100, delay=200}"))
+    assertTrue(valueSlot.captured.toString().contains("center-thinning-transition={duration=100, delay=200}"))
   }
 
   @Test
@@ -116,7 +116,7 @@ class RainTest {
         delay(200)
       }
     )
-    verify { style.setStyleRainProperty("centerThinning-transition", capture(valueSlot)) }
+    verify { style.setStyleRainProperty("center-thinning-transition", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
   }
 
@@ -130,7 +130,7 @@ class RainTest {
     val rain = rain {}
     rain.bindTo(style)
     assertEquals(transition.toValue().toString(), rain.centerThinningTransition!!.toValue().toString())
-    verify { style.getStyleRainProperty("centerThinning-transition") }
+    verify { style.getStyleRainProperty("center-thinning-transition") }
   }
 
   @Test
@@ -140,7 +140,7 @@ class RainTest {
     val rain = rain {}
     rain.bindTo(style)
     assertEquals(null, rain.centerThinningTransition)
-    verify { style.getStyleRainProperty("centerThinning-transition") }
+    verify { style.getStyleRainProperty("center-thinning-transition") }
   }
 
   @Test(expected = RuntimeException::class)
@@ -159,7 +159,7 @@ class RainTest {
     }
     rain.bindTo(style)
     verify { style.setStyleRain(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("centerThinning-transition={duration=100, delay=200}"))
+    assertTrue(valueSlot.captured.toString().contains("center-thinning-transition={duration=100, delay=200}"))
   }
   @Test
   fun colorAsColorIntSet() {

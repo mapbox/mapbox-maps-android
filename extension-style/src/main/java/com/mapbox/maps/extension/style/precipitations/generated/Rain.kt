@@ -35,10 +35,10 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     /**
      * Thinning factor of rain particles from center. 0 - no thinning. 1 - maximal central area thinning. Default value: 1. Value range: [0, 1]
      *
-     * @return centerThinning as Double
+     * @return center-thinning as Double
      */
     get() {
-      return getPropertyValue("centerThinning")
+      return getPropertyValue("center-thinning")
     }
 
   /**
@@ -48,7 +48,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
    */
   @MapboxExperimental
   override fun centerThinning(centerThinning: Double): Rain = apply {
-    setProperty(PropertyValue("centerThinning", centerThinning))
+    setProperty(PropertyValue("center-thinning", centerThinning))
   }
 
   /**
@@ -59,20 +59,20 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     /**
      * Get the CenterThinning property transition options.
      *
-     * @return transition options for centerThinning
+     * @return transition options for center-thinning
      */
     get() {
-      return getTransitionProperty("centerThinning-transition")
+      return getTransitionProperty("center-thinning-transition")
     }
 
   /**
    * Set the CenterThinning property transition options.
    *
-   * @param options transition options for centerThinning
+   * @param options transition options for center-thinning
    */
   @MapboxExperimental
   override fun centerThinningTransition(options: StyleTransition): Rain = apply {
-    val propertyValue = PropertyValue("centerThinning-transition", options)
+    val propertyValue = PropertyValue("center-thinning-transition", options)
     setProperty(propertyValue)
   }
 
@@ -87,7 +87,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   /**
    * Thinning factor of rain particles from center. 0 - no thinning. 1 - maximal central area thinning. Default value: 1. Value range: [0, 1]
    *
-   * This is an Expression representation of "centerThinning".
+   * This is an Expression representation of "center-thinning".
    */
   @MapboxExperimental
   val centerThinningAsExpression: Expression?
@@ -99,7 +99,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
      * @return Double
      */
     get() {
-      getPropertyValue<Expression>("centerThinning")?.let {
+      getPropertyValue<Expression>("center-thinning")?.let {
         return it
       }
       centerThinning?.let {
@@ -114,7 +114,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
    */
   @MapboxExperimental
   override fun centerThinning(centerThinning: Expression): Rain = apply {
-    val propertyValue = PropertyValue("centerThinning", centerThinning)
+    val propertyValue = PropertyValue("center-thinning", centerThinning)
     setProperty(propertyValue)
   }
   /**
@@ -785,7 +785,7 @@ interface RainDslReceiver {
   /**
    * Set the CenterThinning property transition options.
    *
-   * @param options transition options for centerThinning
+   * @param options transition options for center-thinning
    */
   @MapboxExperimental
   fun centerThinningTransition(options: StyleTransition): Rain
