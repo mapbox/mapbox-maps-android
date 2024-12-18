@@ -98,7 +98,7 @@ public class SnowState private constructor(
   private fun UpdateCenterThinning() {
     centerThinningState.value.apply {
       if (notInitial) {
-        applier.setProperty("centerThinning", value)
+        applier.setProperty("center-thinning", value)
       }
     }
   }
@@ -115,7 +115,7 @@ public class SnowState private constructor(
   private fun UpdateCenterThinningTransition() {
     centerThinningTransitionState.value.apply {
       if (notInitial) {
-        applier.setProperty("centerThinning-transition", value)
+        applier.setProperty("center-thinning-transition", value)
       }
     }
   }
@@ -344,8 +344,8 @@ public class SnowState private constructor(
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("centerThinning" to centerThinning.value).takeIf { centerThinning.notInitial },
-      ("centerThinning-transition" to centerThinningTransition.value).takeIf { centerThinningTransition.notInitial },
+      ("center-thinning" to centerThinning.value).takeIf { centerThinning.notInitial },
+      ("center-thinning-transition" to centerThinningTransition.value).takeIf { centerThinningTransition.notInitial },
       ("color" to color.value).takeIf { color.notInitial },
       ("color-transition" to colorTransition.value).takeIf { colorTransition.notInitial },
       ("density" to density.value).takeIf { density.notInitial },
@@ -444,8 +444,8 @@ public class SnowState private constructor(
       restore = { holder ->
         SnowState(
           SnowStateApplier(holder.savedProperties, enabled = holder.enabled),
-          centerThinning = holder.savedProperties["centerThinning"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
-          centerThinningTransition = holder.savedProperties["centerThinning-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          centerThinning = holder.savedProperties["center-thinning"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          centerThinningTransition = holder.savedProperties["center-thinning-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           color = holder.savedProperties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           colorTransition = holder.savedProperties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           density = holder.savedProperties["density"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,

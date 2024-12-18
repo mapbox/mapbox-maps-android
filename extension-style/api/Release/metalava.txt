@@ -1582,7 +1582,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public static com.mapbox.maps.extension.style.layers.generated.CircleLayer circleLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.CircleLayerDsl,kotlin.Unit> block);
   }
 
-  @UiThread @com.mapbox.maps.MapboxExperimental public final class ClipLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl {
+  @UiThread public final class ClipLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl {
     ctor public ClipLayer(String layerId, String sourceId);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
@@ -1641,7 +1641,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
   }
 
-  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface ClipLayerDsl {
+  @com.mapbox.maps.extension.style.types.LayersDsl public interface ClipLayerDsl {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope = listOf(""));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes = listOf());
@@ -1656,7 +1656,7 @@ package com.mapbox.maps.extension.style.layers.generated {
   }
 
   public final class ClipLayerKt {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl,kotlin.Unit> block);
   }
 
   @UiThread public final class FillExtrusionLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayerDsl {

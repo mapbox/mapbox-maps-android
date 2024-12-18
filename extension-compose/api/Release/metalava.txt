@@ -1827,17 +1827,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class ClipLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ClipLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ClipLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("clip")
 }), com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerState clipLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void ClipLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void ClipLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("clip")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ClipLayerState {
+  @androidx.compose.runtime.Stable public final class ClipLayerState {
     ctor public ClipLayerState();
     method public com.mapbox.maps.extension.compose.style.StringListValue getClipLayerScope();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue getClipLayerTypes();

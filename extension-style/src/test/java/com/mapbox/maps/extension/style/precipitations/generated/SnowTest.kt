@@ -49,7 +49,7 @@ class SnowTest {
     }
     snow.bindTo(style)
     verify { style.setStyleSnow(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("centerThinning=1.0"))
+    assertTrue(valueSlot.captured.toString().contains("center-thinning=1.0"))
   }
 
   @Test
@@ -57,7 +57,7 @@ class SnowTest {
     val snow = snow { }
     snow.bindTo(style)
     snow.centerThinning(1.0)
-    verify { style.setStyleSnowProperty("centerThinning", capture(valueSlot)) }
+    verify { style.setStyleSnowProperty("center-thinning", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("1.0"))
   }
 
@@ -68,7 +68,7 @@ class SnowTest {
     val snow = snow { }
     snow.bindTo(style)
     assertEquals(1.0.toString(), snow.centerThinning!!.toString())
-    verify { style.getStyleSnowProperty("centerThinning") }
+    verify { style.getStyleSnowProperty("center-thinning") }
   }
 
   // Expression Tests
@@ -78,7 +78,7 @@ class SnowTest {
     val snow = snow { }
     snow.bindTo(style)
     assertEquals(null, snow.centerThinningAsExpression)
-    verify { style.getStyleSnowProperty("centerThinning") }
+    verify { style.getStyleSnowProperty("center-thinning") }
   }
 
   @Test
@@ -88,7 +88,7 @@ class SnowTest {
     snow.bindTo(style)
     assertEquals(1.0, snow.centerThinningAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, snow.centerThinning!!, 1E-5)
-    verify { style.getStyleSnowProperty("centerThinning") }
+    verify { style.getStyleSnowProperty("center-thinning") }
   }
 
   @Test
@@ -103,7 +103,7 @@ class SnowTest {
     }
     snow.bindTo(style)
     verify { style.setStyleSnow(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("centerThinning-transition={duration=100, delay=200}"))
+    assertTrue(valueSlot.captured.toString().contains("center-thinning-transition={duration=100, delay=200}"))
   }
 
   @Test
@@ -116,7 +116,7 @@ class SnowTest {
         delay(200)
       }
     )
-    verify { style.setStyleSnowProperty("centerThinning-transition", capture(valueSlot)) }
+    verify { style.setStyleSnowProperty("center-thinning-transition", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
   }
 
@@ -130,7 +130,7 @@ class SnowTest {
     val snow = snow {}
     snow.bindTo(style)
     assertEquals(transition.toValue().toString(), snow.centerThinningTransition!!.toValue().toString())
-    verify { style.getStyleSnowProperty("centerThinning-transition") }
+    verify { style.getStyleSnowProperty("center-thinning-transition") }
   }
 
   @Test
@@ -140,7 +140,7 @@ class SnowTest {
     val snow = snow {}
     snow.bindTo(style)
     assertEquals(null, snow.centerThinningTransition)
-    verify { style.getStyleSnowProperty("centerThinning-transition") }
+    verify { style.getStyleSnowProperty("center-thinning-transition") }
   }
 
   @Test(expected = RuntimeException::class)
@@ -159,7 +159,7 @@ class SnowTest {
     }
     snow.bindTo(style)
     verify { style.setStyleSnow(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("centerThinning-transition={duration=100, delay=200}"))
+    assertTrue(valueSlot.captured.toString().contains("center-thinning-transition={duration=100, delay=200}"))
   }
   @Test
   fun colorAsColorIntSet() {
