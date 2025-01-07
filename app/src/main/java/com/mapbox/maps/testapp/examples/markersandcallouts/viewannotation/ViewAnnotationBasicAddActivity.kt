@@ -30,6 +30,11 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
   private lateinit var viewAnnotationManager: ViewAnnotationManager
   private val viewAnnotationViews = mutableListOf<View>()
 
+  // Increase-on-access priority assigned to the most recent selected annotation,
+  // keeping it on top of other selected annotation.
+  private var topPriority: Long = 0
+    get() = ++field
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
@@ -112,7 +117,8 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
           viewAnnotationOptions {
-            selected(isSelected)
+            allowOverlap(true)
+            priority(if (isSelected) topPriority else 0)
           }
         )
         (button.layoutParams as ViewGroup.MarginLayoutParams).apply {

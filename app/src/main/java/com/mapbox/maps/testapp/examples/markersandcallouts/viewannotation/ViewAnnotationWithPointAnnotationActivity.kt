@@ -175,12 +175,6 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
         val isSelected = button.text.toString().equals("SELECT", true)
         val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
         button.text = if (isSelected) "DESELECT" else "SELECT"
-        viewAnnotationManager.updateViewAnnotation(
-          viewAnnotation,
-          viewAnnotationOptions {
-            selected(isSelected)
-          }
-        )
         (button.layoutParams as ViewGroup.MarginLayoutParams).apply {
           bottomMargin += pxDelta
           rightMargin += pxDelta

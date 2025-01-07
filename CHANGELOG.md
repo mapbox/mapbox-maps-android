@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Localize geofencing attribution dialog.
+* Introduce `ViewAnnotationOptions.priority`, deprecate `ViewAnnotationOptions.selected`. Use this property to define view annotation sort order.
 
 
 # 11.9.0 December 18, 2024

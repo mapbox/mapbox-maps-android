@@ -219,7 +219,7 @@ class ViewAnnotationShowcaseActivity :
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
           viewAnnotationOptions {
-            selected(isSelected)
+            priority(if (isSelected) 1 else 0)
           }
         )
         (button.layoutParams as ViewGroup.MarginLayoutParams).apply {

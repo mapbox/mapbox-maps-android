@@ -349,7 +349,7 @@ class ViewAnnotationTest(
   }
 
   @Test
-  fun addTwoViewAnnotationsOneSelectedAllowOverlapTrue() {
+  fun addTwoViewAnnotationsOneWithPriorityAllowOverlapTrue() {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
@@ -360,7 +360,7 @@ class ViewAnnotationTest(
               anchor(ViewAnnotationAnchor.TOP_LEFT)
             }
             allowOverlap(true)
-            selected(true)
+            priority(32)
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
@@ -485,7 +485,7 @@ class ViewAnnotationTest(
   }
 
   @Test
-  fun addTwoViewAnnotationsOneSelectedAllowOverlapFalse() {
+  fun addTwoViewAnnotationsOneWithPriorityAllowOverlapFalse() {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
@@ -496,7 +496,7 @@ class ViewAnnotationTest(
               anchor(ViewAnnotationAnchor.TOP_LEFT)
             }
             allowOverlap(false)
-            selected(true)
+            priority(22)
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
@@ -526,7 +526,7 @@ class ViewAnnotationTest(
   }
 
   @Test
-  fun addTwoViewAnnotationsTwoSelectedAllowOverlapFalse() {
+  fun addTwoViewAnnotationsTwoWithPriorityAllowOverlapFalse() {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
@@ -537,7 +537,7 @@ class ViewAnnotationTest(
               anchor(ViewAnnotationAnchor.TOP_LEFT)
             }
             allowOverlap(false)
-            selected(true)
+            priority(1)
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
@@ -548,7 +548,7 @@ class ViewAnnotationTest(
               anchor(ViewAnnotationAnchor.TOP_LEFT)
             }
             allowOverlap(false)
-            selected(true)
+            priority(34)
           }
         )
       },
