@@ -1192,12 +1192,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    */
   @MapboxExperimental
   val modelRotation: List<Double>?
     /**
-     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
      *
      * Use static method [ModelLayer.defaultModelRotation] to get the default property.
      *
@@ -1208,7 +1208,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * Use static method [ModelLayer.defaultModelRotation] to set the default property.
    *
@@ -1221,7 +1221,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * This is an Expression representation of "model-rotation".
    *
@@ -1229,7 +1229,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelRotationAsExpression: Expression?
     /**
-     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
      *
      * Get the ModelRotation property as an Expression
      *
@@ -1248,7 +1248,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * Use static method [ModelLayer.defaultModelRotationAsExpression] to set the default property.
    *
@@ -2301,12 +2301,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
      */
     @MapboxExperimental
     val defaultModelRotation: List<Double>?
       /**
-       * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+       * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
        *
        * Get the default value of ModelRotation property
        *
@@ -2317,7 +2317,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+     * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
      *
      * This is an Expression representation of "model-rotation".
      *
@@ -2943,7 +2943,7 @@ interface ModelLayerDsl {
   fun modelReceiveShadows(modelReceiveShadows: Expression): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * @param modelRotation value of modelRotation
    */
@@ -2951,7 +2951,7 @@ interface ModelLayerDsl {
   fun modelRotation(modelRotation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * @param modelRotation value of modelRotation as Expression
    */
@@ -2959,7 +2959,7 @@ interface ModelLayerDsl {
   fun modelRotation(modelRotation: Expression): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * Set the ModelRotation property transition options
    *
@@ -2969,7 +2969,7 @@ interface ModelLayerDsl {
   fun modelRotationTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    *
    * DSL for [modelRotationTransition].
    */

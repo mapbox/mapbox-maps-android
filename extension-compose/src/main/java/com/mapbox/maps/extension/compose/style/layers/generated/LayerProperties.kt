@@ -9,6 +9,66 @@ import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
+ * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class FillElevationReferenceValue(public val value: Value) {
+  /**
+   * Construct the [FillElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: FillElevationReferenceValue = FillElevationReferenceValue(Value.valueOf("FillElevationReferenceValue.INITIAL"))
+
+    /**
+     * Default value for [FillElevationReferenceValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: FillElevationReferenceValue = FillElevationReferenceValue(Value.nullValue())
+
+    /**
+     * Elevated rendering is disabled.
+     */
+    @JvmField
+    public val NONE: FillElevationReferenceValue = FillElevationReferenceValue(Value("none"))
+
+    /**
+     * Elevate geometry relative to HD roads. Use this mode to describe base polygons of the road networks.
+     */
+    @JvmField
+    public val HD_ROAD_BASE: FillElevationReferenceValue = FillElevationReferenceValue(Value("hd-road-base"))
+
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features such as 'hatched areas' that should exist only on top of road polygons.
+     */
+    @JvmField
+    public val HD_ROAD_MARKUP: FillElevationReferenceValue = FillElevationReferenceValue(Value("hd-road-markup"))
+  }
+}
+
+/**
  * Controls the frame of reference for `fill-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
@@ -174,6 +234,72 @@ public data class LineCapValue(public val value: Value) {
 }
 
 /**
+ * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class LineElevationReferenceValue(public val value: Value) {
+  /**
+   * Construct the [LineElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: LineElevationReferenceValue = LineElevationReferenceValue(Value.valueOf("LineElevationReferenceValue.INITIAL"))
+
+    /**
+     * Default value for [LineElevationReferenceValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: LineElevationReferenceValue = LineElevationReferenceValue(Value.nullValue())
+
+    /**
+     * Elevated rendering is disabled.
+     */
+    @JvmField
+    public val NONE: LineElevationReferenceValue = LineElevationReferenceValue(Value("none"))
+
+    /**
+     * Elevated rendering is enabled. Use this mode to elevate lines relative to the sea level.
+     */
+    @JvmField
+    public val SEA: LineElevationReferenceValue = LineElevationReferenceValue(Value("sea"))
+
+    /**
+     * Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them.
+     */
+    @JvmField
+    public val GROUND: LineElevationReferenceValue = LineElevationReferenceValue(Value("ground"))
+
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features that should exist only on top of road polygons.
+     */
+    @JvmField
+    public val HD_ROAD_MARKUP: LineElevationReferenceValue = LineElevationReferenceValue(Value("hd-road-markup"))
+  }
+}
+
+/**
  * The display of lines when joining. Default value: "miter".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
@@ -235,6 +361,60 @@ public data class LineJoinValue(public val value: Value) {
      */
     @JvmField
     public val NONE: LineJoinValue = LineJoinValue(Value("none"))
+  }
+}
+
+/**
+ * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class LineWidthUnitValue(public val value: Value) {
+  /**
+   * Construct the [LineWidthUnitValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: LineWidthUnitValue = LineWidthUnitValue(Value.valueOf("LineWidthUnitValue.INITIAL"))
+
+    /**
+     * Default value for [LineWidthUnitValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: LineWidthUnitValue = LineWidthUnitValue(Value.nullValue())
+
+    /**
+     * Width is rendered in pixels.
+     */
+    @JvmField
+    public val PIXELS: LineWidthUnitValue = LineWidthUnitValue(Value("pixels"))
+
+    /**
+     * Width is rendered in meters.
+     */
+    @JvmField
+    public val METERS: LineWidthUnitValue = LineWidthUnitValue(Value("meters"))
   }
 }
 
@@ -620,6 +800,12 @@ public data class SymbolElevationReferenceValue(public val value: Value) {
      */
     @JvmField
     public val GROUND: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("ground"))
+
+    /**
+     * Use this mode to enable elevated behavior for features that are rendered on top of 3D road polygons. The feature is currently being developed.
+     */
+    @JvmField
+    public val HD_ROAD_MARKUP: SymbolElevationReferenceValue = SymbolElevationReferenceValue(Value("hd-road-markup"))
   }
 }
 
@@ -728,7 +914,7 @@ public data class SymbolZOrderValue(public val value: Value) {
     public val AUTO: SymbolZOrderValue = SymbolZOrderValue(Value("auto"))
 
     /**
-     * Sorts symbols by their y-position relative to the viewport if {@link ICON_ALLOW_OVERLAP} or {@link TEXT_ALLOW_OVERLAP} is set to {@link TRUE} or {@link ICON_IGNORE_PLACEMENT} or {@link TEXT_IGNORE_PLACEMENT} is {@link FALSE}.
+     * Sorts symbols by their y-position relative to the viewport if any of the following is set to {@link TRUE}: {@link ICON_ALLOW_OVERLAP}, {@link TEXT_ALLOW_OVERLAP}, {@link ICON_IGNORE_PLACEMENT}, {@link TEXT_IGNORE_PLACEMENT}.
      */
     @JvmField
     public val VIEWPORT_Y: SymbolZOrderValue = SymbolZOrderValue(Value("viewport-y"))
@@ -1910,6 +2096,7 @@ public data class ModelTypeValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
+@MapboxExperimental
 public data class BackgroundPitchAlignmentValue(public val value: Value) {
   /**
    * Construct the [BackgroundPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -1950,7 +2137,7 @@ public data class BackgroundPitchAlignmentValue(public val value: Value) {
     public val MAP: BackgroundPitchAlignmentValue = BackgroundPitchAlignmentValue(Value("map"))
 
     /**
-     * The background is aligned to the plane of the viewport, covering the whole screen.
+     * The background is aligned to the plane of the viewport, covering the whole screen. Note: This mode disables the automatic reordering of the layer when terrain or globe projection is used.
      */
     @JvmField
     public val VIEWPORT: BackgroundPitchAlignmentValue = BackgroundPitchAlignmentValue(Value("viewport"))

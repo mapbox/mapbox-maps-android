@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 /**
  * Set fill-color to initialise the polygonAnnotation with.
  *
- * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+ * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
  *
  * @param fillColor the fill-color value
  * @return this
@@ -20,7 +20,7 @@ public fun PolygonAnnotationOptions.withFillColor(fillColor: Color): PolygonAnno
 /**
  * Set fill-outline-color to initialise the polygonAnnotation with.
  *
- * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
+ * The outline color of the fill. Matches the value of `fill-color` if unspecified.
  *
  * @param fillOutlineColor the fill-outline-color value
  * @return this

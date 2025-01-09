@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
@@ -55,15 +56,15 @@ public class BackgroundLayerState private constructor(
    */
   public var backgroundColor: ColorValue by mutableStateOf(initialBackgroundColor)
   /**
-   *  Defines the transition of [backgroundColor]. Default value: "#000000".
+   *  Defines the transition of [backgroundColor].
    */
   public var backgroundColorTransition: Transition by mutableStateOf(initialBackgroundColorTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    */
   public var backgroundEmissiveStrength: DoubleValue by mutableStateOf(initialBackgroundEmissiveStrength)
   /**
-   *  Defines the transition of [backgroundEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [backgroundEmissiveStrength].
    */
   public var backgroundEmissiveStrengthTransition: Transition by mutableStateOf(initialBackgroundEmissiveStrengthTransition)
   /**
@@ -71,7 +72,7 @@ public class BackgroundLayerState private constructor(
    */
   public var backgroundOpacity: DoubleValue by mutableStateOf(initialBackgroundOpacity)
   /**
-   *  Defines the transition of [backgroundOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [backgroundOpacity].
    */
   public var backgroundOpacityTransition: Transition by mutableStateOf(initialBackgroundOpacityTransition)
   /**
@@ -81,6 +82,7 @@ public class BackgroundLayerState private constructor(
   /**
    *  Orientation of background layer. Default value: "map".
    */
+  @MapboxExperimental
   public var backgroundPitchAlignment: BackgroundPitchAlignmentValue by mutableStateOf(initialBackgroundPitchAlignment)
   /**
    *  Whether this layer is displayed. Default value: "visible".
@@ -141,6 +143,7 @@ public class BackgroundLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateBackgroundPitchAlignment(layerNode: LayerNode) {
     if (backgroundPitchAlignment.notInitial) {
       layerNode.setProperty("background-pitch-alignment", backgroundPitchAlignment.value)

@@ -113,11 +113,11 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var topImage: ImageValue by mutableStateOf(initialTopImage)
   /**
-   *  The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   *  The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    */
   public var accuracyRadius: DoubleValue by mutableStateOf(initialAccuracyRadius)
   /**
-   *  Defines the transition of [accuracyRadius]. Default value: 0.
+   *  Defines the transition of [accuracyRadius].
    */
   public var accuracyRadiusTransition: Transition by mutableStateOf(initialAccuracyRadiusTransition)
   /**
@@ -125,7 +125,7 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var accuracyRadiusBorderColor: ColorValue by mutableStateOf(initialAccuracyRadiusBorderColor)
   /**
-   *  Defines the transition of [accuracyRadiusBorderColor]. Default value: "#ffffff".
+   *  Defines the transition of [accuracyRadiusBorderColor].
    */
   public var accuracyRadiusBorderColorTransition: Transition by mutableStateOf(initialAccuracyRadiusBorderColorTransition)
   /**
@@ -133,23 +133,23 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var accuracyRadiusColor: ColorValue by mutableStateOf(initialAccuracyRadiusColor)
   /**
-   *  Defines the transition of [accuracyRadiusColor]. Default value: "#ffffff".
+   *  Defines the transition of [accuracyRadiusColor].
    */
   public var accuracyRadiusColorTransition: Transition by mutableStateOf(initialAccuracyRadiusColorTransition)
   /**
-   *  The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   *  The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    */
   public var bearing: DoubleValue by mutableStateOf(initialBearing)
   /**
-   *  Defines the transition of [bearing]. Default value: 0.
+   *  Defines the transition of [bearing].
    */
   public var bearingTransition: Transition by mutableStateOf(initialBearingTransition)
   /**
-   *  The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   *  The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    */
   public var bearingImageSize: DoubleValue by mutableStateOf(initialBearingImageSize)
   /**
-   *  Defines the transition of [bearingImageSize]. Default value: 1.
+   *  Defines the transition of [bearingImageSize].
    */
   public var bearingImageSizeTransition: Transition by mutableStateOf(initialBearingImageSizeTransition)
   /**
@@ -157,7 +157,7 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var emphasisCircleColor: ColorValue by mutableStateOf(initialEmphasisCircleColor)
   /**
-   *  Defines the transition of [emphasisCircleColor]. Default value: "#ffffff".
+   *  Defines the transition of [emphasisCircleColor].
    */
   public var emphasisCircleColorTransition: Transition by mutableStateOf(initialEmphasisCircleColorTransition)
   /**
@@ -165,19 +165,19 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var emphasisCircleGlowRange: DoubleRangeValue by mutableStateOf(initialEmphasisCircleGlowRange)
   /**
-   *  Defines the transition of [emphasisCircleGlowRange]. Default value: [0,0].
+   *  Defines the transition of [emphasisCircleGlowRange].
    */
   public var emphasisCircleGlowRangeTransition: Transition by mutableStateOf(initialEmphasisCircleGlowRangeTransition)
   /**
-   *  The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   *  The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    */
   public var emphasisCircleRadius: DoubleValue by mutableStateOf(initialEmphasisCircleRadius)
   /**
-   *  Defines the transition of [emphasisCircleRadius]. Default value: 0.
+   *  Defines the transition of [emphasisCircleRadius].
    */
   public var emphasisCircleRadiusTransition: Transition by mutableStateOf(initialEmphasisCircleRadiusTransition)
   /**
-   *  The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   *  The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    */
   public var imagePitchDisplacement: DoubleValue by mutableStateOf(initialImagePitchDisplacement)
   /**
@@ -185,7 +185,7 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var location: DoubleListValue by mutableStateOf(initialLocation)
   /**
-   *  Defines the transition of [location]. Default value: [0,0,0].
+   *  Defines the transition of [location].
    */
   public var locationTransition: Transition by mutableStateOf(initialLocationTransition)
   /**
@@ -193,7 +193,7 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var locationIndicatorOpacity: DoubleValue by mutableStateOf(initialLocationIndicatorOpacity)
   /**
-   *  Defines the transition of [locationIndicatorOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [locationIndicatorOpacity].
    */
   public var locationIndicatorOpacityTransition: Transition by mutableStateOf(initialLocationIndicatorOpacityTransition)
   /**
@@ -201,19 +201,19 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var perspectiveCompensation: DoubleValue by mutableStateOf(initialPerspectiveCompensation)
   /**
-   *  The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   *  The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    */
   public var shadowImageSize: DoubleValue by mutableStateOf(initialShadowImageSize)
   /**
-   *  Defines the transition of [shadowImageSize]. Default value: 1.
+   *  Defines the transition of [shadowImageSize].
    */
   public var shadowImageSizeTransition: Transition by mutableStateOf(initialShadowImageSizeTransition)
   /**
-   *  The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   *  The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    */
   public var topImageSize: DoubleValue by mutableStateOf(initialTopImageSize)
   /**
-   *  Defines the transition of [topImageSize]. Default value: 1.
+   *  Defines the transition of [topImageSize].
    */
   public var topImageSizeTransition: Transition by mutableStateOf(initialTopImageSizeTransition)
   /**

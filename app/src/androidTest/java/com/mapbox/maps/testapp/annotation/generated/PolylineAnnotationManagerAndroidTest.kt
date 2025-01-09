@@ -54,6 +54,31 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineCrossSlope() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineCrossSlope = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineCrossSlope)
+      polylineAnnotationManager.lineCrossSlope = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope").silentUnwrap(), polylineAnnotationManager.lineCrossSlope)
+    }
+  }
+
+  @Test
+  fun testLineElevationReference() {
+    rule.runOnUiThread {
+      val expectedValue = LineElevationReference.NONE
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineElevationReference = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineElevationReference)
+      polylineAnnotationManager.lineElevationReference = null
+      val expectedDefaultValue = LineElevationReference.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-reference").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, polylineAnnotationManager.lineElevationReference)
+    }
+  }
+
+  @Test
   fun testLineJoin() {
     rule.runOnUiThread {
       val expectedValue = LineJoin.BEVEL
@@ -98,6 +123,19 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polylineAnnotationManager.lineSortKey)
       polylineAnnotationManager.lineSortKey = null
       assertEquals(null, polylineAnnotationManager.lineSortKey)
+    }
+  }
+
+  @Test
+  fun testLineWidthUnit() {
+    rule.runOnUiThread {
+      val expectedValue = LineWidthUnit.PIXELS
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineWidthUnit = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineWidthUnit)
+      polylineAnnotationManager.lineWidthUnit = null
+      val expectedDefaultValue = LineWidthUnit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-width-unit").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, polylineAnnotationManager.lineWidthUnit)
     }
   }
 

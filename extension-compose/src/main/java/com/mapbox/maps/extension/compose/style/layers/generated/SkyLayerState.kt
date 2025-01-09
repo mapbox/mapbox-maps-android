@@ -69,7 +69,7 @@ public class SkyLayerState private constructor(
    */
   public var skyAtmosphereHaloColor: ColorValue by mutableStateOf(initialSkyAtmosphereHaloColor)
   /**
-   *  Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180].
+   *  Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyAtmosphereSun is in degrees.
    */
   public var skyAtmosphereSun: DoubleListValue by mutableStateOf(initialSkyAtmosphereSun)
   /**
@@ -81,7 +81,7 @@ public class SkyLayerState private constructor(
    */
   public var skyGradient: ColorValue by mutableStateOf(initialSkyGradient)
   /**
-   *  Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180].
+   *  Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyGradientCenter is in degrees.
    */
   public var skyGradientCenter: DoubleListValue by mutableStateOf(initialSkyGradientCenter)
   /**
@@ -93,7 +93,7 @@ public class SkyLayerState private constructor(
    */
   public var skyOpacity: DoubleValue by mutableStateOf(initialSkyOpacity)
   /**
-   *  Defines the transition of [skyOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [skyOpacity].
    */
   public var skyOpacityTransition: Transition by mutableStateOf(initialSkyOpacityTransition)
   /**

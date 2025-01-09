@@ -344,11 +344,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    */
   val hillshadeEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
      *
      * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrength] to get the default property.
      *
@@ -359,7 +359,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrength] to set the default property.
    *
@@ -371,14 +371,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "hillshade-emissive-strength".
    *
    */
   val hillshadeEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
      *
      * Get the HillshadeEmissiveStrength property as an Expression
      *
@@ -397,7 +397,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1061,11 +1061,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
      */
     val defaultHillshadeEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
        *
        * Get the default value of HillshadeEmissiveStrength property
        *
@@ -1076,7 +1076,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "hillshade-emissive-strength".
      *
@@ -1469,21 +1469,21 @@ interface HillshadeLayerDsl {
   fun hillshadeAccentColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength
    */
   fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Double = 0.0): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength as Expression
    */
   fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Expression): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * Set the HillshadeEmissiveStrength property transition options
    *
@@ -1492,7 +1492,7 @@ interface HillshadeLayerDsl {
   fun hillshadeEmissiveStrengthTransition(options: StyleTransition): HillshadeLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * DSL for [hillshadeEmissiveStrengthTransition].
    */

@@ -47,7 +47,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   /**
    * Set fill-color to initialise the polygonAnnotation with.
    *
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * @param fillColor the fill-color value
    * @return this
@@ -60,7 +60,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   /**
    * Set fill-color to initialise the polygonAnnotation with.
    *
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    *
    * @param fillColor the fill-color value with ColorInt format
    * @return this
@@ -78,7 +78,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   /**
    * Set fill-opacity to initialise the polygonAnnotation with.
    *
-   * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    *
    * @param fillOpacity the fill-opacity value
    * @return this
@@ -96,7 +96,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   /**
    * Set fill-outline-color to initialise the polygonAnnotation with.
    *
-   * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor the fill-outline-color value
    * @return this
@@ -109,7 +109,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   /**
    * Set fill-outline-color to initialise the polygonAnnotation with.
    *
-   * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor the fill-outline-color value with ColorInt format
    * @return this
@@ -145,7 +145,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   /**
    * Set fill-z-offset to initialise the polygonAnnotation with.
    *
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
    *
    * @param fillZOffset the fill-z-offset value
    * @return this

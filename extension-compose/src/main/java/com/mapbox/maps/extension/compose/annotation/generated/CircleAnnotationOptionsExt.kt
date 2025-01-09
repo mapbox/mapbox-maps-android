@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 /**
  * Set circle-color to initialise the circleAnnotation with.
  *
- * The fill color of the circle.
+ * The fill color of the circle. Default value: "#000000".
  *
  * @param circleColor the circle-color value
  * @return this
@@ -20,7 +20,7 @@ public fun CircleAnnotationOptions.withCircleColor(circleColor: Color): CircleAn
 /**
  * Set circle-stroke-color to initialise the circleAnnotation with.
  *
- * The stroke color of the circle.
+ * The stroke color of the circle. Default value: "#000000".
  *
  * @param circleStrokeColor the circle-stroke-color value
  * @return this

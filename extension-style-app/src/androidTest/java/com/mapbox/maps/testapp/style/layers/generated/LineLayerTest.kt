@@ -95,6 +95,53 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineCrossSlopeTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineCrossSlope(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineCrossSlope!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCrossSlopeAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineCrossSlope(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineCrossSlopeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCrossSlope!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineElevationReferenceTest() {
+    val layer = lineLayer("id", "source") {
+      lineElevationReference(LineElevationReference.NONE)
+    }
+    setupLayer(layer)
+    assertEquals(LineElevationReference.NONE, layer.lineElevationReference)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineElevationReferenceAsExpressionTest() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {
+      lineElevationReference(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineElevationReferenceAsExpression.toString())
+    assertEquals(LineElevationReference.NONE, layer.lineElevationReference!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineJoinTest() {
     val layer = lineLayer("id", "source") {
       lineJoin(LineJoin.BEVEL)
@@ -194,6 +241,29 @@ class LineLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.lineSortKeyAsExpression.toString())
     assertEquals(null, layer.lineSortKey)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineWidthUnitTest() {
+    val layer = lineLayer("id", "source") {
+      lineWidthUnit(LineWidthUnit.PIXELS)
+    }
+    setupLayer(layer)
+    assertEquals(LineWidthUnit.PIXELS, layer.lineWidthUnit)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineWidthUnitAsExpressionTest() {
+    val expression = literal("pixels")
+    val layer = lineLayer("id", "source") {
+      lineWidthUnit(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineWidthUnitAsExpression.toString())
+    assertEquals(LineWidthUnit.PIXELS, layer.lineWidthUnit!!)
   }
 
   @Test
@@ -1199,6 +1269,10 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultMaxZoom should not be null", LineLayer.defaultMaxZoom)
     assertNotNull("defaultLineCap should not be null", LineLayer.defaultLineCap)
     assertNotNull("defaultLineCapAsExpression should not be null", LineLayer.defaultLineCapAsExpression)
+    assertNotNull("defaultLineCrossSlope should not be null", LineLayer.defaultLineCrossSlope)
+    assertNotNull("defaultLineCrossSlopeAsExpression should not be null", LineLayer.defaultLineCrossSlopeAsExpression)
+    assertNotNull("defaultLineElevationReference should not be null", LineLayer.defaultLineElevationReference)
+    assertNotNull("defaultLineElevationReferenceAsExpression should not be null", LineLayer.defaultLineElevationReferenceAsExpression)
     assertNotNull("defaultLineJoin should not be null", LineLayer.defaultLineJoin)
     assertNotNull("defaultLineJoinAsExpression should not be null", LineLayer.defaultLineJoinAsExpression)
     assertNotNull("defaultLineMiterLimit should not be null", LineLayer.defaultLineMiterLimit)
@@ -1207,6 +1281,8 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineRoundLimitAsExpression should not be null", LineLayer.defaultLineRoundLimitAsExpression)
     assertNotNull("defaultLineSortKey should not be null", LineLayer.defaultLineSortKey)
     assertNotNull("defaultLineSortKeyAsExpression should not be null", LineLayer.defaultLineSortKeyAsExpression)
+    assertNotNull("defaultLineWidthUnit should not be null", LineLayer.defaultLineWidthUnit)
+    assertNotNull("defaultLineWidthUnitAsExpression should not be null", LineLayer.defaultLineWidthUnitAsExpression)
     assertNotNull("defaultLineZOffset should not be null", LineLayer.defaultLineZOffset)
     assertNotNull("defaultLineZOffsetAsExpression should not be null", LineLayer.defaultLineZOffsetAsExpression)
     assertNotNull("defaultLineBlur should not be null", LineLayer.defaultLineBlur)
@@ -1273,10 +1349,13 @@ class LineLayerTest : BaseStyleTest() {
       literal(1.0)
     }
     val lineCapTestValue = LineCap.BUTT
+    val lineCrossSlopeTestValue = 1.0
+    val lineElevationReferenceTestValue = LineElevationReference.NONE
     val lineJoinTestValue = LineJoin.BEVEL
     val lineMiterLimitTestValue = 1.0
     val lineRoundLimitTestValue = 1.0
     val lineSortKeyTestValue = 1.0
+    val lineWidthUnitTestValue = LineWidthUnit.PIXELS
     val lineZOffsetTestValue = 1.0
     val lineBlurTestValue = 1.0
     val lineBorderColorTestValue = "rgba(0, 0, 0, 1)"
@@ -1327,10 +1406,13 @@ class LineLayerTest : BaseStyleTest() {
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       lineCap(lineCapTestValue)
+      lineCrossSlope(lineCrossSlopeTestValue)
+      lineElevationReference(lineElevationReferenceTestValue)
       lineJoin(lineJoinTestValue)
       lineMiterLimit(lineMiterLimitTestValue)
       lineRoundLimit(lineRoundLimitTestValue)
       lineSortKey(lineSortKeyTestValue)
+      lineWidthUnit(lineWidthUnitTestValue)
       lineZOffset(lineZOffsetTestValue)
       lineBlur(lineBlurTestValue)
       lineBorderColor(lineBorderColorTestValue)
@@ -1365,10 +1447,13 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(lineCapTestValue, cachedLayer.lineCap)
+    assertEquals(lineCrossSlopeTestValue, cachedLayer.lineCrossSlope)
+    assertEquals(lineElevationReferenceTestValue, cachedLayer.lineElevationReference)
     assertEquals(lineJoinTestValue, cachedLayer.lineJoin)
     assertEquals(lineMiterLimitTestValue, cachedLayer.lineMiterLimit)
     assertEquals(lineRoundLimitTestValue, cachedLayer.lineRoundLimit)
     assertEquals(lineSortKeyTestValue, cachedLayer.lineSortKey)
+    assertEquals(lineWidthUnitTestValue, cachedLayer.lineWidthUnit)
     assertEquals(lineZOffsetTestValue, cachedLayer.lineZOffset)
     assertEquals(lineBlurTestValue, cachedLayer.lineBlur)
     assertEquals(lineBorderColorTestValue, cachedLayer.lineBorderColor)

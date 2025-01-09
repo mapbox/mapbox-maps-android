@@ -30,7 +30,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-join to initialise the polylineAnnotation with.
    *
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    *
    * @param lineJoin the line-join value
    * @return this
@@ -59,14 +59,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    */
   var lineZOffset: Double? = null
 
   /**
    * Set line-z-offset to initialise the polylineAnnotation with.
    *
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    *
    * @param lineZOffset the line-z-offset value
    * @return this
@@ -77,14 +77,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   var lineBlur: Double? = null
 
   /**
    * Set line-blur to initialise the polylineAnnotation with.
    *
-   * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * @param lineBlur the line-blur value
    * @return this
@@ -102,7 +102,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-border-color to initialise the polylineAnnotation with.
    *
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param lineBorderColor the line-border-color value
    * @return this
@@ -115,7 +115,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-border-color to initialise the polylineAnnotation with.
    *
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    *
    * @param lineBorderColor the line-border-color value with ColorInt format
    * @return this
@@ -133,7 +133,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-border-width to initialise the polylineAnnotation with.
    *
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * @param lineBorderWidth the line-border-width value
    * @return this
@@ -151,7 +151,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-color to initialise the polylineAnnotation with.
    *
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * @param lineColor the line-color value
    * @return this
@@ -164,7 +164,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-color to initialise the polylineAnnotation with.
    *
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    *
    * @param lineColor the line-color value with ColorInt format
    * @return this
@@ -175,14 +175,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    */
   var lineGapWidth: Double? = null
 
   /**
    * Set line-gap-width to initialise the polylineAnnotation with.
    *
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. The unit of lineGapWidth is in density-independent pixels.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * @param lineGapWidth the line-gap-width value
    * @return this
@@ -193,14 +193,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    */
   var lineOffset: Double? = null
 
   /**
    * Set line-offset to initialise the polylineAnnotation with.
    *
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. The unit of lineOffset is in density-independent pixels.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * @param lineOffset the line-offset value
    * @return this
@@ -218,7 +218,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-opacity to initialise the polylineAnnotation with.
    *
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param lineOpacity the line-opacity value
    * @return this
@@ -247,14 +247,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   var lineWidth: Double? = null
 
   /**
    * Set line-width to initialise the polylineAnnotation with.
    *
-   * Stroke thickness. The unit of lineWidth is in density-independent pixels.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * @param lineWidth the line-width value
    * @return this

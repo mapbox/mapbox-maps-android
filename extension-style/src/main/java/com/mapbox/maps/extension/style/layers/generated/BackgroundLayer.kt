@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -315,11 +316,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    */
   val backgroundEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
      *
      * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to get the default property.
      *
@@ -330,7 +331,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to set the default property.
    *
@@ -342,14 +343,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "background-emissive-strength".
    *
    */
   val backgroundEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
      *
      * Get the BackgroundEmissiveStrength property as an Expression
      *
@@ -368,7 +369,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to set the default property.
    *
@@ -580,6 +581,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * Orientation of background layer. Default value: "map".
    */
+  @MapboxExperimental
   val backgroundPitchAlignment: BackgroundPitchAlignment?
     /**
      * Orientation of background layer. Default value: "map".
@@ -602,6 +604,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment
    */
+  @MapboxExperimental
   override fun backgroundPitchAlignment(backgroundPitchAlignment: BackgroundPitchAlignment): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-pitch-alignment", backgroundPitchAlignment)
     setProperty(propertyValue)
@@ -613,6 +616,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * This is an Expression representation of "background-pitch-alignment".
    *
    */
+  @MapboxExperimental
   val backgroundPitchAlignmentAsExpression: Expression?
     /**
      * Orientation of background layer. Default value: "map".
@@ -640,6 +644,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment as Expression
    */
+  @MapboxExperimental
   override fun backgroundPitchAlignment(backgroundPitchAlignment: Expression): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-pitch-alignment", backgroundPitchAlignment)
     setProperty(propertyValue)
@@ -772,11 +777,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
      */
     val defaultBackgroundEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
        *
        * Get the default value of BackgroundEmissiveStrength property
        *
@@ -787,7 +792,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "background-emissive-strength".
      *
@@ -907,6 +912,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Orientation of background layer. Default value: "map".
      */
+    @MapboxExperimental
     val defaultBackgroundPitchAlignment: BackgroundPitchAlignment?
       /**
        * Orientation of background layer. Default value: "map".
@@ -928,6 +934,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * This is an Expression representation of "background-pitch-alignment".
      *
      */
+    @MapboxExperimental
     val defaultBackgroundPitchAlignmentAsExpression: Expression?
       /**
        * Get default value of the BackgroundPitchAlignment property as an Expression
@@ -1039,21 +1046,21 @@ interface BackgroundLayerDsl {
   fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
    */
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double = 0.0): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
    */
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * Set the BackgroundEmissiveStrength property transition options
    *
@@ -1062,7 +1069,7 @@ interface BackgroundLayerDsl {
   fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    *
    * DSL for [backgroundEmissiveStrengthTransition].
    */
@@ -1117,6 +1124,7 @@ interface BackgroundLayerDsl {
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment
    */
+  @MapboxExperimental
   fun backgroundPitchAlignment(backgroundPitchAlignment: BackgroundPitchAlignment = BackgroundPitchAlignment.MAP): BackgroundLayer
 
   /**
@@ -1124,6 +1132,7 @@ interface BackgroundLayerDsl {
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment as Expression
    */
+  @MapboxExperimental
   fun backgroundPitchAlignment(backgroundPitchAlignment: Expression): BackgroundLayer
 }
 

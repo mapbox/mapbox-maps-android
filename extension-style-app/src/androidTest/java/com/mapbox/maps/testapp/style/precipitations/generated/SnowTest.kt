@@ -255,6 +255,60 @@ class SnowTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun flakeSizeTest() {
+    val snow = snow {
+      flakeSize(1.0)
+    }
+    setupSnow(snow)
+    assertEquals(1.0, snow.flakeSize!!, 1E-5)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun flakeSizeAsExpressionTest() {
+    val expression = literal(1.0)
+
+    val snow = snow {
+      flakeSize(expression)
+    }
+    setupSnow(snow)
+    assertEquals(1.0, snow.flakeSizeAsExpression?.contents as Double, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun flakeSizeTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val snow = snow {
+      flakeSizeTransition(transition)
+    }
+    setupSnow(snow)
+    assertEquals(transition, snow.flakeSizeTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun flakeSizeTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val snow = snow {
+      flakeSizeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupSnow(snow)
+    assertEquals(transition, snow.flakeSizeTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun intensityTest() {
     val snow = snow {
       intensity(1.0)
@@ -413,6 +467,75 @@ class SnowTest : BaseStyleTest() {
     }
     setupSnow(snow)
     assertEquals(transition, snow.vignetteTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorAsColorIntTest() {
+    val snow = snow {
+      vignetteColor(Color.CYAN)
+    }
+    setupSnow(snow)
+    assertEquals(Color.CYAN, snow.vignetteColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorTest() {
+    val snow = snow {
+      vignetteColor("rgba(0, 0, 0, 1)")
+    }
+    setupSnow(snow)
+    assertEquals("rgba(0, 0, 0, 1)", snow.vignetteColor)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun vignetteColorAsExpressionTest() {
+    val expression = rgba {
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
+      literal(1.0)
+    }
+
+    val snow = snow {
+      vignetteColor(expression)
+    }
+    setupSnow(snow)
+    assertEquals(expression.toString(), snow.vignetteColorAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val snow = snow {
+      vignetteColorTransition(transition)
+    }
+    setupSnow(snow)
+    assertEquals(transition, snow.vignetteColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val snow = snow {
+      vignetteColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupSnow(snow)
+    assertEquals(transition, snow.vignetteColorTransition)
   }
 }
 

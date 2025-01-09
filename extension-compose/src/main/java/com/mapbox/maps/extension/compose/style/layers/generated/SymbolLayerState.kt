@@ -11,6 +11,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.StringListValue
@@ -42,6 +43,7 @@ public class SymbolLayerState private constructor(
   initialIconRotate: DoubleValue,
   initialIconRotationAlignment: IconRotationAlignmentValue,
   initialIconSize: DoubleValue,
+  initialIconSizeScaleRange: DoubleRangeValue,
   initialIconTextFit: IconTextFitValue,
   initialIconTextFitPadding: DoubleListValue,
   initialSymbolAvoidEdges: BooleanValue,
@@ -70,6 +72,7 @@ public class SymbolLayerState private constructor(
   initialTextRotate: DoubleValue,
   initialTextRotationAlignment: TextRotationAlignmentValue,
   initialTextSize: DoubleValue,
+  initialTextSizeScaleRange: DoubleRangeValue,
   initialTextTransform: TextTransformValue,
   initialTextVariableAnchor: TextVariableAnchorListValue,
   initialTextWritingMode: TextWritingModeListValue,
@@ -136,6 +139,7 @@ public class SymbolLayerState private constructor(
     initialIconRotate = DoubleValue.INITIAL,
     initialIconRotationAlignment = IconRotationAlignmentValue.INITIAL,
     initialIconSize = DoubleValue.INITIAL,
+    initialIconSizeScaleRange = DoubleRangeValue.INITIAL,
     initialIconTextFit = IconTextFitValue.INITIAL,
     initialIconTextFitPadding = DoubleListValue.INITIAL,
     initialSymbolAvoidEdges = BooleanValue.INITIAL,
@@ -164,6 +168,7 @@ public class SymbolLayerState private constructor(
     initialTextRotate = DoubleValue.INITIAL,
     initialTextRotationAlignment = TextRotationAlignmentValue.INITIAL,
     initialTextSize = DoubleValue.INITIAL,
+    initialTextSizeScaleRange = DoubleRangeValue.INITIAL,
     initialTextTransform = TextTransformValue.INITIAL,
     initialTextVariableAnchor = TextVariableAnchorListValue.INITIAL,
     initialTextWritingMode = TextWritingModeListValue.INITIAL,
@@ -250,7 +255,7 @@ public class SymbolLayerState private constructor(
    */
   public var iconOptional: BooleanValue by mutableStateOf(initialIconOptional)
   /**
-   *  Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   *  Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    */
   public var iconPadding: DoubleValue by mutableStateOf(initialIconPadding)
   /**
@@ -258,7 +263,7 @@ public class SymbolLayerState private constructor(
    */
   public var iconPitchAlignment: IconPitchAlignmentValue by mutableStateOf(initialIconPitchAlignment)
   /**
-   *  Rotates the icon clockwise. Default value: 0.
+   *  Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    */
   public var iconRotate: DoubleValue by mutableStateOf(initialIconRotate)
   /**
@@ -266,15 +271,20 @@ public class SymbolLayerState private constructor(
    */
   public var iconRotationAlignment: IconRotationAlignmentValue by mutableStateOf(initialIconRotationAlignment)
   /**
-   *  Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   *  Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    */
   public var iconSize: DoubleValue by mutableStateOf(initialIconSize)
+  /**
+   *  Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   */
+  @MapboxExperimental
+  public var iconSizeScaleRange: DoubleRangeValue by mutableStateOf(initialIconSizeScaleRange)
   /**
    *  Scales the icon to fit around the associated text. Default value: "none".
    */
   public var iconTextFit: IconTextFitValue by mutableStateOf(initialIconTextFit)
   /**
-   *  Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   *  Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    */
   public var iconTextFitPadding: DoubleListValue by mutableStateOf(initialIconTextFitPadding)
   /**
@@ -295,7 +305,7 @@ public class SymbolLayerState private constructor(
    */
   public var symbolSortKey: DoubleValue by mutableStateOf(initialSymbolSortKey)
   /**
-   *  Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   *  Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    */
   public var symbolSpacing: DoubleValue by mutableStateOf(initialSymbolSpacing)
   /**
@@ -335,23 +345,23 @@ public class SymbolLayerState private constructor(
    */
   public var textKeepUpright: BooleanValue by mutableStateOf(initialTextKeepUpright)
   /**
-   *  Text tracking amount. Default value: 0.
+   *  Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    */
   public var textLetterSpacing: DoubleValue by mutableStateOf(initialTextLetterSpacing)
   /**
-   *  Text leading value for multi-line text. Default value: 1.2.
+   *  Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    */
   public var textLineHeight: DoubleValue by mutableStateOf(initialTextLineHeight)
   /**
-   *  Maximum angle change between adjacent characters. Default value: 45.
+   *  Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    */
   public var textMaxAngle: DoubleValue by mutableStateOf(initialTextMaxAngle)
   /**
-   *  The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   *  The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    */
   public var textMaxWidth: DoubleValue by mutableStateOf(initialTextMaxWidth)
   /**
-   *  Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   *  Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    */
   public var textOffset: DoubleListValue by mutableStateOf(initialTextOffset)
   /**
@@ -359,7 +369,7 @@ public class SymbolLayerState private constructor(
    */
   public var textOptional: BooleanValue by mutableStateOf(initialTextOptional)
   /**
-   *  Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   *  Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    */
   public var textPadding: DoubleValue by mutableStateOf(initialTextPadding)
   /**
@@ -367,11 +377,11 @@ public class SymbolLayerState private constructor(
    */
   public var textPitchAlignment: TextPitchAlignmentValue by mutableStateOf(initialTextPitchAlignment)
   /**
-   *  Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   *  Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    */
   public var textRadialOffset: DoubleValue by mutableStateOf(initialTextRadialOffset)
   /**
-   *  Rotates the text clockwise. Default value: 0.
+   *  Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    */
   public var textRotate: DoubleValue by mutableStateOf(initialTextRotate)
   /**
@@ -379,9 +389,14 @@ public class SymbolLayerState private constructor(
    */
   public var textRotationAlignment: TextRotationAlignmentValue by mutableStateOf(initialTextRotationAlignment)
   /**
-   *  Font size. Default value: 16. Minimum value: 0.
+   *  Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    */
   public var textSize: DoubleValue by mutableStateOf(initialTextSize)
+  /**
+   *  Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   */
+  @MapboxExperimental
+  public var textSizeScaleRange: DoubleRangeValue by mutableStateOf(initialTextSizeScaleRange)
   /**
    *  Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    */
@@ -399,7 +414,7 @@ public class SymbolLayerState private constructor(
    */
   public var iconColor: ColorValue by mutableStateOf(initialIconColor)
   /**
-   *  Defines the transition of [iconColor]. Default value: "#000000".
+   *  Defines the transition of [iconColor].
    */
   public var iconColorTransition: Transition by mutableStateOf(initialIconColorTransition)
   /**
@@ -407,23 +422,23 @@ public class SymbolLayerState private constructor(
    */
   public var iconColorSaturation: DoubleValue by mutableStateOf(initialIconColorSaturation)
   /**
-   *  Defines the transition of [iconColorSaturation]. Default value: 0. Value range: [-1, 1]
+   *  Defines the transition of [iconColorSaturation].
    */
   public var iconColorSaturationTransition: Transition by mutableStateOf(initialIconColorSaturationTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    */
   public var iconEmissiveStrength: DoubleValue by mutableStateOf(initialIconEmissiveStrength)
   /**
-   *  Defines the transition of [iconEmissiveStrength]. Default value: 1. Minimum value: 0.
+   *  Defines the transition of [iconEmissiveStrength].
    */
   public var iconEmissiveStrengthTransition: Transition by mutableStateOf(initialIconEmissiveStrengthTransition)
   /**
-   *  Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   *  Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    */
   public var iconHaloBlur: DoubleValue by mutableStateOf(initialIconHaloBlur)
   /**
-   *  Defines the transition of [iconHaloBlur]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [iconHaloBlur].
    */
   public var iconHaloBlurTransition: Transition by mutableStateOf(initialIconHaloBlurTransition)
   /**
@@ -431,15 +446,15 @@ public class SymbolLayerState private constructor(
    */
   public var iconHaloColor: ColorValue by mutableStateOf(initialIconHaloColor)
   /**
-   *  Defines the transition of [iconHaloColor]. Default value: "rgba(0, 0, 0, 0)".
+   *  Defines the transition of [iconHaloColor].
    */
   public var iconHaloColorTransition: Transition by mutableStateOf(initialIconHaloColorTransition)
   /**
-   *  Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   *  Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    */
   public var iconHaloWidth: DoubleValue by mutableStateOf(initialIconHaloWidth)
   /**
-   *  Defines the transition of [iconHaloWidth]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [iconHaloWidth].
    */
   public var iconHaloWidthTransition: Transition by mutableStateOf(initialIconHaloWidthTransition)
   /**
@@ -447,7 +462,7 @@ public class SymbolLayerState private constructor(
    */
   public var iconImageCrossFade: DoubleValue by mutableStateOf(initialIconImageCrossFade)
   /**
-   *  Defines the transition of [iconImageCrossFade]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [iconImageCrossFade].
    */
   public var iconImageCrossFadeTransition: Transition by mutableStateOf(initialIconImageCrossFadeTransition)
   /**
@@ -455,7 +470,7 @@ public class SymbolLayerState private constructor(
    */
   public var iconOcclusionOpacity: DoubleValue by mutableStateOf(initialIconOcclusionOpacity)
   /**
-   *  Defines the transition of [iconOcclusionOpacity]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [iconOcclusionOpacity].
    */
   public var iconOcclusionOpacityTransition: Transition by mutableStateOf(initialIconOcclusionOpacityTransition)
   /**
@@ -463,15 +478,15 @@ public class SymbolLayerState private constructor(
    */
   public var iconOpacity: DoubleValue by mutableStateOf(initialIconOpacity)
   /**
-   *  Defines the transition of [iconOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [iconOpacity].
    */
   public var iconOpacityTransition: Transition by mutableStateOf(initialIconOpacityTransition)
   /**
-   *  Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   *  Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    */
   public var iconTranslate: DoubleListValue by mutableStateOf(initialIconTranslate)
   /**
-   *  Defines the transition of [iconTranslate]. Default value: [0,0].
+   *  Defines the transition of [iconTranslate].
    */
   public var iconTranslateTransition: Transition by mutableStateOf(initialIconTranslateTransition)
   /**
@@ -484,7 +499,7 @@ public class SymbolLayerState private constructor(
   @MapboxExperimental
   public var symbolZOffset: DoubleValue by mutableStateOf(initialSymbolZOffset)
   /**
-   *  Defines the transition of [symbolZOffset]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [symbolZOffset].
    */
   @MapboxExperimental
   public var symbolZOffsetTransition: Transition by mutableStateOf(initialSymbolZOffsetTransition)
@@ -493,23 +508,23 @@ public class SymbolLayerState private constructor(
    */
   public var textColor: ColorValue by mutableStateOf(initialTextColor)
   /**
-   *  Defines the transition of [textColor]. Default value: "#000000".
+   *  Defines the transition of [textColor].
    */
   public var textColorTransition: Transition by mutableStateOf(initialTextColorTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    */
   public var textEmissiveStrength: DoubleValue by mutableStateOf(initialTextEmissiveStrength)
   /**
-   *  Defines the transition of [textEmissiveStrength]. Default value: 1. Minimum value: 0.
+   *  Defines the transition of [textEmissiveStrength].
    */
   public var textEmissiveStrengthTransition: Transition by mutableStateOf(initialTextEmissiveStrengthTransition)
   /**
-   *  The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   *  The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    */
   public var textHaloBlur: DoubleValue by mutableStateOf(initialTextHaloBlur)
   /**
-   *  Defines the transition of [textHaloBlur]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [textHaloBlur].
    */
   public var textHaloBlurTransition: Transition by mutableStateOf(initialTextHaloBlurTransition)
   /**
@@ -517,15 +532,15 @@ public class SymbolLayerState private constructor(
    */
   public var textHaloColor: ColorValue by mutableStateOf(initialTextHaloColor)
   /**
-   *  Defines the transition of [textHaloColor]. Default value: "rgba(0, 0, 0, 0)".
+   *  Defines the transition of [textHaloColor].
    */
   public var textHaloColorTransition: Transition by mutableStateOf(initialTextHaloColorTransition)
   /**
-   *  Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   *  Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    */
   public var textHaloWidth: DoubleValue by mutableStateOf(initialTextHaloWidth)
   /**
-   *  Defines the transition of [textHaloWidth]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [textHaloWidth].
    */
   public var textHaloWidthTransition: Transition by mutableStateOf(initialTextHaloWidthTransition)
   /**
@@ -533,7 +548,7 @@ public class SymbolLayerState private constructor(
    */
   public var textOcclusionOpacity: DoubleValue by mutableStateOf(initialTextOcclusionOpacity)
   /**
-   *  Defines the transition of [textOcclusionOpacity]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [textOcclusionOpacity].
    */
   public var textOcclusionOpacityTransition: Transition by mutableStateOf(initialTextOcclusionOpacityTransition)
   /**
@@ -541,15 +556,15 @@ public class SymbolLayerState private constructor(
    */
   public var textOpacity: DoubleValue by mutableStateOf(initialTextOpacity)
   /**
-   *  Defines the transition of [textOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [textOpacity].
    */
   public var textOpacityTransition: Transition by mutableStateOf(initialTextOpacityTransition)
   /**
-   *  Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   *  Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    */
   public var textTranslate: DoubleListValue by mutableStateOf(initialTextTranslate)
   /**
-   *  Defines the transition of [textTranslate]. Default value: [0,0].
+   *  Defines the transition of [textTranslate].
    */
   public var textTranslateTransition: Transition by mutableStateOf(initialTextTranslateTransition)
   /**
@@ -650,6 +665,13 @@ public class SymbolLayerState private constructor(
   private fun UpdateIconSize(layerNode: LayerNode) {
     if (iconSize.notInitial) {
       layerNode.setProperty("icon-size", iconSize.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateIconSizeScaleRange(layerNode: LayerNode) {
+    if (iconSizeScaleRange.notInitial) {
+      layerNode.setProperty("icon-size-scale-range", iconSizeScaleRange.value)
     }
   }
   @Composable
@@ -819,6 +841,13 @@ public class SymbolLayerState private constructor(
   private fun UpdateTextSize(layerNode: LayerNode) {
     if (textSize.notInitial) {
       layerNode.setProperty("text-size", textSize.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateTextSizeScaleRange(layerNode: LayerNode) {
+    if (textSizeScaleRange.notInitial) {
+      layerNode.setProperty("text-size-scale-range", textSizeScaleRange.value)
     }
   }
   @Composable
@@ -1126,6 +1155,7 @@ public class SymbolLayerState private constructor(
     UpdateIconRotate(layerNode)
     UpdateIconRotationAlignment(layerNode)
     UpdateIconSize(layerNode)
+    UpdateIconSizeScaleRange(layerNode)
     UpdateIconTextFit(layerNode)
     UpdateIconTextFitPadding(layerNode)
     UpdateSymbolAvoidEdges(layerNode)
@@ -1154,6 +1184,7 @@ public class SymbolLayerState private constructor(
     UpdateTextRotate(layerNode)
     UpdateTextRotationAlignment(layerNode)
     UpdateTextSize(layerNode)
+    UpdateTextSizeScaleRange(layerNode)
     UpdateTextTransform(layerNode)
     UpdateTextVariableAnchor(layerNode)
     UpdateTextWritingMode(layerNode)

@@ -908,11 +908,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    */
   val rasterEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
      *
      * Use static method [RasterLayer.defaultRasterEmissiveStrength] to get the default property.
      *
@@ -923,7 +923,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * Use static method [RasterLayer.defaultRasterEmissiveStrength] to set the default property.
    *
@@ -935,14 +935,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "raster-emissive-strength".
    *
    */
   val rasterEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
      *
      * Get the RasterEmissiveStrength property as an Expression
      *
@@ -961,7 +961,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * Use static method [RasterLayer.defaultRasterEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1007,11 +1007,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    */
   val rasterFadeDuration: Double?
     /**
-     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
      *
      * Use static method [RasterLayer.defaultRasterFadeDuration] to get the default property.
      *
@@ -1022,7 +1022,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    *
    * Use static method [RasterLayer.defaultRasterFadeDuration] to set the default property.
    *
@@ -1034,14 +1034,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    *
    * This is an Expression representation of "raster-fade-duration".
    *
    */
   val rasterFadeDurationAsExpression: Expression?
     /**
-     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
      *
      * Get the RasterFadeDuration property as an Expression
      *
@@ -1060,7 +1060,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    *
    * Use static method [RasterLayer.defaultRasterFadeDurationAsExpression] to set the default property.
    *
@@ -1072,11 +1072,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    */
   val rasterHueRotate: Double?
     /**
-     * Rotates hues around the color wheel. Default value: 0.
+     * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
      *
      * Use static method [RasterLayer.defaultRasterHueRotate] to get the default property.
      *
@@ -1087,7 +1087,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * Use static method [RasterLayer.defaultRasterHueRotate] to set the default property.
    *
@@ -1099,14 +1099,14 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * This is an Expression representation of "raster-hue-rotate".
    *
    */
   val rasterHueRotateAsExpression: Expression?
     /**
-     * Rotates hues around the color wheel. Default value: 0.
+     * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
      *
      * Get the RasterHueRotate property as an Expression
      *
@@ -1125,7 +1125,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * Use static method [RasterLayer.defaultRasterHueRotateAsExpression] to set the default property.
    *
@@ -1826,11 +1826,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
      */
     val defaultRasterEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
        *
        * Get the default value of RasterEmissiveStrength property
        *
@@ -1841,7 +1841,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "raster-emissive-strength".
      *
@@ -1874,11 +1874,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
      */
     val defaultRasterFadeDuration: Double?
       /**
-       * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+       * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
        *
        * Get the default value of RasterFadeDuration property
        *
@@ -1889,7 +1889,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+     * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
      *
      * This is an Expression representation of "raster-fade-duration".
      *
@@ -1911,11 +1911,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Rotates hues around the color wheel. Default value: 0.
+     * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
      */
     val defaultRasterHueRotate: Double?
       /**
-       * Rotates hues around the color wheel. Default value: 0.
+       * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
        *
        * Get the default value of RasterHueRotate property
        *
@@ -1926,7 +1926,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Rotates hues around the color wheel. Default value: 0.
+     * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
      *
      * This is an Expression representation of "raster-hue-rotate".
      *
@@ -2366,21 +2366,21 @@ interface RasterLayerDsl {
   fun rasterElevationTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * @param rasterEmissiveStrength value of rasterEmissiveStrength
    */
   fun rasterEmissiveStrength(rasterEmissiveStrength: Double = 0.0): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * @param rasterEmissiveStrength value of rasterEmissiveStrength as Expression
    */
   fun rasterEmissiveStrength(rasterEmissiveStrength: Expression): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * Set the RasterEmissiveStrength property transition options
    *
@@ -2389,42 +2389,42 @@ interface RasterLayerDsl {
   fun rasterEmissiveStrengthTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    *
    * DSL for [rasterEmissiveStrengthTransition].
    */
   fun rasterEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    *
    * @param rasterFadeDuration value of rasterFadeDuration
    */
   fun rasterFadeDuration(rasterFadeDuration: Double = 300.0): RasterLayer
 
   /**
-   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    *
    * @param rasterFadeDuration value of rasterFadeDuration as Expression
    */
   fun rasterFadeDuration(rasterFadeDuration: Expression): RasterLayer
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * @param rasterHueRotate value of rasterHueRotate
    */
   fun rasterHueRotate(rasterHueRotate: Double = 0.0): RasterLayer
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * @param rasterHueRotate value of rasterHueRotate as Expression
    */
   fun rasterHueRotate(rasterHueRotate: Expression): RasterLayer
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * Set the RasterHueRotate property transition options
    *
@@ -2433,7 +2433,7 @@ interface RasterLayerDsl {
   fun rasterHueRotateTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Rotates hues around the color wheel. Default value: 0.
+   * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    *
    * DSL for [rasterHueRotateTransition].
    */

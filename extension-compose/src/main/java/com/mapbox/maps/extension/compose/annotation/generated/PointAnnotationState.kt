@@ -104,7 +104,7 @@ public class PointAnnotationState private constructor(
   */
   public var interactionsState: PointAnnotationInteractionsState by mutableStateOf(initialPointAnnotationInteractionsState)
   /**
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    */
   public var iconAnchor: IconAnchor? by mutableStateOf(initialIconAnchor)
   /**
@@ -112,132 +112,132 @@ public class PointAnnotationState private constructor(
    */
   public var iconImage: IconImage? by mutableStateOf(initialIconImage)
   /**
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of {@link PropertyFactory#iconSize} to obtain the final offset in density-independent pixels. When combined with {@link PropertyFactory#iconRotate} the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    */
   public var iconOffset: List<Double>? by mutableStateOf(initialIconOffset)
   /**
-   * Rotates the icon clockwise. The unit of iconRotate is in degrees.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    */
   public var iconRotate: Double? by mutableStateOf(initialIconRotate)
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image. The unit of iconSize is in factor of the original icon size.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    */
   public var iconSize: Double? by mutableStateOf(initialIconSize)
   /**
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    */
   public var iconTextFit: IconTextFit? by mutableStateOf(initialIconTextFit)
   /**
-   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    */
   public var iconTextFitPadding: List<Double>? by mutableStateOf(initialIconTextFitPadding)
   /**
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    */
   public var textAnchor: TextAnchor? by mutableStateOf(initialTextAnchor)
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    */
   public var textField: String? by mutableStateOf(initialTextField)
   /**
-   * Text justification options.
+   * Text justification options. Default value: "center".
    */
   public var textJustify: TextJustify? by mutableStateOf(initialTextJustify)
   /**
-   * Text tracking amount. The unit of textLetterSpacing is in ems.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    */
   public var textLetterSpacing: Double? by mutableStateOf(initialTextLetterSpacing)
   /**
-   * Text leading value for multi-line text. The unit of textLineHeight is in ems.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    */
   public var textLineHeight: Double? by mutableStateOf(initialTextLineHeight)
   /**
-   * The maximum line width for text wrapping. The unit of textMaxWidth is in ems.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    */
   public var textMaxWidth: Double? by mutableStateOf(initialTextMaxWidth)
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. The unit of textOffset is in ems.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    */
   public var textOffset: List<Double>? by mutableStateOf(initialTextOffset)
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present. The unit of textRadialOffset is in ems.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    */
   public var textRadialOffset: Double? by mutableStateOf(initialTextRadialOffset)
   /**
-   * Rotates the text clockwise. The unit of textRotate is in degrees.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    */
   public var textRotate: Double? by mutableStateOf(initialTextRotate)
   /**
-   * Font size. The unit of textSize is in density-independent pixels.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    */
   public var textSize: Double? by mutableStateOf(initialTextSize)
   /**
-   * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    */
   public var textTransform: TextTransform? by mutableStateOf(initialTextTransform)
   /**
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    */
   public var iconColor: Color? by mutableStateOf(initialIconColor)
   /**
-   * Controls the intensity of light emitted on the source features. The unit of iconEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    */
   public var iconEmissiveStrength: Double? by mutableStateOf(initialIconEmissiveStrength)
   /**
-   * Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    */
   public var iconHaloBlur: Double? by mutableStateOf(initialIconHaloBlur)
   /**
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   public var iconHaloColor: Color? by mutableStateOf(initialIconHaloColor)
   /**
-   * Distance of halo to the icon outline. The unit of iconHaloWidth is in density-independent pixels.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    */
   public var iconHaloWidth: Double? by mutableStateOf(initialIconHaloWidth)
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    */
   public var iconImageCrossFade: Double? by mutableStateOf(initialIconImageCrossFade)
   /**
-   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
   public var iconOcclusionOpacity: Double? by mutableStateOf(initialIconOcclusionOpacity)
   /**
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    */
   public var iconOpacity: Double? by mutableStateOf(initialIconOpacity)
   /**
-   * Specifies an uniform elevation from the ground, in meters.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   public var symbolZOffset: Double? by mutableStateOf(initialSymbolZOffset)
   /**
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    */
   public var textColor: Color? by mutableStateOf(initialTextColor)
   /**
-   * Controls the intensity of light emitted on the source features. The unit of textEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    */
   public var textEmissiveStrength: Double? by mutableStateOf(initialTextEmissiveStrength)
   /**
-   * The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    */
   public var textHaloBlur: Double? by mutableStateOf(initialTextHaloBlur)
   /**
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   public var textHaloColor: Color? by mutableStateOf(initialTextHaloColor)
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. The unit of textHaloWidth is in density-independent pixels.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    */
   public var textHaloWidth: Double? by mutableStateOf(initialTextHaloWidth)
   /**
-   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
   public var textOcclusionOpacity: Double? by mutableStateOf(initialTextOcclusionOpacity)
   /**
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    */
   public var textOpacity: Double? by mutableStateOf(initialTextOpacity)
 

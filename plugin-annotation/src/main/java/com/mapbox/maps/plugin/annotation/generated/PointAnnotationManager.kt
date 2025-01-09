@@ -346,7 +346,7 @@ class PointAnnotationManager(
   /**
    * The IconAllowOverlap property
    *
-   * If true, the icon will be visible even if it collides with other previously drawn symbols.
+   * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
    */
   var iconAllowOverlap: Boolean?
     /**
@@ -373,7 +373,7 @@ class PointAnnotationManager(
   /**
    * The default iconAnchor for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Part of the icon placed closest to the anchor.
+   * Part of the icon placed closest to the anchor. Default value: "center".
    */
   var iconAnchor: IconAnchor?
     /**
@@ -407,7 +407,7 @@ class PointAnnotationManager(
   /**
    * The IconIgnorePlacement property
    *
-   * If true, other symbols can be visible even if they collide with the icon.
+   * If true, other symbols can be visible even if they collide with the icon. Default value: false.
    */
   var iconIgnorePlacement: Boolean?
     /**
@@ -468,7 +468,7 @@ class PointAnnotationManager(
   /**
    * The IconKeepUpright property
    *
-   * If true, the icon may be flipped to prevent it from being rendered upside-down.
+   * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
    */
   var iconKeepUpright: Boolean?
     /**
@@ -495,7 +495,7 @@ class PointAnnotationManager(
   /**
    * The default iconOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of {@link PropertyFactory#iconSize} to obtain the final offset in density-independent pixels. When combined with {@link PropertyFactory#iconRotate} the offset will be as if the rotated direction was up.
+   * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
    */
   var iconOffset: List<Double>?
     /**
@@ -526,7 +526,7 @@ class PointAnnotationManager(
   /**
    * The IconOptional property
    *
-   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
+   * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
    */
   var iconOptional: Boolean?
     /**
@@ -553,7 +553,7 @@ class PointAnnotationManager(
   /**
    * The IconPadding property
    *
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. The unit of iconPadding is in density-independent pixels.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    */
   var iconPadding: Double?
     /**
@@ -580,7 +580,7 @@ class PointAnnotationManager(
   /**
    * The IconPitchAlignment property
    *
-   * Orientation of icon when map is pitched.
+   * Orientation of icon when map is pitched. Default value: "auto".
    */
   var iconPitchAlignment: IconPitchAlignment?
     /**
@@ -607,7 +607,7 @@ class PointAnnotationManager(
   /**
    * The default iconRotate for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Rotates the icon clockwise. The unit of iconRotate is in degrees.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    */
   var iconRotate: Double?
     /**
@@ -641,7 +641,7 @@ class PointAnnotationManager(
   /**
    * The IconRotationAlignment property
    *
-   * In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of icons.
+   * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
    */
   var iconRotationAlignment: IconRotationAlignment?
     /**
@@ -668,7 +668,7 @@ class PointAnnotationManager(
   /**
    * The default iconSize for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image. The unit of iconSize is in factor of the original icon size.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    */
   var iconSize: Double?
     /**
@@ -700,9 +700,37 @@ class PointAnnotationManager(
     }
 
   /**
+   * The IconSizeScaleRange property
+   *
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   */
+  @MapboxExperimental
+  var iconSizeScaleRange: List<Double>?
+    /**
+     * Get the IconSizeScaleRange property
+     *
+     * @return property wrapper value around List<Double>
+     */
+    get(): List<Double>? {
+      return layer.iconSizeScaleRange
+    }
+    /**
+     * Set the IconSizeScaleRange property
+     * @param value property wrapper value around List<Double>
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range").value
+      }
+      setLayerProperty(wrappedValue, "icon-size-scale-range")
+    }
+
+  /**
    * The default iconTextFit for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Scales the icon to fit around the associated text.
+   * Scales the icon to fit around the associated text. Default value: "none".
    */
   var iconTextFit: IconTextFit?
     /**
@@ -736,7 +764,7 @@ class PointAnnotationManager(
   /**
    * The default iconTextFitPadding for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    */
   var iconTextFitPadding: List<Double>?
     /**
@@ -767,7 +795,7 @@ class PointAnnotationManager(
   /**
    * The SymbolAvoidEdges property
    *
-   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
+   * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
    */
   var symbolAvoidEdges: Boolean?
     /**
@@ -794,7 +822,7 @@ class PointAnnotationManager(
   /**
    * The SymbolElevationReference property
    *
-   * Selects the base of symbol-elevation.
+   * Selects the base of symbol-elevation. Default value: "ground".
    */
   @MapboxExperimental
   var symbolElevationReference: SymbolElevationReference?
@@ -822,7 +850,7 @@ class PointAnnotationManager(
   /**
    * The SymbolPlacement property
    *
-   * Label placement relative to its geometry.
+   * Label placement relative to its geometry. Default value: "point".
    */
   var symbolPlacement: SymbolPlacement?
     /**
@@ -849,7 +877,7 @@ class PointAnnotationManager(
   /**
    * The default symbolSortKey for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    */
   var symbolSortKey: Double?
     /**
@@ -883,7 +911,7 @@ class PointAnnotationManager(
   /**
    * The SymbolSpacing property
    *
-   * Distance between two symbol anchors. The unit of symbolSpacing is in density-independent pixels.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    */
   var symbolSpacing: Double?
     /**
@@ -910,7 +938,7 @@ class PointAnnotationManager(
   /**
    * The SymbolZElevate property
    *
-   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when {@link PropertyFactory#fillExtrusionHeight} is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or {@link PropertyFactory#symbolSortKey} are applied.
+   * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
    */
   var symbolZElevate: Boolean?
     /**
@@ -937,7 +965,7 @@ class PointAnnotationManager(
   /**
    * The SymbolZOrder property
    *
-   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use {@link PropertyFactory#symbolSortKey}.
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
    */
   var symbolZOrder: SymbolZOrder?
     /**
@@ -964,7 +992,7 @@ class PointAnnotationManager(
   /**
    * The TextAllowOverlap property
    *
-   * If true, the text will be visible even if it collides with other previously drawn symbols.
+   * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
    */
   var textAllowOverlap: Boolean?
     /**
@@ -991,7 +1019,7 @@ class PointAnnotationManager(
   /**
    * The default textAnchor for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Part of the text placed closest to the anchor.
+   * Part of the text placed closest to the anchor. Default value: "center".
    */
   var textAnchor: TextAnchor?
     /**
@@ -1025,7 +1053,7 @@ class PointAnnotationManager(
   /**
    * The default textField for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
    */
   var textField: String?
     /**
@@ -1086,7 +1114,7 @@ class PointAnnotationManager(
   /**
    * The TextIgnorePlacement property
    *
-   * If true, other symbols can be visible even if they collide with the text.
+   * If true, other symbols can be visible even if they collide with the text. Default value: false.
    */
   var textIgnorePlacement: Boolean?
     /**
@@ -1113,7 +1141,7 @@ class PointAnnotationManager(
   /**
    * The default textJustify for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Text justification options.
+   * Text justification options. Default value: "center".
    */
   var textJustify: TextJustify?
     /**
@@ -1147,7 +1175,7 @@ class PointAnnotationManager(
   /**
    * The TextKeepUpright property
    *
-   * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+   * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
    */
   var textKeepUpright: Boolean?
     /**
@@ -1174,7 +1202,7 @@ class PointAnnotationManager(
   /**
    * The default textLetterSpacing for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Text tracking amount. The unit of textLetterSpacing is in ems.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    */
   var textLetterSpacing: Double?
     /**
@@ -1208,7 +1236,7 @@ class PointAnnotationManager(
   /**
    * The default textLineHeight for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Text leading value for multi-line text. The unit of textLineHeight is in ems.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    */
   var textLineHeight: Double?
     /**
@@ -1242,7 +1270,7 @@ class PointAnnotationManager(
   /**
    * The TextMaxAngle property
    *
-   * Maximum angle change between adjacent characters. The unit of textMaxAngle is in degrees.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    */
   var textMaxAngle: Double?
     /**
@@ -1269,7 +1297,7 @@ class PointAnnotationManager(
   /**
    * The default textMaxWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The maximum line width for text wrapping. The unit of textMaxWidth is in ems.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    */
   var textMaxWidth: Double?
     /**
@@ -1303,7 +1331,7 @@ class PointAnnotationManager(
   /**
    * The default textOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. The unit of textOffset is in ems.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    */
   var textOffset: List<Double>?
     /**
@@ -1334,7 +1362,7 @@ class PointAnnotationManager(
   /**
    * The TextOptional property
    *
-   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
+   * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
    */
   var textOptional: Boolean?
     /**
@@ -1361,7 +1389,7 @@ class PointAnnotationManager(
   /**
    * The TextPadding property
    *
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. The unit of textPadding is in density-independent pixels.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    */
   var textPadding: Double?
     /**
@@ -1388,7 +1416,7 @@ class PointAnnotationManager(
   /**
    * The TextPitchAlignment property
    *
-   * Orientation of text when map is pitched.
+   * Orientation of text when map is pitched. Default value: "auto".
    */
   var textPitchAlignment: TextPitchAlignment?
     /**
@@ -1415,7 +1443,7 @@ class PointAnnotationManager(
   /**
    * The default textRadialOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present. The unit of textRadialOffset is in ems.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    */
   var textRadialOffset: Double?
     /**
@@ -1449,7 +1477,7 @@ class PointAnnotationManager(
   /**
    * The default textRotate for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Rotates the text clockwise. The unit of textRotate is in degrees.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    */
   var textRotate: Double?
     /**
@@ -1483,7 +1511,7 @@ class PointAnnotationManager(
   /**
    * The TextRotationAlignment property
    *
-   * In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of the individual glyphs forming the text.
+   * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
    */
   var textRotationAlignment: TextRotationAlignment?
     /**
@@ -1510,7 +1538,7 @@ class PointAnnotationManager(
   /**
    * The default textSize for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Font size. The unit of textSize is in density-independent pixels.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    */
   var textSize: Double?
     /**
@@ -1542,9 +1570,37 @@ class PointAnnotationManager(
     }
 
   /**
+   * The TextSizeScaleRange property
+   *
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   */
+  @MapboxExperimental
+  var textSizeScaleRange: List<Double>?
+    /**
+     * Get the TextSizeScaleRange property
+     *
+     * @return property wrapper value around List<Double>
+     */
+    get(): List<Double>? {
+      return layer.textSizeScaleRange
+    }
+    /**
+     * Set the TextSizeScaleRange property
+     * @param value property wrapper value around List<Double>
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range").value
+      }
+      setLayerProperty(wrappedValue, "text-size-scale-range")
+    }
+
+  /**
    * The default textTransform for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
+   * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
    */
   var textTransform: TextTransform?
     /**
@@ -1578,7 +1634,7 @@ class PointAnnotationManager(
   /**
    * The TextVariableAnchor property
    *
-   * To increase the chance of placing high-priority labels on the map, you can provide an array of {@link Property.TEXT_ANCHOR} locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the {@link PropertyFactory#textRadialOffset} or the two-dimensional {@link PropertyFactory#textOffset}.
+   * To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
    */
   var textVariableAnchor: List<String>?
     /**
@@ -1632,7 +1688,7 @@ class PointAnnotationManager(
   /**
    * The default iconColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    */
   var iconColorInt: Int?
     /**
@@ -1670,7 +1726,7 @@ class PointAnnotationManager(
   /**
    * The default iconColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
    *
-   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
    */
   var iconColorString: String?
     /**
@@ -1703,7 +1759,7 @@ class PointAnnotationManager(
   /**
    * The IconColorSaturation property
    *
-   * Increase or reduce the saturation of the symbol icon.
+   * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    */
   var iconColorSaturation: Double?
     /**
@@ -1730,7 +1786,7 @@ class PointAnnotationManager(
   /**
    * The default iconEmissiveStrength for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Controls the intensity of light emitted on the source features. The unit of iconEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    */
   var iconEmissiveStrength: Double?
     /**
@@ -1764,7 +1820,7 @@ class PointAnnotationManager(
   /**
    * The default iconHaloBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    */
   var iconHaloBlur: Double?
     /**
@@ -1798,7 +1854,7 @@ class PointAnnotationManager(
   /**
    * The default iconHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   var iconHaloColorInt: Int?
     /**
@@ -1836,7 +1892,7 @@ class PointAnnotationManager(
   /**
    * The default iconHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
    *
-   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   var iconHaloColorString: String?
     /**
@@ -1869,7 +1925,7 @@ class PointAnnotationManager(
   /**
    * The default iconHaloWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Distance of halo to the icon outline. The unit of iconHaloWidth is in density-independent pixels.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    */
   var iconHaloWidth: Double?
     /**
@@ -1903,7 +1959,7 @@ class PointAnnotationManager(
   /**
    * The default iconImageCrossFade for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    */
   var iconImageCrossFade: Double?
     /**
@@ -1937,7 +1993,7 @@ class PointAnnotationManager(
   /**
    * The default iconOcclusionOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
   var iconOcclusionOpacity: Double?
     /**
@@ -1971,7 +2027,7 @@ class PointAnnotationManager(
   /**
    * The default iconOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The opacity at which the icon will be drawn.
+   * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
    */
   var iconOpacity: Double?
     /**
@@ -2005,7 +2061,7 @@ class PointAnnotationManager(
   /**
    * The IconTranslate property
    *
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    */
   var iconTranslate: List<Double>?
     /**
@@ -2032,7 +2088,7 @@ class PointAnnotationManager(
   /**
    * The IconTranslateAnchor property
    *
-   * Controls the frame of reference for {@link PropertyFactory#iconTranslate}.
+   * Controls the frame of reference for `icon-translate`. Default value: "map".
    */
   var iconTranslateAnchor: IconTranslateAnchor?
     /**
@@ -2059,7 +2115,7 @@ class PointAnnotationManager(
   /**
    * The default symbolZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Specifies an uniform elevation from the ground, in meters.
+   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   var symbolZOffset: Double?
@@ -2094,7 +2150,7 @@ class PointAnnotationManager(
   /**
    * The default textColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    */
   var textColorInt: Int?
     /**
@@ -2132,7 +2188,7 @@ class PointAnnotationManager(
   /**
    * The default textColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
    *
-   * The color with which the text will be drawn.
+   * The color with which the text will be drawn. Default value: "#000000".
    */
   var textColorString: String?
     /**
@@ -2165,7 +2221,7 @@ class PointAnnotationManager(
   /**
    * The default textEmissiveStrength for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Controls the intensity of light emitted on the source features. The unit of textEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    */
   var textEmissiveStrength: Double?
     /**
@@ -2199,7 +2255,7 @@ class PointAnnotationManager(
   /**
    * The default textHaloBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    */
   var textHaloBlur: Double?
     /**
@@ -2233,7 +2289,7 @@ class PointAnnotationManager(
   /**
    * The default textHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   var textHaloColorInt: Int?
     /**
@@ -2271,7 +2327,7 @@ class PointAnnotationManager(
   /**
    * The default textHaloColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
    *
-   * The color of the text's halo, which helps it stand out from backgrounds.
+   * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   var textHaloColorString: String?
     /**
@@ -2304,7 +2360,7 @@ class PointAnnotationManager(
   /**
    * The default textHaloWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. The unit of textHaloWidth is in density-independent pixels.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    */
   var textHaloWidth: Double?
     /**
@@ -2338,7 +2394,7 @@ class PointAnnotationManager(
   /**
    * The default textOcclusionOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only.
+   * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
   var textOcclusionOpacity: Double?
     /**
@@ -2372,7 +2428,7 @@ class PointAnnotationManager(
   /**
    * The default textOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The opacity at which the text will be drawn.
+   * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    */
   var textOpacity: Double?
     /**
@@ -2406,7 +2462,7 @@ class PointAnnotationManager(
   /**
    * The TextTranslate property
    *
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of textTranslate is in density-independent pixels.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    */
   var textTranslate: List<Double>?
     /**
@@ -2433,7 +2489,7 @@ class PointAnnotationManager(
   /**
    * The TextTranslateAnchor property
    *
-   * Controls the frame of reference for {@link PropertyFactory#textTranslate}.
+   * Controls the frame of reference for `text-translate`. Default value: "map".
    */
   var textTranslateAnchor: TextTranslateAnchor?
     /**

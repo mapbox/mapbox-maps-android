@@ -57,11 +57,15 @@ public class SnowState private constructor(
   densityTransition: Transition,
   direction: DoubleListValue,
   directionTransition: Transition,
+  flakeSize: DoubleValue,
+  flakeSizeTransition: Transition,
   intensity: DoubleValue,
   intensityTransition: Transition,
   opacity: DoubleValue,
   opacityTransition: Transition,
   vignette: DoubleValue,
+  vignetteColor: ColorValue,
+  vignetteColorTransition: Transition,
   vignetteTransition: Transition,
 ) {
   public constructor() : this(enabled = true)
@@ -81,6 +85,10 @@ public class SnowState private constructor(
     DoubleValue.INITIAL,
     Transition.INITIAL,
     DoubleValue.INITIAL,
+    Transition.INITIAL,
+    DoubleValue.INITIAL,
+    ColorValue.INITIAL,
+    Transition.INITIAL,
     Transition.INITIAL,
   )
 
@@ -156,7 +164,7 @@ public class SnowState private constructor(
   private val densityState: MutableState<DoubleValue> = mutableStateOf(density)
 
   /**
-   * Snow particles density.
+   * Snow particles density. Controls the overall particles number.
    * Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
@@ -190,7 +198,7 @@ public class SnowState private constructor(
   private val directionState: MutableState<DoubleListValue> = mutableStateOf(direction)
 
   /**
-   * Main snow particles direction. Heading & pitch
+   * Main snow particles direction. Azimuth and polar angles
    * Default value: [0,90]. Value range: [0, 360]
    */
   @MapboxExperimental
@@ -221,10 +229,44 @@ public class SnowState private constructor(
       }
     }
   }
+  private val flakeSizeState: MutableState<DoubleValue> = mutableStateOf(flakeSize)
+
+  /**
+   * Snow flake particle size. Correlates with individual particle screen size
+   * Default value: 1. Value range: [0, 5]
+   */
+  @MapboxExperimental
+  public var flakeSize: DoubleValue by flakeSizeState
+
+  @Composable
+  private fun UpdateFlakeSize() {
+    flakeSizeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("flake-size", value)
+      }
+    }
+  }
+  private val flakeSizeTransitionState: MutableState<Transition> = mutableStateOf(flakeSizeTransition)
+
+  /**
+   * Defines the transition of [flakeSize].
+   * Default value: 1. Value range: [0, 5]
+   */
+  @MapboxExperimental
+  public var flakeSizeTransition: Transition by flakeSizeTransitionState
+
+  @Composable
+  private fun UpdateFlakeSizeTransition() {
+    flakeSizeTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("flake-size-transition", value)
+      }
+    }
+  }
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(intensity)
 
   /**
-   * Snow particles movement factor.
+   * Snow particles movement factor. Controls the overall particles movement speed.
    * Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
@@ -259,7 +301,7 @@ public class SnowState private constructor(
 
   /**
    * Snow particles opacity.
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.9. Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacity: DoubleValue by opacityState
@@ -276,7 +318,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [opacity].
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.9. Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacityTransition: Transition by opacityTransitionState
@@ -292,8 +334,8 @@ public class SnowState private constructor(
   private val vignetteState: MutableState<DoubleValue> = mutableStateOf(vignette)
 
   /**
-   * Snow vignette screen-space effect.
-   * Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners
+   * Default value: 0.3. Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignette: DoubleValue by vignetteState
@@ -306,11 +348,45 @@ public class SnowState private constructor(
       }
     }
   }
+  private val vignetteColorState: MutableState<ColorValue> = mutableStateOf(vignetteColor)
+
+  /**
+   * Snow vignette screen-space corners tint color.
+   * Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  public var vignetteColor: ColorValue by vignetteColorState
+
+  @Composable
+  private fun UpdateVignetteColor() {
+    vignetteColorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color", value)
+      }
+    }
+  }
+  private val vignetteColorTransitionState: MutableState<Transition> = mutableStateOf(vignetteColorTransition)
+
+  /**
+   * Defines the transition of [vignetteColor].
+   * Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  public var vignetteColorTransition: Transition by vignetteColorTransitionState
+
+  @Composable
+  private fun UpdateVignetteColorTransition() {
+    vignetteColorTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color-transition", value)
+      }
+    }
+  }
   private val vignetteTransitionState: MutableState<Transition> = mutableStateOf(vignetteTransition)
 
   /**
    * Defines the transition of [vignette].
-   * Default value: 0. Value range: [0, 1]
+   * Default value: 0.3. Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignetteTransition: Transition by vignetteTransitionState
@@ -334,11 +410,15 @@ public class SnowState private constructor(
     UpdateDensityTransition()
     UpdateDirection()
     UpdateDirectionTransition()
+    UpdateFlakeSize()
+    UpdateFlakeSizeTransition()
     UpdateIntensity()
     UpdateIntensityTransition()
     UpdateOpacity()
     UpdateOpacityTransition()
     UpdateVignette()
+    UpdateVignetteColor()
+    UpdateVignetteColorTransition()
     UpdateVignetteTransition()
   }
 
@@ -352,11 +432,15 @@ public class SnowState private constructor(
       ("density-transition" to densityTransition.value).takeIf { densityTransition.notInitial },
       ("direction" to direction.value).takeIf { direction.notInitial },
       ("direction-transition" to directionTransition.value).takeIf { directionTransition.notInitial },
+      ("flake-size" to flakeSize.value).takeIf { flakeSize.notInitial },
+      ("flake-size-transition" to flakeSizeTransition.value).takeIf { flakeSizeTransition.notInitial },
       ("intensity" to intensity.value).takeIf { intensity.notInitial },
       ("intensity-transition" to intensityTransition.value).takeIf { intensityTransition.notInitial },
       ("opacity" to opacity.value).takeIf { opacity.notInitial },
       ("opacity-transition" to opacityTransition.value).takeIf { opacityTransition.notInitial },
       ("vignette" to vignette.value).takeIf { vignette.notInitial },
+      ("vignette-color" to vignetteColor.value).takeIf { vignetteColor.notInitial },
+      ("vignette-color-transition" to vignetteColorTransition.value).takeIf { vignetteColorTransition.notInitial },
       ("vignette-transition" to vignetteTransition.value).takeIf { vignetteTransition.notInitial },
     ).toMap()
 
@@ -378,11 +462,15 @@ public class SnowState private constructor(
     if (densityTransition != other.densityTransition) return false
     if (direction != other.direction) return false
     if (directionTransition != other.directionTransition) return false
+    if (flakeSize != other.flakeSize) return false
+    if (flakeSizeTransition != other.flakeSizeTransition) return false
     if (intensity != other.intensity) return false
     if (intensityTransition != other.intensityTransition) return false
     if (opacity != other.opacity) return false
     if (opacityTransition != other.opacityTransition) return false
     if (vignette != other.vignette) return false
+    if (vignetteColor != other.vignetteColor) return false
+    if (vignetteColorTransition != other.vignetteColorTransition) return false
     if (vignetteTransition != other.vignetteTransition) return false
 
     return true
@@ -401,11 +489,15 @@ public class SnowState private constructor(
     densityTransition,
     direction,
     directionTransition,
+    flakeSize,
+    flakeSizeTransition,
     intensity,
     intensityTransition,
     opacity,
     opacityTransition,
     vignette,
+    vignetteColor,
+    vignetteColorTransition,
     vignetteTransition,
   )
 
@@ -413,7 +505,7 @@ public class SnowState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "SnowState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteTransition=$vignetteTransition)"
+    "SnowState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, flakeSize=$flakeSize, flakeSizeTransition=$flakeSizeTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteColor=$vignetteColor, vignetteColorTransition=$vignetteColorTransition, vignetteTransition=$vignetteTransition)"
 
   /**
    * Snow Holder class to be used within [Saver].
@@ -452,11 +544,15 @@ public class SnowState private constructor(
           densityTransition = holder.savedProperties["density-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           direction = holder.savedProperties["direction"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,
           directionTransition = holder.savedProperties["direction-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          flakeSize = holder.savedProperties["flake-size"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          flakeSizeTransition = holder.savedProperties["flake-size-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           intensity = holder.savedProperties["intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           intensityTransition = holder.savedProperties["intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           opacity = holder.savedProperties["opacity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           opacityTransition = holder.savedProperties["opacity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           vignette = holder.savedProperties["vignette"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          vignetteColor = holder.savedProperties["vignette-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
+          vignetteColorTransition = holder.savedProperties["vignette-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           vignetteTransition = holder.savedProperties["vignette-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )
       }

@@ -280,7 +280,7 @@ fun length(block: Expression.ExpressionBuilder.() -> Unit): Expression = Express
 fun letExpression(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.letExpression(block)
 
 /**
- * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
+ * Returns the progress along a gradient line. Can only be used in the `line-gradient` and `line-z-offset` properties.
  */
 fun lineProgress(): Expression = Expression.lineProgress()
 

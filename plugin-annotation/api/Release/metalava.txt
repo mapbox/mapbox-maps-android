@@ -472,6 +472,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getIconRotate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? getIconRotationAlignment();
     method public Double? getIconSize();
+    method public java.util.List<java.lang.Double>? getIconSizeScaleRange();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
     method public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public java.util.List<java.lang.Double>? getIconTranslate();
@@ -514,6 +515,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getTextRotate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? getTextRotationAlignment();
     method public Double? getTextSize();
+    method public java.util.List<java.lang.Double>? getTextSizeScaleRange();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? getTextTransform();
     method public java.util.List<java.lang.Double>? getTextTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? getTextTranslateAnchor();
@@ -544,6 +546,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconRotate(Double?);
     method public void setIconRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment?);
     method public void setIconSize(Double?);
+    method public void setIconSizeScaleRange(java.util.List<java.lang.Double>?);
     method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
@@ -586,6 +589,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextRotate(Double?);
     method public void setTextRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment?);
     method public void setTextSize(Double?);
+    method public void setTextSizeScaleRange(java.util.List<java.lang.Double>?);
     method public void setTextTransform(com.mapbox.maps.extension.style.layers.properties.generated.TextTransform?);
     method public void setTextTranslate(java.util.List<java.lang.Double>?);
     method public void setTextTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor?);
@@ -617,6 +621,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? iconRotate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? iconRotationAlignment;
     property public final Double? iconSize;
+    property public final java.util.List<java.lang.Double>? iconSizeScaleRange;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final java.util.List<java.lang.Double>? iconTranslate;
@@ -659,6 +664,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? textRotate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? textRotationAlignment;
     property public final Double? textSize;
+    property public final java.util.List<java.lang.Double>? textSizeScaleRange;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? textTransform;
     property public final java.util.List<java.lang.Double>? textTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? textTranslateAnchor;
@@ -922,6 +928,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Boolean? getFillAntialias();
     method @ColorInt public Integer? getFillColorInt();
     method public String? getFillColorString();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? getFillElevationReference();
     method public Double? getFillEmissiveStrength();
     method public Double? getFillOpacity();
     method @ColorInt public Integer? getFillOutlineColorInt();
@@ -937,6 +944,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillAntialias(Boolean?);
     method public void setFillColorInt(@ColorInt Integer?);
     method public void setFillColorString(String?);
+    method public void setFillElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference?);
     method public void setFillEmissiveStrength(Double?);
     method public void setFillOpacity(Double?);
     method public void setFillOutlineColorInt(@ColorInt Integer?);
@@ -951,6 +959,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Boolean? fillAntialias;
     property @ColorInt public final Integer? fillColorInt;
     property public final String? fillColorString;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? fillElevationReference;
     property public final Double? fillEmissiveStrength;
     property public final Double? fillOpacity;
     property @ColorInt public final Integer? fillOutlineColorInt;
@@ -1095,8 +1104,10 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
+    method public Double? getLineCrossSlope();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
@@ -1115,6 +1126,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.Double>? getLineTrimFadeRange();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public Double? getLineWidth();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? getLineWidthUnit();
     method public Double? getLineZOffset();
     method public String? getSlot();
     method protected void setDataDrivenPropertyIsUsed(String property);
@@ -1126,8 +1138,10 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
     method public void setLineColorInt(@ColorInt Integer?);
     method public void setLineColorString(String?);
+    method public void setLineCrossSlope(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
+    method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
@@ -1146,6 +1160,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineTrimFadeRange(java.util.List<java.lang.Double>?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     method public void setLineWidth(Double?);
+    method public void setLineWidthUnit(com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit?);
     method public void setLineZOffset(Double?);
     method public void setSlot(String?);
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
@@ -1156,8 +1171,10 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property @ColorInt public final Integer? lineColorInt;
     property public final String? lineColorString;
+    property public final Double? lineCrossSlope;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
@@ -1176,6 +1193,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.Double>? lineTrimFadeRange;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property public final Double? lineWidth;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? lineWidthUnit;
     property public final Double? lineZOffset;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;

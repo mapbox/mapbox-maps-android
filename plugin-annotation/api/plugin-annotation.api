@@ -397,6 +397,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getIconRotate ()Ljava/lang/Double;
 	public final fun getIconRotationAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconRotationAlignment;
 	public final fun getIconSize ()Ljava/lang/Double;
+	public final fun getIconSizeScaleRange ()Ljava/util/List;
 	public final fun getIconTextFit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;
 	public final fun getIconTextFitPadding ()Ljava/util/List;
 	public final fun getIconTranslate ()Ljava/util/List;
@@ -439,6 +440,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getTextRotate ()Ljava/lang/Double;
 	public final fun getTextRotationAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextRotationAlignment;
 	public final fun getTextSize ()Ljava/lang/Double;
+	public final fun getTextSizeScaleRange ()Ljava/util/List;
 	public final fun getTextTransform ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTransform;
 	public final fun getTextTranslate ()Ljava/util/List;
 	public final fun getTextTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTranslateAnchor;
@@ -470,6 +472,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setIconRotate (Ljava/lang/Double;)V
 	public final fun setIconRotationAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconRotationAlignment;)V
 	public final fun setIconSize (Ljava/lang/Double;)V
+	public final fun setIconSizeScaleRange (Ljava/util/List;)V
 	public final fun setIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)V
 	public final fun setIconTextFitPadding (Ljava/util/List;)V
 	public final fun setIconTranslate (Ljava/util/List;)V
@@ -512,6 +515,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setTextRotate (Ljava/lang/Double;)V
 	public final fun setTextRotationAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextRotationAlignment;)V
 	public final fun setTextSize (Ljava/lang/Double;)V
+	public final fun setTextSizeScaleRange (Ljava/util/List;)V
 	public final fun setTextTransform (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTransform;)V
 	public final fun setTextTranslate (Ljava/util/List;)V
 	public final fun setTextTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTranslateAnchor;)V
@@ -734,6 +738,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
 	public final fun getFillColorInt ()Ljava/lang/Integer;
 	public final fun getFillColorString ()Ljava/lang/String;
+	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColorInt ()Ljava/lang/Integer;
@@ -748,6 +753,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillColorInt (Ljava/lang/Integer;)V
 	public final fun setFillColorString (Ljava/lang/String;)V
+	public final fun setFillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)V
 	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColorInt (Ljava/lang/Integer;)V
@@ -874,8 +880,10 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
 	public final fun getLineColorInt ()Ljava/lang/Integer;
 	public final fun getLineColorString ()Ljava/lang/String;
+	public final fun getLineCrossSlope ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
+	public final fun getLineElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;
 	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
@@ -894,6 +902,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineTrimFadeRange ()Ljava/util/List;
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun getLineWidth ()Ljava/lang/Double;
+	public final fun getLineWidthUnit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;
 	public final fun getLineZOffset ()Ljava/lang/Double;
 	public final fun getSlot ()Ljava/lang/String;
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
@@ -904,8 +913,10 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineColorInt (Ljava/lang/Integer;)V
 	public final fun setLineColorString (Ljava/lang/String;)V
+	public final fun setLineCrossSlope (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
 	public final fun setLineDepthOcclusionFactor (Ljava/lang/Double;)V
+	public final fun setLineElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;)V
 	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
@@ -924,6 +935,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineTrimFadeRange (Ljava/util/List;)V
 	public final fun setLineTrimOffset (Ljava/util/List;)V
 	public final fun setLineWidth (Ljava/lang/Double;)V
+	public final fun setLineWidthUnit (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;)V
 	public final fun setLineZOffset (Ljava/lang/Double;)V
 	public final fun setSlot (Ljava/lang/String;)V
 }

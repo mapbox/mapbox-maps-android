@@ -248,6 +248,78 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   // Property getters and setters
 
   /**
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  val fillElevationReference: FillElevationReference?
+    /**
+     * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * Use static method [FillLayer.defaultFillElevationReference] to get the default property.
+     *
+     * @return FillElevationReference
+     */
+    get() {
+      getPropertyValue<String?>("fill-elevation-reference")?.let {
+        return FillElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * Use static method [FillLayer.defaultFillElevationReference] to set the default property.
+   *
+   * @param fillElevationReference value of fillElevationReference
+   */
+  @MapboxExperimental
+  override fun fillElevationReference(fillElevationReference: FillElevationReference): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-elevation-reference", fillElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * This is an Expression representation of "fill-elevation-reference".
+   *
+   */
+  @MapboxExperimental
+  val fillElevationReferenceAsExpression: Expression?
+    /**
+     * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * Get the FillElevationReference property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillElevationReferenceAsExpression] to get the default property.
+     *
+     * @return FillElevationReference
+     */
+    get() {
+      getPropertyValue<Expression>("fill-elevation-reference")?.let {
+        return it
+      }
+      fillElevationReference?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * Use static method [FillLayer.defaultFillElevationReferenceAsExpression] to set the default property.
+   *
+   * @param fillElevationReference value of fillElevationReference as Expression
+   */
+  @MapboxExperimental
+  override fun fillElevationReference(fillElevationReference: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-elevation-reference", fillElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   val fillSortKey: Double?
@@ -508,11 +580,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    */
   val fillEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
      *
      * Use static method [FillLayer.defaultFillEmissiveStrength] to get the default property.
      *
@@ -523,7 +595,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * Use static method [FillLayer.defaultFillEmissiveStrength] to set the default property.
    *
@@ -535,14 +607,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "fill-emissive-strength".
    *
    */
   val fillEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
      *
      * Get the FillEmissiveStrength property as an Expression
      *
@@ -561,7 +633,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * Use static method [FillLayer.defaultFillEmissiveStrengthAsExpression] to set the default property.
    *
@@ -901,11 +973,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    */
   val fillTranslate: List<Double>?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
      *
      * Use static method [FillLayer.defaultFillTranslate] to get the default property.
      *
@@ -916,7 +988,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * Use static method [FillLayer.defaultFillTranslate] to set the default property.
    *
@@ -928,14 +1000,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * This is an Expression representation of "fill-translate".
    *
    */
   val fillTranslateAsExpression: Expression?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
      *
      * Get the FillTranslate property as an Expression
      *
@@ -954,7 +1026,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * Use static method [FillLayer.defaultFillTranslateAsExpression] to set the default property.
    *
@@ -1233,6 +1305,48 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "maxzoom").silentUnwrap()
 
     /**
+     * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     */
+    @MapboxExperimental
+    val defaultFillElevationReference: FillElevationReference?
+      /**
+       * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+       *
+       * Get the default value of FillElevationReference property
+       *
+       * @return FillElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference").silentUnwrap<String>()?.let {
+          return FillElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * This is an Expression representation of "fill-elevation-reference".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillElevationReferenceAsExpression: Expression?
+      /**
+       * Get default value of the FillElevationReference property as an Expression
+       *
+       * @return FillElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillElevationReference?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      */
     val defaultFillSortKey: Double?
@@ -1374,11 +1488,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
      */
     val defaultFillEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
        *
        * Get the default value of FillEmissiveStrength property
        *
@@ -1389,7 +1503,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "fill-emissive-strength".
      *
@@ -1574,11 +1688,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
      */
     val defaultFillTranslate: List<Double>?
       /**
-       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
        *
        * Get the default value of FillTranslate property
        *
@@ -1589,7 +1703,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
      *
      * This is an Expression representation of "fill-translate".
      *
@@ -1790,6 +1904,22 @@ interface FillLayerDsl {
   // Property getters and setters
 
   /**
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * @param fillElevationReference value of fillElevationReference
+   */
+  @MapboxExperimental
+  fun fillElevationReference(fillElevationReference: FillElevationReference = FillElevationReference.NONE): FillLayer
+
+  /**
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * @param fillElevationReference value of fillElevationReference as Expression
+   */
+  @MapboxExperimental
+  fun fillElevationReference(fillElevationReference: Expression): FillLayer
+
+  /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
    * @param fillSortKey value of fillSortKey
@@ -1855,21 +1985,21 @@ interface FillLayerDsl {
   fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength
    */
   fun fillEmissiveStrength(fillEmissiveStrength: Double = 0.0): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
    */
   fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * Set the FillEmissiveStrength property transition options
    *
@@ -1878,7 +2008,7 @@ interface FillLayerDsl {
   fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * DSL for [fillEmissiveStrengthTransition].
    */
@@ -1966,21 +2096,21 @@ interface FillLayerDsl {
   fun fillPattern(fillPattern: Expression): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * @param fillTranslate value of fillTranslate
    */
   fun fillTranslate(fillTranslate: List<Double> = listOf(0.0, 0.0)): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * @param fillTranslate value of fillTranslate as Expression
    */
   fun fillTranslate(fillTranslate: Expression): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * Set the FillTranslate property transition options
    *
@@ -1989,7 +2119,7 @@ interface FillLayerDsl {
   fun fillTranslateTransition(options: StyleTransition): FillLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    *
    * DSL for [fillTranslateTransition].
    */

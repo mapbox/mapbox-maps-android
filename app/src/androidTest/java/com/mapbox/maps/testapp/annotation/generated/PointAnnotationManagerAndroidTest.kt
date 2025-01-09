@@ -184,6 +184,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testIconSizeScaleRange() {
+    rule.runOnUiThread {
+      val expectedValue = listOf(0.0, 1.0)
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconSizeScaleRange = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconSizeScaleRange)
+      pointAnnotationManager.iconSizeScaleRange = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range").silentUnwrap(), pointAnnotationManager.iconSizeScaleRange)
+    }
+  }
+
+  @Test
   fun testIconTextFit() {
     rule.runOnUiThread {
       val expectedValue = IconTextFit.NONE
@@ -521,6 +533,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, pointAnnotationManager.textSize)
       pointAnnotationManager.textSize = null
       assertEquals(null, pointAnnotationManager.textSize)
+    }
+  }
+
+  @Test
+  fun testTextSizeScaleRange() {
+    rule.runOnUiThread {
+      val expectedValue = listOf(0.0, 1.0)
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.textSizeScaleRange = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.textSizeScaleRange)
+      pointAnnotationManager.textSizeScaleRange = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range").silentUnwrap(), pointAnnotationManager.textSizeScaleRange)
     }
   }
 

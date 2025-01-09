@@ -39,6 +39,19 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillElevationReference() {
+    rule.runOnUiThread {
+      val expectedValue = FillElevationReference.NONE
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillElevationReference = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillElevationReference)
+      polygonAnnotationManager.fillElevationReference = null
+      val expectedDefaultValue = FillElevationReference.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, polygonAnnotationManager.fillElevationReference)
+    }
+  }
+
+  @Test
   fun testFillSortKey() {
     rule.runOnUiThread {
       val expectedValue = 1.0

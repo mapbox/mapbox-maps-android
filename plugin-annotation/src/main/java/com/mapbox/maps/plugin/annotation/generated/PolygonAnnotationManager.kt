@@ -125,6 +125,34 @@ class PolygonAnnotationManager(
 
   // Property accessors
   /**
+   * The FillElevationReference property
+   *
+   * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  var fillElevationReference: FillElevationReference?
+    /**
+     * Get the FillElevationReference property
+     *
+     * @return property wrapper value around FillElevationReference
+     */
+    get(): FillElevationReference? {
+      return layer.fillElevationReference
+    }
+    /**
+     * Set the FillElevationReference property
+     * @param value property wrapper value around FillElevationReference
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference").value
+      }
+      setLayerProperty(wrappedValue, "fill-elevation-reference")
+    }
+
+  /**
    * The default fillSortKey for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -161,7 +189,7 @@ class PolygonAnnotationManager(
   /**
    * The FillAntialias property
    *
-   * Whether or not the fill should be antialiased.
+   * Whether or not the fill should be antialiased. Default value: true.
    */
   var fillAntialias: Boolean?
     /**
@@ -188,7 +216,7 @@ class PolygonAnnotationManager(
   /**
    * The default fillColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    */
   var fillColorInt: Int?
     /**
@@ -226,7 +254,7 @@ class PolygonAnnotationManager(
   /**
    * The default fillColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
    *
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    */
   var fillColorString: String?
     /**
@@ -259,7 +287,7 @@ class PolygonAnnotationManager(
   /**
    * The FillEmissiveStrength property
    *
-   * Controls the intensity of light emitted on the source features. The unit of fillEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    */
   var fillEmissiveStrength: Double?
     /**
@@ -286,7 +314,7 @@ class PolygonAnnotationManager(
   /**
    * The default fillOpacity for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
    */
   var fillOpacity: Double?
     /**
@@ -320,7 +348,7 @@ class PolygonAnnotationManager(
   /**
    * The default fillOutlineColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
    *
-   * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    */
   var fillOutlineColorInt: Int?
     /**
@@ -358,7 +386,7 @@ class PolygonAnnotationManager(
   /**
    * The default fillOutlineColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
    *
-   * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    */
   var fillOutlineColorString: String?
     /**
@@ -425,7 +453,7 @@ class PolygonAnnotationManager(
   /**
    * The FillTranslate property
    *
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of fillTranslate is in density-independent pixels.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    */
   var fillTranslate: List<Double>?
     /**
@@ -452,7 +480,7 @@ class PolygonAnnotationManager(
   /**
    * The FillTranslateAnchor property
    *
-   * Controls the frame of reference for {@link PropertyFactory#fillTranslate}.
+   * Controls the frame of reference for `fill-translate`. Default value: "map".
    */
   var fillTranslateAnchor: FillTranslateAnchor?
     /**
@@ -479,7 +507,7 @@ class PolygonAnnotationManager(
   /**
    * The default fillZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain.
+   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   var fillZOffset: Double?

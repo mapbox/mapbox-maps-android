@@ -104,7 +104,7 @@ public class CircleLayerState private constructor(
    */
   public var circleBlur: DoubleValue by mutableStateOf(initialCircleBlur)
   /**
-   *  Defines the transition of [circleBlur]. Default value: 0.
+   *  Defines the transition of [circleBlur].
    */
   public var circleBlurTransition: Transition by mutableStateOf(initialCircleBlurTransition)
   /**
@@ -112,15 +112,15 @@ public class CircleLayerState private constructor(
    */
   public var circleColor: ColorValue by mutableStateOf(initialCircleColor)
   /**
-   *  Defines the transition of [circleColor]. Default value: "#000000".
+   *  Defines the transition of [circleColor].
    */
   public var circleColorTransition: Transition by mutableStateOf(initialCircleColorTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of circleEmissiveStrength is in intensity.
    */
   public var circleEmissiveStrength: DoubleValue by mutableStateOf(initialCircleEmissiveStrength)
   /**
-   *  Defines the transition of [circleEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [circleEmissiveStrength].
    */
   public var circleEmissiveStrengthTransition: Transition by mutableStateOf(initialCircleEmissiveStrengthTransition)
   /**
@@ -128,7 +128,7 @@ public class CircleLayerState private constructor(
    */
   public var circleOpacity: DoubleValue by mutableStateOf(initialCircleOpacity)
   /**
-   *  Defines the transition of [circleOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [circleOpacity].
    */
   public var circleOpacityTransition: Transition by mutableStateOf(initialCircleOpacityTransition)
   /**
@@ -140,11 +140,11 @@ public class CircleLayerState private constructor(
    */
   public var circlePitchScale: CirclePitchScaleValue by mutableStateOf(initialCirclePitchScale)
   /**
-   *  Circle radius. Default value: 5. Minimum value: 0.
+   *  Circle radius. Default value: 5. Minimum value: 0. The unit of circleRadius is in pixels.
    */
   public var circleRadius: DoubleValue by mutableStateOf(initialCircleRadius)
   /**
-   *  Defines the transition of [circleRadius]. Default value: 5. Minimum value: 0.
+   *  Defines the transition of [circleRadius].
    */
   public var circleRadiusTransition: Transition by mutableStateOf(initialCircleRadiusTransition)
   /**
@@ -152,7 +152,7 @@ public class CircleLayerState private constructor(
    */
   public var circleStrokeColor: ColorValue by mutableStateOf(initialCircleStrokeColor)
   /**
-   *  Defines the transition of [circleStrokeColor]. Default value: "#000000".
+   *  Defines the transition of [circleStrokeColor].
    */
   public var circleStrokeColorTransition: Transition by mutableStateOf(initialCircleStrokeColorTransition)
   /**
@@ -160,23 +160,23 @@ public class CircleLayerState private constructor(
    */
   public var circleStrokeOpacity: DoubleValue by mutableStateOf(initialCircleStrokeOpacity)
   /**
-   *  Defines the transition of [circleStrokeOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [circleStrokeOpacity].
    */
   public var circleStrokeOpacityTransition: Transition by mutableStateOf(initialCircleStrokeOpacityTransition)
   /**
-   *  The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0.
+   *  The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
    */
   public var circleStrokeWidth: DoubleValue by mutableStateOf(initialCircleStrokeWidth)
   /**
-   *  Defines the transition of [circleStrokeWidth]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [circleStrokeWidth].
    */
   public var circleStrokeWidthTransition: Transition by mutableStateOf(initialCircleStrokeWidthTransition)
   /**
-   *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of circleTranslate is in pixels.
    */
   public var circleTranslate: DoubleListValue by mutableStateOf(initialCircleTranslate)
   /**
-   *  Defines the transition of [circleTranslate]. Default value: [0,0].
+   *  Defines the transition of [circleTranslate].
    */
   public var circleTranslateTransition: Transition by mutableStateOf(initialCircleTranslateTransition)
   /**

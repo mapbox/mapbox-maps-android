@@ -255,6 +255,114 @@ class RainTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun distortionStrengthTest() {
+    val rain = rain {
+      distortionStrength(1.0)
+    }
+    setupRain(rain)
+    assertEquals(1.0, rain.distortionStrength!!, 1E-5)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun distortionStrengthAsExpressionTest() {
+    val expression = literal(1.0)
+
+    val rain = rain {
+      distortionStrength(expression)
+    }
+    setupRain(rain)
+    assertEquals(1.0, rain.distortionStrengthAsExpression?.contents as Double, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun distortionStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val rain = rain {
+      distortionStrengthTransition(transition)
+    }
+    setupRain(rain)
+    assertEquals(transition, rain.distortionStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun distortionStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val rain = rain {
+      distortionStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupRain(rain)
+    assertEquals(transition, rain.distortionStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun dropletSizeTest() {
+    val rain = rain {
+      dropletSize(listOf(0.0, 1.0))
+    }
+    setupRain(rain)
+    assertEquals(listOf(0.0, 1.0), rain.dropletSize)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun dropletSizeAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+
+    val rain = rain {
+      dropletSize(expression)
+    }
+    setupRain(rain)
+    assertEquals(expression.toString(), rain.dropletSizeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun dropletSizeTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val rain = rain {
+      dropletSizeTransition(transition)
+    }
+    setupRain(rain)
+    assertEquals(transition, rain.dropletSizeTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun dropletSizeTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val rain = rain {
+      dropletSizeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupRain(rain)
+    assertEquals(transition, rain.dropletSizeTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun intensityTest() {
     val rain = rain {
       intensity(1.0)
@@ -413,6 +521,75 @@ class RainTest : BaseStyleTest() {
     }
     setupRain(rain)
     assertEquals(transition, rain.vignetteTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorAsColorIntTest() {
+    val rain = rain {
+      vignetteColor(Color.CYAN)
+    }
+    setupRain(rain)
+    assertEquals(Color.CYAN, rain.vignetteColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorTest() {
+    val rain = rain {
+      vignetteColor("rgba(0, 0, 0, 1)")
+    }
+    setupRain(rain)
+    assertEquals("rgba(0, 0, 0, 1)", rain.vignetteColor)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun vignetteColorAsExpressionTest() {
+    val expression = rgba {
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
+      literal(1.0)
+    }
+
+    val rain = rain {
+      vignetteColor(expression)
+    }
+    setupRain(rain)
+    assertEquals(expression.toString(), rain.vignetteColorAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val rain = rain {
+      vignetteColorTransition(transition)
+    }
+    setupRain(rain)
+    assertEquals(transition, rain.vignetteColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val rain = rain {
+      vignetteColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupRain(rain)
+    assertEquals(transition, rain.vignetteColorTransition)
   }
 }
 

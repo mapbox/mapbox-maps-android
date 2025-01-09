@@ -833,11 +833,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    */
   val fillExtrusionBase: Double?
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionBase] to get the default property.
      *
@@ -848,7 +848,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionBase] to set the default property.
    *
@@ -860,14 +860,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * This is an Expression representation of "fill-extrusion-base".
    *
    */
   val fillExtrusionBaseAsExpression: Expression?
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
      *
      * Get the FillExtrusionBase property as an Expression
      *
@@ -886,7 +886,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAsExpression] to set the default property.
    *
@@ -1199,11 +1199,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    */
   val fillExtrusionEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrength] to get the default property.
      *
@@ -1214,7 +1214,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrength] to set the default property.
    *
@@ -1226,14 +1226,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "fill-extrusion-emissive-strength".
    *
    */
   val fillExtrusionEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
      *
      * Get the FillExtrusionEmissiveStrength property as an Expression
      *
@@ -1252,7 +1252,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1543,12 +1543,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadius: Double?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to get the default property.
      *
@@ -1559,7 +1559,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to set the default property.
    *
@@ -1572,7 +1572,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
    *
@@ -1580,7 +1580,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      *
      * Get the FillExtrusionFloodLightGroundRadius property as an Expression
      *
@@ -1599,7 +1599,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadiusAsExpression] to set the default property.
    *
@@ -1755,12 +1755,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadius: Double?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to get the default property.
      *
@@ -1771,7 +1771,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to set the default property.
    *
@@ -1784,7 +1784,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
    *
@@ -1792,7 +1792,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      *
      * Get the FillExtrusionFloodLightWallRadius property as an Expression
      *
@@ -1811,7 +1811,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadiusAsExpression] to set the default property.
    *
@@ -1861,11 +1861,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    */
   val fillExtrusionHeight: Double?
     /**
-     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionHeight] to get the default property.
      *
@@ -1876,7 +1876,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionHeight] to set the default property.
    *
@@ -1888,14 +1888,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * This is an Expression representation of "fill-extrusion-height".
    *
    */
   val fillExtrusionHeightAsExpression: Expression?
     /**
-     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
      *
      * Get the FillExtrusionHeight property as an Expression
      *
@@ -1914,7 +1914,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAsExpression] to set the default property.
    *
@@ -2032,12 +2032,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    */
   @MapboxExperimental
   val fillExtrusionLineWidth: Double?
     /**
-     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidth] to get the default property.
      *
@@ -2048,7 +2048,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidth] to set the default property.
    *
@@ -2061,7 +2061,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * This is an Expression representation of "fill-extrusion-line-width".
    *
@@ -2069,7 +2069,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionLineWidthAsExpression: Expression?
     /**
-     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
      *
      * Get the FillExtrusionLineWidth property as an Expression
      *
@@ -2088,7 +2088,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression] to set the default property.
    *
@@ -2371,11 +2371,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    */
   val fillExtrusionTranslate: List<Double>?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslate] to get the default property.
      *
@@ -2386,7 +2386,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslate] to set the default property.
    *
@@ -2398,14 +2398,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * This is an Expression representation of "fill-extrusion-translate".
    *
    */
   val fillExtrusionTranslateAsExpression: Expression?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
      *
      * Get the FillExtrusionTranslate property as an Expression
      *
@@ -2424,7 +2424,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAsExpression] to set the default property.
    *
@@ -3056,11 +3056,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-wall-radius-transition").silentUnwrap()
 
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
      */
     val defaultFillExtrusionBase: Double?
       /**
-       * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+       * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
        *
        * Get the default value of FillExtrusionBase property
        *
@@ -3071,7 +3071,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
      *
      * This is an Expression representation of "fill-extrusion-base".
      *
@@ -3250,11 +3250,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
      */
     val defaultFillExtrusionEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
        *
        * Get the default value of FillExtrusionEmissiveStrength property
        *
@@ -3265,7 +3265,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "fill-extrusion-emissive-strength".
      *
@@ -3420,12 +3420,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundRadius: Double?
       /**
-       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
        *
        * Get the default value of FillExtrusionFloodLightGroundRadius property
        *
@@ -3436,7 +3436,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
      *
@@ -3522,12 +3522,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-intensity-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightWallRadius: Double?
       /**
-       * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+       * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
        *
        * Get the default value of FillExtrusionFloodLightWallRadius property
        *
@@ -3538,7 +3538,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
      *
@@ -3573,11 +3573,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-wall-radius-transition").silentUnwrap()
 
     /**
-     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
      */
     val defaultFillExtrusionHeight: Double?
       /**
-       * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+       * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
        *
        * Get the default value of FillExtrusionHeight property
        *
@@ -3588,7 +3588,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+     * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
      *
      * This is an Expression representation of "fill-extrusion-height".
      *
@@ -3663,12 +3663,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionLineWidth: Double?
       /**
-       * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+       * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
        *
        * Get the default value of FillExtrusionLineWidth property
        *
@@ -3679,7 +3679,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+     * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
      *
      * This is an Expression representation of "fill-extrusion-line-width".
      *
@@ -3838,11 +3838,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
      */
     val defaultFillExtrusionTranslate: List<Double>?
       /**
-       * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
        *
        * Get the default value of FillExtrusionTranslate property
        *
@@ -3853,7 +3853,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
      *
      * This is an Expression representation of "fill-extrusion-translate".
      *
@@ -4269,21 +4269,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * @param fillExtrusionBase value of fillExtrusionBase
    */
   fun fillExtrusionBase(fillExtrusionBase: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * @param fillExtrusionBase value of fillExtrusionBase as Expression
    */
   fun fillExtrusionBase(fillExtrusionBase: Expression): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * Set the FillExtrusionBase property transition options
    *
@@ -4292,7 +4292,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionBaseTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    *
    * DSL for [fillExtrusionBaseTransition].
    */
@@ -4366,21 +4366,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Expression): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength
    */
   fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength as Expression
    */
   fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Expression): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * Set the FillExtrusionEmissiveStrength property transition options
    *
@@ -4389,7 +4389,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionEmissiveStrengthTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    *
    * DSL for [fillExtrusionEmissiveStrengthTransition].
    */
@@ -4472,7 +4472,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius
    */
@@ -4480,7 +4480,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius as Expression
    */
@@ -4488,7 +4488,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * Set the FillExtrusionFloodLightGroundRadius property transition options
    *
@@ -4498,7 +4498,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * DSL for [fillExtrusionFloodLightGroundRadiusTransition].
    */
@@ -4540,7 +4540,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius
    */
@@ -4548,7 +4548,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius as Expression
    */
@@ -4556,7 +4556,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * Set the FillExtrusionFloodLightWallRadius property transition options
    *
@@ -4566,7 +4566,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * DSL for [fillExtrusionFloodLightWallRadiusTransition].
    */
@@ -4574,21 +4574,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight
    */
   fun fillExtrusionHeight(fillExtrusionHeight: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight as Expression
    */
   fun fillExtrusionHeight(fillExtrusionHeight: Expression): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * Set the FillExtrusionHeight property transition options
    *
@@ -4597,7 +4597,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionHeightTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    *
    * DSL for [fillExtrusionHeightTransition].
    */
@@ -4620,7 +4620,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionHeightAlignment(fillExtrusionHeightAlignment: Expression): FillExtrusionLayer
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * @param fillExtrusionLineWidth value of fillExtrusionLineWidth
    */
@@ -4628,7 +4628,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionLineWidth(fillExtrusionLineWidth: Double = 0.0): FillExtrusionLayer
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * @param fillExtrusionLineWidth value of fillExtrusionLineWidth as Expression
    */
@@ -4636,7 +4636,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionLineWidth(fillExtrusionLineWidth: Expression): FillExtrusionLayer
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * Set the FillExtrusionLineWidth property transition options
    *
@@ -4646,7 +4646,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionLineWidthTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    *
    * DSL for [fillExtrusionLineWidthTransition].
    */
@@ -4714,21 +4714,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Expression): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate
    */
   fun fillExtrusionTranslate(fillExtrusionTranslate: List<Double> = listOf(0.0, 0.0)): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate as Expression
    */
   fun fillExtrusionTranslate(fillExtrusionTranslate: Expression): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * Set the FillExtrusionTranslate property transition options
    *
@@ -4737,7 +4737,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionTranslateTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    *
    * DSL for [fillExtrusionTranslateTransition].
    */

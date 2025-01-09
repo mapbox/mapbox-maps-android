@@ -89,7 +89,7 @@ public class RasterParticleLayerState private constructor(
   @MapboxExperimental
   public var rasterParticleFadeOpacityFactor: DoubleValue by mutableStateOf(initialRasterParticleFadeOpacityFactor)
   /**
-   *  Defines the transition of [rasterParticleFadeOpacityFactor]. Default value: 0.98. Value range: [0, 1]
+   *  Defines the transition of [rasterParticleFadeOpacityFactor].
    */
   @MapboxExperimental
   public var rasterParticleFadeOpacityFactorTransition: Transition by mutableStateOf(initialRasterParticleFadeOpacityFactorTransition)
@@ -109,7 +109,7 @@ public class RasterParticleLayerState private constructor(
   @MapboxExperimental
   public var rasterParticleSpeedFactor: DoubleValue by mutableStateOf(initialRasterParticleSpeedFactor)
   /**
-   *  Defines the transition of [rasterParticleSpeedFactor]. Default value: 0.2. Value range: [0, 1]
+   *  Defines the transition of [rasterParticleSpeedFactor].
    */
   @MapboxExperimental
   public var rasterParticleSpeedFactorTransition: Transition by mutableStateOf(initialRasterParticleSpeedFactorTransition)

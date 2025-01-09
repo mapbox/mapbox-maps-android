@@ -29,10 +29,13 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @OptIn(MapboxExperimental::class)
 public class LineLayerState private constructor(
   initialLineCap: LineCapValue,
+  initialLineCrossSlope: DoubleValue,
+  initialLineElevationReference: LineElevationReferenceValue,
   initialLineJoin: LineJoinValue,
   initialLineMiterLimit: DoubleValue,
   initialLineRoundLimit: DoubleValue,
   initialLineSortKey: DoubleValue,
+  initialLineWidthUnit: LineWidthUnitValue,
   initialLineZOffset: DoubleValue,
   initialLineBlur: DoubleValue,
   initialLineBlurTransition: Transition,
@@ -78,10 +81,13 @@ public class LineLayerState private constructor(
    */
   public constructor() : this(
     initialLineCap = LineCapValue.INITIAL,
+    initialLineCrossSlope = DoubleValue.INITIAL,
+    initialLineElevationReference = LineElevationReferenceValue.INITIAL,
     initialLineJoin = LineJoinValue.INITIAL,
     initialLineMiterLimit = DoubleValue.INITIAL,
     initialLineRoundLimit = DoubleValue.INITIAL,
     initialLineSortKey = DoubleValue.INITIAL,
+    initialLineWidthUnit = LineWidthUnitValue.INITIAL,
     initialLineZOffset = DoubleValue.INITIAL,
     initialLineBlur = DoubleValue.INITIAL,
     initialLineBlurTransition = Transition.INITIAL,
@@ -134,6 +140,16 @@ public class LineLayerState private constructor(
    */
   public var lineCap: LineCapValue by mutableStateOf(initialLineCap)
   /**
+   *  Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   */
+  @MapboxExperimental
+  public var lineCrossSlope: DoubleValue by mutableStateOf(initialLineCrossSlope)
+  /**
+   *  Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  public var lineElevationReference: LineElevationReferenceValue by mutableStateOf(initialLineElevationReference)
+  /**
    *  The display of lines when joining. Default value: "miter".
    */
   public var lineJoin: LineJoinValue by mutableStateOf(initialLineJoin)
@@ -150,16 +166,21 @@ public class LineLayerState private constructor(
    */
   public var lineSortKey: DoubleValue by mutableStateOf(initialLineSortKey)
   /**
-   *  Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   *  Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   */
+  @MapboxExperimental
+  public var lineWidthUnit: LineWidthUnitValue by mutableStateOf(initialLineWidthUnit)
+  /**
+   *  Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    */
   @MapboxExperimental
   public var lineZOffset: DoubleValue by mutableStateOf(initialLineZOffset)
   /**
-   *  Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   *  Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   public var lineBlur: DoubleValue by mutableStateOf(initialLineBlur)
   /**
-   *  Defines the transition of [lineBlur]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [lineBlur].
    */
   public var lineBlurTransition: Transition by mutableStateOf(initialLineBlurTransition)
   /**
@@ -167,7 +188,7 @@ public class LineLayerState private constructor(
    */
   public var lineBorderColor: ColorValue by mutableStateOf(initialLineBorderColor)
   /**
-   *  Defines the transition of [lineBorderColor]. Default value: "rgba(0, 0, 0, 0)".
+   *  Defines the transition of [lineBorderColor].
    */
   public var lineBorderColorTransition: Transition by mutableStateOf(initialLineBorderColorTransition)
   /**
@@ -175,7 +196,7 @@ public class LineLayerState private constructor(
    */
   public var lineBorderWidth: DoubleValue by mutableStateOf(initialLineBorderWidth)
   /**
-   *  Defines the transition of [lineBorderWidth]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [lineBorderWidth].
    */
   public var lineBorderWidthTransition: Transition by mutableStateOf(initialLineBorderWidthTransition)
   /**
@@ -183,11 +204,11 @@ public class LineLayerState private constructor(
    */
   public var lineColor: ColorValue by mutableStateOf(initialLineColor)
   /**
-   *  Defines the transition of [lineColor]. Default value: "#000000".
+   *  Defines the transition of [lineColor].
    */
   public var lineColorTransition: Transition by mutableStateOf(initialLineColorTransition)
   /**
-   *  Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   *  Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    */
   public var lineDasharray: DoubleListValue by mutableStateOf(initialLineDasharray)
   /**
@@ -195,23 +216,23 @@ public class LineLayerState private constructor(
    */
   public var lineDepthOcclusionFactor: DoubleValue by mutableStateOf(initialLineDepthOcclusionFactor)
   /**
-   *  Defines the transition of [lineDepthOcclusionFactor]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [lineDepthOcclusionFactor].
    */
   public var lineDepthOcclusionFactorTransition: Transition by mutableStateOf(initialLineDepthOcclusionFactorTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    */
   public var lineEmissiveStrength: DoubleValue by mutableStateOf(initialLineEmissiveStrength)
   /**
-   *  Defines the transition of [lineEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [lineEmissiveStrength].
    */
   public var lineEmissiveStrengthTransition: Transition by mutableStateOf(initialLineEmissiveStrengthTransition)
   /**
-   *  Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   *  Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    */
   public var lineGapWidth: DoubleValue by mutableStateOf(initialLineGapWidth)
   /**
-   *  Defines the transition of [lineGapWidth]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [lineGapWidth].
    */
   public var lineGapWidthTransition: Transition by mutableStateOf(initialLineGapWidthTransition)
   /**
@@ -223,15 +244,15 @@ public class LineLayerState private constructor(
    */
   public var lineOcclusionOpacity: DoubleValue by mutableStateOf(initialLineOcclusionOpacity)
   /**
-   *  Defines the transition of [lineOcclusionOpacity]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [lineOcclusionOpacity].
    */
   public var lineOcclusionOpacityTransition: Transition by mutableStateOf(initialLineOcclusionOpacityTransition)
   /**
-   *  The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   *  The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    */
   public var lineOffset: DoubleValue by mutableStateOf(initialLineOffset)
   /**
-   *  Defines the transition of [lineOffset]. Default value: 0.
+   *  Defines the transition of [lineOffset].
    */
   public var lineOffsetTransition: Transition by mutableStateOf(initialLineOffsetTransition)
   /**
@@ -239,7 +260,7 @@ public class LineLayerState private constructor(
    */
   public var lineOpacity: DoubleValue by mutableStateOf(initialLineOpacity)
   /**
-   *  Defines the transition of [lineOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [lineOpacity].
    */
   public var lineOpacityTransition: Transition by mutableStateOf(initialLineOpacityTransition)
   /**
@@ -247,11 +268,11 @@ public class LineLayerState private constructor(
    */
   public var linePattern: ImageValue by mutableStateOf(initialLinePattern)
   /**
-   *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    */
   public var lineTranslate: DoubleListValue by mutableStateOf(initialLineTranslate)
   /**
-   *  Defines the transition of [lineTranslate]. Default value: [0,0].
+   *  Defines the transition of [lineTranslate].
    */
   public var lineTranslateTransition: Transition by mutableStateOf(initialLineTranslateTransition)
   /**
@@ -264,7 +285,7 @@ public class LineLayerState private constructor(
   @MapboxExperimental
   public var lineTrimColor: ColorValue by mutableStateOf(initialLineTrimColor)
   /**
-   *  Defines the transition of [lineTrimColor]. Default value: "transparent".
+   *  Defines the transition of [lineTrimColor].
    */
   @MapboxExperimental
   public var lineTrimColorTransition: Transition by mutableStateOf(initialLineTrimColorTransition)
@@ -278,11 +299,11 @@ public class LineLayerState private constructor(
    */
   public var lineTrimOffset: DoubleListValue by mutableStateOf(initialLineTrimOffset)
   /**
-   *  Stroke thickness. Default value: 1. Minimum value: 0.
+   *  Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   public var lineWidth: DoubleValue by mutableStateOf(initialLineWidth)
   /**
-   *  Defines the transition of [lineWidth]. Default value: 1. Minimum value: 0.
+   *  Defines the transition of [lineWidth].
    */
   public var lineWidthTransition: Transition by mutableStateOf(initialLineWidthTransition)
   /**
@@ -313,6 +334,20 @@ public class LineLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineCrossSlope(layerNode: LayerNode) {
+    if (lineCrossSlope.notInitial) {
+      layerNode.setProperty("line-cross-slope", lineCrossSlope.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineElevationReference(layerNode: LayerNode) {
+    if (lineElevationReference.notInitial) {
+      layerNode.setProperty("line-elevation-reference", lineElevationReference.value)
+    }
+  }
+  @Composable
   private fun UpdateLineJoin(layerNode: LayerNode) {
     if (lineJoin.notInitial) {
       layerNode.setProperty("line-join", lineJoin.value)
@@ -334,6 +369,13 @@ public class LineLayerState private constructor(
   private fun UpdateLineSortKey(layerNode: LayerNode) {
     if (lineSortKey.notInitial) {
       layerNode.setProperty("line-sort-key", lineSortKey.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineWidthUnit(layerNode: LayerNode) {
+    if (lineWidthUnit.notInitial) {
+      layerNode.setProperty("line-width-unit", lineWidthUnit.value)
     }
   }
   @Composable
@@ -575,10 +617,13 @@ public class LineLayerState private constructor(
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
     UpdateLineCap(layerNode)
+    UpdateLineCrossSlope(layerNode)
+    UpdateLineElevationReference(layerNode)
     UpdateLineJoin(layerNode)
     UpdateLineMiterLimit(layerNode)
     UpdateLineRoundLimit(layerNode)
     UpdateLineSortKey(layerNode)
+    UpdateLineWidthUnit(layerNode)
     UpdateLineZOffset(layerNode)
     UpdateLineBlur(layerNode)
     UpdateLineBlurTransition(layerNode)

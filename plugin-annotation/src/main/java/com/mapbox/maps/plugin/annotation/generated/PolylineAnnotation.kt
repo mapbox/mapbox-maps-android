@@ -55,7 +55,7 @@ class PolylineAnnotation(
   /**
    * The lineJoin property
    *
-   * The display of lines when joining.
+   * The display of lines when joining. Default value: "miter".
    */
   var lineJoin: LineJoin?
     /**
@@ -121,7 +121,7 @@ class PolylineAnnotation(
   /**
    * The lineZOffset property
    *
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    */
   var lineZOffset: Double?
     /**
@@ -154,7 +154,7 @@ class PolylineAnnotation(
   /**
    * The lineBlur property
    *
-   * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   var lineBlur: Double?
     /**
@@ -186,7 +186,7 @@ class PolylineAnnotation(
 
   /**
    * The lineBorderColor property in Int
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    */
   var lineBorderColorInt: Int?
     /**
@@ -222,7 +222,7 @@ class PolylineAnnotation(
   /**
    * The lineBorderColor property in String
    *
-   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
    */
   var lineBorderColorString: String?
     /**
@@ -253,7 +253,7 @@ class PolylineAnnotation(
   /**
    * The lineBorderWidth property
    *
-   * The width of the line border. A value of zero means no border.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    */
   var lineBorderWidth: Double?
     /**
@@ -285,7 +285,7 @@ class PolylineAnnotation(
 
   /**
    * The lineColor property in Int
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    */
   var lineColorInt: Int?
     /**
@@ -321,7 +321,7 @@ class PolylineAnnotation(
   /**
    * The lineColor property in String
    *
-   * The color with which the line will be drawn.
+   * The color with which the line will be drawn. Default value: "#000000".
    */
   var lineColorString: String?
     /**
@@ -352,7 +352,7 @@ class PolylineAnnotation(
   /**
    * The lineGapWidth property
    *
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. The unit of lineGapWidth is in density-independent pixels.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    */
   var lineGapWidth: Double?
     /**
@@ -385,7 +385,7 @@ class PolylineAnnotation(
   /**
    * The lineOffset property
    *
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. The unit of lineOffset is in density-independent pixels.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    */
   var lineOffset: Double?
     /**
@@ -418,7 +418,7 @@ class PolylineAnnotation(
   /**
    * The lineOpacity property
    *
-   * The opacity at which the line will be drawn.
+   * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
    */
   var lineOpacity: Double?
     /**
@@ -484,7 +484,7 @@ class PolylineAnnotation(
   /**
    * The lineWidth property
    *
-   * Stroke thickness. The unit of lineWidth is in density-independent pixels.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   var lineWidth: Double?
     /**

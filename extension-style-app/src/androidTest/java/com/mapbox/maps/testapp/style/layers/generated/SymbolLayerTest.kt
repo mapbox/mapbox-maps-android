@@ -382,6 +382,30 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun iconSizeScaleRangeTest() {
+    val testValue = listOf(0.0, 1.0)
+    val layer = symbolLayer("id", "source") {
+      iconSizeScaleRange(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.iconSizeScaleRange?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconSizeScaleRangeAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+    val layer = symbolLayer("id", "source") {
+      iconSizeScaleRange(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.iconSizeScaleRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.iconSizeScaleRange!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun iconTextFitTest() {
     val layer = symbolLayer("id", "source") {
       iconTextFit(IconTextFit.NONE)
@@ -1180,6 +1204,30 @@ class SymbolLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.textSizeAsExpression.toString())
     assertEquals(null, layer.textSize)
+  }
+
+  @Test
+  @UiThreadTest
+  fun textSizeScaleRangeTest() {
+    val testValue = listOf(0.0, 1.0)
+    val layer = symbolLayer("id", "source") {
+      textSizeScaleRange(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.textSizeScaleRange?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun textSizeScaleRangeAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+    val layer = symbolLayer("id", "source") {
+      textSizeScaleRange(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.textSizeScaleRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.textSizeScaleRange!!)
   }
 
   @Test
@@ -2511,6 +2559,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconRotationAlignmentAsExpression should not be null", SymbolLayer.defaultIconRotationAlignmentAsExpression)
     assertNotNull("defaultIconSize should not be null", SymbolLayer.defaultIconSize)
     assertNotNull("defaultIconSizeAsExpression should not be null", SymbolLayer.defaultIconSizeAsExpression)
+    assertNotNull("defaultIconSizeScaleRange should not be null", SymbolLayer.defaultIconSizeScaleRange)
+    assertNotNull("defaultIconSizeScaleRangeAsExpression should not be null", SymbolLayer.defaultIconSizeScaleRangeAsExpression)
     assertNotNull("defaultIconTextFit should not be null", SymbolLayer.defaultIconTextFit)
     assertNotNull("defaultIconTextFitAsExpression should not be null", SymbolLayer.defaultIconTextFitAsExpression)
     assertNotNull("defaultIconTextFitPadding should not be null", SymbolLayer.defaultIconTextFitPadding)
@@ -2568,6 +2618,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultTextRotationAlignmentAsExpression should not be null", SymbolLayer.defaultTextRotationAlignmentAsExpression)
     assertNotNull("defaultTextSize should not be null", SymbolLayer.defaultTextSize)
     assertNotNull("defaultTextSizeAsExpression should not be null", SymbolLayer.defaultTextSizeAsExpression)
+    assertNotNull("defaultTextSizeScaleRange should not be null", SymbolLayer.defaultTextSizeScaleRange)
+    assertNotNull("defaultTextSizeScaleRangeAsExpression should not be null", SymbolLayer.defaultTextSizeScaleRangeAsExpression)
     assertNotNull("defaultTextTransform should not be null", SymbolLayer.defaultTextTransform)
     assertNotNull("defaultTextTransformAsExpression should not be null", SymbolLayer.defaultTextTransformAsExpression)
     assertNotNull("defaultTextVariableAnchor should not be null", SymbolLayer.defaultTextVariableAnchor)
@@ -2663,6 +2715,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconRotateTestValue = 1.0
     val iconRotationAlignmentTestValue = IconRotationAlignment.MAP
     val iconSizeTestValue = 1.0
+    val iconSizeScaleRangeTestValue = listOf(0.0, 1.0)
     val iconTextFitTestValue = IconTextFit.NONE
     val iconTextFitPaddingTestValue = listOf(0.0, 1.0, 2.0, 3.0)
     val symbolAvoidEdgesTestValue = true
@@ -2708,6 +2761,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val textRotateTestValue = 1.0
     val textRotationAlignmentTestValue = TextRotationAlignment.MAP
     val textSizeTestValue = 1.0
+    val textSizeScaleRangeTestValue = listOf(0.0, 1.0)
     val textTransformTestValue = TextTransform.NONE
     val textVariableAnchorTestValue = listOf("center", "left")
     val textWritingModeTestValue = listOf("horizontal", "vertical")
@@ -2752,6 +2806,7 @@ class SymbolLayerTest : BaseStyleTest() {
       iconRotate(iconRotateTestValue)
       iconRotationAlignment(iconRotationAlignmentTestValue)
       iconSize(iconSizeTestValue)
+      iconSizeScaleRange(iconSizeScaleRangeTestValue)
       iconTextFit(iconTextFitTestValue)
       iconTextFitPadding(iconTextFitPaddingTestValue)
       symbolAvoidEdges(symbolAvoidEdgesTestValue)
@@ -2780,6 +2835,7 @@ class SymbolLayerTest : BaseStyleTest() {
       textRotate(textRotateTestValue)
       textRotationAlignment(textRotationAlignmentTestValue)
       textSize(textSizeTestValue)
+      textSizeScaleRange(textSizeScaleRangeTestValue)
       textTransform(textTransformTestValue)
       textVariableAnchor(textVariableAnchorTestValue)
       textWritingMode(textWritingModeTestValue)
@@ -2829,6 +2885,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(iconRotateTestValue, cachedLayer.iconRotate)
     assertEquals(iconRotationAlignmentTestValue, cachedLayer.iconRotationAlignment)
     assertEquals(iconSizeTestValue, cachedLayer.iconSize)
+    assertEquals(iconSizeScaleRangeTestValue, cachedLayer.iconSizeScaleRange)
     assertEquals(iconTextFitTestValue, cachedLayer.iconTextFit)
     assertEquals(iconTextFitPaddingTestValue, cachedLayer.iconTextFitPadding)
     assertEquals(symbolAvoidEdgesTestValue, cachedLayer.symbolAvoidEdges)
@@ -2857,6 +2914,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(textRotateTestValue, cachedLayer.textRotate)
     assertEquals(textRotationAlignmentTestValue, cachedLayer.textRotationAlignment)
     assertEquals(textSizeTestValue, cachedLayer.textSize)
+    assertEquals(textSizeScaleRangeTestValue, cachedLayer.textSizeScaleRange)
     assertEquals(textTransformTestValue, cachedLayer.textTransform)
     assertEquals(textVariableAnchorTestValue, cachedLayer.textVariableAnchor)
     assertEquals(textWritingModeTestValue, cachedLayer.textWritingMode)

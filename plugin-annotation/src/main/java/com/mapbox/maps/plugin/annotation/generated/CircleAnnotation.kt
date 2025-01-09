@@ -86,7 +86,7 @@ class CircleAnnotation(
   /**
    * The circleBlur property
    *
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    */
   var circleBlur: Double?
     /**
@@ -118,7 +118,7 @@ class CircleAnnotation(
 
   /**
    * The circleColor property in Int
-   * The fill color of the circle.
+   * The fill color of the circle. Default value: "#000000".
    */
   var circleColorInt: Int?
     /**
@@ -154,7 +154,7 @@ class CircleAnnotation(
   /**
    * The circleColor property in String
    *
-   * The fill color of the circle.
+   * The fill color of the circle. Default value: "#000000".
    */
   var circleColorString: String?
     /**
@@ -185,7 +185,7 @@ class CircleAnnotation(
   /**
    * The circleOpacity property
    *
-   * The opacity at which the circle will be drawn.
+   * The opacity at which the circle will be drawn. Default value: 1. Value range: [0, 1]
    */
   var circleOpacity: Double?
     /**
@@ -218,7 +218,7 @@ class CircleAnnotation(
   /**
    * The circleRadius property
    *
-   * Circle radius. The unit of circleRadius is in density-independent pixels.
+   * Circle radius. Default value: 5. Minimum value: 0. The unit of circleRadius is in pixels.
    */
   var circleRadius: Double?
     /**
@@ -250,7 +250,7 @@ class CircleAnnotation(
 
   /**
    * The circleStrokeColor property in Int
-   * The stroke color of the circle.
+   * The stroke color of the circle. Default value: "#000000".
    */
   var circleStrokeColorInt: Int?
     /**
@@ -286,7 +286,7 @@ class CircleAnnotation(
   /**
    * The circleStrokeColor property in String
    *
-   * The stroke color of the circle.
+   * The stroke color of the circle. Default value: "#000000".
    */
   var circleStrokeColorString: String?
     /**
@@ -317,7 +317,7 @@ class CircleAnnotation(
   /**
    * The circleStrokeOpacity property
    *
-   * The opacity of the circle's stroke.
+   * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
    */
   var circleStrokeOpacity: Double?
     /**
@@ -350,7 +350,7 @@ class CircleAnnotation(
   /**
    * The circleStrokeWidth property
    *
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
+   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
    */
   var circleStrokeWidth: Double?
     /**

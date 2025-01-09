@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.BooleanValue
@@ -69,6 +70,7 @@ public class DirectionalLightState internal constructor(
   initialIntensityTransition: Transition = Transition.INITIAL,
   initialShadowIntensity: DoubleValue = DoubleValue.INITIAL,
   initialShadowIntensityTransition: Transition = Transition.INITIAL,
+  initialShadowQuality: DoubleValue = DoubleValue.INITIAL,
 ) {
   public constructor(id: String = generateRandomLightId("directional")) : this(
     id = id,
@@ -81,6 +83,7 @@ public class DirectionalLightState internal constructor(
     initialIntensityTransition = Transition.INITIAL,
     initialShadowIntensity = DoubleValue.INITIAL,
     initialShadowIntensityTransition = Transition.INITIAL,
+    initialShadowQuality = DoubleValue.INITIAL,
   )
 
   private val castShadowsState: MutableState<BooleanValue> = mutableStateOf(initialCastShadows)
@@ -92,6 +95,7 @@ public class DirectionalLightState internal constructor(
   private val intensityTransitionState: MutableState<Transition> = mutableStateOf(initialIntensityTransition)
   private val shadowIntensityState: MutableState<DoubleValue> = mutableStateOf(initialShadowIntensity)
   private val shadowIntensityTransitionState: MutableState<Transition> = mutableStateOf(initialShadowIntensityTransition)
+  private val shadowQualityState: MutableState<DoubleValue> = mutableStateOf(initialShadowQuality)
 
   /**
    * Enable/Disable shadow casting for this light
@@ -150,6 +154,14 @@ public class DirectionalLightState internal constructor(
    * Default value: 1. Value range: [0, 1]
    */
   public var shadowIntensityTransition: Transition by shadowIntensityTransitionState
+
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest
+   * quality and is the default value.
+   * Default value: 1. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var shadowQuality: DoubleValue by shadowQualityState
 
   @Composable
   private fun UpdateCastShadows(mapboxMap: MapboxStyleManager) {
@@ -214,6 +226,13 @@ public class DirectionalLightState internal constructor(
     }
   }
 
+  @Composable
+  private fun UpdateShadowQuality(mapboxMap: MapboxStyleManager) {
+    if (shadowQuality.notInitial) {
+      mapboxMap.updateLightProperty("shadow-quality", shadowQuality.value)
+    }
+  }
+
   private fun MapboxStyleManager.updateLightProperty(name: String, value: Value) {
     logD(TAG, "update light property: $id, $name, $value")
     setStyleLightProperty(id, name, value)
@@ -255,6 +274,9 @@ public class DirectionalLightState internal constructor(
           if (shadowIntensityTransition.notInitial) {
             this["shadow-intensity-transition"] = shadowIntensityTransition.value
           }
+          if (shadowQuality.notInitial) {
+            this["shadow-quality"] = shadowQuality.value
+          }
         }
       )
     )
@@ -271,6 +293,7 @@ public class DirectionalLightState internal constructor(
     UpdateIntensityTransition(mapboxMap)
     UpdateShadowIntensity(mapboxMap)
     UpdateShadowIntensityTransition(mapboxMap)
+    UpdateShadowQuality(mapboxMap)
   }
 
   /**
@@ -287,6 +310,7 @@ public class DirectionalLightState internal constructor(
       intensityTransition,
       shadowIntensity,
       shadowIntensityTransition,
+      shadowQuality,
     )
   }
 
@@ -307,6 +331,7 @@ public class DirectionalLightState internal constructor(
     if (intensityTransition != other.intensityTransition) return false
     if (shadowIntensity != other.shadowIntensity) return false
     if (shadowIntensityTransition != other.shadowIntensityTransition) return false
+    if (shadowQuality != other.shadowQuality) return false
     return true
   }
 
@@ -314,7 +339,7 @@ public class DirectionalLightState internal constructor(
    * Overwrite the toString for [DirectionalLightState].
    */
   override fun toString(): String {
-    return "DirectionalLightState(castShadows=$castShadows, color=$color, colorTransition=$colorTransition, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, shadowIntensity=$shadowIntensity, shadowIntensityTransition=$shadowIntensityTransition)"
+    return "DirectionalLightState(castShadows=$castShadows, color=$color, colorTransition=$colorTransition, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, shadowIntensity=$shadowIntensity, shadowIntensityTransition=$shadowIntensityTransition, shadowQuality=$shadowQuality)"
   }
 
   /**
@@ -359,6 +384,7 @@ public class DirectionalLightState internal constructor(
           initialIntensityTransition = properties["intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           initialShadowIntensity = properties["shadow-intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           initialShadowIntensityTransition = properties["shadow-intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          initialShadowQuality = properties["shadow-quality"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
         )
       }
     )

@@ -365,6 +365,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getIconRotate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? getIconRotationAlignment();
     method public Double? getIconSize();
+    method public java.util.List<java.lang.Double>? getIconSizeScaleRange();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
     method public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public java.util.List<java.lang.Double>? getIconTranslate();
@@ -404,6 +405,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getTextRotate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? getTextRotationAlignment();
     method public Double? getTextSize();
+    method public java.util.List<java.lang.Double>? getTextSizeScaleRange();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? getTextTransform();
     method public java.util.List<java.lang.Double>? getTextTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? getTextTranslateAnchor();
@@ -430,6 +432,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconRotate(Double?);
     method public void setIconRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment?);
     method public void setIconSize(Double?);
+    method public void setIconSizeScaleRange(java.util.List<java.lang.Double>?);
     method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
     method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
@@ -469,6 +472,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setTextRotate(Double?);
     method public void setTextRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment?);
     method public void setTextSize(Double?);
+    method public void setTextSizeScaleRange(java.util.List<java.lang.Double>?);
     method public void setTextTransform(com.mapbox.maps.extension.style.layers.properties.generated.TextTransform?);
     method public void setTextTranslate(java.util.List<java.lang.Double>?);
     method public void setTextTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor?);
@@ -495,6 +499,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? iconRotate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? iconRotationAlignment;
     property public final Double? iconSize;
+    property public final java.util.List<java.lang.Double>? iconSizeScaleRange;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
     property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final java.util.List<java.lang.Double>? iconTranslate;
@@ -534,6 +539,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? textRotate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? textRotationAlignment;
     property public final Double? textSize;
+    property public final java.util.List<java.lang.Double>? textSizeScaleRange;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? textTransform;
     property public final java.util.List<java.lang.Double>? textTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? textTranslateAnchor;
@@ -715,6 +721,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     ctor public PolygonAnnotationGroupState();
     method public Boolean? getFillAntialias();
     method public androidx.compose.ui.graphics.Color? getFillColor();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? getFillElevationReference();
     method public Double? getFillEmissiveStrength();
     method public Double? getFillOpacity();
     method public androidx.compose.ui.graphics.Color? getFillOutlineColor();
@@ -726,6 +733,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState getInteractionsState();
     method public void setFillAntialias(Boolean?);
     method public void setFillColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference?);
     method public void setFillEmissiveStrength(Double?);
     method public void setFillOpacity(Double?);
     method public void setFillOutlineColor(androidx.compose.ui.graphics.Color?);
@@ -737,6 +745,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState);
     property public final Boolean? fillAntialias;
     property public final androidx.compose.ui.graphics.Color? fillColor;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? fillElevationReference;
     property public final Double? fillEmissiveStrength;
     property public final Double? fillOpacity;
     property public final androidx.compose.ui.graphics.Color? fillOutlineColor;
@@ -837,8 +846,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineBorderWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method public androidx.compose.ui.graphics.Color? getLineColor();
+    method public Double? getLineCrossSlope();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
@@ -855,6 +866,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public java.util.List<java.lang.Double>? getLineTrimFadeRange();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method public Double? getLineWidth();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? getLineWidthUnit();
     method public Double? getLineZOffset();
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState);
     method public void setLineBlur(Double?);
@@ -862,8 +874,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineBorderWidth(Double?);
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
     method public void setLineColor(androidx.compose.ui.graphics.Color?);
+    method public void setLineCrossSlope(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
+    method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
@@ -880,6 +894,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineTrimFadeRange(java.util.List<java.lang.Double>?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
     method public void setLineWidth(Double?);
+    method public void setLineWidthUnit(com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit?);
     method public void setLineZOffset(Double?);
     property public final com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState interactionsState;
     property public final Double? lineBlur;
@@ -887,8 +902,10 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineBorderWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property public final androidx.compose.ui.graphics.Color? lineColor;
+    property public final Double? lineCrossSlope;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
@@ -905,6 +922,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final java.util.List<java.lang.Double>? lineTrimFadeRange;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property public final Double? lineWidth;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? lineWidthUnit;
     property public final Double? lineZOffset;
   }
 
@@ -1663,7 +1681,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable public final class BackgroundPitchAlignmentValue {
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class BackgroundPitchAlignmentValue {
     ctor public BackgroundPitchAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public BackgroundPitchAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -1891,6 +1909,23 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public static final class ClipLayerTypesListValue.Companion {
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FillElevationReferenceValue {
+    ctor public FillElevationReferenceValue(com.mapbox.bindgen.Value value);
+    ctor public FillElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue HD_ROAD_BASE;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue HD_ROAD_MARKUP;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue NONE;
+  }
+
+  public static final class FillElevationReferenceValue.Companion {
   }
 
   @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class FillExtrusionBaseAlignmentValue {
@@ -2122,6 +2157,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.BooleanValue getFillAntialias();
     method public com.mapbox.maps.extension.compose.style.ColorValue getFillColor();
     method public com.mapbox.maps.extension.compose.style.Transition getFillColorTransition();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue getFillElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getFillEmissiveStrengthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillOpacity();
@@ -2144,6 +2180,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillAntialias(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setFillColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setFillColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFillElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue);
     method public void setFillEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -2166,6 +2203,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue fillAntialias;
     property public final com.mapbox.maps.extension.compose.style.ColorValue fillColor;
     property public final com.mapbox.maps.extension.compose.style.Transition fillColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue fillElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition fillEmissiveStrengthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillOpacity;
@@ -2453,6 +2491,24 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class LineCapValue.Companion {
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LineElevationReferenceValue {
+    ctor public LineElevationReferenceValue(com.mapbox.bindgen.Value value);
+    ctor public LineElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue GROUND;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue HD_ROAD_MARKUP;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue NONE;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue SEA;
+  }
+
+  public static final class LineElevationReferenceValue.Companion {
+  }
+
   @androidx.compose.runtime.Immutable public final class LineJoinValue {
     ctor public LineJoinValue(com.mapbox.bindgen.Value value);
     ctor public LineJoinValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -2495,9 +2551,11 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue getLineCap();
     method public com.mapbox.maps.extension.compose.style.ColorValue getLineColor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineColorTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCrossSlope();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineDasharray();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineDepthOcclusionFactorTransition();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue getLineElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getLineEmissiveStrengthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineGapWidth();
@@ -2523,6 +2581,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineTrimOffset();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineWidth();
     method public com.mapbox.maps.extension.compose.style.Transition getLineWidthTransition();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue getLineWidthUnit();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineZOffset();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
@@ -2539,9 +2598,11 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineCap(com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue);
     method public void setLineColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setLineColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setLineCrossSlope(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineDasharray(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setLineDepthOcclusionFactor(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineDepthOcclusionFactorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setLineElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue);
     method public void setLineEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineGapWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -2567,6 +2628,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineTrimOffset(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setLineWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setLineWidthUnit(com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue);
     method public void setLineZOffset(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
@@ -2583,9 +2645,11 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue lineCap;
     property public final com.mapbox.maps.extension.compose.style.ColorValue lineColor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCrossSlope;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineDasharray;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineDepthOcclusionFactorTransition;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue lineElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition lineEmissiveStrengthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineGapWidth;
@@ -2611,6 +2675,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineTrimOffset;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineWidth;
     property public final com.mapbox.maps.extension.compose.style.Transition lineWidthTransition;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue lineWidthUnit;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineZOffset;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
@@ -2632,6 +2697,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public static final class LineTranslateAnchorValue.Companion {
+  }
+
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LineWidthUnitValue {
+    ctor public LineWidthUnitValue(com.mapbox.bindgen.Value value);
+    ctor public LineWidthUnitValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue METERS;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue PIXELS;
+  }
+
+  public static final class LineWidthUnitValue.Companion {
   }
 
   public final class LocationIndicatorLayerKt {
@@ -3161,6 +3242,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue GROUND;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue HD_ROAD_MARKUP;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue SEA;
   }
 
@@ -3211,6 +3293,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIconRotate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue getIconRotationAlignment();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIconSize();
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getIconSizeScaleRange();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue getIconTextFit();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getIconTextFitPadding();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getIconTranslate();
@@ -3262,6 +3345,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getTextRotate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue getTextRotationAlignment();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getTextSize();
+    method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getTextSizeScaleRange();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue getTextTransform();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getTextTranslate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue getTextTranslateAnchor();
@@ -3300,6 +3384,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setIconRotate(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIconRotationAlignment(com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue);
     method public void setIconSize(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIconSizeScaleRange(com.mapbox.maps.extension.compose.style.DoubleRangeValue);
     method public void setIconTextFit(com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue);
     method public void setIconTextFitPadding(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setIconTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
@@ -3351,6 +3436,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setTextRotate(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setTextRotationAlignment(com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue);
     method public void setTextSize(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setTextSizeScaleRange(com.mapbox.maps.extension.compose.style.DoubleRangeValue);
     method public void setTextTransform(com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue);
     method public void setTextTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setTextTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue);
@@ -3389,6 +3475,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue iconRotate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue iconRotationAlignment;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue iconSize;
+    property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue iconSizeScaleRange;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue iconTextFit;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue iconTextFitPadding;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue iconTranslate;
@@ -3440,6 +3527,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue textRotate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue textRotationAlignment;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue textSize;
+    property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue textSizeScaleRange;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue textTransform;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue textTranslate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue textTranslateAnchor;
@@ -3754,6 +3842,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getShadowIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getShadowIntensityTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getShadowQuality();
     method public void setCastShadows(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3763,6 +3852,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setShadowIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setShadowIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setShadowQuality(com.mapbox.maps.extension.compose.style.DoubleValue);
     property public final com.mapbox.maps.extension.compose.style.BooleanValue castShadows;
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
     property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
@@ -3773,6 +3863,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue shadowIntensity;
     property public final com.mapbox.maps.extension.compose.style.Transition shadowIntensityTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue shadowQuality;
     field public static final com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Companion Companion;
   }
 
@@ -3863,11 +3954,17 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getDensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
     method public com.mapbox.maps.extension.compose.style.Transition getDirectionTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDistortionStrength();
+    method public com.mapbox.maps.extension.compose.style.Transition getDistortionStrengthTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleListValue getDropletSize();
+    method public com.mapbox.maps.extension.compose.style.Transition getDropletSizeTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getOpacityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getVignette();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getVignetteColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getVignetteColorTransition();
     method public com.mapbox.maps.extension.compose.style.Transition getVignetteTransition();
     method public void setCenterThinning(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setCenterThinningTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3877,11 +3974,17 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public void setDensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDistortionStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setDistortionStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setDropletSize(com.mapbox.maps.extension.compose.style.DoubleListValue);
+    method public void setDropletSizeTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setVignette(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setVignetteColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setVignetteColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setVignetteTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.DoubleValue centerThinning;
     property public final com.mapbox.maps.extension.compose.style.Transition centerThinningTransition;
@@ -3891,11 +3994,17 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition densityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
     property public final com.mapbox.maps.extension.compose.style.Transition directionTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue distortionStrength;
+    property public final com.mapbox.maps.extension.compose.style.Transition distortionStrengthTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleListValue dropletSize;
+    property public final com.mapbox.maps.extension.compose.style.Transition dropletSizeTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
     property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue opacity;
     property public final com.mapbox.maps.extension.compose.style.Transition opacityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue vignette;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue vignetteColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition vignetteColorTransition;
     property public final com.mapbox.maps.extension.compose.style.Transition vignetteTransition;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState DISABLED;
@@ -3930,11 +4039,15 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getDensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
     method public com.mapbox.maps.extension.compose.style.Transition getDirectionTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getFlakeSize();
+    method public com.mapbox.maps.extension.compose.style.Transition getFlakeSizeTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getOpacityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getVignette();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getVignetteColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getVignetteColorTransition();
     method public com.mapbox.maps.extension.compose.style.Transition getVignetteTransition();
     method public void setCenterThinning(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setCenterThinningTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3944,11 +4057,15 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public void setDensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFlakeSize(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setFlakeSizeTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setVignette(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setVignetteColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setVignetteColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setVignetteTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.DoubleValue centerThinning;
     property public final com.mapbox.maps.extension.compose.style.Transition centerThinningTransition;
@@ -3958,11 +4075,15 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition densityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
     property public final com.mapbox.maps.extension.compose.style.Transition directionTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue flakeSize;
+    property public final com.mapbox.maps.extension.compose.style.Transition flakeSizeTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
     property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue opacity;
     property public final com.mapbox.maps.extension.compose.style.Transition opacityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue vignette;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue vignetteColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition vignetteColorTransition;
     property public final com.mapbox.maps.extension.compose.style.Transition vignetteTransition;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState DISABLED;

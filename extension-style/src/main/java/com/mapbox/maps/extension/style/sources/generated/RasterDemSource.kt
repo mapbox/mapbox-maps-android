@@ -134,7 +134,7 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
-   * Default value: 512.
+   * Default value: 512. The unit of tileSize is in pixels.
    */
   val tileSize: Long?
     /**
@@ -413,7 +413,7 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
 
     /**
      * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
-     * Default value: 512.
+     * Default value: 512. The unit of tileSize is in pixels.
      */
     fun tileSize(value: Long = 512L): Builder = apply {
       val propertyValue = PropertyValue("tileSize", TypeUtils.wrapToValue(value))

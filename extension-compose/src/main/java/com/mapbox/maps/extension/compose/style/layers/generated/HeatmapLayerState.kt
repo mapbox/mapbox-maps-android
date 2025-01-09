@@ -75,7 +75,7 @@ public class HeatmapLayerState private constructor(
    */
   public var heatmapIntensity: DoubleValue by mutableStateOf(initialHeatmapIntensity)
   /**
-   *  Defines the transition of [heatmapIntensity]. Default value: 1. Minimum value: 0.
+   *  Defines the transition of [heatmapIntensity].
    */
   public var heatmapIntensityTransition: Transition by mutableStateOf(initialHeatmapIntensityTransition)
   /**
@@ -83,15 +83,15 @@ public class HeatmapLayerState private constructor(
    */
   public var heatmapOpacity: DoubleValue by mutableStateOf(initialHeatmapOpacity)
   /**
-   *  Defines the transition of [heatmapOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [heatmapOpacity].
    */
   public var heatmapOpacityTransition: Transition by mutableStateOf(initialHeatmapOpacityTransition)
   /**
-   *  Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius. Default value: 30. Minimum value: 1.
+   *  Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius. Default value: 30. Minimum value: 1. The unit of heatmapRadius is in pixels.
    */
   public var heatmapRadius: DoubleValue by mutableStateOf(initialHeatmapRadius)
   /**
-   *  Defines the transition of [heatmapRadius]. Default value: 30. Minimum value: 1.
+   *  Defines the transition of [heatmapRadius].
    */
   public var heatmapRadiusTransition: Transition by mutableStateOf(initialHeatmapRadiusTransition)
   /**

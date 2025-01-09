@@ -626,7 +626,8 @@ class Expression : Value {
     }
 
     /**
-     * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
+     * Returns the progress along a gradient line. Can only be used in the `line-gradient` and `line-z-offset`
+     * properties.
      */
     fun lineProgress(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.lineProgress())
@@ -2908,7 +2909,8 @@ class Expression : Value {
       ExpressionBuilder("let").apply(block).build()
 
     /**
-     * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
+     * Returns the progress along a gradient line. Can only be used in the `line-gradient` and `line-z-offset`
+     * properties.
      */
     @JvmStatic
     fun lineProgress(): Expression = ExpressionBuilder("line-progress").build()

@@ -6,7 +6,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Localize geofencing attribution dialog.
 * Introduce `ViewAnnotationOptions.priority`, deprecate `ViewAnnotationOptions.selected`. Use this property to define view annotation sort order.
+* Introduce `SymbolLayer.iconSizeScaleRange`, `SymbolLayer.textSizeScaleRange`, `FillLayer.fillElevationReference`, `LineLayer.lineCrossSlope`, `LineLayer.lineWidthUnit`, `LineLayer.lineCrossSlope`, `LineLayer.lineElevationReference`, `DirectionalLight.shadowQuality`, `Rain.distortionStrength`, `Rain.distortionStrengthTransition`, `Rain.dropletSize`, `Rain.dropletSizeTransition`, `Rain.vignetteColor`, `Rain.vignetteColorTransition`, `Snow.flakeSize`, `Snow.flakeSizeTransition`, `Snow.vignetteColor`, `Snow.vignetteColorTransition`.
+* Change default value of experimental `Rain.opacity` to 0.19, default `Rain.vignette` to 0.3, `Snow.opacity` to 0.19, default `Snow.vignette` to 0.3.
+* [compose] Introduce experimental `SymbolLayerState.iconSizeScaleRange`, `SymbolLayerState.textSizeScaleRange`, `FillLayerState.fillElevationReference`, `LineLayerState.lineCrossSlope`, `LineLayerState.lineWidthUnit`, `LineLayerState.lineCrossSlope`, `LineLayerState.lineElevationReference`, `DirectionalLightState.shadowQuality`, `RainState.distortionStrength`, `RainState.distortionStrengthTransition`, `RainState.dropletSize`, `RainState.dropletSizeTransition`, `RainState.vignetteColor`, `RainState.vignetteColorTransition`, `SnowState.flakeSize`, `SnowState.flakeSizeTransition`, `SnowState.vignetteColor`, `SnowState.vignetteColorTransition`.
 
+## Bug fixes 🐞
+* Mark `BackgroundLayer.backgroundPitchAlignment` as experimental.
 
 # 11.9.0 December 18, 2024
 ## Breaking changes ⚠️

@@ -57,11 +57,17 @@ public class RainState private constructor(
   densityTransition: Transition,
   direction: DoubleListValue,
   directionTransition: Transition,
+  distortionStrength: DoubleValue,
+  distortionStrengthTransition: Transition,
+  dropletSize: DoubleListValue,
+  dropletSizeTransition: Transition,
   intensity: DoubleValue,
   intensityTransition: Transition,
   opacity: DoubleValue,
   opacityTransition: Transition,
   vignette: DoubleValue,
+  vignetteColor: ColorValue,
+  vignetteColorTransition: Transition,
   vignetteTransition: Transition,
 ) {
   public constructor() : this(enabled = true)
@@ -78,9 +84,15 @@ public class RainState private constructor(
     Transition.INITIAL,
     DoubleValue.INITIAL,
     Transition.INITIAL,
+    DoubleListValue.INITIAL,
+    Transition.INITIAL,
     DoubleValue.INITIAL,
     Transition.INITIAL,
     DoubleValue.INITIAL,
+    Transition.INITIAL,
+    DoubleValue.INITIAL,
+    ColorValue.INITIAL,
+    Transition.INITIAL,
     Transition.INITIAL,
   )
 
@@ -122,8 +134,8 @@ public class RainState private constructor(
   private val colorState: MutableState<ColorValue> = mutableStateOf(color)
 
   /**
-   *
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color.
+   * Default value: "#919191".
    */
   @MapboxExperimental
   public var color: ColorValue by colorState
@@ -140,7 +152,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [color].
-   * Default value: "#ffffff".
+   * Default value: "#919191".
    */
   @MapboxExperimental
   public var colorTransition: Transition by colorTransitionState
@@ -156,7 +168,7 @@ public class RainState private constructor(
   private val densityState: MutableState<DoubleValue> = mutableStateOf(density)
 
   /**
-   * Rain particles density.
+   * Rain particles density. Controls the overall screen density of the rain.
    * Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
@@ -190,7 +202,7 @@ public class RainState private constructor(
   private val directionState: MutableState<DoubleListValue> = mutableStateOf(direction)
 
   /**
-   * Main rain particles direction. Heading & pitch
+   * Main rain particles direction. Azimuth and polar angles.
    * Default value: [0,80]. Value range: [0, 360]
    */
   @MapboxExperimental
@@ -221,10 +233,78 @@ public class RainState private constructor(
       }
     }
   }
+  private val distortionStrengthState: MutableState<DoubleValue> = mutableStateOf(distortionStrength)
+
+  /**
+   * Rain particles screen-space distortion strength.
+   * Default value: 0.5. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var distortionStrength: DoubleValue by distortionStrengthState
+
+  @Composable
+  private fun UpdateDistortionStrength() {
+    distortionStrengthState.value.apply {
+      if (notInitial) {
+        applier.setProperty("distortion-strength", value)
+      }
+    }
+  }
+  private val distortionStrengthTransitionState: MutableState<Transition> = mutableStateOf(distortionStrengthTransition)
+
+  /**
+   * Defines the transition of [distortionStrength].
+   * Default value: 0.5. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var distortionStrengthTransition: Transition by distortionStrengthTransitionState
+
+  @Composable
+  private fun UpdateDistortionStrengthTransition() {
+    distortionStrengthTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("distortion-strength-transition", value)
+      }
+    }
+  }
+  private val dropletSizeState: MutableState<DoubleListValue> = mutableStateOf(dropletSize)
+
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction
+   * Default value: [1,10]. Value range: [0, 20]
+   */
+  @MapboxExperimental
+  public var dropletSize: DoubleListValue by dropletSizeState
+
+  @Composable
+  private fun UpdateDropletSize() {
+    dropletSizeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("droplet-size", value)
+      }
+    }
+  }
+  private val dropletSizeTransitionState: MutableState<Transition> = mutableStateOf(dropletSizeTransition)
+
+  /**
+   * Defines the transition of [dropletSize].
+   * Default value: [1,10]. Value range: [0, 20]
+   */
+  @MapboxExperimental
+  public var dropletSizeTransition: Transition by dropletSizeTransitionState
+
+  @Composable
+  private fun UpdateDropletSizeTransition() {
+    dropletSizeTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("droplet-size-transition", value)
+      }
+    }
+  }
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(intensity)
 
   /**
-   * Rain particles movement factor.
+   * Rain particles movement factor. Controls the overall rain particles speed
    * Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
@@ -259,7 +339,7 @@ public class RainState private constructor(
 
   /**
    * Rain particles opacity.
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.19. Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacity: DoubleValue by opacityState
@@ -276,7 +356,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [opacity].
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.19. Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacityTransition: Transition by opacityTransitionState
@@ -292,8 +372,8 @@ public class RainState private constructor(
   private val vignetteState: MutableState<DoubleValue> = mutableStateOf(vignette)
 
   /**
-   * Rain vignette screen-space effect.
-   * Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity.
+   * Default value: 0.3. Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignette: DoubleValue by vignetteState
@@ -306,11 +386,45 @@ public class RainState private constructor(
       }
     }
   }
+  private val vignetteColorState: MutableState<ColorValue> = mutableStateOf(vignetteColor)
+
+  /**
+   * Rain vignette screen-space corners tint color.
+   * Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  public var vignetteColor: ColorValue by vignetteColorState
+
+  @Composable
+  private fun UpdateVignetteColor() {
+    vignetteColorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color", value)
+      }
+    }
+  }
+  private val vignetteColorTransitionState: MutableState<Transition> = mutableStateOf(vignetteColorTransition)
+
+  /**
+   * Defines the transition of [vignetteColor].
+   * Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  public var vignetteColorTransition: Transition by vignetteColorTransitionState
+
+  @Composable
+  private fun UpdateVignetteColorTransition() {
+    vignetteColorTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color-transition", value)
+      }
+    }
+  }
   private val vignetteTransitionState: MutableState<Transition> = mutableStateOf(vignetteTransition)
 
   /**
    * Defines the transition of [vignette].
-   * Default value: 0. Value range: [0, 1]
+   * Default value: 0.3. Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignetteTransition: Transition by vignetteTransitionState
@@ -334,11 +448,17 @@ public class RainState private constructor(
     UpdateDensityTransition()
     UpdateDirection()
     UpdateDirectionTransition()
+    UpdateDistortionStrength()
+    UpdateDistortionStrengthTransition()
+    UpdateDropletSize()
+    UpdateDropletSizeTransition()
     UpdateIntensity()
     UpdateIntensityTransition()
     UpdateOpacity()
     UpdateOpacityTransition()
     UpdateVignette()
+    UpdateVignetteColor()
+    UpdateVignetteColorTransition()
     UpdateVignetteTransition()
   }
 
@@ -352,11 +472,17 @@ public class RainState private constructor(
       ("density-transition" to densityTransition.value).takeIf { densityTransition.notInitial },
       ("direction" to direction.value).takeIf { direction.notInitial },
       ("direction-transition" to directionTransition.value).takeIf { directionTransition.notInitial },
+      ("distortion-strength" to distortionStrength.value).takeIf { distortionStrength.notInitial },
+      ("distortion-strength-transition" to distortionStrengthTransition.value).takeIf { distortionStrengthTransition.notInitial },
+      ("droplet-size" to dropletSize.value).takeIf { dropletSize.notInitial },
+      ("droplet-size-transition" to dropletSizeTransition.value).takeIf { dropletSizeTransition.notInitial },
       ("intensity" to intensity.value).takeIf { intensity.notInitial },
       ("intensity-transition" to intensityTransition.value).takeIf { intensityTransition.notInitial },
       ("opacity" to opacity.value).takeIf { opacity.notInitial },
       ("opacity-transition" to opacityTransition.value).takeIf { opacityTransition.notInitial },
       ("vignette" to vignette.value).takeIf { vignette.notInitial },
+      ("vignette-color" to vignetteColor.value).takeIf { vignetteColor.notInitial },
+      ("vignette-color-transition" to vignetteColorTransition.value).takeIf { vignetteColorTransition.notInitial },
       ("vignette-transition" to vignetteTransition.value).takeIf { vignetteTransition.notInitial },
     ).toMap()
 
@@ -378,11 +504,17 @@ public class RainState private constructor(
     if (densityTransition != other.densityTransition) return false
     if (direction != other.direction) return false
     if (directionTransition != other.directionTransition) return false
+    if (distortionStrength != other.distortionStrength) return false
+    if (distortionStrengthTransition != other.distortionStrengthTransition) return false
+    if (dropletSize != other.dropletSize) return false
+    if (dropletSizeTransition != other.dropletSizeTransition) return false
     if (intensity != other.intensity) return false
     if (intensityTransition != other.intensityTransition) return false
     if (opacity != other.opacity) return false
     if (opacityTransition != other.opacityTransition) return false
     if (vignette != other.vignette) return false
+    if (vignetteColor != other.vignetteColor) return false
+    if (vignetteColorTransition != other.vignetteColorTransition) return false
     if (vignetteTransition != other.vignetteTransition) return false
 
     return true
@@ -401,11 +533,17 @@ public class RainState private constructor(
     densityTransition,
     direction,
     directionTransition,
+    distortionStrength,
+    distortionStrengthTransition,
+    dropletSize,
+    dropletSizeTransition,
     intensity,
     intensityTransition,
     opacity,
     opacityTransition,
     vignette,
+    vignetteColor,
+    vignetteColorTransition,
     vignetteTransition,
   )
 
@@ -413,7 +551,7 @@ public class RainState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "RainState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteTransition=$vignetteTransition)"
+    "RainState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, distortionStrength=$distortionStrength, distortionStrengthTransition=$distortionStrengthTransition, dropletSize=$dropletSize, dropletSizeTransition=$dropletSizeTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteColor=$vignetteColor, vignetteColorTransition=$vignetteColorTransition, vignetteTransition=$vignetteTransition)"
 
   /**
    * Rain Holder class to be used within [Saver].
@@ -452,11 +590,17 @@ public class RainState private constructor(
           densityTransition = holder.savedProperties["density-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           direction = holder.savedProperties["direction"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,
           directionTransition = holder.savedProperties["direction-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          distortionStrength = holder.savedProperties["distortion-strength"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          distortionStrengthTransition = holder.savedProperties["distortion-strength-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          dropletSize = holder.savedProperties["droplet-size"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,
+          dropletSizeTransition = holder.savedProperties["droplet-size-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           intensity = holder.savedProperties["intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           intensityTransition = holder.savedProperties["intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           opacity = holder.savedProperties["opacity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           opacityTransition = holder.savedProperties["opacity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           vignette = holder.savedProperties["vignette"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
+          vignetteColor = holder.savedProperties["vignette-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
+          vignetteColorTransition = holder.savedProperties["vignette-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           vignetteTransition = holder.savedProperties["vignette-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )
       }

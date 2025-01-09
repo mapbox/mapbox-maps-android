@@ -152,7 +152,7 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionGroundAttenuation: DoubleValue by mutableStateOf(initialFillExtrusionAmbientOcclusionGroundAttenuation)
   /**
-   *  Defines the transition of [fillExtrusionAmbientOcclusionGroundAttenuation]. Default value: 0.69. Value range: [0, 1]
+   *  Defines the transition of [fillExtrusionAmbientOcclusionGroundAttenuation].
    */
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionGroundAttenuationTransition: Transition by mutableStateOf(initialFillExtrusionAmbientOcclusionGroundAttenuationTransition)
@@ -162,7 +162,7 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionGroundRadius: DoubleValue by mutableStateOf(initialFillExtrusionAmbientOcclusionGroundRadius)
   /**
-   *  Defines the transition of [fillExtrusionAmbientOcclusionGroundRadius]. Default value: 3. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionAmbientOcclusionGroundRadius].
    */
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionGroundRadiusTransition: Transition by mutableStateOf(initialFillExtrusionAmbientOcclusionGroundRadiusTransition)
@@ -171,7 +171,7 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionAmbientOcclusionIntensity: DoubleValue by mutableStateOf(initialFillExtrusionAmbientOcclusionIntensity)
   /**
-   *  Defines the transition of [fillExtrusionAmbientOcclusionIntensity]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [fillExtrusionAmbientOcclusionIntensity].
    */
   public var fillExtrusionAmbientOcclusionIntensityTransition: Transition by mutableStateOf(initialFillExtrusionAmbientOcclusionIntensityTransition)
   /**
@@ -179,7 +179,7 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionAmbientOcclusionRadius: DoubleValue by mutableStateOf(initialFillExtrusionAmbientOcclusionRadius)
   /**
-   *  Defines the transition of [fillExtrusionAmbientOcclusionRadius]. Default value: 3. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionAmbientOcclusionRadius].
    */
   public var fillExtrusionAmbientOcclusionRadiusTransition: Transition by mutableStateOf(initialFillExtrusionAmbientOcclusionRadiusTransition)
   /**
@@ -188,16 +188,16 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionWallRadius: DoubleValue by mutableStateOf(initialFillExtrusionAmbientOcclusionWallRadius)
   /**
-   *  Defines the transition of [fillExtrusionAmbientOcclusionWallRadius]. Default value: 3. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionAmbientOcclusionWallRadius].
    */
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionWallRadiusTransition: Transition by mutableStateOf(initialFillExtrusionAmbientOcclusionWallRadiusTransition)
   /**
-   *  The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0.
+   *  The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
    */
   public var fillExtrusionBase: DoubleValue by mutableStateOf(initialFillExtrusionBase)
   /**
-   *  Defines the transition of [fillExtrusionBase]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionBase].
    */
   public var fillExtrusionBaseTransition: Transition by mutableStateOf(initialFillExtrusionBaseTransition)
   /**
@@ -210,7 +210,7 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionColor: ColorValue by mutableStateOf(initialFillExtrusionColor)
   /**
-   *  Defines the transition of [fillExtrusionColor]. Default value: "#000000".
+   *  Defines the transition of [fillExtrusionColor].
    */
   public var fillExtrusionColorTransition: Transition by mutableStateOf(initialFillExtrusionColorTransition)
   /**
@@ -218,11 +218,11 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionCutoffFadeRange: DoubleValue by mutableStateOf(initialFillExtrusionCutoffFadeRange)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
    */
   public var fillExtrusionEmissiveStrength: DoubleValue by mutableStateOf(initialFillExtrusionEmissiveStrength)
   /**
-   *  Defines the transition of [fillExtrusionEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionEmissiveStrength].
    */
   public var fillExtrusionEmissiveStrengthTransition: Transition by mutableStateOf(initialFillExtrusionEmissiveStrengthTransition)
   /**
@@ -231,7 +231,7 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionFloodLightColor: ColorValue by mutableStateOf(initialFillExtrusionFloodLightColor)
   /**
-   *  Defines the transition of [fillExtrusionFloodLightColor]. Default value: "#ffffff".
+   *  Defines the transition of [fillExtrusionFloodLightColor].
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightColorTransition: Transition by mutableStateOf(initialFillExtrusionFloodLightColorTransition)
@@ -241,17 +241,17 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundAttenuation: DoubleValue by mutableStateOf(initialFillExtrusionFloodLightGroundAttenuation)
   /**
-   *  Defines the transition of [fillExtrusionFloodLightGroundAttenuation]. Default value: 0.69. Value range: [0, 1]
+   *  Defines the transition of [fillExtrusionFloodLightGroundAttenuation].
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundAttenuationTransition: Transition by mutableStateOf(initialFillExtrusionFloodLightGroundAttenuationTransition)
   /**
-   *  The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0.
+   *  The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundRadius: DoubleValue by mutableStateOf(initialFillExtrusionFloodLightGroundRadius)
   /**
-   *  Defines the transition of [fillExtrusionFloodLightGroundRadius]. Default value: 0.
+   *  Defines the transition of [fillExtrusionFloodLightGroundRadius].
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundRadiusTransition: Transition by mutableStateOf(initialFillExtrusionFloodLightGroundRadiusTransition)
@@ -261,26 +261,26 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionFloodLightIntensity: DoubleValue by mutableStateOf(initialFillExtrusionFloodLightIntensity)
   /**
-   *  Defines the transition of [fillExtrusionFloodLightIntensity]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [fillExtrusionFloodLightIntensity].
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightIntensityTransition: Transition by mutableStateOf(initialFillExtrusionFloodLightIntensityTransition)
   /**
-   *  The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0.
+   *  The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightWallRadius: DoubleValue by mutableStateOf(initialFillExtrusionFloodLightWallRadius)
   /**
-   *  Defines the transition of [fillExtrusionFloodLightWallRadius]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionFloodLightWallRadius].
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightWallRadiusTransition: Transition by mutableStateOf(initialFillExtrusionFloodLightWallRadiusTransition)
   /**
-   *  The height with which to extrude this layer. Default value: 0. Minimum value: 0.
+   *  The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
    */
   public var fillExtrusionHeight: DoubleValue by mutableStateOf(initialFillExtrusionHeight)
   /**
-   *  Defines the transition of [fillExtrusionHeight]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionHeight].
    */
   public var fillExtrusionHeightTransition: Transition by mutableStateOf(initialFillExtrusionHeightTransition)
   /**
@@ -289,12 +289,12 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionHeightAlignment: FillExtrusionHeightAlignmentValue by mutableStateOf(initialFillExtrusionHeightAlignment)
   /**
-   *  If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0.
+   *  If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
    */
   @MapboxExperimental
   public var fillExtrusionLineWidth: DoubleValue by mutableStateOf(initialFillExtrusionLineWidth)
   /**
-   *  Defines the transition of [fillExtrusionLineWidth]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionLineWidth].
    */
   @MapboxExperimental
   public var fillExtrusionLineWidthTransition: Transition by mutableStateOf(initialFillExtrusionLineWidthTransition)
@@ -303,7 +303,7 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionOpacity: DoubleValue by mutableStateOf(initialFillExtrusionOpacity)
   /**
-   *  Defines the transition of [fillExtrusionOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [fillExtrusionOpacity].
    */
   public var fillExtrusionOpacityTransition: Transition by mutableStateOf(initialFillExtrusionOpacityTransition)
   /**
@@ -316,11 +316,11 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionRoundedRoof: BooleanValue by mutableStateOf(initialFillExtrusionRoundedRoof)
   /**
-   *  The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0].
+   *  The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
    */
   public var fillExtrusionTranslate: DoubleListValue by mutableStateOf(initialFillExtrusionTranslate)
   /**
-   *  Defines the transition of [fillExtrusionTranslate]. Default value: [0,0].
+   *  Defines the transition of [fillExtrusionTranslate].
    */
   public var fillExtrusionTranslateTransition: Transition by mutableStateOf(initialFillExtrusionTranslateTransition)
   /**
@@ -337,7 +337,7 @@ public class FillExtrusionLayerState private constructor(
   @MapboxExperimental
   public var fillExtrusionVerticalScale: DoubleValue by mutableStateOf(initialFillExtrusionVerticalScale)
   /**
-   *  Defines the transition of [fillExtrusionVerticalScale]. Default value: 1. Minimum value: 0.
+   *  Defines the transition of [fillExtrusionVerticalScale].
    */
   @MapboxExperimental
   public var fillExtrusionVerticalScaleTransition: Transition by mutableStateOf(initialFillExtrusionVerticalScaleTransition)

@@ -178,7 +178,7 @@ public class RasterArraySourceState private constructor(
 
   /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
-   * Default value: 512.
+   * Default value: 512. The unit of tileSize is in pixels.
    */
   public var tileSize: LongValue by tileSizeState
 

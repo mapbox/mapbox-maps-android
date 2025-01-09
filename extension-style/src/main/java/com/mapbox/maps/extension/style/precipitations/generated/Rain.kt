@@ -118,12 +118,12 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    */
   @MapboxExperimental
   val colorAsColorInt: Int?
     /**
-     * Default value: "#ffffff".
+     * Individual rain particle dorplets color. Default value: "#919191".
      *
      * @return color as int
      */
@@ -135,7 +135,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * @param color as int
    */
@@ -145,12 +145,12 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    */
   @MapboxExperimental
   val color: String?
     /**
-     * Default value: "#ffffff".
+     * Individual rain particle dorplets color. Default value: "#919191".
      *
      * @return color as String
      */
@@ -162,7 +162,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     }
 
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * @param color as String
    */
@@ -205,14 +205,14 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   }
 
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * This is an Expression representation of "color".
    */
   @MapboxExperimental
   val colorAsExpression: Expression?
     /**
-     * Default value: "#ffffff".
+     * Individual rain particle dorplets color. Default value: "#919191".
      *
      * Get the color property as an Expression
      *
@@ -225,7 +225,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * @param color value of color as Expression
    */
@@ -235,12 +235,12 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Rain particles density. Default value: 1. Value range: [0, 1]
+   * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val density: Double?
     /**
-     * Rain particles density. Default value: 1. Value range: [0, 1]
+     * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
      *
      * @return density as Double
      */
@@ -249,7 +249,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     }
 
   /**
-   * Rain particles density. Default value: 1. Value range: [0, 1]
+   * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
    *
    * @param density as Double
    */
@@ -292,14 +292,14 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   }
 
   /**
-   * Rain particles density. Default value: 1. Value range: [0, 1]
+   * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "density".
    */
   @MapboxExperimental
   val densityAsExpression: Expression?
     /**
-     * Rain particles density. Default value: 1. Value range: [0, 1]
+     * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
      *
      * Get the density property as an Expression
      *
@@ -315,7 +315,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Rain particles density. Default value: 1. Value range: [0, 1]
+   * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
    *
    * @param density value of density as Expression
    */
@@ -325,12 +325,12 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+   * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
    */
   @MapboxExperimental
   val direction: List<Double>?
     /**
-     * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+     * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
      *
      * @return direction as List<Double>
      */
@@ -339,7 +339,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     }
 
   /**
-   * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+   * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
    *
    * @param direction as List<Double>
    */
@@ -382,14 +382,14 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   }
 
   /**
-   * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+   * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
    *
    * This is an Expression representation of "direction".
    */
   @MapboxExperimental
   val directionAsExpression: Expression?
     /**
-     * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+     * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
      *
      * Get the direction property as an Expression
      *
@@ -405,7 +405,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+   * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
    *
    * @param direction value of direction as Expression
    */
@@ -415,12 +415,192 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+   * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  val distortionStrength: Double?
+    /**
+     * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+     *
+     * @return distortion-strength as Double
+     */
+    get() {
+      return getPropertyValue("distortion-strength")
+    }
+
+  /**
+   * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+   *
+   * @param distortionStrength as Double
+   */
+  @MapboxExperimental
+  override fun distortionStrength(distortionStrength: Double): Rain = apply {
+    setProperty(PropertyValue("distortion-strength", distortionStrength))
+  }
+
+  /**
+   * DistortionStrength property transition options.
+   */
+  @MapboxExperimental
+  val distortionStrengthTransition: StyleTransition?
+    /**
+     * Get the DistortionStrength property transition options.
+     *
+     * @return transition options for distortion-strength
+     */
+    get() {
+      return getTransitionProperty("distortion-strength-transition")
+    }
+
+  /**
+   * Set the DistortionStrength property transition options.
+   *
+   * @param options transition options for distortion-strength
+   */
+  @MapboxExperimental
+  override fun distortionStrengthTransition(options: StyleTransition): Rain = apply {
+    val propertyValue = PropertyValue("distortion-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [distortionStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun distortionStrengthTransition(block: StyleTransition.Builder.() -> Unit): Rain = apply {
+    distortionStrengthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+   *
+   * This is an Expression representation of "distortion-strength".
+   */
+  @MapboxExperimental
+  val distortionStrengthAsExpression: Expression?
+    /**
+     * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+     *
+     * Get the distortionStrength property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("distortion-strength")?.let {
+        return it
+      }
+      distortionStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+   *
+   * @param distortionStrength value of distortionStrength as Expression
+   */
+  @MapboxExperimental
+  override fun distortionStrength(distortionStrength: Expression): Rain = apply {
+    val propertyValue = PropertyValue("distortion-strength", distortionStrength)
+    setProperty(propertyValue)
+  }
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+   */
+  @MapboxExperimental
+  val dropletSize: List<Double>?
+    /**
+     * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+     *
+     * @return droplet-size as List<Double>
+     */
+    get() {
+      return getPropertyValue("droplet-size")
+    }
+
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+   *
+   * @param dropletSize as List<Double>
+   */
+  @MapboxExperimental
+  override fun dropletSize(dropletSize: List<Double>): Rain = apply {
+    setProperty(PropertyValue("droplet-size", dropletSize))
+  }
+
+  /**
+   * DropletSize property transition options.
+   */
+  @MapboxExperimental
+  val dropletSizeTransition: StyleTransition?
+    /**
+     * Get the DropletSize property transition options.
+     *
+     * @return transition options for droplet-size
+     */
+    get() {
+      return getTransitionProperty("droplet-size-transition")
+    }
+
+  /**
+   * Set the DropletSize property transition options.
+   *
+   * @param options transition options for droplet-size
+   */
+  @MapboxExperimental
+  override fun dropletSizeTransition(options: StyleTransition): Rain = apply {
+    val propertyValue = PropertyValue("droplet-size-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [dropletSizeTransition].
+   */
+  @MapboxExperimental
+  override fun dropletSizeTransition(block: StyleTransition.Builder.() -> Unit): Rain = apply {
+    dropletSizeTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+   *
+   * This is an Expression representation of "droplet-size".
+   */
+  @MapboxExperimental
+  val dropletSizeAsExpression: Expression?
+    /**
+     * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+     *
+     * Get the dropletSize property as an Expression
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("droplet-size")?.let {
+        return it
+      }
+      dropletSize?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+   *
+   * @param dropletSize value of dropletSize as Expression
+   */
+  @MapboxExperimental
+  override fun dropletSize(dropletSize: Expression): Rain = apply {
+    val propertyValue = PropertyValue("droplet-size", dropletSize)
+    setProperty(propertyValue)
+  }
+  /**
+   * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val intensity: Double?
     /**
-     * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+     * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
      *
      * @return intensity as Double
      */
@@ -429,7 +609,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     }
 
   /**
-   * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+   * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -472,14 +652,14 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   }
 
   /**
-   * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+   * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "intensity".
    */
   @MapboxExperimental
   val intensityAsExpression: Expression?
     /**
-     * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+     * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
      *
      * Get the intensity property as an Expression
      *
@@ -495,7 +675,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+   * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -505,12 +685,12 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Rain particles opacity. Default value: 1. Value range: [0, 1]
+   * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
    */
   @MapboxExperimental
   val opacity: Double?
     /**
-     * Rain particles opacity. Default value: 1. Value range: [0, 1]
+     * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
      *
      * @return opacity as Double
      */
@@ -519,7 +699,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     }
 
   /**
-   * Rain particles opacity. Default value: 1. Value range: [0, 1]
+   * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
    *
    * @param opacity as Double
    */
@@ -562,14 +742,14 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   }
 
   /**
-   * Rain particles opacity. Default value: 1. Value range: [0, 1]
+   * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
    *
    * This is an Expression representation of "opacity".
    */
   @MapboxExperimental
   val opacityAsExpression: Expression?
     /**
-     * Rain particles opacity. Default value: 1. Value range: [0, 1]
+     * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
      *
      * Get the opacity property as an Expression
      *
@@ -585,7 +765,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Rain particles opacity. Default value: 1. Value range: [0, 1]
+   * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
    *
    * @param opacity value of opacity as Expression
    */
@@ -595,12 +775,12 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     setProperty(propertyValue)
   }
   /**
-   * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
    */
   @MapboxExperimental
   val vignette: Double?
     /**
-     * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+     * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
      *
      * @return vignette as Double
      */
@@ -609,7 +789,7 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
     }
 
   /**
-   * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette as Double
    */
@@ -652,14 +832,14 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
   }
 
   /**
-   * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
    *
    * This is an Expression representation of "vignette".
    */
   @MapboxExperimental
   val vignetteAsExpression: Expression?
     /**
-     * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+     * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
      *
      * Get the vignette property as an Expression
      *
@@ -675,13 +855,130 @@ class Rain : RainDslReceiver, StyleContract.StyleRainExtension {
       return null
     }
   /**
-   * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette value of vignette as Expression
    */
   @MapboxExperimental
   override fun vignette(vignette: Expression): Rain = apply {
     val propertyValue = PropertyValue("vignette", vignette)
+    setProperty(propertyValue)
+  }
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  val vignetteColorAsColorInt: Int?
+    /**
+     * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+     *
+     * @return vignetteColor as int
+     */
+    @ColorInt
+    get() {
+      vignetteColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as int
+   */
+  @MapboxExperimental
+  override fun vignetteColor(@ColorInt vignetteColor: Int): Rain = apply {
+    val propertyValue = PropertyValue("vignette-color", colorIntToRgbaExpression(vignetteColor))
+    setProperty(propertyValue)
+  }
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  val vignetteColor: String?
+    /**
+     * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+     *
+     * @return vignette-color as String
+     */
+    get() {
+      vignetteColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
+    }
+
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as String
+   */
+  @MapboxExperimental
+  override fun vignetteColor(vignetteColor: String): Rain = apply {
+    setProperty(PropertyValue("vignette-color", vignetteColor))
+  }
+
+  /**
+   * VignetteColor property transition options.
+   */
+  @MapboxExperimental
+  val vignetteColorTransition: StyleTransition?
+    /**
+     * Get the VignetteColor property transition options.
+     *
+     * @return transition options for vignette-color
+     */
+    get() {
+      return getTransitionProperty("vignette-color-transition")
+    }
+
+  /**
+   * Set the VignetteColor property transition options.
+   *
+   * @param options transition options for vignette-color
+   */
+  @MapboxExperimental
+  override fun vignetteColorTransition(options: StyleTransition): Rain = apply {
+    val propertyValue = PropertyValue("vignette-color-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [vignetteColorTransition].
+   */
+  @MapboxExperimental
+  override fun vignetteColorTransition(block: StyleTransition.Builder.() -> Unit): Rain = apply {
+    vignetteColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * This is an Expression representation of "vignette-color".
+   */
+  @MapboxExperimental
+  val vignetteColorAsExpression: Expression?
+    /**
+     * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+     *
+     * Get the vignetteColor property as an Expression
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("vignette-color")?.let {
+        return it
+      }
+      return null
+    }
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor value of vignetteColor as Expression
+   */
+  @MapboxExperimental
+  override fun vignetteColor(vignetteColor: Expression): Rain = apply {
+    val propertyValue = PropertyValue("vignette-color", vignetteColor)
     setProperty(propertyValue)
   }
 
@@ -796,22 +1093,22 @@ interface RainDslReceiver {
   @MapboxExperimental
   fun centerThinningTransition(block: StyleTransition.Builder.() -> Unit): Rain
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * @param color as int
    */
   @MapboxExperimental
   fun color(@ColorInt color: Int): Rain
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * @param color as String
    */
   @MapboxExperimental
-  fun color(color: String = "#ffffff"): Rain
+  fun color(color: String = "#919191"): Rain
 
   /**
-   * Default value: "#ffffff".
+   * Individual rain particle dorplets color. Default value: "#919191".
    *
    * @param color value of color as Expression
    */
@@ -832,7 +1129,7 @@ interface RainDslReceiver {
   @MapboxExperimental
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): Rain
   /**
-   * Rain particles density. Default value: 1. Value range: [0, 1]
+   * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
    *
    * @param density as Double
    */
@@ -840,7 +1137,7 @@ interface RainDslReceiver {
   fun density(density: Double = 1.0): Rain
 
   /**
-   * Rain particles density. Default value: 1. Value range: [0, 1]
+   * Rain particles density. Controls the overall screen density of the rain. Default value: 1. Value range: [0, 1]
    *
    * @param density value of density as Expression
    */
@@ -861,7 +1158,7 @@ interface RainDslReceiver {
   @MapboxExperimental
   fun densityTransition(block: StyleTransition.Builder.() -> Unit): Rain
   /**
-   * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+   * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
    *
    * @param direction as List<Double>
    */
@@ -869,7 +1166,7 @@ interface RainDslReceiver {
   fun direction(direction: List<Double> = listOf(0.0, 80.0)): Rain
 
   /**
-   * Main rain particles direction. Heading & pitch Default value: [0,80]. Value range: [0, 360]
+   * Main rain particles direction. Azimuth and polar angles. Default value: [0,80]. Value range: [0, 360]
    *
    * @param direction value of direction as Expression
    */
@@ -890,7 +1187,65 @@ interface RainDslReceiver {
   @MapboxExperimental
   fun directionTransition(block: StyleTransition.Builder.() -> Unit): Rain
   /**
-   * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+   * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+   *
+   * @param distortionStrength as Double
+   */
+  @MapboxExperimental
+  fun distortionStrength(distortionStrength: Double = 0.5): Rain
+
+  /**
+   * Rain particles screen-space distortion strength. Default value: 0.5. Value range: [0, 1]
+   *
+   * @param distortionStrength value of distortionStrength as Expression
+   */
+  @MapboxExperimental
+  fun distortionStrength(distortionStrength: Expression): Rain
+
+  /**
+   * Set the DistortionStrength property transition options.
+   *
+   * @param options transition options for distortion-strength
+   */
+  @MapboxExperimental
+  fun distortionStrengthTransition(options: StyleTransition): Rain
+
+  /**
+   * DSL for [distortionStrengthTransition].
+   */
+  @MapboxExperimental
+  fun distortionStrengthTransition(block: StyleTransition.Builder.() -> Unit): Rain
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+   *
+   * @param dropletSize as List<Double>
+   */
+  @MapboxExperimental
+  fun dropletSize(dropletSize: List<Double> = listOf(1.0, 10.0)): Rain
+
+  /**
+   * Rain droplet size. x - normal to direction, y - along direction Default value: [1,10]. Value range: [0, 20]
+   *
+   * @param dropletSize value of dropletSize as Expression
+   */
+  @MapboxExperimental
+  fun dropletSize(dropletSize: Expression): Rain
+
+  /**
+   * Set the DropletSize property transition options.
+   *
+   * @param options transition options for droplet-size
+   */
+  @MapboxExperimental
+  fun dropletSizeTransition(options: StyleTransition): Rain
+
+  /**
+   * DSL for [dropletSizeTransition].
+   */
+  @MapboxExperimental
+  fun dropletSizeTransition(block: StyleTransition.Builder.() -> Unit): Rain
+  /**
+   * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -898,7 +1253,7 @@ interface RainDslReceiver {
   fun intensity(intensity: Double = 1.0): Rain
 
   /**
-   * Rain particles movement factor. Default value: 1. Value range: [0, 1]
+   * Rain particles movement factor. Controls the overall rain particles speed Default value: 1. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -919,15 +1274,15 @@ interface RainDslReceiver {
   @MapboxExperimental
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): Rain
   /**
-   * Rain particles opacity. Default value: 1. Value range: [0, 1]
+   * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
    *
    * @param opacity as Double
    */
   @MapboxExperimental
-  fun opacity(opacity: Double = 1.0): Rain
+  fun opacity(opacity: Double = 0.19): Rain
 
   /**
-   * Rain particles opacity. Default value: 1. Value range: [0, 1]
+   * Rain particles opacity. Default value: 0.19. Value range: [0, 1]
    *
    * @param opacity value of opacity as Expression
    */
@@ -948,15 +1303,15 @@ interface RainDslReceiver {
   @MapboxExperimental
   fun opacityTransition(block: StyleTransition.Builder.() -> Unit): Rain
   /**
-   * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette as Double
    */
   @MapboxExperimental
-  fun vignette(vignette: Double = 0.0): Rain
+  fun vignette(vignette: Double = 0.3): Rain
 
   /**
-   * Rain vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Screen-space vignette rain tinting effect intensity. Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette value of vignette as Expression
    */
@@ -976,6 +1331,42 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun vignetteTransition(block: StyleTransition.Builder.() -> Unit): Rain
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as int
+   */
+  @MapboxExperimental
+  fun vignetteColor(@ColorInt vignetteColor: Int): Rain
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as String
+   */
+  @MapboxExperimental
+  fun vignetteColor(vignetteColor: String = "#ffffff"): Rain
+
+  /**
+   * Rain vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor value of vignetteColor as Expression
+   */
+  @MapboxExperimental
+  fun vignetteColor(vignetteColor: Expression): Rain
+
+  /**
+   * Set the VignetteColor property transition options.
+   *
+   * @param options transition options for vignette-color
+   */
+  @MapboxExperimental
+  fun vignetteColorTransition(options: StyleTransition): Rain
+
+  /**
+   * DSL for [vignetteColorTransition].
+   */
+  @MapboxExperimental
+  fun vignetteColorTransition(block: StyleTransition.Builder.() -> Unit): Rain
 }
 
 /**

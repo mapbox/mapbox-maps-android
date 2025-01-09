@@ -316,6 +316,147 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   */
+  @MapboxExperimental
+  val lineCrossSlope: Double?
+    /**
+     * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+     *
+     * Use static method [LineLayer.defaultLineCrossSlope] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-cross-slope")
+    }
+
+  /**
+   * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   *
+   * Use static method [LineLayer.defaultLineCrossSlope] to set the default property.
+   *
+   * @param lineCrossSlope value of lineCrossSlope
+   */
+  @MapboxExperimental
+  override fun lineCrossSlope(lineCrossSlope: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-cross-slope", lineCrossSlope)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   *
+   * This is an Expression representation of "line-cross-slope".
+   *
+   */
+  @MapboxExperimental
+  val lineCrossSlopeAsExpression: Expression?
+    /**
+     * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+     *
+     * Get the LineCrossSlope property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineCrossSlopeAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("line-cross-slope")?.let {
+        return it
+      }
+      lineCrossSlope?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   *
+   * Use static method [LineLayer.defaultLineCrossSlopeAsExpression] to set the default property.
+   *
+   * @param lineCrossSlope value of lineCrossSlope as Expression
+   */
+  @MapboxExperimental
+  override fun lineCrossSlope(lineCrossSlope: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-cross-slope", lineCrossSlope)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  val lineElevationReference: LineElevationReference?
+    /**
+     * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * Use static method [LineLayer.defaultLineElevationReference] to get the default property.
+     *
+     * @return LineElevationReference
+     */
+    get() {
+      getPropertyValue<String?>("line-elevation-reference")?.let {
+        return LineElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * Use static method [LineLayer.defaultLineElevationReference] to set the default property.
+   *
+   * @param lineElevationReference value of lineElevationReference
+   */
+  @MapboxExperimental
+  override fun lineElevationReference(lineElevationReference: LineElevationReference): LineLayer = apply {
+    val propertyValue = PropertyValue("line-elevation-reference", lineElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * This is an Expression representation of "line-elevation-reference".
+   *
+   */
+  @MapboxExperimental
+  val lineElevationReferenceAsExpression: Expression?
+    /**
+     * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * Get the LineElevationReference property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineElevationReferenceAsExpression] to get the default property.
+     *
+     * @return LineElevationReference
+     */
+    get() {
+      getPropertyValue<Expression>("line-elevation-reference")?.let {
+        return it
+      }
+      lineElevationReference?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * Use static method [LineLayer.defaultLineElevationReferenceAsExpression] to set the default property.
+   *
+   * @param lineElevationReference value of lineElevationReference as Expression
+   */
+  @MapboxExperimental
+  override fun lineElevationReference(lineElevationReference: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-elevation-reference", lineElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The display of lines when joining. Default value: "miter".
    */
   val lineJoin: LineJoin?
@@ -579,12 +720,84 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   */
+  @MapboxExperimental
+  val lineWidthUnit: LineWidthUnit?
+    /**
+     * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+     *
+     * Use static method [LineLayer.defaultLineWidthUnit] to get the default property.
+     *
+     * @return LineWidthUnit
+     */
+    get() {
+      getPropertyValue<String?>("line-width-unit")?.let {
+        return LineWidthUnit.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   *
+   * Use static method [LineLayer.defaultLineWidthUnit] to set the default property.
+   *
+   * @param lineWidthUnit value of lineWidthUnit
+   */
+  @MapboxExperimental
+  override fun lineWidthUnit(lineWidthUnit: LineWidthUnit): LineLayer = apply {
+    val propertyValue = PropertyValue("line-width-unit", lineWidthUnit)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   *
+   * This is an Expression representation of "line-width-unit".
+   *
+   */
+  @MapboxExperimental
+  val lineWidthUnitAsExpression: Expression?
+    /**
+     * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+     *
+     * Get the LineWidthUnit property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineWidthUnitAsExpression] to get the default property.
+     *
+     * @return LineWidthUnit
+     */
+    get() {
+      getPropertyValue<Expression>("line-width-unit")?.let {
+        return it
+      }
+      lineWidthUnit?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   *
+   * Use static method [LineLayer.defaultLineWidthUnitAsExpression] to set the default property.
+   *
+   * @param lineWidthUnit value of lineWidthUnit as Expression
+   */
+  @MapboxExperimental
+  override fun lineWidthUnit(lineWidthUnit: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-width-unit", lineWidthUnit)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    */
   @MapboxExperimental
   val lineZOffset: Double?
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
      *
      * Use static method [LineLayer.defaultLineZOffset] to get the default property.
      *
@@ -595,7 +808,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    *
    * Use static method [LineLayer.defaultLineZOffset] to set the default property.
    *
@@ -608,7 +821,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    *
    * This is an Expression representation of "line-z-offset".
    *
@@ -616,7 +829,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineZOffsetAsExpression: Expression?
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
      *
      * Get the LineZOffset property as an Expression
      *
@@ -635,7 +848,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    *
    * Use static method [LineLayer.defaultLineZOffsetAsExpression] to set the default property.
    *
@@ -648,11 +861,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   val lineBlur: Double?
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      *
      * Use static method [LineLayer.defaultLineBlur] to get the default property.
      *
@@ -663,7 +876,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * Use static method [LineLayer.defaultLineBlur] to set the default property.
    *
@@ -675,14 +888,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * This is an Expression representation of "line-blur".
    *
    */
   val lineBlurAsExpression: Expression?
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      *
      * Get the LineBlur property as an Expression
      *
@@ -701,7 +914,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * Use static method [LineLayer.defaultLineBlurAsExpression] to set the default property.
    *
@@ -1106,11 +1319,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    */
   val lineDasharray: List<Double>?
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
      *
      * Use static method [LineLayer.defaultLineDasharray] to get the default property.
      *
@@ -1121,7 +1334,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    *
    * Use static method [LineLayer.defaultLineDasharray] to set the default property.
    *
@@ -1133,14 +1346,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    *
    * This is an Expression representation of "line-dasharray".
    *
    */
   val lineDasharrayAsExpression: Expression?
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
      *
      * Get the LineDasharray property as an Expression
      *
@@ -1159,7 +1372,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    *
    * Use static method [LineLayer.defaultLineDasharrayAsExpression] to set the default property.
    *
@@ -1270,11 +1483,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    */
   val lineEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
      *
      * Use static method [LineLayer.defaultLineEmissiveStrength] to get the default property.
      *
@@ -1285,7 +1498,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrength] to set the default property.
    *
@@ -1297,14 +1510,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "line-emissive-strength".
    *
    */
   val lineEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
      *
      * Get the LineEmissiveStrength property as an Expression
      *
@@ -1323,7 +1536,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1369,11 +1582,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    */
   val lineGapWidth: Double?
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
      *
      * Use static method [LineLayer.defaultLineGapWidth] to get the default property.
      *
@@ -1384,7 +1597,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * Use static method [LineLayer.defaultLineGapWidth] to set the default property.
    *
@@ -1396,14 +1609,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * This is an Expression representation of "line-gap-width".
    *
    */
   val lineGapWidthAsExpression: Expression?
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
      *
      * Get the LineGapWidth property as an Expression
      *
@@ -1422,7 +1635,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * Use static method [LineLayer.defaultLineGapWidthAsExpression] to set the default property.
    *
@@ -1594,11 +1807,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    */
   val lineOffset: Double?
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
      *
      * Use static method [LineLayer.defaultLineOffset] to get the default property.
      *
@@ -1609,7 +1822,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * Use static method [LineLayer.defaultLineOffset] to set the default property.
    *
@@ -1621,14 +1834,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * This is an Expression representation of "line-offset".
    *
    */
   val lineOffsetAsExpression: Expression?
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
      *
      * Get the LineOffset property as an Expression
      *
@@ -1647,7 +1860,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * Use static method [LineLayer.defaultLineOffsetAsExpression] to set the default property.
    *
@@ -1857,11 +2070,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    */
   val lineTranslate: List<Double>?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
      *
      * Use static method [LineLayer.defaultLineTranslate] to get the default property.
      *
@@ -1872,7 +2085,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * Use static method [LineLayer.defaultLineTranslate] to set the default property.
    *
@@ -1884,14 +2097,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * This is an Expression representation of "line-translate".
    *
    */
   val lineTranslateAsExpression: Expression?
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
      *
      * Get the LineTranslate property as an Expression
      *
@@ -1910,7 +2123,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * Use static method [LineLayer.defaultLineTranslateAsExpression] to set the default property.
    *
@@ -2297,11 +2510,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   val lineWidth: Double?
     /**
-     * Stroke thickness. Default value: 1. Minimum value: 0.
+     * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
      *
      * Use static method [LineLayer.defaultLineWidth] to get the default property.
      *
@@ -2312,7 +2525,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * Use static method [LineLayer.defaultLineWidth] to set the default property.
    *
@@ -2324,14 +2537,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * This is an Expression representation of "line-width".
    *
    */
   val lineWidthAsExpression: Expression?
     /**
-     * Stroke thickness. Default value: 1. Minimum value: 0.
+     * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
      *
      * Get the LineWidth property as an Expression
      *
@@ -2350,7 +2563,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * Use static method [LineLayer.defaultLineWidthAsExpression] to set the default property.
    *
@@ -2489,6 +2702,87 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
           return it
         }
         defaultLineCap?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
+     * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+     */
+    @MapboxExperimental
+    val defaultLineCrossSlope: Double?
+      /**
+       * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+       *
+       * Get the default value of LineCrossSlope property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope").silentUnwrap()
+      }
+
+    /**
+     * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+     *
+     * This is an Expression representation of "line-cross-slope".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineCrossSlopeAsExpression: Expression?
+      /**
+       * Get default value of the LineCrossSlope property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineCrossSlope?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     */
+    @MapboxExperimental
+    val defaultLineElevationReference: LineElevationReference?
+      /**
+       * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+       *
+       * Get the default value of LineElevationReference property
+       *
+       * @return LineElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-reference").silentUnwrap<String>()?.let {
+          return LineElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * This is an Expression representation of "line-elevation-reference".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineElevationReferenceAsExpression: Expression?
+      /**
+       * Get default value of the LineElevationReference property as an Expression
+       *
+       * @return LineElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-reference").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineElevationReference?.let {
           return Expression.literal(it.value)
         }
         return null
@@ -2646,12 +2940,54 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+     */
+    @MapboxExperimental
+    val defaultLineWidthUnit: LineWidthUnit?
+      /**
+       * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+       *
+       * Get the default value of LineWidthUnit property
+       *
+       * @return LineWidthUnit
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-width-unit").silentUnwrap<String>()?.let {
+          return LineWidthUnit.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+     *
+     * This is an Expression representation of "line-width-unit".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineWidthUnitAsExpression: Expression?
+      /**
+       * Get default value of the LineWidthUnit property as an Expression
+       *
+       * @return LineWidthUnit
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-width-unit").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineWidthUnit?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
+     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
      */
     @MapboxExperimental
     val defaultLineZOffset: Double?
       /**
-       * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+       * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
        *
        * Get the default value of LineZOffset property
        *
@@ -2662,7 +2998,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
      *
      * This is an Expression representation of "line-z-offset".
      *
@@ -2685,11 +3021,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      */
     val defaultLineBlur: Double?
       /**
-       * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+       * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
        *
        * Get the default value of LineBlur property
        *
@@ -2700,7 +3036,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      *
      * This is an Expression representation of "line-blur".
      *
@@ -2915,11 +3251,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-color-transition").silentUnwrap()
 
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
      */
     val defaultLineDasharray: List<Double>?
       /**
-       * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+       * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
        *
        * Get the default value of LineDasharray property
        *
@@ -2930,7 +3266,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
      *
      * This is an Expression representation of "line-dasharray".
      *
@@ -3000,11 +3336,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
      */
     val defaultLineEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
        *
        * Get the default value of LineEmissiveStrength property
        *
@@ -3015,7 +3351,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "line-emissive-strength".
      *
@@ -3048,11 +3384,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
      */
     val defaultLineGapWidth: Double?
       /**
-       * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+       * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
        *
        * Get the default value of LineGapWidth property
        *
@@ -3063,7 +3399,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
      *
      * This is an Expression representation of "line-gap-width".
      *
@@ -3144,11 +3480,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-occlusion-opacity-transition").silentUnwrap()
 
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
      */
     val defaultLineOffset: Double?
       /**
-       * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+       * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
        *
        * Get the default value of LineOffset property
        *
@@ -3159,7 +3495,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
      *
      * This is an Expression representation of "line-offset".
      *
@@ -3277,11 +3613,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
      */
     val defaultLineTranslate: List<Double>?
       /**
-       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
        *
        * Get the default value of LineTranslate property
        *
@@ -3292,7 +3628,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
      *
      * This is an Expression representation of "line-translate".
      *
@@ -3512,11 +3848,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Stroke thickness. Default value: 1. Minimum value: 0.
+     * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
      */
     val defaultLineWidth: Double?
       /**
-       * Stroke thickness. Default value: 1. Minimum value: 0.
+       * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
        *
        * Get the default value of LineWidth property
        *
@@ -3527,7 +3863,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Stroke thickness. Default value: 1. Minimum value: 0.
+     * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
      *
      * This is an Expression representation of "line-width".
      *
@@ -3651,6 +3987,38 @@ interface LineLayerDsl {
   fun lineCap(lineCap: Expression): LineLayer
 
   /**
+   * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   *
+   * @param lineCrossSlope value of lineCrossSlope
+   */
+  @MapboxExperimental
+  fun lineCrossSlope(lineCrossSlope: Double): LineLayer
+
+  /**
+   * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
+   *
+   * @param lineCrossSlope value of lineCrossSlope as Expression
+   */
+  @MapboxExperimental
+  fun lineCrossSlope(lineCrossSlope: Expression): LineLayer
+
+  /**
+   * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * @param lineElevationReference value of lineElevationReference
+   */
+  @MapboxExperimental
+  fun lineElevationReference(lineElevationReference: LineElevationReference = LineElevationReference.NONE): LineLayer
+
+  /**
+   * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * @param lineElevationReference value of lineElevationReference as Expression
+   */
+  @MapboxExperimental
+  fun lineElevationReference(lineElevationReference: Expression): LineLayer
+
+  /**
    * The display of lines when joining. Default value: "miter".
    *
    * @param lineJoin value of lineJoin
@@ -3707,15 +4075,31 @@ interface LineLayerDsl {
   fun lineSortKey(lineSortKey: Expression): LineLayer
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   *
+   * @param lineWidthUnit value of lineWidthUnit
+   */
+  @MapboxExperimental
+  fun lineWidthUnit(lineWidthUnit: LineWidthUnit = LineWidthUnit.PIXELS): LineLayer
+
+  /**
+   * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
+   *
+   * @param lineWidthUnit value of lineWidthUnit as Expression
+   */
+  @MapboxExperimental
+  fun lineWidthUnit(lineWidthUnit: Expression): LineLayer
+
+  /**
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    *
    * @param lineZOffset value of lineZOffset
    */
   @MapboxExperimental
-  fun lineZOffset(lineZOffset: Double): LineLayer
+  fun lineZOffset(lineZOffset: Double = 0.0): LineLayer
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.
+   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
    *
    * @param lineZOffset value of lineZOffset as Expression
    */
@@ -3723,21 +4107,21 @@ interface LineLayerDsl {
   fun lineZOffset(lineZOffset: Expression): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * @param lineBlur value of lineBlur
    */
   fun lineBlur(lineBlur: Double = 0.0): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * @param lineBlur value of lineBlur as Expression
    */
   fun lineBlur(lineBlur: Expression): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * Set the LineBlur property transition options
    *
@@ -3746,7 +4130,7 @@ interface LineLayerDsl {
   fun lineBlurTransition(options: StyleTransition): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.
+   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * DSL for [lineBlurTransition].
    */
@@ -3857,14 +4241,14 @@ interface LineLayerDsl {
   fun lineColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    *
    * @param lineDasharray value of lineDasharray
    */
   fun lineDasharray(lineDasharray: List<Double>): LineLayer
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.
+   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    *
    * @param lineDasharray value of lineDasharray as Expression
    */
@@ -3901,21 +4285,21 @@ interface LineLayerDsl {
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
   fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
   fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * Set the LineEmissiveStrength property transition options
    *
@@ -3924,28 +4308,28 @@ interface LineLayerDsl {
   fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    *
    * DSL for [lineEmissiveStrengthTransition].
    */
   fun lineEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * @param lineGapWidth value of lineGapWidth
    */
   fun lineGapWidth(lineGapWidth: Double = 0.0): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * @param lineGapWidth value of lineGapWidth as Expression
    */
   fun lineGapWidth(lineGapWidth: Expression): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * Set the LineGapWidth property transition options
    *
@@ -3954,7 +4338,7 @@ interface LineLayerDsl {
   fun lineGapWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    *
    * DSL for [lineGapWidthTransition].
    */
@@ -3998,21 +4382,21 @@ interface LineLayerDsl {
   fun lineOcclusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * @param lineOffset value of lineOffset
    */
   fun lineOffset(lineOffset: Double = 0.0): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * @param lineOffset value of lineOffset as Expression
    */
   fun lineOffset(lineOffset: Expression): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * Set the LineOffset property transition options
    *
@@ -4021,7 +4405,7 @@ interface LineLayerDsl {
   fun lineOffsetTransition(options: StyleTransition): LineLayer
 
   /**
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
    *
    * DSL for [lineOffsetTransition].
    */
@@ -4072,21 +4456,21 @@ interface LineLayerDsl {
   fun linePattern(linePattern: Expression): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * @param lineTranslate value of lineTranslate
    */
   fun lineTranslate(lineTranslate: List<Double> = listOf(0.0, 0.0)): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * @param lineTranslate value of lineTranslate as Expression
    */
   fun lineTranslate(lineTranslate: Expression): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * Set the LineTranslate property transition options
    *
@@ -4095,7 +4479,7 @@ interface LineLayerDsl {
   fun lineTranslateTransition(options: StyleTransition): LineLayer
 
   /**
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    *
    * DSL for [lineTranslateTransition].
    */
@@ -4188,21 +4572,21 @@ interface LineLayerDsl {
   fun lineTrimOffset(lineTrimOffset: Expression): LineLayer
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * @param lineWidth value of lineWidth
    */
   fun lineWidth(lineWidth: Double = 1.0): LineLayer
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * @param lineWidth value of lineWidth as Expression
    */
   fun lineWidth(lineWidth: Expression): LineLayer
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * Set the LineWidth property transition options
    *
@@ -4211,7 +4595,7 @@ interface LineLayerDsl {
   fun lineWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Stroke thickness. Default value: 1. Minimum value: 0.
+   * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    *
    * DSL for [lineWidthTransition].
    */

@@ -72,6 +72,29 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillElevationReferenceTest() {
+    val layer = fillLayer("id", "source") {
+      fillElevationReference(FillElevationReference.NONE)
+    }
+    setupLayer(layer)
+    assertEquals(FillElevationReference.NONE, layer.fillElevationReference)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillElevationReferenceAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {
+      fillElevationReference(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillElevationReferenceAsExpression.toString())
+    assertEquals(FillElevationReference.NONE, layer.fillElevationReference!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillSortKeyTest() {
     val testValue = 1.0
     val layer = fillLayer("id", "source") {
@@ -574,6 +597,8 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", FillLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", FillLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", FillLayer.defaultMaxZoom)
+    assertNotNull("defaultFillElevationReference should not be null", FillLayer.defaultFillElevationReference)
+    assertNotNull("defaultFillElevationReferenceAsExpression should not be null", FillLayer.defaultFillElevationReferenceAsExpression)
     assertNotNull("defaultFillSortKey should not be null", FillLayer.defaultFillSortKey)
     assertNotNull("defaultFillSortKeyAsExpression should not be null", FillLayer.defaultFillSortKeyAsExpression)
     assertNotNull("defaultFillAntialias should not be null", FillLayer.defaultFillAntialias)
@@ -613,6 +638,7 @@ class FillLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val fillElevationReferenceTestValue = FillElevationReference.NONE
     val fillSortKeyTestValue = 1.0
     val fillAntialiasTestValue = true
     val fillColorTestValue = "rgba(0, 0, 0, 1)"
@@ -631,6 +657,7 @@ class FillLayerTest : BaseStyleTest() {
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
+      fillElevationReference(fillElevationReferenceTestValue)
       fillSortKey(fillSortKeyTestValue)
       fillAntialias(fillAntialiasTestValue)
       fillColor(fillColorTestValue)
@@ -654,6 +681,7 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillElevationReferenceTestValue, cachedLayer.fillElevationReference)
     assertEquals(fillSortKeyTestValue, cachedLayer.fillSortKey)
     assertEquals(fillAntialiasTestValue, cachedLayer.fillAntialias)
     assertEquals(fillColorTestValue, cachedLayer.fillColor)

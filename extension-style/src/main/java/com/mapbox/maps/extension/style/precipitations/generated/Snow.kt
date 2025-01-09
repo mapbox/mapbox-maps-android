@@ -235,12 +235,12 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     setProperty(propertyValue)
   }
   /**
-   * Snow particles density. Default value: 1. Value range: [0, 1]
+   * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val density: Double?
     /**
-     * Snow particles density. Default value: 1. Value range: [0, 1]
+     * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
      *
      * @return density as Double
      */
@@ -249,7 +249,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     }
 
   /**
-   * Snow particles density. Default value: 1. Value range: [0, 1]
+   * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
    *
    * @param density as Double
    */
@@ -292,14 +292,14 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
   }
 
   /**
-   * Snow particles density. Default value: 1. Value range: [0, 1]
+   * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "density".
    */
   @MapboxExperimental
   val densityAsExpression: Expression?
     /**
-     * Snow particles density. Default value: 1. Value range: [0, 1]
+     * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
      *
      * Get the density property as an Expression
      *
@@ -315,7 +315,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
       return null
     }
   /**
-   * Snow particles density. Default value: 1. Value range: [0, 1]
+   * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
    *
    * @param density value of density as Expression
    */
@@ -325,12 +325,12 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     setProperty(propertyValue)
   }
   /**
-   * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+   * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
    */
   @MapboxExperimental
   val direction: List<Double>?
     /**
-     * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+     * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
      *
      * @return direction as List<Double>
      */
@@ -339,7 +339,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     }
 
   /**
-   * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+   * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
    *
    * @param direction as List<Double>
    */
@@ -382,14 +382,14 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
   }
 
   /**
-   * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+   * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
    *
    * This is an Expression representation of "direction".
    */
   @MapboxExperimental
   val directionAsExpression: Expression?
     /**
-     * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+     * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
      *
      * Get the direction property as an Expression
      *
@@ -405,7 +405,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
       return null
     }
   /**
-   * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+   * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
    *
    * @param direction value of direction as Expression
    */
@@ -415,12 +415,102 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     setProperty(propertyValue)
   }
   /**
-   * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+   * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+   */
+  @MapboxExperimental
+  val flakeSize: Double?
+    /**
+     * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+     *
+     * @return flake-size as Double
+     */
+    get() {
+      return getPropertyValue("flake-size")
+    }
+
+  /**
+   * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+   *
+   * @param flakeSize as Double
+   */
+  @MapboxExperimental
+  override fun flakeSize(flakeSize: Double): Snow = apply {
+    setProperty(PropertyValue("flake-size", flakeSize))
+  }
+
+  /**
+   * FlakeSize property transition options.
+   */
+  @MapboxExperimental
+  val flakeSizeTransition: StyleTransition?
+    /**
+     * Get the FlakeSize property transition options.
+     *
+     * @return transition options for flake-size
+     */
+    get() {
+      return getTransitionProperty("flake-size-transition")
+    }
+
+  /**
+   * Set the FlakeSize property transition options.
+   *
+   * @param options transition options for flake-size
+   */
+  @MapboxExperimental
+  override fun flakeSizeTransition(options: StyleTransition): Snow = apply {
+    val propertyValue = PropertyValue("flake-size-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [flakeSizeTransition].
+   */
+  @MapboxExperimental
+  override fun flakeSizeTransition(block: StyleTransition.Builder.() -> Unit): Snow = apply {
+    flakeSizeTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+   *
+   * This is an Expression representation of "flake-size".
+   */
+  @MapboxExperimental
+  val flakeSizeAsExpression: Expression?
+    /**
+     * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+     *
+     * Get the flakeSize property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("flake-size")?.let {
+        return it
+      }
+      flakeSize?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+   *
+   * @param flakeSize value of flakeSize as Expression
+   */
+  @MapboxExperimental
+  override fun flakeSize(flakeSize: Expression): Snow = apply {
+    val propertyValue = PropertyValue("flake-size", flakeSize)
+    setProperty(propertyValue)
+  }
+  /**
+   * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val intensity: Double?
     /**
-     * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+     * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
      *
      * @return intensity as Double
      */
@@ -429,7 +519,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     }
 
   /**
-   * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+   * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -472,14 +562,14 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
   }
 
   /**
-   * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+   * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "intensity".
    */
   @MapboxExperimental
   val intensityAsExpression: Expression?
     /**
-     * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+     * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
      *
      * Get the intensity property as an Expression
      *
@@ -495,7 +585,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
       return null
     }
   /**
-   * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+   * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -505,12 +595,12 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     setProperty(propertyValue)
   }
   /**
-   * Snow particles opacity. Default value: 1. Value range: [0, 1]
+   * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
    */
   @MapboxExperimental
   val opacity: Double?
     /**
-     * Snow particles opacity. Default value: 1. Value range: [0, 1]
+     * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
      *
      * @return opacity as Double
      */
@@ -519,7 +609,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     }
 
   /**
-   * Snow particles opacity. Default value: 1. Value range: [0, 1]
+   * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
    *
    * @param opacity as Double
    */
@@ -562,14 +652,14 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
   }
 
   /**
-   * Snow particles opacity. Default value: 1. Value range: [0, 1]
+   * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
    *
    * This is an Expression representation of "opacity".
    */
   @MapboxExperimental
   val opacityAsExpression: Expression?
     /**
-     * Snow particles opacity. Default value: 1. Value range: [0, 1]
+     * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
      *
      * Get the opacity property as an Expression
      *
@@ -585,7 +675,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
       return null
     }
   /**
-   * Snow particles opacity. Default value: 1. Value range: [0, 1]
+   * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
    *
    * @param opacity value of opacity as Expression
    */
@@ -595,12 +685,12 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     setProperty(propertyValue)
   }
   /**
-   * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
    */
   @MapboxExperimental
   val vignette: Double?
     /**
-     * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+     * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
      *
      * @return vignette as Double
      */
@@ -609,7 +699,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     }
 
   /**
-   * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette as Double
    */
@@ -652,14 +742,14 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
   }
 
   /**
-   * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
    *
    * This is an Expression representation of "vignette".
    */
   @MapboxExperimental
   val vignetteAsExpression: Expression?
     /**
-     * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+     * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
      *
      * Get the vignette property as an Expression
      *
@@ -675,13 +765,130 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
       return null
     }
   /**
-   * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette value of vignette as Expression
    */
   @MapboxExperimental
   override fun vignette(vignette: Expression): Snow = apply {
     val propertyValue = PropertyValue("vignette", vignette)
+    setProperty(propertyValue)
+  }
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  val vignetteColorAsColorInt: Int?
+    /**
+     * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+     *
+     * @return vignetteColor as int
+     */
+    @ColorInt
+    get() {
+      vignetteColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as int
+   */
+  @MapboxExperimental
+  override fun vignetteColor(@ColorInt vignetteColor: Int): Snow = apply {
+    val propertyValue = PropertyValue("vignette-color", colorIntToRgbaExpression(vignetteColor))
+    setProperty(propertyValue)
+  }
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   */
+  @MapboxExperimental
+  val vignetteColor: String?
+    /**
+     * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+     *
+     * @return vignette-color as String
+     */
+    get() {
+      vignetteColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
+    }
+
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as String
+   */
+  @MapboxExperimental
+  override fun vignetteColor(vignetteColor: String): Snow = apply {
+    setProperty(PropertyValue("vignette-color", vignetteColor))
+  }
+
+  /**
+   * VignetteColor property transition options.
+   */
+  @MapboxExperimental
+  val vignetteColorTransition: StyleTransition?
+    /**
+     * Get the VignetteColor property transition options.
+     *
+     * @return transition options for vignette-color
+     */
+    get() {
+      return getTransitionProperty("vignette-color-transition")
+    }
+
+  /**
+   * Set the VignetteColor property transition options.
+   *
+   * @param options transition options for vignette-color
+   */
+  @MapboxExperimental
+  override fun vignetteColorTransition(options: StyleTransition): Snow = apply {
+    val propertyValue = PropertyValue("vignette-color-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [vignetteColorTransition].
+   */
+  @MapboxExperimental
+  override fun vignetteColorTransition(block: StyleTransition.Builder.() -> Unit): Snow = apply {
+    vignetteColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * This is an Expression representation of "vignette-color".
+   */
+  @MapboxExperimental
+  val vignetteColorAsExpression: Expression?
+    /**
+     * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+     *
+     * Get the vignetteColor property as an Expression
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("vignette-color")?.let {
+        return it
+      }
+      return null
+    }
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor value of vignetteColor as Expression
+   */
+  @MapboxExperimental
+  override fun vignetteColor(vignetteColor: Expression): Snow = apply {
+    val propertyValue = PropertyValue("vignette-color", vignetteColor)
     setProperty(propertyValue)
   }
 
@@ -832,7 +1039,7 @@ interface SnowDslReceiver {
   @MapboxExperimental
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): Snow
   /**
-   * Snow particles density. Default value: 1. Value range: [0, 1]
+   * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
    *
    * @param density as Double
    */
@@ -840,7 +1047,7 @@ interface SnowDslReceiver {
   fun density(density: Double = 1.0): Snow
 
   /**
-   * Snow particles density. Default value: 1. Value range: [0, 1]
+   * Snow particles density. Controls the overall particles number. Default value: 1. Value range: [0, 1]
    *
    * @param density value of density as Expression
    */
@@ -861,7 +1068,7 @@ interface SnowDslReceiver {
   @MapboxExperimental
   fun densityTransition(block: StyleTransition.Builder.() -> Unit): Snow
   /**
-   * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+   * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
    *
    * @param direction as List<Double>
    */
@@ -869,7 +1076,7 @@ interface SnowDslReceiver {
   fun direction(direction: List<Double> = listOf(0.0, 90.0)): Snow
 
   /**
-   * Main snow particles direction. Heading & pitch Default value: [0,90]. Value range: [0, 360]
+   * Main snow particles direction. Azimuth and polar angles Default value: [0,90]. Value range: [0, 360]
    *
    * @param direction value of direction as Expression
    */
@@ -890,7 +1097,36 @@ interface SnowDslReceiver {
   @MapboxExperimental
   fun directionTransition(block: StyleTransition.Builder.() -> Unit): Snow
   /**
-   * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+   * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+   *
+   * @param flakeSize as Double
+   */
+  @MapboxExperimental
+  fun flakeSize(flakeSize: Double = 1.0): Snow
+
+  /**
+   * Snow flake particle size. Correlates with individual particle screen size Default value: 1. Value range: [0, 5]
+   *
+   * @param flakeSize value of flakeSize as Expression
+   */
+  @MapboxExperimental
+  fun flakeSize(flakeSize: Expression): Snow
+
+  /**
+   * Set the FlakeSize property transition options.
+   *
+   * @param options transition options for flake-size
+   */
+  @MapboxExperimental
+  fun flakeSizeTransition(options: StyleTransition): Snow
+
+  /**
+   * DSL for [flakeSizeTransition].
+   */
+  @MapboxExperimental
+  fun flakeSizeTransition(block: StyleTransition.Builder.() -> Unit): Snow
+  /**
+   * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
    *
    * @param intensity as Double
    */
@@ -898,7 +1134,7 @@ interface SnowDslReceiver {
   fun intensity(intensity: Double = 1.0): Snow
 
   /**
-   * Snow particles movement factor. Default value: 1. Value range: [0, 1]
+   * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
    *
    * @param intensity value of intensity as Expression
    */
@@ -919,15 +1155,15 @@ interface SnowDslReceiver {
   @MapboxExperimental
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): Snow
   /**
-   * Snow particles opacity. Default value: 1. Value range: [0, 1]
+   * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
    *
    * @param opacity as Double
    */
   @MapboxExperimental
-  fun opacity(opacity: Double = 1.0): Snow
+  fun opacity(opacity: Double = 0.9): Snow
 
   /**
-   * Snow particles opacity. Default value: 1. Value range: [0, 1]
+   * Snow particles opacity. Default value: 0.9. Value range: [0, 1]
    *
    * @param opacity value of opacity as Expression
    */
@@ -948,15 +1184,15 @@ interface SnowDslReceiver {
   @MapboxExperimental
   fun opacityTransition(block: StyleTransition.Builder.() -> Unit): Snow
   /**
-   * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette as Double
    */
   @MapboxExperimental
-  fun vignette(vignette: Double = 0.0): Snow
+  fun vignette(vignette: Double = 0.3): Snow
 
   /**
-   * Snow vignette screen-space effect. Default value: 0. Value range: [0, 1]
+   * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: 0.3. Value range: [0, 1]
    *
    * @param vignette value of vignette as Expression
    */
@@ -976,6 +1212,42 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun vignetteTransition(block: StyleTransition.Builder.() -> Unit): Snow
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as int
+   */
+  @MapboxExperimental
+  fun vignetteColor(@ColorInt vignetteColor: Int): Snow
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor as String
+   */
+  @MapboxExperimental
+  fun vignetteColor(vignetteColor: String = "#ffffff"): Snow
+
+  /**
+   * Snow vignette screen-space corners tint color. Default value: "#ffffff".
+   *
+   * @param vignetteColor value of vignetteColor as Expression
+   */
+  @MapboxExperimental
+  fun vignetteColor(vignetteColor: Expression): Snow
+
+  /**
+   * Set the VignetteColor property transition options.
+   *
+   * @param options transition options for vignette-color
+   */
+  @MapboxExperimental
+  fun vignetteColorTransition(options: StyleTransition): Snow
+
+  /**
+   * DSL for [vignetteColorTransition].
+   */
+  @MapboxExperimental
+  fun vignetteColorTransition(block: StyleTransition.Builder.() -> Unit): Snow
 }
 
 /**

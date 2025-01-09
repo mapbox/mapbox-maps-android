@@ -28,6 +28,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Stable
 @OptIn(MapboxExperimental::class)
 public class FillLayerState private constructor(
+  initialFillElevationReference: FillElevationReferenceValue,
   initialFillSortKey: DoubleValue,
   initialFillAntialias: BooleanValue,
   initialFillColor: ColorValue,
@@ -55,6 +56,7 @@ public class FillLayerState private constructor(
    * Construct an default [FillLayerState].
    */
   public constructor() : this(
+    initialFillElevationReference = FillElevationReferenceValue.INITIAL,
     initialFillSortKey = DoubleValue.INITIAL,
     initialFillAntialias = BooleanValue.INITIAL,
     initialFillColor = ColorValue.INITIAL,
@@ -86,6 +88,11 @@ public class FillLayerState private constructor(
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
   /**
+   *  Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  public var fillElevationReference: FillElevationReferenceValue by mutableStateOf(initialFillElevationReference)
+  /**
    *  Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   public var fillSortKey: DoubleValue by mutableStateOf(initialFillSortKey)
@@ -98,15 +105,15 @@ public class FillLayerState private constructor(
    */
   public var fillColor: ColorValue by mutableStateOf(initialFillColor)
   /**
-   *  Defines the transition of [fillColor]. Default value: "#000000".
+   *  Defines the transition of [fillColor].
    */
   public var fillColorTransition: Transition by mutableStateOf(initialFillColorTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    */
   public var fillEmissiveStrength: DoubleValue by mutableStateOf(initialFillEmissiveStrength)
   /**
-   *  Defines the transition of [fillEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillEmissiveStrength].
    */
   public var fillEmissiveStrengthTransition: Transition by mutableStateOf(initialFillEmissiveStrengthTransition)
   /**
@@ -114,7 +121,7 @@ public class FillLayerState private constructor(
    */
   public var fillOpacity: DoubleValue by mutableStateOf(initialFillOpacity)
   /**
-   *  Defines the transition of [fillOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [fillOpacity].
    */
   public var fillOpacityTransition: Transition by mutableStateOf(initialFillOpacityTransition)
   /**
@@ -130,11 +137,11 @@ public class FillLayerState private constructor(
    */
   public var fillPattern: ImageValue by mutableStateOf(initialFillPattern)
   /**
-   *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0].
+   *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    */
   public var fillTranslate: DoubleListValue by mutableStateOf(initialFillTranslate)
   /**
-   *  Defines the transition of [fillTranslate]. Default value: [0,0].
+   *  Defines the transition of [fillTranslate].
    */
   public var fillTranslateTransition: Transition by mutableStateOf(initialFillTranslateTransition)
   /**
@@ -147,7 +154,7 @@ public class FillLayerState private constructor(
   @MapboxExperimental
   public var fillZOffset: DoubleValue by mutableStateOf(initialFillZOffset)
   /**
-   *  Defines the transition of [fillZOffset]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [fillZOffset].
    */
   @MapboxExperimental
   public var fillZOffsetTransition: Transition by mutableStateOf(initialFillZOffsetTransition)
@@ -172,6 +179,13 @@ public class FillLayerState private constructor(
    */
   public var filter: Filter by mutableStateOf(initialFilter)
 
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillElevationReference(layerNode: LayerNode) {
+    if (fillElevationReference.notInitial) {
+      layerNode.setProperty("fill-elevation-reference", fillElevationReference.value)
+    }
+  }
   @Composable
   private fun UpdateFillSortKey(layerNode: LayerNode) {
     if (fillSortKey.notInitial) {
@@ -306,6 +320,7 @@ public class FillLayerState private constructor(
 
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
+    UpdateFillElevationReference(layerNode)
     UpdateFillSortKey(layerNode)
     UpdateFillAntialias(layerNode)
     UpdateFillColor(layerNode)

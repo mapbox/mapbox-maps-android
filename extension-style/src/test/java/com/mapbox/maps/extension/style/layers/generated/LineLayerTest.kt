@@ -228,6 +228,141 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineCrossSlopeSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineCrossSlope(testValue)
+    verify { style.setStyleLayerProperty("id", "line-cross-slope", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineCrossSlopeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineCrossSlope?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cross-slope") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineCrossSlopeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCrossSlope(expression)
+    verify { style.setStyleLayerProperty("id", "line-cross-slope", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineCrossSlopeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineCrossSlopeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cross-slope") }
+  }
+
+  @Test
+  fun lineCrossSlopeAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineCrossSlopeAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-cross-slope") }
+  }
+
+  @Test
+  fun lineCrossSlopeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineCrossSlopeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCrossSlope!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-cross-slope") }
+  }
+
+  @Test
+  fun lineElevationReferenceSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineElevationReference(LineElevationReference.NONE)
+    verify { style.setStyleLayerProperty("id", "line-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun lineElevationReferenceGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("none")
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(LineElevationReference.NONE, layer.lineElevationReference)
+    verify { style.getStyleLayerProperty("id", "line-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineElevationReferenceAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineElevationReference(expression)
+    verify { style.setStyleLayerProperty("id", "line-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineElevationReferenceAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineElevationReferenceAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-elevation-reference") }
+  }
+
+  @Test
+  fun lineElevationReferenceAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineElevationReferenceAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-elevation-reference") }
+  }
+
+  @Test
+  fun lineElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.lineElevationReferenceAsExpression?.toString())
+    assertEquals(LineElevationReference.NONE.value, layer.lineElevationReferenceAsExpression.toString())
+    assertEquals(LineElevationReference.NONE, layer.lineElevationReference)
+    verify { style.getStyleLayerProperty("id", "line-elevation-reference") }
+  }
+
+  @Test
   fun lineJoinSet() {
     val layer = lineLayer("id", "source") {}
     layer.bindTo(style)
@@ -494,6 +629,74 @@ class LineLayerTest {
     assertEquals(1.0, layer.lineSortKeyAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, layer.lineSortKey!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "line-sort-key") }
+  }
+
+  @Test
+  fun lineWidthUnitSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineWidthUnit(LineWidthUnit.PIXELS)
+    verify { style.setStyleLayerProperty("id", "line-width-unit", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "pixels")
+  }
+
+  @Test
+  fun lineWidthUnitGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("pixels")
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(LineWidthUnit.PIXELS, layer.lineWidthUnit)
+    verify { style.getStyleLayerProperty("id", "line-width-unit") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineWidthUnitAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineWidthUnit(expression)
+    verify { style.setStyleLayerProperty("id", "line-width-unit", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineWidthUnitAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineWidthUnitAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-width-unit") }
+  }
+
+  @Test
+  fun lineWidthUnitAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineWidthUnitAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-width-unit") }
+  }
+
+  @Test
+  fun lineWidthUnitAsExpressionGetFromLiteral() {
+    val value = "pixels"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.lineWidthUnitAsExpression?.toString())
+    assertEquals(LineWidthUnit.PIXELS.value, layer.lineWidthUnitAsExpression.toString())
+    assertEquals(LineWidthUnit.PIXELS, layer.lineWidthUnit)
+    verify { style.getStyleLayerProperty("id", "line-width-unit") }
   }
 
   @Test
@@ -2603,6 +2806,70 @@ class LineLayerTest {
   }
 
   @Test
+  fun defaultLineCrossSlopeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineCrossSlope?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineCrossSlopeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineCrossSlopeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope") }
+  }
+
+  @Test
+  fun defaultLineCrossSlopeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineCrossSlopeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineCrossSlope!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope") }
+  }
+
+  @Test
+  fun defaultLineElevationReferenceTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("none")
+
+    assertEquals(LineElevationReference.NONE, LineLayer.defaultLineElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineElevationReferenceAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineElevationReferenceAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-reference") }
+  }
+
+  @Test
+  fun defaultLineElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), LineLayer.defaultLineElevationReferenceAsExpression?.toString())
+    assertEquals(LineElevationReference.NONE.value, LineLayer.defaultLineElevationReferenceAsExpression.toString())
+    assertEquals(LineElevationReference.NONE, LineLayer.defaultLineElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-reference") }
+  }
+
+  @Test
   fun defaultLineJoinTest() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("bevel")
 
@@ -2726,6 +2993,39 @@ class LineLayerTest {
     assertEquals(1.0, LineLayer.defaultLineSortKeyAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, LineLayer.defaultLineSortKey!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-sort-key") }
+  }
+
+  @Test
+  fun defaultLineWidthUnitTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("pixels")
+
+    assertEquals(LineWidthUnit.PIXELS, LineLayer.defaultLineWidthUnit)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-width-unit") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineWidthUnitAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineWidthUnitAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-width-unit") }
+  }
+
+  @Test
+  fun defaultLineWidthUnitAsExpressionGetFromLiteral() {
+    val value = "pixels"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), LineLayer.defaultLineWidthUnitAsExpression?.toString())
+    assertEquals(LineWidthUnit.PIXELS.value, LineLayer.defaultLineWidthUnitAsExpression.toString())
+    assertEquals(LineWidthUnit.PIXELS, LineLayer.defaultLineWidthUnit)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-width-unit") }
   }
 
   @Test

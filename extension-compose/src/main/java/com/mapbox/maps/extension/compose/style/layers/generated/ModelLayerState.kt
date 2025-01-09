@@ -116,7 +116,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelAmbientOcclusionIntensity: DoubleValue by mutableStateOf(initialModelAmbientOcclusionIntensity)
   /**
-   *  Defines the transition of [modelAmbientOcclusionIntensity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [modelAmbientOcclusionIntensity].
    */
   @MapboxExperimental
   public var modelAmbientOcclusionIntensityTransition: Transition by mutableStateOf(initialModelAmbientOcclusionIntensityTransition)
@@ -131,7 +131,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelColor: ColorValue by mutableStateOf(initialModelColor)
   /**
-   *  Defines the transition of [modelColor]. Default value: "#ffffff".
+   *  Defines the transition of [modelColor].
    */
   @MapboxExperimental
   public var modelColorTransition: Transition by mutableStateOf(initialModelColorTransition)
@@ -141,7 +141,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelColorMixIntensity: DoubleValue by mutableStateOf(initialModelColorMixIntensity)
   /**
-   *  Defines the transition of [modelColorMixIntensity]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [modelColorMixIntensity].
    */
   @MapboxExperimental
   public var modelColorMixIntensityTransition: Transition by mutableStateOf(initialModelColorMixIntensityTransition)
@@ -156,7 +156,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelEmissiveStrength: DoubleValue by mutableStateOf(initialModelEmissiveStrength)
   /**
-   *  Defines the transition of [modelEmissiveStrength]. Default value: 0. Value range: [0, 5]
+   *  Defines the transition of [modelEmissiveStrength].
    */
   @MapboxExperimental
   public var modelEmissiveStrengthTransition: Transition by mutableStateOf(initialModelEmissiveStrengthTransition)
@@ -166,7 +166,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelHeightBasedEmissiveStrengthMultiplier: DoubleListValue by mutableStateOf(initialModelHeightBasedEmissiveStrengthMultiplier)
   /**
-   *  Defines the transition of [modelHeightBasedEmissiveStrengthMultiplier]. Default value: [1,1,1,1,0].
+   *  Defines the transition of [modelHeightBasedEmissiveStrengthMultiplier].
    */
   @MapboxExperimental
   public var modelHeightBasedEmissiveStrengthMultiplierTransition: Transition by mutableStateOf(initialModelHeightBasedEmissiveStrengthMultiplierTransition)
@@ -176,7 +176,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelOpacity: DoubleValue by mutableStateOf(initialModelOpacity)
   /**
-   *  Defines the transition of [modelOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [modelOpacity].
    */
   @MapboxExperimental
   public var modelOpacityTransition: Transition by mutableStateOf(initialModelOpacityTransition)
@@ -186,12 +186,12 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelReceiveShadows: BooleanValue by mutableStateOf(initialModelReceiveShadows)
   /**
-   *  The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0].
+   *  The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    */
   @MapboxExperimental
   public var modelRotation: DoubleListValue by mutableStateOf(initialModelRotation)
   /**
-   *  Defines the transition of [modelRotation]. Default value: [0,0,0].
+   *  Defines the transition of [modelRotation].
    */
   @MapboxExperimental
   public var modelRotationTransition: Transition by mutableStateOf(initialModelRotationTransition)
@@ -201,7 +201,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelRoughness: DoubleValue by mutableStateOf(initialModelRoughness)
   /**
-   *  Defines the transition of [modelRoughness]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [modelRoughness].
    */
   @MapboxExperimental
   public var modelRoughnessTransition: Transition by mutableStateOf(initialModelRoughnessTransition)
@@ -211,7 +211,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelScale: DoubleListValue by mutableStateOf(initialModelScale)
   /**
-   *  Defines the transition of [modelScale]. Default value: [1,1,1].
+   *  Defines the transition of [modelScale].
    */
   @MapboxExperimental
   public var modelScaleTransition: Transition by mutableStateOf(initialModelScaleTransition)
@@ -226,7 +226,7 @@ public class ModelLayerState private constructor(
   @MapboxExperimental
   public var modelTranslation: DoubleListValue by mutableStateOf(initialModelTranslation)
   /**
-   *  Defines the transition of [modelTranslation]. Default value: [0,0,0].
+   *  Defines the transition of [modelTranslation].
    */
   @MapboxExperimental
   public var modelTranslationTransition: Transition by mutableStateOf(initialModelTranslationTransition)

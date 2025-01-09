@@ -573,6 +573,125 @@ class SnowTest {
     assertTrue(valueSlot.captured.toString().contains("direction-transition={duration=100, delay=200}"))
   }
   @Test
+  fun flakeSizeSet() {
+    val snow = snow {
+      flakeSize(1.0)
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("flake-size=1.0"))
+  }
+
+  @Test
+  fun flakeSizeSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.flakeSize(1.0)
+    verify { style.setStyleSnowProperty("flake-size", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("1.0"))
+  }
+
+  @Test
+  fun flakeSizeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals(1.0.toString(), snow.flakeSize!!.toString())
+    verify { style.getStyleSnowProperty("flake-size") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun flakeSizeAsExpressionGetNull() {
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals(null, snow.flakeSizeAsExpression)
+    verify { style.getStyleSnowProperty("flake-size") }
+  }
+
+  @Test
+  fun flakeSizeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals(1.0, snow.flakeSizeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, snow.flakeSize!!, 1E-5)
+    verify { style.getStyleSnowProperty("flake-size") }
+  }
+
+  @Test
+  fun flakeSizeTransitionSet() {
+    val snow = snow {
+      flakeSizeTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("flake-size-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun flakeSizeTransitionSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.flakeSizeTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleSnowProperty("flake-size-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun flakeSizeTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val snow = snow {}
+    snow.bindTo(style)
+    assertEquals(transition.toValue().toString(), snow.flakeSizeTransition!!.toValue().toString())
+    verify { style.getStyleSnowProperty("flake-size-transition") }
+  }
+
+  @Test
+  fun flakeSizeTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val snow = snow {}
+    snow.bindTo(style)
+    assertEquals(null, snow.flakeSizeTransition)
+    verify { style.getStyleSnowProperty("flake-size-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun flakeSizeTransitionGetException() {
+    val snow = snow {}
+    snow.flakeSizeTransition
+  }
+
+  @Test
+  fun flakeSizeTransitionSetDsl() {
+    val snow = snow {
+      flakeSizeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("flake-size-transition={duration=100, delay=200}"))
+  }
+  @Test
   fun intensitySet() {
     val snow = snow {
       intensity(1.0)
@@ -928,6 +1047,179 @@ class SnowTest {
     snow.bindTo(style)
     verify { style.setStyleSnow(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("vignette-transition={duration=100, delay=200}"))
+  }
+  @Test
+  fun vignetteColorAsColorIntSet() {
+    val snow = snow {
+      vignetteColor(Color.CYAN)
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertEquals("{vignette-color=[rgba, 0, 255, 255, 1.0]}", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun vignetteColorAsColorIntSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.vignetteColor(Color.CYAN)
+    verify { style.setStyleSnowProperty("vignette-color", capture(valueSlot)) }
+    assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun vignetteColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val snow = snow {}
+    snow.bindTo(style)
+    assertEquals(Color.RED, snow.vignetteColorAsColorInt!!)
+    verify { style.getStyleSnowProperty("vignette-color") }
+  }
+
+  @Test
+  fun vignetteColorSet() {
+    val snow = snow {
+      vignetteColor("rgba(0, 0, 0, 1)")
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color=rgba(0, 0, 0, 1)"))
+  }
+
+  @Test
+  fun vignetteColorSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.vignetteColor("rgba(0, 0, 0, 1)")
+    verify { style.setStyleSnowProperty("vignette-color", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("rgba(0, 0, 0, 1)"))
+  }
+
+  @Test
+  fun vignetteColorGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals("rgba(0, 0, 0, 1)".toString(), snow.vignetteColor!!.toString())
+    verify { style.getStyleSnowProperty("vignette-color") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun vignetteColorAsExpressionGetNull() {
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals(null, snow.vignetteColorAsExpression)
+    verify { style.getStyleSnowProperty("vignette-color") }
+  }
+
+  @Test
+  fun vignetteColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val snow = snow {
+      vignetteColor(expression)
+    }
+    snow.bindTo(style)
+    assertEquals(expression.toString(), snow.vignetteColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", snow.vignetteColor)
+    assertEquals(Color.BLACK, snow.vignetteColorAsColorInt)
+    verify { style.getStyleSnowProperty("vignette-color") }
+  }
+
+  @Test
+  fun vignetteColorTransitionSet() {
+    val snow = snow {
+      vignetteColorTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun vignetteColorTransitionSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.vignetteColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleSnowProperty("vignette-color-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun vignetteColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val snow = snow {}
+    snow.bindTo(style)
+    assertEquals(transition.toValue().toString(), snow.vignetteColorTransition!!.toValue().toString())
+    verify { style.getStyleSnowProperty("vignette-color-transition") }
+  }
+
+  @Test
+  fun vignetteColorTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val snow = snow {}
+    snow.bindTo(style)
+    assertEquals(null, snow.vignetteColorTransition)
+    verify { style.getStyleSnowProperty("vignette-color-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun vignetteColorTransitionGetException() {
+    val snow = snow {}
+    snow.vignetteColorTransition
+  }
+
+  @Test
+  fun vignetteColorTransitionSetDsl() {
+    val snow = snow {
+      vignetteColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color-transition={duration=100, delay=200}"))
   }
 
   @Test

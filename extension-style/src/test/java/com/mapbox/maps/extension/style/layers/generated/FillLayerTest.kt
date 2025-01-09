@@ -160,6 +160,74 @@ class FillLayerTest {
   // Property getters and setters
 
   @Test
+  fun fillElevationReferenceSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillElevationReference(FillElevationReference.NONE)
+    verify { style.setStyleLayerProperty("id", "fill-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillElevationReferenceGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("none")
+
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(FillElevationReference.NONE, layer.fillElevationReference)
+    verify { style.getStyleLayerProperty("id", "fill-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillElevationReferenceAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillElevationReference(expression)
+    verify { style.setStyleLayerProperty("id", "fill-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillElevationReferenceAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillElevationReferenceAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-elevation-reference") }
+  }
+
+  @Test
+  fun fillElevationReferenceAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillElevationReferenceAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-elevation-reference") }
+  }
+
+  @Test
+  fun fillElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.fillElevationReferenceAsExpression?.toString())
+    assertEquals(FillElevationReference.NONE.value, layer.fillElevationReferenceAsExpression.toString())
+    assertEquals(FillElevationReference.NONE, layer.fillElevationReference)
+    verify { style.getStyleLayerProperty("id", "fill-elevation-reference") }
+  }
+
+  @Test
   fun fillSortKeySet() {
     val layer = fillLayer("id", "source") {}
     val testValue = 1.0
@@ -1221,6 +1289,39 @@ class FillLayerTest {
   }
 
   // Default property getter tests
+
+  @Test
+  fun defaultFillElevationReferenceTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("none")
+
+    assertEquals(FillElevationReference.NONE, FillLayer.defaultFillElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillElevationReferenceAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillElevationReferenceAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference") }
+  }
+
+  @Test
+  fun defaultFillElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), FillLayer.defaultFillElevationReferenceAsExpression?.toString())
+    assertEquals(FillElevationReference.NONE.value, FillLayer.defaultFillElevationReferenceAsExpression.toString())
+    assertEquals(FillElevationReference.NONE, FillLayer.defaultFillElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-elevation-reference") }
+  }
 
   @Test
   fun defaultFillSortKeyTest() {

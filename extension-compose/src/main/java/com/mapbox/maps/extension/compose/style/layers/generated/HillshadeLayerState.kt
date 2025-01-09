@@ -79,15 +79,15 @@ public class HillshadeLayerState private constructor(
    */
   public var hillshadeAccentColor: ColorValue by mutableStateOf(initialHillshadeAccentColor)
   /**
-   *  Defines the transition of [hillshadeAccentColor]. Default value: "#000000".
+   *  Defines the transition of [hillshadeAccentColor].
    */
   public var hillshadeAccentColorTransition: Transition by mutableStateOf(initialHillshadeAccentColorTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    */
   public var hillshadeEmissiveStrength: DoubleValue by mutableStateOf(initialHillshadeEmissiveStrength)
   /**
-   *  Defines the transition of [hillshadeEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [hillshadeEmissiveStrength].
    */
   public var hillshadeEmissiveStrengthTransition: Transition by mutableStateOf(initialHillshadeEmissiveStrengthTransition)
   /**
@@ -95,7 +95,7 @@ public class HillshadeLayerState private constructor(
    */
   public var hillshadeExaggeration: DoubleValue by mutableStateOf(initialHillshadeExaggeration)
   /**
-   *  Defines the transition of [hillshadeExaggeration]. Default value: 0.5. Value range: [0, 1]
+   *  Defines the transition of [hillshadeExaggeration].
    */
   public var hillshadeExaggerationTransition: Transition by mutableStateOf(initialHillshadeExaggerationTransition)
   /**
@@ -103,7 +103,7 @@ public class HillshadeLayerState private constructor(
    */
   public var hillshadeHighlightColor: ColorValue by mutableStateOf(initialHillshadeHighlightColor)
   /**
-   *  Defines the transition of [hillshadeHighlightColor]. Default value: "#FFFFFF".
+   *  Defines the transition of [hillshadeHighlightColor].
    */
   public var hillshadeHighlightColorTransition: Transition by mutableStateOf(initialHillshadeHighlightColorTransition)
   /**
@@ -119,7 +119,7 @@ public class HillshadeLayerState private constructor(
    */
   public var hillshadeShadowColor: ColorValue by mutableStateOf(initialHillshadeShadowColor)
   /**
-   *  Defines the transition of [hillshadeShadowColor]. Default value: "#000000".
+   *  Defines the transition of [hillshadeShadowColor].
    */
   public var hillshadeShadowColorTransition: Transition by mutableStateOf(initialHillshadeShadowColorTransition)
   /**

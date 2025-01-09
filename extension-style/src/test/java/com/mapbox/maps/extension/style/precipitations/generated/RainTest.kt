@@ -573,6 +573,244 @@ class RainTest {
     assertTrue(valueSlot.captured.toString().contains("direction-transition={duration=100, delay=200}"))
   }
   @Test
+  fun distortionStrengthSet() {
+    val rain = rain {
+      distortionStrength(1.0)
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("distortion-strength=1.0"))
+  }
+
+  @Test
+  fun distortionStrengthSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.distortionStrength(1.0)
+    verify { style.setStyleRainProperty("distortion-strength", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("1.0"))
+  }
+
+  @Test
+  fun distortionStrengthGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(1.0.toString(), rain.distortionStrength!!.toString())
+    verify { style.getStyleRainProperty("distortion-strength") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun distortionStrengthAsExpressionGetNull() {
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(null, rain.distortionStrengthAsExpression)
+    verify { style.getStyleRainProperty("distortion-strength") }
+  }
+
+  @Test
+  fun distortionStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(1.0, rain.distortionStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, rain.distortionStrength!!, 1E-5)
+    verify { style.getStyleRainProperty("distortion-strength") }
+  }
+
+  @Test
+  fun distortionStrengthTransitionSet() {
+    val rain = rain {
+      distortionStrengthTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("distortion-strength-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun distortionStrengthTransitionSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.distortionStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleRainProperty("distortion-strength-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun distortionStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(transition.toValue().toString(), rain.distortionStrengthTransition!!.toValue().toString())
+    verify { style.getStyleRainProperty("distortion-strength-transition") }
+  }
+
+  @Test
+  fun distortionStrengthTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(null, rain.distortionStrengthTransition)
+    verify { style.getStyleRainProperty("distortion-strength-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun distortionStrengthTransitionGetException() {
+    val rain = rain {}
+    rain.distortionStrengthTransition
+  }
+
+  @Test
+  fun distortionStrengthTransitionSetDsl() {
+    val rain = rain {
+      distortionStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("distortion-strength-transition={duration=100, delay=200}"))
+  }
+  @Test
+  fun dropletSizeSet() {
+    val rain = rain {
+      dropletSize(listOf(0.0, 1.0))
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("droplet-size=[0.0, 1.0]"))
+  }
+
+  @Test
+  fun dropletSizeSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.dropletSize(listOf(0.0, 1.0))
+    verify { style.setStyleRainProperty("droplet-size", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("[0.0, 1.0]"))
+  }
+
+  @Test
+  fun dropletSizeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(listOf(0.0, 1.0).toString(), rain.dropletSize!!.toString())
+    verify { style.getStyleRainProperty("droplet-size") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun dropletSizeAsExpressionGetNull() {
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(null, rain.dropletSizeAsExpression)
+    verify { style.getStyleRainProperty("droplet-size") }
+  }
+
+  @Test
+  fun dropletSizeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals("[literal, [0.0, 1.0]]", rain.dropletSizeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), rain.dropletSize)
+    verify { style.getStyleRainProperty("droplet-size") }
+  }
+
+  @Test
+  fun dropletSizeTransitionSet() {
+    val rain = rain {
+      dropletSizeTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("droplet-size-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun dropletSizeTransitionSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.dropletSizeTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleRainProperty("droplet-size-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun dropletSizeTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(transition.toValue().toString(), rain.dropletSizeTransition!!.toValue().toString())
+    verify { style.getStyleRainProperty("droplet-size-transition") }
+  }
+
+  @Test
+  fun dropletSizeTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(null, rain.dropletSizeTransition)
+    verify { style.getStyleRainProperty("droplet-size-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun dropletSizeTransitionGetException() {
+    val rain = rain {}
+    rain.dropletSizeTransition
+  }
+
+  @Test
+  fun dropletSizeTransitionSetDsl() {
+    val rain = rain {
+      dropletSizeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("droplet-size-transition={duration=100, delay=200}"))
+  }
+  @Test
   fun intensitySet() {
     val rain = rain {
       intensity(1.0)
@@ -928,6 +1166,179 @@ class RainTest {
     rain.bindTo(style)
     verify { style.setStyleRain(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("vignette-transition={duration=100, delay=200}"))
+  }
+  @Test
+  fun vignetteColorAsColorIntSet() {
+    val rain = rain {
+      vignetteColor(Color.CYAN)
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertEquals("{vignette-color=[rgba, 0, 255, 255, 1.0]}", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun vignetteColorAsColorIntSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.vignetteColor(Color.CYAN)
+    verify { style.setStyleRainProperty("vignette-color", capture(valueSlot)) }
+    assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun vignetteColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(Color.RED, rain.vignetteColorAsColorInt!!)
+    verify { style.getStyleRainProperty("vignette-color") }
+  }
+
+  @Test
+  fun vignetteColorSet() {
+    val rain = rain {
+      vignetteColor("rgba(0, 0, 0, 1)")
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color=rgba(0, 0, 0, 1)"))
+  }
+
+  @Test
+  fun vignetteColorSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.vignetteColor("rgba(0, 0, 0, 1)")
+    verify { style.setStyleRainProperty("vignette-color", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("rgba(0, 0, 0, 1)"))
+  }
+
+  @Test
+  fun vignetteColorGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals("rgba(0, 0, 0, 1)".toString(), rain.vignetteColor!!.toString())
+    verify { style.getStyleRainProperty("vignette-color") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun vignetteColorAsExpressionGetNull() {
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(null, rain.vignetteColorAsExpression)
+    verify { style.getStyleRainProperty("vignette-color") }
+  }
+
+  @Test
+  fun vignetteColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val rain = rain {
+      vignetteColor(expression)
+    }
+    rain.bindTo(style)
+    assertEquals(expression.toString(), rain.vignetteColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", rain.vignetteColor)
+    assertEquals(Color.BLACK, rain.vignetteColorAsColorInt)
+    verify { style.getStyleRainProperty("vignette-color") }
+  }
+
+  @Test
+  fun vignetteColorTransitionSet() {
+    val rain = rain {
+      vignetteColorTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun vignetteColorTransitionSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.vignetteColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleRainProperty("vignette-color-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun vignetteColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(transition.toValue().toString(), rain.vignetteColorTransition!!.toValue().toString())
+    verify { style.getStyleRainProperty("vignette-color-transition") }
+  }
+
+  @Test
+  fun vignetteColorTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val rain = rain {}
+    rain.bindTo(style)
+    assertEquals(null, rain.vignetteColorTransition)
+    verify { style.getStyleRainProperty("vignette-color-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun vignetteColorTransitionGetException() {
+    val rain = rain {}
+    rain.vignetteColorTransition
+  }
+
+  @Test
+  fun vignetteColorTransitionSetDsl() {
+    val rain = rain {
+      vignetteColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color-transition={duration=100, delay=200}"))
   }
 
   @Test

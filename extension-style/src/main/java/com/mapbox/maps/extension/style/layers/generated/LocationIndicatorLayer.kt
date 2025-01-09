@@ -380,11 +380,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    */
   val accuracyRadius: Double?
     /**
-     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
      *
      * Use static method [LocationIndicatorLayer.defaultAccuracyRadius] to get the default property.
      *
@@ -395,7 +395,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * Use static method [LocationIndicatorLayer.defaultAccuracyRadius] to set the default property.
    *
@@ -407,14 +407,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * This is an Expression representation of "accuracy-radius".
    *
    */
   val accuracyRadiusAsExpression: Expression?
     /**
-     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
      *
      * Get the AccuracyRadius property as an Expression
      *
@@ -433,7 +433,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusAsExpression] to set the default property.
    *
@@ -739,11 +739,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    */
   val bearing: Double?
     /**
-     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
      *
      * Use static method [LocationIndicatorLayer.defaultBearing] to get the default property.
      *
@@ -754,7 +754,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * Use static method [LocationIndicatorLayer.defaultBearing] to set the default property.
    *
@@ -766,14 +766,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * This is an Expression representation of "bearing".
    *
    */
   val bearingAsExpression: Expression?
     /**
-     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
      *
      * Get the Bearing property as an Expression
      *
@@ -792,7 +792,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * Use static method [LocationIndicatorLayer.defaultBearingAsExpression] to set the default property.
    *
@@ -838,11 +838,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    */
   val bearingImageSize: Double?
     /**
-     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
      *
      * Use static method [LocationIndicatorLayer.defaultBearingImageSize] to get the default property.
      *
@@ -853,7 +853,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * Use static method [LocationIndicatorLayer.defaultBearingImageSize] to set the default property.
    *
@@ -865,14 +865,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * This is an Expression representation of "bearing-image-size".
    *
    */
   val bearingImageSizeAsExpression: Expression?
     /**
-     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
      *
      * Get the BearingImageSize property as an Expression
      *
@@ -891,7 +891,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * Use static method [LocationIndicatorLayer.defaultBearingImageSizeAsExpression] to set the default property.
    *
@@ -1166,11 +1166,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    */
   val emphasisCircleRadius: Double?
     /**
-     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
      *
      * Use static method [LocationIndicatorLayer.defaultEmphasisCircleRadius] to get the default property.
      *
@@ -1181,7 +1181,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * Use static method [LocationIndicatorLayer.defaultEmphasisCircleRadius] to set the default property.
    *
@@ -1193,14 +1193,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * This is an Expression representation of "emphasis-circle-radius".
    *
    */
   val emphasisCircleRadiusAsExpression: Expression?
     /**
-     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
      *
      * Get the EmphasisCircleRadius property as an Expression
      *
@@ -1219,7 +1219,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * Use static method [LocationIndicatorLayer.defaultEmphasisCircleRadiusAsExpression] to set the default property.
    *
@@ -1265,11 +1265,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    */
   val imagePitchDisplacement: Double?
     /**
-     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
      *
      * Use static method [LocationIndicatorLayer.defaultImagePitchDisplacement] to get the default property.
      *
@@ -1280,7 +1280,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    *
    * Use static method [LocationIndicatorLayer.defaultImagePitchDisplacement] to set the default property.
    *
@@ -1292,14 +1292,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    *
    * This is an Expression representation of "image-pitch-displacement".
    *
    */
   val imagePitchDisplacementAsExpression: Expression?
     /**
-     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
      *
      * Get the ImagePitchDisplacement property as an Expression
      *
@@ -1318,7 +1318,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    *
    * Use static method [LocationIndicatorLayer.defaultImagePitchDisplacementAsExpression] to set the default property.
    *
@@ -1593,11 +1593,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    */
   val shadowImageSize: Double?
     /**
-     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
      *
      * Use static method [LocationIndicatorLayer.defaultShadowImageSize] to get the default property.
      *
@@ -1608,7 +1608,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * Use static method [LocationIndicatorLayer.defaultShadowImageSize] to set the default property.
    *
@@ -1620,14 +1620,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * This is an Expression representation of "shadow-image-size".
    *
    */
   val shadowImageSizeAsExpression: Expression?
     /**
-     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
      *
      * Get the ShadowImageSize property as an Expression
      *
@@ -1646,7 +1646,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * Use static method [LocationIndicatorLayer.defaultShadowImageSizeAsExpression] to set the default property.
    *
@@ -1692,11 +1692,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    */
   val topImageSize: Double?
     /**
-     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
      *
      * Use static method [LocationIndicatorLayer.defaultTopImageSize] to get the default property.
      *
@@ -1707,7 +1707,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * Use static method [LocationIndicatorLayer.defaultTopImageSize] to set the default property.
    *
@@ -1719,14 +1719,14 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * This is an Expression representation of "top-image-size".
    *
    */
   val topImageSizeAsExpression: Expression?
     /**
-     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
      *
      * Get the TopImageSize property as an Expression
      *
@@ -1745,7 +1745,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * Use static method [LocationIndicatorLayer.defaultTopImageSizeAsExpression] to set the default property.
    *
@@ -1961,11 +1961,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
      */
     val defaultAccuracyRadius: Double?
       /**
-       * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+       * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
        *
        * Get the default value of AccuracyRadius property
        *
@@ -1976,7 +1976,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
      *
      * This is an Expression representation of "accuracy-radius".
      *
@@ -2143,11 +2143,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-transition").silentUnwrap()
 
     /**
-     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
      */
     val defaultBearing: Double?
       /**
-       * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+       * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
        *
        * Get the default value of Bearing property
        *
@@ -2158,7 +2158,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+     * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
      *
      * This is an Expression representation of "bearing".
      *
@@ -2191,11 +2191,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-transition").silentUnwrap()
 
     /**
-     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
      */
     val defaultBearingImageSize: Double?
       /**
-       * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+       * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
        *
        * Get the default value of BearingImageSize property
        *
@@ -2206,7 +2206,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
      *
      * This is an Expression representation of "bearing-image-size".
      *
@@ -2354,11 +2354,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-glow-range-transition").silentUnwrap()
 
     /**
-     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
      */
     val defaultEmphasisCircleRadius: Double?
       /**
-       * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+       * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
        *
        * Get the default value of EmphasisCircleRadius property
        *
@@ -2369,7 +2369,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
      *
      * This is an Expression representation of "emphasis-circle-radius".
      *
@@ -2402,11 +2402,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-radius-transition").silentUnwrap()
 
     /**
-     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
      */
     val defaultImagePitchDisplacement: Double?
       /**
-       * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+       * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
        *
        * Get the default value of ImagePitchDisplacement property
        *
@@ -2417,7 +2417,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
      *
      * This is an Expression representation of "image-pitch-displacement".
      *
@@ -2572,11 +2572,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
      */
     val defaultShadowImageSize: Double?
       /**
-       * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+       * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
        *
        * Get the default value of ShadowImageSize property
        *
@@ -2587,7 +2587,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
      *
      * This is an Expression representation of "shadow-image-size".
      *
@@ -2620,11 +2620,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image-size-transition").silentUnwrap()
 
     /**
-     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
      */
     val defaultTopImageSize: Double?
       /**
-       * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+       * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
        *
        * Get the default value of TopImageSize property
        *
@@ -2635,7 +2635,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
-     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+     * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
      *
      * This is an Expression representation of "top-image-size".
      *
@@ -2767,21 +2767,21 @@ interface LocationIndicatorLayerDsl {
   fun topImage(topImage: Expression): LocationIndicatorLayer
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * @param accuracyRadius value of accuracyRadius
    */
   fun accuracyRadius(accuracyRadius: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * @param accuracyRadius value of accuracyRadius as Expression
    */
   fun accuracyRadius(accuracyRadius: Expression): LocationIndicatorLayer
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * Set the AccuracyRadius property transition options
    *
@@ -2790,7 +2790,7 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0.
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * DSL for [accuracyRadiusTransition].
    */
@@ -2871,21 +2871,21 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * @param bearing value of bearing
    */
   fun bearing(bearing: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * @param bearing value of bearing as Expression
    */
   fun bearing(bearing: Expression): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * Set the Bearing property transition options
    *
@@ -2894,28 +2894,28 @@ interface LocationIndicatorLayerDsl {
   fun bearingTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0.
+   * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * DSL for [bearingTransition].
    */
   fun bearingTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * @param bearingImageSize value of bearingImageSize
    */
   fun bearingImageSize(bearingImageSize: Double = 1.0): LocationIndicatorLayer
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * @param bearingImageSize value of bearingImageSize as Expression
    */
   fun bearingImageSize(bearingImageSize: Expression): LocationIndicatorLayer
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * Set the BearingImageSize property transition options
    *
@@ -2924,7 +2924,7 @@ interface LocationIndicatorLayerDsl {
   fun bearingImageSizeTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    *
    * DSL for [bearingImageSizeTransition].
    */
@@ -2998,21 +2998,21 @@ interface LocationIndicatorLayerDsl {
   fun emphasisCircleGlowRangeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius
    */
   fun emphasisCircleRadius(emphasisCircleRadius: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius as Expression
    */
   fun emphasisCircleRadius(emphasisCircleRadius: Expression): LocationIndicatorLayer
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * Set the EmphasisCircleRadius property transition options
    *
@@ -3021,21 +3021,21 @@ interface LocationIndicatorLayerDsl {
   fun emphasisCircleRadiusTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0.
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
    *
    * DSL for [emphasisCircleRadiusTransition].
    */
   fun emphasisCircleRadiusTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement
    */
   fun imagePitchDisplacement(imagePitchDisplacement: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0".
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement as Expression
    */
@@ -3116,21 +3116,21 @@ interface LocationIndicatorLayerDsl {
   fun perspectiveCompensation(perspectiveCompensation: Expression): LocationIndicatorLayer
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * @param shadowImageSize value of shadowImageSize
    */
   fun shadowImageSize(shadowImageSize: Double = 1.0): LocationIndicatorLayer
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * @param shadowImageSize value of shadowImageSize as Expression
    */
   fun shadowImageSize(shadowImageSize: Expression): LocationIndicatorLayer
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * Set the ShadowImageSize property transition options
    *
@@ -3139,28 +3139,28 @@ interface LocationIndicatorLayerDsl {
   fun shadowImageSizeTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * DSL for [shadowImageSizeTransition].
    */
   fun shadowImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * @param topImageSize value of topImageSize
    */
   fun topImageSize(topImageSize: Double = 1.0): LocationIndicatorLayer
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * @param topImageSize value of topImageSize as Expression
    */
   fun topImageSize(topImageSize: Expression): LocationIndicatorLayer
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * Set the TopImageSize property transition options
    *
@@ -3169,7 +3169,7 @@ interface LocationIndicatorLayerDsl {
   fun topImageSizeTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
-   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1.
+   * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    *
    * DSL for [topImageSizeTransition].
    */

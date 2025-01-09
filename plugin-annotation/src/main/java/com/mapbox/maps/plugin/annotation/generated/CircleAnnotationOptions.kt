@@ -46,7 +46,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-blur to initialise the circleAnnotation with.
    *
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    *
    * @param circleBlur the circle-blur value
    * @return this
@@ -64,7 +64,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-color to initialise the circleAnnotation with.
    *
-   * The fill color of the circle.
+   * The fill color of the circle. Default value: "#000000".
    *
    * @param circleColor the circle-color value
    * @return this
@@ -77,7 +77,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-color to initialise the circleAnnotation with.
    *
-   * The fill color of the circle.
+   * The fill color of the circle. Default value: "#000000".
    *
    * @param circleColor the circle-color value with ColorInt format
    * @return this
@@ -95,7 +95,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-opacity to initialise the circleAnnotation with.
    *
-   * The opacity at which the circle will be drawn.
+   * The opacity at which the circle will be drawn. Default value: 1. Value range: [0, 1]
    *
    * @param circleOpacity the circle-opacity value
    * @return this
@@ -106,14 +106,14 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * Circle radius. Default value: 5. Minimum value: 0.
+   * Circle radius. Default value: 5. Minimum value: 0. The unit of circleRadius is in pixels.
    */
   var circleRadius: Double? = null
 
   /**
    * Set circle-radius to initialise the circleAnnotation with.
    *
-   * Circle radius. The unit of circleRadius is in density-independent pixels.
+   * Circle radius. Default value: 5. Minimum value: 0. The unit of circleRadius is in pixels.
    *
    * @param circleRadius the circle-radius value
    * @return this
@@ -131,7 +131,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-stroke-color to initialise the circleAnnotation with.
    *
-   * The stroke color of the circle.
+   * The stroke color of the circle. Default value: "#000000".
    *
    * @param circleStrokeColor the circle-stroke-color value
    * @return this
@@ -144,7 +144,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-stroke-color to initialise the circleAnnotation with.
    *
-   * The stroke color of the circle.
+   * The stroke color of the circle. Default value: "#000000".
    *
    * @param circleStrokeColor the circle-stroke-color value with ColorInt format
    * @return this
@@ -162,7 +162,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-stroke-opacity to initialise the circleAnnotation with.
    *
-   * The opacity of the circle's stroke.
+   * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
    *
    * @param circleStrokeOpacity the circle-stroke-opacity value
    * @return this
@@ -173,14 +173,14 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
-   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0.
+   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
    */
   var circleStrokeWidth: Double? = null
 
   /**
    * Set circle-stroke-width to initialise the circleAnnotation with.
    *
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
+   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
    *
    * @param circleStrokeWidth the circle-stroke-width value
    * @return this

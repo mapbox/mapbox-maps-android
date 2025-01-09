@@ -110,7 +110,7 @@ public class RasterLayerState private constructor(
    */
   public var rasterBrightnessMax: DoubleValue by mutableStateOf(initialRasterBrightnessMax)
   /**
-   *  Defines the transition of [rasterBrightnessMax]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [rasterBrightnessMax].
    */
   public var rasterBrightnessMaxTransition: Transition by mutableStateOf(initialRasterBrightnessMaxTransition)
   /**
@@ -118,7 +118,7 @@ public class RasterLayerState private constructor(
    */
   public var rasterBrightnessMin: DoubleValue by mutableStateOf(initialRasterBrightnessMin)
   /**
-   *  Defines the transition of [rasterBrightnessMin]. Default value: 0. Value range: [0, 1]
+   *  Defines the transition of [rasterBrightnessMin].
    */
   public var rasterBrightnessMinTransition: Transition by mutableStateOf(initialRasterBrightnessMinTransition)
   /**
@@ -130,7 +130,7 @@ public class RasterLayerState private constructor(
    */
   public var rasterColorMix: DoubleListValue by mutableStateOf(initialRasterColorMix)
   /**
-   *  Defines the transition of [rasterColorMix]. Default value: [0.2126,0.7152,0.0722,0].
+   *  Defines the transition of [rasterColorMix].
    */
   public var rasterColorMixTransition: Transition by mutableStateOf(initialRasterColorMixTransition)
   /**
@@ -146,7 +146,7 @@ public class RasterLayerState private constructor(
    */
   public var rasterContrast: DoubleValue by mutableStateOf(initialRasterContrast)
   /**
-   *  Defines the transition of [rasterContrast]. Default value: 0. Value range: [-1, 1]
+   *  Defines the transition of [rasterContrast].
    */
   public var rasterContrastTransition: Transition by mutableStateOf(initialRasterContrastTransition)
   /**
@@ -155,28 +155,28 @@ public class RasterLayerState private constructor(
   @MapboxExperimental
   public var rasterElevation: DoubleValue by mutableStateOf(initialRasterElevation)
   /**
-   *  Defines the transition of [rasterElevation]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [rasterElevation].
    */
   @MapboxExperimental
   public var rasterElevationTransition: Transition by mutableStateOf(initialRasterElevationTransition)
   /**
-   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.
+   *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    */
   public var rasterEmissiveStrength: DoubleValue by mutableStateOf(initialRasterEmissiveStrength)
   /**
-   *  Defines the transition of [rasterEmissiveStrength]. Default value: 0. Minimum value: 0.
+   *  Defines the transition of [rasterEmissiveStrength].
    */
   public var rasterEmissiveStrengthTransition: Transition by mutableStateOf(initialRasterEmissiveStrengthTransition)
   /**
-   *  Fade duration when a new tile is added. Default value: 300. Minimum value: 0.
+   *  Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    */
   public var rasterFadeDuration: DoubleValue by mutableStateOf(initialRasterFadeDuration)
   /**
-   *  Rotates hues around the color wheel. Default value: 0.
+   *  Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    */
   public var rasterHueRotate: DoubleValue by mutableStateOf(initialRasterHueRotate)
   /**
-   *  Defines the transition of [rasterHueRotate]. Default value: 0.
+   *  Defines the transition of [rasterHueRotate].
    */
   public var rasterHueRotateTransition: Transition by mutableStateOf(initialRasterHueRotateTransition)
   /**
@@ -184,7 +184,7 @@ public class RasterLayerState private constructor(
    */
   public var rasterOpacity: DoubleValue by mutableStateOf(initialRasterOpacity)
   /**
-   *  Defines the transition of [rasterOpacity]. Default value: 1. Value range: [0, 1]
+   *  Defines the transition of [rasterOpacity].
    */
   public var rasterOpacityTransition: Transition by mutableStateOf(initialRasterOpacityTransition)
   /**
@@ -196,7 +196,7 @@ public class RasterLayerState private constructor(
    */
   public var rasterSaturation: DoubleValue by mutableStateOf(initialRasterSaturation)
   /**
-   *  Defines the transition of [rasterSaturation]. Default value: 0. Value range: [-1, 1]
+   *  Defines the transition of [rasterSaturation].
    */
   public var rasterSaturationTransition: Transition by mutableStateOf(initialRasterSaturationTransition)
   /**

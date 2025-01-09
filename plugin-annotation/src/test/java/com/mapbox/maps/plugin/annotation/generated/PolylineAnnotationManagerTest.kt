@@ -239,8 +239,8 @@ class PolylineAnnotationManagerTest {
     annotation.lineSortKey = null
     assertNull(annotation.lineSortKey)
 
-    annotation.lineZOffset = 1.0
-    assertEquals(1.0, annotation.lineZOffset)
+    annotation.lineZOffset = 0.0
+    assertEquals(0.0, annotation.lineZOffset)
     annotation.lineZOffset = null
     assertNull(annotation.lineZOffset)
 
@@ -739,7 +739,7 @@ class PolylineAnnotationManagerTest {
     verify(exactly = 0) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
     val options = PolylineAnnotationOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-      .withLineZOffset(1.0)
+      .withLineZOffset(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
     verify(exactly = 1) { manager.dragLayer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
@@ -755,7 +755,7 @@ class PolylineAnnotationManagerTest {
     verify(exactly = 0) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
     val options = PolylineAnnotationOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    manager.lineZOffset = 1.0
+    manager.lineZOffset = 0.0
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }
     verify(exactly = 1) { manager.dragLayer.lineZOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET)) }

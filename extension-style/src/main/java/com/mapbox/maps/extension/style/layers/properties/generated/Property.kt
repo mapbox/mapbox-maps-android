@@ -64,6 +64,65 @@ class Visibility private constructor(override val value: String) : LayerProperty
   }
 }
 
+// FILL_ELEVATION_REFERENCE: Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset.
+/**
+ * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class FillElevationReference private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is FillElevationReference &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "FillElevationReference(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Elevated rendering is disabled.
+     */
+    @JvmField
+    val NONE = FillElevationReference("none")
+    /**
+     * Elevate geometry relative to HD roads. Use this mode to describe base polygons of the road networks.
+     */
+    @JvmField
+    val HD_ROAD_BASE = FillElevationReference("hd-road-base")
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features such as 'hatched areas' that should exist only on top of road polygons.
+     */
+    @JvmField
+    val HD_ROAD_MARKUP = FillElevationReference("hd-road-markup")
+
+    /**
+     * Utility function to get [FillElevationReference] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): FillElevationReference {
+      return when (value) {
+        "NONE" -> NONE
+        "HD_ROAD_BASE" -> HD_ROAD_BASE
+        "HD_ROAD_MARKUP" -> HD_ROAD_MARKUP
+        else -> throw RuntimeException("FillElevationReference.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // LINE_CAP: The display of line endings.
 /**
  * The display of line endings.
@@ -118,6 +177,71 @@ class LineCap private constructor(override val value: String) : LayerProperty {
         "ROUND" -> ROUND
         "SQUARE" -> SQUARE
         else -> throw RuntimeException("LineCap.valueOf does not support [$value]")
+      }
+    }
+  }
+}
+// LINE_ELEVATION_REFERENCE: Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset.
+/**
+ * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class LineElevationReference private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is LineElevationReference &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "LineElevationReference(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Elevated rendering is disabled.
+     */
+    @JvmField
+    val NONE = LineElevationReference("none")
+    /**
+     * Elevated rendering is enabled. Use this mode to elevate lines relative to the sea level.
+     */
+    @JvmField
+    val SEA = LineElevationReference("sea")
+    /**
+     * Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them.
+     */
+    @JvmField
+    val GROUND = LineElevationReference("ground")
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features that should exist only on top of road polygons.
+     */
+    @JvmField
+    val HD_ROAD_MARKUP = LineElevationReference("hd-road-markup")
+
+    /**
+     * Utility function to get [LineElevationReference] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): LineElevationReference {
+      return when (value) {
+        "NONE" -> NONE
+        "SEA" -> SEA
+        "GROUND" -> GROUND
+        "HD_ROAD_MARKUP" -> HD_ROAD_MARKUP
+        else -> throw RuntimeException("LineElevationReference.valueOf does not support [$value]")
       }
     }
   }
@@ -182,6 +306,59 @@ class LineJoin private constructor(override val value: String) : LayerProperty {
         "MITER" -> MITER
         "NONE" -> NONE
         else -> throw RuntimeException("LineJoin.valueOf does not support [$value]")
+      }
+    }
+  }
+}
+// LINE_WIDTH_UNIT: Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release.
+/**
+ * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class LineWidthUnit private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is LineWidthUnit &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "LineWidthUnit(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Width is rendered in pixels.
+     */
+    @JvmField
+    val PIXELS = LineWidthUnit("pixels")
+    /**
+     * Width is rendered in meters.
+     */
+    @JvmField
+    val METERS = LineWidthUnit("meters")
+
+    /**
+     * Utility function to get [LineWidthUnit] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): LineWidthUnit {
+      return when (value) {
+        "PIXELS" -> PIXELS
+        "METERS" -> METERS
+        else -> throw RuntimeException("LineWidthUnit.valueOf does not support [$value]")
       }
     }
   }
@@ -499,6 +676,11 @@ class SymbolElevationReference private constructor(override val value: String) :
      */
     @JvmField
     val GROUND = SymbolElevationReference("ground")
+    /**
+     * Use this mode to enable elevated behavior for features that are rendered on top of 3D road polygons. The feature is currently being developed.
+     */
+    @JvmField
+    val HD_ROAD_MARKUP = SymbolElevationReference("hd-road-markup")
 
     /**
      * Utility function to get [SymbolElevationReference] instance from given [value].
@@ -508,6 +690,7 @@ class SymbolElevationReference private constructor(override val value: String) :
       return when (value) {
         "SEA" -> SEA
         "GROUND" -> GROUND
+        "HD_ROAD_MARKUP" -> HD_ROAD_MARKUP
         else -> throw RuntimeException("SymbolElevationReference.valueOf does not support [$value]")
       }
     }
@@ -605,7 +788,7 @@ class SymbolZOrder private constructor(override val value: String) : LayerProper
     @JvmField
     val AUTO = SymbolZOrder("auto")
     /**
-     * Sorts symbols by their y-position relative to the viewport if {@link ICON_ALLOW_OVERLAP} or {@link TEXT_ALLOW_OVERLAP} is set to {@link TRUE} or {@link ICON_IGNORE_PLACEMENT} or {@link TEXT_IGNORE_PLACEMENT} is {@link FALSE}.
+     * Sorts symbols by their y-position relative to the viewport if any of the following is set to {@link TRUE}: {@link ICON_ALLOW_OVERLAP}, {@link TEXT_ALLOW_OVERLAP}, {@link ICON_IGNORE_PLACEMENT}, {@link TEXT_IGNORE_PLACEMENT}.
      */
     @JvmField
     val VIEWPORT_Y = SymbolZOrder("viewport-y")
@@ -1699,6 +1882,7 @@ class ModelType private constructor(override val value: String) : LayerProperty 
  *
  * @param value String value of this property
  */
+@MapboxExperimental
 class BackgroundPitchAlignment private constructor(override val value: String) : LayerProperty {
 
   /**
@@ -1727,7 +1911,7 @@ class BackgroundPitchAlignment private constructor(override val value: String) :
     @JvmField
     val MAP = BackgroundPitchAlignment("map")
     /**
-     * The background is aligned to the plane of the viewport, covering the whole screen.
+     * The background is aligned to the plane of the viewport, covering the whole screen. Note: This mode disables the automatic reordering of the layer when terrain or globe projection is used.
      */
     @JvmField
     val VIEWPORT = BackgroundPitchAlignment("viewport")

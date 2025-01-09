@@ -706,11 +706,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    */
   val iconPadding: Double?
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
      *
      * Use static method [SymbolLayer.defaultIconPadding] to get the default property.
      *
@@ -721,7 +721,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconPadding] to set the default property.
    *
@@ -733,14 +733,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    *
    * This is an Expression representation of "icon-padding".
    *
    */
   val iconPaddingAsExpression: Expression?
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
      *
      * Get the IconPadding property as an Expression
      *
@@ -759,7 +759,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconPaddingAsExpression] to set the default property.
    *
@@ -839,11 +839,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the icon clockwise. Default value: 0.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    */
   val iconRotate: Double?
     /**
-     * Rotates the icon clockwise. Default value: 0.
+     * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
      *
      * Use static method [SymbolLayer.defaultIconRotate] to get the default property.
      *
@@ -854,7 +854,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the icon clockwise. Default value: 0.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    *
    * Use static method [SymbolLayer.defaultIconRotate] to set the default property.
    *
@@ -866,14 +866,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the icon clockwise. Default value: 0.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    *
    * This is an Expression representation of "icon-rotate".
    *
    */
   val iconRotateAsExpression: Expression?
     /**
-     * Rotates the icon clockwise. Default value: 0.
+     * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
      *
      * Get the IconRotate property as an Expression
      *
@@ -892,7 +892,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the icon clockwise. Default value: 0.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    *
    * Use static method [SymbolLayer.defaultIconRotateAsExpression] to set the default property.
    *
@@ -972,11 +972,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    */
   val iconSize: Double?
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
      *
      * Use static method [SymbolLayer.defaultIconSize] to get the default property.
      *
@@ -987,7 +987,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    *
    * Use static method [SymbolLayer.defaultIconSize] to set the default property.
    *
@@ -999,14 +999,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    *
    * This is an Expression representation of "icon-size".
    *
    */
   val iconSizeAsExpression: Expression?
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
      *
      * Get the IconSize property as an Expression
      *
@@ -1025,7 +1025,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    *
    * Use static method [SymbolLayer.defaultIconSizeAsExpression] to set the default property.
    *
@@ -1033,6 +1033,75 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun iconSize(iconSize: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-size", iconSize)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   */
+  @MapboxExperimental
+  val iconSizeScaleRange: List<Double>?
+    /**
+     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     *
+     * Use static method [SymbolLayer.defaultIconSizeScaleRange] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("icon-size-scale-range")
+    }
+
+  /**
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * Use static method [SymbolLayer.defaultIconSizeScaleRange] to set the default property.
+   *
+   * @param iconSizeScaleRange value of iconSizeScaleRange
+   */
+  @MapboxExperimental
+  override fun iconSizeScaleRange(iconSizeScaleRange: List<Double>): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-size-scale-range", iconSizeScaleRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * This is an Expression representation of "icon-size-scale-range".
+   *
+   */
+  @MapboxExperimental
+  val iconSizeScaleRangeAsExpression: Expression?
+    /**
+     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     *
+     * Get the IconSizeScaleRange property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultIconSizeScaleRangeAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("icon-size-scale-range")?.let {
+        return it
+      }
+      iconSizeScaleRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * Use static method [SymbolLayer.defaultIconSizeScaleRangeAsExpression] to set the default property.
+   *
+   * @param iconSizeScaleRange value of iconSizeScaleRange as Expression
+   */
+  @MapboxExperimental
+  override fun iconSizeScaleRange(iconSizeScaleRange: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-size-scale-range", iconSizeScaleRange)
     setProperty(propertyValue)
   }
 
@@ -1105,11 +1174,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    */
   val iconTextFitPadding: List<Double>?
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
      *
      * Use static method [SymbolLayer.defaultIconTextFitPadding] to get the default property.
      *
@@ -1120,7 +1189,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconTextFitPadding] to set the default property.
    *
@@ -1132,14 +1201,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    *
    * This is an Expression representation of "icon-text-fit-padding".
    *
    */
   val iconTextFitPaddingAsExpression: Expression?
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
      *
      * Get the IconTextFitPadding property as an Expression
      *
@@ -1158,7 +1227,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconTextFitPaddingAsExpression] to set the default property.
    *
@@ -1440,11 +1509,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    */
   val symbolSpacing: Double?
     /**
-     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
      *
      * Use static method [SymbolLayer.defaultSymbolSpacing] to get the default property.
      *
@@ -1455,7 +1524,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    *
    * Use static method [SymbolLayer.defaultSymbolSpacing] to set the default property.
    *
@@ -1467,14 +1536,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    *
    * This is an Expression representation of "symbol-spacing".
    *
    */
   val symbolSpacingAsExpression: Expression?
     /**
-     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
      *
      * Get the SymbolSpacing property as an Expression
      *
@@ -1493,7 +1562,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    *
    * Use static method [SymbolLayer.defaultSymbolSpacingAsExpression] to set the default property.
    *
@@ -2138,11 +2207,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text tracking amount. Default value: 0.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    */
   val textLetterSpacing: Double?
     /**
-     * Text tracking amount. Default value: 0.
+     * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
      *
      * Use static method [SymbolLayer.defaultTextLetterSpacing] to get the default property.
      *
@@ -2153,7 +2222,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text tracking amount. Default value: 0.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    *
    * Use static method [SymbolLayer.defaultTextLetterSpacing] to set the default property.
    *
@@ -2165,14 +2234,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text tracking amount. Default value: 0.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    *
    * This is an Expression representation of "text-letter-spacing".
    *
    */
   val textLetterSpacingAsExpression: Expression?
     /**
-     * Text tracking amount. Default value: 0.
+     * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
      *
      * Get the TextLetterSpacing property as an Expression
      *
@@ -2191,7 +2260,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text tracking amount. Default value: 0.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    *
    * Use static method [SymbolLayer.defaultTextLetterSpacingAsExpression] to set the default property.
    *
@@ -2203,11 +2272,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text leading value for multi-line text. Default value: 1.2.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    */
   val textLineHeight: Double?
     /**
-     * Text leading value for multi-line text. Default value: 1.2.
+     * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
      *
      * Use static method [SymbolLayer.defaultTextLineHeight] to get the default property.
      *
@@ -2218,7 +2287,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text leading value for multi-line text. Default value: 1.2.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    *
    * Use static method [SymbolLayer.defaultTextLineHeight] to set the default property.
    *
@@ -2230,14 +2299,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Text leading value for multi-line text. Default value: 1.2.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    *
    * This is an Expression representation of "text-line-height".
    *
    */
   val textLineHeightAsExpression: Expression?
     /**
-     * Text leading value for multi-line text. Default value: 1.2.
+     * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
      *
      * Get the TextLineHeight property as an Expression
      *
@@ -2256,7 +2325,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Text leading value for multi-line text. Default value: 1.2.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    *
    * Use static method [SymbolLayer.defaultTextLineHeightAsExpression] to set the default property.
    *
@@ -2268,11 +2337,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Maximum angle change between adjacent characters. Default value: 45.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    */
   val textMaxAngle: Double?
     /**
-     * Maximum angle change between adjacent characters. Default value: 45.
+     * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
      *
      * Use static method [SymbolLayer.defaultTextMaxAngle] to get the default property.
      *
@@ -2283,7 +2352,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Maximum angle change between adjacent characters. Default value: 45.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    *
    * Use static method [SymbolLayer.defaultTextMaxAngle] to set the default property.
    *
@@ -2295,14 +2364,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Maximum angle change between adjacent characters. Default value: 45.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    *
    * This is an Expression representation of "text-max-angle".
    *
    */
   val textMaxAngleAsExpression: Expression?
     /**
-     * Maximum angle change between adjacent characters. Default value: 45.
+     * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
      *
      * Get the TextMaxAngle property as an Expression
      *
@@ -2321,7 +2390,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Maximum angle change between adjacent characters. Default value: 45.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    *
    * Use static method [SymbolLayer.defaultTextMaxAngleAsExpression] to set the default property.
    *
@@ -2333,11 +2402,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    */
   val textMaxWidth: Double?
     /**
-     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
      *
      * Use static method [SymbolLayer.defaultTextMaxWidth] to get the default property.
      *
@@ -2348,7 +2417,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    *
    * Use static method [SymbolLayer.defaultTextMaxWidth] to set the default property.
    *
@@ -2360,14 +2429,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    *
    * This is an Expression representation of "text-max-width".
    *
    */
   val textMaxWidthAsExpression: Expression?
     /**
-     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
      *
      * Get the TextMaxWidth property as an Expression
      *
@@ -2386,7 +2455,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    *
    * Use static method [SymbolLayer.defaultTextMaxWidthAsExpression] to set the default property.
    *
@@ -2398,11 +2467,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    */
   val textOffset: List<Double>?
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
      *
      * Use static method [SymbolLayer.defaultTextOffset] to get the default property.
      *
@@ -2413,7 +2482,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    *
    * Use static method [SymbolLayer.defaultTextOffset] to set the default property.
    *
@@ -2425,14 +2494,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    *
    * This is an Expression representation of "text-offset".
    *
    */
   val textOffsetAsExpression: Expression?
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
      *
      * Get the TextOffset property as an Expression
      *
@@ -2451,7 +2520,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    *
    * Use static method [SymbolLayer.defaultTextOffsetAsExpression] to set the default property.
    *
@@ -2528,11 +2597,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    */
   val textPadding: Double?
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
      *
      * Use static method [SymbolLayer.defaultTextPadding] to get the default property.
      *
@@ -2543,7 +2612,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextPadding] to set the default property.
    *
@@ -2555,14 +2624,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    *
    * This is an Expression representation of "text-padding".
    *
    */
   val textPaddingAsExpression: Expression?
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
      *
      * Get the TextPadding property as an Expression
      *
@@ -2581,7 +2650,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextPaddingAsExpression] to set the default property.
    *
@@ -2661,11 +2730,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    */
   val textRadialOffset: Double?
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
      *
      * Use static method [SymbolLayer.defaultTextRadialOffset] to get the default property.
      *
@@ -2676,7 +2745,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    *
    * Use static method [SymbolLayer.defaultTextRadialOffset] to set the default property.
    *
@@ -2688,14 +2757,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    *
    * This is an Expression representation of "text-radial-offset".
    *
    */
   val textRadialOffsetAsExpression: Expression?
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
      *
      * Get the TextRadialOffset property as an Expression
      *
@@ -2714,7 +2783,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    *
    * Use static method [SymbolLayer.defaultTextRadialOffsetAsExpression] to set the default property.
    *
@@ -2726,11 +2795,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the text clockwise. Default value: 0.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    */
   val textRotate: Double?
     /**
-     * Rotates the text clockwise. Default value: 0.
+     * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
      *
      * Use static method [SymbolLayer.defaultTextRotate] to get the default property.
      *
@@ -2741,7 +2810,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the text clockwise. Default value: 0.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    *
    * Use static method [SymbolLayer.defaultTextRotate] to set the default property.
    *
@@ -2753,14 +2822,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Rotates the text clockwise. Default value: 0.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    *
    * This is an Expression representation of "text-rotate".
    *
    */
   val textRotateAsExpression: Expression?
     /**
-     * Rotates the text clockwise. Default value: 0.
+     * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
      *
      * Get the TextRotate property as an Expression
      *
@@ -2779,7 +2848,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Rotates the text clockwise. Default value: 0.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    *
    * Use static method [SymbolLayer.defaultTextRotateAsExpression] to set the default property.
    *
@@ -2859,11 +2928,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Font size. Default value: 16. Minimum value: 0.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    */
   val textSize: Double?
     /**
-     * Font size. Default value: 16. Minimum value: 0.
+     * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
      *
      * Use static method [SymbolLayer.defaultTextSize] to get the default property.
      *
@@ -2874,7 +2943,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Font size. Default value: 16. Minimum value: 0.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextSize] to set the default property.
    *
@@ -2886,14 +2955,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Font size. Default value: 16. Minimum value: 0.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    *
    * This is an Expression representation of "text-size".
    *
    */
   val textSizeAsExpression: Expression?
     /**
-     * Font size. Default value: 16. Minimum value: 0.
+     * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
      *
      * Get the TextSize property as an Expression
      *
@@ -2912,7 +2981,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Font size. Default value: 16. Minimum value: 0.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextSizeAsExpression] to set the default property.
    *
@@ -2920,6 +2989,75 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun textSize(textSize: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-size", textSize)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   */
+  @MapboxExperimental
+  val textSizeScaleRange: List<Double>?
+    /**
+     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     *
+     * Use static method [SymbolLayer.defaultTextSizeScaleRange] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("text-size-scale-range")
+    }
+
+  /**
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * Use static method [SymbolLayer.defaultTextSizeScaleRange] to set the default property.
+   *
+   * @param textSizeScaleRange value of textSizeScaleRange
+   */
+  @MapboxExperimental
+  override fun textSizeScaleRange(textSizeScaleRange: List<Double>): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-size-scale-range", textSizeScaleRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * This is an Expression representation of "text-size-scale-range".
+   *
+   */
+  @MapboxExperimental
+  val textSizeScaleRangeAsExpression: Expression?
+    /**
+     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     *
+     * Get the TextSizeScaleRange property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultTextSizeScaleRangeAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("text-size-scale-range")?.let {
+        return it
+      }
+      textSizeScaleRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * Use static method [SymbolLayer.defaultTextSizeScaleRangeAsExpression] to set the default property.
+   *
+   * @param textSizeScaleRange value of textSizeScaleRange as Expression
+   */
+  @MapboxExperimental
+  override fun textSizeScaleRange(textSizeScaleRange: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-size-scale-range", textSizeScaleRange)
     setProperty(propertyValue)
   }
 
@@ -3351,11 +3489,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    */
   val iconEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
      *
      * Use static method [SymbolLayer.defaultIconEmissiveStrength] to get the default property.
      *
@@ -3366,7 +3504,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrength] to set the default property.
    *
@@ -3378,14 +3516,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "icon-emissive-strength".
    *
    */
   val iconEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
      *
      * Get the IconEmissiveStrength property as an Expression
      *
@@ -3404,7 +3542,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to set the default property.
    *
@@ -3450,11 +3588,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    */
   val iconHaloBlur: Double?
     /**
-     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
      *
      * Use static method [SymbolLayer.defaultIconHaloBlur] to get the default property.
      *
@@ -3465,7 +3603,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconHaloBlur] to set the default property.
    *
@@ -3477,14 +3615,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * This is an Expression representation of "icon-halo-blur".
    *
    */
   val iconHaloBlurAsExpression: Expression?
     /**
-     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
      *
      * Get the IconHaloBlur property as an Expression
      *
@@ -3503,7 +3641,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconHaloBlurAsExpression] to set the default property.
    *
@@ -3679,11 +3817,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    */
   val iconHaloWidth: Double?
     /**
-     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
      *
      * Use static method [SymbolLayer.defaultIconHaloWidth] to get the default property.
      *
@@ -3694,7 +3832,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconHaloWidth] to set the default property.
    *
@@ -3706,14 +3844,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * This is an Expression representation of "icon-halo-width".
    *
    */
   val iconHaloWidthAsExpression: Expression?
     /**
-     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
      *
      * Get the IconHaloWidth property as an Expression
      *
@@ -3732,7 +3870,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconHaloWidthAsExpression] to set the default property.
    *
@@ -4075,11 +4213,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    */
   val iconTranslate: List<Double>?
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
      *
      * Use static method [SymbolLayer.defaultIconTranslate] to get the default property.
      *
@@ -4090,7 +4228,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconTranslate] to set the default property.
    *
@@ -4102,14 +4240,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * This is an Expression representation of "icon-translate".
    *
    */
   val iconTranslateAsExpression: Expression?
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
      *
      * Get the IconTranslate property as an Expression
      *
@@ -4128,7 +4266,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * Use static method [SymbolLayer.defaultIconTranslateAsExpression] to set the default property.
    *
@@ -4478,11 +4616,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    */
   val textEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
      *
      * Use static method [SymbolLayer.defaultTextEmissiveStrength] to get the default property.
      *
@@ -4493,7 +4631,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrength] to set the default property.
    *
@@ -4505,14 +4643,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * This is an Expression representation of "text-emissive-strength".
    *
    */
   val textEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
      *
      * Get the TextEmissiveStrength property as an Expression
      *
@@ -4531,7 +4669,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to set the default property.
    *
@@ -4577,11 +4715,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    */
   val textHaloBlur: Double?
     /**
-     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
      *
      * Use static method [SymbolLayer.defaultTextHaloBlur] to get the default property.
      *
@@ -4592,7 +4730,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextHaloBlur] to set the default property.
    *
@@ -4604,14 +4742,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * This is an Expression representation of "text-halo-blur".
    *
    */
   val textHaloBlurAsExpression: Expression?
     /**
-     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
      *
      * Get the TextHaloBlur property as an Expression
      *
@@ -4630,7 +4768,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextHaloBlurAsExpression] to set the default property.
    *
@@ -4806,11 +4944,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    */
   val textHaloWidth: Double?
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
      *
      * Use static method [SymbolLayer.defaultTextHaloWidth] to get the default property.
      *
@@ -4821,7 +4959,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextHaloWidth] to set the default property.
    *
@@ -4833,14 +4971,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * This is an Expression representation of "text-halo-width".
    *
    */
   val textHaloWidthAsExpression: Expression?
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
      *
      * Get the TextHaloWidth property as an Expression
      *
@@ -4859,7 +4997,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextHaloWidthAsExpression] to set the default property.
    *
@@ -5103,11 +5241,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    */
   val textTranslate: List<Double>?
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
      *
      * Use static method [SymbolLayer.defaultTextTranslate] to get the default property.
      *
@@ -5118,7 +5256,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextTranslate] to set the default property.
    *
@@ -5130,14 +5268,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * This is an Expression representation of "text-translate".
    *
    */
   val textTranslateAsExpression: Expression?
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
      *
      * Get the TextTranslate property as an Expression
      *
@@ -5156,7 +5294,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * Use static method [SymbolLayer.defaultTextTranslateAsExpression] to set the default property.
    *
@@ -5591,11 +5729,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
      */
     val defaultIconPadding: Double?
       /**
-       * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+       * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
        *
        * Get the default value of IconPadding property
        *
@@ -5606,7 +5744,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
      *
      * This is an Expression representation of "icon-padding".
      *
@@ -5668,11 +5806,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the icon clockwise. Default value: 0.
+     * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
      */
     val defaultIconRotate: Double?
       /**
-       * Rotates the icon clockwise. Default value: 0.
+       * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
        *
        * Get the default value of IconRotate property
        *
@@ -5683,7 +5821,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the icon clockwise. Default value: 0.
+     * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
      *
      * This is an Expression representation of "icon-rotate".
      *
@@ -5745,11 +5883,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
      */
     val defaultIconSize: Double?
       /**
-       * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+       * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
        *
        * Get the default value of IconSize property
        *
@@ -5760,7 +5898,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+     * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
      *
      * This is an Expression representation of "icon-size".
      *
@@ -5776,6 +5914,45 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
           return it
         }
         defaultIconSize?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     */
+    @MapboxExperimental
+    val defaultIconSizeScaleRange: List<Double>?
+      /**
+       * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+       *
+       * Get the default value of IconSizeScaleRange property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range").silentUnwrap()
+      }
+
+    /**
+     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     *
+     * This is an Expression representation of "icon-size-scale-range".
+     *
+     */
+    @MapboxExperimental
+    val defaultIconSizeScaleRangeAsExpression: Expression?
+      /**
+       * Get default value of the IconSizeScaleRange property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultIconSizeScaleRange?.let {
           return Expression.literal(it)
         }
         return null
@@ -5822,11 +5999,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
      */
     val defaultIconTextFitPadding: List<Double>?
       /**
-       * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+       * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
        *
        * Get the default value of IconTextFitPadding property
        *
@@ -5837,7 +6014,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+     * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
      *
      * This is an Expression representation of "icon-text-fit-padding".
      *
@@ -6015,11 +6192,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
      */
     val defaultSymbolSpacing: Double?
       /**
-       * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+       * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
        *
        * Get the default value of SymbolSpacing property
        *
@@ -6030,7 +6207,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+     * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
      *
      * This is an Expression representation of "symbol-spacing".
      *
@@ -6412,11 +6589,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text tracking amount. Default value: 0.
+     * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
      */
     val defaultTextLetterSpacing: Double?
       /**
-       * Text tracking amount. Default value: 0.
+       * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
        *
        * Get the default value of TextLetterSpacing property
        *
@@ -6427,7 +6604,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text tracking amount. Default value: 0.
+     * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
      *
      * This is an Expression representation of "text-letter-spacing".
      *
@@ -6449,11 +6626,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text leading value for multi-line text. Default value: 1.2.
+     * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
      */
     val defaultTextLineHeight: Double?
       /**
-       * Text leading value for multi-line text. Default value: 1.2.
+       * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
        *
        * Get the default value of TextLineHeight property
        *
@@ -6464,7 +6641,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Text leading value for multi-line text. Default value: 1.2.
+     * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
      *
      * This is an Expression representation of "text-line-height".
      *
@@ -6486,11 +6663,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Maximum angle change between adjacent characters. Default value: 45.
+     * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
      */
     val defaultTextMaxAngle: Double?
       /**
-       * Maximum angle change between adjacent characters. Default value: 45.
+       * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
        *
        * Get the default value of TextMaxAngle property
        *
@@ -6501,7 +6678,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Maximum angle change between adjacent characters. Default value: 45.
+     * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
      *
      * This is an Expression representation of "text-max-angle".
      *
@@ -6523,11 +6700,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
      */
     val defaultTextMaxWidth: Double?
       /**
-       * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+       * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
        *
        * Get the default value of TextMaxWidth property
        *
@@ -6538,7 +6715,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+     * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
      *
      * This is an Expression representation of "text-max-width".
      *
@@ -6560,11 +6737,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
      */
     val defaultTextOffset: List<Double>?
       /**
-       * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+       * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
        *
        * Get the default value of TextOffset property
        *
@@ -6575,7 +6752,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+     * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
      *
      * This is an Expression representation of "text-offset".
      *
@@ -6634,11 +6811,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
      */
     val defaultTextPadding: Double?
       /**
-       * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+       * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
        *
        * Get the default value of TextPadding property
        *
@@ -6649,7 +6826,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+     * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
      *
      * This is an Expression representation of "text-padding".
      *
@@ -6711,11 +6888,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
      */
     val defaultTextRadialOffset: Double?
       /**
-       * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+       * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
        *
        * Get the default value of TextRadialOffset property
        *
@@ -6726,7 +6903,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+     * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
      *
      * This is an Expression representation of "text-radial-offset".
      *
@@ -6748,11 +6925,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the text clockwise. Default value: 0.
+     * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
      */
     val defaultTextRotate: Double?
       /**
-       * Rotates the text clockwise. Default value: 0.
+       * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
        *
        * Get the default value of TextRotate property
        *
@@ -6763,7 +6940,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Rotates the text clockwise. Default value: 0.
+     * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
      *
      * This is an Expression representation of "text-rotate".
      *
@@ -6825,11 +7002,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Font size. Default value: 16. Minimum value: 0.
+     * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
      */
     val defaultTextSize: Double?
       /**
-       * Font size. Default value: 16. Minimum value: 0.
+       * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
        *
        * Get the default value of TextSize property
        *
@@ -6840,7 +7017,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Font size. Default value: 16. Minimum value: 0.
+     * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
      *
      * This is an Expression representation of "text-size".
      *
@@ -6856,6 +7033,45 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
           return it
         }
         defaultTextSize?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     */
+    @MapboxExperimental
+    val defaultTextSizeScaleRange: List<Double>?
+      /**
+       * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+       *
+       * Get the default value of TextSizeScaleRange property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range").silentUnwrap()
+      }
+
+    /**
+     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     *
+     * This is an Expression representation of "text-size-scale-range".
+     *
+     */
+    @MapboxExperimental
+    val defaultTextSizeScaleRangeAsExpression: Expression?
+      /**
+       * Get default value of the TextSizeScaleRange property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultTextSizeScaleRange?.let {
           return Expression.literal(it)
         }
         return null
@@ -7091,11 +7307,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
      */
     val defaultIconEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
        *
        * Get the default value of IconEmissiveStrength property
        *
@@ -7106,7 +7322,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "icon-emissive-strength".
      *
@@ -7139,11 +7355,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength-transition").silentUnwrap()
 
     /**
-     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
      */
     val defaultIconHaloBlur: Double?
       /**
-       * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+       * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
        *
        * Get the default value of IconHaloBlur property
        *
@@ -7154,7 +7370,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+     * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
      *
      * This is an Expression representation of "icon-halo-blur".
      *
@@ -7254,11 +7470,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-color-transition").silentUnwrap()
 
     /**
-     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
      */
     val defaultIconHaloWidth: Double?
       /**
-       * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+       * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
        *
        * Get the default value of IconHaloWidth property
        *
@@ -7269,7 +7485,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+     * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
      *
      * This is an Expression representation of "icon-halo-width".
      *
@@ -7446,11 +7662,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-opacity-transition").silentUnwrap()
 
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
      */
     val defaultIconTranslate: List<Double>?
       /**
-       * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+       * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
        *
        * Get the default value of IconTranslate property
        *
@@ -7461,7 +7677,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
      *
      * This is an Expression representation of "icon-translate".
      *
@@ -7652,11 +7868,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
      */
     val defaultTextEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+       * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
        *
        * Get the default value of TextEmissiveStrength property
        *
@@ -7667,7 +7883,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+     * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
      *
      * This is an Expression representation of "text-emissive-strength".
      *
@@ -7700,11 +7916,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength-transition").silentUnwrap()
 
     /**
-     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
      */
     val defaultTextHaloBlur: Double?
       /**
-       * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+       * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
        *
        * Get the default value of TextHaloBlur property
        *
@@ -7715,7 +7931,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+     * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
      *
      * This is an Expression representation of "text-halo-blur".
      *
@@ -7815,11 +8031,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-color-transition").silentUnwrap()
 
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
      */
     val defaultTextHaloWidth: Double?
       /**
-       * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+       * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
        *
        * Get the default value of TextHaloWidth property
        *
@@ -7830,7 +8046,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+     * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
      *
      * This is an Expression representation of "text-halo-width".
      *
@@ -7959,11 +8175,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-opacity-transition").silentUnwrap()
 
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
      */
     val defaultTextTranslate: List<Double>?
       /**
-       * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+       * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
        *
        * Get the default value of TextTranslate property
        *
@@ -7974,7 +8190,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+     * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
      *
      * This is an Expression representation of "text-translate".
      *
@@ -8222,14 +8438,14 @@ interface SymbolLayerDsl {
   fun iconOptional(iconOptional: Expression): SymbolLayer
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    *
    * @param iconPadding value of iconPadding
    */
   fun iconPadding(iconPadding: Double = 2.0): SymbolLayer
 
   /**
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
    *
    * @param iconPadding value of iconPadding as Expression
    */
@@ -8250,14 +8466,14 @@ interface SymbolLayerDsl {
   fun iconPitchAlignment(iconPitchAlignment: Expression): SymbolLayer
 
   /**
-   * Rotates the icon clockwise. Default value: 0.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    *
    * @param iconRotate value of iconRotate
    */
   fun iconRotate(iconRotate: Double = 0.0): SymbolLayer
 
   /**
-   * Rotates the icon clockwise. Default value: 0.
+   * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
    *
    * @param iconRotate value of iconRotate as Expression
    */
@@ -8278,18 +8494,34 @@ interface SymbolLayerDsl {
   fun iconRotationAlignment(iconRotationAlignment: Expression): SymbolLayer
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    *
    * @param iconSize value of iconSize
    */
   fun iconSize(iconSize: Double = 1.0): SymbolLayer
 
   /**
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
    *
    * @param iconSize value of iconSize as Expression
    */
   fun iconSize(iconSize: Expression): SymbolLayer
+
+  /**
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * @param iconSizeScaleRange value of iconSizeScaleRange
+   */
+  @MapboxExperimental
+  fun iconSizeScaleRange(iconSizeScaleRange: List<Double> = listOf(0.8, 2.0)): SymbolLayer
+
+  /**
+   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * @param iconSizeScaleRange value of iconSizeScaleRange as Expression
+   */
+  @MapboxExperimental
+  fun iconSizeScaleRange(iconSizeScaleRange: Expression): SymbolLayer
 
   /**
    * Scales the icon to fit around the associated text. Default value: "none".
@@ -8306,14 +8538,14 @@ interface SymbolLayerDsl {
   fun iconTextFit(iconTextFit: Expression): SymbolLayer
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    *
    * @param iconTextFitPadding value of iconTextFitPadding
    */
   fun iconTextFitPadding(iconTextFitPadding: List<Double> = listOf(0.0, 0.0, 0.0, 0.0)): SymbolLayer
 
   /**
-   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0].
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
    *
    * @param iconTextFitPadding value of iconTextFitPadding as Expression
    */
@@ -8378,14 +8610,14 @@ interface SymbolLayerDsl {
   fun symbolSortKey(symbolSortKey: Expression): SymbolLayer
 
   /**
-   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    *
    * @param symbolSpacing value of symbolSpacing
    */
   fun symbolSpacing(symbolSpacing: Double = 250.0): SymbolLayer
 
   /**
-   * Distance between two symbol anchors. Default value: 250. Minimum value: 1.
+   * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
    *
    * @param symbolSpacing value of symbolSpacing as Expression
    */
@@ -8534,70 +8766,70 @@ interface SymbolLayerDsl {
   fun textKeepUpright(textKeepUpright: Expression): SymbolLayer
 
   /**
-   * Text tracking amount. Default value: 0.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    *
    * @param textLetterSpacing value of textLetterSpacing
    */
   fun textLetterSpacing(textLetterSpacing: Double = 0.0): SymbolLayer
 
   /**
-   * Text tracking amount. Default value: 0.
+   * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
    *
    * @param textLetterSpacing value of textLetterSpacing as Expression
    */
   fun textLetterSpacing(textLetterSpacing: Expression): SymbolLayer
 
   /**
-   * Text leading value for multi-line text. Default value: 1.2.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    *
    * @param textLineHeight value of textLineHeight
    */
   fun textLineHeight(textLineHeight: Double = 1.2): SymbolLayer
 
   /**
-   * Text leading value for multi-line text. Default value: 1.2.
+   * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
    *
    * @param textLineHeight value of textLineHeight as Expression
    */
   fun textLineHeight(textLineHeight: Expression): SymbolLayer
 
   /**
-   * Maximum angle change between adjacent characters. Default value: 45.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    *
    * @param textMaxAngle value of textMaxAngle
    */
   fun textMaxAngle(textMaxAngle: Double = 45.0): SymbolLayer
 
   /**
-   * Maximum angle change between adjacent characters. Default value: 45.
+   * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
    *
    * @param textMaxAngle value of textMaxAngle as Expression
    */
   fun textMaxAngle(textMaxAngle: Expression): SymbolLayer
 
   /**
-   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    *
    * @param textMaxWidth value of textMaxWidth
    */
   fun textMaxWidth(textMaxWidth: Double = 10.0): SymbolLayer
 
   /**
-   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0.
+   * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
    *
    * @param textMaxWidth value of textMaxWidth as Expression
    */
   fun textMaxWidth(textMaxWidth: Expression): SymbolLayer
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    *
    * @param textOffset value of textOffset
    */
   fun textOffset(textOffset: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0].
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
    *
    * @param textOffset value of textOffset as Expression
    */
@@ -8618,14 +8850,14 @@ interface SymbolLayerDsl {
   fun textOptional(textOptional: Expression): SymbolLayer
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    *
    * @param textPadding value of textPadding
    */
   fun textPadding(textPadding: Double = 2.0): SymbolLayer
 
   /**
-   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
    *
    * @param textPadding value of textPadding as Expression
    */
@@ -8646,28 +8878,28 @@ interface SymbolLayerDsl {
   fun textPitchAlignment(textPitchAlignment: Expression): SymbolLayer
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    *
    * @param textRadialOffset value of textRadialOffset
    */
   fun textRadialOffset(textRadialOffset: Double = 0.0): SymbolLayer
 
   /**
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
    *
    * @param textRadialOffset value of textRadialOffset as Expression
    */
   fun textRadialOffset(textRadialOffset: Expression): SymbolLayer
 
   /**
-   * Rotates the text clockwise. Default value: 0.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    *
    * @param textRotate value of textRotate
    */
   fun textRotate(textRotate: Double = 0.0): SymbolLayer
 
   /**
-   * Rotates the text clockwise. Default value: 0.
+   * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
    *
    * @param textRotate value of textRotate as Expression
    */
@@ -8688,18 +8920,34 @@ interface SymbolLayerDsl {
   fun textRotationAlignment(textRotationAlignment: Expression): SymbolLayer
 
   /**
-   * Font size. Default value: 16. Minimum value: 0.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    *
    * @param textSize value of textSize
    */
   fun textSize(textSize: Double = 16.0): SymbolLayer
 
   /**
-   * Font size. Default value: 16. Minimum value: 0.
+   * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
    *
    * @param textSize value of textSize as Expression
    */
   fun textSize(textSize: Expression): SymbolLayer
+
+  /**
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * @param textSizeScaleRange value of textSizeScaleRange
+   */
+  @MapboxExperimental
+  fun textSizeScaleRange(textSizeScaleRange: List<Double> = listOf(0.8, 2.0)): SymbolLayer
+
+  /**
+   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   *
+   * @param textSizeScaleRange value of textSizeScaleRange as Expression
+   */
+  @MapboxExperimental
+  fun textSizeScaleRange(textSizeScaleRange: Expression): SymbolLayer
 
   /**
    * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
@@ -8811,21 +9059,21 @@ interface SymbolLayerDsl {
   fun iconColorSaturationTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength
    */
   fun iconEmissiveStrength(iconEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
    */
   fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * Set the IconEmissiveStrength property transition options
    *
@@ -8834,28 +9082,28 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
    *
    * DSL for [iconEmissiveStrengthTransition].
    */
   fun iconEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * @param iconHaloBlur value of iconHaloBlur
    */
   fun iconHaloBlur(iconHaloBlur: Double = 0.0): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * @param iconHaloBlur value of iconHaloBlur as Expression
    */
   fun iconHaloBlur(iconHaloBlur: Expression): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * Set the IconHaloBlur property transition options
    *
@@ -8864,7 +9112,7 @@ interface SymbolLayerDsl {
   fun iconHaloBlurTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0.
+   * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
    *
    * DSL for [iconHaloBlurTransition].
    */
@@ -8908,21 +9156,21 @@ interface SymbolLayerDsl {
   fun iconHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * @param iconHaloWidth value of iconHaloWidth
    */
   fun iconHaloWidth(iconHaloWidth: Double = 0.0): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * @param iconHaloWidth value of iconHaloWidth as Expression
    */
   fun iconHaloWidth(iconHaloWidth: Expression): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * Set the IconHaloWidth property transition options
    *
@@ -8931,7 +9179,7 @@ interface SymbolLayerDsl {
   fun iconHaloWidthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0.
+   * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    *
    * DSL for [iconHaloWidthTransition].
    */
@@ -9028,21 +9276,21 @@ interface SymbolLayerDsl {
   fun iconOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * @param iconTranslate value of iconTranslate
    */
   fun iconTranslate(iconTranslate: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * @param iconTranslate value of iconTranslate as Expression
    */
   fun iconTranslate(iconTranslate: Expression): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * Set the IconTranslate property transition options
    *
@@ -9051,7 +9299,7 @@ interface SymbolLayerDsl {
   fun iconTranslateTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
    *
    * DSL for [iconTranslateTransition].
    */
@@ -9143,21 +9391,21 @@ interface SymbolLayerDsl {
   fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * @param textEmissiveStrength value of textEmissiveStrength
    */
   fun textEmissiveStrength(textEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * @param textEmissiveStrength value of textEmissiveStrength as Expression
    */
   fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * Set the TextEmissiveStrength property transition options
    *
@@ -9166,28 +9414,28 @@ interface SymbolLayerDsl {
   fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0.
+   * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * DSL for [textEmissiveStrengthTransition].
    */
   fun textEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * @param textHaloBlur value of textHaloBlur
    */
   fun textHaloBlur(textHaloBlur: Double = 0.0): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * @param textHaloBlur value of textHaloBlur as Expression
    */
   fun textHaloBlur(textHaloBlur: Expression): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * Set the TextHaloBlur property transition options
    *
@@ -9196,7 +9444,7 @@ interface SymbolLayerDsl {
   fun textHaloBlurTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0.
+   * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
    *
    * DSL for [textHaloBlurTransition].
    */
@@ -9240,21 +9488,21 @@ interface SymbolLayerDsl {
   fun textHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * @param textHaloWidth value of textHaloWidth
    */
   fun textHaloWidth(textHaloWidth: Double = 0.0): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * @param textHaloWidth value of textHaloWidth as Expression
    */
   fun textHaloWidth(textHaloWidth: Expression): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * Set the TextHaloWidth property transition options
    *
@@ -9263,7 +9511,7 @@ interface SymbolLayerDsl {
   fun textHaloWidthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
    *
    * DSL for [textHaloWidthTransition].
    */
@@ -9330,21 +9578,21 @@ interface SymbolLayerDsl {
   fun textOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * @param textTranslate value of textTranslate
    */
   fun textTranslate(textTranslate: List<Double> = listOf(0.0, 0.0)): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * @param textTranslate value of textTranslate as Expression
    */
   fun textTranslate(textTranslate: Expression): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * Set the TextTranslate property transition options
    *
@@ -9353,7 +9601,7 @@ interface SymbolLayerDsl {
   fun textTranslateTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0].
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
    *
    * DSL for [textTranslateTransition].
    */

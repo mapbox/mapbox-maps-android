@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.light.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.Light
@@ -418,6 +419,62 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   override fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight = apply {
     shadowIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  val shadowQuality: Double?
+    /**
+     * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+     *
+     * @return shadowQuality as Double
+     */
+    get() {
+      return getPropertyValue("shadow-quality")
+    }
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+   *
+   * @param shadowQuality as Double
+   */
+  @MapboxExperimental
+  override fun shadowQuality(shadowQuality: Double): DirectionalLight = apply {
+    setProperty(PropertyValue("shadow-quality", shadowQuality))
+  }
+
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+   *
+   * This is an Expression representation of "shadow-quality".
+   */
+  @MapboxExperimental
+  val shadowQualityAsExpression: Expression?
+    /**
+     * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+     *
+     * Get the ShadowQuality property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("shadow-quality")?.let {
+        return it
+      }
+      shadowQuality?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+   *
+   * @param shadowQuality value of shadowQuality as Expression
+   */
+  @MapboxExperimental
+  override fun shadowQuality(shadowQuality: Expression): DirectionalLight = apply {
+    val propertyValue = PropertyValue("shadow-quality", shadowQuality)
+    setProperty(propertyValue)
+  }
 
   /**
    * Get the type of this light
@@ -562,6 +619,22 @@ interface DirectionalLightDslReceiver {
    * DSL for [shadowIntensityTransition].
    */
   fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
+
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+   *
+   * @param shadowQuality as Double
+   */
+  @MapboxExperimental
+  fun shadowQuality(shadowQuality: Double = 1.0): DirectionalLight
+
+  /**
+   * Determines the quality of the shadows on the map. A value of 1 ensures the highest quality and is the default value. Default value: 1. Value range: [0, 1]
+   *
+   * @param shadowQuality value of shadowQuality as Expression
+   */
+  @MapboxExperimental
+  fun shadowQuality(shadowQuality: Expression): DirectionalLight
 }
 
 /**

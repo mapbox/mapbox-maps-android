@@ -43,31 +43,31 @@ public class CircleAnnotationState private constructor(
   */
   public var interactionsState: CircleAnnotationInteractionsState by mutableStateOf(initialCircleAnnotationInteractionsState)
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
    */
   public var circleBlur: Double? by mutableStateOf(initialCircleBlur)
   /**
-   * The fill color of the circle.
+   * The fill color of the circle. Default value: "#000000".
    */
   public var circleColor: Color? by mutableStateOf(initialCircleColor)
   /**
-   * The opacity at which the circle will be drawn.
+   * The opacity at which the circle will be drawn. Default value: 1. Value range: [0, 1]
    */
   public var circleOpacity: Double? by mutableStateOf(initialCircleOpacity)
   /**
-   * Circle radius. The unit of circleRadius is in density-independent pixels.
+   * Circle radius. Default value: 5. Minimum value: 0. The unit of circleRadius is in pixels.
    */
   public var circleRadius: Double? by mutableStateOf(initialCircleRadius)
   /**
-   * The stroke color of the circle.
+   * The stroke color of the circle. Default value: "#000000".
    */
   public var circleStrokeColor: Color? by mutableStateOf(initialCircleStrokeColor)
   /**
-   * The opacity of the circle's stroke.
+   * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
    */
   public var circleStrokeOpacity: Double? by mutableStateOf(initialCircleStrokeOpacity)
   /**
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
+   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
    */
   public var circleStrokeWidth: Double? by mutableStateOf(initialCircleStrokeWidth)
 
