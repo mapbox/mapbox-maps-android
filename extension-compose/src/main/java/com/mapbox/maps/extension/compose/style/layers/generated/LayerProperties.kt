@@ -618,7 +618,7 @@ public data class IconPitchAlignmentValue(public val value: Value) {
     public val VIEWPORT: IconPitchAlignmentValue = IconPitchAlignmentValue(Value("viewport"))
 
     /**
-     * Automatically matches the value of {@link ICON_ROTATION_ALIGNMENT}.
+     * Automatically matches the value of `icon-rotation-alignment`.
      */
     @JvmField
     public val AUTO: IconPitchAlignmentValue = IconPitchAlignmentValue(Value("auto"))
@@ -665,19 +665,19 @@ public data class IconRotationAlignmentValue(public val value: Value) {
     public val DEFAULT: IconRotationAlignmentValue = IconRotationAlignmentValue(Value.nullValue())
 
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, aligns icons east-west. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, aligns icon x-axes with the line.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], aligns icons east-west. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] aligns icon x-axes with the line.
      */
     @JvmField
     public val MAP: IconRotationAlignmentValue = IconRotationAlignmentValue(Value("map"))
 
     /**
-     * Produces icons whose x-axes are aligned with the x-axis of the viewport, regardless of the value of {@link SYMBOL_PLACEMENT}.
+     * Produces icons whose x-axes are aligned with the x-axis of the viewport, regardless of the value of `symbol-placement`.
      */
     @JvmField
     public val VIEWPORT: IconRotationAlignmentValue = IconRotationAlignmentValue(Value("viewport"))
 
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, this is equivalent to {@link Property#ICON_ROTATION_ALIGNMENT_VIEWPORT}. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, this is equivalent to {@link Property#ICON_ROTATION_ALIGNMENT_MAP}.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], this is equivalent to [IconRotationAlignment.VIEWPORT]. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] this is equivalent to [IconRotationAlignment.MAP].
      */
     @JvmField
     public val AUTO: IconRotationAlignmentValue = IconRotationAlignmentValue(Value("auto"))
@@ -855,13 +855,13 @@ public data class SymbolPlacementValue(public val value: Value) {
     public val POINT: SymbolPlacementValue = SymbolPlacementValue(Value("point"))
 
     /**
-     * The label is placed along the line of the geometry. Can only be used on LineString and Polygon geometries.
+     * The label is placed along the line of the geometry. Can only be used on `LineString` and `Polygon` geometries.
      */
     @JvmField
     public val LINE: SymbolPlacementValue = SymbolPlacementValue(Value("line"))
 
     /**
-     * The label is placed at the center of the line of the geometry. Can only be used on LineString and Polygon geometries. Note that a single feature in a vector tile may contain multiple line geometries.
+     * The label is placed at the center of the line of the geometry. Can only be used on `LineString` and `Polygon` geometries. Note that a single feature in a vector tile may contain multiple line geometries.
      */
     @JvmField
     public val LINE_CENTER: SymbolPlacementValue = SymbolPlacementValue(Value("line-center"))
@@ -908,19 +908,19 @@ public data class SymbolZOrderValue(public val value: Value) {
     public val DEFAULT: SymbolZOrderValue = SymbolZOrderValue(Value.nullValue())
 
     /**
-     * Sorts symbols by symbol sort key if set. Otherwise, sorts symbols by their y-position relative to the viewport if {@link ICON_ALLOW_OVERLAP} or {@link TEXT_ALLOW_OVERLAP} is set to {@link TRUE} or {@link ICON_IGNORE_PLACEMENT} or {@link TEXT_IGNORE_PLACEMENT} is {@link FALSE}.
+     * Sorts symbols by `symbol-sort-key` if set. Otherwise, sorts symbols by their y-position relative to the viewport if `icon-allow-overlap` or `text-allow-overlap` is set to `true` or `icon-ignore-placement` or `text-ignore-placement` is `false`.
      */
     @JvmField
     public val AUTO: SymbolZOrderValue = SymbolZOrderValue(Value("auto"))
 
     /**
-     * Sorts symbols by their y-position relative to the viewport if any of the following is set to {@link TRUE}: {@link ICON_ALLOW_OVERLAP}, {@link TEXT_ALLOW_OVERLAP}, {@link ICON_IGNORE_PLACEMENT}, {@link TEXT_IGNORE_PLACEMENT}.
+     * Sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`.
      */
     @JvmField
     public val VIEWPORT_Y: SymbolZOrderValue = SymbolZOrderValue(Value("viewport-y"))
 
     /**
-     * Sorts symbols by symbol sort key if set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
+     * Sorts symbols by `symbol-sort-key` if set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     public val SOURCE: SymbolZOrderValue = SymbolZOrderValue(Value("source"))
@@ -1139,7 +1139,7 @@ public data class TextPitchAlignmentValue(public val value: Value) {
     public val VIEWPORT: TextPitchAlignmentValue = TextPitchAlignmentValue(Value("viewport"))
 
     /**
-     * Automatically matches the value of {@link TEXT_ROTATION_ALIGNMENT}.
+     * Automatically matches the value of `text-rotation-alignment`.
      */
     @JvmField
     public val AUTO: TextPitchAlignmentValue = TextPitchAlignmentValue(Value("auto"))
@@ -1186,19 +1186,19 @@ public data class TextRotationAlignmentValue(public val value: Value) {
     public val DEFAULT: TextRotationAlignmentValue = TextRotationAlignmentValue(Value.nullValue())
 
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, aligns text east-west. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, aligns text x-axes with the line.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], aligns text east-west. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] aligns text x-axes with the line.
      */
     @JvmField
     public val MAP: TextRotationAlignmentValue = TextRotationAlignmentValue(Value("map"))
 
     /**
-     * Produces glyphs whose x-axes are aligned with the x-axis of the viewport, regardless of the value of {@link SYMBOL_PLACEMENT}.
+     * Produces glyphs whose x-axes are aligned with the x-axis of the viewport, regardless of the value of `symbol-placement`.
      */
     @JvmField
     public val VIEWPORT: TextRotationAlignmentValue = TextRotationAlignmentValue(Value("viewport"))
 
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, this is equivalent to {@link Property#TEXT_ROTATION_ALIGNMENT_VIEWPORT}. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, this is equivalent to {@link Property#TEXT_ROTATION_ALIGNMENT_MAP}.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], this is equivalent to [TextRotationAlignment.VIEWPORT]. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] this is equivalent to [TextRotationAlignment.MAP].
      */
     @JvmField
     public val AUTO: TextRotationAlignmentValue = TextRotationAlignmentValue(Value("auto"))
@@ -2184,13 +2184,13 @@ public data class SkyTypeValue(public val value: Value) {
     public val DEFAULT: SkyTypeValue = SkyTypeValue(Value.nullValue())
 
     /**
-     * Renders the sky with a gradient that can be configured with {@link SKY_GRADIENT_RADIUS} and {@link SKY_GRADIENT}.
+     * Renders the sky with a gradient that can be configured with `sky-gradient-radius` and `sky-gradient`.
      */
     @JvmField
     public val GRADIENT: SkyTypeValue = SkyTypeValue(Value("gradient"))
 
     /**
-     * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through {@link SKY_ATMOSPHERE_SUN}.
+     * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through `sky-atmosphere-sun`.
      */
     @JvmField
     public val ATMOSPHERE: SkyTypeValue = SkyTypeValue(Value("atmosphere"))

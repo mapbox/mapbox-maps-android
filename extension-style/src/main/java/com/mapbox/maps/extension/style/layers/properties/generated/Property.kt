@@ -496,7 +496,7 @@ class IconPitchAlignment private constructor(override val value: String) : Layer
     @JvmField
     val VIEWPORT = IconPitchAlignment("viewport")
     /**
-     * Automatically matches the value of {@link ICON_ROTATION_ALIGNMENT}.
+     * Automatically matches the value of [IconRotationAlignment].
      */
     @JvmField
     val AUTO = IconPitchAlignment("auto")
@@ -544,17 +544,17 @@ class IconRotationAlignment private constructor(override val value: String) : La
    */
   companion object {
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, aligns icons east-west. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, aligns icon x-axes with the line.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], aligns icons east-west. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] aligns icon x-axes with the line.
      */
     @JvmField
     val MAP = IconRotationAlignment("map")
     /**
-     * Produces icons whose x-axes are aligned with the x-axis of the viewport, regardless of the value of {@link SYMBOL_PLACEMENT}.
+     * Produces icons whose x-axes are aligned with the x-axis of the viewport, regardless of the value of [SymbolPlacement].
      */
     @JvmField
     val VIEWPORT = IconRotationAlignment("viewport")
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, this is equivalent to {@link Property#ICON_ROTATION_ALIGNMENT_VIEWPORT}. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, this is equivalent to {@link Property#ICON_ROTATION_ALIGNMENT_MAP}.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], this is equivalent to [IconRotationAlignment.VIEWPORT]. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] this is equivalent to [IconRotationAlignment.MAP].
      */
     @JvmField
     val AUTO = IconRotationAlignment("auto")
@@ -730,12 +730,12 @@ class SymbolPlacement private constructor(override val value: String) : LayerPro
     @JvmField
     val POINT = SymbolPlacement("point")
     /**
-     * The label is placed along the line of the geometry. Can only be used on LineString and Polygon geometries.
+     * The label is placed along the line of the geometry. Can only be used on `LineString` and `Polygon` geometries.
      */
     @JvmField
     val LINE = SymbolPlacement("line")
     /**
-     * The label is placed at the center of the line of the geometry. Can only be used on LineString and Polygon geometries. Note that a single feature in a vector tile may contain multiple line geometries.
+     * The label is placed at the center of the line of the geometry. Can only be used on `LineString` and `Polygon` geometries. Note that a single feature in a vector tile may contain multiple line geometries.
      */
     @JvmField
     val LINE_CENTER = SymbolPlacement("line-center")
@@ -783,17 +783,17 @@ class SymbolZOrder private constructor(override val value: String) : LayerProper
    */
   companion object {
     /**
-     * Sorts symbols by symbol sort key if set. Otherwise, sorts symbols by their y-position relative to the viewport if {@link ICON_ALLOW_OVERLAP} or {@link TEXT_ALLOW_OVERLAP} is set to {@link TRUE} or {@link ICON_IGNORE_PLACEMENT} or {@link TEXT_IGNORE_PLACEMENT} is {@link FALSE}.
+     * Sorts symbols by `symbol-sort-key` if set. Otherwise, sorts symbols by their y-position relative to the viewport if `icon-allow-overlap` or `text-allow-overlap` is set to `true` or `icon-ignore-placement` or `text-ignore-placement` is `false`.
      */
     @JvmField
     val AUTO = SymbolZOrder("auto")
     /**
-     * Sorts symbols by their y-position relative to the viewport if any of the following is set to {@link TRUE}: {@link ICON_ALLOW_OVERLAP}, {@link TEXT_ALLOW_OVERLAP}, {@link ICON_IGNORE_PLACEMENT}, {@link TEXT_IGNORE_PLACEMENT}.
+     * Sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`.
      */
     @JvmField
     val VIEWPORT_Y = SymbolZOrder("viewport-y")
     /**
-     * Sorts symbols by symbol sort key if set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
+     * Sorts symbols by `symbol-sort-key` if set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     val SOURCE = SymbolZOrder("source")
@@ -1009,7 +1009,7 @@ class TextPitchAlignment private constructor(override val value: String) : Layer
     @JvmField
     val VIEWPORT = TextPitchAlignment("viewport")
     /**
-     * Automatically matches the value of {@link TEXT_ROTATION_ALIGNMENT}.
+     * Automatically matches the value of [TextRotationAlignment].
      */
     @JvmField
     val AUTO = TextPitchAlignment("auto")
@@ -1057,17 +1057,17 @@ class TextRotationAlignment private constructor(override val value: String) : La
    */
   companion object {
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, aligns text east-west. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, aligns text x-axes with the line.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], aligns text east-west. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] aligns text x-axes with the line.
      */
     @JvmField
     val MAP = TextRotationAlignment("map")
     /**
-     * Produces glyphs whose x-axes are aligned with the x-axis of the viewport, regardless of the value of {@link SYMBOL_PLACEMENT}.
+     * Produces glyphs whose x-axes are aligned with the x-axis of the viewport, regardless of the value of [SymbolPlacement].
      */
     @JvmField
     val VIEWPORT = TextRotationAlignment("viewport")
     /**
-     * When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, this is equivalent to {@link Property#TEXT_ROTATION_ALIGNMENT_VIEWPORT}. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, this is equivalent to {@link Property#TEXT_ROTATION_ALIGNMENT_MAP}.
+     * When [SymbolPlacement] is set to [SymbolPlacement.POINT], this is equivalent to [TextRotationAlignment.VIEWPORT]. When [SymbolPlacement] is set to [SymbolPlacement.LINE] or [SymbolPlacement.LINE_CENTER] this is equivalent to [TextRotationAlignment.MAP].
      */
     @JvmField
     val AUTO = TextRotationAlignment("auto")
@@ -1958,12 +1958,12 @@ class SkyType private constructor(override val value: String) : LayerProperty {
    */
   companion object {
     /**
-     * Renders the sky with a gradient that can be configured with {@link SKY_GRADIENT_RADIUS} and {@link SKY_GRADIENT}.
+     * Renders the sky with a gradient that can be configured with `sky-gradient-radius` and `sky-gradient`.
      */
     @JvmField
     val GRADIENT = SkyType("gradient")
     /**
-     * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through {@link SKY_ATMOSPHERE_SUN}.
+     * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through `sky-atmosphere-sun`.
      */
     @JvmField
     val ATMOSPHERE = SkyType("atmosphere")
