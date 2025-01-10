@@ -181,6 +181,7 @@ class GesturesPluginTest {
     every { gesturesManager.rotateGestureDetector } returns rotateGestureDetector
     every { gesturesManager.standardScaleGestureDetector } returns scaleGestureDetector
     every { gesturesManager.shoveGestureDetector } returns shoveGestureDetector
+    every { shoveGestureDetector.isInProgress } returns false
     every { gesturesManager.moveGestureDetector } returns moveGestureDetector
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
@@ -562,6 +563,22 @@ class GesturesPluginTest {
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
     verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
     verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun verifyMoveListenerShoveInProgress() {
+    every { shoveGestureDetector.isInProgress } returns true
+
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every { moveGestureDetector.pointersCount } returns 2
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0.0f, 0.0f)
+    presenter.moveGestureListener.detector = moveGestureDetector
+    var handled = presenter.moveGestureListener.onMove(moveGestureDetector, 50.0f, 50.0f)
+    assertFalse(handled)
+    verify(exactly = 0) { presenter.mapInteractionDelegate.dispatch(any()) }
   }
 
   @Test

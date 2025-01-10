@@ -590,6 +590,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       if (!internalSettings.pinchScrollEnabled && detector.pointersCount > 1) {
         return false
       }
+      // Skip any scroll if shove gesture is already in progress
+      // Without this fix scroll interferences with shove and the camera makes unwanted moves
+      if (gesturesManager.shoveGestureDetector.isInProgress) {
+        return false
+      }
 
       val fromX = detector.focalPoint.x.toDouble()
       val fromY = detector.focalPoint.y.toDouble()
