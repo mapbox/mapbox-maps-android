@@ -350,6 +350,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
             anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
           },
         )
+        minZoom(8f)
       }
     )
     alternativeEtaView = viewAnnotationManager.addViewAnnotation(
@@ -370,6 +371,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
             anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
           },
         )
+        minZoom(8f)
       }
     )
     alternativeEtaView.setOnClickListener {
@@ -384,6 +386,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         annotatedLayerFeature(LAYER_PARKING) {
           featureId(PARKING_FEATURE_ID_1)
         }
+        minZoom(10f)
       }
     )
 
@@ -395,6 +398,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         annotatedLayerFeature(LAYER_PARKING) {
           featureId(PARKING_FEATURE_ID_2)
         }
+        minZoom(12f)
       }
     )
 
@@ -407,6 +411,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         annotatedLayerFeature(LAYER_CONSTRUCTION) {
           featureId(CONSTRUCTION_FEATURE_ID_1)
         }
+        minZoom(10f)
       }
     )
   }
@@ -499,12 +504,8 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         flipX = flipX,
         flipY = flipY,
         tint = tint,
-      )!!
+      )
     )
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
   }
 
   private companion object {
