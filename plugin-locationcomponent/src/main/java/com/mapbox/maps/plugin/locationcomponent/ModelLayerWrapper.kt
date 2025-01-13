@@ -4,6 +4,7 @@ import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
+import com.mapbox.maps.plugin.ModelElevationReference
 import com.mapbox.maps.plugin.ModelScaleMode
 
 @OptIn(MapboxExperimental::class)
@@ -26,6 +27,7 @@ internal class ModelLayerWrapper(
   modelColorExpression: Value?,
   modelColorMixIntensity: Double,
   modelColorMixIntensityExpression: Value?,
+  modelElevationReference: ModelElevationReference,
 ) : LocationLayerWrapper(layerId) {
   init {
     layerProperties["id"] = Value(layerId)
@@ -44,6 +46,7 @@ internal class ModelLayerWrapper(
     layerProperties["model-emissive-strength"] = modelEmissiveStrengthExpression ?: Value(modelEmissiveStrength)
     layerProperties["model-color"] = modelColorExpression ?: colorIntToRgbaExpression(modelColor)
     layerProperties["model-color-mix-intensity"] = modelColorMixIntensityExpression ?: Value(modelColorMixIntensity)
+    layerProperties["model-elevation-reference"] = Value(modelElevationReference.value)
   }
 
   private fun buildTransition(delay: Long, duration: Long): Value {
@@ -64,6 +67,8 @@ internal class ModelLayerWrapper(
   fun modelOpacity(opacity: Double) = updateProperty("model-opacity", Value(opacity))
 
   fun modelScaleMode(modelScaleMode: ModelScaleMode) = updateProperty("model-scale-mode", Value(modelScaleMode.value))
+
+  fun modelElevationReference(modelElevationReference: ModelElevationReference) = updateProperty("model-elevation-reference", Value(modelElevationReference.value))
 
   fun slot(slot: String?) = updateProperty("slot", Value(slot ?: ""))
 }

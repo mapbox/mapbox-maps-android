@@ -9,6 +9,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.logE
+import com.mapbox.maps.plugin.ModelElevationReference
 import com.mapbox.maps.plugin.ModelScaleMode
 import com.mapbox.maps.plugin.locationcomponent.utils.take
 import io.mockk.Runs
@@ -47,7 +48,8 @@ class ModelLayerWrapperTest {
     modelColor = INITIAL_MODEL_COLOR,
     modelColorExpression = null,
     modelColorMixIntensity = INITIAL_MODEL_COLOR_MIX_INTENSITY,
-    modelColorMixIntensityExpression = null
+    modelColorMixIntensityExpression = null,
+    modelElevationReference = INITIAL_MODEL_ELEVATION_REFERENCE,
   )
   private val layerWithExpression = ModelLayerWrapper(
     layerId = MODEL_LAYER_ID,
@@ -66,7 +68,8 @@ class ModelLayerWrapperTest {
     modelColor = INITIAL_MODEL_COLOR,
     modelColorExpression = INITIAL_MODEL_COLOR_EXPRESSION,
     modelColorMixIntensity = INITIAL_MODEL_COLOR_MIX_INTENSITY,
-    modelColorMixIntensityExpression = INITIAL_MODEL_COLOR_MIX_INTENSITY_EXPRESSION
+    modelColorMixIntensityExpression = INITIAL_MODEL_COLOR_MIX_INTENSITY_EXPRESSION,
+    modelElevationReference = INITIAL_MODEL_ELEVATION_REFERENCE,
   )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -105,6 +108,7 @@ class ModelLayerWrapperTest {
         "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH,
         "model-color" to colorIntToRgbaExpression(INITIAL_MODEL_COLOR),
         "model-color-mix-intensity" to INITIAL_MODEL_COLOR_MIX_INTENSITY,
+        "model-elevation-reference" to INITIAL_MODEL_ELEVATION_REFERENCE.value,
       ).toValue(),
       layer.toValue(),
     )
@@ -130,6 +134,7 @@ class ModelLayerWrapperTest {
         "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION,
         "model-color" to INITIAL_MODEL_COLOR_EXPRESSION,
         "model-color-mix-intensity" to INITIAL_MODEL_COLOR_MIX_INTENSITY_EXPRESSION,
+        "model-elevation-reference" to INITIAL_MODEL_ELEVATION_REFERENCE.value,
       ).toValue(),
       layerWithExpression.toValue(),
     )
@@ -241,9 +246,24 @@ class ModelLayerWrapperTest {
     setModelScaleMode(ModelScaleMode.MAP)
   }
 
+  @Test
+  fun testModelElevationReferenceGround() {
+    setModelElevationReference(ModelElevationReference.GROUND)
+  }
+
+  @Test
+  fun testModelElevationReferenceSea() {
+    setModelElevationReference(ModelElevationReference.SEA)
+  }
+
   private fun setModelScaleMode(mode: ModelScaleMode) {
     layer.modelScaleMode(mode)
     verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale-mode", Value(mode.value)) }
+  }
+
+  private fun setModelElevationReference(reference: ModelElevationReference) {
+    layer.modelElevationReference(reference)
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-elevation-reference", Value(reference.value)) }
   }
 
   companion object {
@@ -266,6 +286,7 @@ class ModelLayerWrapperTest {
     """.trimIndent()
     ).take()
     private val INITIAL_SCALE_MODE = ModelScaleMode.VIEWPORT
+    private val INITIAL_MODEL_ELEVATION_REFERENCE = ModelElevationReference.GROUND
     private val INITIAL_MODEL_EMISSIVE_STENGTH = 1.0
     private val INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION = Value.fromJson(
       """

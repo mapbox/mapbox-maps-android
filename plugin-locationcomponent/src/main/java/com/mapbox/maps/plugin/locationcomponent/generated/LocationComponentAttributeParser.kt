@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import com.mapbox.maps.ImageHolder.Companion.from
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.ModelElevationReference
 import com.mapbox.maps.plugin.ModelScaleMode
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.R
@@ -82,6 +83,7 @@ internal object LocationComponentAttributeParser {
             } catch (e: Exception) {
               emptyList()
             },
+            modelElevationReference = ModelElevationReference.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelElevationReference, ModelElevationReference.GROUND.ordinal)],
           )
           else -> createDefault2DPuck(withBearing = puckBearingEnabled)
         }

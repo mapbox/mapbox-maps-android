@@ -100,5 +100,7 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DMaterialOverrides" type="attr" />
     <!-- The node overrides for the model. Default value: []. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DNodeOverrides" type="attr" />
+    <!-- Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground". -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelElevationReference" type="attr" />
 </resources>
 <!-- End of generated file. -->

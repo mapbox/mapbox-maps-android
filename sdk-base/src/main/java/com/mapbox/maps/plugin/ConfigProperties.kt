@@ -166,6 +166,11 @@ data class LocationPuck3D @JvmOverloads constructor(
    */
   @MapboxExperimental
   var nodeOverrides: List<String> = emptyList(),
+  /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   */
+  @MapboxExperimental
+  var modelElevationReference: ModelElevationReference = ModelElevationReference.GROUND,
 ) : LocationPuck()
 
 /**
@@ -183,6 +188,23 @@ enum class ModelScaleMode(val value: String) {
    * Model is scaled so that it's always the same size on the screen. The property model-scale specifies how many pixels each unit in model file should cover.
    */
   VIEWPORT("viewport"),
+}
+
+/**
+ * Selects the base of the model. Some modes might require precomputed elevation data in the tileset.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+enum class ModelElevationReference(val value: String) {
+  /**
+   * Elevated rendering is enabled. Use this mode to elevate lines relative to the sea level.
+   */
+  SEA("sea"),
+  /**
+   * Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them.
+   */
+  GROUND("ground"),
 }
 
 // End of generated file.

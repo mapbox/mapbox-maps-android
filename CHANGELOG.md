@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Mark `BackgroundLayer.backgroundPitchAlignment` as experimental.
 * Skip any map scroll (panning) if shove gesture is already in progress preventing camera flying away.
+* Introduce experimental `LocationPuck3D.modelElevationReference` property.
 
 # 11.9.0 December 18, 2024
 ## Breaking changes ⚠️

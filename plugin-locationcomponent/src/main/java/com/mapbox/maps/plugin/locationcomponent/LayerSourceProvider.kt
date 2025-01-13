@@ -45,7 +45,8 @@ internal object LayerSourceProvider {
       modelColor = locationModelLayerOptions.modelColor,
       modelColorExpression = locationModelLayerOptions.modelColorExpression?.let { Value.fromJson(it).take() },
       modelColorMixIntensity = locationModelLayerOptions.modelColorMixIntensity.toDouble(),
-      modelColorMixIntensityExpression = locationModelLayerOptions.modelColorMixIntensityExpression?.let { Value.fromJson(it).take() }
+      modelColorMixIntensityExpression = locationModelLayerOptions.modelColorMixIntensityExpression?.let { Value.fromJson(it).take() },
+      modelElevationReference = locationModelLayerOptions.modelElevationReference
     )
 
   fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)
