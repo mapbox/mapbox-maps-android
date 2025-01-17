@@ -31,7 +31,7 @@ import java.util.*
 /**
  * A GeoJSON data source.
  *
- * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources/#geojson)
  *
  */
 class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourceId) {

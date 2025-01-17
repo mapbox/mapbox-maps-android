@@ -15,7 +15,7 @@ import java.util.*
 /**
  * A raster tile source.
  *
- * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources/#raster)
  *
  */
 class RasterSource(builder: Builder) : Source(builder.sourceId) {

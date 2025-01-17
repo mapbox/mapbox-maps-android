@@ -20,7 +20,7 @@ import java.util.*
 /**
  * The background color or pattern of the map.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-background)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#background)
  *
  * @param layerId the ID of the layer
  */

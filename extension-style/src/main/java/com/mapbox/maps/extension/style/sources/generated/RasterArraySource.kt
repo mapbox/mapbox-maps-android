@@ -16,7 +16,7 @@ import java.util.*
 /**
  * A raster array source
  *
- * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster_array)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources/#raster-array)
  *
  */
 @MapboxExperimental

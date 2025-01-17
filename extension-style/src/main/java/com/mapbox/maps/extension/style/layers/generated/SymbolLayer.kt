@@ -20,7 +20,7 @@ import java.util.*
 /**
  * An icon or a text label.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-symbol)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#symbol)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

@@ -16,7 +16,7 @@ import java.util.*
 /**
  * A vector tile source.
  *
- * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#vector)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources/#vector)
  *
  */
 class VectorSource(builder: Builder) : Source(builder.sourceId) {

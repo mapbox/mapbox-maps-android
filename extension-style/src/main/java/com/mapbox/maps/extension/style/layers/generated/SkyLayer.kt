@@ -23,7 +23,7 @@ import java.util.*
  * **Warning**: As of v10.6.0, [Atmosphere] is the preferred method for atmospheric styling.
  * Sky layer is not supported by the globe projection, and will be phased out in future major release.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-sky)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#sky)
  *
  * @param layerId the ID of the layer
  */

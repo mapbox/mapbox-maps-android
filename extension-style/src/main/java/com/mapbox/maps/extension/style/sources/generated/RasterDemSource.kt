@@ -15,7 +15,7 @@ import java.util.*
 /**
  * A RGB-encoded raster DEM source
  *
- * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster_dem)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/sources/#raster-dem)
  *
  */
 class RasterDemSource(builder: Builder) : Source(builder.sourceId) {

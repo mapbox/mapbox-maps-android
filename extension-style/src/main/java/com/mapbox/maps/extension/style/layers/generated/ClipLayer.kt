@@ -16,7 +16,7 @@ import java.util.*
 /**
  * Layer that removes 3D content from map.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-clip)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#clip)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

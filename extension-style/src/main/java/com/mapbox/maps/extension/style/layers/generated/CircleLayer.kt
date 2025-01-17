@@ -19,7 +19,7 @@ import java.util.*
 /**
  * A filled circle.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-circle)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#circle)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

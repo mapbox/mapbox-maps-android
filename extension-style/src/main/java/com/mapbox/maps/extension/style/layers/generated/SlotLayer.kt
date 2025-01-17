@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.types.*
 /**
  * Marks the position of a slot.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-slot)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#slot)
  *
  * @param layerId the ID of the layer
  */
