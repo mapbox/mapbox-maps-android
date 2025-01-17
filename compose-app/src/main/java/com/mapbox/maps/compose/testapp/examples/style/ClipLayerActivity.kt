@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -40,7 +39,6 @@ import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJson
 /**
  * Example showcasing the usage of [com.mapbox.maps.extension.style.layers.generated.ClipLayer].
  */
-@OptIn(MapboxExperimental::class)
 public class ClipLayerActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {

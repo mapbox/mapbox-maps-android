@@ -1770,6 +1770,59 @@ class HillshadeIlluminationAnchor private constructor(override val value: String
     }
   }
 }
+// MODEL_ELEVATION_REFERENCE: Selects the base of the model. Some modes might require precomputed elevation data in the tileset.
+/**
+ * Selects the base of the model. Some modes might require precomputed elevation data in the tileset.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class ModelElevationReference private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is ModelElevationReference &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "ModelElevationReference(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Elevated rendering is enabled. Use this mode to elevate lines relative to the sea level.
+     */
+    @JvmField
+    val SEA = ModelElevationReference("sea")
+    /**
+     * Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them.
+     */
+    @JvmField
+    val GROUND = ModelElevationReference("ground")
+
+    /**
+     * Utility function to get [ModelElevationReference] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): ModelElevationReference {
+      return when (value) {
+        "SEA" -> SEA
+        "GROUND" -> GROUND
+        else -> throw RuntimeException("ModelElevationReference.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // MODEL_SCALE_MODE: Defines scaling mode. Only applies to location-indicator type layers.
 /**
  * Defines scaling mode. Only applies to location-indicator type layers.
@@ -2143,7 +2196,6 @@ class TextWritingMode private constructor(override val value: String) : LayerPro
  *
  * @param value String value of this property
  */
-@MapboxExperimental
 class ClipLayerTypes private constructor(override val value: String) : LayerProperty {
 
   /**

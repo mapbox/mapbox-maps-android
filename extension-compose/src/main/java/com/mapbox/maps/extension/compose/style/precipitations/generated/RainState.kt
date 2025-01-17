@@ -101,7 +101,7 @@ public class RainState private constructor(
   /**
    * Thinning factor of rain particles from center. 0 - no thinning. 1 - maximal central area
    * thinning.
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.57. Value range: [0, 1]
    */
   @MapboxExperimental
   public var centerThinning: DoubleValue by centerThinningState
@@ -118,7 +118,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [centerThinning].
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.57. Value range: [0, 1]
    */
   @MapboxExperimental
   public var centerThinningTransition: Transition by centerThinningTransitionState
@@ -135,7 +135,7 @@ public class RainState private constructor(
 
   /**
    * Individual rain particle dorplets color.
-   * Default value: "#919191".
+   * Default value: "["interpolate",["linear"],["measure-light","brightness"],0,"#03113d",0.3,"#a8adbc"]".
    */
   @MapboxExperimental
   public var color: ColorValue by colorState
@@ -152,7 +152,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [color].
-   * Default value: "#919191".
+   * Default value: "["interpolate",["linear"],["measure-light","brightness"],0,"#03113d",0.3,"#a8adbc"]".
    */
   @MapboxExperimental
   public var colorTransition: Transition by colorTransitionState
@@ -169,7 +169,7 @@ public class RainState private constructor(
 
   /**
    * Rain particles density. Controls the overall screen density of the rain.
-   * Default value: 1. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.5]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var density: DoubleValue by densityState
@@ -186,7 +186,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [density].
-   * Default value: 1. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.5]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var densityTransition: Transition by densityTransitionState
@@ -237,7 +237,7 @@ public class RainState private constructor(
 
   /**
    * Rain particles screen-space distortion strength.
-   * Default value: 0.5. Value range: [0, 1]
+   * Default value: 0.7. Value range: [0, 1]
    */
   @MapboxExperimental
   public var distortionStrength: DoubleValue by distortionStrengthState
@@ -254,7 +254,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [distortionStrength].
-   * Default value: 0.5. Value range: [0, 1]
+   * Default value: 0.7. Value range: [0, 1]
    */
   @MapboxExperimental
   public var distortionStrengthTransition: Transition by distortionStrengthTransitionState
@@ -271,7 +271,7 @@ public class RainState private constructor(
 
   /**
    * Rain droplet size. x - normal to direction, y - along direction
-   * Default value: [1,10]. Value range: [0, 20]
+   * Default value: [2.6,18.2]. Value range: [0, 50]
    */
   @MapboxExperimental
   public var dropletSize: DoubleListValue by dropletSizeState
@@ -288,7 +288,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [dropletSize].
-   * Default value: [1,10]. Value range: [0, 20]
+   * Default value: [2.6,18.2]. Value range: [0, 50]
    */
   @MapboxExperimental
   public var dropletSizeTransition: Transition by dropletSizeTransitionState
@@ -339,7 +339,7 @@ public class RainState private constructor(
 
   /**
    * Rain particles opacity.
-   * Default value: 0.19. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["measure-light","brightness"],0,0.88,1,0.7]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacity: DoubleValue by opacityState
@@ -356,7 +356,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [opacity].
-   * Default value: 0.19. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["measure-light","brightness"],0,0.88,1,0.7]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacityTransition: Transition by opacityTransitionState
@@ -373,7 +373,7 @@ public class RainState private constructor(
 
   /**
    * Screen-space vignette rain tinting effect intensity.
-   * Default value: 0.3. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,1]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignette: DoubleValue by vignetteState
@@ -390,7 +390,7 @@ public class RainState private constructor(
 
   /**
    * Rain vignette screen-space corners tint color.
-   * Default value: "#ffffff".
+   * Default value: "["interpolate",["linear"],["measure-light","brightness"],0,"#001736",0.3,"#464646"]".
    */
   @MapboxExperimental
   public var vignetteColor: ColorValue by vignetteColorState
@@ -407,7 +407,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [vignetteColor].
-   * Default value: "#ffffff".
+   * Default value: "["interpolate",["linear"],["measure-light","brightness"],0,"#001736",0.3,"#464646"]".
    */
   @MapboxExperimental
   public var vignetteColorTransition: Transition by vignetteColorTransitionState
@@ -424,7 +424,7 @@ public class RainState private constructor(
 
   /**
    * Defines the transition of [vignette].
-   * Default value: 0.3. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,1]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignetteTransition: Transition by vignetteTransitionState

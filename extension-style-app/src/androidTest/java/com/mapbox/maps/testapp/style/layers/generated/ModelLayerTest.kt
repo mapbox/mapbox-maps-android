@@ -331,6 +331,29 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelElevationReferenceTest() {
+    val layer = modelLayer("id", "source") {
+      modelElevationReference(ModelElevationReference.SEA)
+    }
+    setupLayer(layer)
+    assertEquals(ModelElevationReference.SEA, layer.modelElevationReference)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelElevationReferenceAsExpressionTest() {
+    val expression = literal("sea")
+    val layer = modelLayer("id", "source") {
+      modelElevationReference(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelElevationReferenceAsExpression.toString())
+    assertEquals(ModelElevationReference.SEA, layer.modelElevationReference!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun modelEmissiveStrengthTest() {
     val testValue = 1.0
     val layer = modelLayer("id", "source") {
@@ -865,6 +888,8 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelColorMixIntensityTransition should not be null", ModelLayer.defaultModelColorMixIntensityTransition)
     assertNotNull("defaultModelCutoffFadeRange should not be null", ModelLayer.defaultModelCutoffFadeRange)
     assertNotNull("defaultModelCutoffFadeRangeAsExpression should not be null", ModelLayer.defaultModelCutoffFadeRangeAsExpression)
+    assertNotNull("defaultModelElevationReference should not be null", ModelLayer.defaultModelElevationReference)
+    assertNotNull("defaultModelElevationReferenceAsExpression should not be null", ModelLayer.defaultModelElevationReferenceAsExpression)
     assertNotNull("defaultModelEmissiveStrength should not be null", ModelLayer.defaultModelEmissiveStrength)
     assertNotNull("defaultModelEmissiveStrengthAsExpression should not be null", ModelLayer.defaultModelEmissiveStrengthAsExpression)
     assertNotNull("defaultModelEmissiveStrengthTransition should not be null", ModelLayer.defaultModelEmissiveStrengthTransition)
@@ -909,6 +934,7 @@ class ModelLayerTest : BaseStyleTest() {
     val modelColorTestValue = "rgba(0, 0, 0, 1)"
     val modelColorMixIntensityTestValue = 1.0
     val modelCutoffFadeRangeTestValue = 1.0
+    val modelElevationReferenceTestValue = ModelElevationReference.SEA
     val modelEmissiveStrengthTestValue = 1.0
     val modelHeightBasedEmissiveStrengthMultiplierTestValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
     val modelOpacityTestValue = 1.0
@@ -933,6 +959,7 @@ class ModelLayerTest : BaseStyleTest() {
       modelColor(modelColorTestValue)
       modelColorMixIntensity(modelColorMixIntensityTestValue)
       modelCutoffFadeRange(modelCutoffFadeRangeTestValue)
+      modelElevationReference(modelElevationReferenceTestValue)
       modelEmissiveStrength(modelEmissiveStrengthTestValue)
       modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplierTestValue)
       modelOpacity(modelOpacityTestValue)
@@ -962,6 +989,7 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(modelColorTestValue, cachedLayer.modelColor)
     assertEquals(modelColorMixIntensityTestValue, cachedLayer.modelColorMixIntensity)
     assertEquals(modelCutoffFadeRangeTestValue, cachedLayer.modelCutoffFadeRange)
+    assertEquals(modelElevationReferenceTestValue, cachedLayer.modelElevationReference)
     assertEquals(modelEmissiveStrengthTestValue, cachedLayer.modelEmissiveStrength)
     assertEquals(modelHeightBasedEmissiveStrengthMultiplierTestValue, cachedLayer.modelHeightBasedEmissiveStrengthMultiplier)
     assertEquals(modelOpacityTestValue, cachedLayer.modelOpacity)

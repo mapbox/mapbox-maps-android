@@ -3041,6 +3041,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public final fun getModelColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getModelCutoffFadeRange ()Ljava/lang/Double;
 	public final fun getModelCutoffFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+	public final fun getModelElevationReferenceAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelEmissiveStrength ()Ljava/lang/Double;
 	public final fun getModelEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3096,6 +3098,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun modelColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelCutoffFadeRange (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelCutoffFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelElevationReference (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3158,6 +3162,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$C
 	public final fun getDefaultModelColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultModelCutoffFadeRange ()Ljava/lang/Double;
 	public final fun getDefaultModelCutoffFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+	public final fun getDefaultModelElevationReferenceAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultModelEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3211,6 +3217,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun modelColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelCutoffFadeRange (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelCutoffFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelElevationReference (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3259,6 +3267,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerDs
 	public static synthetic fun modelColor$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelColorMixIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelCutoffFadeRange$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelElevationReference$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelHeightBasedEmissiveStrengthMultiplier$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelId$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -4917,6 +4926,21 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/L
 	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;
 }
 
+public final class com/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference$Companion;
+	public static final field GROUND Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+	public static final field SEA Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+}
+
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ModelScaleMode : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelScaleMode$Companion;
 	public static final field MAP Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelScaleMode;
@@ -5541,15 +5565,15 @@ public abstract interface class com/mapbox/maps/extension/style/precipitations/g
 
 public final class com/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver$DefaultImpls {
 	public static synthetic fun centerThinning$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
-	public static synthetic fun color$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
-	public static synthetic fun density$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public static synthetic fun color$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public static synthetic fun density$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public static synthetic fun direction$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public static synthetic fun distortionStrength$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public static synthetic fun dropletSize$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public static synthetic fun intensity$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
-	public static synthetic fun opacity$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
-	public static synthetic fun vignette$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
-	public static synthetic fun vignetteColor$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public static synthetic fun opacity$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public static synthetic fun vignette$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public static synthetic fun vignetteColor$default (Lcom/mapbox/maps/extension/style/precipitations/generated/RainDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 }
 
 public final class com/mapbox/maps/extension/style/precipitations/generated/RainKt {
@@ -5678,12 +5702,12 @@ public abstract interface class com/mapbox/maps/extension/style/precipitations/g
 public final class com/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver$DefaultImpls {
 	public static synthetic fun centerThinning$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public static synthetic fun color$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
-	public static synthetic fun density$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public static synthetic fun density$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public static synthetic fun direction$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public static synthetic fun flakeSize$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public static synthetic fun intensity$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public static synthetic fun opacity$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
-	public static synthetic fun vignette$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public static synthetic fun vignette$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public static synthetic fun vignetteColor$default (Lcom/mapbox/maps/extension/style/precipitations/generated/SnowDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 }
 

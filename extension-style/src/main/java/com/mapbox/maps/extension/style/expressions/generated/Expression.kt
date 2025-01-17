@@ -552,12 +552,18 @@ class Expression : Value {
     }
 
     /**
-     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
-     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
-     * currently in the style. This validation process is synchronous and requires the image to have been
-     * added to the style before requesting it in the `'image'` argument. To implement crossfading between two
-     * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
-     * argument in the `'image'` expression.
+     * Returns a [`ResolvedImage`](/style-spec/reference/types/#resolvedimage) for use in [`icon-image`](/style-spec/reference/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression.
+     *
+     * A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is currently
+     * in the style. This validation process is synchronous and requires the image to have been added
+     * to the style before requesting it in the `'image'` argument.
+     *
+     * Every image name can be followed by an optional [`ImageOptions`](/style-spec/reference/types/#imageoptions) object, which will be used for
+     * vector images only.
+     *
+     * To implement crossfading between two images within a symbol layer using the [`icon-image-cross-fade`](/style-spec/reference/layers/#paint-symbol-icon-image-cross-fade) attribute, include a
+     * second image as the second argument in the `'image'` expression.
      */
     fun image(block: ImageBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.image(block))
@@ -2714,12 +2720,18 @@ class Expression : Value {
     fun id(): Expression = ExpressionBuilder("id").build()
 
     /**
-     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
-     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
-     * currently in the style. This validation process is synchronous and requires the image to have been
-     * added to the style before requesting it in the `'image'` argument. To implement crossfading between two
-     * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
-     * argument in the `'image'` expression.
+     * Returns a [`ResolvedImage`](/style-spec/reference/types/#resolvedimage) for use in [`icon-image`](/style-spec/reference/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression.
+     *
+     * A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is currently
+     * in the style. This validation process is synchronous and requires the image to have been added
+     * to the style before requesting it in the `'image'` argument.
+     *
+     * Every image name can be followed by an optional [`ImageOptions`](/style-spec/reference/types/#imageoptions) object, which will be used for
+     * vector images only.
+     *
+     * To implement crossfading between two images within a symbol layer using the [`icon-image-cross-fade`](/style-spec/reference/layers/#paint-symbol-icon-image-cross-fade) attribute, include a
+     * second image as the second argument in the `'image'` expression.
      */
     @JvmStatic
     fun image(vararg expressions: Expression): Expression {
@@ -2731,12 +2743,18 @@ class Expression : Value {
     }
 
     /**
-     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
-     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
-     * currently in the style. This validation process is synchronous and requires the image to have been
-     * added to the style before requesting it in the `'image'` argument. To implement crossfading between two
-     * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
-     * argument in the `'image'` expression.
+     * Returns a [`ResolvedImage`](/style-spec/reference/types/#resolvedimage) for use in [`icon-image`](/style-spec/reference/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression.
+     *
+     * A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is currently
+     * in the style. This validation process is synchronous and requires the image to have been added
+     * to the style before requesting it in the `'image'` argument.
+     *
+     * Every image name can be followed by an optional [`ImageOptions`](/style-spec/reference/types/#imageoptions) object, which will be used for
+     * vector images only.
+     *
+     * To implement crossfading between two images within a symbol layer using the [`icon-image-cross-fade`](/style-spec/reference/layers/#paint-symbol-icon-image-cross-fade) attribute, include a
+     * second image as the second argument in the `'image'` expression.
      */
     @MapboxExperimental
     @JvmStatic
@@ -2751,12 +2769,18 @@ class Expression : Value {
     }
 
     /**
-     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
-     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
-     * currently in the style. This validation process is synchronous and requires the image to have been
-     * added to the style before requesting it in the `'image'` argument. To implement crossfading between two
-     * images within a symbol layer using the [`icon-image-cross-fade`](/mapbox-gl-js/style-spec/layers/#paint-symbol-icon-image-cross-fade) attribute, include a second image as the second
-     * argument in the `'image'` expression.
+     * Returns a [`ResolvedImage`](/style-spec/reference/types/#resolvedimage) for use in [`icon-image`](/style-spec/reference/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression.
+     *
+     * A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is currently
+     * in the style. This validation process is synchronous and requires the image to have been added
+     * to the style before requesting it in the `'image'` argument.
+     *
+     * Every image name can be followed by an optional [`ImageOptions`](/style-spec/reference/types/#imageoptions) object, which will be used for
+     * vector images only.
+     *
+     * To implement crossfading between two images within a symbol layer using the [`icon-image-cross-fade`](/style-spec/reference/layers/#paint-symbol-icon-image-cross-fade) attribute, include a
+     * second image as the second argument in the `'image'` expression.
      */
     @MapboxExperimental
     @JvmStatic

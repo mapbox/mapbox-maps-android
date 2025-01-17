@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
@@ -24,7 +23,6 @@ import com.mapbox.maps.testapp.R
 /**
  * Example showcasing the usage of [com.mapbox.maps.extension.style.layers.generated.ClipLayer].
  */
-@OptIn(MapboxExperimental::class)
 class ClipLayerActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
@@ -88,7 +86,6 @@ class ClipLayerActivity : AppCompatActivity() {
     }
   }
 
-  @OptIn(MapboxExperimental::class)
   private fun updateClipLayerTypes(vararg clipLayerTypes: String) {
     mapboxMap.getStyle { style ->
       style.getLayerAs<ClipLayer>(CLIP_LAYER_ID)?.visibility(Visibility.VISIBLE)

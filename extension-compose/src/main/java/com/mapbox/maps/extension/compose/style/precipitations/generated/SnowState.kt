@@ -97,7 +97,7 @@ public class SnowState private constructor(
   /**
    * Thinning factor of snow particles from center. 0 - no thinning. 1 - maximal central area
    * thinning.
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.4. Value range: [0, 1]
    */
   @MapboxExperimental
   public var centerThinning: DoubleValue by centerThinningState
@@ -114,7 +114,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [centerThinning].
-   * Default value: 1. Value range: [0, 1]
+   * Default value: 0.4. Value range: [0, 1]
    */
   @MapboxExperimental
   public var centerThinningTransition: Transition by centerThinningTransitionState
@@ -165,7 +165,7 @@ public class SnowState private constructor(
 
   /**
    * Snow particles density. Controls the overall particles number.
-   * Default value: 1. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.85]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var density: DoubleValue by densityState
@@ -182,7 +182,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [density].
-   * Default value: 1. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.85]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var densityTransition: Transition by densityTransitionState
@@ -199,7 +199,7 @@ public class SnowState private constructor(
 
   /**
    * Main snow particles direction. Azimuth and polar angles
-   * Default value: [0,90]. Value range: [0, 360]
+   * Default value: [0,50]. Value range: [0, 360]
    */
   @MapboxExperimental
   public var direction: DoubleListValue by directionState
@@ -216,7 +216,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [direction].
-   * Default value: [0,90]. Value range: [0, 360]
+   * Default value: [0,50]. Value range: [0, 360]
    */
   @MapboxExperimental
   public var directionTransition: Transition by directionTransitionState
@@ -233,7 +233,7 @@ public class SnowState private constructor(
 
   /**
    * Snow flake particle size. Correlates with individual particle screen size
-   * Default value: 1. Value range: [0, 5]
+   * Default value: 0.71. Value range: [0, 5]
    */
   @MapboxExperimental
   public var flakeSize: DoubleValue by flakeSizeState
@@ -250,7 +250,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [flakeSize].
-   * Default value: 1. Value range: [0, 5]
+   * Default value: 0.71. Value range: [0, 5]
    */
   @MapboxExperimental
   public var flakeSizeTransition: Transition by flakeSizeTransitionState
@@ -301,7 +301,7 @@ public class SnowState private constructor(
 
   /**
    * Snow particles opacity.
-   * Default value: 0.9. Value range: [0, 1]
+   * Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacity: DoubleValue by opacityState
@@ -318,7 +318,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [opacity].
-   * Default value: 0.9. Value range: [0, 1]
+   * Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   public var opacityTransition: Transition by opacityTransitionState
@@ -335,7 +335,7 @@ public class SnowState private constructor(
 
   /**
    * Snow vignette screen-space effect. Adds snow tint to screen corners
-   * Default value: 0.3. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.3]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignette: DoubleValue by vignetteState
@@ -386,7 +386,7 @@ public class SnowState private constructor(
 
   /**
    * Defines the transition of [vignette].
-   * Default value: 0.3. Value range: [0, 1]
+   * Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.3]". Value range: [0, 1]
    */
   @MapboxExperimental
   public var vignetteTransition: Transition by vignetteTransitionState

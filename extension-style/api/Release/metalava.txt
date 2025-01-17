@@ -1584,10 +1584,10 @@ package com.mapbox.maps.extension.style.layers.generated {
 
   @UiThread public final class ClipLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.ClipLayerDsl {
     ctor public ClipLayer(String layerId, String sourceId);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public java.util.List<java.lang.String>? getClipLayerScope();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getClipLayerScopeAsExpression();
@@ -1642,10 +1642,10 @@ package com.mapbox.maps.extension.style.layers.generated {
   }
 
   @com.mapbox.maps.extension.style.types.LayersDsl public interface ClipLayerDsl {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope = listOf(""));
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes = listOf());
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(java.util.List<java.lang.String> clipLayerScope = listOf(""));
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerScope(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerScope);
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(java.util.List<java.lang.String> clipLayerTypes = listOf());
+    method public com.mapbox.maps.extension.style.layers.generated.ClipLayer clipLayerTypes(com.mapbox.maps.extension.style.expressions.generated.Expression clipLayerTypes);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.ClipLayer minZoom(double minZoom);
@@ -3632,6 +3632,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelColorTransition();
     method public Double? getModelCutoffFadeRange();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelCutoffFadeRangeAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference? getModelElevationReference();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelElevationReferenceAsExpression();
     method public Double? getModelEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelEmissiveStrengthTransition();
@@ -3685,6 +3687,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCutoffFadeRange(double modelCutoffFadeRange);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCutoffFadeRange(com.mapbox.maps.extension.style.expressions.generated.Expression modelCutoffFadeRange);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference modelElevationReference);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression modelElevationReference);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(double modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3743,6 +3747,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelColorTransition;
     property public final Double? modelCutoffFadeRange;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelCutoffFadeRangeAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference? modelElevationReference;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelElevationReferenceAsExpression;
     property public final Double? modelEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelEmissiveStrengthTransition;
@@ -3797,6 +3803,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelColorTransition();
     method public Double? getDefaultModelCutoffFadeRange();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelCutoffFadeRangeAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference? getDefaultModelElevationReference();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelElevationReferenceAsExpression();
     method public Double? getDefaultModelEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelEmissiveStrengthTransition();
@@ -3843,6 +3851,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelColorTransition;
     property public final Double? defaultModelCutoffFadeRange;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelCutoffFadeRangeAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference? defaultModelElevationReference;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelElevationReferenceAsExpression;
     property public final Double? defaultModelEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelEmissiveStrengthTransition;
@@ -3896,6 +3906,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCutoffFadeRange(double modelCutoffFadeRange = 0.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCutoffFadeRange(com.mapbox.maps.extension.style.expressions.generated.Expression modelCutoffFadeRange);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference modelElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference.GROUND);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression modelElevationReference);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(double modelEmissiveStrength = 0.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -5700,7 +5712,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor valueOf(String value);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class ClipLayerTypes {
+  public final class ClipLayerTypes {
     method public String getValue();
     method public static com.mapbox.maps.extension.style.layers.properties.generated.ClipLayerTypes valueOf(String value);
     property public String value;
@@ -5936,6 +5948,19 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
   public static final class LineWidthUnit.Companion {
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class ModelElevationReference {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference GROUND;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference SEA;
+  }
+
+  public static final class ModelElevationReference.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference valueOf(String value);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class ModelScaleMode {
@@ -6543,28 +6568,28 @@ package com.mapbox.maps.extension.style.precipitations.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.RainDsl public interface RainDslReceiver {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(double centerThinning = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(double centerThinning = 0.57);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinning(com.mapbox.maps.extension.style.expressions.generated.Expression centerThinning);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinningTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain centerThinningTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(@ColorInt int color);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(String color = "#919191");
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(String color);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(com.mapbox.maps.extension.style.expressions.generated.Expression color = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "measure-light" + "\"" + "," + "\"" + "brightness" + "\"" + "],0," + "\"" + "#03113d" + "\"" + ",0.3," + "\"" + "#a8adbc" + "\"" + "]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(double density = 1.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(double density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(com.mapbox.maps.extension.style.expressions.generated.Expression density = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],11,0,13,0.5]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain direction(java.util.List<java.lang.Double> direction = listOf(0.0, 80.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain distortionStrength(double distortionStrength = 0.5);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain distortionStrength(double distortionStrength = 0.7);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain distortionStrength(com.mapbox.maps.extension.style.expressions.generated.Expression distortionStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain distortionStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain distortionStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain dropletSize(java.util.List<java.lang.Double> dropletSize = listOf(1.0, 10.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain dropletSize(java.util.List<java.lang.Double> dropletSize = listOf(2.6, 18.2));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain dropletSize(com.mapbox.maps.extension.style.expressions.generated.Expression dropletSize);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain dropletSizeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain dropletSizeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -6572,15 +6597,15 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(double opacity = 0.19);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(double opacity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "measure-light" + "\"" + "," + "\"" + "brightness" + "\"" + "],0,0.88,1,0.7]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain opacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(double vignette = 0.3);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(double vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],11,0,13,1]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(@ColorInt int vignetteColor);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(String vignetteColor = "#ffffff");
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(String vignetteColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "measure-light" + "\"" + "," + "\"" + "brightness" + "\"" + "],0," + "\"" + "#001736" + "\"" + ",0.3," + "\"" + "#464646" + "\"" + "]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6699,7 +6724,7 @@ package com.mapbox.maps.extension.style.precipitations.generated {
   }
 
   @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.SnowDsl public interface SnowDslReceiver {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(double centerThinning = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(double centerThinning = 0.4);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinning(com.mapbox.maps.extension.style.expressions.generated.Expression centerThinning);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinningTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow centerThinningTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -6708,15 +6733,15 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(double density = 1.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(double density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(com.mapbox.maps.extension.style.expressions.generated.Expression density = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],11,0,13,0.85]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(java.util.List<java.lang.Double> direction = listOf(0.0, 90.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(java.util.List<java.lang.Double> direction = listOf(0.0, 50.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow flakeSize(double flakeSize = 1.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow flakeSize(double flakeSize = 0.71);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow flakeSize(com.mapbox.maps.extension.style.expressions.generated.Expression flakeSize);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow flakeSizeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow flakeSizeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -6724,12 +6749,12 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(double opacity = 0.9);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(double opacity = 1.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacity(com.mapbox.maps.extension.style.expressions.generated.Expression opacity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow opacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(double vignette = 0.3);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(double vignette);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignette(com.mapbox.maps.extension.style.expressions.generated.Expression vignette = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],11,0,13,0.3]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColor(@ColorInt int vignetteColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColor(String vignetteColor = "#ffffff");
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor);

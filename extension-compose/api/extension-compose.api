@@ -2379,6 +2379,25 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Loca
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
+	public static final field GROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
+	public static final field SEA Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelLayerKt {
 	public static final fun ModelLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelLayerState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ModelLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
@@ -2398,6 +2417,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun getModelColorMixIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getModelColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getModelCutoffFadeRange ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getModelElevationReference ()Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public final fun getModelEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getModelEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getModelHeightBasedEmissiveStrengthMultiplier ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -2430,6 +2450,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun setModelColorMixIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setModelColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setModelCutoffFadeRange (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setModelElevationReference (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;)V
 	public final fun setModelEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setModelEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setModelHeightBasedEmissiveStrengthMultiplier (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V

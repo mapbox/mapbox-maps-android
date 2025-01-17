@@ -37,6 +37,7 @@ public class ModelLayerState private constructor(
   initialModelColorMixIntensity: DoubleValue,
   initialModelColorMixIntensityTransition: Transition,
   initialModelCutoffFadeRange: DoubleValue,
+  initialModelElevationReference: ModelElevationReferenceValue,
   initialModelEmissiveStrength: DoubleValue,
   initialModelEmissiveStrengthTransition: Transition,
   initialModelHeightBasedEmissiveStrengthMultiplier: DoubleListValue,
@@ -74,6 +75,7 @@ public class ModelLayerState private constructor(
     initialModelColorMixIntensity = DoubleValue.INITIAL,
     initialModelColorMixIntensityTransition = Transition.INITIAL,
     initialModelCutoffFadeRange = DoubleValue.INITIAL,
+    initialModelElevationReference = ModelElevationReferenceValue.INITIAL,
     initialModelEmissiveStrength = DoubleValue.INITIAL,
     initialModelEmissiveStrengthTransition = Transition.INITIAL,
     initialModelHeightBasedEmissiveStrengthMultiplier = DoubleListValue.INITIAL,
@@ -150,6 +152,11 @@ public class ModelLayerState private constructor(
    */
   @MapboxExperimental
   public var modelCutoffFadeRange: DoubleValue by mutableStateOf(initialModelCutoffFadeRange)
+  /**
+   *  Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   */
+  @MapboxExperimental
+  public var modelElevationReference: ModelElevationReferenceValue by mutableStateOf(initialModelElevationReference)
   /**
    *  Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    */
@@ -324,6 +331,13 @@ public class ModelLayerState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
+  private fun UpdateModelElevationReference(layerNode: LayerNode) {
+    if (modelElevationReference.notInitial) {
+      layerNode.setProperty("model-elevation-reference", modelElevationReference.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateModelEmissiveStrength(layerNode: LayerNode) {
     if (modelEmissiveStrength.notInitial) {
       layerNode.setProperty("model-emissive-strength", modelEmissiveStrength.value)
@@ -483,6 +497,7 @@ public class ModelLayerState private constructor(
     UpdateModelColorMixIntensity(layerNode)
     UpdateModelColorMixIntensityTransition(layerNode)
     UpdateModelCutoffFadeRange(layerNode)
+    UpdateModelElevationReference(layerNode)
     UpdateModelEmissiveStrength(layerNode)
     UpdateModelEmissiveStrengthTransition(layerNode)
     UpdateModelHeightBasedEmissiveStrengthMultiplier(layerNode)

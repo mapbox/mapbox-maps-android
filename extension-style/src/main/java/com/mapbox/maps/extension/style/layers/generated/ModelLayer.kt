@@ -805,6 +805,78 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   */
+  @MapboxExperimental
+  val modelElevationReference: ModelElevationReference?
+    /**
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     *
+     * Use static method [ModelLayer.defaultModelElevationReference] to get the default property.
+     *
+     * @return ModelElevationReference
+     */
+    get() {
+      getPropertyValue<String?>("model-elevation-reference")?.let {
+        return ModelElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   *
+   * Use static method [ModelLayer.defaultModelElevationReference] to set the default property.
+   *
+   * @param modelElevationReference value of modelElevationReference
+   */
+  @MapboxExperimental
+  override fun modelElevationReference(modelElevationReference: ModelElevationReference): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-elevation-reference", modelElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   *
+   * This is an Expression representation of "model-elevation-reference".
+   *
+   */
+  @MapboxExperimental
+  val modelElevationReferenceAsExpression: Expression?
+    /**
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     *
+     * Get the ModelElevationReference property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelElevationReferenceAsExpression] to get the default property.
+     *
+     * @return ModelElevationReference
+     */
+    get() {
+      getPropertyValue<Expression>("model-elevation-reference")?.let {
+        return it
+      }
+      modelElevationReference?.let {
+        return Expression.literal(it.value)
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   *
+   * Use static method [ModelLayer.defaultModelElevationReferenceAsExpression] to set the default property.
+   *
+   * @param modelElevationReference value of modelElevationReference as Expression
+   */
+  @MapboxExperimental
+  override fun modelElevationReference(modelElevationReference: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-elevation-reference", modelElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    */
   @MapboxExperimental
@@ -2109,6 +2181,48 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     */
+    @MapboxExperimental
+    val defaultModelElevationReference: ModelElevationReference?
+      /**
+       * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+       *
+       * Get the default value of ModelElevationReference property
+       *
+       * @return ModelElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-elevation-reference").silentUnwrap<String>()?.let {
+          return ModelElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     *
+     * This is an Expression representation of "model-elevation-reference".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelElevationReferenceAsExpression: Expression?
+      /**
+       * Get default value of the ModelElevationReference property as an Expression
+       *
+       * @return ModelElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-elevation-reference").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelElevationReference?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
      * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      */
     @MapboxExperimental
@@ -2823,6 +2937,22 @@ interface ModelLayerDsl {
    */
   @MapboxExperimental
   fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer
+
+  /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   *
+   * @param modelElevationReference value of modelElevationReference
+   */
+  @MapboxExperimental
+  fun modelElevationReference(modelElevationReference: ModelElevationReference = ModelElevationReference.GROUND): ModelLayer
+
+  /**
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   *
+   * @param modelElevationReference value of modelElevationReference as Expression
+   */
+  @MapboxExperimental
+  fun modelElevationReference(modelElevationReference: Expression): ModelLayer
 
   /**
    * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]

@@ -3,7 +3,6 @@
 package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -246,7 +245,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
   /**
    * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
    */
-  @MapboxExperimental
   val clipLayerScope: List<String>?
     /**
      * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
@@ -266,7 +264,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
    *
    * @param clipLayerScope value of clipLayerScope
    */
-  @MapboxExperimental
   override fun clipLayerScope(clipLayerScope: List<String>): ClipLayer = apply {
     val propertyValue = PropertyValue("clip-layer-scope", clipLayerScope)
     setProperty(propertyValue)
@@ -278,7 +275,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
    * This is an Expression representation of "clip-layer-scope".
    *
    */
-  @MapboxExperimental
   val clipLayerScopeAsExpression: Expression?
     /**
      * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
@@ -306,7 +302,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
    *
    * @param clipLayerScope value of clipLayerScope as Expression
    */
-  @MapboxExperimental
   override fun clipLayerScope(clipLayerScope: Expression): ClipLayer = apply {
     val propertyValue = PropertyValue("clip-layer-scope", clipLayerScope)
     setProperty(propertyValue)
@@ -315,7 +310,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
   /**
    * Layer types that will also be removed if fallen below this clip layer. Default value: [].
    */
-  @MapboxExperimental
   val clipLayerTypes: List<String>?
     /**
      * Layer types that will also be removed if fallen below this clip layer. Default value: [].
@@ -335,7 +329,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
    *
    * @param clipLayerTypes value of clipLayerTypes
    */
-  @MapboxExperimental
   override fun clipLayerTypes(clipLayerTypes: List<String>): ClipLayer = apply {
     val propertyValue = PropertyValue("clip-layer-types", clipLayerTypes)
     setProperty(propertyValue)
@@ -347,7 +340,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
    * This is an Expression representation of "clip-layer-types".
    *
    */
-  @MapboxExperimental
   val clipLayerTypesAsExpression: Expression?
     /**
      * Layer types that will also be removed if fallen below this clip layer. Default value: [].
@@ -375,7 +367,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
    *
    * @param clipLayerTypes value of clipLayerTypes as Expression
    */
-  @MapboxExperimental
   override fun clipLayerTypes(clipLayerTypes: Expression): ClipLayer = apply {
     val propertyValue = PropertyValue("clip-layer-types", clipLayerTypes)
     setProperty(propertyValue)
@@ -443,7 +434,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
     /**
      * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
      */
-    @MapboxExperimental
     val defaultClipLayerScope: List<String>?
       /**
        * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
@@ -462,7 +452,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      * This is an Expression representation of "clip-layer-scope".
      *
      */
-    @MapboxExperimental
     val defaultClipLayerScopeAsExpression: Expression?
       /**
        * Get default value of the ClipLayerScope property as an Expression
@@ -482,7 +471,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
     /**
      * Layer types that will also be removed if fallen below this clip layer. Default value: [].
      */
-    @MapboxExperimental
     val defaultClipLayerTypes: List<String>?
       /**
        * Layer types that will also be removed if fallen below this clip layer. Default value: [].
@@ -501,7 +489,6 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      * This is an Expression representation of "clip-layer-types".
      *
      */
-    @MapboxExperimental
     val defaultClipLayerTypesAsExpression: Expression?
       /**
        * Get default value of the ClipLayerTypes property as an Expression
@@ -600,7 +587,6 @@ interface ClipLayerDsl {
    *
    * @param clipLayerScope value of clipLayerScope
    */
-  @MapboxExperimental
   fun clipLayerScope(clipLayerScope: List<String> = listOf("")): ClipLayer
 
   /**
@@ -608,7 +594,6 @@ interface ClipLayerDsl {
    *
    * @param clipLayerScope value of clipLayerScope as Expression
    */
-  @MapboxExperimental
   fun clipLayerScope(clipLayerScope: Expression): ClipLayer
 
   /**
@@ -616,7 +601,6 @@ interface ClipLayerDsl {
    *
    * @param clipLayerTypes value of clipLayerTypes
    */
-  @MapboxExperimental
   fun clipLayerTypes(clipLayerTypes: List<String> = listOf()): ClipLayer
 
   /**
@@ -624,7 +608,6 @@ interface ClipLayerDsl {
    *
    * @param clipLayerTypes value of clipLayerTypes as Expression
    */
-  @MapboxExperimental
   fun clipLayerTypes(clipLayerTypes: Expression): ClipLayer
 }
 

@@ -55,12 +55,10 @@ public class ClipLayerState private constructor(
   /**
    *  Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
    */
-  @MapboxExperimental
   public var clipLayerScope: StringListValue by mutableStateOf(initialClipLayerScope)
   /**
    *  Layer types that will also be removed if fallen below this clip layer. Default value: [].
    */
-  @MapboxExperimental
   public var clipLayerTypes: ClipLayerTypesListValue by mutableStateOf(initialClipLayerTypes)
   /**
    *  Whether this layer is displayed. Default value: "visible".
@@ -84,14 +82,12 @@ public class ClipLayerState private constructor(
   public var filter: Filter by mutableStateOf(initialFilter)
 
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateClipLayerScope(layerNode: LayerNode) {
     if (clipLayerScope.notInitial) {
       layerNode.setProperty("clip-layer-scope", clipLayerScope.value)
     }
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateClipLayerTypes(layerNode: LayerNode) {
     if (clipLayerTypes.notInitial) {
       layerNode.setProperty("clip-layer-types", clipLayerTypes.value)

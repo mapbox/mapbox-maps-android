@@ -10,11 +10,14 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `SymbolLayer.iconSizeScaleRange`, `SymbolLayer.textSizeScaleRange`, `FillLayer.fillElevationReference`, `LineLayer.lineCrossSlope`, `LineLayer.lineWidthUnit`, `LineLayer.lineCrossSlope`, `LineLayer.lineElevationReference`, `DirectionalLight.shadowQuality`, `Rain.distortionStrength`, `Rain.distortionStrengthTransition`, `Rain.dropletSize`, `Rain.dropletSizeTransition`, `Rain.vignetteColor`, `Rain.vignetteColorTransition`, `Snow.flakeSize`, `Snow.flakeSizeTransition`, `Snow.vignetteColor`, `Snow.vignetteColorTransition`.
 * Change default value of experimental `Rain.opacity` to 0.19, default `Rain.vignette` to 0.3, `Snow.opacity` to 0.19, default `Snow.vignette` to 0.3.
 * [compose] Introduce experimental `SymbolLayerState.iconSizeScaleRange`, `SymbolLayerState.textSizeScaleRange`, `FillLayerState.fillElevationReference`, `LineLayerState.lineCrossSlope`, `LineLayerState.lineWidthUnit`, `LineLayerState.lineCrossSlope`, `LineLayerState.lineElevationReference`, `DirectionalLightState.shadowQuality`, `RainState.distortionStrength`, `RainState.distortionStrengthTransition`, `RainState.dropletSize`, `RainState.dropletSizeTransition`, `RainState.vignetteColor`, `RainState.vignetteColorTransition`, `SnowState.flakeSize`, `SnowState.flakeSizeTransition`, `SnowState.vignetteColor`, `SnowState.vignetteColorTransition`.
+* Remove `@MapboxExperimental` from `ClipLayer.clipLayerTypes` and `ClipLayer.clipLayerScope`.
+* Update the default value of experimental properties: default `Snow.density` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.85]`; default `Snow.opacity` is updated to `1.0`; default `Snow.vignette` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.3]`; default `Snow.centerThinning` is updated to `0.4`, default `Snow.direction` is updated to `listOf(0.0, 50.0)`; default `Snow.flakeSize` is updated to `0.71`; default `Rain.density` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.85]`; default `Rain.color` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,"#03113d",0.3,"#a8adbc"]`; default `Rain.opacity` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,0.88,1,0.7]`;  default `Rain.vignette` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.3]`; default `Rain.vignetteColor` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,"#001736",0.3,"#464646"]`; default `Rain.centerThinning` is updated to `0.57`; default `Rain.dropletSize` is updated to `listOf(2.6, 18.2)`; default `Rain.distortionStrength` is updated to `0.7`.
+* Introduce experimental `ModelLayer.modelElevationReference` property.
+* Introduce experimental `LocationPuck3D.modelElevationReference` property.
 
 ## Bug fixes 🐞
 * Mark `BackgroundLayer.backgroundPitchAlignment` as experimental.
 * Skip any map scroll (panning) if shove gesture is already in progress preventing camera flying away.
-* Introduce experimental `LocationPuck3D.modelElevationReference` property.
 
 # 11.9.0 December 18, 2024
 ## Breaking changes ⚠️

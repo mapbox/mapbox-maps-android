@@ -726,6 +726,74 @@ class ModelLayerTest {
   }
 
   @Test
+  fun modelElevationReferenceSet() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelElevationReference(ModelElevationReference.SEA)
+    verify { style.setStyleLayerProperty("id", "model-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "sea")
+  }
+
+  @Test
+  fun modelElevationReferenceGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
+
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(ModelElevationReference.SEA, layer.modelElevationReference)
+    verify { style.getStyleLayerProperty("id", "model-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelElevationReferenceAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelElevationReference(expression)
+    verify { style.setStyleLayerProperty("id", "model-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelElevationReferenceAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelElevationReferenceAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-elevation-reference") }
+  }
+
+  @Test
+  fun modelElevationReferenceAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelElevationReferenceAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-elevation-reference") }
+  }
+
+  @Test
+  fun modelElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "sea"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.modelElevationReferenceAsExpression?.toString())
+    assertEquals(ModelElevationReference.SEA.value, layer.modelElevationReferenceAsExpression.toString())
+    assertEquals(ModelElevationReference.SEA, layer.modelElevationReference)
+    verify { style.getStyleLayerProperty("id", "model-elevation-reference") }
+  }
+
+  @Test
   fun modelEmissiveStrengthSet() {
     val layer = modelLayer("id", "source") {}
     val testValue = 1.0
@@ -2002,6 +2070,39 @@ class ModelLayerTest {
     assertEquals(1.0, ModelLayer.defaultModelCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, ModelLayer.defaultModelCutoffFadeRange!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cutoff-fade-range") }
+  }
+
+  @Test
+  fun defaultModelElevationReferenceTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("sea")
+
+    assertEquals(ModelElevationReference.SEA, ModelLayer.defaultModelElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelElevationReferenceAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelElevationReferenceAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-elevation-reference") }
+  }
+
+  @Test
+  fun defaultModelElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "sea"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), ModelLayer.defaultModelElevationReferenceAsExpression?.toString())
+    assertEquals(ModelElevationReference.SEA.value, ModelLayer.defaultModelElevationReferenceAsExpression.toString())
+    assertEquals(ModelElevationReference.SEA, ModelLayer.defaultModelElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-elevation-reference") }
   }
 
   @Test

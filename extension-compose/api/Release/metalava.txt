@@ -1883,7 +1883,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ClipLayerTypes {
+  @androidx.compose.runtime.Immutable public final class ClipLayerTypes {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
@@ -1896,7 +1896,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class ClipLayerTypes.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ClipLayerTypesListValue {
+  @androidx.compose.runtime.Immutable public final class ClipLayerTypesListValue {
     ctor public ClipLayerTypesListValue(com.mapbox.bindgen.Value value);
     ctor public ClipLayerTypesListValue(java.util.List<com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypes> value);
     ctor public ClipLayerTypesListValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
@@ -2832,6 +2832,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ModelElevationReferenceValue {
+    ctor public ModelElevationReferenceValue(com.mapbox.bindgen.Value value);
+    ctor public ModelElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue GROUND;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue SEA;
+  }
+
+  public static final class ModelElevationReferenceValue.Companion {
+  }
+
   public final class ModelLayerKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ModelLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("model")
@@ -2857,6 +2873,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getModelColorMixIntensityTransition();
     method public com.mapbox.maps.extension.compose.style.Transition getModelColorTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getModelCutoffFadeRange();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue getModelElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getModelEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getModelEmissiveStrengthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getModelHeightBasedEmissiveStrengthMultiplier();
@@ -2889,6 +2906,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setModelColorMixIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setModelColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setModelCutoffFadeRange(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setModelElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue);
     method public void setModelEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setModelEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setModelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.compose.style.DoubleListValue);
@@ -2921,6 +2939,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition modelColorMixIntensityTransition;
     property public final com.mapbox.maps.extension.compose.style.Transition modelColorTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue modelCutoffFadeRange;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue modelElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue modelEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition modelEmissiveStrengthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue modelHeightBasedEmissiveStrengthMultiplier;
