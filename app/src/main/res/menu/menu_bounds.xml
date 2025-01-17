@@ -17,4 +17,8 @@
         android:id="@+id/menu_action_reset"
         android:title="@string/restrict_reset"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_toggle_bounds"
+        android:title="@string/toggle_show_bounds"
+        app:showAsAction="never"/>
 </menu>
