@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -580,6 +581,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * Orientation of background layer. Default value: "map".
    */
+  @MapboxExperimental
   val backgroundPitchAlignment: BackgroundPitchAlignment?
     /**
      * Orientation of background layer. Default value: "map".
@@ -602,6 +604,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment
    */
+  @MapboxExperimental
   override fun backgroundPitchAlignment(backgroundPitchAlignment: BackgroundPitchAlignment): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-pitch-alignment", backgroundPitchAlignment)
     setProperty(propertyValue)
@@ -613,6 +616,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * This is an Expression representation of "background-pitch-alignment".
    *
    */
+  @MapboxExperimental
   val backgroundPitchAlignmentAsExpression: Expression?
     /**
      * Orientation of background layer. Default value: "map".
@@ -640,6 +644,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment as Expression
    */
+  @MapboxExperimental
   override fun backgroundPitchAlignment(backgroundPitchAlignment: Expression): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-pitch-alignment", backgroundPitchAlignment)
     setProperty(propertyValue)
@@ -907,6 +912,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Orientation of background layer. Default value: "map".
      */
+    @MapboxExperimental
     val defaultBackgroundPitchAlignment: BackgroundPitchAlignment?
       /**
        * Orientation of background layer. Default value: "map".
@@ -928,6 +934,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * This is an Expression representation of "background-pitch-alignment".
      *
      */
+    @MapboxExperimental
     val defaultBackgroundPitchAlignmentAsExpression: Expression?
       /**
        * Get default value of the BackgroundPitchAlignment property as an Expression
@@ -1117,6 +1124,7 @@ interface BackgroundLayerDsl {
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment
    */
+  @MapboxExperimental
   fun backgroundPitchAlignment(backgroundPitchAlignment: BackgroundPitchAlignment = BackgroundPitchAlignment.MAP): BackgroundLayer
 
   /**
@@ -1124,6 +1132,7 @@ interface BackgroundLayerDsl {
    *
    * @param backgroundPitchAlignment value of backgroundPitchAlignment as Expression
    */
+  @MapboxExperimental
   fun backgroundPitchAlignment(backgroundPitchAlignment: Expression): BackgroundLayer
 }
 

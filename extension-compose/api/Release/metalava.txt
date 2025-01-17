@@ -1663,7 +1663,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable public final class BackgroundPitchAlignmentValue {
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class BackgroundPitchAlignmentValue {
     ctor public BackgroundPitchAlignmentValue(com.mapbox.bindgen.Value value);
     ctor public BackgroundPitchAlignmentValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();

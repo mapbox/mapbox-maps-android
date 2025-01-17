@@ -1699,6 +1699,7 @@ class ModelType private constructor(override val value: String) : LayerProperty 
  *
  * @param value String value of this property
  */
+@MapboxExperimental
 class BackgroundPitchAlignment private constructor(override val value: String) : LayerProperty {
 
   /**

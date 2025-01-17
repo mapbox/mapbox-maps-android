@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
@@ -81,6 +82,7 @@ public class BackgroundLayerState private constructor(
   /**
    *  Orientation of background layer. Default value: "map".
    */
+  @MapboxExperimental
   public var backgroundPitchAlignment: BackgroundPitchAlignmentValue by mutableStateOf(initialBackgroundPitchAlignment)
   /**
    *  Whether this layer is displayed. Default value: "visible".
@@ -141,6 +143,7 @@ public class BackgroundLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateBackgroundPitchAlignment(layerNode: LayerNode) {
     if (backgroundPitchAlignment.notInitial) {
       layerNode.setProperty("background-pitch-alignment", backgroundPitchAlignment.value)

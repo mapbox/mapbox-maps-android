@@ -1910,6 +1910,7 @@ public data class ModelTypeValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
+@MapboxExperimental
 public data class BackgroundPitchAlignmentValue(public val value: Value) {
   /**
    * Construct the [BackgroundPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).

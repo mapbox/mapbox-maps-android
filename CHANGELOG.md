@@ -2,6 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 11.9.1
+## Bug fixes 🐞
+* Add missing experimental annotation to `backgroundPitchAlignment` property.
 
 # 11.9.0 December 18, 2024
 ## Breaking changes ⚠️

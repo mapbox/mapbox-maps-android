@@ -1173,8 +1173,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(String backgroundPattern);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPattern);
-    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment backgroundPitchAlignment);
-    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPitchAlignment);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment backgroundPitchAlignment);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPitchAlignment);
     method public String? getBackgroundColor();
     method @ColorInt public Integer? getBackgroundColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBackgroundColorAsExpression();
@@ -1276,8 +1276,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(String backgroundPattern);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPattern);
-    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment backgroundPitchAlignment = com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment.MAP);
-    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPitchAlignment);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment backgroundPitchAlignment = com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment.MAP);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPitchAlignment(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPitchAlignment);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer slot(String slot);
@@ -5576,7 +5576,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor valueOf(String value);
   }
 
-  public final class BackgroundPitchAlignment {
+  @com.mapbox.maps.MapboxExperimental public final class BackgroundPitchAlignment {
     method public String getValue();
     method public static com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment valueOf(String value);
     property public String value;
