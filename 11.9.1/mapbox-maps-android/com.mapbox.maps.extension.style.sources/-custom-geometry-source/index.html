@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>CustomGeometrySource</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.style.sources/CustomGeometrySource///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.style.sources</a><span class="delimiter">/</span><span class="current">CustomGeometrySource</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Custom</span><wbr></wbr><span>Geometry</span><wbr></wbr><span><span>Source</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">CustomGeometrySource</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps/-custom-geometry-source-options/index.html">CustomGeometrySourceOptions</a></span></span><span class="token punctuation">)</span> : <a href="../-source/index.html">Source</a></div><p class="paragraph">Custom Geometry Source, allows using FeatureCollections.</p><p class="paragraph">CustomGeometrySource uses a coalescing model for frequent data updates targeting the same tile id, which means, that the in-progress request as well as the last scheduled request are guaranteed to finish. Any requests scheduled meanwhile can be canceled.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="1206997238%2FConstructors%2F540127926" anchor-label="CustomGeometrySource" id="1206997238%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-custom-geometry-source.html"><span>Custom</span><wbr></wbr><span>Geometry</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1206997238%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-custom-geometry-source.html"><span class="token function">CustomGeometrySource</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps/-custom-geometry-source-options/index.html">CustomGeometrySourceOptions</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="959747785%2FFunctions%2F540127926" anchor-label="bindTo" id="959747785%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-source/bind-to.html"><span>bind</span><wbr></wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="959747785%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../-source/bind-to.html"><span class="token function">bindTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">delegate<span class="token operator">: </span><a href="../../com.mapbox.maps/-mapbox-style-manager/index.html">MapboxStyleManager</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add the source to the Style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-263568941%2FFunctions%2F540127926" anchor-label="invalidateRegion" id="-263568941%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="invalidate-region.html"><span>invalidate</span><wbr></wbr><span><span>Region</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-263568941%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="invalidate-region.html"><span class="token function">invalidateRegion</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">coordinateBounds<span class="token operator">: </span><a href="../../com.mapbox.maps/-coordinate-bounds/index.html">CoordinateBounds</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invalidate region for provided custom geometry source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-640163009%2FFunctions%2F540127926" anchor-label="invalidateTile" id="-640163009%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="invalidate-tile.html"><span>invalidate</span><wbr></wbr><span><span>Tile</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-640163009%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="invalidate-tile.html"><span class="token function">invalidateTile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">tileID<span class="token operator">: </span><a href="../../com.mapbox.maps/-canonical-tile-i-d/index.html">CanonicalTileID</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invalidate tile for provided custom geometry source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1324395255%2FFunctions%2F540127926" anchor-label="invalidRegion" id="-1324395255%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="invalid-region.html"><span>invalid</span><wbr></wbr><span><span>Region</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1324395255%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="invalid-region.html"><span class="token function"><strike>invalidRegion</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">coordinateBounds<span class="token operator">: </span><a href="../../com.mapbox.maps/-coordinate-bounds/index.html">CoordinateBounds</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invalidate region for provided custom geometry source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="380668873%2FFunctions%2F540127926" anchor-label="invalidTile" id="380668873%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="invalid-tile.html"><span>invalid</span><wbr></wbr><span><span>Tile</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="380668873%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="invalid-tile.html"><span class="token function"><strike>invalidTile</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">tileID<span class="token operator">: </span><a href="../../com.mapbox.maps/-canonical-tile-i-d/index.html">CanonicalTileID</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invalidate tile for provided custom geometry source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1742591057%2FFunctions%2F540127926" anchor-label="setTileCacheBudget" id="1742591057%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="set-tile-cache-budget.html"><span>set</span><wbr></wbr><span>Tile</span><wbr></wbr><span>Cache</span><wbr></wbr><span><span>Budget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1742591057%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-tile-cache-budget.html"><span class="token function">setTileCacheBudget</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="../../com.mapbox.maps/-tile-cache-budget/index.html">TileCacheBudget</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The property allows to define source specific resource budget, either in tile units or in megabytes. Whenever tile cache goes over the defined limit, least recently used tile will be evicted from the in-memory cache. Note that the current implementation does not take into account resources allocated by the visible tiles.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1221336752%2FFunctions%2F540127926" anchor-label="setTileData" id="-1221336752%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="set-tile-data.html"><span>set</span><wbr></wbr><span>Tile</span><wbr></wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1221336752%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-tile-data.html"><span class="token function">setTileData</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">tileID<span class="token operator">: </span><a href="../../com.mapbox.maps/-canonical-tile-i-d/index.html">CanonicalTileID</a><span class="token punctuation">, </span></span><span class="parameter ">featureCollection<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.geojson/Feature///PointingToDeclaration/">Feature</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set tile data of a custom geometry.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1091598245%2FFunctions%2F540127926" anchor-label="toString" id="1091598245%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-source/to-string.html"><span>to</span><wbr></wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1091598245%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../-source/to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Returns a human readable string that includes the cached properties of the source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="194254523%2FProperties%2F540127926" anchor-label="sourceId" id="194254523%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-source/source-id.html"><span>source</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="194254523%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="194254523%2FProperties%2F540127926" anchor-label="sourceId" id="194254523%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-source/source-id.html">sourceId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="194254523%2FProperties%2F540127926" anchor-label="sourceId" id="194254523%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The ID of the Source.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1702802733%2FProperties%2F540127926" anchor-label="tileCacheBudget" id="1702802733%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="tile-cache-budget.html"><span>tile</span><wbr></wbr><span>Cache</span><wbr></wbr><span><span>Budget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1702802733%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1702802733%2FProperties%2F540127926" anchor-label="tileCacheBudget" id="1702802733%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="tile-cache-budget.html">tileCacheBudget</a><span class="token operator">: </span><a href="../../com.mapbox.maps/-tile-cache-budget/index.html">TileCacheBudget</a><span class="token operator">?</span></div><div class="brief "><a data-name="1702802733%2FProperties%2F540127926" anchor-label="tileCacheBudget" id="1702802733%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The property allows to define source specific resource budget, either in tile units or in megabytes. Whenever tile cache goes over the defined limit, least recently used tile will be evicted from the in-memory cache. Note that the current implementation does not take into account resources allocated by the visible tiles.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

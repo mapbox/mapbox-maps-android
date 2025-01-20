@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>LineLayerState</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.compose.style.layers.generated/LineLayerState///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.compose.style.layers.generated</a><span class="delimiter">/</span><span class="current">LineLayerState</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Line</span><wbr></wbr><span>Layer</span><wbr></wbr><span><span>State</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Stable.html"><span class="token annotation builtin">Stable</span></a></div></div><span class="token keyword">class </span><a href="index.html">LineLayerState</a></div><p class="paragraph">The state holder for <a href="../-line-layer.html">LineLayer</a>'s layer properties.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="See also">See also</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">See also</h4>
+      <div data-togglable="See also">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="See also"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div></div></span></div><div><div class="title"><div data-togglable="See also"><p class="paragraph"><a href="https://docs.mapbox.com/style-spec/reference/layers#line">The online documentation</a></p></div></div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-2101691603%2FConstructors%2F540127926" anchor-label="LineLayerState" id="-2101691603%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-line-layer-state.html"><span>Line</span><wbr></wbr><span>Layer</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2101691603%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-line-layer-state.html"><span class="token function">LineLayerState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Construct an default <a href="index.html">LineLayerState</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-510209751%2FProperties%2F540127926" anchor-label="filter" id="-510209751%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="filter.html"><span><span>filter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-510209751%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-510209751%2FProperties%2F540127926" anchor-label="filter" id="-510209751%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="filter.html">filter</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style.layers/-filter/index.html">Filter</a></div><div class="brief "><a data-name="-510209751%2FProperties%2F540127926" anchor-label="filter" id="-510209751%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The <code class="lang-kotlin">[&quot;feature-state&quot;, ...]</code> expression is not supported in filter expressions. The <code class="lang-kotlin">[&quot;pitch&quot;]</code> and <code class="lang-kotlin">[&quot;distance-from-center&quot;]</code> expressions are supported only for filter expressions on the symbol layer.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-983569175%2FProperties%2F540127926" anchor-label="interactionsState" id="-983569175%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="interactions-state.html"><span>interactions</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-983569175%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-983569175%2FProperties%2F540127926" anchor-label="interactionsState" id="-983569175%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="interactions-state.html">interactionsState</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style.layers/-layer-interactions-state/index.html">LayerInteractionsState</a></div><div class="brief "><a data-name="-983569175%2FProperties%2F540127926" anchor-label="interactionsState" id="-983569175%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The interactions associated with this layer.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1153150330%2FProperties%2F540127926" anchor-label="lineBlur" id="-1153150330%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-blur.html"><span>line</span><wbr></wbr><span><span>Blur</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1153150330%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1153150330%2FProperties%2F540127926" anchor-label="lineBlur" id="-1153150330%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-blur.html">lineBlur</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-1153150330%2FProperties%2F540127926" anchor-label="lineBlur" id="-1153150330%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Blur applied to the line, in pixels. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="921501553%2FProperties%2F540127926" anchor-label="lineBlurTransition" id="921501553%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-blur-transition.html"><span>line</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="921501553%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="921501553%2FProperties%2F540127926" anchor-label="lineBlurTransition" id="921501553%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-blur-transition.html">lineBlurTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="921501553%2FProperties%2F540127926" anchor-label="lineBlurTransition" id="921501553%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-blur.html">lineBlur</a>. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1966726582%2FProperties%2F540127926" anchor-label="lineBorderColor" id="1966726582%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-border-color.html"><span>line</span><wbr></wbr><span>Border</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1966726582%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1966726582%2FProperties%2F540127926" anchor-label="lineBorderColor" id="1966726582%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-border-color.html">lineBorderColor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="1966726582%2FProperties%2F540127926" anchor-label="lineBorderColor" id="1966726582%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: &quot;rgba(0, 0, 0, 0)&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-627945823%2FProperties%2F540127926" anchor-label="lineBorderColorTransition" id="-627945823%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-border-color-transition.html"><span>line</span><wbr></wbr><span>Border</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-627945823%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-627945823%2FProperties%2F540127926" anchor-label="lineBorderColorTransition" id="-627945823%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-border-color-transition.html">lineBorderColorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-627945823%2FProperties%2F540127926" anchor-label="lineBorderColorTransition" id="-627945823%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-border-color.html">lineBorderColor</a>. Default value: &quot;rgba(0, 0, 0, 0)&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="275236019%2FProperties%2F540127926" anchor-label="lineBorderWidth" id="275236019%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-border-width.html"><span>line</span><wbr></wbr><span>Border</span><wbr></wbr><span><span>Width</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="275236019%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="275236019%2FProperties%2F540127926" anchor-label="lineBorderWidth" id="275236019%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-border-width.html">lineBorderWidth</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="275236019%2FProperties%2F540127926" anchor-label="lineBorderWidth" id="275236019%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1071817378%2FProperties%2F540127926" anchor-label="lineBorderWidthTransition" id="-1071817378%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-border-width-transition.html"><span>line</span><wbr></wbr><span>Border</span><wbr></wbr><span>Width</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1071817378%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1071817378%2FProperties%2F540127926" anchor-label="lineBorderWidthTransition" id="-1071817378%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-border-width-transition.html">lineBorderWidthTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-1071817378%2FProperties%2F540127926" anchor-label="lineBorderWidthTransition" id="-1071817378%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-border-width.html">lineBorderWidth</a>. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1514545957%2FProperties%2F540127926" anchor-label="lineCap" id="-1514545957%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-cap.html"><span>line</span><wbr></wbr><span><span>Cap</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1514545957%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1514545957%2FProperties%2F540127926" anchor-label="lineCap" id="-1514545957%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-cap.html">lineCap</a><span class="token operator">: </span><a href="../-line-cap-value/index.html">LineCapValue</a></div><div class="brief "><a data-name="-1514545957%2FProperties%2F540127926" anchor-label="lineCap" id="-1514545957%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The display of line endings. Default value: &quot;butt&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1645721194%2FProperties%2F540127926" anchor-label="lineColor" id="1645721194%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-color.html"><span>line</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1645721194%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1645721194%2FProperties%2F540127926" anchor-label="lineColor" id="1645721194%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-color.html">lineColor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="1645721194%2FProperties%2F540127926" anchor-label="lineColor" id="1645721194%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The color with which the line will be drawn. Default value: &quot;#000000&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1093675435%2FProperties%2F540127926" anchor-label="lineColorTransition" id="-1093675435%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-color-transition.html"><span>line</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1093675435%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1093675435%2FProperties%2F540127926" anchor-label="lineColorTransition" id="-1093675435%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-color-transition.html">lineColorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-1093675435%2FProperties%2F540127926" anchor-label="lineColorTransition" id="-1093675435%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-color.html">lineColor</a>. Default value: &quot;#000000&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-97673146%2FProperties%2F540127926" anchor-label="lineDasharray" id="-97673146%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-dasharray.html"><span>line</span><wbr></wbr><span><span>Dasharray</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-97673146%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-97673146%2FProperties%2F540127926" anchor-label="lineDasharray" id="-97673146%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-dasharray.html">lineDasharray</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-list-value/index.html">DoubleListValue</a></div><div class="brief "><a data-name="-97673146%2FProperties%2F540127926" anchor-label="lineDasharray" id="-97673146%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with <code class="lang-kotlin">lineMetrics: true</code> specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1989030092%2FProperties%2F540127926" anchor-label="lineDepthOcclusionFactor" id="-1989030092%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-depth-occlusion-factor.html"><span>line</span><wbr></wbr><span>Depth</span><wbr></wbr><span>Occlusion</span><wbr></wbr><span><span>Factor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1989030092%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1989030092%2FProperties%2F540127926" anchor-label="lineDepthOcclusionFactor" id="-1989030092%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-depth-occlusion-factor.html">lineDepthOcclusionFactor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-1989030092%2FProperties%2F540127926" anchor-label="lineDepthOcclusionFactor" id="-1989030092%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-354354529%2FProperties%2F540127926" anchor-label="lineDepthOcclusionFactorTransition" id="-354354529%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-depth-occlusion-factor-transition.html"><span>line</span><wbr></wbr><span>Depth</span><wbr></wbr><span>Occlusion</span><wbr></wbr><span>Factor</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-354354529%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-354354529%2FProperties%2F540127926" anchor-label="lineDepthOcclusionFactorTransition" id="-354354529%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-depth-occlusion-factor-transition.html">lineDepthOcclusionFactorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-354354529%2FProperties%2F540127926" anchor-label="lineDepthOcclusionFactorTransition" id="-354354529%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-depth-occlusion-factor.html">lineDepthOcclusionFactor</a>. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1163717547%2FProperties%2F540127926" anchor-label="lineEmissiveStrength" id="-1163717547%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-emissive-strength.html"><span>line</span><wbr></wbr><span>Emissive</span><wbr></wbr><span><span>Strength</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1163717547%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1163717547%2FProperties%2F540127926" anchor-label="lineEmissiveStrength" id="-1163717547%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-emissive-strength.html">lineEmissiveStrength</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-1163717547%2FProperties%2F540127926" anchor-label="lineEmissiveStrength" id="-1163717547%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-394589568%2FProperties%2F540127926" anchor-label="lineEmissiveStrengthTransition" id="-394589568%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-emissive-strength-transition.html"><span>line</span><wbr></wbr><span>Emissive</span><wbr></wbr><span>Strength</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-394589568%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-394589568%2FProperties%2F540127926" anchor-label="lineEmissiveStrengthTransition" id="-394589568%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-emissive-strength-transition.html">lineEmissiveStrengthTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-394589568%2FProperties%2F540127926" anchor-label="lineEmissiveStrengthTransition" id="-394589568%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-emissive-strength.html">lineEmissiveStrength</a>. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1591695747%2FProperties%2F540127926" anchor-label="lineGapWidth" id="-1591695747%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-gap-width.html"><span>line</span><wbr></wbr><span>Gap</span><wbr></wbr><span><span>Width</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1591695747%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1591695747%2FProperties%2F540127926" anchor-label="lineGapWidth" id="-1591695747%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-gap-width.html">lineGapWidth</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-1591695747%2FProperties%2F540127926" anchor-label="lineGapWidth" id="-1591695747%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1214646952%2FProperties%2F540127926" anchor-label="lineGapWidthTransition" id="1214646952%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-gap-width-transition.html"><span>line</span><wbr></wbr><span>Gap</span><wbr></wbr><span>Width</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1214646952%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1214646952%2FProperties%2F540127926" anchor-label="lineGapWidthTransition" id="1214646952%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-gap-width-transition.html">lineGapWidthTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="1214646952%2FProperties%2F540127926" anchor-label="lineGapWidthTransition" id="1214646952%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-gap-width.html">lineGapWidth</a>. Default value: 0. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="714106845%2FProperties%2F540127926" anchor-label="lineGradient" id="714106845%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-gradient.html"><span>line</span><wbr></wbr><span><span>Gradient</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="714106845%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="714106845%2FProperties%2F540127926" anchor-label="lineGradient" id="714106845%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-gradient.html">lineGradient</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="714106845%2FProperties%2F540127926" anchor-label="lineGradient" id="714106845%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">A gradient used to color a line feature at various distances along its length. Defined using a <code class="lang-kotlin">step</code> or <code class="lang-kotlin">interpolate</code> expression which outputs a color for each corresponding <code class="lang-kotlin">line-progress</code> input value. <code class="lang-kotlin">line-progress</code> is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a <code class="lang-kotlin">number</code> between <code class="lang-kotlin">0</code> and <code class="lang-kotlin">1</code>). Can only be used with GeoJSON sources that specify <code class="lang-kotlin">&quot;lineMetrics&quot;: true</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="553940771%2FProperties%2F540127926" anchor-label="lineJoin" id="553940771%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-join.html"><span>line</span><wbr></wbr><span><span>Join</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="553940771%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="553940771%2FProperties%2F540127926" anchor-label="lineJoin" id="553940771%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-join.html">lineJoin</a><span class="token operator">: </span><a href="../-line-join-value/index.html">LineJoinValue</a></div><div class="brief "><a data-name="553940771%2FProperties%2F540127926" anchor-label="lineJoin" id="553940771%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The display of lines when joining. Default value: &quot;miter&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1587620841%2FProperties%2F540127926" anchor-label="lineMiterLimit" id="-1587620841%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-miter-limit.html"><span>line</span><wbr></wbr><span>Miter</span><wbr></wbr><span><span>Limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1587620841%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1587620841%2FProperties%2F540127926" anchor-label="lineMiterLimit" id="-1587620841%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-miter-limit.html">lineMiterLimit</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-1587620841%2FProperties%2F540127926" anchor-label="lineMiterLimit" id="-1587620841%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-212195057%2FProperties%2F540127926" anchor-label="lineOcclusionOpacity" id="-212195057%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-occlusion-opacity.html"><span>line</span><wbr></wbr><span>Occlusion</span><wbr></wbr><span><span>Opacity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-212195057%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-212195057%2FProperties%2F540127926" anchor-label="lineOcclusionOpacity" id="-212195057%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-occlusion-opacity.html">lineOcclusionOpacity</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-212195057%2FProperties%2F540127926" anchor-label="lineOcclusionOpacity" id="-212195057%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when <code class="lang-kotlin">line-opacity</code> has data-driven styling. Default value: 0. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-191693126%2FProperties%2F540127926" anchor-label="lineOcclusionOpacityTransition" id="-191693126%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-occlusion-opacity-transition.html"><span>line</span><wbr></wbr><span>Occlusion</span><wbr></wbr><span>Opacity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-191693126%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-191693126%2FProperties%2F540127926" anchor-label="lineOcclusionOpacityTransition" id="-191693126%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-occlusion-opacity-transition.html">lineOcclusionOpacityTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-191693126%2FProperties%2F540127926" anchor-label="lineOcclusionOpacityTransition" id="-191693126%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-occlusion-opacity.html">lineOcclusionOpacity</a>. Default value: 0. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="389141466%2FProperties%2F540127926" anchor-label="lineOffset" id="389141466%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-offset.html"><span>line</span><wbr></wbr><span><span>Offset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="389141466%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="389141466%2FProperties%2F540127926" anchor-label="lineOffset" id="389141466%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-offset.html">lineOffset</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="389141466%2FProperties%2F540127926" anchor-label="lineOffset" id="389141466%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1740105669%2FProperties%2F540127926" anchor-label="lineOffsetTransition" id="1740105669%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-offset-transition.html"><span>line</span><wbr></wbr><span>Offset</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1740105669%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1740105669%2FProperties%2F540127926" anchor-label="lineOffsetTransition" id="1740105669%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-offset-transition.html">lineOffsetTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="1740105669%2FProperties%2F540127926" anchor-label="lineOffsetTransition" id="1740105669%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-offset.html">lineOffset</a>. Default value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="863637186%2FProperties%2F540127926" anchor-label="lineOpacity" id="863637186%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-opacity.html"><span>line</span><wbr></wbr><span><span>Opacity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="863637186%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="863637186%2FProperties%2F540127926" anchor-label="lineOpacity" id="863637186%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-opacity.html">lineOpacity</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="863637186%2FProperties%2F540127926" anchor-label="lineOpacity" id="863637186%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The opacity at which the line will be drawn. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1983799123%2FProperties%2F540127926" anchor-label="lineOpacityTransition" id="-1983799123%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-opacity-transition.html"><span>line</span><wbr></wbr><span>Opacity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1983799123%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1983799123%2FProperties%2F540127926" anchor-label="lineOpacityTransition" id="-1983799123%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-opacity-transition.html">lineOpacityTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-1983799123%2FProperties%2F540127926" anchor-label="lineOpacityTransition" id="-1983799123%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-opacity.html">lineOpacity</a>. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="48802525%2FProperties%2F540127926" anchor-label="linePattern" id="48802525%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-pattern.html"><span>line</span><wbr></wbr><span><span>Pattern</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="48802525%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="48802525%2FProperties%2F540127926" anchor-label="linePattern" id="48802525%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-pattern.html">linePattern</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style.layers/-image-value/index.html">ImageValue</a></div><div class="brief "><a data-name="48802525%2FProperties%2F540127926" anchor-label="linePattern" id="48802525%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="891826912%2FProperties%2F540127926" anchor-label="lineRoundLimit" id="891826912%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-round-limit.html"><span>line</span><wbr></wbr><span>Round</span><wbr></wbr><span><span>Limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="891826912%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="891826912%2FProperties%2F540127926" anchor-label="lineRoundLimit" id="891826912%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-round-limit.html">lineRoundLimit</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="891826912%2FProperties%2F540127926" anchor-label="lineRoundLimit" id="891826912%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1960378284%2FProperties%2F540127926" anchor-label="lineSortKey" id="1960378284%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-sort-key.html"><span>line</span><wbr></wbr><span>Sort</span><wbr></wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1960378284%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1960378284%2FProperties%2F540127926" anchor-label="lineSortKey" id="1960378284%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-sort-key.html">lineSortKey</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="1960378284%2FProperties%2F540127926" anchor-label="lineSortKey" id="1960378284%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1140493023%2FProperties%2F540127926" anchor-label="lineTranslate" id="1140493023%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-translate.html"><span>line</span><wbr></wbr><span><span>Translate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1140493023%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1140493023%2FProperties%2F540127926" anchor-label="lineTranslate" id="1140493023%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-translate.html">lineTranslate</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-list-value/index.html">DoubleListValue</a></div><div class="brief "><a data-name="1140493023%2FProperties%2F540127926" anchor-label="lineTranslate" id="1140493023%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The geometry's offset. Values are x, y where negatives indicate left and up, respectively. Default value: 0,0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2106549290%2FProperties%2F540127926" anchor-label="lineTranslateAnchor" id="2106549290%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-translate-anchor.html"><span>line</span><wbr></wbr><span>Translate</span><wbr></wbr><span><span>Anchor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2106549290%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2106549290%2FProperties%2F540127926" anchor-label="lineTranslateAnchor" id="2106549290%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-translate-anchor.html">lineTranslateAnchor</a><span class="token operator">: </span><a href="../-line-translate-anchor-value/index.html">LineTranslateAnchorValue</a></div><div class="brief "><a data-name="2106549290%2FProperties%2F540127926" anchor-label="lineTranslateAnchor" id="2106549290%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Controls the frame of reference for <code class="lang-kotlin">line-translate</code>. Default value: &quot;map&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1631626102%2FProperties%2F540127926" anchor-label="lineTranslateTransition" id="-1631626102%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-translate-transition.html"><span>line</span><wbr></wbr><span>Translate</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1631626102%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1631626102%2FProperties%2F540127926" anchor-label="lineTranslateTransition" id="-1631626102%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-translate-transition.html">lineTranslateTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-1631626102%2FProperties%2F540127926" anchor-label="lineTranslateTransition" id="-1631626102%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-translate.html">lineTranslate</a>. Default value: 0,0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="512915244%2FProperties%2F540127926" anchor-label="lineTrimColor" id="512915244%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-trim-color.html"><span>line</span><wbr></wbr><span>Trim</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="512915244%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="512915244%2FProperties%2F540127926" anchor-label="lineTrimColor" id="512915244%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="line-trim-color.html">lineTrimColor</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-color-value/index.html">ColorValue</a></div><div class="brief "><a data-name="512915244%2FProperties%2F540127926" anchor-label="lineTrimColor" id="512915244%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The color to be used for rendering the trimmed line section that is defined by the <code class="lang-kotlin">line-trim-offset</code> property. Default value: &quot;transparent&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="103419031%2FProperties%2F540127926" anchor-label="lineTrimColorTransition" id="103419031%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-trim-color-transition.html"><span>line</span><wbr></wbr><span>Trim</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="103419031%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="103419031%2FProperties%2F540127926" anchor-label="lineTrimColorTransition" id="103419031%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="line-trim-color-transition.html">lineTrimColorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="103419031%2FProperties%2F540127926" anchor-label="lineTrimColorTransition" id="103419031%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-trim-color.html">lineTrimColor</a>. Default value: &quot;transparent&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1843605294%2FProperties%2F540127926" anchor-label="lineTrimFadeRange" id="1843605294%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-trim-fade-range.html"><span>line</span><wbr></wbr><span>Trim</span><wbr></wbr><span>Fade</span><wbr></wbr><span><span>Range</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1843605294%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1843605294%2FProperties%2F540127926" anchor-label="lineTrimFadeRange" id="1843605294%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="line-trim-fade-range.html">lineTrimFadeRange</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-range-value/index.html">DoubleRangeValue</a></div><div class="brief "><a data-name="1843605294%2FProperties%2F540127926" anchor-label="lineTrimFadeRange" id="1843605294%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The fade range for the trim-start and trim-end points is defined by the <code class="lang-kotlin">line-trim-offset</code> property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between <code class="lang-kotlin">line-trim-color</code> and the color specified by the <code class="lang-kotlin">line-color</code> or the <code class="lang-kotlin">line-gradient</code> property. Default value: 0,0. Minimum value: 0,0. Maximum value: 1,1.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-368104616%2FProperties%2F540127926" anchor-label="lineTrimOffset" id="-368104616%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-trim-offset.html"><span>line</span><wbr></wbr><span>Trim</span><wbr></wbr><span><span>Offset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-368104616%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-368104616%2FProperties%2F540127926" anchor-label="lineTrimOffset" id="-368104616%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-trim-offset.html">lineTrimOffset</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-list-value/index.html">DoubleListValue</a></div><div class="brief "><a data-name="-368104616%2FProperties%2F540127926" anchor-label="lineTrimOffset" id="-368104616%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The line part between trim-start, trim-end will be painted using <code class="lang-kotlin">line-trim-color,</code> which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range 0.0, 1.0. Default value: 0,0. Minimum value: 0,0. Maximum value: 1,1.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-45769369%2FProperties%2F540127926" anchor-label="lineWidth" id="-45769369%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-width.html"><span>line</span><wbr></wbr><span><span>Width</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-45769369%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-45769369%2FProperties%2F540127926" anchor-label="lineWidth" id="-45769369%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-width.html">lineWidth</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-45769369%2FProperties%2F540127926" anchor-label="lineWidth" id="-45769369%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Stroke thickness. Default value: 1. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1537546990%2FProperties%2F540127926" anchor-label="lineWidthTransition" id="-1537546990%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-width-transition.html"><span>line</span><wbr></wbr><span>Width</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1537546990%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1537546990%2FProperties%2F540127926" anchor-label="lineWidthTransition" id="-1537546990%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="line-width-transition.html">lineWidthTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-transition/index.html">Transition</a></div><div class="brief "><a data-name="-1537546990%2FProperties%2F540127926" anchor-label="lineWidthTransition" id="-1537546990%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the transition of <a href="line-width.html">lineWidth</a>. Default value: 1. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-570051744%2FProperties%2F540127926" anchor-label="lineZOffset" id="-570051744%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="line-z-offset.html"><span>line</span><wbr></wbr><span><span>ZOffset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-570051744%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-570051744%2FProperties%2F540127926" anchor-label="lineZOffset" id="-570051744%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword"></span><span class="token keyword">var </span><a href="line-z-offset.html">lineZOffset</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-double-value/index.html">DoubleValue</a></div><div class="brief "><a data-name="-570051744%2FProperties%2F540127926" anchor-label="lineZOffset" id="-570051744%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Vertical offset from ground, in meters. Defaults to 0. Not supported for globe projection at the moment.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1204024034%2FProperties%2F540127926" anchor-label="maxZoom" id="1204024034%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="max-zoom.html"><span>max</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1204024034%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1204024034%2FProperties%2F540127926" anchor-label="maxZoom" id="1204024034%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="max-zoom.html">maxZoom</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-long-value/index.html">LongValue</a></div><div class="brief "><a data-name="1204024034%2FProperties%2F540127926" anchor-label="maxZoom" id="1204024034%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: 0, 24</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-397705036%2FProperties%2F540127926" anchor-label="minZoom" id="-397705036%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="min-zoom.html"><span>min</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-397705036%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-397705036%2FProperties%2F540127926" anchor-label="minZoom" id="-397705036%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="min-zoom.html">minZoom</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-long-value/index.html">LongValue</a></div><div class="brief "><a data-name="-397705036%2FProperties%2F540127926" anchor-label="minZoom" id="-397705036%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: 0, 24</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-613041373%2FProperties%2F540127926" anchor-label="sourceLayer" id="-613041373%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="source-layer.html"><span>source</span><wbr></wbr><span><span>Layer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-613041373%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-613041373%2FProperties%2F540127926" anchor-label="sourceLayer" id="-613041373%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="source-layer.html">sourceLayer</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.compose.style/-string-value/index.html">StringValue</a></div><div class="brief "><a data-name="-613041373%2FProperties%2F540127926" anchor-label="sourceLayer" id="-613041373%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="899778767%2FProperties%2F540127926" anchor-label="visibility" id="899778767%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="visibility.html"><span><span>visibility</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="899778767%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="899778767%2FProperties%2F540127926" anchor-label="visibility" id="899778767%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="visibility.html">visibility</a><span class="token operator">: </span><a href="../-visibility-value/index.html">VisibilityValue</a></div><div class="brief "><a data-name="899778767%2FProperties%2F540127926" anchor-label="visibility" id="899778767%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether this layer is displayed. Default value: &quot;visible&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

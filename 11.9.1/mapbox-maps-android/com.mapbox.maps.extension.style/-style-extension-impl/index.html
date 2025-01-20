@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>StyleExtensionImpl</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.style/StyleExtensionImpl///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.style</a><span class="delimiter">/</span><span class="current">StyleExtensionImpl</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Style</span><wbr></wbr><span>Extension</span><wbr></wbr><span><span>Impl</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">StyleExtensionImpl</a> : <a href="../-style-contract/-style-extension/index.html">StyleContract.StyleExtension</a></div><p class="paragraph">The concrete implementation of style extension.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="1990719396%2FClasslikes%2F540127926" anchor-label="Builder" id="1990719396%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-builder/index.html"><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1990719396%2FClasslikes%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-builder/index.html">Builder</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>style<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The builder for style extension.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-202613268%2FProperties%2F540127926" anchor-label="atmosphere" id="-202613268%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="atmosphere.html"><span><span>atmosphere</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-202613268%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-202613268%2FProperties%2F540127926" anchor-label="atmosphere" id="-202613268%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="atmosphere.html">atmosphere</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.atmosphere.generated/-atmosphere/index.html">Atmosphere</a><span class="token operator">?</span></div><div class="brief "><a data-name="-202613268%2FProperties%2F540127926" anchor-label="atmosphere" id="-202613268%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The atmosphere of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1201089449%2FProperties%2F540127926" anchor-label="dynamicLight" id="-1201089449%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="dynamic-light.html"><span>dynamic</span><wbr></wbr><span><span>Light</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1201089449%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1201089449%2FProperties%2F540127926" anchor-label="dynamicLight" id="-1201089449%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="dynamic-light.html">dynamicLight</a><span class="token operator">: </span><a href="../-style-contract/-style-light-extension/index.html">StyleContract.StyleLightExtension</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1201089449%2FProperties%2F540127926" anchor-label="dynamicLight" id="-1201089449%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The dynamic light which is built with <a href="../../com.mapbox.maps.extension.style.light.generated/-ambient-light/index.html">AmbientLight</a> and <a href="../../com.mapbox.maps.extension.style.light.generated/-directional-light/index.html">DirectionalLight</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1045540337%2FProperties%2F540127926" anchor-label="flatLight" id="-1045540337%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="flat-light.html"><span>flat</span><wbr></wbr><span><span>Light</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1045540337%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1045540337%2FProperties%2F540127926" anchor-label="flatLight" id="-1045540337%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="flat-light.html">flatLight</a><span class="token operator">: </span><a href="../-style-contract/-style-light-extension/index.html">StyleContract.StyleLightExtension</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1045540337%2FProperties%2F540127926" anchor-label="flatLight" id="-1045540337%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The flat light of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="710211030%2FProperties%2F540127926" anchor-label="images" id="710211030%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="images.html"><span><span>images</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="710211030%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="710211030%2FProperties%2F540127926" anchor-label="images" id="710211030%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="images.html">images</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-style-contract/-style-image-extension/index.html">StyleContract.StyleImageExtension</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="710211030%2FProperties%2F540127926" anchor-label="images" id="710211030%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The images of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1206942284%2FProperties%2F540127926" anchor-label="layers" id="1206942284%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="layers.html"><span><span>layers</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1206942284%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1206942284%2FProperties%2F540127926" anchor-label="layers" id="1206942284%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="layers.html">layers</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html">Pair</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps.extension.style.layers/-layer/index.html">Layer</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../com.mapbox.maps/-layer-position/index.html">LayerPosition</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><div class="brief "><a data-name="1206942284%2FProperties%2F540127926" anchor-label="layers" id="1206942284%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The layers of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1428782556%2FProperties%2F540127926" anchor-label="models" id="-1428782556%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="models.html"><span><span>models</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1428782556%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1428782556%2FProperties%2F540127926" anchor-label="models" id="-1428782556%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="models.html">models</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-style-contract/-style-model-extension/index.html">StyleContract.StyleModelExtension</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1428782556%2FProperties%2F540127926" anchor-label="models" id="-1428782556%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The models of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1118687905%2FProperties%2F540127926" anchor-label="projection" id="-1118687905%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="projection.html"><span><span>projection</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1118687905%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1118687905%2FProperties%2F540127926" anchor-label="projection" id="-1118687905%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="projection.html">projection</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.projection.generated/-projection/index.html">Projection</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1118687905%2FProperties%2F540127926" anchor-label="projection" id="-1118687905%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The map projection of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="121607290%2FProperties%2F540127926" anchor-label="rain" id="121607290%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="rain.html"><span><span>rain</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="121607290%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="121607290%2FProperties%2F540127926" anchor-label="rain" id="121607290%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="rain.html">rain</a><span class="token operator">: </span><a href="../-style-contract/-style-rain-extension/index.html">StyleContract.StyleRainExtension</a><span class="token operator">?</span></div><div class="brief "><a data-name="121607290%2FProperties%2F540127926" anchor-label="rain" id="121607290%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The rain effect of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-742971029%2FProperties%2F540127926" anchor-label="snow" id="-742971029%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="snow.html"><span><span>snow</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-742971029%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-742971029%2FProperties%2F540127926" anchor-label="snow" id="-742971029%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="snow.html">snow</a><span class="token operator">: </span><a href="../-style-contract/-style-snow-extension/index.html">StyleContract.StyleSnowExtension</a><span class="token operator">?</span></div><div class="brief "><a data-name="-742971029%2FProperties%2F540127926" anchor-label="snow" id="-742971029%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The snow effect of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-919323756%2FProperties%2F540127926" anchor-label="sources" id="-919323756%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="sources.html"><span><span>sources</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-919323756%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-919323756%2FProperties%2F540127926" anchor-label="sources" id="-919323756%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="sources.html">sources</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.mapbox.maps.extension.style.sources/-source/index.html">Source</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-919323756%2FProperties%2F540127926" anchor-label="sources" id="-919323756%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The sources of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-801862789%2FProperties%2F540127926" anchor-label="style" id="-801862789%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="style.html"><span><span>style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-801862789%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-801862789%2FProperties%2F540127926" anchor-label="style" id="-801862789%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="style.html">style</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-801862789%2FProperties%2F540127926" anchor-label="style" id="-801862789%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Style represented as JSON or URI.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2024422071%2FProperties%2F540127926" anchor-label="terrain" id="2024422071%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="terrain.html"><span><span>terrain</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2024422071%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2024422071%2FProperties%2F540127926" anchor-label="terrain" id="2024422071%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="terrain.html">terrain</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.terrain.generated/-terrain/index.html">Terrain</a><span class="token operator">?</span></div><div class="brief "><a data-name="2024422071%2FProperties%2F540127926" anchor-label="terrain" id="2024422071%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The terrain of the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1066345191%2FProperties%2F540127926" anchor-label="transition" id="-1066345191%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="transition.html"><span><span>transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1066345191%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1066345191%2FProperties%2F540127926" anchor-label="transition" id="-1066345191%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="transition.html">transition</a><span class="token operator">: </span><a href="../../com.mapbox.maps/-transition-options/index.html">TransitionOptions</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1066345191%2FProperties%2F540127926" anchor-label="transition" id="-1066345191%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Transition options applied when loading the style.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
