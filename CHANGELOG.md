@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.9.1
+
+# 11.9.1 January 20, 2025
 ## Bug fixes 🐞
 * Add missing experimental annotation to `backgroundPitchAlignment` property.
 * Fix crash on style reload if a config referenced in the expression was missing.
@@ -13,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.9.2.
+
 
 # 11.9.0 December 18, 2024
 ## Known issues 🛑
