@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Companion</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.style.sources.generated/GeoJsonSource.Companion///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../../index.html">com.mapbox.maps.extension.style.sources.generated</a><span class="delimiter">/</span><a href="../index.html">GeoJsonSource</a><span class="delimiter">/</span><span class="current">Companion</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Companion</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">Companion</a></div><p class="paragraph">Static variables and methods.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-1943777760%2FProperties%2F540127926" anchor-label="defaultBuffer" id="-1943777760%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-buffer.html"><span>default</span><wbr></wbr><span><span>Buffer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1943777760%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1943777760%2FProperties%2F540127926" anchor-label="defaultBuffer" id="-1943777760%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-buffer.html">defaultBuffer</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1943777760%2FProperties%2F540127926" anchor-label="defaultBuffer" id="-1943777760%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Size of the tile buffer on each side. A value of 0 produces no buffer. A value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer rendering artifacts near tile edges and slower performance. Default value: 128. Value range: 0, 512</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1983298752%2FProperties%2F540127926" anchor-label="defaultCluster" id="1983298752%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-cluster.html"><span>default</span><wbr></wbr><span><span>Cluster</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1983298752%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1983298752%2FProperties%2F540127926" anchor-label="defaultCluster" id="1983298752%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-cluster.html">defaultCluster</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><a data-name="1983298752%2FProperties%2F540127926" anchor-label="defaultCluster" id="1983298752%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">If the data is a collection of point features, setting this to true clusters the points by radius into groups. Cluster groups become new <code class="lang-kotlin">Point</code> features in the source with additional properties:</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1907141123%2FProperties%2F540127926" anchor-label="defaultClusterMaxZoom" id="1907141123%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-cluster-max-zoom.html"><span>default</span><wbr></wbr><span>Cluster</span><wbr></wbr><span>Max</span><wbr></wbr><span><span>Zoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1907141123%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1907141123%2FProperties%2F540127926" anchor-label="defaultClusterMaxZoom" id="1907141123%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-cluster-max-zoom.html">defaultClusterMaxZoom</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><a data-name="1907141123%2FProperties%2F540127926" anchor-label="defaultClusterMaxZoom" id="1907141123%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom levels so setting clusterMaxZoom to 14 means the clusters will be displayed until z15.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1653955077%2FProperties%2F540127926" anchor-label="defaultClusterMinPoints" id="1653955077%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-cluster-min-points.html"><span>default</span><wbr></wbr><span>Cluster</span><wbr></wbr><span>Min</span><wbr></wbr><span><span>Points</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1653955077%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1653955077%2FProperties%2F540127926" anchor-label="defaultClusterMinPoints" id="1653955077%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-cluster-min-points.html">defaultClusterMinPoints</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><a data-name="1653955077%2FProperties%2F540127926" anchor-label="defaultClusterMinPoints" id="1653955077%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to <code class="lang-kotlin">2</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1896751630%2FProperties%2F540127926" anchor-label="defaultClusterRadius" id="1896751630%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-cluster-radius.html"><span>default</span><wbr></wbr><span>Cluster</span><wbr></wbr><span><span>Radius</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1896751630%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1896751630%2FProperties%2F540127926" anchor-label="defaultClusterRadius" id="1896751630%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-cluster-radius.html">defaultClusterRadius</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><a data-name="1896751630%2FProperties%2F540127926" anchor-label="defaultClusterRadius" id="1896751630%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal to the width of a tile. Default value: 50. Minimum value: 0.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1309145456%2FProperties%2F540127926" anchor-label="defaultGenerateId" id="1309145456%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-generate-id.html"><span>default</span><wbr></wbr><span>Generate</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1309145456%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1309145456%2FProperties%2F540127926" anchor-label="defaultGenerateId" id="1309145456%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-generate-id.html">defaultGenerateId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><a data-name="1309145456%2FProperties%2F540127926" anchor-label="defaultGenerateId" id="1309145456%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether to generate ids for the GeoJSON features. When enabled, the <code class="lang-kotlin">feature.id</code> property will be auto assigned based on its index in the <code class="lang-kotlin">features</code> array, over-writing any previous values. Default value: false.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1333383083%2FProperties%2F540127926" anchor-label="defaultLineMetrics" id="1333383083%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-line-metrics.html"><span>default</span><wbr></wbr><span>Line</span><wbr></wbr><span><span>Metrics</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1333383083%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1333383083%2FProperties%2F540127926" anchor-label="defaultLineMetrics" id="1333383083%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-line-metrics.html">defaultLineMetrics</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><a data-name="1333383083%2FProperties%2F540127926" anchor-label="defaultLineMetrics" id="1333383083%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether to calculate line distance metrics. This is required for line layers that specify <code class="lang-kotlin">line-gradient</code> values. Default value: false.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2061187549%2FProperties%2F540127926" anchor-label="defaultMaxzoom" id="-2061187549%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-maxzoom.html"><span>default</span><wbr></wbr><span><span>Maxzoom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2061187549%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-2061187549%2FProperties%2F540127926" anchor-label="defaultMaxzoom" id="-2061187549%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-maxzoom.html">defaultMaxzoom</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><a data-name="-2061187549%2FProperties%2F540127926" anchor-label="defaultMaxzoom" id="-2061187549%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom levels). Default value: 18.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="273602956%2FProperties%2F540127926" anchor-label="defaultPrefetchZoomDelta" id="273602956%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-prefetch-zoom-delta.html"><span>default</span><wbr></wbr><span>Prefetch</span><wbr></wbr><span>Zoom</span><wbr></wbr><span><span>Delta</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="273602956%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="273602956%2FProperties%2F540127926" anchor-label="defaultPrefetchZoomDelta" id="273602956%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-prefetch-zoom-delta.html">defaultPrefetchZoomDelta</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><a data-name="273602956%2FProperties%2F540127926" anchor-label="defaultPrefetchZoomDelta" id="273602956%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map will first request a tile at zoom level lower than zoom - delta, but so that the zoom level is multiple of delta, in an attempt to display a full map at lower resolution as quick as possible. It will get clamped at the tile source minimum zoom. Default value: 4.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-263926067%2FProperties%2F540127926" anchor-label="defaultTolerance" id="-263926067%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="default-tolerance.html"><span>default</span><wbr></wbr><span><span>Tolerance</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-263926067%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-263926067%2FProperties%2F540127926" anchor-label="defaultTolerance" id="-263926067%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-tolerance.html">defaultTolerance</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="-263926067%2FProperties%2F540127926" anchor-label="defaultTolerance" id="-263926067%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance). Default value: 0.375.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>BitmapWidget</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.renderer.widget/BitmapWidget///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.renderer.widget</a><span class="delimiter">/</span><span class="current">BitmapWidget</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Bitmap</span><wbr></wbr><span><span>Widget</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../com.mapbox.maps/-mapbox-experimental/index.html"><span class="token annotation builtin">MapboxExperimental</span></a></div></div><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html">BitmapWidget</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bitmap<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Bitmap.html">Bitmap</a><span class="token punctuation">, </span></span><span class="parameter ">originalPosition<span class="token operator">: </span><a href="../-widget-position/index.html">WidgetPosition</a><span class="token operator"> = </span>WidgetPosition {
+    verticalAlignment = WidgetPosition.Vertical.TOP
+    horizontalAlignment = WidgetPosition.Horizontal.LEFT
+    offsetX = 0f
+    offsetY = 0f
+  }</span></span><span class="token punctuation">)</span> : <a href="../-widget/index.html">Widget</a></div><p class="paragraph">Widget displaying bitmap within specified position and margins.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Parameters">Parameters</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">Parameters</h4>
+      <div data-togglable="Parameters">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="Parameters"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div data-togglable="Parameters"><div class="table" data-togglable="Parameters"><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>bitmap</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">bitmap used to draw widget</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>original</span><wbr></wbr><span><span>Position</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">position of widget</p></div></div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-1046435566%2FConstructors%2F540127926" anchor-label="BitmapWidget" id="-1046435566%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-bitmap-widget.html"><span>Bitmap</span><wbr></wbr><span><span>Widget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1046435566%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-bitmap-widget.html"><span class="token function"><strike>BitmapWidget</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bitmap<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Bitmap.html">Bitmap</a><span class="token punctuation">, </span></span><span class="parameter ">position<span class="token operator">: </span><a href="../-widget-position/index.html">WidgetPosition</a><span class="token operator"> = </span>WidgetPosition(
+      vertical = WidgetPosition.Vertical.TOP,
+      horizontal = WidgetPosition.Horizontal.LEFT,
+    )<span class="token punctuation">, </span></span><span class="parameter ">marginX<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">0.0f</span><span class="token punctuation">, </span></span><span class="parameter ">marginY<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">0.0f</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The deprecated constructor for BitmapWidget.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1840948930%2FConstructors%2F540127926" anchor-label="BitmapWidget" id="-1840948930%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-bitmap-widget.html"><span>Bitmap</span><wbr></wbr><span><span>Widget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1840948930%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-bitmap-widget.html"><span class="token function"><strike>BitmapWidget</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bitmap<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Bitmap.html">Bitmap</a><span class="token punctuation">, </span></span><span class="parameter ">position<span class="token operator">: </span><a href="../-widget-position/index.html">WidgetPosition</a><span class="token operator"> = </span>WidgetPosition(
+      vertical = WidgetPosition.Vertical.TOP,
+      horizontal = WidgetPosition.Horizontal.LEFT,
+    )<span class="token punctuation">, </span></span><span class="parameter ">marginX<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">0.0f</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The deprecated constructor for BitmapWidget.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1332334994%2FConstructors%2F540127926" anchor-label="BitmapWidget" id="1332334994%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-bitmap-widget.html"><span>Bitmap</span><wbr></wbr><span><span>Widget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1332334994%2FConstructors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-bitmap-widget.html"><span class="token function">BitmapWidget</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bitmap<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Bitmap.html">Bitmap</a><span class="token punctuation">, </span></span><span class="parameter ">originalPosition<span class="token operator">: </span><a href="../-widget-position/index.html">WidgetPosition</a><span class="token operator"> = </span>WidgetPosition {
+    verticalAlignment = WidgetPosition.Vertical.TOP
+    horizontalAlignment = WidgetPosition.Horizontal.LEFT
+    offsetX = 0f
+    offsetY = 0f
+  }</span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-79094155%2FFunctions%2F540127926" anchor-label="getPosition" id="-79094155%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-position.html"><span>get</span><wbr></wbr><span><span>Position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-79094155%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-position.html"><span class="token function">getPosition</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-widget-position/index.html">WidgetPosition</a></div><div class="brief "><p class="paragraph">Get the current position of the widget.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="108790208%2FFunctions%2F540127926" anchor-label="getRotation" id="108790208%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-rotation.html"><span>get</span><wbr></wbr><span><span>Rotation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="108790208%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-rotation.html"><span class="token function">getRotation</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><p class="paragraph">Get absolute rotation of widget in degrees.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="873944792%2FFunctions%2F540127926" anchor-label="setPosition" id="873944792%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="set-position.html"><span>set</span><wbr></wbr><span><span>Position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="873944792%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-position.html"><span class="token function">setPosition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">widgetPosition<span class="token operator">: </span><a href="../-widget-position/index.html">WidgetPosition</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Update the widget to the new position.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-228534843%2FFunctions%2F540127926" anchor-label="setRotation" id="-228534843%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="set-rotation.html"><span>set</span><wbr></wbr><span><span>Rotation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-228534843%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-rotation.html"><span class="token function">setRotation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">angleDegrees<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set the absolute rotation of widget in degrees.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1935830977%2FFunctions%2F540127926" anchor-label="updateBitmap" id="1935830977%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="update-bitmap.html"><span>update</span><wbr></wbr><span><span>Bitmap</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1935830977%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="update-bitmap.html"><span class="token function">updateBitmap</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bitmap<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Bitmap.html">Bitmap</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Update bitmap widget uses.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Inheritors</h2>
+      <div class="table" data-togglable="Inheritors"><a data-name="1470281823%2FInheritors%2F540127926" anchor-label="CompassWidget" id="1470281823%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.extension.androidauto.widgets/-compass-widget/index.html">CompassWidget</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1470281823%2FInheritors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="92903518%2FInheritors%2F540127926" anchor-label="LogoWidget" id="92903518%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.extension.androidauto.widgets/-logo-widget/index.html">LogoWidget</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="92903518%2FInheritors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

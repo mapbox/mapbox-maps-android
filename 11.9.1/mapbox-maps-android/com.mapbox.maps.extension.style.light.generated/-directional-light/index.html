@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>DirectionalLight</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.style.light.generated/DirectionalLight///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.extension.style.light.generated</a><span class="delimiter">/</span><span class="current">DirectionalLight</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Directional</span><wbr></wbr><span><span>Light</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/UiThread.html"><span class="token annotation builtin">UiThread</span></a></div></div><span class="token keyword">class </span><a href="index.html">DirectionalLight</a> : <a href="../../com.mapbox.maps.extension.style.light/-light/index.html">Light</a>, <a href="../-directional-light-dsl-receiver/index.html">DirectionalLightDslReceiver</a></div><p class="paragraph">A light that has a direction and is located at infinite distance, so its rays are parallel. It simulates the sun light and can cast shadows.</p><p class="paragraph">Check the <a href="https://www.mapbox.com/mapbox-gl-style-spec/#light">online documentation</a>.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-736885172%2FFunctions%2F540127926" anchor-label="castShadows" id="-736885172%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="cast-shadows.html"><span>cast</span><wbr></wbr><span><span>Shadows</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-736885172%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="cast-shadows.html"><span class="token function">castShadows</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">castShadows<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="cast-shadows.html"><span class="token function">castShadows</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">castShadows<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Enable/Disable shadow casting for this light Default value: false.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-222518935%2FFunctions%2F540127926" anchor-label="color" id="-222518935%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="color.html"><span><span>color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-222518935%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="color.html"><span class="token function">color</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="color.html"><span class="token function">color</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/ColorInt.html"><span class="token annotation builtin">ColorInt</span></a> </span>color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="color.html"><span class="token function">color</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Color of the directional light. Default value: &quot;#ffffff&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1992229664%2FFunctions%2F540127926" anchor-label="colorTransition" id="-1992229664%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="color-transition.html"><span>color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1992229664%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="color-transition.html"><span class="token function">colorTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Set the Color property transition options.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="color-transition.html"><span class="token function">colorTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/-builder/index.html">StyleTransition.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">DSL for <a href="color-transition.html">colorTransition</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1273815119%2FFunctions%2F540127926" anchor-label="direction" id="-1273815119%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="direction.html"><span><span>direction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1273815119%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="direction.html"><span class="token function">direction</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">direction<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="direction.html"><span class="token function">direction</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">direction<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Direction of the light source specified as a azimuthal angle, p polar angle where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: 210,30. Minimum value: 0,0. Maximum value: 360,90.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="800666520%2FFunctions%2F540127926" anchor-label="directionTransition" id="800666520%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="direction-transition.html"><span>direction</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="800666520%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="direction-transition.html"><span class="token function">directionTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Set the Direction property transition options.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="direction-transition.html"><span class="token function">directionTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/-builder/index.html">StyleTransition.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">DSL for <a href="direction-transition.html">directionTransition</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1598771267%2FFunctions%2F540127926" anchor-label="intensity" id="-1598771267%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="intensity.html"><span><span>intensity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1598771267%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="intensity.html"><span class="token function">intensity</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">intensity<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="intensity.html"><span class="token function">intensity</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">intensity<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">A multiplier for the color of the directional light. Default value: 0.5. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1721170688%2FFunctions%2F540127926" anchor-label="intensityTransition" id="-1721170688%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="intensity-transition.html"><span>intensity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1721170688%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="intensity-transition.html"><span class="token function">intensityTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Set the Intensity property transition options.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="intensity-transition.html"><span class="token function">intensityTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/-builder/index.html">StyleTransition.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">DSL for <a href="intensity-transition.html">intensityTransition</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1595172349%2FFunctions%2F540127926" anchor-label="shadowIntensity" id="1595172349%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="shadow-intensity.html"><span>shadow</span><wbr></wbr><span><span>Intensity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1595172349%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="shadow-intensity.html"><span class="token function">shadowIntensity</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">shadowIntensity<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="shadow-intensity.html"><span class="token function">shadowIntensity</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">shadowIntensity<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="612706368%2FFunctions%2F540127926" anchor-label="shadowIntensityTransition" id="612706368%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="shadow-intensity-transition.html"><span>shadow</span><wbr></wbr><span>Intensity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="612706368%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="shadow-intensity-transition.html"><span class="token function">shadowIntensityTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">options<span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">Set the ShadowIntensity property transition options.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="shadow-intensity-transition.html"><span class="token function">shadowIntensityTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/-builder/index.html">StyleTransition.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">DirectionalLight</a></div><div class="brief "><p class="paragraph">DSL for <a href="shadow-intensity-transition.html">shadowIntensityTransition</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-295211517%2FProperties%2F540127926" anchor-label="castShadows" id="-295211517%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="cast-shadows.html"><span>cast</span><wbr></wbr><span><span>Shadows</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-295211517%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-295211517%2FProperties%2F540127926" anchor-label="castShadows" id="-295211517%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="cast-shadows.html">castShadows</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><a data-name="-295211517%2FProperties%2F540127926" anchor-label="castShadows" id="-295211517%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Enable/Disable shadow casting for this light Default value: false.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-73577543%2FProperties%2F540127926" anchor-label="castShadowsAsExpression" id="-73577543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="cast-shadows-as-expression.html"><span>cast</span><wbr></wbr><span>Shadows</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-73577543%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-73577543%2FProperties%2F540127926" anchor-label="castShadowsAsExpression" id="-73577543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="cast-shadows-as-expression.html">castShadowsAsExpression</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-73577543%2FProperties%2F540127926" anchor-label="castShadowsAsExpression" id="-73577543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Enable/Disable shadow casting for this light Default value: false.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1098284012%2FProperties%2F540127926" anchor-label="color" id="-1098284012%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="color.html"><span><span>color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1098284012%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1098284012%2FProperties%2F540127926" anchor-label="color" id="-1098284012%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="color.html">color</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1098284012%2FProperties%2F540127926" anchor-label="color" id="-1098284012%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Color of the directional light. Default value: &quot;#ffffff&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1068142870%2FProperties%2F540127926" anchor-label="colorAsColorInt" id="1068142870%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="color-as-color-int.html"><span>color</span><wbr></wbr><span>As</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Int</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1068142870%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1068142870%2FProperties%2F540127926" anchor-label="colorAsColorInt" id="1068142870%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/ColorInt.html"><span class="token annotation builtin">ColorInt</span></a></div></div><span class="token keyword"></span><span class="token keyword">val </span><a href="color-as-color-int.html">colorAsColorInt</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div><div class="brief "><a data-name="1068142870%2FProperties%2F540127926" anchor-label="colorAsColorInt" id="1068142870%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Color of the directional light. Default value: &quot;#ffffff&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1040068534%2FProperties%2F540127926" anchor-label="colorAsExpression" id="-1040068534%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="color-as-expression.html"><span>color</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1040068534%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1040068534%2FProperties%2F540127926" anchor-label="colorAsExpression" id="-1040068534%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="color-as-expression.html">colorAsExpression</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1040068534%2FProperties%2F540127926" anchor-label="colorAsExpression" id="-1040068534%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Color of the directional light. Default value: &quot;#ffffff&quot;.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="84154239%2FProperties%2F540127926" anchor-label="colorTransition" id="84154239%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="color-transition.html"><span>color</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="84154239%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="84154239%2FProperties%2F540127926" anchor-label="colorTransition" id="84154239%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="color-transition.html">colorTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="84154239%2FProperties%2F540127926" anchor-label="colorTransition" id="84154239%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Color property transition options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="450365048%2FProperties%2F540127926" anchor-label="direction" id="450365048%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="direction.html"><span><span>direction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="450365048%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="450365048%2FProperties%2F540127926" anchor-label="direction" id="450365048%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="direction.html">direction</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><a data-name="450365048%2FProperties%2F540127926" anchor-label="direction" id="450365048%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Direction of the light source specified as a azimuthal angle, p polar angle where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: 210,30. Minimum value: 0,0. Maximum value: 360,90.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-842277714%2FProperties%2F540127926" anchor-label="directionAsExpression" id="-842277714%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="direction-as-expression.html"><span>direction</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-842277714%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-842277714%2FProperties%2F540127926" anchor-label="directionAsExpression" id="-842277714%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="direction-as-expression.html">directionAsExpression</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-842277714%2FProperties%2F540127926" anchor-label="directionAsExpression" id="-842277714%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Direction of the light source specified as a azimuthal angle, p polar angle where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: 210,30. Minimum value: 0,0. Maximum value: 360,90.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="602795235%2FProperties%2F540127926" anchor-label="directionTransition" id="602795235%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="direction-transition.html"><span>direction</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="602795235%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="602795235%2FProperties%2F540127926" anchor-label="directionTransition" id="602795235%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="direction-transition.html">directionTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="602795235%2FProperties%2F540127926" anchor-label="directionTransition" id="602795235%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Direction property transition options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-485136316%2FProperties%2F540127926" anchor-label="intensity" id="-485136316%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="intensity.html"><span><span>intensity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-485136316%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-485136316%2FProperties%2F540127926" anchor-label="intensity" id="-485136316%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="intensity.html">intensity</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="-485136316%2FProperties%2F540127926" anchor-label="intensity" id="-485136316%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">A multiplier for the color of the directional light. Default value: 0.5. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-664212358%2FProperties%2F540127926" anchor-label="intensityAsExpression" id="-664212358%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="intensity-as-expression.html"><span>intensity</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-664212358%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-664212358%2FProperties%2F540127926" anchor-label="intensityAsExpression" id="-664212358%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="intensity-as-expression.html">intensityAsExpression</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-664212358%2FProperties%2F540127926" anchor-label="intensityAsExpression" id="-664212358%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">A multiplier for the color of the directional light. Default value: 0.5. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-773554257%2FProperties%2F540127926" anchor-label="intensityTransition" id="-773554257%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="intensity-transition.html"><span>intensity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-773554257%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-773554257%2FProperties%2F540127926" anchor-label="intensityTransition" id="-773554257%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="intensity-transition.html">intensityTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="-773554257%2FProperties%2F540127926" anchor-label="intensityTransition" id="-773554257%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Intensity property transition options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1944456166%2FProperties%2F540127926" anchor-label="lightId" id="1944456166%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="light-id.html"><span>light</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1944456166%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1944456166%2FProperties%2F540127926" anchor-label="lightId" id="1944456166%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="light-id.html">lightId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1944456166%2FProperties%2F540127926" anchor-label="lightId" id="1944456166%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The ID of the Light.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1463691780%2FProperties%2F540127926" anchor-label="shadowIntensity" id="1463691780%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="shadow-intensity.html"><span>shadow</span><wbr></wbr><span><span>Intensity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1463691780%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1463691780%2FProperties%2F540127926" anchor-label="shadowIntensity" id="1463691780%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="shadow-intensity.html">shadowIntensity</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="1463691780%2FProperties%2F540127926" anchor-label="shadowIntensity" id="1463691780%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-88273350%2FProperties%2F540127926" anchor-label="shadowIntensityAsExpression" id="-88273350%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="shadow-intensity-as-expression.html"><span>shadow</span><wbr></wbr><span>Intensity</span><wbr></wbr><span>As</span><wbr></wbr><span><span>Expression</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-88273350%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-88273350%2FProperties%2F540127926" anchor-label="shadowIntensityAsExpression" id="-88273350%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="shadow-intensity-as-expression.html">shadowIntensityAsExpression</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a><span class="token operator">?</span></div><div class="brief "><a data-name="-88273350%2FProperties%2F540127926" anchor-label="shadowIntensityAsExpression" id="-88273350%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: 0, 1</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1247154543%2FProperties%2F540127926" anchor-label="shadowIntensityTransition" id="1247154543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="shadow-intensity-transition.html"><span>shadow</span><wbr></wbr><span>Intensity</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1247154543%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1247154543%2FProperties%2F540127926" anchor-label="shadowIntensityTransition" id="1247154543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="shadow-intensity-transition.html">shadowIntensityTransition</a><span class="token operator">: </span><a href="../../com.mapbox.maps.extension.style.types/-style-transition/index.html">StyleTransition</a><span class="token operator">?</span></div><div class="brief "><a data-name="1247154543%2FProperties%2F540127926" anchor-label="shadowIntensityTransition" id="1247154543%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">ShadowIntensity property transition options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
