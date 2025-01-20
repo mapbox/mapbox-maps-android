@@ -19,7 +19,24 @@ Mapbox welcomes participation and contributions from everyone.
 * Mark `BackgroundLayer.backgroundPitchAlignment` as experimental.
 * Skip any map scroll (panning) if shove gesture is already in progress preventing camera flying away.
 
+# 11.9.1
+## Bug fixes 🐞
+* Add missing experimental annotation to `backgroundPitchAlignment` property.
+* Fix crash on style reload if a config referenced in the expression was missing.
+* Fix high cpu usage when map goes to background.
+* Fix missing on style loaded call if sprite is absent in cache and there is no network connection.
+* Fix background layers which used images from a mapbox-hosted style.
+* Fix disappearing tiles in some rare conditions.
+
+## Dependencies
+* Update gl-native to v11.9.2.
+
 # 11.9.0 December 18, 2024
+## Known issues 🛑
+We do not recommend using this version. Please use [11.9.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.9.1) or newer.
+
+* When a map is currently visible and user press home button the [MapboxRenderThread](maps-sdk/src/main/java/com/mapbox/maps/renderer/RenderHandlerThread.kt) consumes CPU (potentially keeping **one** CPU busy).
+
 ## Breaking changes ⚠️
 * Expose experimental Geofencing with `com.mapbox.annotation.MapboxExperimental`.
 * Move experimental geofencing classes to `com.mapbox.common.geofencing` package from `com.mapbox.common.experimental.geofencing`.
