@@ -14,11 +14,24 @@ Mapbox welcomes participation and contributions from everyone.
 * Update the default value of experimental properties: default `Snow.density` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.85]`; default `Snow.opacity` is updated to `1.0`; default `Snow.vignette` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.3]`; default `Snow.centerThinning` is updated to `0.4`, default `Snow.direction` is updated to `listOf(0.0, 50.0)`; default `Snow.flakeSize` is updated to `0.71`; default `Rain.density` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.85]`; default `Rain.color` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,"#03113d",0.3,"#a8adbc"]`; default `Rain.opacity` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,0.88,1,0.7]`;  default `Rain.vignette` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.3]`; default `Rain.vignetteColor` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,"#001736",0.3,"#464646"]`; default `Rain.centerThinning` is updated to `0.57`; default `Rain.dropletSize` is updated to `listOf(2.6, 18.2)`; default `Rain.distortionStrength` is updated to `0.7`.
 * Introduce experimental `ModelLayer.modelElevationReference` property.
 * Introduce experimental `LocationPuck3D.modelElevationReference` property.
+* Remove `<profileable android:shell=true/>` flag in release manifest.
+* Remove `libandroid-tests-support-code.so` from release AAR.
 
 ## Bug fixes 🐞
 * Mark `BackgroundLayer.backgroundPitchAlignment` as experimental.
 * Skip any map scroll (panning) if shove gesture is already in progress preventing camera flying away.
+* Fix crash on style reload if a config referenced in the expression was missing.
+* Fix high cpu usage when map goes to background.
+* Fix missing on style loaded call if sprite is absent in cache and there is no network connection.
+* Fix background layers which used images from a mapbox-hosted style.
+* Fix images being displayed incorrectly in some cases with line patterns and `LineJoin.NONE`.
+* Fix too early sources loaded event.
 
+## Known issues ⚠️
+* Disappearing tiles in some rare conditions. Fix will be available in the next release.
+
+## Dependencies
+* Update gl-native to v11.10.0-beta.2 and common to v24.10.0-beta.2.
 
 # 11.9.1 January 20, 2025
 ## Bug fixes 🐞
@@ -31,7 +44,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.9.2.
-
 
 # 11.9.0 December 18, 2024
 ## Known issues 🛑
