@@ -7,12 +7,19 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.QueriedFeature
+import com.mapbox.maps.RenderedQueryGeometry
+import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.ScreenBox
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.Style
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.getFeatureState
 import com.mapbox.maps.coroutine.queryRenderedFeatures
@@ -23,13 +30,22 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.databinding.ActivityFeatureStateBinding
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.fold
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.text.DateFormat.getDateTimeInstance
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import kotlin.coroutines.resume
 
 /**
  * Example showcasing usage of feature state.
@@ -64,45 +80,48 @@ class FeatureStateActivity : AppCompatActivity() {
     }
   }
 
+  /**
+   * Wait for the first layout pass to get the [ScreenBox] of the crosshair.
+   */
+  private suspend fun getCrosshairScreenBox() = suspendCancellableCoroutine { cont ->
+    binding.mapView.doOnLayout {
+      val rect = Rect()
+      crosshair.getDrawingRect(rect)
+      binding.mapView.offsetDescendantRectToMyCoords(crosshair, rect)
+      val screenBox = ScreenBox(
+        ScreenCoordinate(rect.left.toDouble(), rect.top.toDouble()),
+        ScreenCoordinate(rect.right.toDouble(), rect.bottom.toDouble())
+      )
+      cont.resume(screenBox)
+    }
+  }
+
   private suspend fun highlightFeatureOnHover() {
-    var lastFeatureId: String? = null
-    mapboxMap
-      .cameraChangedEvents
-      .map {
-        Rect().apply {
-          crosshair.getDrawingRect(this)
-          binding.mapView.offsetDescendantRectToMyCoords(crosshair, this)
-        }
-      }
-      .map { offsetViewBounds ->
+    val crosshairScreenBox = getCrosshairScreenBox()
+
+    // Observe camera changes and query the rendered features under the crosshair.
+    mapboxMap.cameraChangedEvents
+      // Conflate the flow to only process the latest event and don't block the main
+      // thread when queryRenderedFeatures is slow.
+      .conflate()
+      .map { _ ->
         mapboxMap
           .queryRenderedFeatures(
-            RenderedQueryGeometry(
-              ScreenBox(
-                ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
-                ScreenCoordinate(
-                  offsetViewBounds.right.toDouble(),
-                  offsetViewBounds.bottom.toDouble()
-                )
-              )
-            ),
+            RenderedQueryGeometry(crosshairScreenBox),
             RenderedQueryOptions(listOf(LAYER_ID), literal(true))
-          )
+          ).value?.firstOrNull()?.queriedFeature
       }
-      .map { expected ->
-        expected.value?.firstOrNull()
+      .distinctUntilChangedBy { queriedFeature ->
+        queriedFeature?.feature?.id()
       }
-      .distinctUntilChangedBy { renderedFeature ->
-        renderedFeature?.queriedFeature?.feature?.id()
-      }
-      .collect { renderedFeature ->
-        val selectedFeature = renderedFeature?.queriedFeature?.feature
-        val selectedFeatureId = selectedFeature?.id()
+      .fold(null) { lastFeatureId: String?, queriedFeature: QueriedFeature? ->
+        // Clear the state of the last feature
         lastFeatureId?.let { lastId ->
           setHoverFeatureState(lastId, false)
         }
-        lastFeatureId = selectedFeatureId
 
+        val selectedFeature = queriedFeature?.feature
+        val selectedFeatureId = selectedFeature?.id()
         if (selectedFeatureId != null) {
           setHoverFeatureState(selectedFeatureId, true)
           logHoverFeatureState(selectedFeatureId)
@@ -121,6 +140,9 @@ class FeatureStateActivity : AppCompatActivity() {
             "N/A"
           }
         }
+
+        // Pass this id to the next iteration of the fold
+        queriedFeature?.feature?.id()
       }
   }
 
