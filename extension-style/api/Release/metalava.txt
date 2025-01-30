@@ -6816,7 +6816,10 @@ package com.mapbox.maps.extension.style.sources {
 
   @com.mapbox.maps.MapboxExperimental public final class CustomRasterSource extends com.mapbox.maps.extension.style.sources.Source {
     ctor public CustomRasterSource(String id, com.mapbox.maps.CustomRasterSourceOptions options);
+    method public Long? getMaxOverscaleFactorForParentTiles();
+    method public void setMaxOverscaleFactorForParentTiles(long value);
     method public void setTileData(java.util.List<com.mapbox.maps.CustomRasterSourceTileData> tileData);
+    property public final Long? maxOverscaleFactorForParentTiles;
   }
 
   public final class CustomRasterSourceKt {

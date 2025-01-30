@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+* Added support for the `maxOverscaleFactorForParentTiles` property in `CustomRasterSource`, allowing greater control over tile overscaling behavior when rendering custom raster tiles.
+
 # 11.10.0-beta.1 January 20, 2025
 ## Features ✨ and improvements 🏁
 * Localize geofencing attribution dialog.
