@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.CanonicalTileID
 import com.mapbox.maps.CustomRasterSourceTileData
 import com.mapbox.maps.Image
@@ -13,6 +14,7 @@ import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.toMapboxImage
 import io.mockk.Runs
 import io.mockk.every
@@ -21,6 +23,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -46,6 +49,7 @@ class CustomRasterSourceTest {
       // mandatory builder argument
       clientCallback(mockk())
     }
+    testSource.setMaxOverscaleFactorForParentTiles(83)
   }
 
   @Test
@@ -104,5 +108,21 @@ class CustomRasterSourceTest {
       )
     }
     unmockkStatic(DataRef::class)
+  }
+
+  @Test
+  fun maxOverscaleFactorForParentTilesSet() {
+    testSource.bindTo(style)
+    testSource.setMaxOverscaleFactorForParentTiles(83)
+    verify { style.setStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles", Value.valueOf(83L)) }
+  }
+
+  @Test
+  fun maxOverscaleFactorForParentTilesGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(83)
+    testSource.bindTo(style)
+    val maxOverscaleFactorForParentTiles = testSource.maxOverscaleFactorForParentTiles
+    Assert.assertEquals(83L, maxOverscaleFactorForParentTiles)
+    verify { style.getStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles") }
   }
 }

@@ -6,6 +6,8 @@ import com.mapbox.maps.CustomRasterSourceOptions
 import com.mapbox.maps.CustomRasterSourceTileData
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.check
 
 /**
@@ -46,6 +48,30 @@ class CustomRasterSource(
   fun setTileData(tileData: List<CustomRasterSourceTileData>) {
     delegate?.setStyleCustomRasterSourceTileData(sourceId, tileData).check()
   }
+
+  /**
+   * When a set of tiles for a current zoom level is being rendered and some of
+   * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
+   * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
+   * This property sets the maximum limit for how much a parent tile can be overscaled.
+   */
+  fun setMaxOverscaleFactorForParentTiles(value: Long) {
+    setVolatileProperty(PropertyValue("max-overscale-factor-for-parent-tiles", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * When a set of tiles for a current zoom level is being rendered and some of
+   * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
+   * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
+   * This property sets the maximum limit for how much a parent tile can be overscaled.
+   */
+  val maxOverscaleFactorForParentTiles: Long?
+    /**
+     * Get the MaxOverscaleFactorForParentTiles property
+     *
+     * @return Long
+     */
+    get() = getPropertyValue("max-overscale-factor-for-parent-tiles")
 }
 
 /**
