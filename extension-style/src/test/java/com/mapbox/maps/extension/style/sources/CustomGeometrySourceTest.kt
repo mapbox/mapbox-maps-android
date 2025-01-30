@@ -118,4 +118,20 @@ class CustomGeometrySourceTest {
     Assert.assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
     verify { style.getStyleSourceProperty("testId", "tile-cache-budget") }
   }
+
+  @Test
+  fun maxOverscaleFactorForParentTilesSet() {
+    testSource.bindTo(style)
+    testSource.setMaxOverscaleFactorForParentTiles(83)
+    verify { style.setStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles", Value.valueOf(83L)) }
+  }
+
+  @Test
+  fun maxOverscaleFactorForParentTilesGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(83)
+    testSource.bindTo(style)
+    val maxOverscaleFactorForParentTiles = testSource.maxOverscaleFactorForParentTiles
+    Assert.assertEquals(83L, maxOverscaleFactorForParentTiles)
+    verify { style.getStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles") }
+  }
 }

@@ -6800,13 +6800,16 @@ package com.mapbox.maps.extension.style.sources {
 
   public final class CustomGeometrySource extends com.mapbox.maps.extension.style.sources.Source {
     ctor public CustomGeometrySource(String id, com.mapbox.maps.CustomGeometrySourceOptions options);
+    method public Long? getMaxOverscaleFactorForParentTiles();
     method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method @Deprecated public void invalidRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
     method @Deprecated public void invalidTile(com.mapbox.maps.CanonicalTileID tileID);
     method public void invalidateRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
     method public void invalidateTile(com.mapbox.maps.CanonicalTileID tileID);
+    method public void setMaxOverscaleFactorForParentTiles(long value);
     method public void setTileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, java.util.List<com.mapbox.geojson.Feature> featureCollection);
+    property public final Long? maxOverscaleFactorForParentTiles;
     property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
   }
 

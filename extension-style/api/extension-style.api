@@ -5738,11 +5738,13 @@ public final class com/mapbox/maps/extension/style/projection/generated/StylePro
 
 public final class com/mapbox/maps/extension/style/sources/CustomGeometrySource : com/mapbox/maps/extension/style/sources/Source {
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/CustomGeometrySourceOptions;)V
+	public final fun getMaxOverscaleFactorForParentTiles ()Ljava/lang/Long;
 	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun invalidRegion (Lcom/mapbox/maps/CoordinateBounds;)V
 	public final fun invalidTile (Lcom/mapbox/maps/CanonicalTileID;)V
 	public final fun invalidateRegion (Lcom/mapbox/maps/CoordinateBounds;)V
 	public final fun invalidateTile (Lcom/mapbox/maps/CanonicalTileID;)V
+	public final fun setMaxOverscaleFactorForParentTiles (J)V
 	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
 	public final fun setTileData (Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)V
 }
