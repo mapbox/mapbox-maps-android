@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.10.0-rc.1
+
+# 11.10.0-rc.1 January 31, 2025
 ## Features ✨ and improvements 🏁
 * Add experimental `ViewAnnotationManager.setViewAnnotationAvoidLayers` for specifying layers that view annotations should avoid. The API currently only supports line layers.
 * Add support for the `maxOverscaleFactorForParentTiles` property in `CustomRasterSource` and `CustomGeometrySource`, allowing greater control over tile overscaling behavior when rendering custom raster tiles.
@@ -26,6 +27,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.10.0-rc.1 and common to v24.10.0-rc.1.
+
 
 # 11.10.0-beta.1 January 20, 2025
 ## Features ✨ and improvements 🏁
