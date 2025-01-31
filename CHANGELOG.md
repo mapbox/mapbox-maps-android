@@ -8,8 +8,24 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add experimental `ViewAnnotationManager.setViewAnnotationAvoidLayers` for specifying layers that view annotations should avoid. The API currently only supports line layers.
 * Add support for the `maxOverscaleFactorForParentTiles` property in `CustomRasterSource` and `CustomGeometrySource`, allowing greater control over tile overscaling behavior when rendering custom raster tiles.
-* Add `*UseTheme` String style properties to override color theme for particular color properties in all layers.
+* Add `*UseTheme` String style properties to override color theme for particular color properties in all layers and their Compose counterparts.
 * Remove experimental `ShadowQuality` properties from direct light layer.
+* Extend tilecover for elevated roads avoiding missing road segments.
+
+## Bug fixes 🐞
+* Prefer last used anchor for Dynamic View Annotation placement.
+* Fix out of bound issue of gradient effect.
+* Fix hidden elements caused by flood lighting.
+* Fix parsing raster sprite images with float stretch/content coordinates.
+* Fix glyph loading issue when incorrect glyph url is used.
+* Fix color theme data decoding.
+* Speed up start with big old offline database.
+* Fix disappearing tiles in some rare conditions.
+* Fix road shadows issues when far away and low zoom levels.
+
+## Dependencies
+* Update gl-native to v11.10.0-rc.1 and common to v24.10.0-rc.1.
+
 
 # 11.10.0-beta.1 January 20, 2025
 ## Features ✨ and improvements 🏁
