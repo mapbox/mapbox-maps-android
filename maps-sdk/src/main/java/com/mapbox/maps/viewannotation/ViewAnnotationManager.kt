@@ -9,8 +9,8 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxDelicateApi
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
-import com.mapbox.maps.util.isEmpty
 
 /**
  * Manager API to control View Annotations.
@@ -25,6 +25,15 @@ import com.mapbox.maps.util.isEmpty
  * View annotation manager instance is destroyed automatically when [MapView.onDestroy] is called.
  */
 interface ViewAnnotationManager {
+
+  /**
+   * Specify layers that view annotations should avoid. This applies to ALL view annotations associated to any layer.
+   * The API currently only supports line layers.
+   *
+   * @return A list of layer ids if there are any, empty set otherwise.
+   */
+  @MapboxExperimental
+  var viewAnnotationAvoidLayers: HashSet<String>
 
   /**
    * Add view annotation inflated from [resId] synchronously.

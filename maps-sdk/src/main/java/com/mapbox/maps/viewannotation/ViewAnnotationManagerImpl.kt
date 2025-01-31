@@ -60,6 +60,19 @@ internal class ViewAnnotationManagerImpl(
   private var updatedPositionDescriptors = emptyList<DelegatingViewAnnotationPositionDescriptor>()
   private var currentPositionDescriptors = emptyList<DelegatingViewAnnotationPositionDescriptor>()
 
+  /**
+   * Specify layers that view annotations should avoid. This applies to ALL view annotations associated to any layer.
+   * The API currently only supports line layers.
+   *
+   * @return A list of layer ids if there are any, empty set otherwise.
+   */
+  @MapboxExperimental
+  override var viewAnnotationAvoidLayers: HashSet<String>
+    get() = mapboxMap.getViewAnnotationAvoidLayers()
+    set(value) {
+      mapboxMap.setViewAnnotationAvoidLayers(value)
+    }
+
   init {
     viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,

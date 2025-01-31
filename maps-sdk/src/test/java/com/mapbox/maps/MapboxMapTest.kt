@@ -29,6 +29,7 @@ import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.verifyNo
+import com.mapbox.verifyOnce
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.every
@@ -1799,6 +1800,24 @@ class MapboxMapTest {
   fun getRenderWorldCopies() {
     mapboxMap.getRenderWorldCopies()
     verify { nativeMap.getRenderWorldCopies() }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun setViewAnnotationAvoidLayers() {
+    val layerIds = hashSetOf("layer-1", "layer-2")
+    mapboxMap.setViewAnnotationAvoidLayers(layerIds)
+    verifyOnce { nativeMap.setViewAnnotationAvoidLayers(layerIds) }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun getViewAnnotationAvoidLayers() {
+    val layerIds = hashSetOf("layer-1", "layer-2")
+    every { nativeMap.getViewAnnotationAvoidLayers() } returns layerIds
+    mapboxMap.getViewAnnotationAvoidLayers()
+    verifyOnce { mapboxMap.getViewAnnotationAvoidLayers() }
+    assertEquals(layerIds, mapboxMap.getViewAnnotationAvoidLayers())
   }
 }
 
