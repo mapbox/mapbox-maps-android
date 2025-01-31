@@ -461,7 +461,6 @@ class DirectionalLightTest {
     assertEquals(listOf(0.0, 1.0), light.direction)
     verify { style.getStyleLightProperty("id", "direction") }
   }
-
   @Test
   fun directionTransitionSet() {
     val light = directionalLight("id") {
@@ -630,7 +629,6 @@ class DirectionalLightTest {
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
-
   @Test
   fun intensityTransitionSet() {
     val light = directionalLight("id") {
@@ -799,7 +797,6 @@ class DirectionalLightTest {
     assertEquals(1.0, light.shadowIntensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "shadow-intensity") }
   }
-
   @Test
   fun shadowIntensityTransitionSet() {
     val light = directionalLight("id") {
@@ -869,104 +866,6 @@ class DirectionalLightTest {
     style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("shadow-intensity-transition={duration=100, delay=200}"))
-  }
-
-  @Test
-  fun shadowQualitySet() {
-    val light = directionalLight("id") {
-      shadowQuality(1.0)
-    }
-    style.setLights(listOf(light))
-    verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("shadow-quality=1.0"))
-  }
-
-  @Test
-  fun shadowQualitySetAfterInitialization() {
-    val light = directionalLight("id") { }
-    style.setLights(listOf(light))
-    light.shadowQuality(1.0)
-    verify { style.setStyleLightProperty("id", "shadow-quality", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("1.0"))
-  }
-
-  @Test
-  fun shadowQualityGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-
-    val light = directionalLight("id") { }
-    style.setLights(listOf(light))
-    assertEquals(1.0.toString(), light.shadowQuality!!.toString())
-    verify { style.getStyleLightProperty("id", "shadow-quality") }
-  }
-  // Expression Tests
-
-  @Test
-  fun shadowQualityAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
-
-    val light = directionalLight("id") {
-      shadowQuality(expression)
-    }
-    style.setLights(listOf(light))
-    verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
-  }
-
-  @Test
-  fun shadowQualityAsExpressionSetAfterInitialization() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
-
-    val light = directionalLight("id") { }
-    style.setLights(listOf(light))
-    light.shadowQuality(expression)
-    verify { style.setStyleLightProperty("id", "shadow-quality", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
-  }
-
-  @Test
-  fun shadowQualityAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    every { styleProperty.value } returns expression
-
-    val light = directionalLight("id") { }
-    style.setLights(listOf(light))
-    assertEquals(expression.toString(), light.shadowQualityAsExpression?.toString())
-    verify { style.getStyleLightProperty("id", "shadow-quality") }
-  }
-
-  @Test
-  fun shadowQualityAsExpressionGetNull() {
-    val light = directionalLight("id") { }
-    style.setLights(listOf(light))
-    assertEquals(null, light.shadowQualityAsExpression)
-    verify { style.getStyleLightProperty("id", "shadow-quality") }
-  }
-
-  @Test
-  fun shadowQualityAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    val light = directionalLight("id") { }
-    style.setLights(listOf(light))
-    assertEquals(1.0, light.shadowQualityAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, light.shadowQuality!!, 1E-5)
-    verify { style.getStyleLightProperty("id", "shadow-quality") }
   }
 }
 

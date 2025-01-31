@@ -28,6 +28,7 @@ class AmbientLightTest : BaseStyleTest() {
     setupLight(light, directionalLight { })
     assertEquals(Color.CYAN, light.colorAsColorInt)
   }
+
   @Test
   @UiThreadTest
   fun colorTest() {

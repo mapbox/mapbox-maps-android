@@ -963,6 +963,37 @@ class FillExtrusionLayerTest {
     assertEquals(expectedValue.toString(), layer.fillExtrusionColor?.toString())
     verify { style.getStyleLayerProperty("id", "fill-extrusion-color") }
   }
+
+  @Test
+  fun fillExtrusionColorUseThemeSetAfterInitialization() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.fillExtrusionColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun fillExtrusionColorUseThemeSet() {
+    val theme = "none"
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("fill-extrusion-color-use-theme"))
+  }
+
+  @Test
+  fun fillExtrusionColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.fillExtrusionColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -1285,6 +1316,37 @@ class FillExtrusionLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.fillExtrusionFloodLightColor?.toString())
     verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color") }
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeSetAfterInitialization() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.fillExtrusionFloodLightColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeSet() {
+    val theme = "none"
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionFloodLightColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("fill-extrusion-flood-light-color-use-theme"))
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.fillExtrusionFloodLightColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme") }
   }
   // Expression Tests
 
@@ -3120,6 +3182,15 @@ class FillExtrusionLayerTest {
     assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color") }
   }
+
+  @Test
+  fun defaultFillExtrusionColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, FillExtrusionLayer.defaultFillExtrusionColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -3270,6 +3341,15 @@ class FillExtrusionLayerTest {
     assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionFloodLightColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-color") }
   }
+
+  @Test
+  fun defaultFillExtrusionFloodLightColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, FillExtrusionLayer.defaultFillExtrusionFloodLightColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

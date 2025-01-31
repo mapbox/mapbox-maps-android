@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -24,10 +25,13 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Stable
 public class SkyLayerState private constructor(
   initialSkyAtmosphereColor: ColorValue,
+  initialSkyAtmosphereColorUseTheme: StringValue,
   initialSkyAtmosphereHaloColor: ColorValue,
+  initialSkyAtmosphereHaloColorUseTheme: StringValue,
   initialSkyAtmosphereSun: DoubleListValue,
   initialSkyAtmosphereSunIntensity: DoubleValue,
   initialSkyGradient: ColorValue,
+  initialSkyGradientUseTheme: StringValue,
   initialSkyGradientCenter: DoubleListValue,
   initialSkyGradientRadius: DoubleValue,
   initialSkyOpacity: DoubleValue,
@@ -44,10 +48,13 @@ public class SkyLayerState private constructor(
    */
   public constructor() : this(
     initialSkyAtmosphereColor = ColorValue.INITIAL,
+    initialSkyAtmosphereColorUseTheme = StringValue.INITIAL,
     initialSkyAtmosphereHaloColor = ColorValue.INITIAL,
+    initialSkyAtmosphereHaloColorUseTheme = StringValue.INITIAL,
     initialSkyAtmosphereSun = DoubleListValue.INITIAL,
     initialSkyAtmosphereSunIntensity = DoubleValue.INITIAL,
     initialSkyGradient = ColorValue.INITIAL,
+    initialSkyGradientUseTheme = StringValue.INITIAL,
     initialSkyGradientCenter = DoubleListValue.INITIAL,
     initialSkyGradientRadius = DoubleValue.INITIAL,
     initialSkyOpacity = DoubleValue.INITIAL,
@@ -65,9 +72,19 @@ public class SkyLayerState private constructor(
    */
   public var skyAtmosphereColor: ColorValue by mutableStateOf(initialSkyAtmosphereColor)
   /**
+   *  Overrides applying of color theme for [skyAtmosphereColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var skyAtmosphereColorUseTheme: StringValue by mutableStateOf(initialSkyAtmosphereColorUseTheme)
+  /**
    *  A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer. Default value: "white".
    */
   public var skyAtmosphereHaloColor: ColorValue by mutableStateOf(initialSkyAtmosphereHaloColor)
+  /**
+   *  Overrides applying of color theme for [skyAtmosphereHaloColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var skyAtmosphereHaloColorUseTheme: StringValue by mutableStateOf(initialSkyAtmosphereHaloColorUseTheme)
   /**
    *  Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyAtmosphereSun is in degrees.
    */
@@ -80,6 +97,11 @@ public class SkyLayerState private constructor(
    *  Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`. Default value: ["interpolate",["linear"],["sky-radial-progress"],0.8,"#87ceeb",1,"white"].
    */
   public var skyGradient: ColorValue by mutableStateOf(initialSkyGradient)
+  /**
+   *  Overrides applying of color theme for [skyGradient] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var skyGradientUseTheme: StringValue by mutableStateOf(initialSkyGradientUseTheme)
   /**
    *  Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyGradientCenter is in degrees.
    */
@@ -128,9 +150,23 @@ public class SkyLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSkyAtmosphereColorUseTheme(layerNode: LayerNode) {
+    if (skyAtmosphereColorUseTheme.notInitial) {
+      layerNode.setProperty("sky-atmosphere-color-use-theme", skyAtmosphereColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateSkyAtmosphereHaloColor(layerNode: LayerNode) {
     if (skyAtmosphereHaloColor.notInitial) {
       layerNode.setProperty("sky-atmosphere-halo-color", skyAtmosphereHaloColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSkyAtmosphereHaloColorUseTheme(layerNode: LayerNode) {
+    if (skyAtmosphereHaloColorUseTheme.notInitial) {
+      layerNode.setProperty("sky-atmosphere-halo-color-use-theme", skyAtmosphereHaloColorUseTheme.value)
     }
   }
   @Composable
@@ -149,6 +185,13 @@ public class SkyLayerState private constructor(
   private fun UpdateSkyGradient(layerNode: LayerNode) {
     if (skyGradient.notInitial) {
       layerNode.setProperty("sky-gradient", skyGradient.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateSkyGradientUseTheme(layerNode: LayerNode) {
+    if (skyGradientUseTheme.notInitial) {
+      layerNode.setProperty("sky-gradient-use-theme", skyGradientUseTheme.value)
     }
   }
   @Composable
@@ -215,10 +258,13 @@ public class SkyLayerState private constructor(
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
     UpdateSkyAtmosphereColor(layerNode)
+    UpdateSkyAtmosphereColorUseTheme(layerNode)
     UpdateSkyAtmosphereHaloColor(layerNode)
+    UpdateSkyAtmosphereHaloColorUseTheme(layerNode)
     UpdateSkyAtmosphereSun(layerNode)
     UpdateSkyAtmosphereSunIntensity(layerNode)
     UpdateSkyGradient(layerNode)
+    UpdateSkyGradientUseTheme(layerNode)
     UpdateSkyGradientCenter(layerNode)
     UpdateSkyGradientRadius(layerNode)
     UpdateSkyOpacity(layerNode)

@@ -32,12 +32,14 @@ public class FillLayerState private constructor(
   initialFillSortKey: DoubleValue,
   initialFillAntialias: BooleanValue,
   initialFillColor: ColorValue,
+  initialFillColorUseTheme: StringValue,
   initialFillColorTransition: Transition,
   initialFillEmissiveStrength: DoubleValue,
   initialFillEmissiveStrengthTransition: Transition,
   initialFillOpacity: DoubleValue,
   initialFillOpacityTransition: Transition,
   initialFillOutlineColor: ColorValue,
+  initialFillOutlineColorUseTheme: StringValue,
   initialFillOutlineColorTransition: Transition,
   initialFillPattern: ImageValue,
   initialFillTranslate: DoubleListValue,
@@ -60,12 +62,14 @@ public class FillLayerState private constructor(
     initialFillSortKey = DoubleValue.INITIAL,
     initialFillAntialias = BooleanValue.INITIAL,
     initialFillColor = ColorValue.INITIAL,
+    initialFillColorUseTheme = StringValue.INITIAL,
     initialFillColorTransition = Transition.INITIAL,
     initialFillEmissiveStrength = DoubleValue.INITIAL,
     initialFillEmissiveStrengthTransition = Transition.INITIAL,
     initialFillOpacity = DoubleValue.INITIAL,
     initialFillOpacityTransition = Transition.INITIAL,
     initialFillOutlineColor = ColorValue.INITIAL,
+    initialFillOutlineColorUseTheme = StringValue.INITIAL,
     initialFillOutlineColorTransition = Transition.INITIAL,
     initialFillPattern = ImageValue.INITIAL,
     initialFillTranslate = DoubleListValue.INITIAL,
@@ -105,6 +109,11 @@ public class FillLayerState private constructor(
    */
   public var fillColor: ColorValue by mutableStateOf(initialFillColor)
   /**
+   *  Overrides applying of color theme for [fillColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var fillColorUseTheme: StringValue by mutableStateOf(initialFillColorUseTheme)
+  /**
    *  Defines the transition of [fillColor].
    */
   public var fillColorTransition: Transition by mutableStateOf(initialFillColorTransition)
@@ -128,6 +137,11 @@ public class FillLayerState private constructor(
    *  The outline color of the fill. Matches the value of `fill-color` if unspecified.
    */
   public var fillOutlineColor: ColorValue by mutableStateOf(initialFillOutlineColor)
+  /**
+   *  Overrides applying of color theme for [fillOutlineColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var fillOutlineColorUseTheme: StringValue by mutableStateOf(initialFillOutlineColorUseTheme)
   /**
    *  Defines the transition of [fillOutlineColor].
    */
@@ -205,6 +219,13 @@ public class FillLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillColorUseTheme(layerNode: LayerNode) {
+    if (fillColorUseTheme.notInitial) {
+      layerNode.setProperty("fill-color-use-theme", fillColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateFillColorTransition(layerNode: LayerNode) {
     if (fillColorTransition.notInitial) {
       layerNode.setProperty("fill-color-transition", fillColorTransition.value)
@@ -238,6 +259,13 @@ public class FillLayerState private constructor(
   private fun UpdateFillOutlineColor(layerNode: LayerNode) {
     if (fillOutlineColor.notInitial) {
       layerNode.setProperty("fill-outline-color", fillOutlineColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillOutlineColorUseTheme(layerNode: LayerNode) {
+    if (fillOutlineColorUseTheme.notInitial) {
+      layerNode.setProperty("fill-outline-color-use-theme", fillOutlineColorUseTheme.value)
     }
   }
   @Composable
@@ -324,12 +352,14 @@ public class FillLayerState private constructor(
     UpdateFillSortKey(layerNode)
     UpdateFillAntialias(layerNode)
     UpdateFillColor(layerNode)
+    UpdateFillColorUseTheme(layerNode)
     UpdateFillColorTransition(layerNode)
     UpdateFillEmissiveStrength(layerNode)
     UpdateFillEmissiveStrengthTransition(layerNode)
     UpdateFillOpacity(layerNode)
     UpdateFillOpacityTransition(layerNode)
     UpdateFillOutlineColor(layerNode)
+    UpdateFillOutlineColorUseTheme(layerNode)
     UpdateFillOutlineColorTransition(layerNode)
     UpdateFillPattern(layerNode)
     UpdateFillTranslate(layerNode)

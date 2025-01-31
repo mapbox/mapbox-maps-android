@@ -3390,6 +3390,35 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Сolor theme override for [iconColor].
+   */
+  @MapboxExperimental
+  val iconColorUseTheme: String?
+    /**
+     * Get the IconColorUseTheme property
+     *
+     * Use static method [SymbolLayer.defaultIconColorUseTheme] to get the default property.
+     *
+     * @return current IconColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("icon-color-use-theme")
+    }
+
+  /**
+   * Set the IconColorUseTheme as String
+   *
+   * Use static method [SymbolLayer.defaultIconColorUseTheme] to get the default property.
+   *
+   * @param iconColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun iconColorUseTheme(iconColorUseTheme: String): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-color-use-theme", iconColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    */
   val iconColorSaturation: Double?
@@ -3814,6 +3843,35 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun iconHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconHaloColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [iconHaloColor].
+   */
+  @MapboxExperimental
+  val iconHaloColorUseTheme: String?
+    /**
+     * Get the IconHaloColorUseTheme property
+     *
+     * Use static method [SymbolLayer.defaultIconHaloColorUseTheme] to get the default property.
+     *
+     * @return current IconHaloColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("icon-halo-color-use-theme")
+    }
+
+  /**
+   * Set the IconHaloColorUseTheme as String
+   *
+   * Use static method [SymbolLayer.defaultIconHaloColorUseTheme] to get the default property.
+   *
+   * @param iconHaloColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun iconHaloColorUseTheme(iconHaloColorUseTheme: String): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-halo-color-use-theme", iconHaloColorUseTheme)
+    setProperty(propertyValue)
   }
 
   /**
@@ -4616,6 +4674,35 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Сolor theme override for [textColor].
+   */
+  @MapboxExperimental
+  val textColorUseTheme: String?
+    /**
+     * Get the TextColorUseTheme property
+     *
+     * Use static method [SymbolLayer.defaultTextColorUseTheme] to get the default property.
+     *
+     * @return current TextColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("text-color-use-theme")
+    }
+
+  /**
+   * Set the TextColorUseTheme as String
+   *
+   * Use static method [SymbolLayer.defaultTextColorUseTheme] to get the default property.
+   *
+   * @param textColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun textColorUseTheme(textColorUseTheme: String): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-color-use-theme", textColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    */
   val textEmissiveStrength: Double?
@@ -4941,6 +5028,35 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun textHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textHaloColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [textHaloColor].
+   */
+  @MapboxExperimental
+  val textHaloColorUseTheme: String?
+    /**
+     * Get the TextHaloColorUseTheme property
+     *
+     * Use static method [SymbolLayer.defaultTextHaloColorUseTheme] to get the default property.
+     *
+     * @return current TextHaloColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("text-halo-color-use-theme")
+    }
+
+  /**
+   * Set the TextHaloColorUseTheme as String
+   *
+   * Use static method [SymbolLayer.defaultTextHaloColorUseTheme] to get the default property.
+   *
+   * @param textHaloColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun textHaloColorUseTheme(textHaloColorUseTheme: String): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-halo-color-use-theme", textHaloColorUseTheme)
+    setProperty(propertyValue)
   }
 
   /**
@@ -7259,6 +7375,18 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
+     * Default color theme for [iconColor].
+     */
+    @MapboxExperimental
+    val defaultIconColorUseTheme: String?
+      /**
+       * Get default value of the IconColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-use-theme").silentUnwrap()
+
+    /**
      * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
      */
     val defaultIconColorSaturation: Double?
@@ -7468,6 +7596,18 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [iconHaloColor].
+     */
+    @MapboxExperimental
+    val defaultIconHaloColorUseTheme: String?
+      /**
+       * Get default value of the IconHaloColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-color-use-theme").silentUnwrap()
 
     /**
      * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
@@ -7868,6 +8008,18 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition").silentUnwrap()
 
     /**
+     * Default color theme for [textColor].
+     */
+    @MapboxExperimental
+    val defaultTextColorUseTheme: String?
+      /**
+       * Get default value of the TextColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-use-theme").silentUnwrap()
+
+    /**
      * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
      */
     val defaultTextEmissiveStrength: Double?
@@ -8029,6 +8181,18 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [textHaloColor].
+     */
+    @MapboxExperimental
+    val defaultTextHaloColorUseTheme: String?
+      /**
+       * Get default value of the TextHaloColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-color-use-theme").silentUnwrap()
 
     /**
      * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
@@ -9029,6 +9193,14 @@ interface SymbolLayerDsl {
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
+   * Set the iconColorUseTheme as String for [iconColor].
+   *
+   * @param iconColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun iconColorUseTheme(iconColorUseTheme: String): SymbolLayer
+
+  /**
    * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    *
    * @param iconColorSaturation value of iconColorSaturation
@@ -9154,6 +9326,14 @@ interface SymbolLayerDsl {
    * DSL for [iconHaloColorTransition].
    */
   fun iconHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
+   * Set the iconHaloColorUseTheme as String for [iconHaloColor].
+   *
+   * @param iconHaloColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun iconHaloColorUseTheme(iconHaloColorUseTheme: String): SymbolLayer
 
   /**
    * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
@@ -9391,6 +9571,14 @@ interface SymbolLayerDsl {
   fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
+   * Set the textColorUseTheme as String for [textColor].
+   *
+   * @param textColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun textColorUseTheme(textColorUseTheme: String): SymbolLayer
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
    *
    * @param textEmissiveStrength value of textEmissiveStrength
@@ -9486,6 +9674,14 @@ interface SymbolLayerDsl {
    * DSL for [textHaloColorTransition].
    */
   fun textHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
+   * Set the textHaloColorUseTheme as String for [textHaloColor].
+   *
+   * @param textHaloColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun textHaloColorUseTheme(textHaloColorUseTheme: String): SymbolLayer
 
   /**
    * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.

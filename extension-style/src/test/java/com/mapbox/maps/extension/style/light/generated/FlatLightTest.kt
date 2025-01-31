@@ -466,7 +466,6 @@ class FlatLightTest {
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
-
   @Test
   fun intensityTransitionSet() {
     val light = flatLight("id") {
@@ -645,7 +644,6 @@ class FlatLightTest {
     assertEquals(LightPosition(0.0, 1.0, 2.0), light.position)
     verify { style.getStyleLightProperty("id", "position") }
   }
-
   @Test
   fun positionTransitionSet() {
     val light = flatLight("id") {

@@ -152,6 +152,37 @@ class HillshadeLayerTest {
     assertEquals(expectedValue.toString(), layer.hillshadeAccentColor?.toString())
     verify { style.getStyleLayerProperty("id", "hillshade-accent-color") }
   }
+
+  @Test
+  fun hillshadeAccentColorUseThemeSetAfterInitialization() {
+    val layer = hillshadeLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.hillshadeAccentColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "hillshade-accent-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun hillshadeAccentColorUseThemeSet() {
+    val theme = "none"
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeAccentColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("hillshade-accent-color-use-theme"))
+  }
+
+  @Test
+  fun hillshadeAccentColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.hillshadeAccentColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-accent-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -515,6 +546,37 @@ class HillshadeLayerTest {
     assertEquals(expectedValue.toString(), layer.hillshadeHighlightColor?.toString())
     verify { style.getStyleLayerProperty("id", "hillshade-highlight-color") }
   }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeSetAfterInitialization() {
+    val layer = hillshadeLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.hillshadeHighlightColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "hillshade-highlight-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeSet() {
+    val theme = "none"
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeHighlightColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("hillshade-highlight-color-use-theme"))
+  }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.hillshadeHighlightColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-highlight-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -799,6 +861,37 @@ class HillshadeLayerTest {
     assertEquals(expectedValue.toString(), layer.hillshadeShadowColor?.toString())
     verify { style.getStyleLayerProperty("id", "hillshade-shadow-color") }
   }
+
+  @Test
+  fun hillshadeShadowColorUseThemeSetAfterInitialization() {
+    val layer = hillshadeLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.hillshadeShadowColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "hillshade-shadow-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun hillshadeShadowColorUseThemeSet() {
+    val theme = "none"
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeShadowColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("hillshade-shadow-color-use-theme"))
+  }
+
+  @Test
+  fun hillshadeShadowColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.hillshadeShadowColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-shadow-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -1004,6 +1097,15 @@ class HillshadeLayerTest {
     assertEquals(expectedValue.toString(), HillshadeLayer.defaultHillshadeAccentColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color") }
   }
+
+  @Test
+  fun defaultHillshadeAccentColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, HillshadeLayer.defaultHillshadeAccentColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -1167,6 +1269,15 @@ class HillshadeLayerTest {
     assertEquals(expectedValue.toString(), HillshadeLayer.defaultHillshadeHighlightColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-highlight-color") }
   }
+
+  @Test
+  fun defaultHillshadeHighlightColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, HillshadeLayer.defaultHillshadeHighlightColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-highlight-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -1306,6 +1417,15 @@ class HillshadeLayerTest {
     assertEquals(expectedValue.toString(), HillshadeLayer.defaultHillshadeShadowColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-shadow-color") }
   }
+
+  @Test
+  fun defaultHillshadeShadowColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, HillshadeLayer.defaultHillshadeShadowColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-shadow-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

@@ -363,7 +363,6 @@ class AmbientLightTest {
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
-
   @Test
   fun intensityTransitionSet() {
     val light = ambientLight("id") {

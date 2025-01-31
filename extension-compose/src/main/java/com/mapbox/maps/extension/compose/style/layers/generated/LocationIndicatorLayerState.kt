@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleRangeValue
@@ -31,14 +32,17 @@ public class LocationIndicatorLayerState private constructor(
   initialAccuracyRadius: DoubleValue,
   initialAccuracyRadiusTransition: Transition,
   initialAccuracyRadiusBorderColor: ColorValue,
+  initialAccuracyRadiusBorderColorUseTheme: StringValue,
   initialAccuracyRadiusBorderColorTransition: Transition,
   initialAccuracyRadiusColor: ColorValue,
+  initialAccuracyRadiusColorUseTheme: StringValue,
   initialAccuracyRadiusColorTransition: Transition,
   initialBearing: DoubleValue,
   initialBearingTransition: Transition,
   initialBearingImageSize: DoubleValue,
   initialBearingImageSizeTransition: Transition,
   initialEmphasisCircleColor: ColorValue,
+  initialEmphasisCircleColorUseTheme: StringValue,
   initialEmphasisCircleColorTransition: Transition,
   initialEmphasisCircleGlowRange: DoubleRangeValue,
   initialEmphasisCircleGlowRangeTransition: Transition,
@@ -70,14 +74,17 @@ public class LocationIndicatorLayerState private constructor(
     initialAccuracyRadius = DoubleValue.INITIAL,
     initialAccuracyRadiusTransition = Transition.INITIAL,
     initialAccuracyRadiusBorderColor = ColorValue.INITIAL,
+    initialAccuracyRadiusBorderColorUseTheme = StringValue.INITIAL,
     initialAccuracyRadiusBorderColorTransition = Transition.INITIAL,
     initialAccuracyRadiusColor = ColorValue.INITIAL,
+    initialAccuracyRadiusColorUseTheme = StringValue.INITIAL,
     initialAccuracyRadiusColorTransition = Transition.INITIAL,
     initialBearing = DoubleValue.INITIAL,
     initialBearingTransition = Transition.INITIAL,
     initialBearingImageSize = DoubleValue.INITIAL,
     initialBearingImageSizeTransition = Transition.INITIAL,
     initialEmphasisCircleColor = ColorValue.INITIAL,
+    initialEmphasisCircleColorUseTheme = StringValue.INITIAL,
     initialEmphasisCircleColorTransition = Transition.INITIAL,
     initialEmphasisCircleGlowRange = DoubleRangeValue.INITIAL,
     initialEmphasisCircleGlowRangeTransition = Transition.INITIAL,
@@ -125,6 +132,11 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var accuracyRadiusBorderColor: ColorValue by mutableStateOf(initialAccuracyRadiusBorderColor)
   /**
+   *  Overrides applying of color theme for [accuracyRadiusBorderColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var accuracyRadiusBorderColorUseTheme: StringValue by mutableStateOf(initialAccuracyRadiusBorderColorUseTheme)
+  /**
    *  Defines the transition of [accuracyRadiusBorderColor].
    */
   public var accuracyRadiusBorderColorTransition: Transition by mutableStateOf(initialAccuracyRadiusBorderColorTransition)
@@ -132,6 +144,11 @@ public class LocationIndicatorLayerState private constructor(
    *  The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
    */
   public var accuracyRadiusColor: ColorValue by mutableStateOf(initialAccuracyRadiusColor)
+  /**
+   *  Overrides applying of color theme for [accuracyRadiusColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var accuracyRadiusColorUseTheme: StringValue by mutableStateOf(initialAccuracyRadiusColorUseTheme)
   /**
    *  Defines the transition of [accuracyRadiusColor].
    */
@@ -156,6 +173,11 @@ public class LocationIndicatorLayerState private constructor(
    *  The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
    */
   public var emphasisCircleColor: ColorValue by mutableStateOf(initialEmphasisCircleColor)
+  /**
+   *  Overrides applying of color theme for [emphasisCircleColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var emphasisCircleColorUseTheme: StringValue by mutableStateOf(initialEmphasisCircleColorUseTheme)
   /**
    *  Defines the transition of [emphasisCircleColor].
    */
@@ -283,6 +305,13 @@ public class LocationIndicatorLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateAccuracyRadiusBorderColorUseTheme(layerNode: LayerNode) {
+    if (accuracyRadiusBorderColorUseTheme.notInitial) {
+      layerNode.setProperty("accuracy-radius-border-color-use-theme", accuracyRadiusBorderColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateAccuracyRadiusBorderColorTransition(layerNode: LayerNode) {
     if (accuracyRadiusBorderColorTransition.notInitial) {
       layerNode.setProperty("accuracy-radius-border-color-transition", accuracyRadiusBorderColorTransition.value)
@@ -292,6 +321,13 @@ public class LocationIndicatorLayerState private constructor(
   private fun UpdateAccuracyRadiusColor(layerNode: LayerNode) {
     if (accuracyRadiusColor.notInitial) {
       layerNode.setProperty("accuracy-radius-color", accuracyRadiusColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateAccuracyRadiusColorUseTheme(layerNode: LayerNode) {
+    if (accuracyRadiusColorUseTheme.notInitial) {
+      layerNode.setProperty("accuracy-radius-color-use-theme", accuracyRadiusColorUseTheme.value)
     }
   }
   @Composable
@@ -328,6 +364,13 @@ public class LocationIndicatorLayerState private constructor(
   private fun UpdateEmphasisCircleColor(layerNode: LayerNode) {
     if (emphasisCircleColor.notInitial) {
       layerNode.setProperty("emphasis-circle-color", emphasisCircleColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateEmphasisCircleColorUseTheme(layerNode: LayerNode) {
+    if (emphasisCircleColorUseTheme.notInitial) {
+      layerNode.setProperty("emphasis-circle-color-use-theme", emphasisCircleColorUseTheme.value)
     }
   }
   @Composable
@@ -459,14 +502,17 @@ public class LocationIndicatorLayerState private constructor(
     UpdateAccuracyRadius(layerNode)
     UpdateAccuracyRadiusTransition(layerNode)
     UpdateAccuracyRadiusBorderColor(layerNode)
+    UpdateAccuracyRadiusBorderColorUseTheme(layerNode)
     UpdateAccuracyRadiusBorderColorTransition(layerNode)
     UpdateAccuracyRadiusColor(layerNode)
+    UpdateAccuracyRadiusColorUseTheme(layerNode)
     UpdateAccuracyRadiusColorTransition(layerNode)
     UpdateBearing(layerNode)
     UpdateBearingTransition(layerNode)
     UpdateBearingImageSize(layerNode)
     UpdateBearingImageSizeTransition(layerNode)
     UpdateEmphasisCircleColor(layerNode)
+    UpdateEmphasisCircleColorUseTheme(layerNode)
     UpdateEmphasisCircleColorTransition(layerNode)
     UpdateEmphasisCircleGlowRange(layerNode)
     UpdateEmphasisCircleGlowRangeTransition(layerNode)

@@ -3370,6 +3370,37 @@ class SymbolLayerTest {
     assertEquals(expectedValue.toString(), layer.iconColor?.toString())
     verify { style.getStyleLayerProperty("id", "icon-color") }
   }
+
+  @Test
+  fun iconColorUseThemeSetAfterInitialization() {
+    val layer = symbolLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.iconColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "icon-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun iconColorUseThemeSet() {
+    val theme = "none"
+    val layer = symbolLayer("id", "source") {
+      iconColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("icon-color-use-theme"))
+  }
+
+  @Test
+  fun iconColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.iconColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -3839,6 +3870,37 @@ class SymbolLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.iconHaloColor?.toString())
     verify { style.getStyleLayerProperty("id", "icon-halo-color") }
+  }
+
+  @Test
+  fun iconHaloColorUseThemeSetAfterInitialization() {
+    val layer = symbolLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.iconHaloColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "icon-halo-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun iconHaloColorUseThemeSet() {
+    val theme = "none"
+    val layer = symbolLayer("id", "source") {
+      iconHaloColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("icon-halo-color-use-theme"))
+  }
+
+  @Test
+  fun iconHaloColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.iconHaloColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-halo-color-use-theme") }
   }
   // Expression Tests
 
@@ -4699,6 +4761,37 @@ class SymbolLayerTest {
     assertEquals(expectedValue.toString(), layer.textColor?.toString())
     verify { style.getStyleLayerProperty("id", "text-color") }
   }
+
+  @Test
+  fun textColorUseThemeSetAfterInitialization() {
+    val layer = symbolLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.textColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "text-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun textColorUseThemeSet() {
+    val theme = "none"
+    val layer = symbolLayer("id", "source") {
+      textColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("text-color-use-theme"))
+  }
+
+  @Test
+  fun textColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.textColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "text-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -5061,6 +5154,37 @@ class SymbolLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.textHaloColor?.toString())
     verify { style.getStyleLayerProperty("id", "text-halo-color") }
+  }
+
+  @Test
+  fun textHaloColorUseThemeSetAfterInitialization() {
+    val layer = symbolLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.textHaloColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "text-halo-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun textHaloColorUseThemeSet() {
+    val theme = "none"
+    val layer = symbolLayer("id", "source") {
+      textHaloColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("text-halo-color-use-theme"))
+  }
+
+  @Test
+  fun textHaloColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.textHaloColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "text-halo-color-use-theme") }
   }
   // Expression Tests
 
@@ -7287,6 +7411,15 @@ class SymbolLayerTest {
     assertEquals(expectedValue.toString(), SymbolLayer.defaultIconColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color") }
   }
+
+  @Test
+  fun defaultIconColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, SymbolLayer.defaultIconColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -7494,6 +7627,15 @@ class SymbolLayerTest {
     assertEquals(expectedValue.toString(), SymbolLayer.defaultIconHaloColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-color") }
   }
+
+  @Test
+  fun defaultIconHaloColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, SymbolLayer.defaultIconHaloColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -7866,6 +8008,15 @@ class SymbolLayerTest {
     assertEquals(expectedValue.toString(), SymbolLayer.defaultTextColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color") }
   }
+
+  @Test
+  fun defaultTextColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, SymbolLayer.defaultTextColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -8029,6 +8180,15 @@ class SymbolLayerTest {
     assertEquals(expectedValue.toString(), SymbolLayer.defaultTextHaloColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-color") }
   }
+
+  @Test
+  fun defaultTextHaloColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, SymbolLayer.defaultTextHaloColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-halo-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

@@ -393,6 +393,17 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineBorderColorUseTheme() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineBorderColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.lineBorderColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineBorderColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -517,6 +528,17 @@ class LineLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(Color.CYAN, layer.lineColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineColorUseTheme() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.lineColorUseTheme)
   }
 
   @Test
@@ -773,6 +795,17 @@ class LineLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(testValue.toString(), layer.lineGradient?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineGradientUseTheme() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineGradientUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.lineGradientUseTheme)
   }
 
   @Test
@@ -1098,6 +1131,17 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineTrimColorUseTheme() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineTrimColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.lineTrimColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineTrimColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -1291,6 +1335,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineBorderColor should not be null", LineLayer.defaultLineBorderColor)
     assertNotNull("defaultLineBorderColorAsExpression should not be null", LineLayer.defaultLineBorderColorAsExpression)
     assertNotNull("defaultLineBorderColorAsColorInt should not be null", LineLayer.defaultLineBorderColorAsColorInt)
+    assertNotNull("defaultLineBorderColorUseTheme should not be null", LineLayer.defaultLineBorderColorUseTheme)
     assertNotNull("defaultLineBorderColorTransition should not be null", LineLayer.defaultLineBorderColorTransition)
     assertNotNull("defaultLineBorderWidth should not be null", LineLayer.defaultLineBorderWidth)
     assertNotNull("defaultLineBorderWidthAsExpression should not be null", LineLayer.defaultLineBorderWidthAsExpression)
@@ -1298,6 +1343,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineColor should not be null", LineLayer.defaultLineColor)
     assertNotNull("defaultLineColorAsExpression should not be null", LineLayer.defaultLineColorAsExpression)
     assertNotNull("defaultLineColorAsColorInt should not be null", LineLayer.defaultLineColorAsColorInt)
+    assertNotNull("defaultLineColorUseTheme should not be null", LineLayer.defaultLineColorUseTheme)
     assertNotNull("defaultLineColorTransition should not be null", LineLayer.defaultLineColorTransition)
     assertNotNull("defaultLineDasharray should not be null", LineLayer.defaultLineDasharray)
     assertNotNull("defaultLineDasharrayAsExpression should not be null", LineLayer.defaultLineDasharrayAsExpression)
@@ -1310,6 +1356,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineGapWidth should not be null", LineLayer.defaultLineGapWidth)
     assertNotNull("defaultLineGapWidthAsExpression should not be null", LineLayer.defaultLineGapWidthAsExpression)
     assertNotNull("defaultLineGapWidthTransition should not be null", LineLayer.defaultLineGapWidthTransition)
+    assertNotNull("defaultLineGradientUseTheme should not be null", LineLayer.defaultLineGradientUseTheme)
     assertNotNull("defaultLineOcclusionOpacity should not be null", LineLayer.defaultLineOcclusionOpacity)
     assertNotNull("defaultLineOcclusionOpacityAsExpression should not be null", LineLayer.defaultLineOcclusionOpacityAsExpression)
     assertNotNull("defaultLineOcclusionOpacityTransition should not be null", LineLayer.defaultLineOcclusionOpacityTransition)
@@ -1329,6 +1376,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineTrimColor should not be null", LineLayer.defaultLineTrimColor)
     assertNotNull("defaultLineTrimColorAsExpression should not be null", LineLayer.defaultLineTrimColorAsExpression)
     assertNotNull("defaultLineTrimColorAsColorInt should not be null", LineLayer.defaultLineTrimColorAsColorInt)
+    assertNotNull("defaultLineTrimColorUseTheme should not be null", LineLayer.defaultLineTrimColorUseTheme)
     assertNotNull("defaultLineTrimColorTransition should not be null", LineLayer.defaultLineTrimColorTransition)
     assertNotNull("defaultLineTrimFadeRange should not be null", LineLayer.defaultLineTrimFadeRange)
     assertNotNull("defaultLineTrimFadeRangeAsExpression should not be null", LineLayer.defaultLineTrimFadeRangeAsExpression)
@@ -1359,8 +1407,10 @@ class LineLayerTest : BaseStyleTest() {
     val lineZOffsetTestValue = 1.0
     val lineBlurTestValue = 1.0
     val lineBorderColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineBorderColorUseThemeTestValue = "default"
     val lineBorderWidthTestValue = 1.0
     val lineColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineColorUseThemeTestValue = "default"
     val lineDasharrayTestValue = listOf(1.0, 2.0)
     val lineDepthOcclusionFactorTestValue = 1.0
     val lineEmissiveStrengthTestValue = 1.0
@@ -1387,6 +1437,7 @@ class LineLayerTest : BaseStyleTest() {
         }
       }
     }
+    val lineGradientUseThemeTestValue = "default"
     val lineOcclusionOpacityTestValue = 1.0
     val lineOffsetTestValue = 1.0
     val lineOpacityTestValue = 1.0
@@ -1394,6 +1445,7 @@ class LineLayerTest : BaseStyleTest() {
     val lineTranslateTestValue = listOf(0.0, 1.0)
     val lineTranslateAnchorTestValue = LineTranslateAnchor.MAP
     val lineTrimColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineTrimColorUseThemeTestValue = "default"
     val lineTrimFadeRangeTestValue = listOf(0.0, 1.0)
     val lineTrimOffsetTestValue = listOf(0.0, 1.0)
     val lineWidthTestValue = 1.0
@@ -1416,13 +1468,16 @@ class LineLayerTest : BaseStyleTest() {
       lineZOffset(lineZOffsetTestValue)
       lineBlur(lineBlurTestValue)
       lineBorderColor(lineBorderColorTestValue)
+      lineBorderColorUseTheme(lineBorderColorUseThemeTestValue)
       lineBorderWidth(lineBorderWidthTestValue)
       lineColor(lineColorTestValue)
+      lineColorUseTheme(lineColorUseThemeTestValue)
       lineDasharray(lineDasharrayTestValue)
       lineDepthOcclusionFactor(lineDepthOcclusionFactorTestValue)
       lineEmissiveStrength(lineEmissiveStrengthTestValue)
       lineGapWidth(lineGapWidthTestValue)
       lineGradient(lineGradientTestValue)
+      lineGradientUseTheme(lineGradientUseThemeTestValue)
       lineOcclusionOpacity(lineOcclusionOpacityTestValue)
       lineOffset(lineOffsetTestValue)
       lineOpacity(lineOpacityTestValue)
@@ -1430,6 +1485,7 @@ class LineLayerTest : BaseStyleTest() {
       lineTranslate(lineTranslateTestValue)
       lineTranslateAnchor(lineTranslateAnchorTestValue)
       lineTrimColor(lineTrimColorTestValue)
+      lineTrimColorUseTheme(lineTrimColorUseThemeTestValue)
       lineTrimFadeRange(lineTrimFadeRangeTestValue)
       lineTrimOffset(lineTrimOffsetTestValue)
       lineWidth(lineWidthTestValue)
@@ -1457,13 +1513,16 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineZOffsetTestValue, cachedLayer.lineZOffset)
     assertEquals(lineBlurTestValue, cachedLayer.lineBlur)
     assertEquals(lineBorderColorTestValue, cachedLayer.lineBorderColor)
+    assertEquals(lineBorderColorUseThemeTestValue, cachedLayer.lineBorderColorUseTheme)
     assertEquals(lineBorderWidthTestValue, cachedLayer.lineBorderWidth)
     assertEquals(lineColorTestValue, cachedLayer.lineColor)
+    assertEquals(lineColorUseThemeTestValue, cachedLayer.lineColorUseTheme)
     assertEquals(lineDasharrayTestValue, cachedLayer.lineDasharray)
     assertEquals(lineDepthOcclusionFactorTestValue, cachedLayer.lineDepthOcclusionFactor)
     assertEquals(lineEmissiveStrengthTestValue, cachedLayer.lineEmissiveStrength)
     assertEquals(lineGapWidthTestValue, cachedLayer.lineGapWidth)
     assertEquals(lineGradientTestValue, cachedLayer.lineGradient)
+    assertEquals(lineGradientUseThemeTestValue, cachedLayer.lineGradientUseTheme)
     assertEquals(lineOcclusionOpacityTestValue, cachedLayer.lineOcclusionOpacity)
     assertEquals(lineOffsetTestValue, cachedLayer.lineOffset)
     assertEquals(lineOpacityTestValue, cachedLayer.lineOpacity)
@@ -1471,6 +1530,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineTranslateTestValue, cachedLayer.lineTranslate)
     assertEquals(lineTranslateAnchorTestValue, cachedLayer.lineTranslateAnchor)
     assertEquals(lineTrimColorTestValue, cachedLayer.lineTrimColor)
+    assertEquals(lineTrimColorUseThemeTestValue, cachedLayer.lineTrimColorUseTheme)
     assertEquals(lineTrimFadeRangeTestValue, cachedLayer.lineTrimFadeRange)
     assertEquals(lineTrimOffsetTestValue, cachedLayer.lineTrimOffset)
     assertEquals(lineWidthTestValue, cachedLayer.lineWidth)

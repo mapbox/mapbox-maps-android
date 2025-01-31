@@ -389,6 +389,37 @@ class FillLayerTest {
     assertEquals(expectedValue.toString(), layer.fillColor?.toString())
     verify { style.getStyleLayerProperty("id", "fill-color") }
   }
+
+  @Test
+  fun fillColorUseThemeSetAfterInitialization() {
+    val layer = fillLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.fillColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "fill-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun fillColorUseThemeSet() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("fill-color-use-theme"))
+  }
+
+  @Test
+  fun fillColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.fillColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -751,6 +782,37 @@ class FillLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.fillOutlineColor?.toString())
     verify { style.getStyleLayerProperty("id", "fill-outline-color") }
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeSetAfterInitialization() {
+    val layer = fillLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.fillOutlineColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "fill-outline-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeSet() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillOutlineColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("fill-outline-color-use-theme"))
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.fillOutlineColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-outline-color-use-theme") }
   }
   // Expression Tests
 
@@ -1401,6 +1463,15 @@ class FillLayerTest {
     assertEquals(expectedValue.toString(), FillLayer.defaultFillColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color") }
   }
+
+  @Test
+  fun defaultFillColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, FillLayer.defaultFillColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -1564,6 +1635,15 @@ class FillLayerTest {
     assertEquals(expectedValue.toString(), FillLayer.defaultFillOutlineColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-outline-color") }
   }
+
+  @Test
+  fun defaultFillOutlineColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, FillLayer.defaultFillOutlineColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-outline-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

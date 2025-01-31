@@ -101,6 +101,17 @@ class HeatmapLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun heatmapColorUseTheme() {
+    val theme = "none"
+    val layer = heatmapLayer("id", "source") {
+      heatmapColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.heatmapColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun heatmapIntensityTest() {
     val testValue = 1.0
     val layer = heatmapLayer("id", "source") {
@@ -330,6 +341,7 @@ class HeatmapLayerTest : BaseStyleTest() {
     assertNotNull("defaultMinZoom should not be null", HeatmapLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", HeatmapLayer.defaultMaxZoom)
     assertNotNull("defaultHeatmapColor should not be null", HeatmapLayer.defaultHeatmapColor)
+    assertNotNull("defaultHeatmapColorUseTheme should not be null", HeatmapLayer.defaultHeatmapColorUseTheme)
     assertNotNull("defaultHeatmapIntensity should not be null", HeatmapLayer.defaultHeatmapIntensity)
     assertNotNull("defaultHeatmapIntensityAsExpression should not be null", HeatmapLayer.defaultHeatmapIntensityAsExpression)
     assertNotNull("defaultHeatmapIntensityTransition should not be null", HeatmapLayer.defaultHeatmapIntensityTransition)
@@ -374,6 +386,7 @@ class HeatmapLayerTest : BaseStyleTest() {
         }
       }
     }
+    val heatmapColorUseThemeTestValue = "default"
     val heatmapIntensityTestValue = 1.0
     val heatmapOpacityTestValue = 1.0
     val heatmapRadiusTestValue = 1.0
@@ -387,6 +400,7 @@ class HeatmapLayerTest : BaseStyleTest() {
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       heatmapColor(heatmapColorTestValue)
+      heatmapColorUseTheme(heatmapColorUseThemeTestValue)
       heatmapIntensity(heatmapIntensityTestValue)
       heatmapOpacity(heatmapOpacityTestValue)
       heatmapRadius(heatmapRadiusTestValue)
@@ -405,6 +419,7 @@ class HeatmapLayerTest : BaseStyleTest() {
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(heatmapColorTestValue, cachedLayer.heatmapColor)
+    assertEquals(heatmapColorUseThemeTestValue, cachedLayer.heatmapColorUseTheme)
     assertEquals(heatmapIntensityTestValue, cachedLayer.heatmapIntensity)
     assertEquals(heatmapOpacityTestValue, cachedLayer.heatmapOpacity)
     assertEquals(heatmapRadiusTestValue, cachedLayer.heatmapRadius)

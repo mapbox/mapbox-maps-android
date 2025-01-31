@@ -127,6 +127,17 @@ class RasterParticleLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun rasterParticleColorUseTheme() {
+    val theme = "none"
+    val layer = rasterParticleLayer("id", "source") {
+      rasterParticleColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.rasterParticleColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun rasterParticleCountTest() {
     val testValue = 1L
     val layer = rasterParticleLayer("id", "source") {
@@ -342,6 +353,7 @@ class RasterParticleLayerTest : BaseStyleTest() {
     assertNotNull("defaultMaxZoom should not be null", RasterParticleLayer.defaultMaxZoom)
     assertNotNull("defaultRasterParticleArrayBand should not be null", RasterParticleLayer.defaultRasterParticleArrayBand)
     assertNotNull("defaultRasterParticleArrayBandAsExpression should not be null", RasterParticleLayer.defaultRasterParticleArrayBandAsExpression)
+    assertNotNull("defaultRasterParticleColorUseTheme should not be null", RasterParticleLayer.defaultRasterParticleColorUseTheme)
     assertNotNull("defaultRasterParticleCount should not be null", RasterParticleLayer.defaultRasterParticleCount)
     assertNotNull("defaultRasterParticleCountAsExpression should not be null", RasterParticleLayer.defaultRasterParticleCountAsExpression)
     assertNotNull("defaultRasterParticleFadeOpacityFactor should not be null", RasterParticleLayer.defaultRasterParticleFadeOpacityFactor)
@@ -388,6 +400,7 @@ class RasterParticleLayerTest : BaseStyleTest() {
         }
       }
     }
+    val rasterParticleColorUseThemeTestValue = "default"
     val rasterParticleCountTestValue = 1L
     val rasterParticleFadeOpacityFactorTestValue = 1.0
     val rasterParticleMaxSpeedTestValue = 1.0
@@ -403,6 +416,7 @@ class RasterParticleLayerTest : BaseStyleTest() {
       filter(filterTestValue)
       rasterParticleArrayBand(rasterParticleArrayBandTestValue)
       rasterParticleColor(rasterParticleColorTestValue)
+      rasterParticleColorUseTheme(rasterParticleColorUseThemeTestValue)
       rasterParticleCount(rasterParticleCountTestValue)
       rasterParticleFadeOpacityFactor(rasterParticleFadeOpacityFactorTestValue)
       rasterParticleMaxSpeed(rasterParticleMaxSpeedTestValue)
@@ -423,6 +437,7 @@ class RasterParticleLayerTest : BaseStyleTest() {
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(rasterParticleArrayBandTestValue, cachedLayer.rasterParticleArrayBand)
     assertEquals(rasterParticleColorTestValue, cachedLayer.rasterParticleColor)
+    assertEquals(rasterParticleColorUseThemeTestValue, cachedLayer.rasterParticleColorUseTheme)
     assertEquals(rasterParticleCountTestValue, cachedLayer.rasterParticleCount)
     assertEquals(rasterParticleFadeOpacityFactorTestValue, cachedLayer.rasterParticleFadeOpacityFactor)
     assertEquals(rasterParticleMaxSpeedTestValue, cachedLayer.rasterParticleMaxSpeed)

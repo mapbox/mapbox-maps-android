@@ -12,9 +12,11 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.atmosphere.AtmosphereStateApplier
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
@@ -50,14 +52,17 @@ public class AtmosphereState private constructor(
   internal val applier: AtmosphereStateApplier,
   color: ColorValue,
   colorTransition: Transition,
+  colorUseTheme: StringValue,
   highColor: ColorValue,
   highColorTransition: Transition,
+  highColorUseTheme: StringValue,
   horizonBlend: DoubleValue,
   horizonBlendTransition: Transition,
   range: DoubleRangeValue,
   rangeTransition: Transition,
   spaceColor: ColorValue,
   spaceColorTransition: Transition,
+  spaceColorUseTheme: StringValue,
   starIntensity: DoubleValue,
   starIntensityTransition: Transition,
   verticalRange: DoubleRangeValue,
@@ -68,14 +73,17 @@ public class AtmosphereState private constructor(
     AtmosphereStateApplier(emptyMap()),
     ColorValue.INITIAL,
     Transition.INITIAL,
+    StringValue.INITIAL,
     ColorValue.INITIAL,
     Transition.INITIAL,
+    StringValue.INITIAL,
     DoubleValue.INITIAL,
     Transition.INITIAL,
     DoubleRangeValue.INITIAL,
     Transition.INITIAL,
     ColorValue.INITIAL,
     Transition.INITIAL,
+    StringValue.INITIAL,
     DoubleValue.INITIAL,
     Transition.INITIAL,
     DoubleRangeValue.INITIAL,
@@ -116,6 +124,24 @@ public class AtmosphereState private constructor(
       }
     }
   }
+  private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(colorUseTheme)
+
+  /**
+   * Overrides applying of color theme for [color] if "none" is set. To follow default theme "default"
+   * should be set.
+   * Default value: "default".
+   */
+  @MapboxExperimental
+  public var colorUseTheme: StringValue by colorUseThemeState
+
+  @Composable
+  private fun UpdateColorUseTheme() {
+    colorUseThemeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("color-use-theme", value)
+      }
+    }
+  }
   private val highColorState: MutableState<ColorValue> = mutableStateOf(highColor)
 
   /**
@@ -147,6 +173,24 @@ public class AtmosphereState private constructor(
     highColorTransitionState.value.apply {
       if (notInitial) {
         applier.setProperty("high-color-transition", value)
+      }
+    }
+  }
+  private val highColorUseThemeState: MutableState<StringValue> = mutableStateOf(highColorUseTheme)
+
+  /**
+   * Overrides applying of color theme for [highColor] if "none" is set. To follow default theme "default"
+   * should be set.
+   * Default value: "default".
+   */
+  @MapboxExperimental
+  public var highColorUseTheme: StringValue by highColorUseThemeState
+
+  @Composable
+  private fun UpdateHighColorUseTheme() {
+    highColorUseThemeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("high-color-use-theme", value)
       }
     }
   }
@@ -251,6 +295,24 @@ public class AtmosphereState private constructor(
       }
     }
   }
+  private val spaceColorUseThemeState: MutableState<StringValue> = mutableStateOf(spaceColorUseTheme)
+
+  /**
+   * Overrides applying of color theme for [spaceColor] if "none" is set. To follow default theme "default"
+   * should be set.
+   * Default value: "default".
+   */
+  @MapboxExperimental
+  public var spaceColorUseTheme: StringValue by spaceColorUseThemeState
+
+  @Composable
+  private fun UpdateSpaceColorUseTheme() {
+    spaceColorUseThemeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("space-color-use-theme", value)
+      }
+    }
+  }
   private val starIntensityState: MutableState<DoubleValue> = mutableStateOf(starIntensity)
 
   /**
@@ -323,14 +385,17 @@ public class AtmosphereState private constructor(
   internal fun UpdateProperties() {
     UpdateColor()
     UpdateColorTransition()
+    UpdateColorUseTheme()
     UpdateHighColor()
     UpdateHighColorTransition()
+    UpdateHighColorUseTheme()
     UpdateHorizonBlend()
     UpdateHorizonBlendTransition()
     UpdateRange()
     UpdateRangeTransition()
     UpdateSpaceColor()
     UpdateSpaceColorTransition()
+    UpdateSpaceColorUseTheme()
     UpdateStarIntensity()
     UpdateStarIntensityTransition()
     UpdateVerticalRange()
@@ -341,14 +406,17 @@ public class AtmosphereState private constructor(
     listOfNotNull(
       ("color" to color.value).takeIf { color.notInitial },
       ("color-transition" to colorTransition.value).takeIf { colorTransition.notInitial },
+      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.notInitial },
       ("high-color" to highColor.value).takeIf { highColor.notInitial },
       ("high-color-transition" to highColorTransition.value).takeIf { highColorTransition.notInitial },
+      ("high-color-use-theme" to highColorUseTheme.value).takeIf { highColorUseTheme.notInitial },
       ("horizon-blend" to horizonBlend.value).takeIf { horizonBlend.notInitial },
       ("horizon-blend-transition" to horizonBlendTransition.value).takeIf { horizonBlendTransition.notInitial },
       ("range" to range.value).takeIf { range.notInitial },
       ("range-transition" to rangeTransition.value).takeIf { rangeTransition.notInitial },
       ("space-color" to spaceColor.value).takeIf { spaceColor.notInitial },
       ("space-color-transition" to spaceColorTransition.value).takeIf { spaceColorTransition.notInitial },
+      ("space-color-use-theme" to spaceColorUseTheme.value).takeIf { spaceColorUseTheme.notInitial },
       ("star-intensity" to starIntensity.value).takeIf { starIntensity.notInitial },
       ("star-intensity-transition" to starIntensityTransition.value).takeIf { starIntensityTransition.notInitial },
       ("vertical-range" to verticalRange.value).takeIf { verticalRange.notInitial },
@@ -367,14 +435,17 @@ public class AtmosphereState private constructor(
     if (applier != other.applier) return false
     if (color != other.color) return false
     if (colorTransition != other.colorTransition) return false
+    if (colorUseTheme != other.colorUseTheme) return false
     if (highColor != other.highColor) return false
     if (highColorTransition != other.highColorTransition) return false
+    if (highColorUseTheme != other.highColorUseTheme) return false
     if (horizonBlend != other.horizonBlend) return false
     if (horizonBlendTransition != other.horizonBlendTransition) return false
     if (range != other.range) return false
     if (rangeTransition != other.rangeTransition) return false
     if (spaceColor != other.spaceColor) return false
     if (spaceColorTransition != other.spaceColorTransition) return false
+    if (spaceColorUseTheme != other.spaceColorUseTheme) return false
     if (starIntensity != other.starIntensity) return false
     if (starIntensityTransition != other.starIntensityTransition) return false
     if (verticalRange != other.verticalRange) return false
@@ -390,14 +461,17 @@ public class AtmosphereState private constructor(
     applier,
     color,
     colorTransition,
+    colorUseTheme,
     highColor,
     highColorTransition,
+    highColorUseTheme,
     horizonBlend,
     horizonBlendTransition,
     range,
     rangeTransition,
     spaceColor,
     spaceColorTransition,
+    spaceColorUseTheme,
     starIntensity,
     starIntensityTransition,
     verticalRange,
@@ -408,7 +482,7 @@ public class AtmosphereState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "AtmosphereState(color=$color, colorTransition=$colorTransition, highColor=$highColor, highColorTransition=$highColorTransition, horizonBlend=$horizonBlend, horizonBlendTransition=$horizonBlendTransition, range=$range, rangeTransition=$rangeTransition, spaceColor=$spaceColor, spaceColorTransition=$spaceColorTransition, starIntensity=$starIntensity, starIntensityTransition=$starIntensityTransition, verticalRange=$verticalRange, verticalRangeTransition=$verticalRangeTransition)"
+    "AtmosphereState(color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, highColor=$highColor, highColorTransition=$highColorTransition, highColorUseTheme=$highColorUseTheme, horizonBlend=$horizonBlend, horizonBlendTransition=$horizonBlendTransition, range=$range, rangeTransition=$rangeTransition, spaceColor=$spaceColor, spaceColorTransition=$spaceColorTransition, spaceColorUseTheme=$spaceColorUseTheme, starIntensity=$starIntensity, starIntensityTransition=$starIntensityTransition, verticalRange=$verticalRange, verticalRangeTransition=$verticalRangeTransition)"
 
   /**
    * Atmosphere Holder class to be used within [Saver].
@@ -437,14 +511,17 @@ public class AtmosphereState private constructor(
           AtmosphereStateApplier(holder.savedProperties),
           color = holder.savedProperties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           colorTransition = holder.savedProperties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          colorUseTheme = holder.savedProperties["color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           highColor = holder.savedProperties["high-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           highColorTransition = holder.savedProperties["high-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          highColorUseTheme = holder.savedProperties["high-color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           horizonBlend = holder.savedProperties["horizon-blend"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           horizonBlendTransition = holder.savedProperties["horizon-blend-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           range = holder.savedProperties["range"]?.let { DoubleRangeValue(it) } ?: DoubleRangeValue.INITIAL,
           rangeTransition = holder.savedProperties["range-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           spaceColor = holder.savedProperties["space-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           spaceColorTransition = holder.savedProperties["space-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          spaceColorUseTheme = holder.savedProperties["space-color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           starIntensity = holder.savedProperties["star-intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           starIntensityTransition = holder.savedProperties["star-intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           verticalRange = holder.savedProperties["vertical-range"]?.let { DoubleRangeValue(it) } ?: DoubleRangeValue.INITIAL,

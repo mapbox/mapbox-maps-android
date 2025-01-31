@@ -21,7 +21,6 @@ import org.junit.runner.RunWith
 @OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class RainTest : BaseStyleTest() {
-
   @Test
   @UiThreadTest
   fun centerThinningTest() {
@@ -144,7 +143,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.colorTransition)
   }
-
   @Test
   @UiThreadTest
   fun densityTest() {
@@ -198,7 +196,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.densityTransition)
   }
-
   @Test
   @UiThreadTest
   fun directionTest() {
@@ -252,7 +249,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.directionTransition)
   }
-
   @Test
   @UiThreadTest
   fun distortionStrengthTest() {
@@ -306,7 +302,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.distortionStrengthTransition)
   }
-
   @Test
   @UiThreadTest
   fun dropletSizeTest() {
@@ -360,7 +355,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.dropletSizeTransition)
   }
-
   @Test
   @UiThreadTest
   fun intensityTest() {
@@ -414,7 +408,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.intensityTransition)
   }
-
   @Test
   @UiThreadTest
   fun opacityTest() {
@@ -468,7 +461,6 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.opacityTransition)
   }
-
   @Test
   @UiThreadTest
   fun vignetteTest() {

@@ -26,16 +26,19 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @OptIn(MapboxExperimental::class)
 public class HillshadeLayerState private constructor(
   initialHillshadeAccentColor: ColorValue,
+  initialHillshadeAccentColorUseTheme: StringValue,
   initialHillshadeAccentColorTransition: Transition,
   initialHillshadeEmissiveStrength: DoubleValue,
   initialHillshadeEmissiveStrengthTransition: Transition,
   initialHillshadeExaggeration: DoubleValue,
   initialHillshadeExaggerationTransition: Transition,
   initialHillshadeHighlightColor: ColorValue,
+  initialHillshadeHighlightColorUseTheme: StringValue,
   initialHillshadeHighlightColorTransition: Transition,
   initialHillshadeIlluminationAnchor: HillshadeIlluminationAnchorValue,
   initialHillshadeIlluminationDirection: DoubleValue,
   initialHillshadeShadowColor: ColorValue,
+  initialHillshadeShadowColorUseTheme: StringValue,
   initialHillshadeShadowColorTransition: Transition,
   initialVisibility: VisibilityValue,
   initialMinZoom: LongValue,
@@ -49,16 +52,19 @@ public class HillshadeLayerState private constructor(
    */
   public constructor() : this(
     initialHillshadeAccentColor = ColorValue.INITIAL,
+    initialHillshadeAccentColorUseTheme = StringValue.INITIAL,
     initialHillshadeAccentColorTransition = Transition.INITIAL,
     initialHillshadeEmissiveStrength = DoubleValue.INITIAL,
     initialHillshadeEmissiveStrengthTransition = Transition.INITIAL,
     initialHillshadeExaggeration = DoubleValue.INITIAL,
     initialHillshadeExaggerationTransition = Transition.INITIAL,
     initialHillshadeHighlightColor = ColorValue.INITIAL,
+    initialHillshadeHighlightColorUseTheme = StringValue.INITIAL,
     initialHillshadeHighlightColorTransition = Transition.INITIAL,
     initialHillshadeIlluminationAnchor = HillshadeIlluminationAnchorValue.INITIAL,
     initialHillshadeIlluminationDirection = DoubleValue.INITIAL,
     initialHillshadeShadowColor = ColorValue.INITIAL,
+    initialHillshadeShadowColorUseTheme = StringValue.INITIAL,
     initialHillshadeShadowColorTransition = Transition.INITIAL,
     initialVisibility = VisibilityValue.INITIAL,
     initialMinZoom = LongValue.INITIAL,
@@ -78,6 +84,11 @@ public class HillshadeLayerState private constructor(
    *  The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
    */
   public var hillshadeAccentColor: ColorValue by mutableStateOf(initialHillshadeAccentColor)
+  /**
+   *  Overrides applying of color theme for [hillshadeAccentColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var hillshadeAccentColorUseTheme: StringValue by mutableStateOf(initialHillshadeAccentColorUseTheme)
   /**
    *  Defines the transition of [hillshadeAccentColor].
    */
@@ -103,6 +114,11 @@ public class HillshadeLayerState private constructor(
    */
   public var hillshadeHighlightColor: ColorValue by mutableStateOf(initialHillshadeHighlightColor)
   /**
+   *  Overrides applying of color theme for [hillshadeHighlightColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var hillshadeHighlightColorUseTheme: StringValue by mutableStateOf(initialHillshadeHighlightColorUseTheme)
+  /**
    *  Defines the transition of [hillshadeHighlightColor].
    */
   public var hillshadeHighlightColorTransition: Transition by mutableStateOf(initialHillshadeHighlightColorTransition)
@@ -118,6 +134,11 @@ public class HillshadeLayerState private constructor(
    *  The shading color of areas that face away from the light source. Default value: "#000000".
    */
   public var hillshadeShadowColor: ColorValue by mutableStateOf(initialHillshadeShadowColor)
+  /**
+   *  Overrides applying of color theme for [hillshadeShadowColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var hillshadeShadowColorUseTheme: StringValue by mutableStateOf(initialHillshadeShadowColorUseTheme)
   /**
    *  Defines the transition of [hillshadeShadowColor].
    */
@@ -147,6 +168,13 @@ public class HillshadeLayerState private constructor(
   private fun UpdateHillshadeAccentColor(layerNode: LayerNode) {
     if (hillshadeAccentColor.notInitial) {
       layerNode.setProperty("hillshade-accent-color", hillshadeAccentColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateHillshadeAccentColorUseTheme(layerNode: LayerNode) {
+    if (hillshadeAccentColorUseTheme.notInitial) {
+      layerNode.setProperty("hillshade-accent-color-use-theme", hillshadeAccentColorUseTheme.value)
     }
   }
   @Composable
@@ -186,6 +214,13 @@ public class HillshadeLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateHillshadeHighlightColorUseTheme(layerNode: LayerNode) {
+    if (hillshadeHighlightColorUseTheme.notInitial) {
+      layerNode.setProperty("hillshade-highlight-color-use-theme", hillshadeHighlightColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateHillshadeHighlightColorTransition(layerNode: LayerNode) {
     if (hillshadeHighlightColorTransition.notInitial) {
       layerNode.setProperty("hillshade-highlight-color-transition", hillshadeHighlightColorTransition.value)
@@ -207,6 +242,13 @@ public class HillshadeLayerState private constructor(
   private fun UpdateHillshadeShadowColor(layerNode: LayerNode) {
     if (hillshadeShadowColor.notInitial) {
       layerNode.setProperty("hillshade-shadow-color", hillshadeShadowColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateHillshadeShadowColorUseTheme(layerNode: LayerNode) {
+    if (hillshadeShadowColorUseTheme.notInitial) {
+      layerNode.setProperty("hillshade-shadow-color-use-theme", hillshadeShadowColorUseTheme.value)
     }
   }
   @Composable
@@ -249,16 +291,19 @@ public class HillshadeLayerState private constructor(
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
     UpdateHillshadeAccentColor(layerNode)
+    UpdateHillshadeAccentColorUseTheme(layerNode)
     UpdateHillshadeAccentColorTransition(layerNode)
     UpdateHillshadeEmissiveStrength(layerNode)
     UpdateHillshadeEmissiveStrengthTransition(layerNode)
     UpdateHillshadeExaggeration(layerNode)
     UpdateHillshadeExaggerationTransition(layerNode)
     UpdateHillshadeHighlightColor(layerNode)
+    UpdateHillshadeHighlightColorUseTheme(layerNode)
     UpdateHillshadeHighlightColorTransition(layerNode)
     UpdateHillshadeIlluminationAnchor(layerNode)
     UpdateHillshadeIlluminationDirection(layerNode)
     UpdateHillshadeShadowColor(layerNode)
+    UpdateHillshadeShadowColorUseTheme(layerNode)
     UpdateHillshadeShadowColorTransition(layerNode)
     UpdateVisibility(layerNode)
     UpdateMinZoom(layerNode)

@@ -30,6 +30,7 @@ public class CircleLayerState private constructor(
   initialCircleBlur: DoubleValue,
   initialCircleBlurTransition: Transition,
   initialCircleColor: ColorValue,
+  initialCircleColorUseTheme: StringValue,
   initialCircleColorTransition: Transition,
   initialCircleEmissiveStrength: DoubleValue,
   initialCircleEmissiveStrengthTransition: Transition,
@@ -40,6 +41,7 @@ public class CircleLayerState private constructor(
   initialCircleRadius: DoubleValue,
   initialCircleRadiusTransition: Transition,
   initialCircleStrokeColor: ColorValue,
+  initialCircleStrokeColorUseTheme: StringValue,
   initialCircleStrokeColorTransition: Transition,
   initialCircleStrokeOpacity: DoubleValue,
   initialCircleStrokeOpacityTransition: Transition,
@@ -63,6 +65,7 @@ public class CircleLayerState private constructor(
     initialCircleBlur = DoubleValue.INITIAL,
     initialCircleBlurTransition = Transition.INITIAL,
     initialCircleColor = ColorValue.INITIAL,
+    initialCircleColorUseTheme = StringValue.INITIAL,
     initialCircleColorTransition = Transition.INITIAL,
     initialCircleEmissiveStrength = DoubleValue.INITIAL,
     initialCircleEmissiveStrengthTransition = Transition.INITIAL,
@@ -73,6 +76,7 @@ public class CircleLayerState private constructor(
     initialCircleRadius = DoubleValue.INITIAL,
     initialCircleRadiusTransition = Transition.INITIAL,
     initialCircleStrokeColor = ColorValue.INITIAL,
+    initialCircleStrokeColorUseTheme = StringValue.INITIAL,
     initialCircleStrokeColorTransition = Transition.INITIAL,
     initialCircleStrokeOpacity = DoubleValue.INITIAL,
     initialCircleStrokeOpacityTransition = Transition.INITIAL,
@@ -111,6 +115,11 @@ public class CircleLayerState private constructor(
    *  The fill color of the circle. Default value: "#000000".
    */
   public var circleColor: ColorValue by mutableStateOf(initialCircleColor)
+  /**
+   *  Overrides applying of color theme for [circleColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var circleColorUseTheme: StringValue by mutableStateOf(initialCircleColorUseTheme)
   /**
    *  Defines the transition of [circleColor].
    */
@@ -151,6 +160,11 @@ public class CircleLayerState private constructor(
    *  The stroke color of the circle. Default value: "#000000".
    */
   public var circleStrokeColor: ColorValue by mutableStateOf(initialCircleStrokeColor)
+  /**
+   *  Overrides applying of color theme for [circleStrokeColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var circleStrokeColorUseTheme: StringValue by mutableStateOf(initialCircleStrokeColorUseTheme)
   /**
    *  Defines the transition of [circleStrokeColor].
    */
@@ -229,6 +243,13 @@ public class CircleLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateCircleColorUseTheme(layerNode: LayerNode) {
+    if (circleColorUseTheme.notInitial) {
+      layerNode.setProperty("circle-color-use-theme", circleColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateCircleColorTransition(layerNode: LayerNode) {
     if (circleColorTransition.notInitial) {
       layerNode.setProperty("circle-color-transition", circleColorTransition.value)
@@ -286,6 +307,13 @@ public class CircleLayerState private constructor(
   private fun UpdateCircleStrokeColor(layerNode: LayerNode) {
     if (circleStrokeColor.notInitial) {
       layerNode.setProperty("circle-stroke-color", circleStrokeColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateCircleStrokeColorUseTheme(layerNode: LayerNode) {
+    if (circleStrokeColorUseTheme.notInitial) {
+      layerNode.setProperty("circle-stroke-color-use-theme", circleStrokeColorUseTheme.value)
     }
   }
   @Composable
@@ -373,6 +401,7 @@ public class CircleLayerState private constructor(
     UpdateCircleBlur(layerNode)
     UpdateCircleBlurTransition(layerNode)
     UpdateCircleColor(layerNode)
+    UpdateCircleColorUseTheme(layerNode)
     UpdateCircleColorTransition(layerNode)
     UpdateCircleEmissiveStrength(layerNode)
     UpdateCircleEmissiveStrengthTransition(layerNode)
@@ -383,6 +412,7 @@ public class CircleLayerState private constructor(
     UpdateCircleRadius(layerNode)
     UpdateCircleRadiusTransition(layerNode)
     UpdateCircleStrokeColor(layerNode)
+    UpdateCircleStrokeColorUseTheme(layerNode)
     UpdateCircleStrokeColorTransition(layerNode)
     UpdateCircleStrokeOpacity(layerNode)
     UpdateCircleStrokeOpacityTransition(layerNode)

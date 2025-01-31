@@ -11,6 +11,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.layers.ImageValue
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
@@ -23,6 +24,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Stable
 public class BackgroundLayerState private constructor(
   initialBackgroundColor: ColorValue,
+  initialBackgroundColorUseTheme: StringValue,
   initialBackgroundColorTransition: Transition,
   initialBackgroundEmissiveStrength: DoubleValue,
   initialBackgroundEmissiveStrengthTransition: Transition,
@@ -39,6 +41,7 @@ public class BackgroundLayerState private constructor(
    */
   public constructor() : this(
     initialBackgroundColor = ColorValue.INITIAL,
+    initialBackgroundColorUseTheme = StringValue.INITIAL,
     initialBackgroundColorTransition = Transition.INITIAL,
     initialBackgroundEmissiveStrength = DoubleValue.INITIAL,
     initialBackgroundEmissiveStrengthTransition = Transition.INITIAL,
@@ -55,6 +58,11 @@ public class BackgroundLayerState private constructor(
    *  The color with which the background will be drawn. Default value: "#000000".
    */
   public var backgroundColor: ColorValue by mutableStateOf(initialBackgroundColor)
+  /**
+   *  Overrides applying of color theme for [backgroundColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var backgroundColorUseTheme: StringValue by mutableStateOf(initialBackgroundColorUseTheme)
   /**
    *  Defines the transition of [backgroundColor].
    */
@@ -101,6 +109,13 @@ public class BackgroundLayerState private constructor(
   private fun UpdateBackgroundColor(layerNode: LayerNode) {
     if (backgroundColor.notInitial) {
       layerNode.setProperty("background-color", backgroundColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateBackgroundColorUseTheme(layerNode: LayerNode) {
+    if (backgroundColorUseTheme.notInitial) {
+      layerNode.setProperty("background-color-use-theme", backgroundColorUseTheme.value)
     }
   }
   @Composable
@@ -171,6 +186,7 @@ public class BackgroundLayerState private constructor(
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
     UpdateBackgroundColor(layerNode)
+    UpdateBackgroundColorUseTheme(layerNode)
     UpdateBackgroundColorTransition(layerNode)
     UpdateBackgroundEmissiveStrength(layerNode)
     UpdateBackgroundEmissiveStrengthTransition(layerNode)

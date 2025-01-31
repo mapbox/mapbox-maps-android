@@ -217,6 +217,17 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelColorUseTheme() {
+    val theme = "none"
+    val layer = modelLayer("id", "source") {
+      modelColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.modelColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun modelColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -882,6 +893,7 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelColor should not be null", ModelLayer.defaultModelColor)
     assertNotNull("defaultModelColorAsExpression should not be null", ModelLayer.defaultModelColorAsExpression)
     assertNotNull("defaultModelColorAsColorInt should not be null", ModelLayer.defaultModelColorAsColorInt)
+    assertNotNull("defaultModelColorUseTheme should not be null", ModelLayer.defaultModelColorUseTheme)
     assertNotNull("defaultModelColorTransition should not be null", ModelLayer.defaultModelColorTransition)
     assertNotNull("defaultModelColorMixIntensity should not be null", ModelLayer.defaultModelColorMixIntensity)
     assertNotNull("defaultModelColorMixIntensityAsExpression should not be null", ModelLayer.defaultModelColorMixIntensityAsExpression)
@@ -932,6 +944,7 @@ class ModelLayerTest : BaseStyleTest() {
     val modelAmbientOcclusionIntensityTestValue = 1.0
     val modelCastShadowsTestValue = true
     val modelColorTestValue = "rgba(0, 0, 0, 1)"
+    val modelColorUseThemeTestValue = "default"
     val modelColorMixIntensityTestValue = 1.0
     val modelCutoffFadeRangeTestValue = 1.0
     val modelElevationReferenceTestValue = ModelElevationReference.SEA
@@ -957,6 +970,7 @@ class ModelLayerTest : BaseStyleTest() {
       modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensityTestValue)
       modelCastShadows(modelCastShadowsTestValue)
       modelColor(modelColorTestValue)
+      modelColorUseTheme(modelColorUseThemeTestValue)
       modelColorMixIntensity(modelColorMixIntensityTestValue)
       modelCutoffFadeRange(modelCutoffFadeRangeTestValue)
       modelElevationReference(modelElevationReferenceTestValue)
@@ -987,6 +1001,7 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(modelAmbientOcclusionIntensityTestValue, cachedLayer.modelAmbientOcclusionIntensity)
     assertEquals(modelCastShadowsTestValue, cachedLayer.modelCastShadows)
     assertEquals(modelColorTestValue, cachedLayer.modelColor)
+    assertEquals(modelColorUseThemeTestValue, cachedLayer.modelColorUseTheme)
     assertEquals(modelColorMixIntensityTestValue, cachedLayer.modelColorMixIntensity)
     assertEquals(modelCutoffFadeRangeTestValue, cachedLayer.modelCutoffFadeRange)
     assertEquals(modelElevationReferenceTestValue, cachedLayer.modelElevationReference)

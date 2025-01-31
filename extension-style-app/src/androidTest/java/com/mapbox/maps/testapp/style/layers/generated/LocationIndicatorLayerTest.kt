@@ -190,6 +190,17 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun accuracyRadiusBorderColorUseTheme() {
+    val theme = "none"
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusBorderColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.accuracyRadiusBorderColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun accuracyRadiusBorderColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -257,6 +268,17 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(Color.CYAN, layer.accuracyRadiusColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun accuracyRadiusColorUseTheme() {
+    val theme = "none"
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.accuracyRadiusColorUseTheme)
   }
 
   @Test
@@ -438,6 +460,17 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(Color.CYAN, layer.emphasisCircleColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun emphasisCircleColorUseTheme() {
+    val theme = "none"
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.emphasisCircleColorUseTheme)
   }
 
   @Test
@@ -894,10 +927,12 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultAccuracyRadiusBorderColor should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColor)
     assertNotNull("defaultAccuracyRadiusBorderColorAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorAsExpression)
     assertNotNull("defaultAccuracyRadiusBorderColorAsColorInt should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorAsColorInt)
+    assertNotNull("defaultAccuracyRadiusBorderColorUseTheme should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme)
     assertNotNull("defaultAccuracyRadiusBorderColorTransition should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorTransition)
     assertNotNull("defaultAccuracyRadiusColor should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColor)
     assertNotNull("defaultAccuracyRadiusColorAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorAsExpression)
     assertNotNull("defaultAccuracyRadiusColorAsColorInt should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorAsColorInt)
+    assertNotNull("defaultAccuracyRadiusColorUseTheme should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme)
     assertNotNull("defaultAccuracyRadiusColorTransition should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorTransition)
     assertNotNull("defaultBearing should not be null", LocationIndicatorLayer.defaultBearing)
     assertNotNull("defaultBearingAsExpression should not be null", LocationIndicatorLayer.defaultBearingAsExpression)
@@ -908,6 +943,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultEmphasisCircleColor should not be null", LocationIndicatorLayer.defaultEmphasisCircleColor)
     assertNotNull("defaultEmphasisCircleColorAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorAsExpression)
     assertNotNull("defaultEmphasisCircleColorAsColorInt should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorAsColorInt)
+    assertNotNull("defaultEmphasisCircleColorUseTheme should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme)
     assertNotNull("defaultEmphasisCircleColorTransition should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorTransition)
     assertNotNull("defaultEmphasisCircleGlowRange should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRange)
     assertNotNull("defaultEmphasisCircleGlowRangeAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRangeAsExpression)
@@ -941,10 +977,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     val topImageTestValue = "abc"
     val accuracyRadiusTestValue = 1.0
     val accuracyRadiusBorderColorTestValue = "rgba(0, 0, 0, 1)"
+    val accuracyRadiusBorderColorUseThemeTestValue = "default"
     val accuracyRadiusColorTestValue = "rgba(0, 0, 0, 1)"
+    val accuracyRadiusColorUseThemeTestValue = "default"
     val bearingTestValue = 1.0
     val bearingImageSizeTestValue = 1.0
     val emphasisCircleColorTestValue = "rgba(0, 0, 0, 1)"
+    val emphasisCircleColorUseThemeTestValue = "default"
     val emphasisCircleGlowRangeTestValue = listOf(0.0, 1.0)
     val emphasisCircleRadiusTestValue = 1.0
     val imagePitchDisplacementTestValue = 1.0
@@ -960,10 +999,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
       topImage(topImageTestValue)
       accuracyRadius(accuracyRadiusTestValue)
       accuracyRadiusBorderColor(accuracyRadiusBorderColorTestValue)
+      accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseThemeTestValue)
       accuracyRadiusColor(accuracyRadiusColorTestValue)
+      accuracyRadiusColorUseTheme(accuracyRadiusColorUseThemeTestValue)
       bearing(bearingTestValue)
       bearingImageSize(bearingImageSizeTestValue)
       emphasisCircleColor(emphasisCircleColorTestValue)
+      emphasisCircleColorUseTheme(emphasisCircleColorUseThemeTestValue)
       emphasisCircleGlowRange(emphasisCircleGlowRangeTestValue)
       emphasisCircleRadius(emphasisCircleRadiusTestValue)
       imagePitchDisplacement(imagePitchDisplacementTestValue)
@@ -986,10 +1028,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(topImageTestValue, cachedLayer.topImage)
     assertEquals(accuracyRadiusTestValue, cachedLayer.accuracyRadius)
     assertEquals(accuracyRadiusBorderColorTestValue, cachedLayer.accuracyRadiusBorderColor)
+    assertEquals(accuracyRadiusBorderColorUseThemeTestValue, cachedLayer.accuracyRadiusBorderColorUseTheme)
     assertEquals(accuracyRadiusColorTestValue, cachedLayer.accuracyRadiusColor)
+    assertEquals(accuracyRadiusColorUseThemeTestValue, cachedLayer.accuracyRadiusColorUseTheme)
     assertEquals(bearingTestValue, cachedLayer.bearing)
     assertEquals(bearingImageSizeTestValue, cachedLayer.bearingImageSize)
     assertEquals(emphasisCircleColorTestValue, cachedLayer.emphasisCircleColor)
+    assertEquals(emphasisCircleColorUseThemeTestValue, cachedLayer.emphasisCircleColorUseTheme)
     assertEquals(emphasisCircleGlowRangeTestValue, cachedLayer.emphasisCircleGlowRange)
     assertEquals(emphasisCircleRadiusTestValue, cachedLayer.emphasisCircleRadius)
     assertEquals(imagePitchDisplacementTestValue, cachedLayer.imagePitchDisplacement)

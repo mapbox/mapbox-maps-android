@@ -1078,7 +1078,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun centerThinning(centerThinning: Expression): Rain
-
   /**
    * Set the CenterThinning property transition options.
    *
@@ -1143,7 +1142,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun density(density: Expression = Expression.fromRaw("""["interpolate",["linear"],["zoom"],11,0,13,0.5]""".trimIndent())): Rain
-
   /**
    * Set the Density property transition options.
    *
@@ -1172,7 +1170,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun direction(direction: Expression): Rain
-
   /**
    * Set the Direction property transition options.
    *
@@ -1201,7 +1198,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun distortionStrength(distortionStrength: Expression): Rain
-
   /**
    * Set the DistortionStrength property transition options.
    *
@@ -1230,7 +1226,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun dropletSize(dropletSize: Expression): Rain
-
   /**
    * Set the DropletSize property transition options.
    *
@@ -1259,7 +1254,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun intensity(intensity: Expression): Rain
-
   /**
    * Set the Intensity property transition options.
    *
@@ -1288,7 +1282,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun opacity(opacity: Expression = Expression.fromRaw("""["interpolate",["linear"],["measure-light","brightness"],0,0.88,1,0.7]""".trimIndent())): Rain
-
   /**
    * Set the Opacity property transition options.
    *
@@ -1317,7 +1310,6 @@ interface RainDslReceiver {
    */
   @MapboxExperimental
   fun vignette(vignette: Expression = Expression.fromRaw("""["interpolate",["linear"],["zoom"],11,0,13,1]""".trimIndent())): Rain
-
   /**
    * Set the Vignette property transition options.
    *

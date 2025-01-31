@@ -988,7 +988,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun centerThinning(centerThinning: Expression): Snow
-
   /**
    * Set the CenterThinning property transition options.
    *
@@ -1053,7 +1052,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun density(density: Expression = Expression.fromRaw("""["interpolate",["linear"],["zoom"],11,0,13,0.85]""".trimIndent())): Snow
-
   /**
    * Set the Density property transition options.
    *
@@ -1082,7 +1080,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun direction(direction: Expression): Snow
-
   /**
    * Set the Direction property transition options.
    *
@@ -1111,7 +1108,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun flakeSize(flakeSize: Expression): Snow
-
   /**
    * Set the FlakeSize property transition options.
    *
@@ -1140,7 +1136,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun intensity(intensity: Expression): Snow
-
   /**
    * Set the Intensity property transition options.
    *
@@ -1169,7 +1164,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun opacity(opacity: Expression): Snow
-
   /**
    * Set the Opacity property transition options.
    *
@@ -1198,7 +1192,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun vignette(vignette: Expression = Expression.fromRaw("""["interpolate",["linear"],["zoom"],11,0,13,0.3]""".trimIndent())): Snow
-
   /**
    * Set the Vignette property transition options.
    *

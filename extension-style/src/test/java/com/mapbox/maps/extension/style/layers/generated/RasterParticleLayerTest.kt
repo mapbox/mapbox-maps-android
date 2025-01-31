@@ -310,6 +310,37 @@ class RasterParticleLayerTest {
     assertEquals(expectedValue.toString(), layer.rasterParticleColor?.toString())
     verify { style.getStyleLayerProperty("id", "raster-particle-color") }
   }
+
+  @Test
+  fun rasterParticleColorUseThemeSetAfterInitialization() {
+    val layer = rasterParticleLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.rasterParticleColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "raster-particle-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun rasterParticleColorUseThemeSet() {
+    val theme = "none"
+    val layer = rasterParticleLayer("id", "source") {
+      rasterParticleColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("raster-particle-color-use-theme"))
+  }
+
+  @Test
+  fun rasterParticleColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = rasterParticleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.rasterParticleColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-particle-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -881,6 +912,15 @@ class RasterParticleLayerTest {
     assertEquals(expectedValue.toString(), RasterParticleLayer.defaultRasterParticleColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-color") }
   }
+
+  @Test
+  fun defaultRasterParticleColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, RasterParticleLayer.defaultRasterParticleColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

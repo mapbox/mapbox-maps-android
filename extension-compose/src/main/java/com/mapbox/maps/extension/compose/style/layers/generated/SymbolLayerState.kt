@@ -77,6 +77,7 @@ public class SymbolLayerState private constructor(
   initialTextVariableAnchor: TextVariableAnchorListValue,
   initialTextWritingMode: TextWritingModeListValue,
   initialIconColor: ColorValue,
+  initialIconColorUseTheme: StringValue,
   initialIconColorTransition: Transition,
   initialIconColorSaturation: DoubleValue,
   initialIconColorSaturationTransition: Transition,
@@ -85,6 +86,7 @@ public class SymbolLayerState private constructor(
   initialIconHaloBlur: DoubleValue,
   initialIconHaloBlurTransition: Transition,
   initialIconHaloColor: ColorValue,
+  initialIconHaloColorUseTheme: StringValue,
   initialIconHaloColorTransition: Transition,
   initialIconHaloWidth: DoubleValue,
   initialIconHaloWidthTransition: Transition,
@@ -100,12 +102,14 @@ public class SymbolLayerState private constructor(
   initialSymbolZOffset: DoubleValue,
   initialSymbolZOffsetTransition: Transition,
   initialTextColor: ColorValue,
+  initialTextColorUseTheme: StringValue,
   initialTextColorTransition: Transition,
   initialTextEmissiveStrength: DoubleValue,
   initialTextEmissiveStrengthTransition: Transition,
   initialTextHaloBlur: DoubleValue,
   initialTextHaloBlurTransition: Transition,
   initialTextHaloColor: ColorValue,
+  initialTextHaloColorUseTheme: StringValue,
   initialTextHaloColorTransition: Transition,
   initialTextHaloWidth: DoubleValue,
   initialTextHaloWidthTransition: Transition,
@@ -173,6 +177,7 @@ public class SymbolLayerState private constructor(
     initialTextVariableAnchor = TextVariableAnchorListValue.INITIAL,
     initialTextWritingMode = TextWritingModeListValue.INITIAL,
     initialIconColor = ColorValue.INITIAL,
+    initialIconColorUseTheme = StringValue.INITIAL,
     initialIconColorTransition = Transition.INITIAL,
     initialIconColorSaturation = DoubleValue.INITIAL,
     initialIconColorSaturationTransition = Transition.INITIAL,
@@ -181,6 +186,7 @@ public class SymbolLayerState private constructor(
     initialIconHaloBlur = DoubleValue.INITIAL,
     initialIconHaloBlurTransition = Transition.INITIAL,
     initialIconHaloColor = ColorValue.INITIAL,
+    initialIconHaloColorUseTheme = StringValue.INITIAL,
     initialIconHaloColorTransition = Transition.INITIAL,
     initialIconHaloWidth = DoubleValue.INITIAL,
     initialIconHaloWidthTransition = Transition.INITIAL,
@@ -196,12 +202,14 @@ public class SymbolLayerState private constructor(
     initialSymbolZOffset = DoubleValue.INITIAL,
     initialSymbolZOffsetTransition = Transition.INITIAL,
     initialTextColor = ColorValue.INITIAL,
+    initialTextColorUseTheme = StringValue.INITIAL,
     initialTextColorTransition = Transition.INITIAL,
     initialTextEmissiveStrength = DoubleValue.INITIAL,
     initialTextEmissiveStrengthTransition = Transition.INITIAL,
     initialTextHaloBlur = DoubleValue.INITIAL,
     initialTextHaloBlurTransition = Transition.INITIAL,
     initialTextHaloColor = ColorValue.INITIAL,
+    initialTextHaloColorUseTheme = StringValue.INITIAL,
     initialTextHaloColorTransition = Transition.INITIAL,
     initialTextHaloWidth = DoubleValue.INITIAL,
     initialTextHaloWidthTransition = Transition.INITIAL,
@@ -414,6 +422,11 @@ public class SymbolLayerState private constructor(
    */
   public var iconColor: ColorValue by mutableStateOf(initialIconColor)
   /**
+   *  Overrides applying of color theme for [iconColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var iconColorUseTheme: StringValue by mutableStateOf(initialIconColorUseTheme)
+  /**
    *  Defines the transition of [iconColor].
    */
   public var iconColorTransition: Transition by mutableStateOf(initialIconColorTransition)
@@ -445,6 +458,11 @@ public class SymbolLayerState private constructor(
    *  The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
    */
   public var iconHaloColor: ColorValue by mutableStateOf(initialIconHaloColor)
+  /**
+   *  Overrides applying of color theme for [iconHaloColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var iconHaloColorUseTheme: StringValue by mutableStateOf(initialIconHaloColorUseTheme)
   /**
    *  Defines the transition of [iconHaloColor].
    */
@@ -508,6 +526,11 @@ public class SymbolLayerState private constructor(
    */
   public var textColor: ColorValue by mutableStateOf(initialTextColor)
   /**
+   *  Overrides applying of color theme for [textColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var textColorUseTheme: StringValue by mutableStateOf(initialTextColorUseTheme)
+  /**
    *  Defines the transition of [textColor].
    */
   public var textColorTransition: Transition by mutableStateOf(initialTextColorTransition)
@@ -531,6 +554,11 @@ public class SymbolLayerState private constructor(
    *  The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
    */
   public var textHaloColor: ColorValue by mutableStateOf(initialTextHaloColor)
+  /**
+   *  Overrides applying of color theme for [textHaloColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var textHaloColorUseTheme: StringValue by mutableStateOf(initialTextHaloColorUseTheme)
   /**
    *  Defines the transition of [textHaloColor].
    */
@@ -875,6 +903,13 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateIconColorUseTheme(layerNode: LayerNode) {
+    if (iconColorUseTheme.notInitial) {
+      layerNode.setProperty("icon-color-use-theme", iconColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateIconColorTransition(layerNode: LayerNode) {
     if (iconColorTransition.notInitial) {
       layerNode.setProperty("icon-color-transition", iconColorTransition.value)
@@ -920,6 +955,13 @@ public class SymbolLayerState private constructor(
   private fun UpdateIconHaloColor(layerNode: LayerNode) {
     if (iconHaloColor.notInitial) {
       layerNode.setProperty("icon-halo-color", iconHaloColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateIconHaloColorUseTheme(layerNode: LayerNode) {
+    if (iconHaloColorUseTheme.notInitial) {
+      layerNode.setProperty("icon-halo-color-use-theme", iconHaloColorUseTheme.value)
     }
   }
   @Composable
@@ -1015,6 +1057,13 @@ public class SymbolLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateTextColorUseTheme(layerNode: LayerNode) {
+    if (textColorUseTheme.notInitial) {
+      layerNode.setProperty("text-color-use-theme", textColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateTextColorTransition(layerNode: LayerNode) {
     if (textColorTransition.notInitial) {
       layerNode.setProperty("text-color-transition", textColorTransition.value)
@@ -1048,6 +1097,13 @@ public class SymbolLayerState private constructor(
   private fun UpdateTextHaloColor(layerNode: LayerNode) {
     if (textHaloColor.notInitial) {
       layerNode.setProperty("text-halo-color", textHaloColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateTextHaloColorUseTheme(layerNode: LayerNode) {
+    if (textHaloColorUseTheme.notInitial) {
+      layerNode.setProperty("text-halo-color-use-theme", textHaloColorUseTheme.value)
     }
   }
   @Composable
@@ -1189,6 +1245,7 @@ public class SymbolLayerState private constructor(
     UpdateTextVariableAnchor(layerNode)
     UpdateTextWritingMode(layerNode)
     UpdateIconColor(layerNode)
+    UpdateIconColorUseTheme(layerNode)
     UpdateIconColorTransition(layerNode)
     UpdateIconColorSaturation(layerNode)
     UpdateIconColorSaturationTransition(layerNode)
@@ -1197,6 +1254,7 @@ public class SymbolLayerState private constructor(
     UpdateIconHaloBlur(layerNode)
     UpdateIconHaloBlurTransition(layerNode)
     UpdateIconHaloColor(layerNode)
+    UpdateIconHaloColorUseTheme(layerNode)
     UpdateIconHaloColorTransition(layerNode)
     UpdateIconHaloWidth(layerNode)
     UpdateIconHaloWidthTransition(layerNode)
@@ -1212,12 +1270,14 @@ public class SymbolLayerState private constructor(
     UpdateSymbolZOffset(layerNode)
     UpdateSymbolZOffsetTransition(layerNode)
     UpdateTextColor(layerNode)
+    UpdateTextColorUseTheme(layerNode)
     UpdateTextColorTransition(layerNode)
     UpdateTextEmissiveStrength(layerNode)
     UpdateTextEmissiveStrengthTransition(layerNode)
     UpdateTextHaloBlur(layerNode)
     UpdateTextHaloBlurTransition(layerNode)
     UpdateTextHaloColor(layerNode)
+    UpdateTextHaloColorUseTheme(layerNode)
     UpdateTextHaloColorTransition(layerNode)
     UpdateTextHaloWidth(layerNode)
     UpdateTextHaloWidthTransition(layerNode)

@@ -70,7 +70,6 @@ class RainTest {
     assertEquals(1.0.toString(), rain.centerThinning!!.toString())
     verify { style.getStyleRainProperty("center-thinning") }
   }
-
   // Expression Tests
 
   @Test
@@ -362,7 +361,6 @@ class RainTest {
     assertEquals(1.0.toString(), rain.density!!.toString())
     verify { style.getStyleRainProperty("density") }
   }
-
   // Expression Tests
 
   @Test
@@ -481,7 +479,6 @@ class RainTest {
     assertEquals(listOf(0.0, 1.0).toString(), rain.direction!!.toString())
     verify { style.getStyleRainProperty("direction") }
   }
-
   // Expression Tests
 
   @Test
@@ -600,7 +597,6 @@ class RainTest {
     assertEquals(1.0.toString(), rain.distortionStrength!!.toString())
     verify { style.getStyleRainProperty("distortion-strength") }
   }
-
   // Expression Tests
 
   @Test
@@ -719,7 +715,6 @@ class RainTest {
     assertEquals(listOf(0.0, 1.0).toString(), rain.dropletSize!!.toString())
     verify { style.getStyleRainProperty("droplet-size") }
   }
-
   // Expression Tests
 
   @Test
@@ -838,7 +833,6 @@ class RainTest {
     assertEquals(1.0.toString(), rain.intensity!!.toString())
     verify { style.getStyleRainProperty("intensity") }
   }
-
   // Expression Tests
 
   @Test
@@ -957,7 +951,6 @@ class RainTest {
     assertEquals(1.0.toString(), rain.opacity!!.toString())
     verify { style.getStyleRainProperty("opacity") }
   }
-
   // Expression Tests
 
   @Test
@@ -1076,7 +1069,6 @@ class RainTest {
     assertEquals(1.0.toString(), rain.vignette!!.toString())
     verify { style.getStyleRainProperty("vignette") }
   }
-
   // Expression Tests
 
   @Test

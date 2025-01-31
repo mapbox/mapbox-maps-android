@@ -900,6 +900,37 @@ class LineLayerTest {
     assertEquals(expectedValue.toString(), layer.lineBorderColor?.toString())
     verify { style.getStyleLayerProperty("id", "line-border-color") }
   }
+
+  @Test
+  fun lineBorderColorUseThemeSetAfterInitialization() {
+    val layer = lineLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.lineBorderColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "line-border-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun lineBorderColorUseThemeSet() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineBorderColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("line-border-color-use-theme"))
+  }
+
+  @Test
+  fun lineBorderColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.lineBorderColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -1155,6 +1186,37 @@ class LineLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.lineColor?.toString())
     verify { style.getStyleLayerProperty("id", "line-color") }
+  }
+
+  @Test
+  fun lineColorUseThemeSetAfterInitialization() {
+    val layer = lineLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.lineColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "line-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun lineColorUseThemeSet() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("line-color-use-theme"))
+  }
+
+  @Test
+  fun lineColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.lineColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "line-color-use-theme") }
   }
   // Expression Tests
 
@@ -1750,6 +1812,37 @@ class LineLayerTest {
     assertEquals(expectedValue.toString(), layer.lineGradient?.toString())
     verify { style.getStyleLayerProperty("id", "line-gradient") }
   }
+
+  @Test
+  fun lineGradientUseThemeSetAfterInitialization() {
+    val layer = lineLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.lineGradientUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "line-gradient-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun lineGradientUseThemeSet() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineGradientUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("line-gradient-use-theme"))
+  }
+
+  @Test
+  fun lineGradientUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.lineGradientUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "line-gradient-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -2340,6 +2433,37 @@ class LineLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.lineTrimColor?.toString())
     verify { style.getStyleLayerProperty("id", "line-trim-color") }
+  }
+
+  @Test
+  fun lineTrimColorUseThemeSetAfterInitialization() {
+    val layer = lineLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.lineTrimColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "line-trim-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun lineTrimColorUseThemeSet() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineTrimColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("line-trim-color-use-theme"))
+  }
+
+  @Test
+  fun lineTrimColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.lineTrimColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color-use-theme") }
   }
   // Expression Tests
 
@@ -3118,6 +3242,15 @@ class LineLayerTest {
     assertEquals(expectedValue.toString(), LineLayer.defaultLineBorderColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color") }
   }
+
+  @Test
+  fun defaultLineBorderColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LineLayer.defaultLineBorderColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -3237,6 +3370,15 @@ class LineLayerTest {
     assertEquals(expectedValue.toString(), LineLayer.defaultLineColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-color") }
   }
+
+  @Test
+  fun defaultLineColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LineLayer.defaultLineColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -3459,6 +3601,15 @@ class LineLayerTest {
     assertEquals(transition.toValue().toString(), LineLayer.defaultLineGapWidthTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gap-width-transition") }
   }
+
+  @Test
+  fun defaultLineGradientUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LineLayer.defaultLineGradientUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gradient-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -3717,6 +3868,15 @@ class LineLayerTest {
     assertEquals(expectedValue.toString(), LineLayer.defaultLineTrimColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color") }
   }
+
+  @Test
+  fun defaultLineTrimColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LineLayer.defaultLineTrimColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
