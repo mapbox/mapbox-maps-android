@@ -2,6 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
 # 11.10.0-rc.1
 ## Features ✨ and improvements 🏁
 * Add experimental `ViewAnnotationManager.setViewAnnotationAvoidLayers` for specifying layers that view annotations should avoid. The API currently only supports line layers.
