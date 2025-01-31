@@ -1534,4 +1534,92 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     ThreadChecker.throwIfNotMainThread()
     return styleManager.styleFeaturesets
   }
+
+  /**
+   * Reset color theme to initial color theme.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  open fun setInitialStyleColorTheme() {
+    ThreadChecker.throwIfNotMainThread()
+    styleManager.setInitialStyleColorTheme()
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param colorTheme for the style. Providing null value deletes the theme.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setStyleColorTheme(colorTheme: ColorTheme?): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.setStyleColorTheme(colorTheme)
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param base64 Base64 encoded representation of an LUT image. The height of the image cannot be more than 32 pixels.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setStyleColorTheme(base64: String): Expected<String, None> {
+    return setStyleColorTheme(
+      ColorTheme.valueOf(
+        StylePropertyValue(
+          Value.valueOf(base64), StylePropertyValueKind.CONSTANT
+        )
+      )
+    )
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param bitmap The bitmap image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @OptIn(MapboxDelicateApi::class)
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setStyleColorTheme(bitmap: Bitmap): Expected<String, None> {
+    return setStyleColorTheme(ColorTheme.valueOf(bitmap.toMapboxImage()))
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param image The image data of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setStyleColorTheme(image: Image): Expected<String, None> {
+    return setStyleColorTheme(ColorTheme.valueOf(image))
+  }
 }

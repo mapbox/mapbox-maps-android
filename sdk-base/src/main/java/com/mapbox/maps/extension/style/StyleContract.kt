@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.style
 
+import com.mapbox.maps.ColorTheme
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
@@ -80,6 +81,12 @@ interface StyleContract {
      */
     @MapboxExperimental
     val snow: StyleSnowExtension?
+
+    /**
+     * The color theme of the style.
+     */
+    @MapboxExperimental
+    val colorTheme: ColorTheme?
   }
 
   /**

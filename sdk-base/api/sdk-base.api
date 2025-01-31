@@ -222,8 +222,13 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun removeStyleModel (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSource (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSourceUnchecked (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
+	public fun setInitialStyleColorTheme ()V
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleColorTheme (Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleColorTheme (Lcom/mapbox/maps/ColorTheme;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleColorTheme (Lcom/mapbox/maps/Image;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleColorTheme (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomRasterSourceTileData (Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleGeoJSONSourceData (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/GeoJSONSourceData;)Lcom/mapbox/bindgen/Expected;
@@ -683,6 +688,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 
 public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleExtension {
 	public abstract fun getAtmosphere ()Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;
+	public abstract fun getColorTheme ()Lcom/mapbox/maps/ColorTheme;
 	public abstract fun getDynamicLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
 	public abstract fun getFlatLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
 	public abstract fun getImages ()Ljava/util/List;

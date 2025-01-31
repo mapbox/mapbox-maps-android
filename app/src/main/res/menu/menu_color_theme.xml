@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_action_color_theme_image"
+        android:title="@string/color_theme_monochrome"/>
+    <item
+        android:id="@+id/menu_action_color_theme_base64"
+        android:title="@string/color_theme_red"/>
+    <item
+        android:id="@+id/menu_action_color_theme_reset"
+        android:title="@string/color_theme_reset"/>
+</menu>

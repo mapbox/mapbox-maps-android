@@ -10,6 +10,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `*UseTheme` String style properties to override color theme for particular color properties in all layers and their Compose counterparts.
 * Remove experimental `ShadowQuality` properties from direct light layer.
 * Extend tilecover for elevated roads avoiding missing road segments.
+* Introduce experimental Color Theme API, which allows changing the style of the map using `Style.setStyleColorTheme`.
+* [compose] Introduce experimental `StyleState.colorTheme` state for setting `ColorTheme` for the style.
 
 ## Bug fixes 🐞
 * Prefer last used anchor for Dynamic View Annotation placement.

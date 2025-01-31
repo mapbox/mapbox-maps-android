@@ -1240,6 +1240,29 @@ package com.mapbox.maps.extension.compose.style {
   public static final class StringValue.Companion {
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class StyleColorTheme {
+    ctor public StyleColorTheme(com.mapbox.maps.ColorTheme colorTheme);
+    method public com.mapbox.maps.ColorTheme component1();
+    method public com.mapbox.maps.extension.compose.style.StyleColorTheme copy(com.mapbox.maps.ColorTheme colorTheme, boolean isStyleDefault);
+    method public com.mapbox.maps.ColorTheme getColorTheme();
+    property public final com.mapbox.maps.ColorTheme colorTheme;
+    field public static final com.mapbox.maps.extension.compose.style.StyleColorTheme.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.StyleColorTheme NONE;
+    field public static final com.mapbox.maps.extension.compose.style.StyleColorTheme STYLE_DEFAULT;
+  }
+
+  public static final class StyleColorTheme.Companion {
+  }
+
+  public final class StyleColorThemeKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme rememberColorTheme(String base64);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme rememberColorTheme(com.mapbox.maps.Image image);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme rememberColorTheme(androidx.compose.ui.graphics.ImageBitmap imageBitmap);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme rememberColorTheme(androidx.compose.ui.graphics.painter.Painter painter);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme rememberColorTheme(@DrawableRes int resourceId);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.StyleColorTheme rememberStyleColorTheme(com.mapbox.maps.ColorTheme colorTheme);
+  }
+
   @androidx.compose.runtime.Immutable public final class StyleImage {
     ctor public StyleImage(String imageId, com.mapbox.maps.Image image, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
     method public String component1();
@@ -1317,6 +1340,7 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.projection.generated.Projection getProjection();
     method public com.mapbox.maps.extension.compose.style.precipitations.generated.RainState getRainState();
     method public com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState getSnowState();
+    method public com.mapbox.maps.extension.compose.style.StyleColorTheme getStyleColorTheme();
     method public com.mapbox.maps.extension.compose.style.StyleImportsConfig getStyleImportsConfig();
     method public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState getStyleInteractionsState();
     method public com.mapbox.maps.TransitionOptions getStyleTransition();
@@ -1326,6 +1350,7 @@ package com.mapbox.maps.extension.compose.style {
     method public void setProjection(com.mapbox.maps.extension.compose.style.projection.generated.Projection);
     method public void setRainState(com.mapbox.maps.extension.compose.style.precipitations.generated.RainState);
     method public void setSnowState(com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState);
+    method public void setStyleColorTheme(com.mapbox.maps.extension.compose.style.StyleColorTheme);
     method public void setStyleImportsConfig(com.mapbox.maps.extension.compose.style.StyleImportsConfig);
     method public void setStyleInteractionsState(com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState);
     method public void setStyleTransition(com.mapbox.maps.TransitionOptions);
@@ -1335,6 +1360,7 @@ package com.mapbox.maps.extension.compose.style {
     property public final com.mapbox.maps.extension.compose.style.projection.generated.Projection projection;
     property public final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState rainState;
     property public final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState snowState;
+    property public final com.mapbox.maps.extension.compose.style.StyleColorTheme styleColorTheme;
     property public final com.mapbox.maps.extension.compose.style.StyleImportsConfig styleImportsConfig;
     property public final com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState styleInteractionsState;
     property public final com.mapbox.maps.TransitionOptions styleTransition;

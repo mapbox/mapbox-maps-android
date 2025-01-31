@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style {
 
   public final class StyleExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleExtension {
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? getAtmosphere();
+    method public com.mapbox.maps.ColorTheme? getColorTheme();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getDynamicLight();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getFlatLight();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
@@ -16,6 +17,7 @@ package com.mapbox.maps.extension.style {
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
     method public com.mapbox.maps.TransitionOptions? getTransition();
     property public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? atmosphere;
+    property public com.mapbox.maps.ColorTheme? colorTheme;
     property public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? dynamicLight;
     property public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? flatLight;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
@@ -45,6 +47,7 @@ package com.mapbox.maps.extension.style {
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer);
     method public operator void setAtmosphere(com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere);
+    method @com.mapbox.maps.MapboxExperimental public operator void setColorTheme(com.mapbox.maps.ColorTheme);
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.FlatLight);
     method public operator void setLight(com.mapbox.maps.extension.style.light.DynamicLight);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
@@ -201,6 +204,17 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
     method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.MapboxStyleManager);
     method public static void removeAtmosphere(com.mapbox.maps.MapboxStyleManager);
     method public static void setAtmosphere(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
+  }
+
+}
+
+package com.mapbox.maps.extension.style.color {
+
+  public final class ColorThemeExtKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme colorTheme();
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme colorTheme(String base64);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme colorTheme(com.mapbox.maps.Image image);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.ColorTheme colorTheme(android.graphics.Bitmap bitmap);
   }
 
 }

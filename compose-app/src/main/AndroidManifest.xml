@@ -317,6 +317,16 @@
                 android:name="@string/category"
                 android:value="@string/category_styles" />
         </activity>
+        <activity
+            android:name=".examples.style.ColorThemeActivity"
+            android:description="@string/description_color_theme"
+            android:exported="true"
+            android:label="@string/activity_color_theme"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
     </application>
 
 </manifest>

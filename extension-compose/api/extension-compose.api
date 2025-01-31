@@ -1058,6 +1058,32 @@ public final class com/mapbox/maps/extension/compose/style/StringValue {
 public final class com/mapbox/maps/extension/compose/style/StringValue$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/StyleColorTheme {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/StyleColorTheme$Companion;
+	public static final field NONE Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
+	public static final field STYLE_DEFAULT Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
+	public fun <init> (Lcom/mapbox/maps/ColorTheme;)V
+	public final fun component1 ()Lcom/mapbox/maps/ColorTheme;
+	public final fun copy (Lcom/mapbox/maps/ColorTheme;Z)Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;Lcom/mapbox/maps/ColorTheme;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColorTheme ()Lcom/mapbox/maps/ColorTheme;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/StyleColorTheme$Companion {
+}
+
+public final class com/mapbox/maps/extension/compose/style/StyleColorThemeKt {
+	public static final fun rememberColorTheme (ILandroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/ColorTheme;
+	public static final fun rememberColorTheme (Landroidx/compose/ui/graphics/ImageBitmap;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/ColorTheme;
+	public static final fun rememberColorTheme (Landroidx/compose/ui/graphics/painter/Painter;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/ColorTheme;
+	public static final fun rememberColorTheme (Lcom/mapbox/maps/Image;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/ColorTheme;
+	public static final fun rememberColorTheme (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/ColorTheme;
+	public static final fun rememberStyleColorTheme (Lcom/mapbox/maps/ColorTheme;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
+}
+
 public final class com/mapbox/maps/extension/compose/style/StyleImage {
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/Image;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)V
 	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/Image;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1116,6 +1142,7 @@ public final class com/mapbox/maps/extension/compose/style/StyleState {
 	public final fun getProjection ()Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public final fun getRainState ()Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
 	public final fun getSnowState ()Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
+	public final fun getStyleColorTheme ()Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
 	public final fun getStyleImportsConfig ()Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;
 	public final fun getStyleInteractionsState ()Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
 	public final fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
@@ -1125,6 +1152,7 @@ public final class com/mapbox/maps/extension/compose/style/StyleState {
 	public final fun setProjection (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;)V
 	public final fun setRainState (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;)V
 	public final fun setSnowState (Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;)V
+	public final fun setStyleColorTheme (Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;)V
 	public final fun setStyleImportsConfig (Lcom/mapbox/maps/extension/compose/style/StyleImportsConfig;)V
 	public final fun setStyleInteractionsState (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;)V
 	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V

@@ -201,8 +201,13 @@ package com.mapbox.maps {
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleModel(String modelId);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleSource(String sourceId);
     method @CallSuper @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleSourceUnchecked(String sourceId);
+    method @CallSuper @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public void setInitialStyleColorTheme();
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphere(com.mapbox.bindgen.Value properties);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphereProperty(String property, com.mapbox.bindgen.Value value);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleColorTheme(com.mapbox.maps.ColorTheme? colorTheme);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleColorTheme(String base64);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleColorTheme(android.graphics.Bitmap bitmap);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleColorTheme(com.mapbox.maps.Image image);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomGeometrySourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, java.util.List<com.mapbox.geojson.Feature> featureCollection);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomRasterSourceTileData(String sourceId, java.util.List<com.mapbox.maps.CustomRasterSourceTileData> tiles);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, String dataId, com.mapbox.maps.GeoJSONSourceData data);
@@ -675,6 +680,7 @@ package com.mapbox.maps.extension.style {
 
   public static interface StyleContract.StyleExtension {
     method public com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension? getAtmosphere();
+    method public com.mapbox.maps.ColorTheme? getColorTheme();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getDynamicLight();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getFlatLight();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
@@ -688,6 +694,7 @@ package com.mapbox.maps.extension.style {
     method public com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? getTerrain();
     method public com.mapbox.maps.TransitionOptions? getTransition();
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension? atmosphere;
+    property public abstract com.mapbox.maps.ColorTheme? colorTheme;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? dynamicLight;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? flatLight;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
