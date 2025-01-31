@@ -832,12 +832,14 @@ public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationMan
 	public abstract fun cameraForAnnotations (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun getAnnotations ()Ljava/util/Map;
 	public abstract fun getViewAnnotation (Lcom/mapbox/maps/AnnotatedLayerFeature;)Landroid/view/View;
+	public abstract fun getViewAnnotationAvoidLayers ()Ljava/util/HashSet;
 	public abstract fun getViewAnnotationOptions (Landroid/view/View;)Lcom/mapbox/maps/ViewAnnotationOptions;
 	public abstract fun getViewAnnotationOptions (Lcom/mapbox/maps/AnnotatedLayerFeature;)Lcom/mapbox/maps/ViewAnnotationOptions;
 	public abstract fun getViewAnnotationUpdateMode ()Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
 	public abstract fun removeAllViewAnnotations ()V
 	public abstract fun removeOnViewAnnotationUpdatedListener (Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;)V
 	public abstract fun removeViewAnnotation (Landroid/view/View;)Z
+	public abstract fun setViewAnnotationAvoidLayers (Ljava/util/HashSet;)V
 	public abstract fun setViewAnnotationUpdateMode (Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;)V
 	public abstract fun updateViewAnnotation (Landroid/view/View;Lcom/mapbox/maps/ViewAnnotationOptions;)Z
 }

@@ -11,6 +11,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import java.util.HashSet
 import java.util.concurrent.CopyOnWriteArrayList
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -708,6 +709,16 @@ internal class NativeMapImpl(val map: Map) {
 
   fun stopPerformanceStatisticsCollection() {
     map.stopPerformanceStatisticsCollection()
+  }
+
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
+  fun setViewAnnotationAvoidLayers(layerIds: HashSet<String>?): Expected<String, None> {
+    return map.setViewAnnotationAvoidLayers(layerIds)
+  }
+
+  fun getViewAnnotationAvoidLayers(): HashSet<String> {
+    return map.viewAnnotationAvoidLayers
   }
 
   // ///// START INTERACTIONS /////////

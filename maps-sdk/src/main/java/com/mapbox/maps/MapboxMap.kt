@@ -2462,6 +2462,31 @@ class MapboxMap :
     return nativeMap.addViewAnnotation(viewId, options)
   }
 
+  /**
+   * Specify layers that view annotations should avoid. This applies to ALL view annotations associated to any layer.
+   * The API currently only supports line layers.
+   *
+   * @param layerIds A list of layerIDs of layers on the features of which the view annotation should not be placed. Passing `null` will clear the list of layers.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  internal fun setViewAnnotationAvoidLayers(layerIds: HashSet<String>?): Expected<String, None> {
+    checkNativeMap("setViewAnnotationAvoidLayers")
+    return nativeMap.setViewAnnotationAvoidLayers(layerIds)
+  }
+
+  /**
+   * Returns a list of layer ids of layers that all layer associated view annotations are set to avoid.
+   *
+   * @return A list of layer ids if there are any, empty set otherwise.
+   */
+  @MapboxExperimental
+  internal fun getViewAnnotationAvoidLayers(): HashSet<String> {
+    checkNativeMap("getViewAnnotationAvoidLayers")
+    return nativeMap.getViewAnnotationAvoidLayers()
+  }
+
   @JvmSynthetic
   internal fun updateViewAnnotation(
     viewId: String,

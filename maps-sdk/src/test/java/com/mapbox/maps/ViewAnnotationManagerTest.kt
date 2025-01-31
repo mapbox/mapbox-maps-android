@@ -13,6 +13,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.shadows.ShadowCoordinateBounds
 import com.mapbox.maps.viewannotation.*
+import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -534,6 +535,18 @@ class ViewAnnotationManagerTest {
     annotations.add(view)
 
     assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun testViewAnnotationAvoidLayers() {
+    val layerIds = hashSetOf("layer-1", "layer-2")
+    every { mapboxMap.setViewAnnotationAvoidLayers(any()) } returns ExpectedFactory.createNone()
+    every { mapboxMap.getViewAnnotationAvoidLayers() } returns layerIds
+    viewAnnotationManager.viewAnnotationAvoidLayers = layerIds
+    verifyOnce { mapboxMap.setViewAnnotationAvoidLayers(layerIds) }
+    assertEquals(layerIds, viewAnnotationManager.viewAnnotationAvoidLayers)
+    verifyOnce { mapboxMap.getViewAnnotationAvoidLayers() }
   }
 
   private companion object {
