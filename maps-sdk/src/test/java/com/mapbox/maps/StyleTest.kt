@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
 import io.mockk.verify
@@ -644,5 +645,51 @@ class StyleTest {
     val actualFeaturesets = style.getFeaturesets()
     verifyOnce { styleManager.styleFeaturesets }
     assertEquals(featuresets, actualFeaturesets)
+  }
+
+  @Test
+  fun setColorThemeTest() {
+    val image = mockk<Image>()
+    val colorTheme = ColorTheme.valueOf(image)
+    style.setStyleColorTheme(colorTheme)
+    verifyOnce { styleManager.setStyleColorTheme(colorTheme) }
+  }
+
+  @Test
+  fun setImageColorThemeTest() {
+    val image = mockk<Image>()
+    style.setStyleColorTheme(image)
+    val slot = slot<ColorTheme>()
+    verifyOnce { styleManager.setStyleColorTheme(capture(slot)) }
+    assertEquals(true, slot.captured.isImage)
+    assertEquals(false, slot.captured.isStylePropertyValue)
+    assertEquals(image, slot.captured.image)
+  }
+
+  @Test
+  fun setBitmapColorThemeTest() {
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    every { DataRef.allocateNative(any()) } returns nativeDataRef
+    val bitmap = Bitmap.createBitmap(1024, 32, Bitmap.Config.ARGB_8888)
+    style.setStyleColorTheme(bitmap)
+    val slot = slot<ColorTheme>()
+    verifyOnce { styleManager.setStyleColorTheme(capture(slot)) }
+    assertEquals(true, slot.captured.isImage)
+    assertEquals(false, slot.captured.isStylePropertyValue)
+    assertEquals(1024, slot.captured.image.width)
+    assertEquals(32, slot.captured.image.height)
+    assertEquals(nativeDataRef, slot.captured.image.data)
+  }
+
+  @Test
+  fun setBase64ColorThemeTest() {
+    val encodedTheme = "base64"
+    val slot = slot<ColorTheme>()
+    style.setStyleColorTheme(encodedTheme)
+    verifyOnce { styleManager.setStyleColorTheme(capture(slot)) }
+    assertEquals(false, slot.captured.isImage)
+    assertEquals(true, slot.captured.isStylePropertyValue)
+    assertEquals(Value.valueOf(encodedTheme), slot.captured.stylePropertyValue.value)
   }
 }

@@ -184,4 +184,7 @@
     <string name="clip_symbol">Clip symbol</string>
     <string name="clip_model_and_symbol">Clip model and symbol</string>
     <string name="clip_reset">Reset</string>
+    <string name="color_theme_red">Red</string>
+    <string name="color_theme_reset">Reset</string>
+    <string name="color_theme_monochrome">Monochrome</string>
 </resources>

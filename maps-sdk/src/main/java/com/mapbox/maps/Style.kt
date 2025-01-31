@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.graphics.Bitmap
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import com.mapbox.bindgen.Expected
@@ -1260,6 +1261,73 @@ class Style internal constructor(
   override fun isStyleLoaded(): Boolean {
     checkNativeStyle("isStyleLoaded")
     return super.isStyleLoaded()
+  }
+
+  /**
+   * Set color theme to style.
+   *
+   * @param colorTheme Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setStyleColorTheme(colorTheme: ColorTheme?): Expected<String, None> {
+    checkNativeStyle("setStyleColorTheme")
+    return super.setStyleColorTheme(colorTheme)
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param bitmap [Bitmap] of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setStyleColorTheme(bitmap: Bitmap): Expected<String, None> {
+    checkNativeStyle("setStyleColorTheme")
+    return super.setStyleColorTheme(bitmap)
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param base64 base64 representation of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setStyleColorTheme(base64: String): Expected<String, None> {
+    checkNativeStyle("setStyleColorTheme")
+    return super.setStyleColorTheme(base64)
+  }
+
+  /**
+   * Set color theme to style.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param image image data of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setStyleColorTheme(image: Image): Expected<String, None> {
+    checkNativeStyle("setStyleColorTheme")
+    return super.setStyleColorTheme(image)
   }
 
   /**

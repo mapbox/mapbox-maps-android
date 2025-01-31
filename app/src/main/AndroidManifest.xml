@@ -1426,5 +1426,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.style.ColorThemeActivity"
+            android:description="@string/description_color_theme"
+            android:exported="true"
+            android:label="@string/activity_color_theme">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>

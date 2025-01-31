@@ -414,6 +414,7 @@ class MapboxMap :
         styleExtension.transition?.let(style::setStyleTransition)
         styleExtension.rain?.bindTo(style)
         styleExtension.snow?.bindTo(style)
+        styleExtension.colorTheme?.let(style::setStyleColorTheme)
       },
       styleDataSourcesLoadedListener = { style ->
         styleExtension.sources.forEach {

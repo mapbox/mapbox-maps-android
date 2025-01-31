@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose.style.internal
 
 import android.util.Log
+import com.mapbox.maps.ColorTheme
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.StyleDataLoaded
@@ -35,7 +36,7 @@ internal class MapStyleNode(
   var atmosphereState: AtmosphereState,
   var rainState: RainState,
   var snowState: SnowState,
-  var terrainState: TerrainState,
+  var terrainState: TerrainState
 ) : MapNode() {
 
   val coroutineScope =
@@ -195,6 +196,18 @@ internal class MapStyleNode(
     coroutineScope.launch {
       styleDataLoaded.collect {
         mapboxMap.setStyleTransition(transition)
+      }
+    }
+  }
+
+  internal fun updateStyleColorTheme(colorTheme: ColorTheme?, isStyleDefault: Boolean) {
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        if (isStyleDefault) {
+          mapboxMap.setInitialStyleColorTheme()
+        } else {
+          mapboxMap.setStyleColorTheme(colorTheme)
+        }
       }
     }
   }

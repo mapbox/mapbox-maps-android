@@ -2,6 +2,7 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl : com/mapb
 	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/StyleExtensionImpl$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun getAtmosphere ()Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;
 	public fun getAtmosphere ()Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun getColorTheme ()Lcom/mapbox/maps/ColorTheme;
 	public fun getDynamicLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
 	public fun getFlatLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
 	public fun getImages ()Ljava/util/List;
@@ -34,6 +35,7 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl$Builder {
 	public final fun layerAtPosition (Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Lkotlin/Pair;
 	public static synthetic fun layerAtPosition$default (Lcom/mapbox/maps/extension/style/StyleExtensionImpl$Builder;Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlin/Pair;
 	public final fun setAtmosphere (Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;)V
+	public final fun setColorTheme (Lcom/mapbox/maps/ColorTheme;)V
 	public final fun setLight (Lcom/mapbox/maps/extension/style/light/DynamicLight;)V
 	public final fun setLight (Lcom/mapbox/maps/extension/style/light/generated/FlatLight;)V
 	public final fun setProjection (Lcom/mapbox/maps/extension/style/projection/generated/Projection;)V
@@ -169,6 +171,13 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 	public static final fun getAtmosphere (Lcom/mapbox/maps/MapboxStyleManager;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public static final fun removeAtmosphere (Lcom/mapbox/maps/MapboxStyleManager;)V
 	public static final fun setAtmosphere (Lcom/mapbox/maps/MapboxStyleManager;Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;)V
+}
+
+public final class com/mapbox/maps/extension/style/color/ColorThemeExtKt {
+	public static final fun colorTheme ()Lcom/mapbox/maps/ColorTheme;
+	public static final fun colorTheme (Landroid/graphics/Bitmap;)Lcom/mapbox/maps/ColorTheme;
+	public static final fun colorTheme (Lcom/mapbox/maps/Image;)Lcom/mapbox/maps/ColorTheme;
+	public static final fun colorTheme (Ljava/lang/String;)Lcom/mapbox/maps/ColorTheme;
 }
 
 public final class com/mapbox/maps/extension/style/expressions/dsl/generated/ExpressionDslKt {

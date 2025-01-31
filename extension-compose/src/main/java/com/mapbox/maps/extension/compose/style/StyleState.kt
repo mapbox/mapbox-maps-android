@@ -46,6 +46,7 @@ public class StyleState internal constructor(
   initialTerrainState: TerrainState = TerrainState.INITIAL,
   initialLightsState: LightsState = LightsState.INITIAL,
   initialStyleTransition: TransitionOptions,
+  initialColorTheme: StyleColorTheme,
 ) {
   /**
    * Construct a default [StyleState].
@@ -59,7 +60,8 @@ public class StyleState internal constructor(
     initialSnowState = SnowState(),
     initialTerrainState = TerrainState.INITIAL,
     initialLightsState = LightsState.INITIAL,
-    initialStyleTransition = transition { }
+    initialStyleTransition = transition { },
+    initialColorTheme = StyleColorTheme.STYLE_DEFAULT
   )
 
   /**
@@ -111,4 +113,10 @@ public class StyleState internal constructor(
    * Transition options applied when loading the style.
    */
   public var styleTransition: TransitionOptions by mutableStateOf(initialStyleTransition)
+
+  /**
+   * The color theme to be set to the map. Defaults to initial color theme meaning no custom theme is added, default value is taken from [style] definition.
+   */
+  @MapboxExperimental
+  public var styleColorTheme: StyleColorTheme by mutableStateOf(initialColorTheme)
 }

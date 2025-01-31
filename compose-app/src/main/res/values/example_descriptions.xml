@@ -28,4 +28,5 @@
     <string name="description_clip_layer">Showcase the usage of clip layer.</string>
     <string name="description_interactions">Showcase the interactions.</string>
     <string name="description_precipitations">Showcase the rain and snow effects.</string>
+    <string name="description_color_theme">Showcase color theme.</string>
 </resources>

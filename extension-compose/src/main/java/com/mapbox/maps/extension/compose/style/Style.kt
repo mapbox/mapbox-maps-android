@@ -331,7 +331,7 @@ public fun GenericStyle(
           atmosphereState = styleState.atmosphereState,
           rainState = styleState.rainState,
           snowState = styleState.snowState,
-          terrainState = styleState.terrainState,
+          terrainState = styleState.terrainState
         )
       },
       update = {
@@ -352,6 +352,9 @@ public fun GenericStyle(
         }
         set(styleState.styleTransition) {
           updateStyleTransition(it)
+        }
+        set(styleState.styleColorTheme) {
+          updateStyleColorTheme(it.colorTheme, it.isStyleDefault)
         }
       }
     ) {

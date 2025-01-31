@@ -7,6 +7,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.color.colorTheme
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeatureStateKey
@@ -239,6 +240,10 @@ class MapboxMapTest {
     every { styleExtension.transition } returns transition
     every { style.setStyleTransition(any()) } just Runs
 
+    val colorTheme = colorTheme()
+    every { styleExtension.colorTheme } returns colorTheme
+    every { style.setStyleColorTheme(any<ColorTheme>()) } returns ExpectedFactory.createNone()
+
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     val userCallbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
@@ -268,6 +273,7 @@ class MapboxMapTest {
     verifyNo { style.setStyleTransition(any()) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
     verifyNo { model.bindTo(style) }
+    verifyNo { style.setStyleColorTheme(colorTheme) }
 
     callbackStyleSlots.first().onStyleLoaded(style)
 
@@ -276,6 +282,7 @@ class MapboxMapTest {
     verify { terrain.bindTo(style) }
     verify { projection.bindTo(style) }
     verify { atmosphere.bindTo(style) }
+    verify { style.setStyleColorTheme(colorTheme) }
     verify { style.setStyleTransition(any()) }
     verifyNo { source.bindTo(style) }
     verifyNo { image.bindTo(style) }

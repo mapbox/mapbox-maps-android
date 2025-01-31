@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style
 
 import android.opengl.GLES20
+import com.mapbox.maps.ColorTheme
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.TransitionOptions
@@ -98,6 +99,12 @@ class StyleExtensionImpl private constructor(
   override val snow: StyleContract.StyleSnowExtension? = builder.snow
 
   /**
+   * Color theme of the style.
+   */
+  @MapboxExperimental
+  override val colorTheme: ColorTheme? = builder.colorTheme
+
+  /**
    * The builder for style extension.
    */
   class Builder(
@@ -122,6 +129,7 @@ class StyleExtensionImpl private constructor(
     internal var snow: Snow? = null
     @OptIn(MapboxExperimental::class)
     internal var rain: Rain? = null
+    internal var colorTheme: ColorTheme? = null
 
     /**
      * Extension function for [Layer] to overload Unary operations.
@@ -235,6 +243,17 @@ class StyleExtensionImpl private constructor(
     @JvmName("setRain")
     operator fun Rain.unaryPlus() {
       rain = this
+    }
+
+    /**
+     * Extension function for [ColorTheme] to overload Unary operations.
+     *
+     * Apply +[ColorTheme] will apply specific theme to the [StyleExtensionImpl].
+     */
+    @MapboxExperimental
+    @JvmName("setColorTheme")
+    operator fun ColorTheme.unaryPlus() {
+      colorTheme = this
     }
 
     /**
