@@ -49,6 +49,7 @@ class FlatLightTest : BaseStyleTest() {
     setupLight(light)
     assertEquals(Color.CYAN, light.colorAsColorInt)
   }
+
   @Test
   @UiThreadTest
   fun colorTest() {

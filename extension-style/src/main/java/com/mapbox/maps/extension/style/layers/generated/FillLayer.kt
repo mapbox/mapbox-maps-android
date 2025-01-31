@@ -580,6 +580,35 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Сolor theme override for [fillColor].
+   */
+  @MapboxExperimental
+  val fillColorUseTheme: String?
+    /**
+     * Get the FillColorUseTheme property
+     *
+     * Use static method [FillLayer.defaultFillColorUseTheme] to get the default property.
+     *
+     * @return current FillColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("fill-color-use-theme")
+    }
+
+  /**
+   * Set the FillColorUseTheme as String
+   *
+   * Use static method [FillLayer.defaultFillColorUseTheme] to get the default property.
+   *
+   * @param fillColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillColorUseTheme(fillColorUseTheme: String): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-color-use-theme", fillColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    */
   val fillEmissiveStrength: Double?
@@ -905,6 +934,35 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   override fun fillOutlineColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillOutlineColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [fillOutlineColor].
+   */
+  @MapboxExperimental
+  val fillOutlineColorUseTheme: String?
+    /**
+     * Get the FillOutlineColorUseTheme property
+     *
+     * Use static method [FillLayer.defaultFillOutlineColorUseTheme] to get the default property.
+     *
+     * @return current FillOutlineColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("fill-outline-color-use-theme")
+    }
+
+  /**
+   * Set the FillOutlineColorUseTheme as String
+   *
+   * Use static method [FillLayer.defaultFillOutlineColorUseTheme] to get the default property.
+   *
+   * @param fillOutlineColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillOutlineColorUseTheme(fillOutlineColorUseTheme: String): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-outline-color-use-theme", fillOutlineColorUseTheme)
+    setProperty(propertyValue)
   }
 
   /**
@@ -1488,6 +1546,18 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-transition").silentUnwrap()
 
     /**
+     * Default color theme for [fillColor].
+     */
+    @MapboxExperimental
+    val defaultFillColorUseTheme: String?
+      /**
+       * Get default value of the FillColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-use-theme").silentUnwrap()
+
+    /**
      * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
      */
     val defaultFillEmissiveStrength: Double?
@@ -1649,6 +1719,18 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-outline-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [fillOutlineColor].
+     */
+    @MapboxExperimental
+    val defaultFillOutlineColorUseTheme: String?
+      /**
+       * Get default value of the FillOutlineColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-outline-color-use-theme").silentUnwrap()
 
     /**
      * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -1985,6 +2067,14 @@ interface FillLayerDsl {
   fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
+   * Set the fillColorUseTheme as String for [fillColor].
+   *
+   * @param fillColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillColorUseTheme(fillColorUseTheme: String): FillLayer
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength
@@ -2080,6 +2170,14 @@ interface FillLayerDsl {
    * DSL for [fillOutlineColorTransition].
    */
   fun fillOutlineColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
+
+  /**
+   * Set the fillOutlineColorUseTheme as String for [fillOutlineColor].
+   *
+   * @param fillOutlineColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillOutlineColorUseTheme(fillOutlineColorUseTheme: String): FillLayer
 
   /**
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.

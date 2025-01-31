@@ -5,8 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.10.0-rc.1 
+## Features ✨ and improvements 🏁
 * Add experimental `ViewAnnotationManager.setViewAnnotationAvoidLayers` for specifying layers that view annotations should avoid. The API currently only supports line layers.
 * Add support for the `maxOverscaleFactorForParentTiles` property in `CustomRasterSource` and `CustomGeometrySource`, allowing greater control over tile overscaling behavior when rendering custom raster tiles.
+* Add `*UseTheme` String style properties to override color theme for particular color properties in all layers.
+* Remove experimental `ShadowQuality` properties from direct light layer.
 
 # 11.10.0-beta.1 January 20, 2025
 ## Features ✨ and improvements 🏁

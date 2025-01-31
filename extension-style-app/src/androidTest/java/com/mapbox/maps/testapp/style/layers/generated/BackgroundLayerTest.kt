@@ -65,6 +65,17 @@ class BackgroundLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun backgroundColorUseTheme() {
+    val theme = "none"
+    val layer = backgroundLayer("id") {
+      backgroundColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.backgroundColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun backgroundColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -287,6 +298,7 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertNotNull("defaultBackgroundColor should not be null", BackgroundLayer.defaultBackgroundColor)
     assertNotNull("defaultBackgroundColorAsExpression should not be null", BackgroundLayer.defaultBackgroundColorAsExpression)
     assertNotNull("defaultBackgroundColorAsColorInt should not be null", BackgroundLayer.defaultBackgroundColorAsColorInt)
+    assertNotNull("defaultBackgroundColorUseTheme should not be null", BackgroundLayer.defaultBackgroundColorUseTheme)
     assertNotNull("defaultBackgroundColorTransition should not be null", BackgroundLayer.defaultBackgroundColorTransition)
     assertNotNull("defaultBackgroundEmissiveStrength should not be null", BackgroundLayer.defaultBackgroundEmissiveStrength)
     assertNotNull("defaultBackgroundEmissiveStrengthAsExpression should not be null", BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression)
@@ -304,6 +316,7 @@ class BackgroundLayerTest : BaseStyleTest() {
   @UiThreadTest
   fun getLayerTest() {
     val backgroundColorTestValue = "rgba(0, 0, 0, 1)"
+    val backgroundColorUseThemeTestValue = "default"
     val backgroundEmissiveStrengthTestValue = 1.0
     val backgroundOpacityTestValue = 1.0
     val backgroundPatternTestValue = "abc"
@@ -311,6 +324,7 @@ class BackgroundLayerTest : BaseStyleTest() {
 
     val layer = backgroundLayer("id") {
       backgroundColor(backgroundColorTestValue)
+      backgroundColorUseTheme(backgroundColorUseThemeTestValue)
       backgroundEmissiveStrength(backgroundEmissiveStrengthTestValue)
       backgroundOpacity(backgroundOpacityTestValue)
       backgroundPattern(backgroundPatternTestValue)
@@ -325,6 +339,7 @@ class BackgroundLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals(backgroundColorTestValue, cachedLayer.backgroundColor)
+    assertEquals(backgroundColorUseThemeTestValue, cachedLayer.backgroundColorUseTheme)
     assertEquals(backgroundEmissiveStrengthTestValue, cachedLayer.backgroundEmissiveStrength)
     assertEquals(backgroundOpacityTestValue, cachedLayer.backgroundOpacity)
     assertEquals(backgroundPatternTestValue, cachedLayer.backgroundPattern)

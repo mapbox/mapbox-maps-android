@@ -491,6 +491,17 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionColorUseTheme() {
+    val theme = "none"
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.fillExtrusionColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -641,6 +652,17 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(Color.CYAN, layer.fillExtrusionFloodLightColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionFloodLightColorUseTheme() {
+    val theme = "none"
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionFloodLightColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.fillExtrusionFloodLightColorUseTheme)
   }
 
   @Test
@@ -1367,6 +1389,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionColor should not be null", FillExtrusionLayer.defaultFillExtrusionColor)
     assertNotNull("defaultFillExtrusionColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsExpression)
     assertNotNull("defaultFillExtrusionColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsColorInt)
+    assertNotNull("defaultFillExtrusionColorUseTheme should not be null", FillExtrusionLayer.defaultFillExtrusionColorUseTheme)
     assertNotNull("defaultFillExtrusionColorTransition should not be null", FillExtrusionLayer.defaultFillExtrusionColorTransition)
     assertNotNull("defaultFillExtrusionCutoffFadeRange should not be null", FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange)
     assertNotNull("defaultFillExtrusionCutoffFadeRangeAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression)
@@ -1376,6 +1399,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionFloodLightColor should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColor)
     assertNotNull("defaultFillExtrusionFloodLightColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsExpression)
     assertNotNull("defaultFillExtrusionFloodLightColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt)
+    assertNotNull("defaultFillExtrusionFloodLightColorUseTheme should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorUseTheme)
     assertNotNull("defaultFillExtrusionFloodLightColorTransition should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorTransition)
     assertNotNull("defaultFillExtrusionFloodLightGroundAttenuation should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuation)
     assertNotNull("defaultFillExtrusionFloodLightGroundAttenuationAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuationAsExpression)
@@ -1434,9 +1458,11 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionBaseTestValue = 1.0
     val fillExtrusionBaseAlignmentTestValue = FillExtrusionBaseAlignment.TERRAIN
     val fillExtrusionColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillExtrusionColorUseThemeTestValue = "default"
     val fillExtrusionCutoffFadeRangeTestValue = 1.0
     val fillExtrusionEmissiveStrengthTestValue = 1.0
     val fillExtrusionFloodLightColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillExtrusionFloodLightColorUseThemeTestValue = "default"
     val fillExtrusionFloodLightGroundAttenuationTestValue = 1.0
     val fillExtrusionFloodLightGroundRadiusTestValue = 1.0
     val fillExtrusionFloodLightIntensityTestValue = 1.0
@@ -1468,9 +1494,11 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionBase(fillExtrusionBaseTestValue)
       fillExtrusionBaseAlignment(fillExtrusionBaseAlignmentTestValue)
       fillExtrusionColor(fillExtrusionColorTestValue)
+      fillExtrusionColorUseTheme(fillExtrusionColorUseThemeTestValue)
       fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRangeTestValue)
       fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrengthTestValue)
       fillExtrusionFloodLightColor(fillExtrusionFloodLightColorTestValue)
+      fillExtrusionFloodLightColorUseTheme(fillExtrusionFloodLightColorUseThemeTestValue)
       fillExtrusionFloodLightGroundAttenuation(fillExtrusionFloodLightGroundAttenuationTestValue)
       fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadiusTestValue)
       fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensityTestValue)
@@ -1507,9 +1535,11 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
     assertEquals(fillExtrusionBaseAlignmentTestValue, cachedLayer.fillExtrusionBaseAlignment)
     assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
+    assertEquals(fillExtrusionColorUseThemeTestValue, cachedLayer.fillExtrusionColorUseTheme)
     assertEquals(fillExtrusionCutoffFadeRangeTestValue, cachedLayer.fillExtrusionCutoffFadeRange)
     assertEquals(fillExtrusionEmissiveStrengthTestValue, cachedLayer.fillExtrusionEmissiveStrength)
     assertEquals(fillExtrusionFloodLightColorTestValue, cachedLayer.fillExtrusionFloodLightColor)
+    assertEquals(fillExtrusionFloodLightColorUseThemeTestValue, cachedLayer.fillExtrusionFloodLightColorUseTheme)
     assertEquals(fillExtrusionFloodLightGroundAttenuationTestValue, cachedLayer.fillExtrusionFloodLightGroundAttenuation)
     assertEquals(fillExtrusionFloodLightGroundRadiusTestValue, cachedLayer.fillExtrusionFloodLightGroundRadius)
     assertEquals(fillExtrusionFloodLightIntensityTestValue, cachedLayer.fillExtrusionFloodLightIntensity)

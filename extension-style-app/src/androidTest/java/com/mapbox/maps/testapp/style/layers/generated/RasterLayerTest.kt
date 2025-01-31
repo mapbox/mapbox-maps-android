@@ -220,6 +220,17 @@ class RasterLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun rasterColorUseTheme() {
+    val theme = "none"
+    val layer = rasterLayer("id", "source") {
+      rasterColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.rasterColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun rasterColorMixTest() {
     val testValue = listOf(0.0, 1.0, 2.0, 3.0)
     val layer = rasterLayer("id", "source") {
@@ -746,6 +757,7 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterBrightnessMin should not be null", RasterLayer.defaultRasterBrightnessMin)
     assertNotNull("defaultRasterBrightnessMinAsExpression should not be null", RasterLayer.defaultRasterBrightnessMinAsExpression)
     assertNotNull("defaultRasterBrightnessMinTransition should not be null", RasterLayer.defaultRasterBrightnessMinTransition)
+    assertNotNull("defaultRasterColorUseTheme should not be null", RasterLayer.defaultRasterColorUseTheme)
     assertNotNull("defaultRasterColorMix should not be null", RasterLayer.defaultRasterColorMix)
     assertNotNull("defaultRasterColorMixAsExpression should not be null", RasterLayer.defaultRasterColorMixAsExpression)
     assertNotNull("defaultRasterColorMixTransition should not be null", RasterLayer.defaultRasterColorMixTransition)
@@ -804,6 +816,7 @@ class RasterLayerTest : BaseStyleTest() {
         }
       }
     }
+    val rasterColorUseThemeTestValue = "default"
     val rasterColorMixTestValue = listOf(0.0, 1.0, 2.0, 3.0)
     val rasterColorRangeTestValue = listOf(0.0, 1.0)
     val rasterContrastTestValue = 1.0
@@ -825,6 +838,7 @@ class RasterLayerTest : BaseStyleTest() {
       rasterBrightnessMax(rasterBrightnessMaxTestValue)
       rasterBrightnessMin(rasterBrightnessMinTestValue)
       rasterColor(rasterColorTestValue)
+      rasterColorUseTheme(rasterColorUseThemeTestValue)
       rasterColorMix(rasterColorMixTestValue)
       rasterColorRange(rasterColorRangeTestValue)
       rasterContrast(rasterContrastTestValue)
@@ -851,6 +865,7 @@ class RasterLayerTest : BaseStyleTest() {
     assertEquals(rasterBrightnessMaxTestValue, cachedLayer.rasterBrightnessMax)
     assertEquals(rasterBrightnessMinTestValue, cachedLayer.rasterBrightnessMin)
     assertEquals(rasterColorTestValue, cachedLayer.rasterColor)
+    assertEquals(rasterColorUseThemeTestValue, cachedLayer.rasterColorUseTheme)
     assertEquals(rasterColorMixTestValue, cachedLayer.rasterColorMix)
     assertEquals(rasterColorRangeTestValue, cachedLayer.rasterColorRange)
     assertEquals(rasterContrastTestValue, cachedLayer.rasterContrast)

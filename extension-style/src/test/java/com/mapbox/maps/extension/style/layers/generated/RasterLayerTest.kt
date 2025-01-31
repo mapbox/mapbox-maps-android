@@ -492,6 +492,37 @@ class RasterLayerTest {
     assertEquals(expectedValue.toString(), layer.rasterColor?.toString())
     verify { style.getStyleLayerProperty("id", "raster-color") }
   }
+
+  @Test
+  fun rasterColorUseThemeSetAfterInitialization() {
+    val layer = rasterLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.rasterColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "raster-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun rasterColorUseThemeSet() {
+    val theme = "none"
+    val layer = rasterLayer("id", "source") {
+      rasterColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("raster-color-use-theme"))
+  }
+
+  @Test
+  fun rasterColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.rasterColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -1672,6 +1703,15 @@ class RasterLayerTest {
     assertEquals(transition.toValue().toString(), RasterLayer.defaultRasterBrightnessMinTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-brightness-min-transition") }
   }
+
+  @Test
+  fun defaultRasterColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, RasterLayer.defaultRasterColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

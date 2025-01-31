@@ -43,11 +43,13 @@ public class FillExtrusionLayerState private constructor(
   initialFillExtrusionBaseTransition: Transition,
   initialFillExtrusionBaseAlignment: FillExtrusionBaseAlignmentValue,
   initialFillExtrusionColor: ColorValue,
+  initialFillExtrusionColorUseTheme: StringValue,
   initialFillExtrusionColorTransition: Transition,
   initialFillExtrusionCutoffFadeRange: DoubleValue,
   initialFillExtrusionEmissiveStrength: DoubleValue,
   initialFillExtrusionEmissiveStrengthTransition: Transition,
   initialFillExtrusionFloodLightColor: ColorValue,
+  initialFillExtrusionFloodLightColorUseTheme: StringValue,
   initialFillExtrusionFloodLightColorTransition: Transition,
   initialFillExtrusionFloodLightGroundAttenuation: DoubleValue,
   initialFillExtrusionFloodLightGroundAttenuationTransition: Transition,
@@ -98,11 +100,13 @@ public class FillExtrusionLayerState private constructor(
     initialFillExtrusionBaseTransition = Transition.INITIAL,
     initialFillExtrusionBaseAlignment = FillExtrusionBaseAlignmentValue.INITIAL,
     initialFillExtrusionColor = ColorValue.INITIAL,
+    initialFillExtrusionColorUseTheme = StringValue.INITIAL,
     initialFillExtrusionColorTransition = Transition.INITIAL,
     initialFillExtrusionCutoffFadeRange = DoubleValue.INITIAL,
     initialFillExtrusionEmissiveStrength = DoubleValue.INITIAL,
     initialFillExtrusionEmissiveStrengthTransition = Transition.INITIAL,
     initialFillExtrusionFloodLightColor = ColorValue.INITIAL,
+    initialFillExtrusionFloodLightColorUseTheme = StringValue.INITIAL,
     initialFillExtrusionFloodLightColorTransition = Transition.INITIAL,
     initialFillExtrusionFloodLightGroundAttenuation = DoubleValue.INITIAL,
     initialFillExtrusionFloodLightGroundAttenuationTransition = Transition.INITIAL,
@@ -210,6 +214,11 @@ public class FillExtrusionLayerState private constructor(
    */
   public var fillExtrusionColor: ColorValue by mutableStateOf(initialFillExtrusionColor)
   /**
+   *  Overrides applying of color theme for [fillExtrusionColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var fillExtrusionColorUseTheme: StringValue by mutableStateOf(initialFillExtrusionColorUseTheme)
+  /**
    *  Defines the transition of [fillExtrusionColor].
    */
   public var fillExtrusionColorTransition: Transition by mutableStateOf(initialFillExtrusionColorTransition)
@@ -230,6 +239,11 @@ public class FillExtrusionLayerState private constructor(
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightColor: ColorValue by mutableStateOf(initialFillExtrusionFloodLightColor)
+  /**
+   *  Overrides applying of color theme for [fillExtrusionFloodLightColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var fillExtrusionFloodLightColorUseTheme: StringValue by mutableStateOf(initialFillExtrusionFloodLightColorUseTheme)
   /**
    *  Defines the transition of [fillExtrusionFloodLightColor].
    */
@@ -461,6 +475,13 @@ public class FillExtrusionLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillExtrusionColorUseTheme(layerNode: LayerNode) {
+    if (fillExtrusionColorUseTheme.notInitial) {
+      layerNode.setProperty("fill-extrusion-color-use-theme", fillExtrusionColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateFillExtrusionColorTransition(layerNode: LayerNode) {
     if (fillExtrusionColorTransition.notInitial) {
       layerNode.setProperty("fill-extrusion-color-transition", fillExtrusionColorTransition.value)
@@ -489,6 +510,13 @@ public class FillExtrusionLayerState private constructor(
   private fun UpdateFillExtrusionFloodLightColor(layerNode: LayerNode) {
     if (fillExtrusionFloodLightColor.notInitial) {
       layerNode.setProperty("fill-extrusion-flood-light-color", fillExtrusionFloodLightColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillExtrusionFloodLightColorUseTheme(layerNode: LayerNode) {
+    if (fillExtrusionFloodLightColorUseTheme.notInitial) {
+      layerNode.setProperty("fill-extrusion-flood-light-color-use-theme", fillExtrusionFloodLightColorUseTheme.value)
     }
   }
   @Composable
@@ -701,11 +729,13 @@ public class FillExtrusionLayerState private constructor(
     UpdateFillExtrusionBaseTransition(layerNode)
     UpdateFillExtrusionBaseAlignment(layerNode)
     UpdateFillExtrusionColor(layerNode)
+    UpdateFillExtrusionColorUseTheme(layerNode)
     UpdateFillExtrusionColorTransition(layerNode)
     UpdateFillExtrusionCutoffFadeRange(layerNode)
     UpdateFillExtrusionEmissiveStrength(layerNode)
     UpdateFillExtrusionEmissiveStrengthTransition(layerNode)
     UpdateFillExtrusionFloodLightColor(layerNode)
+    UpdateFillExtrusionFloodLightColorUseTheme(layerNode)
     UpdateFillExtrusionFloodLightColorTransition(layerNode)
     UpdateFillExtrusionFloodLightGroundAttenuation(layerNode)
     UpdateFillExtrusionFloodLightGroundAttenuationTransition(layerNode)

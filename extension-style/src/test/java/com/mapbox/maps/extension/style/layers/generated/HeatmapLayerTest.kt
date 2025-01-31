@@ -240,6 +240,37 @@ class HeatmapLayerTest {
     assertEquals(expectedValue.toString(), layer.heatmapColor?.toString())
     verify { style.getStyleLayerProperty("id", "heatmap-color") }
   }
+
+  @Test
+  fun heatmapColorUseThemeSetAfterInitialization() {
+    val layer = heatmapLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.heatmapColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "heatmap-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun heatmapColorUseThemeSet() {
+    val theme = "none"
+    val layer = heatmapLayer("id", "source") {
+      heatmapColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("heatmap-color-use-theme"))
+  }
+
+  @Test
+  fun heatmapColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = heatmapLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.heatmapColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "heatmap-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -749,6 +780,15 @@ class HeatmapLayerTest {
     assertEquals(expectedValue.toString(), HeatmapLayer.defaultHeatmapColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("heatmap", "heatmap-color") }
   }
+
+  @Test
+  fun defaultHeatmapColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, HeatmapLayer.defaultHeatmapColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("heatmap", "heatmap-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

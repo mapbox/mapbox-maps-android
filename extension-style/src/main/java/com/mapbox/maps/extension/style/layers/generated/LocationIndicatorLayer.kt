@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -609,6 +610,35 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Сolor theme override for [accuracyRadiusBorderColor].
+   */
+  @MapboxExperimental
+  val accuracyRadiusBorderColorUseTheme: String?
+    /**
+     * Get the AccuracyRadiusBorderColorUseTheme property
+     *
+     * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme] to get the default property.
+     *
+     * @return current AccuracyRadiusBorderColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("accuracy-radius-border-color-use-theme")
+    }
+
+  /**
+   * Set the AccuracyRadiusBorderColorUseTheme as String
+   *
+   * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme] to get the default property.
+   *
+   * @param accuracyRadiusBorderColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseTheme: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("accuracy-radius-border-color-use-theme", accuracyRadiusBorderColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
    */
   val accuracyRadiusColor: String?
@@ -736,6 +766,35 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   override fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     accuracyRadiusColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [accuracyRadiusColor].
+   */
+  @MapboxExperimental
+  val accuracyRadiusColorUseTheme: String?
+    /**
+     * Get the AccuracyRadiusColorUseTheme property
+     *
+     * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme] to get the default property.
+     *
+     * @return current AccuracyRadiusColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("accuracy-radius-color-use-theme")
+    }
+
+  /**
+   * Set the AccuracyRadiusColorUseTheme as String
+   *
+   * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme] to get the default property.
+   *
+   * @param accuracyRadiusColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun accuracyRadiusColorUseTheme(accuracyRadiusColorUseTheme: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("accuracy-radius-color-use-theme", accuracyRadiusColorUseTheme)
+    setProperty(propertyValue)
   }
 
   /**
@@ -1064,6 +1123,35 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   override fun emphasisCircleColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     emphasisCircleColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [emphasisCircleColor].
+   */
+  @MapboxExperimental
+  val emphasisCircleColorUseTheme: String?
+    /**
+     * Get the EmphasisCircleColorUseTheme property
+     *
+     * Use static method [LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme] to get the default property.
+     *
+     * @return current EmphasisCircleColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("emphasis-circle-color-use-theme")
+    }
+
+  /**
+   * Set the EmphasisCircleColorUseTheme as String
+   *
+   * Use static method [LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme] to get the default property.
+   *
+   * @param emphasisCircleColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun emphasisCircleColorUseTheme(emphasisCircleColorUseTheme: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("emphasis-circle-color-use-theme", emphasisCircleColorUseTheme)
+    setProperty(propertyValue)
   }
 
   /**
@@ -2076,6 +2164,18 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-border-color-transition").silentUnwrap()
 
     /**
+     * Default color theme for [accuracyRadiusBorderColor].
+     */
+    @MapboxExperimental
+    val defaultAccuracyRadiusBorderColorUseTheme: String?
+      /**
+       * Get default value of the AccuracyRadiusBorderColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-border-color-use-theme").silentUnwrap()
+
+    /**
      * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
      */
     val defaultAccuracyRadiusColor: String?
@@ -2141,6 +2241,18 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [accuracyRadiusColor].
+     */
+    @MapboxExperimental
+    val defaultAccuracyRadiusColorUseTheme: String?
+      /**
+       * Get default value of the AccuracyRadiusColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-use-theme").silentUnwrap()
 
     /**
      * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
@@ -2304,6 +2416,18 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [emphasisCircleColor].
+     */
+    @MapboxExperimental
+    val defaultEmphasisCircleColorUseTheme: String?
+      /**
+       * Get default value of the EmphasisCircleColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color-use-theme").silentUnwrap()
 
     /**
      * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
@@ -2834,6 +2958,14 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusBorderColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
+   * Set the accuracyRadiusBorderColorUseTheme as String for [accuracyRadiusBorderColor].
+   *
+   * @param accuracyRadiusBorderColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseTheme: String): LocationIndicatorLayer
+
+  /**
    * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
@@ -2869,6 +3001,14 @@ interface LocationIndicatorLayerDsl {
    * DSL for [accuracyRadiusColorTransition].
    */
   fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
+
+  /**
+   * Set the accuracyRadiusColorUseTheme as String for [accuracyRadiusColor].
+   *
+   * @param accuracyRadiusColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun accuracyRadiusColorUseTheme(accuracyRadiusColorUseTheme: String): LocationIndicatorLayer
 
   /**
    * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
@@ -2966,6 +3106,14 @@ interface LocationIndicatorLayerDsl {
    * DSL for [emphasisCircleColorTransition].
    */
   fun emphasisCircleColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
+
+  /**
+   * Set the emphasisCircleColorUseTheme as String for [emphasisCircleColor].
+   *
+   * @param emphasisCircleColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun emphasisCircleColorUseTheme(emphasisCircleColorUseTheme: String): LocationIndicatorLayer
 
   /**
    * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].

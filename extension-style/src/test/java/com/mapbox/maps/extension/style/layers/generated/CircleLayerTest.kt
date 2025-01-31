@@ -358,6 +358,37 @@ class CircleLayerTest {
     assertEquals(expectedValue.toString(), layer.circleColor?.toString())
     verify { style.getStyleLayerProperty("id", "circle-color") }
   }
+
+  @Test
+  fun circleColorUseThemeSetAfterInitialization() {
+    val layer = circleLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.circleColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "circle-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun circleColorUseThemeSet() {
+    val theme = "none"
+    val layer = circleLayer("id", "source") {
+      circleColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("circle-color-use-theme"))
+  }
+
+  @Test
+  fun circleColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.circleColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -963,6 +994,37 @@ class CircleLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.circleStrokeColor?.toString())
     verify { style.getStyleLayerProperty("id", "circle-stroke-color") }
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeSetAfterInitialization() {
+    val layer = circleLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.circleStrokeColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "circle-stroke-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeSet() {
+    val theme = "none"
+    val layer = circleLayer("id", "source") {
+      circleStrokeColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("circle-stroke-color-use-theme"))
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.circleStrokeColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-stroke-color-use-theme") }
   }
   // Expression Tests
 
@@ -1633,6 +1695,15 @@ class CircleLayerTest {
     assertEquals(expectedValue.toString(), CircleLayer.defaultCircleColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color") }
   }
+
+  @Test
+  fun defaultCircleColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, CircleLayer.defaultCircleColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -1906,6 +1977,15 @@ class CircleLayerTest {
     assertEquals(expectedValue.toString(), CircleLayer.defaultCircleStrokeColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-stroke-color") }
   }
+
+  @Test
+  fun defaultCircleStrokeColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, CircleLayer.defaultCircleStrokeColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-stroke-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

@@ -40,10 +40,12 @@ public class LineLayerState private constructor(
   initialLineBlur: DoubleValue,
   initialLineBlurTransition: Transition,
   initialLineBorderColor: ColorValue,
+  initialLineBorderColorUseTheme: StringValue,
   initialLineBorderColorTransition: Transition,
   initialLineBorderWidth: DoubleValue,
   initialLineBorderWidthTransition: Transition,
   initialLineColor: ColorValue,
+  initialLineColorUseTheme: StringValue,
   initialLineColorTransition: Transition,
   initialLineDasharray: DoubleListValue,
   initialLineDepthOcclusionFactor: DoubleValue,
@@ -53,6 +55,7 @@ public class LineLayerState private constructor(
   initialLineGapWidth: DoubleValue,
   initialLineGapWidthTransition: Transition,
   initialLineGradient: ColorValue,
+  initialLineGradientUseTheme: StringValue,
   initialLineOcclusionOpacity: DoubleValue,
   initialLineOcclusionOpacityTransition: Transition,
   initialLineOffset: DoubleValue,
@@ -64,6 +67,7 @@ public class LineLayerState private constructor(
   initialLineTranslateTransition: Transition,
   initialLineTranslateAnchor: LineTranslateAnchorValue,
   initialLineTrimColor: ColorValue,
+  initialLineTrimColorUseTheme: StringValue,
   initialLineTrimColorTransition: Transition,
   initialLineTrimFadeRange: DoubleRangeValue,
   initialLineTrimOffset: DoubleListValue,
@@ -92,10 +96,12 @@ public class LineLayerState private constructor(
     initialLineBlur = DoubleValue.INITIAL,
     initialLineBlurTransition = Transition.INITIAL,
     initialLineBorderColor = ColorValue.INITIAL,
+    initialLineBorderColorUseTheme = StringValue.INITIAL,
     initialLineBorderColorTransition = Transition.INITIAL,
     initialLineBorderWidth = DoubleValue.INITIAL,
     initialLineBorderWidthTransition = Transition.INITIAL,
     initialLineColor = ColorValue.INITIAL,
+    initialLineColorUseTheme = StringValue.INITIAL,
     initialLineColorTransition = Transition.INITIAL,
     initialLineDasharray = DoubleListValue.INITIAL,
     initialLineDepthOcclusionFactor = DoubleValue.INITIAL,
@@ -105,6 +111,7 @@ public class LineLayerState private constructor(
     initialLineGapWidth = DoubleValue.INITIAL,
     initialLineGapWidthTransition = Transition.INITIAL,
     initialLineGradient = ColorValue.INITIAL,
+    initialLineGradientUseTheme = StringValue.INITIAL,
     initialLineOcclusionOpacity = DoubleValue.INITIAL,
     initialLineOcclusionOpacityTransition = Transition.INITIAL,
     initialLineOffset = DoubleValue.INITIAL,
@@ -116,6 +123,7 @@ public class LineLayerState private constructor(
     initialLineTranslateTransition = Transition.INITIAL,
     initialLineTranslateAnchor = LineTranslateAnchorValue.INITIAL,
     initialLineTrimColor = ColorValue.INITIAL,
+    initialLineTrimColorUseTheme = StringValue.INITIAL,
     initialLineTrimColorTransition = Transition.INITIAL,
     initialLineTrimFadeRange = DoubleRangeValue.INITIAL,
     initialLineTrimOffset = DoubleListValue.INITIAL,
@@ -188,6 +196,11 @@ public class LineLayerState private constructor(
    */
   public var lineBorderColor: ColorValue by mutableStateOf(initialLineBorderColor)
   /**
+   *  Overrides applying of color theme for [lineBorderColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var lineBorderColorUseTheme: StringValue by mutableStateOf(initialLineBorderColorUseTheme)
+  /**
    *  Defines the transition of [lineBorderColor].
    */
   public var lineBorderColorTransition: Transition by mutableStateOf(initialLineBorderColorTransition)
@@ -203,6 +216,11 @@ public class LineLayerState private constructor(
    *  The color with which the line will be drawn. Default value: "#000000".
    */
   public var lineColor: ColorValue by mutableStateOf(initialLineColor)
+  /**
+   *  Overrides applying of color theme for [lineColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var lineColorUseTheme: StringValue by mutableStateOf(initialLineColorUseTheme)
   /**
    *  Defines the transition of [lineColor].
    */
@@ -239,6 +257,11 @@ public class LineLayerState private constructor(
    *  A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    */
   public var lineGradient: ColorValue by mutableStateOf(initialLineGradient)
+  /**
+   *  Overrides applying of color theme for [lineGradient] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var lineGradientUseTheme: StringValue by mutableStateOf(initialLineGradientUseTheme)
   /**
    *  Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
    */
@@ -284,6 +307,11 @@ public class LineLayerState private constructor(
    */
   @MapboxExperimental
   public var lineTrimColor: ColorValue by mutableStateOf(initialLineTrimColor)
+  /**
+   *  Overrides applying of color theme for [lineTrimColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var lineTrimColorUseTheme: StringValue by mutableStateOf(initialLineTrimColorUseTheme)
   /**
    *  Defines the transition of [lineTrimColor].
    */
@@ -404,6 +432,13 @@ public class LineLayerState private constructor(
     }
   }
   @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineBorderColorUseTheme(layerNode: LayerNode) {
+    if (lineBorderColorUseTheme.notInitial) {
+      layerNode.setProperty("line-border-color-use-theme", lineBorderColorUseTheme.value)
+    }
+  }
+  @Composable
   private fun UpdateLineBorderColorTransition(layerNode: LayerNode) {
     if (lineBorderColorTransition.notInitial) {
       layerNode.setProperty("line-border-color-transition", lineBorderColorTransition.value)
@@ -425,6 +460,13 @@ public class LineLayerState private constructor(
   private fun UpdateLineColor(layerNode: LayerNode) {
     if (lineColor.notInitial) {
       layerNode.setProperty("line-color", lineColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineColorUseTheme(layerNode: LayerNode) {
+    if (lineColorUseTheme.notInitial) {
+      layerNode.setProperty("line-color-use-theme", lineColorUseTheme.value)
     }
   }
   @Composable
@@ -479,6 +521,13 @@ public class LineLayerState private constructor(
   private fun UpdateLineGradient(layerNode: LayerNode) {
     if (lineGradient.notInitial) {
       layerNode.setProperty("line-gradient", lineGradient.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineGradientUseTheme(layerNode: LayerNode) {
+    if (lineGradientUseTheme.notInitial) {
+      layerNode.setProperty("line-gradient-use-theme", lineGradientUseTheme.value)
     }
   }
   @Composable
@@ -549,6 +598,13 @@ public class LineLayerState private constructor(
   private fun UpdateLineTrimColor(layerNode: LayerNode) {
     if (lineTrimColor.notInitial) {
       layerNode.setProperty("line-trim-color", lineTrimColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimColorUseTheme(layerNode: LayerNode) {
+    if (lineTrimColorUseTheme.notInitial) {
+      layerNode.setProperty("line-trim-color-use-theme", lineTrimColorUseTheme.value)
     }
   }
   @Composable
@@ -628,10 +684,12 @@ public class LineLayerState private constructor(
     UpdateLineBlur(layerNode)
     UpdateLineBlurTransition(layerNode)
     UpdateLineBorderColor(layerNode)
+    UpdateLineBorderColorUseTheme(layerNode)
     UpdateLineBorderColorTransition(layerNode)
     UpdateLineBorderWidth(layerNode)
     UpdateLineBorderWidthTransition(layerNode)
     UpdateLineColor(layerNode)
+    UpdateLineColorUseTheme(layerNode)
     UpdateLineColorTransition(layerNode)
     UpdateLineDasharray(layerNode)
     UpdateLineDepthOcclusionFactor(layerNode)
@@ -641,6 +699,7 @@ public class LineLayerState private constructor(
     UpdateLineGapWidth(layerNode)
     UpdateLineGapWidthTransition(layerNode)
     UpdateLineGradient(layerNode)
+    UpdateLineGradientUseTheme(layerNode)
     UpdateLineOcclusionOpacity(layerNode)
     UpdateLineOcclusionOpacityTransition(layerNode)
     UpdateLineOffset(layerNode)
@@ -652,6 +711,7 @@ public class LineLayerState private constructor(
     UpdateLineTranslateTransition(layerNode)
     UpdateLineTranslateAnchor(layerNode)
     UpdateLineTrimColor(layerNode)
+    UpdateLineTrimColorUseTheme(layerNode)
     UpdateLineTrimColorTransition(layerNode)
     UpdateLineTrimFadeRange(layerNode)
     UpdateLineTrimOffset(layerNode)

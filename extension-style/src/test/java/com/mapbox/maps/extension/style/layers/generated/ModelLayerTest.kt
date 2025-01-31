@@ -429,6 +429,37 @@ class ModelLayerTest {
     assertEquals(expectedValue.toString(), layer.modelColor?.toString())
     verify { style.getStyleLayerProperty("id", "model-color") }
   }
+
+  @Test
+  fun modelColorUseThemeSetAfterInitialization() {
+    val layer = modelLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.modelColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "model-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun modelColorUseThemeSet() {
+    val theme = "none"
+    val layer = modelLayer("id", "source") {
+      modelColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("model-color-use-theme"))
+  }
+
+  @Test
+  fun modelColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.modelColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "model-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -1937,6 +1968,15 @@ class ModelLayerTest {
     assertEquals(expectedValue.toString(), ModelLayer.defaultModelColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color") }
   }
+
+  @Test
+  fun defaultModelColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, ModelLayer.defaultModelColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

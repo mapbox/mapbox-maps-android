@@ -144,6 +144,26 @@ class AtmosphereTest {
   }
 
   @Test
+  fun colorUseThemeSet() {
+    val atmosphere = atmosphere { }
+    val theme = "none"
+    atmosphere.bindTo(style)
+    atmosphere.colorUseTheme(theme)
+    verify { style.setStyleAtmosphereProperty("color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun colorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(theme.toString(), atmosphere.colorUseTheme?.toString())
+    verify { style.getStyleAtmosphereProperty("color-use-theme") }
+  }
+
+  @Test
   fun colorTransitionSet() {
     val atmosphere = atmosphere {
       colorTransition(
@@ -314,6 +334,26 @@ class AtmosphereTest {
     assertEquals("rgba(0, 0, 0, 1)", atmosphere.highColor)
     assertEquals(Color.BLACK, atmosphere.highColorAsColorInt)
     verify { style.getStyleAtmosphereProperty("high-color") }
+  }
+
+  @Test
+  fun highColorUseThemeSet() {
+    val atmosphere = atmosphere { }
+    val theme = "none"
+    atmosphere.bindTo(style)
+    atmosphere.highColorUseTheme(theme)
+    verify { style.setStyleAtmosphereProperty("high-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun highColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(theme.toString(), atmosphere.highColorUseTheme?.toString())
+    verify { style.getStyleAtmosphereProperty("high-color-use-theme") }
   }
 
   @Test
@@ -727,6 +767,26 @@ class AtmosphereTest {
     assertEquals("rgba(0, 0, 0, 1)", atmosphere.spaceColor)
     assertEquals(Color.BLACK, atmosphere.spaceColorAsColorInt)
     verify { style.getStyleAtmosphereProperty("space-color") }
+  }
+
+  @Test
+  fun spaceColorUseThemeSet() {
+    val atmosphere = atmosphere { }
+    val theme = "none"
+    atmosphere.bindTo(style)
+    atmosphere.spaceColorUseTheme(theme)
+    verify { style.setStyleAtmosphereProperty("space-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun spaceColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(theme.toString(), atmosphere.spaceColorUseTheme?.toString())
+    verify { style.getStyleAtmosphereProperty("space-color-use-theme") }
   }
 
   @Test

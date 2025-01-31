@@ -32,6 +32,17 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun colorUseThemeDsl() {
+    val theme = "none"
+    val atmosphere = atmosphere {
+      colorUseTheme(theme)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(theme, atmosphere.colorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun colorTest() {
     val atmosphere = atmosphere {
       color("rgba(0, 0, 0, 1)")
@@ -101,6 +112,17 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun highColorUseThemeDsl() {
+    val theme = "none"
+    val atmosphere = atmosphere {
+      highColorUseTheme(theme)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(theme, atmosphere.highColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun highColorTest() {
     val atmosphere = atmosphere {
       highColor("rgba(0, 0, 0, 1)")
@@ -157,7 +179,6 @@ class AtmosphereTest : BaseStyleTest() {
     setupAtmosphere(atmosphere)
     assertEquals(transition, atmosphere.highColorTransition)
   }
-
   @Test
   @UiThreadTest
   fun horizonBlendTest() {
@@ -211,7 +232,6 @@ class AtmosphereTest : BaseStyleTest() {
     setupAtmosphere(atmosphere)
     assertEquals(transition, atmosphere.horizonBlendTransition)
   }
-
   @Test
   @UiThreadTest
   fun rangeTest() {
@@ -278,6 +298,17 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun spaceColorUseThemeDsl() {
+    val theme = "none"
+    val atmosphere = atmosphere {
+      spaceColorUseTheme(theme)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(theme, atmosphere.spaceColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun spaceColorTest() {
     val atmosphere = atmosphere {
       spaceColor("rgba(0, 0, 0, 1)")
@@ -334,7 +365,6 @@ class AtmosphereTest : BaseStyleTest() {
     setupAtmosphere(atmosphere)
     assertEquals(transition, atmosphere.spaceColorTransition)
   }
-
   @Test
   @UiThreadTest
   fun starIntensityTest() {
@@ -388,7 +418,6 @@ class AtmosphereTest : BaseStyleTest() {
     setupAtmosphere(atmosphere)
     assertEquals(transition, atmosphere.starIntensityTransition)
   }
-
   @Test
   @UiThreadTest
   fun verticalRangeTest() {

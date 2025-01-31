@@ -21,7 +21,6 @@ import org.junit.runner.RunWith
 @OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class SnowTest : BaseStyleTest() {
-
   @Test
   @UiThreadTest
   fun centerThinningTest() {
@@ -144,7 +143,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.colorTransition)
   }
-
   @Test
   @UiThreadTest
   fun densityTest() {
@@ -198,7 +196,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.densityTransition)
   }
-
   @Test
   @UiThreadTest
   fun directionTest() {
@@ -252,7 +249,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.directionTransition)
   }
-
   @Test
   @UiThreadTest
   fun flakeSizeTest() {
@@ -306,7 +302,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.flakeSizeTransition)
   }
-
   @Test
   @UiThreadTest
   fun intensityTest() {
@@ -360,7 +355,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.intensityTransition)
   }
-
   @Test
   @UiThreadTest
   fun opacityTest() {
@@ -414,7 +408,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.opacityTransition)
   }
-
   @Test
   @UiThreadTest
   fun vignetteTest() {

@@ -1134,6 +1134,35 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Сolor theme override for [fillExtrusionColor].
+   */
+  @MapboxExperimental
+  val fillExtrusionColorUseTheme: String?
+    /**
+     * Get the FillExtrusionColorUseTheme property
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionColorUseTheme] to get the default property.
+     *
+     * @return current FillExtrusionColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-color-use-theme")
+    }
+
+  /**
+   * Set the FillExtrusionColorUseTheme as String
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionColorUseTheme] to get the default property.
+   *
+   * @param fillExtrusionColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillExtrusionColorUseTheme(fillExtrusionColorUseTheme: String): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-color-use-theme", fillExtrusionColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
   val fillExtrusionCutoffFadeRange: Double?
@@ -1434,6 +1463,35 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   override fun fillExtrusionFloodLightColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionFloodLightColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [fillExtrusionFloodLightColor].
+   */
+  @MapboxExperimental
+  val fillExtrusionFloodLightColorUseTheme: String?
+    /**
+     * Get the FillExtrusionFloodLightColorUseTheme property
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorUseTheme] to get the default property.
+     *
+     * @return current FillExtrusionFloodLightColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-flood-light-color-use-theme")
+    }
+
+  /**
+   * Set the FillExtrusionFloodLightColorUseTheme as String
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorUseTheme] to get the default property.
+   *
+   * @param fillExtrusionFloodLightColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillExtrusionFloodLightColorUseTheme(fillExtrusionFloodLightColorUseTheme: String): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-flood-light-color-use-theme", fillExtrusionFloodLightColorUseTheme)
+    setProperty(propertyValue)
   }
 
   /**
@@ -3213,6 +3271,18 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-transition").silentUnwrap()
 
     /**
+     * Default color theme for [fillExtrusionColor].
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionColorUseTheme: String?
+      /**
+       * Get default value of the FillExtrusionColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-use-theme").silentUnwrap()
+
+    /**
      * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      */
     val defaultFillExtrusionCutoffFadeRange: Double?
@@ -3367,6 +3437,18 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [fillExtrusionFloodLightColor].
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionFloodLightColorUseTheme: String?
+      /**
+       * Get default value of the FillExtrusionFloodLightColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-color-use-theme").silentUnwrap()
 
     /**
      * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
@@ -4352,6 +4434,14 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
+   * Set the fillExtrusionColorUseTheme as String for [fillExtrusionColor].
+   *
+   * @param fillExtrusionColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillExtrusionColorUseTheme(fillExtrusionColorUseTheme: String): FillExtrusionLayer
+
+  /**
    * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange
@@ -4436,6 +4526,14 @@ interface FillExtrusionLayerDsl {
    */
   @MapboxExperimental
   fun fillExtrusionFloodLightColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
+
+  /**
+   * Set the fillExtrusionFloodLightColorUseTheme as String for [fillExtrusionFloodLightColor].
+   *
+   * @param fillExtrusionFloodLightColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillExtrusionFloodLightColorUseTheme(fillExtrusionFloodLightColorUseTheme: String): FillExtrusionLayer
 
   /**
    * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]

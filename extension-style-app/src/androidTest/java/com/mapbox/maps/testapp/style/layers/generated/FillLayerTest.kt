@@ -185,6 +185,17 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillColorUseTheme() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.fillColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillColorTransitionTest() {
     val transition = transitionOptions {
       duration(100)
@@ -364,6 +375,17 @@ class FillLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(Color.CYAN, layer.fillOutlineColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillOutlineColorUseTheme() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillOutlineColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.fillOutlineColorUseTheme)
   }
 
   @Test
@@ -606,6 +628,7 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillColor should not be null", FillLayer.defaultFillColor)
     assertNotNull("defaultFillColorAsExpression should not be null", FillLayer.defaultFillColorAsExpression)
     assertNotNull("defaultFillColorAsColorInt should not be null", FillLayer.defaultFillColorAsColorInt)
+    assertNotNull("defaultFillColorUseTheme should not be null", FillLayer.defaultFillColorUseTheme)
     assertNotNull("defaultFillColorTransition should not be null", FillLayer.defaultFillColorTransition)
     assertNotNull("defaultFillEmissiveStrength should not be null", FillLayer.defaultFillEmissiveStrength)
     assertNotNull("defaultFillEmissiveStrengthAsExpression should not be null", FillLayer.defaultFillEmissiveStrengthAsExpression)
@@ -616,6 +639,7 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillOutlineColor should not be null", FillLayer.defaultFillOutlineColor)
     assertNotNull("defaultFillOutlineColorAsExpression should not be null", FillLayer.defaultFillOutlineColorAsExpression)
     assertNotNull("defaultFillOutlineColorAsColorInt should not be null", FillLayer.defaultFillOutlineColorAsColorInt)
+    assertNotNull("defaultFillOutlineColorUseTheme should not be null", FillLayer.defaultFillOutlineColorUseTheme)
     assertNotNull("defaultFillOutlineColorTransition should not be null", FillLayer.defaultFillOutlineColorTransition)
     assertNotNull("defaultFillPattern should not be null", FillLayer.defaultFillPattern)
     assertNotNull("defaultFillPatternAsExpression should not be null", FillLayer.defaultFillPatternAsExpression)
@@ -642,9 +666,11 @@ class FillLayerTest : BaseStyleTest() {
     val fillSortKeyTestValue = 1.0
     val fillAntialiasTestValue = true
     val fillColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillColorUseThemeTestValue = "default"
     val fillEmissiveStrengthTestValue = 1.0
     val fillOpacityTestValue = 1.0
     val fillOutlineColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillOutlineColorUseThemeTestValue = "default"
     val fillPatternTestValue = "abc"
     val fillTranslateTestValue = listOf(0.0, 1.0)
     val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
@@ -661,9 +687,11 @@ class FillLayerTest : BaseStyleTest() {
       fillSortKey(fillSortKeyTestValue)
       fillAntialias(fillAntialiasTestValue)
       fillColor(fillColorTestValue)
+      fillColorUseTheme(fillColorUseThemeTestValue)
       fillEmissiveStrength(fillEmissiveStrengthTestValue)
       fillOpacity(fillOpacityTestValue)
       fillOutlineColor(fillOutlineColorTestValue)
+      fillOutlineColorUseTheme(fillOutlineColorUseThemeTestValue)
       fillPattern(fillPatternTestValue)
       fillTranslate(fillTranslateTestValue)
       fillTranslateAnchor(fillTranslateAnchorTestValue)
@@ -685,9 +713,11 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(fillSortKeyTestValue, cachedLayer.fillSortKey)
     assertEquals(fillAntialiasTestValue, cachedLayer.fillAntialias)
     assertEquals(fillColorTestValue, cachedLayer.fillColor)
+    assertEquals(fillColorUseThemeTestValue, cachedLayer.fillColorUseTheme)
     assertEquals(fillEmissiveStrengthTestValue, cachedLayer.fillEmissiveStrength)
     assertEquals(fillOpacityTestValue, cachedLayer.fillOpacity)
     assertEquals(fillOutlineColorTestValue, cachedLayer.fillOutlineColor)
+    assertEquals(fillOutlineColorUseThemeTestValue, cachedLayer.fillOutlineColorUseTheme)
     assertEquals(fillPatternTestValue, cachedLayer.fillPattern)
     assertEquals(fillTranslateTestValue, cachedLayer.fillTranslate)
     assertEquals(fillTranslateAnchorTestValue, cachedLayer.fillTranslateAnchor)

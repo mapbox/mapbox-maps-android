@@ -26,6 +26,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @OptIn(MapboxExperimental::class)
 public class HeatmapLayerState private constructor(
   initialHeatmapColor: ColorValue,
+  initialHeatmapColorUseTheme: StringValue,
   initialHeatmapIntensity: DoubleValue,
   initialHeatmapIntensityTransition: Transition,
   initialHeatmapOpacity: DoubleValue,
@@ -45,6 +46,7 @@ public class HeatmapLayerState private constructor(
    */
   public constructor() : this(
     initialHeatmapColor = ColorValue.INITIAL,
+    initialHeatmapColorUseTheme = StringValue.INITIAL,
     initialHeatmapIntensity = DoubleValue.INITIAL,
     initialHeatmapIntensityTransition = Transition.INITIAL,
     initialHeatmapOpacity = DoubleValue.INITIAL,
@@ -70,6 +72,11 @@ public class HeatmapLayerState private constructor(
    *  Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input. Default value: ["interpolate",["linear"],["heatmap-density"],0,"rgba(0, 0, 255, 0)",0.1,"royalblue",0.3,"cyan",0.5,"lime",0.7,"yellow",1,"red"].
    */
   public var heatmapColor: ColorValue by mutableStateOf(initialHeatmapColor)
+  /**
+   *  Overrides applying of color theme for [heatmapColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var heatmapColorUseTheme: StringValue by mutableStateOf(initialHeatmapColorUseTheme)
   /**
    *  Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level. Default value: 1. Minimum value: 0.
    */
@@ -123,6 +130,13 @@ public class HeatmapLayerState private constructor(
   private fun UpdateHeatmapColor(layerNode: LayerNode) {
     if (heatmapColor.notInitial) {
       layerNode.setProperty("heatmap-color", heatmapColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateHeatmapColorUseTheme(layerNode: LayerNode) {
+    if (heatmapColorUseTheme.notInitial) {
+      layerNode.setProperty("heatmap-color-use-theme", heatmapColorUseTheme.value)
     }
   }
   @Composable
@@ -201,6 +215,7 @@ public class HeatmapLayerState private constructor(
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
     UpdateHeatmapColor(layerNode)
+    UpdateHeatmapColorUseTheme(layerNode)
     UpdateHeatmapIntensity(layerNode)
     UpdateHeatmapIntensityTransition(layerNode)
     UpdateHeatmapOpacity(layerNode)

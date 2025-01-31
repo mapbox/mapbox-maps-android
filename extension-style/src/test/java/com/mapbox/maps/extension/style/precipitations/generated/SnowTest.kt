@@ -70,7 +70,6 @@ class SnowTest {
     assertEquals(1.0.toString(), snow.centerThinning!!.toString())
     verify { style.getStyleSnowProperty("center-thinning") }
   }
-
   // Expression Tests
 
   @Test
@@ -362,7 +361,6 @@ class SnowTest {
     assertEquals(1.0.toString(), snow.density!!.toString())
     verify { style.getStyleSnowProperty("density") }
   }
-
   // Expression Tests
 
   @Test
@@ -481,7 +479,6 @@ class SnowTest {
     assertEquals(listOf(0.0, 1.0).toString(), snow.direction!!.toString())
     verify { style.getStyleSnowProperty("direction") }
   }
-
   // Expression Tests
 
   @Test
@@ -600,7 +597,6 @@ class SnowTest {
     assertEquals(1.0.toString(), snow.flakeSize!!.toString())
     verify { style.getStyleSnowProperty("flake-size") }
   }
-
   // Expression Tests
 
   @Test
@@ -719,7 +715,6 @@ class SnowTest {
     assertEquals(1.0.toString(), snow.intensity!!.toString())
     verify { style.getStyleSnowProperty("intensity") }
   }
-
   // Expression Tests
 
   @Test
@@ -838,7 +833,6 @@ class SnowTest {
     assertEquals(1.0.toString(), snow.opacity!!.toString())
     verify { style.getStyleSnowProperty("opacity") }
   }
-
   // Expression Tests
 
   @Test
@@ -957,7 +951,6 @@ class SnowTest {
     assertEquals(1.0.toString(), snow.vignette!!.toString())
     verify { style.getStyleSnowProperty("vignette") }
   }
-
   // Expression Tests
 
   @Test

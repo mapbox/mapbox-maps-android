@@ -505,6 +505,35 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Сolor theme override for [rasterColor].
+   */
+  @MapboxExperimental
+  val rasterColorUseTheme: String?
+    /**
+     * Get the RasterColorUseTheme property
+     *
+     * Use static method [RasterLayer.defaultRasterColorUseTheme] to get the default property.
+     *
+     * @return current RasterColorUseTheme property as Expression
+     */
+    get() {
+      return getPropertyValue("raster-color-use-theme")
+    }
+
+  /**
+   * Set the RasterColorUseTheme as String
+   *
+   * Use static method [RasterLayer.defaultRasterColorUseTheme] to get the default property.
+   *
+   * @param rasterColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun rasterColorUseTheme(rasterColorUseTheme: String): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-color-use-theme", rasterColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    */
   val rasterColorMix: List<Double>?
@@ -1631,6 +1660,18 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-brightness-min-transition").silentUnwrap()
 
     /**
+     * Default color theme for [rasterColor].
+     */
+    @MapboxExperimental
+    val defaultRasterColorUseTheme: String?
+      /**
+       * Get default value of the RasterColor property as String
+       *
+       * @return Expression
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-use-theme").silentUnwrap()
+
+    /**
      * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
      */
     val defaultRasterColorMix: List<Double>?
@@ -2240,6 +2281,14 @@ interface RasterLayerDsl {
    * @param rasterColor value of rasterColor
    */
   fun rasterColor(rasterColor: Expression): RasterLayer
+
+  /**
+   * Set the rasterColorUseTheme as String for [rasterColor].
+   *
+   * @param rasterColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun rasterColorUseTheme(rasterColorUseTheme: String): RasterLayer
 
   /**
    * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].

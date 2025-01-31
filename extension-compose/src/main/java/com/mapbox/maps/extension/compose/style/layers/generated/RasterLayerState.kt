@@ -33,6 +33,7 @@ public class RasterLayerState private constructor(
   initialRasterBrightnessMin: DoubleValue,
   initialRasterBrightnessMinTransition: Transition,
   initialRasterColor: ColorValue,
+  initialRasterColorUseTheme: StringValue,
   initialRasterColorMix: DoubleListValue,
   initialRasterColorMixTransition: Transition,
   initialRasterColorRange: DoubleRangeValue,
@@ -68,6 +69,7 @@ public class RasterLayerState private constructor(
     initialRasterBrightnessMin = DoubleValue.INITIAL,
     initialRasterBrightnessMinTransition = Transition.INITIAL,
     initialRasterColor = ColorValue.INITIAL,
+    initialRasterColorUseTheme = StringValue.INITIAL,
     initialRasterColorMix = DoubleListValue.INITIAL,
     initialRasterColorMixTransition = Transition.INITIAL,
     initialRasterColorRange = DoubleRangeValue.INITIAL,
@@ -125,6 +127,11 @@ public class RasterLayerState private constructor(
    *  Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
    */
   public var rasterColor: ColorValue by mutableStateOf(initialRasterColor)
+  /**
+   *  Overrides applying of color theme for [rasterColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var rasterColorUseTheme: StringValue by mutableStateOf(initialRasterColorUseTheme)
   /**
    *  When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    */
@@ -255,6 +262,13 @@ public class RasterLayerState private constructor(
   private fun UpdateRasterColor(layerNode: LayerNode) {
     if (rasterColor.notInitial) {
       layerNode.setProperty("raster-color", rasterColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateRasterColorUseTheme(layerNode: LayerNode) {
+    if (rasterColorUseTheme.notInitial) {
+      layerNode.setProperty("raster-color-use-theme", rasterColorUseTheme.value)
     }
   }
   @Composable
@@ -406,6 +420,7 @@ public class RasterLayerState private constructor(
     UpdateRasterBrightnessMin(layerNode)
     UpdateRasterBrightnessMinTransition(layerNode)
     UpdateRasterColor(layerNode)
+    UpdateRasterColorUseTheme(layerNode)
     UpdateRasterColorMix(layerNode)
     UpdateRasterColorMixTransition(layerNode)
     UpdateRasterColorRange(layerNode)

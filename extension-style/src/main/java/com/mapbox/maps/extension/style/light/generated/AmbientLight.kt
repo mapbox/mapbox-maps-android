@@ -126,6 +126,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
   override fun colorTransition(block: StyleTransition.Builder.() -> Unit): AmbientLight = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
+
   /**
    * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    */
@@ -232,7 +233,6 @@ interface AmbientLightDslReceiver {
    * @param color as int
    */
   fun color(@ColorInt color: Int): AmbientLight
-
   /**
    * Color of the ambient light. Default value: "#ffffff".
    *

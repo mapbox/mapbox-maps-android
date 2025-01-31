@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -344,6 +345,35 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
+   * Сolor theme override for [hillshadeAccentColor].
+   */
+  @MapboxExperimental
+  val hillshadeAccentColorUseTheme: String?
+    /**
+     * Get the HillshadeAccentColorUseTheme property
+     *
+     * Use static method [HillshadeLayer.defaultHillshadeAccentColorUseTheme] to get the default property.
+     *
+     * @return current HillshadeAccentColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("hillshade-accent-color-use-theme")
+    }
+
+  /**
+   * Set the HillshadeAccentColorUseTheme as String
+   *
+   * Use static method [HillshadeLayer.defaultHillshadeAccentColorUseTheme] to get the default property.
+   *
+   * @param hillshadeAccentColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun hillshadeAccentColorUseTheme(hillshadeAccentColorUseTheme: String): HillshadeLayer = apply {
+    val propertyValue = PropertyValue("hillshade-accent-color-use-theme", hillshadeAccentColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    */
   val hillshadeEmissiveStrength: Double?
@@ -672,6 +702,35 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
+   * Сolor theme override for [hillshadeHighlightColor].
+   */
+  @MapboxExperimental
+  val hillshadeHighlightColorUseTheme: String?
+    /**
+     * Get the HillshadeHighlightColorUseTheme property
+     *
+     * Use static method [HillshadeLayer.defaultHillshadeHighlightColorUseTheme] to get the default property.
+     *
+     * @return current HillshadeHighlightColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("hillshade-highlight-color-use-theme")
+    }
+
+  /**
+   * Set the HillshadeHighlightColorUseTheme as String
+   *
+   * Use static method [HillshadeLayer.defaultHillshadeHighlightColorUseTheme] to get the default property.
+   *
+   * @param hillshadeHighlightColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun hillshadeHighlightColorUseTheme(hillshadeHighlightColorUseTheme: String): HillshadeLayer = apply {
+    val propertyValue = PropertyValue("hillshade-highlight-color-use-theme", hillshadeHighlightColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Direction of light source when map is rotated. Default value: "viewport".
    */
   val hillshadeIlluminationAnchor: HillshadeIlluminationAnchor?
@@ -935,6 +994,35 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
+   * Сolor theme override for [hillshadeShadowColor].
+   */
+  @MapboxExperimental
+  val hillshadeShadowColorUseTheme: String?
+    /**
+     * Get the HillshadeShadowColorUseTheme property
+     *
+     * Use static method [HillshadeLayer.defaultHillshadeShadowColorUseTheme] to get the default property.
+     *
+     * @return current HillshadeShadowColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("hillshade-shadow-color-use-theme")
+    }
+
+  /**
+   * Set the HillshadeShadowColorUseTheme as String
+   *
+   * Use static method [HillshadeLayer.defaultHillshadeShadowColorUseTheme] to get the default property.
+   *
+   * @param hillshadeShadowColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun hillshadeShadowColorUseTheme(hillshadeShadowColorUseTheme: String): HillshadeLayer = apply {
+    val propertyValue = PropertyValue("hillshade-shadow-color-use-theme", hillshadeShadowColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Get the type of this layer
    *
    * @return Type of the layer as [String]
@@ -1059,6 +1147,18 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [hillshadeAccentColor].
+     */
+    @MapboxExperimental
+    val defaultHillshadeAccentColorUseTheme: String?
+      /**
+       * Get default value of the HillshadeAccentColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-use-theme").silentUnwrap()
 
     /**
      * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
@@ -1224,6 +1324,18 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-highlight-color-transition").silentUnwrap()
 
     /**
+     * Default color theme for [hillshadeHighlightColor].
+     */
+    @MapboxExperimental
+    val defaultHillshadeHighlightColorUseTheme: String?
+      /**
+       * Get default value of the HillshadeHighlightColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-highlight-color-use-theme").silentUnwrap()
+
+    /**
      * Direction of light source when map is rotated. Default value: "viewport".
      */
     val defaultHillshadeIlluminationAnchor: HillshadeIlluminationAnchor?
@@ -1366,6 +1478,18 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-shadow-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [hillshadeShadowColor].
+     */
+    @MapboxExperimental
+    val defaultHillshadeShadowColorUseTheme: String?
+      /**
+       * Get default value of the HillshadeShadowColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-shadow-color-use-theme").silentUnwrap()
   }
 }
 
@@ -1469,6 +1593,14 @@ interface HillshadeLayerDsl {
   fun hillshadeAccentColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
+   * Set the hillshadeAccentColorUseTheme as String for [hillshadeAccentColor].
+   *
+   * @param hillshadeAccentColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun hillshadeAccentColorUseTheme(hillshadeAccentColorUseTheme: String): HillshadeLayer
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
    *
    * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength
@@ -1566,6 +1698,14 @@ interface HillshadeLayerDsl {
   fun hillshadeHighlightColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
+   * Set the hillshadeHighlightColorUseTheme as String for [hillshadeHighlightColor].
+   *
+   * @param hillshadeHighlightColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun hillshadeHighlightColorUseTheme(hillshadeHighlightColorUseTheme: String): HillshadeLayer
+
+  /**
    * Direction of light source when map is rotated. Default value: "viewport".
    *
    * @param hillshadeIlluminationAnchor value of hillshadeIlluminationAnchor
@@ -1629,6 +1769,14 @@ interface HillshadeLayerDsl {
    * DSL for [hillshadeShadowColorTransition].
    */
   fun hillshadeShadowColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
+
+  /**
+   * Set the hillshadeShadowColorUseTheme as String for [hillshadeShadowColor].
+   *
+   * @param hillshadeShadowColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun hillshadeShadowColorUseTheme(hillshadeShadowColorUseTheme: String): HillshadeLayer
 }
 
 /**

@@ -27,6 +27,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 public class RasterParticleLayerState private constructor(
   initialRasterParticleArrayBand: StringValue,
   initialRasterParticleColor: ColorValue,
+  initialRasterParticleColorUseTheme: StringValue,
   initialRasterParticleCount: LongValue,
   initialRasterParticleFadeOpacityFactor: DoubleValue,
   initialRasterParticleFadeOpacityFactorTransition: Transition,
@@ -47,6 +48,7 @@ public class RasterParticleLayerState private constructor(
   public constructor() : this(
     initialRasterParticleArrayBand = StringValue.INITIAL,
     initialRasterParticleColor = ColorValue.INITIAL,
+    initialRasterParticleColorUseTheme = StringValue.INITIAL,
     initialRasterParticleCount = LongValue.INITIAL,
     initialRasterParticleFadeOpacityFactor = DoubleValue.INITIAL,
     initialRasterParticleFadeOpacityFactorTransition = Transition.INITIAL,
@@ -78,6 +80,11 @@ public class RasterParticleLayerState private constructor(
    */
   @MapboxExperimental
   public var rasterParticleColor: ColorValue by mutableStateOf(initialRasterParticleColor)
+  /**
+   *  Overrides applying of color theme for [rasterParticleColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var rasterParticleColorUseTheme: StringValue by mutableStateOf(initialRasterParticleColorUseTheme)
   /**
    *  Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    */
@@ -146,6 +153,13 @@ public class RasterParticleLayerState private constructor(
   private fun UpdateRasterParticleColor(layerNode: LayerNode) {
     if (rasterParticleColor.notInitial) {
       layerNode.setProperty("raster-particle-color", rasterParticleColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateRasterParticleColorUseTheme(layerNode: LayerNode) {
+    if (rasterParticleColorUseTheme.notInitial) {
+      layerNode.setProperty("raster-particle-color-use-theme", rasterParticleColorUseTheme.value)
     }
   }
   @Composable
@@ -232,6 +246,7 @@ public class RasterParticleLayerState private constructor(
   internal fun UpdateProperties(layerNode: LayerNode) {
     UpdateRasterParticleArrayBand(layerNode)
     UpdateRasterParticleColor(layerNode)
+    UpdateRasterParticleColorUseTheme(layerNode)
     UpdateRasterParticleCount(layerNode)
     UpdateRasterParticleFadeOpacityFactor(layerNode)
     UpdateRasterParticleFadeOpacityFactorTransition(layerNode)

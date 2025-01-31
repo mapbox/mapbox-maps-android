@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -318,6 +319,35 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * Сolor theme override for [skyAtmosphereColor].
+   */
+  @MapboxExperimental
+  val skyAtmosphereColorUseTheme: String?
+    /**
+     * Get the SkyAtmosphereColorUseTheme property
+     *
+     * Use static method [SkyLayer.defaultSkyAtmosphereColorUseTheme] to get the default property.
+     *
+     * @return current SkyAtmosphereColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("sky-atmosphere-color-use-theme")
+    }
+
+  /**
+   * Set the SkyAtmosphereColorUseTheme as String
+   *
+   * Use static method [SkyLayer.defaultSkyAtmosphereColorUseTheme] to get the default property.
+   *
+   * @param skyAtmosphereColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun skyAtmosphereColorUseTheme(skyAtmosphereColorUseTheme: String): SkyLayer = apply {
+    val propertyValue = PropertyValue("sky-atmosphere-color-use-theme", skyAtmosphereColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer. Default value: "white".
    */
   val skyAtmosphereHaloColor: String?
@@ -410,6 +440,35 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   override fun skyAtmosphereHaloColor(@ColorInt skyAtmosphereHaloColor: Int): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-halo-color", colorIntToRgbaExpression(skyAtmosphereHaloColor))
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [skyAtmosphereHaloColor].
+   */
+  @MapboxExperimental
+  val skyAtmosphereHaloColorUseTheme: String?
+    /**
+     * Get the SkyAtmosphereHaloColorUseTheme property
+     *
+     * Use static method [SkyLayer.defaultSkyAtmosphereHaloColorUseTheme] to get the default property.
+     *
+     * @return current SkyAtmosphereHaloColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("sky-atmosphere-halo-color-use-theme")
+    }
+
+  /**
+   * Set the SkyAtmosphereHaloColorUseTheme as String
+   *
+   * Use static method [SkyLayer.defaultSkyAtmosphereHaloColorUseTheme] to get the default property.
+   *
+   * @param skyAtmosphereHaloColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun skyAtmosphereHaloColorUseTheme(skyAtmosphereHaloColorUseTheme: String): SkyLayer = apply {
+    val propertyValue = PropertyValue("sky-atmosphere-halo-color-use-theme", skyAtmosphereHaloColorUseTheme)
     setProperty(propertyValue)
   }
 
@@ -567,6 +626,35 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   override fun skyGradient(skyGradient: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-gradient", skyGradient)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [skyGradient].
+   */
+  @MapboxExperimental
+  val skyGradientUseTheme: String?
+    /**
+     * Get the SkyGradientUseTheme property
+     *
+     * Use static method [SkyLayer.defaultSkyGradientUseTheme] to get the default property.
+     *
+     * @return current SkyGradientUseTheme property as Expression
+     */
+    get() {
+      return getPropertyValue("sky-gradient-use-theme")
+    }
+
+  /**
+   * Set the SkyGradientUseTheme as String
+   *
+   * Use static method [SkyLayer.defaultSkyGradientUseTheme] to get the default property.
+   *
+   * @param skyGradientUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun skyGradientUseTheme(skyGradientUseTheme: String): SkyLayer = apply {
+    val propertyValue = PropertyValue("sky-gradient-use-theme", skyGradientUseTheme)
     setProperty(propertyValue)
   }
 
@@ -983,6 +1071,18 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * Default color theme for [skyAtmosphereColor].
+     */
+    @MapboxExperimental
+    val defaultSkyAtmosphereColorUseTheme: String?
+      /**
+       * Get default value of the SkyAtmosphereColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-atmosphere-color-use-theme").silentUnwrap()
+
+    /**
      * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer. Default value: "white".
      */
     val defaultSkyAtmosphereHaloColor: String?
@@ -1037,6 +1137,18 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
         }
         return null
       }
+
+    /**
+     * Default color theme for [skyAtmosphereHaloColor].
+     */
+    @MapboxExperimental
+    val defaultSkyAtmosphereHaloColorUseTheme: String?
+      /**
+       * Get default value of the SkyAtmosphereHaloColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-atmosphere-halo-color-use-theme").silentUnwrap()
 
     /**
      * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyAtmosphereSun is in degrees.
@@ -1126,6 +1238,18 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       get() {
         return StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-gradient").silentUnwrap()
       }
+
+    /**
+     * Default color theme for [skyGradient].
+     */
+    @MapboxExperimental
+    val defaultSkyGradientUseTheme: String?
+      /**
+       * Get default value of the SkyGradient property as String
+       *
+       * @return Expression
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-gradient-use-theme").silentUnwrap()
 
     /**
      * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyGradientCenter is in degrees.
@@ -1381,6 +1505,14 @@ interface SkyLayerDsl {
   fun skyAtmosphereColor(@ColorInt skyAtmosphereColor: Int): SkyLayer
 
   /**
+   * Set the skyAtmosphereColorUseTheme as String for [skyAtmosphereColor].
+   *
+   * @param skyAtmosphereColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun skyAtmosphereColorUseTheme(skyAtmosphereColorUseTheme: String): SkyLayer
+
+  /**
    * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer. Default value: "white".
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
@@ -1400,6 +1532,14 @@ interface SkyLayerDsl {
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
   fun skyAtmosphereHaloColor(@ColorInt skyAtmosphereHaloColor: Int): SkyLayer
+
+  /**
+   * Set the skyAtmosphereHaloColorUseTheme as String for [skyAtmosphereHaloColor].
+   *
+   * @param skyAtmosphereHaloColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun skyAtmosphereHaloColorUseTheme(skyAtmosphereHaloColorUseTheme: String): SkyLayer
 
   /**
    * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyAtmosphereSun is in degrees.
@@ -1435,6 +1575,14 @@ interface SkyLayerDsl {
    * @param skyGradient value of skyGradient
    */
   fun skyGradient(skyGradient: Expression): SkyLayer
+
+  /**
+   * Set the skyGradientUseTheme as String for [skyGradient].
+   *
+   * @param skyGradientUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun skyGradientUseTheme(skyGradientUseTheme: String): SkyLayer
 
   /**
    * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyGradientCenter is in degrees.

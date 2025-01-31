@@ -388,6 +388,37 @@ class LocationIndicatorLayerTest {
     assertEquals(expectedValue.toString(), layer.accuracyRadiusBorderColor?.toString())
     verify { style.getStyleLayerProperty("id", "accuracy-radius-border-color") }
   }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeSetAfterInitialization() {
+    val layer = locationIndicatorLayer("id") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.accuracyRadiusBorderColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "accuracy-radius-border-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeSet() {
+    val theme = "none"
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusBorderColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("accuracy-radius-border-color-use-theme"))
+  }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.accuracyRadiusBorderColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-border-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -536,6 +567,37 @@ class LocationIndicatorLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.accuracyRadiusColor?.toString())
     verify { style.getStyleLayerProperty("id", "accuracy-radius-color") }
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeSetAfterInitialization() {
+    val layer = locationIndicatorLayer("id") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.accuracyRadiusColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "accuracy-radius-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeSet() {
+    val theme = "none"
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("accuracy-radius-color-use-theme"))
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.accuracyRadiusColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-color-use-theme") }
   }
   // Expression Tests
 
@@ -899,6 +961,37 @@ class LocationIndicatorLayerTest {
     val expectedValue = "rgba(0, 0, 0, 1)"
     assertEquals(expectedValue.toString(), layer.emphasisCircleColor?.toString())
     verify { style.getStyleLayerProperty("id", "emphasis-circle-color") }
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeSetAfterInitialization() {
+    val layer = locationIndicatorLayer("id") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.emphasisCircleColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "emphasis-circle-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeSet() {
+    val theme = "none"
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("emphasis-circle-color-use-theme"))
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.emphasisCircleColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "emphasis-circle-color-use-theme") }
   }
   // Expression Tests
 
@@ -2016,6 +2109,15 @@ class LocationIndicatorLayerTest {
     assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultAccuracyRadiusBorderColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-border-color") }
   }
+
+  @Test
+  fun defaultAccuracyRadiusBorderColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-border-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -2091,6 +2193,15 @@ class LocationIndicatorLayerTest {
     assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultAccuracyRadiusColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color") }
   }
+
+  @Test
+  fun defaultAccuracyRadiusColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test
@@ -2254,6 +2365,15 @@ class LocationIndicatorLayerTest {
     assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultEmphasisCircleColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color") }
   }
+
+  @Test
+  fun defaultEmphasisCircleColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

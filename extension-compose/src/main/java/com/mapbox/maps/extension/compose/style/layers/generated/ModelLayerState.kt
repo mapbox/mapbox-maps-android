@@ -33,6 +33,7 @@ public class ModelLayerState private constructor(
   initialModelAmbientOcclusionIntensityTransition: Transition,
   initialModelCastShadows: BooleanValue,
   initialModelColor: ColorValue,
+  initialModelColorUseTheme: StringValue,
   initialModelColorTransition: Transition,
   initialModelColorMixIntensity: DoubleValue,
   initialModelColorMixIntensityTransition: Transition,
@@ -71,6 +72,7 @@ public class ModelLayerState private constructor(
     initialModelAmbientOcclusionIntensityTransition = Transition.INITIAL,
     initialModelCastShadows = BooleanValue.INITIAL,
     initialModelColor = ColorValue.INITIAL,
+    initialModelColorUseTheme = StringValue.INITIAL,
     initialModelColorTransition = Transition.INITIAL,
     initialModelColorMixIntensity = DoubleValue.INITIAL,
     initialModelColorMixIntensityTransition = Transition.INITIAL,
@@ -132,6 +134,11 @@ public class ModelLayerState private constructor(
    */
   @MapboxExperimental
   public var modelColor: ColorValue by mutableStateOf(initialModelColor)
+  /**
+   *  Overrides applying of color theme for [modelColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var modelColorUseTheme: StringValue by mutableStateOf(initialModelColorUseTheme)
   /**
    *  Defines the transition of [modelColor].
    */
@@ -299,6 +306,13 @@ public class ModelLayerState private constructor(
   private fun UpdateModelColor(layerNode: LayerNode) {
     if (modelColor.notInitial) {
       layerNode.setProperty("model-color", modelColor.value)
+    }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateModelColorUseTheme(layerNode: LayerNode) {
+    if (modelColorUseTheme.notInitial) {
+      layerNode.setProperty("model-color-use-theme", modelColorUseTheme.value)
     }
   }
   @Composable
@@ -493,6 +507,7 @@ public class ModelLayerState private constructor(
     UpdateModelAmbientOcclusionIntensityTransition(layerNode)
     UpdateModelCastShadows(layerNode)
     UpdateModelColor(layerNode)
+    UpdateModelColorUseTheme(layerNode)
     UpdateModelColorTransition(layerNode)
     UpdateModelColorMixIntensity(layerNode)
     UpdateModelColorMixIntensityTransition(layerNode)

@@ -85,6 +85,37 @@ class BackgroundLayerTest {
     assertEquals(expectedValue.toString(), layer.backgroundColor?.toString())
     verify { style.getStyleLayerProperty("id", "background-color") }
   }
+
+  @Test
+  fun backgroundColorUseThemeSetAfterInitialization() {
+    val layer = backgroundLayer("id") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.backgroundColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "background-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun backgroundColorUseThemeSet() {
+    val theme = "none"
+    val layer = backgroundLayer("id") {
+      backgroundColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("background-color-use-theme"))
+  }
+
+  @Test
+  fun backgroundColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.backgroundColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "background-color-use-theme") }
+  }
   // Expression Tests
 
   @Test
@@ -633,6 +664,15 @@ class BackgroundLayerTest {
     assertEquals(expectedValue.toString(), BackgroundLayer.defaultBackgroundColor?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color") }
   }
+
+  @Test
+  fun defaultBackgroundColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, BackgroundLayer.defaultBackgroundColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-use-theme") }
+  }
+
   // Expression Tests
 
   @Test

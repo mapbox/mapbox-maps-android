@@ -48,6 +48,7 @@ class DirectionalLightTest : BaseStyleTest() {
     setupLight(ambientLight { }, light)
     assertEquals(Color.CYAN, light.colorAsColorInt)
   }
+
   @Test
   @UiThreadTest
   fun colorTest() {
@@ -248,26 +249,6 @@ class DirectionalLightTest : BaseStyleTest() {
     }
     setupLight(ambientLight { }, light)
     assertEquals(transition, light.shadowIntensityTransition)
-  }
-  @Test
-  @UiThreadTest
-  fun shadowQualityTest() {
-    val light = directionalLight {
-      shadowQuality(1.0)
-    }
-    setupLight(ambientLight { }, light)
-    assertEquals(1.0, light.shadowQuality!!, 1E-5)
-  }
-  // Add Expression Test
-  @Test
-  @UiThreadTest
-  fun shadowQualityAsExpressionTest() {
-    val expression = literal(1.0)
-    val light = directionalLight {
-      shadowQuality(expression)
-    }
-    setupLight(ambientLight { }, light)
-    assertEquals(1.0, light.shadowQualityAsExpression?.contents as Double, 1E-5)
   }
 }
 // End of generated file.
