@@ -2,6 +2,16 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 11.9.2
+## Bug fixes 🐞
+* Fix exception while parsing the config expression.
+* Fix app crash when autoMaxZoom=true.
+* Fixing parsing raster sprite images with float stretch/content coordinates.
+* Fix color theme data decoding.
+* Fix glyph loading issue when incorrect glyph url is used.
+
+## Dependencies
+* Update gl-native to v11.9.3.
 
 # 11.9.1 January 20, 2025
 ## Bug fixes 🐞
