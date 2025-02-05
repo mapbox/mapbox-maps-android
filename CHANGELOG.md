@@ -6,6 +6,16 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Fix wrong layer order when using `aboveLayer(..)` composable function.
 
+# 11.9.2
+## Bug fixes 🐞
+* Fix exception while parsing the config expression.
+* Fix app crash when autoMaxZoom=true.
+* Fixing parsing raster sprite images with float stretch/content coordinates.
+* Fix color theme data decoding.
+* Fix glyph loading issue when incorrect glyph url is used.
+
+## Dependencies
+* Update gl-native to v11.9.3.
 
 # 11.10.0-rc.1 January 31, 2025
 ## Features ✨ and improvements 🏁
