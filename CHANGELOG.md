@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* [compose] Fix wrong layer order when using `aboveLayer(..)` composable function.
 
 
 # 11.10.0-rc.1 January 31, 2025

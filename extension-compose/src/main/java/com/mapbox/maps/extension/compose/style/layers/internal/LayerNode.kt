@@ -77,8 +77,8 @@ internal class LayerNode(
     }
   }
 
-  override fun onMoved(parent: MapNode, from: Int, to: Int) {
-    logD(TAG, "onMoved: from $from to $to")
+  override fun onMoved(parent: MapNode) {
+    logD(TAG, "onMoved")
     dispatchWhenStyleDataLoaded {
       it.repositionCurrentNode(parent)
     }

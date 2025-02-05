@@ -14,7 +14,7 @@ internal abstract class BaseAnnotationNode(private val mapboxStyleManager: Mapbo
   }
 
   @CallSuper
-  override fun onMoved(parent: MapNode, from: Int, to: Int) {
+  override fun onMoved(parent: MapNode) {
     mapboxStyleManager.repositionCurrentNode(parent)
   }
 

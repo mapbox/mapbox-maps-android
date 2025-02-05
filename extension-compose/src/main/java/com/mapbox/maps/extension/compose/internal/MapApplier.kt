@@ -1,6 +1,8 @@
 package com.mapbox.maps.extension.compose.internal
 
 import androidx.compose.runtime.AbstractApplier
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 import com.mapbox.maps.MapView
 import com.mapbox.maps.logD
 
@@ -12,20 +14,17 @@ internal abstract class MapNode {
   val children = mutableListOf<MapNode>()
 
   /**
-   * Invoked when the [MapNode] is attached to the node tree.
+   * Invoked when this [MapNode] is attached to the node tree.
    */
   open fun onAttached(parent: MapNode) {}
 
   /**
-   * Invoked when the [MapNode] is moved inside the node tree.
-   *
-   * @param from original position
-   * @param to the target position
+   * Invoked when this [MapNode] is moved inside the node tree.
    */
-  open fun onMoved(parent: MapNode, from: Int, to: Int) {}
+  open fun onMoved(parent: MapNode) {}
 
   /**
-   * Invoked when the [MapNode] is removed from the node tree.
+   * Invoked when this [MapNode] is removed from the node tree.
    */
   open fun onRemoved(parent: MapNode) {}
 
@@ -90,12 +89,10 @@ internal class MapApplier(
   override fun move(from: Int, to: Int, count: Int) {
     logD(TAG, "move: $from, $to, $count")
     current.children.move(from, to, count)
-    repeat(count) { offset ->
-      current.children[to + offset - if (to > from) count else 0].onMoved(
-        parent = current,
-        from = from + offset,
-        to = to + offset - if (to > from) count else 0
-      )
+
+    // Let's move the children nodes in the tree
+    current.children.forEach { child ->
+      child.onMoved(current)
     }
     printNodesTree("MapNodeMoved")
   }
@@ -110,7 +107,13 @@ internal class MapApplier(
   }
 
   private fun printNodesTree(tag: String = TAG) {
-    walkChildren(tag = tag, node = root)
+    // We don't know how many nodes are in the tree, so we only walk the tree when the logging
+    // level is DEBUG.
+    LogConfiguration.getLoggingLevel(tag)?.let {
+      if (it.ordinal <= LoggingLevel.DEBUG.ordinal) {
+        walkChildren(tag = tag, node = root)
+      }
+    }
   }
 
   private fun walkChildren(tag: String = TAG, prefix: String = "\t", node: MapNode) {

@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.compose.internal
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.extension.compose.style.LayerPositionedContent
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.logW
 
@@ -18,7 +19,8 @@ internal interface LayerPositionAwareNode {
    * Reposition all the layers within the current node according to [getRelativePositionInfo].
    */
   fun MapboxStyleManager.repositionCurrentNode(parent: MapNode) {
-    repositionLayersForCurrentNode(getRelativePositionInfo(parent))
+    val layerPosition = (parent as? StyleLayerPositionNode)?.layerPosition
+    repositionLayersForCurrentNode(getRelativePositionInfo(parent, layerPosition))
   }
 
   /**
@@ -52,10 +54,35 @@ internal interface LayerPositionAwareNode {
 
   /**
    * Search the children of the parent node, and see if there's any other [LayerPositionAwareNode]
-   * which is on top of the current node, construct the [LayerPosition] with below layer id, so the
+   * which is rendered on top of this one (for [LayerPositionedContent.belowLayer]) or below (for [LayerPositionedContent.aboveLayer])
+   * of the current node, construct the [LayerPosition] with the found layer id, so the
    * current layer is inserted at the correct position and consistent with the node tree.
    *
-   * If there's nothing above current node, take the [targetLayerPosition] as it's position.
+   * If there's nothing above/below current node, take the [targetLayerPosition] as its insertion position.
+   *
+   * For example, the following compose block:
+   * ```
+   * aboveLayer("buildings") {
+   *  layerPositionAwareNode_1
+   *  layerPositionAwareNode_2
+   *  layerPositionAwareNode_3
+   * }
+   * ```
+   * Should be rendered in the map in the following order (top visible layer to bottom layer):
+   * ```
+   *  layerPositionAwareNode_3
+   *  layerPositionAwareNode_2
+   *  layerPositionAwareNode_1
+   *  "buildings"
+   * ```
+   *
+   * Meaning that the relative position of the layers should be:
+   * ```
+   * layerPositionAwareNode_3 above layerPositionAwareNode_2
+   * layerPositionAwareNode_2 above layerPositionAwareNode_1
+   * layerPositionAwareNode_1 above "buildings"
+   * ```
+   *
    *
    * @param parent the parent node of the node to be positioned.
    * @param targetLayerPosition the optional target layer position, useful in case of [StyleLayerPositionNode].
@@ -63,16 +90,25 @@ internal interface LayerPositionAwareNode {
   fun getRelativePositionInfo(
     parent: MapNode,
     targetLayerPosition: LayerPosition? = null
-  ): LayerPosition? {
-    return with(parent.children.filterIsInstance<LayerPositionAwareNode>()) {
-      elementAtOrNull(indexOf(this@LayerPositionAwareNode) + 1)?.getLayerIds()?.firstOrNull()
-        ?.let { belowLayerId ->
-          LayerPosition(
-            /* above = */ null,
-            /* below = */ belowLayerId,
-            /* at = */ null
-          )
-        } ?: targetLayerPosition
+  ): LayerPosition? =
+    parent.children.filterIsInstance<LayerPositionAwareNode>().let { children ->
+      val me = this@LayerPositionAwareNode
+      val isAbove = targetLayerPosition?.above != null
+      val anchorLayerIdx = children.indexOf(me) + if (isAbove) {
+        -1
+      } else {
+        1
+      }
+      val anchorLayerNode = children.elementAtOrNull(anchorLayerIdx)
+      return if (anchorLayerNode == null) {
+        targetLayerPosition
+      } else {
+        val anchorLayerId = anchorLayerNode.getLayerIds().first()
+        LayerPosition(
+          /* above = */ if (isAbove) anchorLayerId else null,
+          /* below = */ if (isAbove) null else anchorLayerId,
+          /* at = */ null
+        )
+      }
     }
-  }
 }
