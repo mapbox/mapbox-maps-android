@@ -7,13 +7,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FilterChip
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
@@ -24,7 +30,10 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.atmosphere.generated.rememberAtmosphereState
 import com.mapbox.maps.extension.compose.style.rememberColorTheme
 import com.mapbox.maps.extension.compose.style.rememberStyleColorTheme
 import com.mapbox.maps.extension.compose.style.rememberStyleState
@@ -36,7 +45,7 @@ import com.mapbox.maps.extension.style.color.colorTheme
  */
 public class ColorThemeActivity : ComponentActivity() {
 
-  @OptIn(MapboxExperimental::class)
+  @OptIn(MapboxExperimental::class, ExperimentalMaterialApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -48,7 +57,22 @@ public class ColorThemeActivity : ComponentActivity() {
       var currentColorTheme by remember {
         mutableStateOf(base64ColorTheme)
       }
-      var currentStyleColorTheme = rememberStyleColorTheme(currentColorTheme)
+      val currentStyleColorTheme = rememberStyleColorTheme(currentColorTheme)
+      var atmosphereUseTheme by remember {
+        mutableStateOf(true)
+      }
+      val initialAtmosphereState = rememberAtmosphereState {
+        color = ColorValue(Color.Green)
+      }
+      val currentAtmosphereState by remember {
+        mutableStateOf(initialAtmosphereState)
+      }
+
+      // When state is toggled, update atmosphere state with correct string value.
+      // Setting it to "none" means that color theme will not affect atmosphere.
+      currentAtmosphereState.colorUseTheme = StringValue(
+        if (atmosphereUseTheme) "default" else "none"
+      )
 
       MapboxMapComposeTheme {
         ExampleScaffold(
@@ -82,6 +106,26 @@ public class ColorThemeActivity : ComponentActivity() {
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Reset")
               }
+
+              FilterChip(
+                onClick = {
+                  atmosphereUseTheme = !atmosphereUseTheme
+                },
+                content = {
+                  Text("Use theme color for Atmosphere")
+                },
+                selected = atmosphereUseTheme,
+                leadingIcon = if (atmosphereUseTheme) {
+                  {
+                    Icon(
+                      imageVector = Icons.Filled.Done,
+                      contentDescription = null,
+                    )
+                  }
+                } else {
+                  null
+                },
+              )
             }
           }
         ) {
@@ -95,11 +139,11 @@ public class ColorThemeActivity : ComponentActivity() {
                 style = Style.MAPBOX_STREETS,
                 styleState = rememberStyleState {
                   styleColorTheme = currentStyleColorTheme
+                  atmosphereState = currentAtmosphereState
                 },
               )
             }
-          ) {
-          }
+          )
         }
       }
     }
@@ -124,7 +168,7 @@ public class ColorThemeActivity : ComponentActivity() {
     private val CENTER = Point.fromLngLat(LONGITUDE, LATITUDE)
     private val START_CAMERA_POSITION = cameraOptions {
       center(CENTER)
-      zoom(11.0)
+      zoom(2.0)
       pitch(45.0)
     }
   }

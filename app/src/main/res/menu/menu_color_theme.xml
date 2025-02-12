@@ -2,11 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_action_color_theme_image"
-        android:title="@string/color_theme_monochrome"/>
+        android:title="@string/color_theme_monochrome" />
     <item
         android:id="@+id/menu_action_color_theme_base64"
-        android:title="@string/color_theme_red"/>
+        android:title="@string/color_theme_red" />
+    <item
+        android:id="@+id/menu_action_color_theme_toggle_atmosphere"
+        android:title="@string/color_theme_toggle_atmosphere" />
     <item
         android:id="@+id/menu_action_color_theme_reset"
-        android:title="@string/color_theme_reset"/>
+        android:title="@string/color_theme_reset" />
 </menu>
