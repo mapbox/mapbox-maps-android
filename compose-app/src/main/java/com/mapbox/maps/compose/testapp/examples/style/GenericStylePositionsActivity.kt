@@ -239,23 +239,33 @@ public class GenericStylePositionsActivity : ComponentActivity() {
     showLayerPositionedContent: Boolean,
     lightPresetConfig: String
   ) {
-    val geoJsonSource = rememberGeoJsonSourceState {
-      data = GeoJSONData(CityLocations.HELSINKI)
-    }
     GenericStyle(
       style = styleUri,
       slotsContent = slotsContent {
-        // Only add background layer in slots for standard style, where the top and middle slot
-        // are available.
+        // Only add slots contents for standard style, where the top and middle slot are available.
         if (styleUri == Style.STANDARD) {
           if (showTopSlotContent) {
             slot("top") {
-              CircleLayer(
-                sourceState = geoJsonSource,
+              CircleAnnotation(
+                point = CityLocations.HELSINKI.offset(0.008),
               ) {
-                circleColor = ColorValue(Color.Cyan)
-                circleRadius = DoubleValue(50.0)
+                circleRadius = 30.0
+                circleColor = Color.Magenta
+              }
+              CircleLayer(
+                sourceState = rememberGeoJsonSourceState {
+                  data = GeoJSONData(CityLocations.HELSINKI.offset(-0.0010))
+                }
+              ) {
+                circleColor = ColorValue(Color.DarkGray)
+                circleRadius = DoubleValue(30.0)
                 circleColorTransition = Transition(durationMillis = 1000L)
+              }
+              CircleAnnotation(
+                point = CityLocations.HELSINKI.offset(-0.008)
+              ) {
+                circleRadius = 30.0
+                circleColor = Color.Green
               }
             }
           }
@@ -273,11 +283,28 @@ public class GenericStylePositionsActivity : ComponentActivity() {
         // only add background layer below building layer if the style is not standard
         // style, where layers are available in runtime styling.
         if (styleUri != Style.STANDARD) {
-          if (showLayerPositionedContent) {
-            belowLayer("building") {
-              BackgroundLayer {
-                backgroundColor = ColorValue(Color.Yellow)
-                backgroundOpacity = DoubleValue(0.3)
+          belowLayer("building") {
+            if (showLayerPositionedContent) {
+              CircleAnnotation(
+                point = CityLocations.HELSINKI.offset(0.008),
+              ) {
+                circleRadius = 30.0
+                circleColor = Color.Magenta
+              }
+              CircleLayer(
+                layerId = "middle-circle-layer",
+                sourceState = rememberGeoJsonSourceState {
+                  data = GeoJSONData(CityLocations.HELSINKI.offset(-0.0016))
+                }
+              ) {
+                circleColor = ColorValue(Color.DarkGray)
+                circleRadius = DoubleValue(30.0)
+              }
+              CircleAnnotation(
+                point = CityLocations.HELSINKI.offset(-0.008)
+              ) {
+                circleRadius = 30.0
+                circleColor = Color.Green
               }
             }
           }

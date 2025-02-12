@@ -14,8 +14,8 @@ import org.junit.Assert
 
 internal data class SimpleLayerPositionAwareNode(
   val id: String,
-  var attachedLayerPosition: LayerPosition? = null,
-  val movedLayerIdSlot: CapturingSlot<String> = slot<String>(),
+  private var attachedLayerPosition: LayerPosition? = null,
+  private val movedLayerIdSlot: CapturingSlot<String> = slot<String>(),
 ) : LayerPositionAwareNode, MapNode() {
   private val movedLayerPosition: CapturingSlot<LayerPosition> = slot<LayerPosition>()
 
@@ -32,6 +32,8 @@ internal data class SimpleLayerPositionAwareNode(
   }
 
   private val layerIds = listOf(id)
+  override var isAttached: Boolean = false
+
   override fun getLayerIds(): List<String> = layerIds
 
   override fun onMoved(parent: MapNode) {
@@ -41,8 +43,8 @@ internal data class SimpleLayerPositionAwareNode(
 
   override fun onAttached(parent: MapNode) {
     val parentPositionNode = parent as StyleLayerPositionNode
-    attachedLayerPosition =
-      getRelativePositionInfo(parentPositionNode, parentPositionNode.layerPosition)
+    attachedLayerPosition = getRelativePositionInfo(parentPositionNode)
+    isAttached = true
   }
 
   internal fun validateMoved(
@@ -50,6 +52,10 @@ internal data class SimpleLayerPositionAwareNode(
     below: String? = null
   ) {
     Assert.assertEquals(id, movedLayerIdSlot.captured.also { movedLayerIdSlot.clear() })
+    validateInserted(above, below)
+  }
+
+  internal fun validateInserted(above: String? = null, below: String? = null) {
     Assert.assertEquals(above, attachedLayerPosition!!.above)
     Assert.assertEquals(below, attachedLayerPosition!!.below)
   }

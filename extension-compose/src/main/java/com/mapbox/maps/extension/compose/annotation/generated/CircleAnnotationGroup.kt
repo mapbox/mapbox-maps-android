@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationManagerNode
@@ -90,11 +91,14 @@ public fun CircleAnnotationGroup(
     annotations.forEach { it.withDraggable(true) }
   }
 
+  val coroutineScope = rememberCoroutineScope()
+
   ComposeNode<CircleAnnotationManagerNode, MapApplier>(
     factory = {
       CircleAnnotationManagerNode(
         mapApplier.mapView.mapboxMap,
         mapApplier.mapView.annotations.createCircleAnnotationManager(annotationConfig).also { annotationManager = it },
+        coroutineScope,
       ).also { annotationManagerNode = it }
     },
     update = {

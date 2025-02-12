@@ -5,6 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Bug fixes 🐞
 * [compose] Fix wrong layer order when using `aboveLayer(..)` composable function.
+* [compose] Fix annotation composable functions not working inside `slot(...)` composable function.
+* [compose] Fix annotation composable functions rendered in wrong order.
 
 
 # 11.9.2 February 05, 2025

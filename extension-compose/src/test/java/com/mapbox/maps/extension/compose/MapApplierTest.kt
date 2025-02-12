@@ -275,14 +275,14 @@ public class MapApplierTest {
     // current render layers top to bottom:
     // "layer_01"
     // "style_layer"
-    Assert.assertEquals("style_layer", layer1.attachedLayerPosition!!.above)
+    layer1.validateInserted(above = "style_layer")
 
     mapApplier.insertBottomUp(1, layer2)
     // current render layers top to bottom:
     // "layer_02"
     // "layer_01"
     // "style_layer"
-    Assert.assertEquals("layer_01", layer2.attachedLayerPosition!!.above)
+    layer2.validateInserted(above = "layer_01")
 
     mapApplier.insertBottomUp(2, layer3)
     // current render layers top to bottom:
@@ -290,7 +290,7 @@ public class MapApplierTest {
     // "layer_02"
     // "layer_01"
     // "style_layer"
-    Assert.assertEquals("layer_02", layer3.attachedLayerPosition!!.above)
+    layer3.validateInserted(above = "layer_02")
     parent.assertLayerIds(listOf("layer_01", "layer_02", "layer_03"))
 
     // move layer_02 to the first position in the composition tree
@@ -385,14 +385,14 @@ public class MapApplierTest {
     // current render layers top to bottom:
     // "style_layer"
     // "layer_01"
-    Assert.assertEquals("style_layer", layer1.attachedLayerPosition!!.below)
+    layer1.validateInserted(below = "style_layer")
 
     mapApplier.insertBottomUp(1, layer2)
     // current render layers top to bottom:
     // "style_layer"
     // "layer_02"
     // "layer_01"
-    Assert.assertEquals("style_layer", layer2.attachedLayerPosition!!.below)
+    layer2.validateInserted(above = "layer_01")
 
     mapApplier.insertBottomUp(2, layer3)
     // current render layers top to bottom:
@@ -400,7 +400,7 @@ public class MapApplierTest {
     // "layer_03"
     // "layer_02"
     // "layer_01"
-    Assert.assertEquals("style_layer", layer3.attachedLayerPosition!!.below)
+    layer3.validateInserted(above = "layer_02")
     parent.assertLayerIds(listOf("layer_01", "layer_02", "layer_03"))
 
     // move layer_02 to the first position in the composition tree
@@ -411,12 +411,12 @@ public class MapApplierTest {
     // "layer_01"
     // "layer_02"
     parent.assertLayerIds(listOf("layer_02", "layer_01", "layer_03"))
-    // Make sure layer_02 is moved and rendered below layer_01
-    layer2.validateMoved(below = "layer_01")
-    // Make sure layer_01 is moved and rendered below layer_03
-    layer1.validateMoved(below = "layer_03")
-    // Make sure layer_03 is moved and rendered below style_layer
-    layer3.validateMoved(below = "style_layer")
+    // Make sure layer_02 is moved and rendered below style_layer
+    layer2.validateMoved(below = "style_layer")
+    // Make sure layer_01 is moved and rendered above layer_02
+    layer1.validateMoved(above = "layer_02")
+    // Make sure layer_03 is moved and rendered above layer_01
+    layer3.validateMoved(above = "layer_01")
 
     // move layer_01 and layer_03 to the first position in the composition tree
     mapApplier.move(1, 0, 2)
@@ -426,12 +426,12 @@ public class MapApplierTest {
     // "layer_03"
     // "layer_01"
     parent.assertLayerIds(listOf("layer_01", "layer_03", "layer_02"))
-    // Make sure layer_01 is moved and rendered below layer_03
-    layer1.validateMoved(below = "layer_03")
-    // Make sure layer_03 is moved and rendered below layer_02
-    layer3.validateMoved(below = "layer_02")
-    // Make sure layer_02 is moved and rendered below style_layer
-    layer2.validateMoved(below = "style_layer")
+    // Make sure layer_01 is moved and rendered below style_layer
+    layer1.validateMoved(below = "style_layer")
+    // Make sure layer_03 is moved and rendered above layer_01
+    layer3.validateMoved(above = "layer_01")
+    // Make sure layer_02 is moved and rendered above layer_03
+    layer2.validateMoved(above = "layer_03")
 
     // Insert layer_04
     val layer4 = SimpleLayerPositionAwareNode("layer_04")
@@ -452,9 +452,9 @@ public class MapApplierTest {
     // "layer_01"
     // "layer_04"
     // "layer_02"
-    layer3.validateMoved(below = "style_layer")
-    layer1.validateMoved(below = "layer_03")
-    layer4.validateMoved(below = "layer_01")
-    layer2.validateMoved(below = "layer_04")
+    layer2.validateMoved(below = "style_layer")
+    layer4.validateMoved(above = "layer_02")
+    layer1.validateMoved(above = "layer_04")
+    layer3.validateMoved(above = "layer_01")
   }
 }

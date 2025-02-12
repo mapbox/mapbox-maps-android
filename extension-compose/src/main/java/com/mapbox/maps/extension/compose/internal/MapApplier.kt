@@ -65,6 +65,11 @@ internal class MapApplier(
     logD(TAG, "insertBottomUp: $index, $instance")
     current.children.add(index, instance)
     instance.onAttached(parent = current)
+    // If the inserted node is a LayerPositionAwareNode, we need to notify the next
+    // LayerPositionAwareNode one so it can re-position itself
+    if (instance is LayerPositionAwareNode) {
+      notifyMoveNextLayerPositionAwareNode(index + 1)
+    }
     printNodesTree("MapNodeInserted")
   }
 
@@ -99,11 +104,28 @@ internal class MapApplier(
 
   override fun remove(index: Int, count: Int) {
     logD(TAG, "remove: $index, $count")
+    var layerPositionAwareNodeRemoved = false
     repeat(count) { offset ->
-      current.children[index + offset].onRemoved(parent = current)
+      val child = current.children[index + offset]
+      child.onRemoved(parent = current)
+      layerPositionAwareNodeRemoved = layerPositionAwareNodeRemoved or (child is LayerPositionAwareNode)
     }
     current.children.remove(index, count)
+    // If any of the removed nodes are a LayerPositionAwareNode, we need to notify the next
+    // LayerPositionAwareNode one so it can re-position itself
+    if (layerPositionAwareNodeRemoved) {
+      notifyMoveNextLayerPositionAwareNode(index)
+    }
     printNodesTree("MapNodeRemoved")
+  }
+
+  private fun notifyMoveNextLayerPositionAwareNode(index: Int) {
+    for (i in index until current.children.size) {
+      if (current.children[i] is LayerPositionAwareNode) {
+        current.children[i].onMoved(parent = current)
+        break
+      }
+    }
   }
 
   private fun printNodesTree(tag: String = TAG) {
