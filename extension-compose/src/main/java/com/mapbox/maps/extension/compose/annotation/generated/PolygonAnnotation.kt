@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.MapboxMapComposable
@@ -72,6 +73,8 @@ public fun PolygonAnnotation(
     mutableStateOf<PolygonAnnotationManager?>(null)
   }
 
+  val coroutineScope = rememberCoroutineScope()
+
   ComposeNode<PolygonAnnotationNode, MapApplier>(
     factory = {
       val factoryAnnotationManager = mapApplier.mapView.annotations.createPolygonAnnotationManager().also { annotationManager = it }
@@ -79,7 +82,7 @@ public fun PolygonAnnotation(
         .withPoints(points)
         .withDraggable(polygonAnnotationState.interactionsState.isDraggable)
       val annotation = factoryAnnotationManager.create(annotationOptions)
-      PolygonAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
+      PolygonAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation, coroutineScope).also { annotationNode = it }
     },
     update = {
       update(points) {

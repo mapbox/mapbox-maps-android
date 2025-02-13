@@ -7,11 +7,13 @@ import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
+import kotlinx.coroutines.CoroutineScope
 
 internal class PolylineAnnotationManagerNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: PolylineAnnotationManager,
-) : BaseAnnotationNode(mapboxStyleManager) {
+  coroutineScope: CoroutineScope,
+) : BaseAnnotationNode(mapboxStyleManager, coroutineScope) {
 
   internal var currentAnnotations: MutableList<PolylineAnnotation> = mutableListOf()
   var annotationClusterItems: List<PolylineAnnotationOptions> = emptyList()

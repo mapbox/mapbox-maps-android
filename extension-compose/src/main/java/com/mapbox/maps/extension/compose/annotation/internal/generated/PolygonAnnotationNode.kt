@@ -6,12 +6,14 @@ import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
+import kotlinx.coroutines.CoroutineScope
 
 internal class PolygonAnnotationNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: PolygonAnnotationManager,
   val annotation: PolygonAnnotation,
-) : BaseAnnotationNode(mapboxStyleManager) {
+  coroutineScope: CoroutineScope,
+) : BaseAnnotationNode(mapboxStyleManager, coroutineScope) {
 
   override fun cleanUp() {
     annotationManager.delete(annotation)

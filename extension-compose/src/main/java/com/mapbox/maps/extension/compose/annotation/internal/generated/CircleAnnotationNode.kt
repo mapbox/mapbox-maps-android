@@ -6,12 +6,14 @@ import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
+import kotlinx.coroutines.CoroutineScope
 
 internal class CircleAnnotationNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: CircleAnnotationManager,
   val annotation: CircleAnnotation,
-) : BaseAnnotationNode(mapboxStyleManager) {
+  coroutineScope: CoroutineScope,
+) : BaseAnnotationNode(mapboxStyleManager, coroutineScope) {
 
   override fun cleanUp() {
     annotationManager.delete(annotation)

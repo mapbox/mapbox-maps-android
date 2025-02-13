@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.MapboxMapComposable
@@ -72,6 +73,8 @@ public fun CircleAnnotation(
     mutableStateOf<CircleAnnotationManager?>(null)
   }
 
+  val coroutineScope = rememberCoroutineScope()
+
   ComposeNode<CircleAnnotationNode, MapApplier>(
     factory = {
       val factoryAnnotationManager = mapApplier.mapView.annotations.createCircleAnnotationManager().also { annotationManager = it }
@@ -79,7 +82,7 @@ public fun CircleAnnotation(
         .withPoint(point)
         .withDraggable(circleAnnotationState.interactionsState.isDraggable)
       val annotation = factoryAnnotationManager.create(annotationOptions)
-      CircleAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation).also { annotationNode = it }
+      CircleAnnotationNode(mapApplier.mapView.mapboxMap, factoryAnnotationManager, annotation, coroutineScope).also { annotationNode = it }
     },
     update = {
       update(point) {

@@ -7,11 +7,13 @@ import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import kotlinx.coroutines.CoroutineScope
 
 internal class PointAnnotationManagerNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: PointAnnotationManager,
-) : BaseAnnotationNode(mapboxStyleManager) {
+  coroutineScope: CoroutineScope,
+) : BaseAnnotationNode(mapboxStyleManager, coroutineScope) {
 
   internal var currentAnnotations: MutableList<PointAnnotation> = mutableListOf()
   var annotationClusterItems: List<PointAnnotationOptions> = emptyList()

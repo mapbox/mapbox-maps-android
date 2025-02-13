@@ -4,6 +4,12 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.10.0
+## Bug fixes 🐞
+* [compose] Fix wrong layer order when using `aboveLayer(..)` composable function.
+* [compose] Fix annotation composable functions not working inside `slot(...)` composable function.
+* [compose] Fix annotation composable functions rendered in wrong order.
+
 # 11.10.0-rc.1 January 31, 2025
 ## Features ✨ and improvements 🏁
 * Add experimental `ViewAnnotationManager.setViewAnnotationAvoidLayers` for specifying layers that view annotations should avoid. The API currently only supports line layers.

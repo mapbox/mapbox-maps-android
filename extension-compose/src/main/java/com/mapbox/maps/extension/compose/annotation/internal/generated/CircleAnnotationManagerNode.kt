@@ -7,11 +7,13 @@ import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import kotlinx.coroutines.CoroutineScope
 
 internal class CircleAnnotationManagerNode(
   mapboxStyleManager: MapboxStyleManager,
   val annotationManager: CircleAnnotationManager,
-) : BaseAnnotationNode(mapboxStyleManager) {
+  coroutineScope: CoroutineScope,
+) : BaseAnnotationNode(mapboxStyleManager, coroutineScope) {
 
   internal var currentAnnotations: MutableList<CircleAnnotation> = mutableListOf()
   var annotationClusterItems: List<CircleAnnotationOptions> = emptyList()
