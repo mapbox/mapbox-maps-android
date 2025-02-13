@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.10.0
+
+# 11.10.0 February 13, 2025
 ## Features ✨ and improvements 🏁
 * Localize geofencing attribution dialog.
 * Introduce `ViewAnnotationOptions.priority`, deprecate `ViewAnnotationOptions.selected`. Use this property to define view annotation sort order.
@@ -57,6 +58,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.10.0 and common to v24.10.0.
+
 
 
 # 11.9.2 February 05, 2025
