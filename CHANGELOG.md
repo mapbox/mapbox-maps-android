@@ -5,10 +5,58 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.10.0
+## Features ✨ and improvements 🏁
+* Localize geofencing attribution dialog.
+* Introduce `ViewAnnotationOptions.priority`, deprecate `ViewAnnotationOptions.selected`. Use this property to define view annotation sort order.
+* Introduce `ViewAnnotationOptions.minZoom` and `ViewAnnotationOptions.maxZoom`. Use these properties to configure zoom-level specific view annotations.
+* Introduce `SymbolLayer.iconSizeScaleRange`, `SymbolLayer.textSizeScaleRange`, `FillLayer.fillElevationReference`, `LineLayer.lineCrossSlope`, `LineLayer.lineWidthUnit`, `LineLayer.lineCrossSlope`, `LineLayer.lineElevationReference`, `DirectionalLight.shadowQuality`, `Rain.distortionStrength`, `Rain.distortionStrengthTransition`, `Rain.dropletSize`, `Rain.dropletSizeTransition`, `Rain.vignetteColor`, `Rain.vignetteColorTransition`, `Snow.flakeSize`, `Snow.flakeSizeTransition`, `Snow.vignetteColor`, `Snow.vignetteColorTransition`.
+* Introduce experimental Color Theme API, which allows changing the style of the map using `Style.setStyleColorTheme`.
+* Introduce experimental `ModelLayer.modelElevationReference` property.
+* Introduce experimental `LocationPuck3D.modelElevationReference` property.
+* Add experimental `ViewAnnotationManager.setViewAnnotationAvoidLayers` for specifying layers that view annotations should avoid. The API currently only supports line layers.
+* Add `*UseTheme` String style properties to override color theme for particular color properties in all layers and their Compose counterparts.
+* Add support for the `maxOverscaleFactorForParentTiles` property in `CustomRasterSource` and `CustomGeometrySource`, allowing greater control over tile overscaling behavior when rendering custom raster tiles.
+* Extend tilecover for elevated roads avoiding missing road segments.
+* Change default value of experimental `Rain.opacity` to 0.19, default `Rain.vignette` to 0.3, `Snow.opacity` to 0.19, default `Snow.vignette` to 0.3.
+* Update the default value of experimental properties: default `Snow.density` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.85]`; default `Snow.opacity` is updated to `1.0`; default `Snow.vignette` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.3]`; default `Snow.centerThinning` is updated to `0.4`, default `Snow.direction` is updated to `listOf(0.0, 50.0)`; default `Snow.flakeSize` is updated to `0.71`; default `Rain.density` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.85]`; default `Rain.color` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,"#03113d",0.3,"#a8adbc"]`; default `Rain.opacity` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,0.88,1,0.7]`;  default `Rain.vignette` is updated to `["interpolate",["linear"],["zoom"],11,0,13,0.3]`; default `Rain.vignetteColor` is updated to `["interpolate",["linear"],["measure-light","brightness"],0,"#001736",0.3,"#464646"]`; default `Rain.centerThinning` is updated to `0.57`; default `Rain.dropletSize` is updated to `listOf(2.6, 18.2)`; default `Rain.distortionStrength` is updated to `0.7`.
+* Remove `@MapboxExperimental` from `ClipLayer.clipLayerTypes` and `ClipLayer.clipLayerScope`.
+* Remove `<profileable android:shell=true/>` flag in release manifest.
+* Remove `libandroid-tests-support-code.so` from release AAR.
+* Remove experimental `ShadowQuality` properties from direct light layer.
+* [compose] Introduce experimental `StyleState.colorTheme` state for setting `ColorTheme` for the style.
+* [compose] Introduce experimental `SymbolLayerState.iconSizeScaleRange`, `SymbolLayerState.textSizeScaleRange`, `FillLayerState.fillElevationReference`, `LineLayerState.lineCrossSlope`, `LineLayerState.lineWidthUnit`, `LineLayerState.lineCrossSlope`, `LineLayerState.lineElevationReference`, `DirectionalLightState.shadowQuality`, `RainState.distortionStrength`, `RainState.distortionStrengthTransition`, `RainState.dropletSize`, `RainState.dropletSizeTransition`, `RainState.vignetteColor`, `RainState.vignetteColorTransition`, `SnowState.flakeSize`, `SnowState.flakeSizeTransition`, `SnowState.vignetteColor`, `SnowState.vignetteColorTransition`.
+
 ## Bug fixes 🐞
 * [compose] Fix wrong layer order when using `aboveLayer(..)` composable function.
 * [compose] Fix annotation composable functions not working inside `slot(...)` composable function.
 * [compose] Fix annotation composable functions rendered in wrong order.
+* Prefer last used anchor for Dynamic View Annotation placement.
+* Fix out of bound issue of gradient effect.
+* Fix hidden elements caused by flood lighting.
+* Fix parsing raster sprite images with float stretch/content coordinates.
+* Fix glyph loading issue when incorrect glyph url is used.
+* Speed up start with big old offline database.
+* Fix disappearing tiles in some rare conditions.
+* Fix rasterization of images with positive mask coordinates which caused vector icons not being rasterized correctly.
+* Place Dynamic View Annotation further away from camera when pitch > 45. This allows Dynamic View Annotation to be placed further away from the puck so it is not repositioned frequently.
+* Fix visual artifacts from `FillExtrusionLayer` for night presets.
+* Fix precision issues with 3D puck and orthographic projection when zoom is more than 17. The fix prevents puck-shadow from disappearing in lower zoom scales in 2D-views.
+* Fix road shadows issues when far away and low zoom levels.
+* Fix app crash when autoMaxZoom=true.
+* Fix an unhandled exception occurring during config expression parsing
+* Mark `BackgroundLayer.backgroundPitchAlignment` as experimental.
+* Skip any map scroll (panning) if shove gesture is already in progress preventing camera flying away.
+* Fix crash on style reload if a config referenced in the expression was missing.
+* Fix high cpu usage when map goes to background.
+* Fix missing on style loaded call if sprite is absent in cache and there is no network connection.
+* Fix background layers which used images from a mapbox-hosted style.
+* Fix images being displayed incorrectly in some cases with line patterns and `LineJoin.NONE`.
+* Fix too early sources loaded event.
+* Fix to calculate image size for max text size, not for the next zoom level text size.
+* Fix line rendering for layers with elevated and non-elevated buckets
+
+## Dependencies
+* Update gl-native to v11.10.0 and common to v24.10.0.
 
 # 11.10.0-rc.1 January 31, 2025
 ## Features ✨ and improvements 🏁
