@@ -1,8 +1,6 @@
 package com.mapbox.maps
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
@@ -15,10 +13,22 @@ import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainCoroutineDispatcher
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 internal object MapProvider {
 
   private lateinit var mapTelemetry: MapTelemetry
+
+  /**
+   * [CoroutineScope] that runs on Main dispatcher by default (NOTE that it is not using [MainCoroutineDispatcher.immediate]).
+   */
+  private val mainScope =
+    CoroutineScope(CoroutineName(MapController.TAG) + SupervisorJob() + Dispatchers.Main)
 
   fun getNativeMapWrapper(
     mapInitOptions: MapInitOptions,
@@ -54,7 +64,8 @@ internal object MapProvider {
         paramsProvider(context, MapboxModuleType.MapTelemetry)
       }
     }
-    Handler(Looper.getMainLooper()).post {
+    // Schedule the turnstile event on the Main dispatcher to avoid blocking this call chain.
+    mainScope.launch {
       mapTelemetry.onAppUserTurnstileEvent()
     }
     return mapTelemetry

@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-
+## Features ✨ and improvements 🏁
+* Small performance improvements in the map initialization call chain by avoiding IPC calls on main.
 
 # 11.10.0 February 13, 2025
 ## Features ✨ and improvements 🏁

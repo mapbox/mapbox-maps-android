@@ -17,6 +17,7 @@ import com.mapbox.common.EventsServiceObserver
 import com.mapbox.common.SdkInformation
 import com.mapbox.common.TelemetryService
 import com.mapbox.common.TelemetryUtils
+import kotlinx.coroutines.Dispatchers
 import org.junit.Assert
 import org.junit.Before
 import org.junit.BeforeClass
@@ -39,7 +40,7 @@ class MapTelemetryEventsServiceTest {
 
     val telemetryService = TelemetryService.getOrCreate()
     val context = InstrumentationRegistry.getInstrumentation().context
-    telemetry = MapTelemetryImpl(context, eventsService, telemetryService, options)
+    telemetry = MapTelemetryImpl(context, eventsService, telemetryService, options, Dispatchers.Unconfined)
   }
 
   @Test

@@ -8,11 +8,28 @@ import com.google.gson.Gson
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.bindgen.Value
-import com.mapbox.common.*
+import com.mapbox.common.Event
+import com.mapbox.common.EventPriority
+import com.mapbox.common.EventsServerOptions
+import com.mapbox.common.EventsService
+import com.mapbox.common.EventsServiceInterface
+import com.mapbox.common.SdkInformation
+import com.mapbox.common.TelemetryCollectionState
+import com.mapbox.common.TelemetryService
+import com.mapbox.common.TelemetryUtils
+import com.mapbox.common.TurnstileEvent
+import com.mapbox.common.UserSKUIdentifier
 import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.module.MapTelemetry
-import java.util.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 /**
  * Concrete implementation of map telemetry.
@@ -27,7 +44,12 @@ class MapTelemetryImpl : MapTelemetry {
   private val eventsServiceOptions: EventsServerOptions
 
   /**
-   * Creates a map telemetry instance using application context and access token
+   * [CoroutineScope] that runs on IO dispatcher by default.
+   */
+  private val bgScope: CoroutineScope
+
+  /**
+   * Creates a map telemetry instance using application context
    *
    * @param appContext the application context
    */
@@ -44,6 +66,7 @@ class MapTelemetryImpl : MapTelemetry {
     )
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
     this.telemetryService = TelemetryService.getOrCreate()
+    bgScope = CoroutineScope(CoroutineName(TAG) + SupervisorJob() + Dispatchers.IO)
   }
 
   /**
@@ -58,12 +81,14 @@ class MapTelemetryImpl : MapTelemetry {
     appContext: Context,
     eventsService: EventsServiceInterface,
     telemetryService: TelemetryService,
-    eventsServerOptions: EventsServerOptions
+    eventsServerOptions: EventsServerOptions,
+    defaultCoroutineDispatcher: CoroutineDispatcher,
   ) {
     this.appContext = appContext
     this.eventsService = eventsService
     this.telemetryService = telemetryService
     this.eventsServiceOptions = eventsServerOptions
+    bgScope = CoroutineScope(CoroutineName(TAG) + SupervisorJob() + defaultCoroutineDispatcher)
   }
 
   /**
@@ -77,8 +102,18 @@ class MapTelemetryImpl : MapTelemetry {
     }
 
     if (shouldSendEvents()) {
-      val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext))
-      sendEvent(Gson().toJson(mapLoadEvent))
+      sendMapLoadEvent()
+    }
+  }
+
+  private fun sendMapLoadEvent() {
+    bgScope.launch {
+      try {
+        val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext))
+        sendEvent(Gson().toJson(mapLoadEvent))
+      } catch (e: Throwable) {
+        logW(TAG, "sendMapLoadEvent error: $e")
+      }
     }
   }
 

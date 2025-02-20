@@ -26,6 +26,7 @@ mapboxLibrary {
 dependencies {
   implementation(project(":sdk-base"))
   implementation(libs.mapbox.base)
+  implementation(libs.coroutines)
   compileOnly(libs.mapbox.annotations)
   kapt(libs.mapbox.annotationsProcessor)
   implementation(libs.kotlin)
