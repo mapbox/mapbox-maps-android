@@ -91,7 +91,6 @@ dependencies {
   implementation(libs.mapbox.javaTurf)
   implementation(libs.mapbox.javaGeoJSON)
   implementation(libs.mapbox.services)
-  implementation(libs.coroutines)
   implementation(libs.androidx.appCompat)
   implementation(libs.androidx.coreKtx)
   implementation(libs.androidx.recyclerView)

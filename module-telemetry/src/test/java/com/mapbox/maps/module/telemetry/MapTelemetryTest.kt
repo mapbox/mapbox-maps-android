@@ -5,7 +5,9 @@ import android.telephony.TelephonyManager
 import android.view.Display
 import android.view.WindowManager
 import com.mapbox.common.*
+import com.mapbox.maps.base.BuildConfig
 import io.mockk.*
+import kotlinx.coroutines.Dispatchers
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -68,18 +70,13 @@ class MapTelemetryTest {
 
   @Before
   fun setUp() {
-    mockkStatic(EventsService::class)
-    mockkStatic(TelemetryService::class)
     mockkStatic(TelemetryUtils::class)
     every { TelemetryUtils.getEventsCollectionState() } returns true
     every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
     every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.ENABLED
 
-    every { EventsService.getOrCreate(any()) } returns eventsService
     every { eventsService.sendEvent(any(), any()) } returns Unit
     every { eventsService.sendTurnstileEvent(any(), any()) } returns Unit
-
-    every { TelemetryService.getOrCreate() } returns telemetryService
 
     every { context.getSystemService(Context.TELEPHONY_SERVICE) } returns telephonyManager
     every { telephonyManager.networkType } returns TelephonyManager.NETWORK_TYPE_GPRS
@@ -88,23 +85,39 @@ class MapTelemetryTest {
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
     every { windowManager.defaultDisplay } returns display
 
-    telemetry = MapTelemetryImpl(context)
+    telemetry = MapTelemetryImpl(
+      context, eventsService, telemetryService,
+        EventsServerOptions(
+        SdkInformation(
+          BuildConfig.MAPBOX_SDK_IDENTIFIER,
+          BuildConfig.MAPBOX_SDK_VERSION,
+          null
+        ),
+        null
+      ),
+        Dispatchers.Unconfined
+    )
   }
 
   @After
   fun cleanUp() {
-    unmockkStatic(EventsService::class)
-    unmockkStatic(TelemetryService::class)
     unmockkStatic(TelemetryUtils::class)
     unmockkAll()
   }
 
   @Test
-  fun testConstructorInitialisation() {
+  fun testDefaultConstructorInitialisation() {
+    mockkStatic(EventsService::class)
+    mockkStatic(TelemetryService::class)
+    every { EventsService.getOrCreate(any()) } returns eventsService
+    every { TelemetryService.getOrCreate() } returns telemetryService
+    MapTelemetryImpl(context)
     // validate the event service is initialised
     verify { EventsService.getOrCreate(any()) }
     // validate the telemetry service is initialised
     verify { TelemetryService.getOrCreate() }
+    unmockkStatic(EventsService::class)
+    unmockkStatic(TelemetryService::class)
   }
 
   @Test
