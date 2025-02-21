@@ -87,6 +87,7 @@ dependencies {
   compileOnly(libs.asyncInflater)
   api(libs.kotlin)
   api(libs.coroutines)
+  implementation(libs.coroutines.android)
   implementation(libs.androidx.coreKtx)
   implementation(libs.androidx.annotations)
 
@@ -101,7 +102,6 @@ dependencies {
   androidTestImplementation(libs.androidx.testJUnit)
   androidTestImplementation(libs.androidx.jUnitTestRules)
   androidTestImplementation(libs.androidx.uiAutomator)
-  androidTestImplementation(libs.coroutines)
   androidTestUtil(libs.androidx.orchestrator)
 
   detektPlugins(libs.detektFormatting)
