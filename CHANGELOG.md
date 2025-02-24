@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.10.1
+
+# 11.10.1 February 24, 2025
 ## Features ✨ and improvements 🏁
 * Small performance improvements in the map initialization call chain by avoiding IPC calls on main.
 
@@ -18,7 +19,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.10.1.
-
 
 # 11.10.0 February 13, 2025
 ## Features ✨ and improvements 🏁
