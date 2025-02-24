@@ -4,9 +4,21 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.10.1
+
+# 11.10.1 February 24, 2025
 ## Features ✨ and improvements 🏁
 * Small performance improvements in the map initialization call chain by avoiding IPC calls on main.
+
+## Bug fixes 🐞
+* Fix LUT not being applied to in-place updated images.
+* Fix in-place updates for SDF images.
+* Fix background layer not being updated if raster image was updated in-place or if color theme changed.
+* Vector icons supported in location indicator layer.
+* Fix mipmaps for images updated inplace.
+* Ensure background color is correctly set.
+
+## Dependencies
+* Update gl-native to v11.10.1.
 
 # 11.10.0 February 13, 2025
 ## Features ✨ and improvements 🏁
