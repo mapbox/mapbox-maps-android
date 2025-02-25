@@ -5,12 +5,14 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 
-# 11.10.2
+
+# 11.10.2 February 25, 2025
 ## Bug fixes 🐞
 * Fixing missing vector images after style change
 
 ## Dependencies
 * Update gl-native to v11.10.2.
+
 
 # 11.10.1 February 24, 2025
 ## Features ✨ and improvements 🏁
