@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.style.utils
 
+import com.mapbox.maps.extension.style.expressions.dsl.generated.coalesce
 import com.mapbox.maps.extension.style.types.PromoteId
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -58,6 +59,43 @@ class PromoteIdTest {
   @Test(expected = RuntimeException::class)
   fun fromProperty_InvalidHashMapType() {
     PromoteId.fromProperty(hashMapOf(1 to 2))
+  }
+
+  @Test
+  fun fromProperty_Expression() {
+    val expected = PromoteId(
+      coalesce {
+        get { literal("building_id") }
+        id()
+      },
+      "building"
+    )
+    val actual = PromoteId.fromProperty(
+      hashMapOf(
+        "building" to listOf(
+          "coalesce", listOf("get", "building_id"), listOf("id")
+        )
+      )
+    )
+
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun fromProperty_ExpressionNullSource() {
+    val expected = PromoteId(
+      coalesce {
+        get { literal("building_id") }
+        id()
+      },
+    )
+    val actual = PromoteId.fromProperty(
+      listOf(
+        "coalesce", listOf("get", "building_id"), listOf("id")
+      )
+    )
+
+    assertEquals(expected, actual)
   }
 
   private data class MockType(val a: String, val b: String)

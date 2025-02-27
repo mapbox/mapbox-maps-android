@@ -4299,6 +4299,7 @@ package com.mapbox.maps.extension.compose.style.sources {
   @androidx.compose.runtime.Immutable public final class PromoteIdValue {
     ctor public PromoteIdValue(com.mapbox.bindgen.Value value);
     ctor public PromoteIdValue(String propertyName, String? sourceId = null);
+    ctor public PromoteIdValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression, String? sourceId = null);
     ctor public PromoteIdValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.PromoteIdValue copy(com.mapbox.bindgen.Value value);

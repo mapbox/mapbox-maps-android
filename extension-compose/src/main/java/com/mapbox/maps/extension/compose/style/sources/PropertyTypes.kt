@@ -190,7 +190,12 @@ public data class PromoteIdValue(public val value: Value) {
   /**
    * Construct the PromoteId with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
-  public constructor(expression: Expression) : this(expression as Value)
+  @JvmOverloads
+  public constructor(expression: Expression, sourceId: String? = null) : this(
+    ComposeTypeUtils.wrapToValue(
+      com.mapbox.maps.extension.style.types.PromoteId(expression, sourceId)
+    )
+  )
 
   /**
    * True if the this value is not [INITIAL]

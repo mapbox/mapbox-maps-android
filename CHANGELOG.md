@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-
+## Features ✨ and improvements 🏁
+* Support expression input for `PromoteId`.
 
 # 11.10.2 February 25, 2025
 ## Bug fixes 🐞

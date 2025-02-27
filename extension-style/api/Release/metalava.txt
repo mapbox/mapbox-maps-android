@@ -7696,11 +7696,15 @@ package com.mapbox.maps.extension.style.types {
   @Keep public final class PromoteId {
     ctor public PromoteId(String propertyName, String? sourceId = null);
     ctor public PromoteId(String propertyName);
+    ctor public PromoteId(com.mapbox.maps.extension.style.expressions.generated.Expression expression, String? sourceId = null);
+    ctor public PromoteId(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public String component1();
     method public String? component2();
     method public com.mapbox.maps.extension.style.types.PromoteId copy(String propertyName, String? sourceId);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getExpression();
     method public String getPropertyName();
     method public String? getSourceId();
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? expression;
     property public final String propertyName;
     property public final String? sourceId;
     field public static final com.mapbox.maps.extension.style.types.PromoteId.Companion Companion;

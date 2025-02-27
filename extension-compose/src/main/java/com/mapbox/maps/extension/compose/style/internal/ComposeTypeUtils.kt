@@ -33,10 +33,11 @@ internal object ComposeTypeUtils {
         )
       )
       is PromoteId -> with(value) {
-        val propertyNameValue = Value(propertyName)
+        val promoteIdValue = Value.fromJson(propertyName).getValueOrElse { Value.valueOf(propertyName) }
         sourceId?.let {
-          Value(hashMapOf(sourceId to propertyNameValue))
-        } ?: propertyNameValue
+          Value(hashMapOf(sourceId to promoteIdValue))
+        }
+        promoteIdValue
       }
       is TextWritingMode -> {
         value.value
