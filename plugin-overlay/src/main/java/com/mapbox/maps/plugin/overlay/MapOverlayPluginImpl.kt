@@ -46,7 +46,7 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
   }
 
   /**
-   * Register an MapOverlay instance.
+   * Register a MapOverlay instance.
    * @param overlay the registered overlay view
    */
   override fun registerOverlay(overlay: View) {
@@ -62,7 +62,7 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
   }
 
   /**
-   * Unregister an MapOverlay instance.
+   * Unregister a MapOverlay instance.
    * @param overlay the unregistered overlay view
    */
   override fun unregisterOverlay(overlay: View) {
@@ -80,8 +80,8 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
   }
 
   /**
-   * Set the margins for the area that displaying import POIs without covered. These margins can let the
-   * POIs near the border not by cut or covered.
+   * Set the margins for the area that is displaying POIs within the overlay bounds.
+   * These margins provide offsets to ensure POIs near the border of the overlay not be hidden or covered.
    * @param marginLeft the margin on the left, in pixel
    * @param marginTop the margin on the top, in pixel
    * @param marginRight the margin on the right, in pixel
@@ -101,7 +101,7 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
 
   /**
    * Reframe MapView to a certain zoom and position to make sure every coordinate will be shown
-   * on the MapView and not covered by registered MapOverlays.
+   * on the MapView and not be covered by registered MapOverlays.
    * If no onAnimateReframe is provided, MapView will jump to the new CameraOptions directly;
    * if onAnimateReframe is provided, the new CameraOptions will be return and users can define their
    * own animation to move the camera.
@@ -122,8 +122,8 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
 
   /**
    * Get the CameraOptions that make sure every coordinate will be shown
-   * on the MapView and not covered by registered MapOverlays.
-   * Users can use their own animation to move camera with this CameraOptions.
+   * on the MapView and not be covered by registered MapOverlays.
+   * Users can use their own animation to move the camera with this CameraOptions.
    *
    * @param result callback with CameraOptions that MapView should animate to.
    * Will be null if MapOverlayCoordinatesProvider is not provided.
@@ -224,7 +224,7 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
   }
 
   /**
-   * Class represent the rectangle of MapOverlays on MapView
+   * Class that represents the rectangle of MapOverlays on MapView
    */
   @RestrictTo(RestrictTo.Scope.LIBRARY)
   internal class MapOverLayRect(

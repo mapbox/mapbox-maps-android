@@ -21,7 +21,7 @@ interface MapOverlayPlugin : MapSizePlugin, MapPlugin {
   fun unregisterMapOverlayCoordinatesProvider()
 
   /**
-   * Register an view as overlay.
+   * Register a view as overlay.
    * @param overlay the registered overlay view
    */
   fun registerOverlay(overlay: View)
@@ -33,7 +33,7 @@ interface MapOverlayPlugin : MapSizePlugin, MapPlugin {
   fun registerOverlays(overlays: List<View>)
 
   /**
-   * Unregister an view.
+   * Unregister a view.
    * @param overlay the unregistered overlay view
    */
   fun unregisterOverlay(overlay: View)
@@ -45,8 +45,8 @@ interface MapOverlayPlugin : MapSizePlugin, MapPlugin {
   fun unregisterOverlays(overlays: List<View>)
 
   /**
-   * Set the margins for the area that displaying import POIs without covered. These margins can let the
-   * POIs near the border not by cut or covered.
+   * Set the margins for the area that is displaying POIs within the overlay bounds.
+   * These margins provide offsets to ensure POIs near the border of the overlay not be hidden or covered.
    * @param marginTop the margin on the top, in pixel
    * @param marginLeft the margin on the left, in pixel
    * @param marginBottom the margin on the bottom, in pixel
@@ -56,7 +56,7 @@ interface MapOverlayPlugin : MapSizePlugin, MapPlugin {
 
   /**
    * Reframe MapView to a certain zoom and position to make sure every coordinate will be shown
-   * on the MapView and not covered by registered MapOverlays.
+   * on the MapView and not be covered by registered MapOverlays.
    * If no [OnReframeFinished] object is provided, MapView will jump to the new [CameraOptions] directly;
    * if [OnReframeFinished] object is provided, the new [CameraOptions] will be return and users can define their
    * own animation to move the camera.
