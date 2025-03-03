@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁
 * Support expression input for `PromoteId`.
 * Add a setting that allows geofencing users with Android <= 28 to access background locations. Add `mapbox-location-config.xml` file with the following content:
@@ -25,6 +27,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.11.0-beta.1 and common to v24.11.0-beta.1.
+
 
 # 11.10.2 February 25, 2025
 ## Bug fixes 🐞
