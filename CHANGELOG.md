@@ -5,6 +5,26 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Support expression input for `PromoteId`.
+* Add a setting that allows geofencing users with Android <= 28 to access background locations. Add `mapbox-location-config.xml` file with the following content:
+```xml
+<resources>
+  <bool name="com.mapbox.common.location.sdk28_use_background_permissions">true</bool>
+</resources>
+```
+
+## Bug fixes 🐞
+* Fix missing vector images after style change.
+* Ensure background color is correctly set.
+* Fix background layer not being updated if raster image was updated in-place or if color theme changed.
+* Trigger DVA replacement if zoom diff is big.
+* Fix line placement symbol disappearing issue when in zoom level 5.
+* Place view annotation away from camera when pitch > 45.
+* Fix dark shades of gradient effect in night preset.
+* Fix Custom Raster Source behavior on re-creation.
+* Change unreachable connection retries to use exponential backoff.
+
+## Dependencies
+* Update gl-native to v11.11.0-beta.1 and common to v24.11.0-beta.1.
 
 # 11.10.2 February 25, 2025
 ## Bug fixes 🐞
