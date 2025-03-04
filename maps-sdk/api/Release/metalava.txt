@@ -333,6 +333,7 @@ package com.mapbox.maps {
     method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.CanonicalTileID> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public void whenSizeReady(kotlin.jvm.functions.Function0<kotlin.Unit> action);
     property public com.mapbox.maps.CameraState cameraState;
     property public final com.mapbox.maps.Style? style;
     field public static final com.mapbox.maps.MapboxMap.Companion Companion;

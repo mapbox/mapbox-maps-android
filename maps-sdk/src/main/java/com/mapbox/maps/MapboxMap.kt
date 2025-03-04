@@ -669,6 +669,17 @@ class MapboxMap :
   }
 
   /**
+   * Execute the provided [action] when map size becomes ready.
+   * Will be executed synchronously if map size is ready at the moment of invocation.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  @MapboxExperimental
+  fun whenSizeReady(action: () -> Unit) {
+    checkNativeMap("whenSizeReady")
+    nativeMap.whenMapSizeReady(action)
+  }
+
+  /**
    * Get debug options
    */
   @Deprecated("Use `MapView.debugOptions` instead.")
