@@ -1551,6 +1551,13 @@ class MapboxMapTest {
   }
 
   @Test
+  fun whenSizeReady() {
+    val action = mockk<() -> Unit>()
+    mapboxMap.whenSizeReady(action)
+    verify { nativeMap.whenMapSizeReady(action) }
+  }
+
+  @Test
   fun getFreeCameraOptions() {
     mapboxMap.getFreeCameraOptions()
     verify { nativeMap.getFreeCameraOptions() }

@@ -332,6 +332,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun tileCover (Lcom/mapbox/maps/TileCoverOptions;Lcom/mapbox/maps/CameraOptions;)Ljava/util/List;
 	public final fun triggerRepaint ()V
 	public fun unproject (Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
+	public final fun whenSizeReady (Lkotlin/jvm/functions/Function0;)V
 }
 
 public final class com/mapbox/maps/MapboxMap$Companion {
