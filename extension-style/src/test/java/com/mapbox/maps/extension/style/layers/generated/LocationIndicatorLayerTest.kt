@@ -57,204 +57,6 @@ class LocationIndicatorLayerTest {
   // Property getters and setters
 
   @Test
-  fun bearingImageSet() {
-    val layer = locationIndicatorLayer("id") {}
-    val testValue = "abc"
-    layer.bindTo(style)
-    layer.bearingImage(testValue)
-    verify { style.setStyleLayerProperty("id", "bearing-image", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "abc")
-  }
-
-  @Test
-  fun bearingImageGet() {
-    every { styleProperty.value } returns Value("abc")
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    val expectedValue = "abc"
-    assertEquals(expectedValue.toString(), layer.bearingImage?.toString())
-    verify { style.getStyleLayerProperty("id", "bearing-image") }
-  }
-  // Expression Tests
-
-  @Test
-  fun bearingImageAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = locationIndicatorLayer("id") {}
-    layer.bindTo(style)
-    layer.bearingImage(expression)
-    verify { style.setStyleLayerProperty("id", "bearing-image", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun bearingImageAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.bearingImageAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "bearing-image") }
-  }
-
-  @Test
-  fun bearingImageAsExpressionGetNull() {
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.bearingImageAsExpression)
-    verify { style.getStyleLayerProperty("id", "bearing-image") }
-  }
-
-  @Test
-  fun bearingImageAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns Value("abc")
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals("abc", layer.bearingImageAsExpression.toString())
-    assertEquals("abc", layer.bearingImage)
-    verify { style.getStyleLayerProperty("id", "bearing-image") }
-  }
-
-  @Test
-  fun shadowImageSet() {
-    val layer = locationIndicatorLayer("id") {}
-    val testValue = "abc"
-    layer.bindTo(style)
-    layer.shadowImage(testValue)
-    verify { style.setStyleLayerProperty("id", "shadow-image", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "abc")
-  }
-
-  @Test
-  fun shadowImageGet() {
-    every { styleProperty.value } returns Value("abc")
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    val expectedValue = "abc"
-    assertEquals(expectedValue.toString(), layer.shadowImage?.toString())
-    verify { style.getStyleLayerProperty("id", "shadow-image") }
-  }
-  // Expression Tests
-
-  @Test
-  fun shadowImageAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = locationIndicatorLayer("id") {}
-    layer.bindTo(style)
-    layer.shadowImage(expression)
-    verify { style.setStyleLayerProperty("id", "shadow-image", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun shadowImageAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.shadowImageAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "shadow-image") }
-  }
-
-  @Test
-  fun shadowImageAsExpressionGetNull() {
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.shadowImageAsExpression)
-    verify { style.getStyleLayerProperty("id", "shadow-image") }
-  }
-
-  @Test
-  fun shadowImageAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns Value("abc")
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals("abc", layer.shadowImageAsExpression.toString())
-    assertEquals("abc", layer.shadowImage)
-    verify { style.getStyleLayerProperty("id", "shadow-image") }
-  }
-
-  @Test
-  fun topImageSet() {
-    val layer = locationIndicatorLayer("id") {}
-    val testValue = "abc"
-    layer.bindTo(style)
-    layer.topImage(testValue)
-    verify { style.setStyleLayerProperty("id", "top-image", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "abc")
-  }
-
-  @Test
-  fun topImageGet() {
-    every { styleProperty.value } returns Value("abc")
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    val expectedValue = "abc"
-    assertEquals(expectedValue.toString(), layer.topImage?.toString())
-    verify { style.getStyleLayerProperty("id", "top-image") }
-  }
-  // Expression Tests
-
-  @Test
-  fun topImageAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = locationIndicatorLayer("id") {}
-    layer.bindTo(style)
-    layer.topImage(expression)
-    verify { style.setStyleLayerProperty("id", "top-image", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun topImageAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.topImageAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "top-image") }
-  }
-
-  @Test
-  fun topImageAsExpressionGetNull() {
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.topImageAsExpression)
-    verify { style.getStyleLayerProperty("id", "top-image") }
-  }
-
-  @Test
-  fun topImageAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns Value("abc")
-    val layer = locationIndicatorLayer("id") { }
-    layer.bindTo(style)
-    assertEquals("abc", layer.topImageAsExpression.toString())
-    assertEquals("abc", layer.topImage)
-    verify { style.getStyleLayerProperty("id", "top-image") }
-  }
-
-  @Test
   fun accuracyRadiusSet() {
     val layer = locationIndicatorLayer("id") {}
     val testValue = 1.0
@@ -826,6 +628,72 @@ class LocationIndicatorLayerTest {
     }
     verify { style.setStyleLayerProperty("id", "bearing-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun bearingImageSet() {
+    val layer = locationIndicatorLayer("id") {}
+    val testValue = "abc"
+    layer.bindTo(style)
+    layer.bearingImage(testValue)
+    verify { style.setStyleLayerProperty("id", "bearing-image", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "abc")
+  }
+
+  @Test
+  fun bearingImageGet() {
+    every { styleProperty.value } returns Value("abc")
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), layer.bearingImage?.toString())
+    verify { style.getStyleLayerProperty("id", "bearing-image") }
+  }
+  // Expression Tests
+
+  @Test
+  fun bearingImageAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.bearingImage(expression)
+    verify { style.setStyleLayerProperty("id", "bearing-image", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun bearingImageAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.bearingImageAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "bearing-image") }
+  }
+
+  @Test
+  fun bearingImageAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.bearingImageAsExpression)
+    verify { style.getStyleLayerProperty("id", "bearing-image") }
+  }
+
+  @Test
+  fun bearingImageAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns Value("abc")
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals("abc", layer.bearingImageAsExpression.toString())
+    assertEquals("abc", layer.bearingImage)
+    verify { style.getStyleLayerProperty("id", "bearing-image") }
   }
 
   @Test
@@ -1678,6 +1546,72 @@ class LocationIndicatorLayerTest {
   }
 
   @Test
+  fun shadowImageSet() {
+    val layer = locationIndicatorLayer("id") {}
+    val testValue = "abc"
+    layer.bindTo(style)
+    layer.shadowImage(testValue)
+    verify { style.setStyleLayerProperty("id", "shadow-image", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "abc")
+  }
+
+  @Test
+  fun shadowImageGet() {
+    every { styleProperty.value } returns Value("abc")
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), layer.shadowImage?.toString())
+    verify { style.getStyleLayerProperty("id", "shadow-image") }
+  }
+  // Expression Tests
+
+  @Test
+  fun shadowImageAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.shadowImage(expression)
+    verify { style.setStyleLayerProperty("id", "shadow-image", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun shadowImageAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.shadowImageAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "shadow-image") }
+  }
+
+  @Test
+  fun shadowImageAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.shadowImageAsExpression)
+    verify { style.getStyleLayerProperty("id", "shadow-image") }
+  }
+
+  @Test
+  fun shadowImageAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns Value("abc")
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals("abc", layer.shadowImageAsExpression.toString())
+    assertEquals("abc", layer.shadowImage)
+    verify { style.getStyleLayerProperty("id", "shadow-image") }
+  }
+
+  @Test
   fun shadowImageSizeSet() {
     val layer = locationIndicatorLayer("id") {}
     val testValue = 1.0
@@ -1782,6 +1716,72 @@ class LocationIndicatorLayerTest {
     }
     verify { style.setStyleLayerProperty("id", "shadow-image-size-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun topImageSet() {
+    val layer = locationIndicatorLayer("id") {}
+    val testValue = "abc"
+    layer.bindTo(style)
+    layer.topImage(testValue)
+    verify { style.setStyleLayerProperty("id", "top-image", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "abc")
+  }
+
+  @Test
+  fun topImageGet() {
+    every { styleProperty.value } returns Value("abc")
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), layer.topImage?.toString())
+    verify { style.getStyleLayerProperty("id", "top-image") }
+  }
+  // Expression Tests
+
+  @Test
+  fun topImageAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.topImage(expression)
+    verify { style.setStyleLayerProperty("id", "top-image", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun topImageAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.topImageAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "top-image") }
+  }
+
+  @Test
+  fun topImageAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.topImageAsExpression)
+    verify { style.getStyleLayerProperty("id", "top-image") }
+  }
+
+  @Test
+  fun topImageAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns Value("abc")
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals("abc", layer.topImageAsExpression.toString())
+    assertEquals("abc", layer.topImage)
+    verify { style.getStyleLayerProperty("id", "top-image") }
   }
 
   @Test
@@ -1953,102 +1953,6 @@ class LocationIndicatorLayerTest {
   }
 
   // Default property getter tests
-
-  @Test
-  fun defaultBearingImageTest() {
-    every { styleProperty.value } returns Value("abc")
-
-    val expectedValue = "abc"
-    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultBearingImage?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultBearingImageAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), LocationIndicatorLayer.defaultBearingImageAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image") }
-  }
-
-  @Test
-  fun defaultBearingImageAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns Value("abc")
-
-    assertEquals("abc", LocationIndicatorLayer.defaultBearingImageAsExpression.toString())
-    assertEquals("abc", LocationIndicatorLayer.defaultBearingImage)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image") }
-  }
-
-  @Test
-  fun defaultShadowImageTest() {
-    every { styleProperty.value } returns Value("abc")
-
-    val expectedValue = "abc"
-    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultShadowImage?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultShadowImageAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), LocationIndicatorLayer.defaultShadowImageAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image") }
-  }
-
-  @Test
-  fun defaultShadowImageAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns Value("abc")
-
-    assertEquals("abc", LocationIndicatorLayer.defaultShadowImageAsExpression.toString())
-    assertEquals("abc", LocationIndicatorLayer.defaultShadowImage)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image") }
-  }
-
-  @Test
-  fun defaultTopImageTest() {
-    every { styleProperty.value } returns Value("abc")
-
-    val expectedValue = "abc"
-    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultTopImage?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultTopImageAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), LocationIndicatorLayer.defaultTopImageAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image") }
-  }
-
-  @Test
-  fun defaultTopImageAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns Value("abc")
-
-    assertEquals("abc", LocationIndicatorLayer.defaultTopImageAsExpression.toString())
-    assertEquals("abc", LocationIndicatorLayer.defaultTopImage)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image") }
-  }
 
   @Test
   fun defaultAccuracyRadiusTest() {
@@ -2304,6 +2208,38 @@ class LocationIndicatorLayerTest {
 
     assertEquals(transition.toValue().toString(), LocationIndicatorLayer.defaultBearingTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-transition") }
+  }
+
+  @Test
+  fun defaultBearingImageTest() {
+    every { styleProperty.value } returns Value("abc")
+
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultBearingImage?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultBearingImageAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LocationIndicatorLayer.defaultBearingImageAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image") }
+  }
+
+  @Test
+  fun defaultBearingImageAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns Value("abc")
+
+    assertEquals("abc", LocationIndicatorLayer.defaultBearingImageAsExpression.toString())
+    assertEquals("abc", LocationIndicatorLayer.defaultBearingImage)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image") }
   }
 
   @Test
@@ -2673,6 +2609,38 @@ class LocationIndicatorLayerTest {
   }
 
   @Test
+  fun defaultShadowImageTest() {
+    every { styleProperty.value } returns Value("abc")
+
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultShadowImage?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultShadowImageAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LocationIndicatorLayer.defaultShadowImageAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image") }
+  }
+
+  @Test
+  fun defaultShadowImageAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns Value("abc")
+
+    assertEquals("abc", LocationIndicatorLayer.defaultShadowImageAsExpression.toString())
+    assertEquals("abc", LocationIndicatorLayer.defaultShadowImage)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image") }
+  }
+
+  @Test
   fun defaultShadowImageSizeTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -2714,6 +2682,38 @@ class LocationIndicatorLayerTest {
 
     assertEquals(transition.toValue().toString(), LocationIndicatorLayer.defaultShadowImageSizeTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image-size-transition") }
+  }
+
+  @Test
+  fun defaultTopImageTest() {
+    every { styleProperty.value } returns Value("abc")
+
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultTopImage?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultTopImageAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LocationIndicatorLayer.defaultTopImageAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image") }
+  }
+
+  @Test
+  fun defaultTopImageAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns Value("abc")
+
+    assertEquals("abc", LocationIndicatorLayer.defaultTopImageAsExpression.toString())
+    assertEquals("abc", LocationIndicatorLayer.defaultTopImage)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image") }
   }
 
   @Test

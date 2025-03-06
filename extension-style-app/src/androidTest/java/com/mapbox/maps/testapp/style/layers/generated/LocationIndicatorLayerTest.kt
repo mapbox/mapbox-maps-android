@@ -23,78 +23,6 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun bearingImageTest() {
-    val testValue = "abc"
-    val layer = locationIndicatorLayer("id") {
-      bearingImage(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.bearingImage?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun bearingImageAsExpressionTest() {
-    val expression = literal("abc")
-    val layer = locationIndicatorLayer("id") {
-      bearingImage(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.bearingImageAsExpression.toString())
-    assertEquals(expression.toString(), layer.bearingImage)
-  }
-
-  @Test
-  @UiThreadTest
-  fun shadowImageTest() {
-    val testValue = "abc"
-    val layer = locationIndicatorLayer("id") {
-      shadowImage(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.shadowImage?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun shadowImageAsExpressionTest() {
-    val expression = literal("abc")
-    val layer = locationIndicatorLayer("id") {
-      shadowImage(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.shadowImageAsExpression.toString())
-    assertEquals(expression.toString(), layer.shadowImage)
-  }
-
-  @Test
-  @UiThreadTest
-  fun topImageTest() {
-    val testValue = "abc"
-    val layer = locationIndicatorLayer("id") {
-      topImage(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.topImage?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun topImageAsExpressionTest() {
-    val expression = literal("abc")
-    val layer = locationIndicatorLayer("id") {
-      topImage(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.topImageAsExpression.toString())
-    assertEquals(expression.toString(), layer.topImage)
-  }
-
-  @Test
-  @UiThreadTest
   fun accuracyRadiusTest() {
     val testValue = 1.0
     val layer = locationIndicatorLayer("id") {
@@ -365,6 +293,30 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(transition, layer.bearingTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun bearingImageTest() {
+    val testValue = "abc"
+    val layer = locationIndicatorLayer("id") {
+      bearingImage(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.bearingImage?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun bearingImageAsExpressionTest() {
+    val expression = literal("abc")
+    val layer = locationIndicatorLayer("id") {
+      bearingImage(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.bearingImageAsExpression.toString())
+    assertEquals(expression.toString(), layer.bearingImage)
   }
 
   @Test
@@ -774,6 +726,30 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun shadowImageTest() {
+    val testValue = "abc"
+    val layer = locationIndicatorLayer("id") {
+      shadowImage(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.shadowImage?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun shadowImageAsExpressionTest() {
+    val expression = literal("abc")
+    val layer = locationIndicatorLayer("id") {
+      shadowImage(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.shadowImageAsExpression.toString())
+    assertEquals(expression.toString(), layer.shadowImage)
+  }
+
+  @Test
+  @UiThreadTest
   fun shadowImageSizeTest() {
     val testValue = 1.0
     val layer = locationIndicatorLayer("id") {
@@ -825,6 +801,30 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(transition, layer.shadowImageSizeTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun topImageTest() {
+    val testValue = "abc"
+    val layer = locationIndicatorLayer("id") {
+      topImage(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.topImage?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun topImageAsExpressionTest() {
+    val expression = literal("abc")
+    val layer = locationIndicatorLayer("id") {
+      topImage(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.topImageAsExpression.toString())
+    assertEquals(expression.toString(), layer.topImage)
   }
 
   @Test
@@ -915,12 +915,6 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", LocationIndicatorLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", LocationIndicatorLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", LocationIndicatorLayer.defaultMaxZoom)
-    assertNotNull("defaultBearingImage should not be null", LocationIndicatorLayer.defaultBearingImage)
-    assertNotNull("defaultBearingImageAsExpression should not be null", LocationIndicatorLayer.defaultBearingImageAsExpression)
-    assertNotNull("defaultShadowImage should not be null", LocationIndicatorLayer.defaultShadowImage)
-    assertNotNull("defaultShadowImageAsExpression should not be null", LocationIndicatorLayer.defaultShadowImageAsExpression)
-    assertNotNull("defaultTopImage should not be null", LocationIndicatorLayer.defaultTopImage)
-    assertNotNull("defaultTopImageAsExpression should not be null", LocationIndicatorLayer.defaultTopImageAsExpression)
     assertNotNull("defaultAccuracyRadius should not be null", LocationIndicatorLayer.defaultAccuracyRadius)
     assertNotNull("defaultAccuracyRadiusAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusAsExpression)
     assertNotNull("defaultAccuracyRadiusTransition should not be null", LocationIndicatorLayer.defaultAccuracyRadiusTransition)
@@ -937,6 +931,8 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultBearing should not be null", LocationIndicatorLayer.defaultBearing)
     assertNotNull("defaultBearingAsExpression should not be null", LocationIndicatorLayer.defaultBearingAsExpression)
     assertNotNull("defaultBearingTransition should not be null", LocationIndicatorLayer.defaultBearingTransition)
+    assertNotNull("defaultBearingImage should not be null", LocationIndicatorLayer.defaultBearingImage)
+    assertNotNull("defaultBearingImageAsExpression should not be null", LocationIndicatorLayer.defaultBearingImageAsExpression)
     assertNotNull("defaultBearingImageSize should not be null", LocationIndicatorLayer.defaultBearingImageSize)
     assertNotNull("defaultBearingImageSizeAsExpression should not be null", LocationIndicatorLayer.defaultBearingImageSizeAsExpression)
     assertNotNull("defaultBearingImageSizeTransition should not be null", LocationIndicatorLayer.defaultBearingImageSizeTransition)
@@ -961,9 +957,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultLocationIndicatorOpacityTransition should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacityTransition)
     assertNotNull("defaultPerspectiveCompensation should not be null", LocationIndicatorLayer.defaultPerspectiveCompensation)
     assertNotNull("defaultPerspectiveCompensationAsExpression should not be null", LocationIndicatorLayer.defaultPerspectiveCompensationAsExpression)
+    assertNotNull("defaultShadowImage should not be null", LocationIndicatorLayer.defaultShadowImage)
+    assertNotNull("defaultShadowImageAsExpression should not be null", LocationIndicatorLayer.defaultShadowImageAsExpression)
     assertNotNull("defaultShadowImageSize should not be null", LocationIndicatorLayer.defaultShadowImageSize)
     assertNotNull("defaultShadowImageSizeAsExpression should not be null", LocationIndicatorLayer.defaultShadowImageSizeAsExpression)
     assertNotNull("defaultShadowImageSizeTransition should not be null", LocationIndicatorLayer.defaultShadowImageSizeTransition)
+    assertNotNull("defaultTopImage should not be null", LocationIndicatorLayer.defaultTopImage)
+    assertNotNull("defaultTopImageAsExpression should not be null", LocationIndicatorLayer.defaultTopImageAsExpression)
     assertNotNull("defaultTopImageSize should not be null", LocationIndicatorLayer.defaultTopImageSize)
     assertNotNull("defaultTopImageSizeAsExpression should not be null", LocationIndicatorLayer.defaultTopImageSizeAsExpression)
     assertNotNull("defaultTopImageSizeTransition should not be null", LocationIndicatorLayer.defaultTopImageSizeTransition)
@@ -972,15 +972,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val bearingImageTestValue = "abc"
-    val shadowImageTestValue = "abc"
-    val topImageTestValue = "abc"
     val accuracyRadiusTestValue = 1.0
     val accuracyRadiusBorderColorTestValue = "rgba(0, 0, 0, 1)"
     val accuracyRadiusBorderColorUseThemeTestValue = "default"
     val accuracyRadiusColorTestValue = "rgba(0, 0, 0, 1)"
     val accuracyRadiusColorUseThemeTestValue = "default"
     val bearingTestValue = 1.0
+    val bearingImageTestValue = "abc"
     val bearingImageSizeTestValue = 1.0
     val emphasisCircleColorTestValue = "rgba(0, 0, 0, 1)"
     val emphasisCircleColorUseThemeTestValue = "default"
@@ -990,19 +988,19 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     val locationTestValue = listOf(0.0, 1.0, 2.0)
     val locationIndicatorOpacityTestValue = 1.0
     val perspectiveCompensationTestValue = 1.0
+    val shadowImageTestValue = "abc"
     val shadowImageSizeTestValue = 1.0
+    val topImageTestValue = "abc"
     val topImageSizeTestValue = 1.0
 
     val layer = locationIndicatorLayer("id") {
-      bearingImage(bearingImageTestValue)
-      shadowImage(shadowImageTestValue)
-      topImage(topImageTestValue)
       accuracyRadius(accuracyRadiusTestValue)
       accuracyRadiusBorderColor(accuracyRadiusBorderColorTestValue)
       accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseThemeTestValue)
       accuracyRadiusColor(accuracyRadiusColorTestValue)
       accuracyRadiusColorUseTheme(accuracyRadiusColorUseThemeTestValue)
       bearing(bearingTestValue)
+      bearingImage(bearingImageTestValue)
       bearingImageSize(bearingImageSizeTestValue)
       emphasisCircleColor(emphasisCircleColorTestValue)
       emphasisCircleColorUseTheme(emphasisCircleColorUseThemeTestValue)
@@ -1012,7 +1010,9 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
       location(locationTestValue)
       locationIndicatorOpacity(locationIndicatorOpacityTestValue)
       perspectiveCompensation(perspectiveCompensationTestValue)
+      shadowImage(shadowImageTestValue)
       shadowImageSize(shadowImageSizeTestValue)
+      topImage(topImageTestValue)
       topImageSize(topImageSizeTestValue)
     }
 
@@ -1023,15 +1023,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     removeLayer(layer)
     setupLayer(cachedLayer)
 
-    assertEquals(bearingImageTestValue, cachedLayer.bearingImage)
-    assertEquals(shadowImageTestValue, cachedLayer.shadowImage)
-    assertEquals(topImageTestValue, cachedLayer.topImage)
     assertEquals(accuracyRadiusTestValue, cachedLayer.accuracyRadius)
     assertEquals(accuracyRadiusBorderColorTestValue, cachedLayer.accuracyRadiusBorderColor)
     assertEquals(accuracyRadiusBorderColorUseThemeTestValue, cachedLayer.accuracyRadiusBorderColorUseTheme)
     assertEquals(accuracyRadiusColorTestValue, cachedLayer.accuracyRadiusColor)
     assertEquals(accuracyRadiusColorUseThemeTestValue, cachedLayer.accuracyRadiusColorUseTheme)
     assertEquals(bearingTestValue, cachedLayer.bearing)
+    assertEquals(bearingImageTestValue, cachedLayer.bearingImage)
     assertEquals(bearingImageSizeTestValue, cachedLayer.bearingImageSize)
     assertEquals(emphasisCircleColorTestValue, cachedLayer.emphasisCircleColor)
     assertEquals(emphasisCircleColorUseThemeTestValue, cachedLayer.emphasisCircleColorUseTheme)
@@ -1041,7 +1039,9 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(locationTestValue, cachedLayer.location)
     assertEquals(locationIndicatorOpacityTestValue, cachedLayer.locationIndicatorOpacity)
     assertEquals(perspectiveCompensationTestValue, cachedLayer.perspectiveCompensation)
+    assertEquals(shadowImageTestValue, cachedLayer.shadowImage)
     assertEquals(shadowImageSizeTestValue, cachedLayer.shadowImageSize)
+    assertEquals(topImageTestValue, cachedLayer.topImage)
     assertEquals(topImageSizeTestValue, cachedLayer.topImageSize)
   }
 }
