@@ -224,6 +224,61 @@ class LocationIndicatorLayerTest {
   // Expression Tests
 
   @Test
+  fun accuracyRadiusBorderColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.accuracyRadiusBorderColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "accuracy-radius-border-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.accuracyRadiusBorderColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-border-color-use-theme") }
+  }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.accuracyRadiusBorderColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-border-color-use-theme") }
+  }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.accuracyRadiusBorderColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-border-color-use-theme") }
+  }
+
+  @Test
+  fun accuracyRadiusBorderColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusBorderColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.accuracyRadiusBorderColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-border-color-use-theme") }
+  }
+
+  @Test
   fun accuracyRadiusBorderColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -402,6 +457,61 @@ class LocationIndicatorLayerTest {
     verify { style.getStyleLayerProperty("id", "accuracy-radius-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun accuracyRadiusColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.accuracyRadiusColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "accuracy-radius-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.accuracyRadiusColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-color-use-theme") }
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.accuracyRadiusColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-color-use-theme") }
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.accuracyRadiusColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-color-use-theme") }
+  }
+
+  @Test
+  fun accuracyRadiusColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.accuracyRadiusColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "accuracy-radius-color-use-theme") }
+  }
 
   @Test
   fun accuracyRadiusColorAsExpressionSet() {
@@ -862,6 +972,61 @@ class LocationIndicatorLayerTest {
     verify { style.getStyleLayerProperty("id", "emphasis-circle-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun emphasisCircleColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.emphasisCircleColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "emphasis-circle-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.emphasisCircleColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "emphasis-circle-color-use-theme") }
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.emphasisCircleColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "emphasis-circle-color-use-theme") }
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.emphasisCircleColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "emphasis-circle-color-use-theme") }
+  }
+
+  @Test
+  fun emphasisCircleColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.emphasisCircleColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "emphasis-circle-color-use-theme") }
+  }
 
   @Test
   fun emphasisCircleColorAsExpressionSet() {

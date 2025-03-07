@@ -300,6 +300,41 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
+   * Сolor theme override for [heatmapColor].
+   */
+  @MapboxExperimental
+  val heatmapColorUseThemeAsExpression: Expression?
+    /**
+     * Get the HeatmapColorUseTheme property
+     *
+     * Use static method [HeatmapLayer.defaultHeatmapColorUseTheme] to get the default property.
+     *
+     * @return current HeatmapColorUseTheme property as Expression
+     */
+    get() {
+      getPropertyValue<Expression>("heatmap-color-use-theme")?.let {
+        return it
+      }
+      heatmapColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the HeatmapColorUseTheme as Expression
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapColorUseTheme] to get the default property.
+   *
+   * @param heatmapColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun heatmapColorUseTheme(heatmapColorUseTheme: Expression): HeatmapLayer = apply {
+    val propertyValue = PropertyValue("heatmap-color-use-theme", heatmapColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level. Default value: 1. Minimum value: 0.
    */
   val heatmapIntensity: Double?
@@ -748,6 +783,22 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       get() = StyleManager.getStyleLayerPropertyDefaultValue("heatmap", "heatmap-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [heatmapColor].
+     */
+    @MapboxExperimental
+    val defaultHeatmapColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the HeatmapColor property as Expression
+       *
+       * @return Expression
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("heatmap", "heatmap-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultHeatmapColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level. Default value: 1. Minimum value: 0.
      */
     val defaultHeatmapIntensity: Double?
@@ -1019,6 +1070,14 @@ interface HeatmapLayerDsl {
    */
   @MapboxExperimental
   fun heatmapColorUseTheme(heatmapColorUseTheme: String): HeatmapLayer
+
+  /**
+   * Set the heatmapColorUseTheme as Expression for [heatmapColor].
+   *
+   * @param heatmapColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun heatmapColorUseTheme(heatmapColorUseTheme: Expression): HeatmapLayer
 
   /**
    * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level. Default value: 1. Minimum value: 0.

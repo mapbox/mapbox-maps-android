@@ -185,6 +185,28 @@ class CircleLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun circleColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = circleLayer("id", "source") {
+      circleColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.circleColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun circleColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = circleLayer("id", "source") {
+      circleColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.circleColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun circleColorAsColorIntTest() {
     val layer = circleLayer("id", "source") {
       circleColor(Color.CYAN)
@@ -484,6 +506,28 @@ class CircleLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun circleStrokeColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = circleLayer("id", "source") {
+      circleStrokeColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.circleStrokeColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun circleStrokeColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = circleLayer("id", "source") {
+      circleStrokeColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.circleStrokeColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun circleStrokeColorAsColorIntTest() {
     val layer = circleLayer("id", "source") {
       circleStrokeColor(Color.CYAN)
@@ -772,6 +816,7 @@ class CircleLayerTest : BaseStyleTest() {
     assertNotNull("defaultCircleColorAsExpression should not be null", CircleLayer.defaultCircleColorAsExpression)
     assertNotNull("defaultCircleColorAsColorInt should not be null", CircleLayer.defaultCircleColorAsColorInt)
     assertNotNull("defaultCircleColorUseTheme should not be null", CircleLayer.defaultCircleColorUseTheme)
+    assertNotNull("defaultCircleColorUseThemeAsExpression should not be null", CircleLayer.defaultCircleColorUseThemeAsExpression)
     assertNotNull("defaultCircleColorTransition should not be null", CircleLayer.defaultCircleColorTransition)
     assertNotNull("defaultCircleEmissiveStrength should not be null", CircleLayer.defaultCircleEmissiveStrength)
     assertNotNull("defaultCircleEmissiveStrengthAsExpression should not be null", CircleLayer.defaultCircleEmissiveStrengthAsExpression)
@@ -790,6 +835,7 @@ class CircleLayerTest : BaseStyleTest() {
     assertNotNull("defaultCircleStrokeColorAsExpression should not be null", CircleLayer.defaultCircleStrokeColorAsExpression)
     assertNotNull("defaultCircleStrokeColorAsColorInt should not be null", CircleLayer.defaultCircleStrokeColorAsColorInt)
     assertNotNull("defaultCircleStrokeColorUseTheme should not be null", CircleLayer.defaultCircleStrokeColorUseTheme)
+    assertNotNull("defaultCircleStrokeColorUseThemeAsExpression should not be null", CircleLayer.defaultCircleStrokeColorUseThemeAsExpression)
     assertNotNull("defaultCircleStrokeColorTransition should not be null", CircleLayer.defaultCircleStrokeColorTransition)
     assertNotNull("defaultCircleStrokeOpacity should not be null", CircleLayer.defaultCircleStrokeOpacity)
     assertNotNull("defaultCircleStrokeOpacityAsExpression should not be null", CircleLayer.defaultCircleStrokeOpacityAsExpression)

@@ -108,6 +108,28 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun accuracyRadiusBorderColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusBorderColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.accuracyRadiusBorderColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun accuracyRadiusBorderColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusBorderColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.accuracyRadiusBorderColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun accuracyRadiusBorderColorAsColorIntTest() {
     val layer = locationIndicatorLayer("id") {
       accuracyRadiusBorderColor(Color.CYAN)
@@ -186,6 +208,28 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(expression.toString(), layer.accuracyRadiusColorAsExpression.toString())
     assertEquals("rgba(0, 0, 0, 1)", layer.accuracyRadiusColor)
     assertEquals(Color.BLACK, layer.accuracyRadiusColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun accuracyRadiusColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.accuracyRadiusColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun accuracyRadiusColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = locationIndicatorLayer("id") {
+      accuracyRadiusColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.accuracyRadiusColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -402,6 +446,28 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(expression.toString(), layer.emphasisCircleColorAsExpression.toString())
     assertEquals("rgba(0, 0, 0, 1)", layer.emphasisCircleColor)
     assertEquals(Color.BLACK, layer.emphasisCircleColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun emphasisCircleColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.emphasisCircleColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun emphasisCircleColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = locationIndicatorLayer("id") {
+      emphasisCircleColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.emphasisCircleColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -922,11 +988,13 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultAccuracyRadiusBorderColorAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorAsExpression)
     assertNotNull("defaultAccuracyRadiusBorderColorAsColorInt should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorAsColorInt)
     assertNotNull("defaultAccuracyRadiusBorderColorUseTheme should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme)
+    assertNotNull("defaultAccuracyRadiusBorderColorUseThemeAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseThemeAsExpression)
     assertNotNull("defaultAccuracyRadiusBorderColorTransition should not be null", LocationIndicatorLayer.defaultAccuracyRadiusBorderColorTransition)
     assertNotNull("defaultAccuracyRadiusColor should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColor)
     assertNotNull("defaultAccuracyRadiusColorAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorAsExpression)
     assertNotNull("defaultAccuracyRadiusColorAsColorInt should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorAsColorInt)
     assertNotNull("defaultAccuracyRadiusColorUseTheme should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme)
+    assertNotNull("defaultAccuracyRadiusColorUseThemeAsExpression should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorUseThemeAsExpression)
     assertNotNull("defaultAccuracyRadiusColorTransition should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorTransition)
     assertNotNull("defaultBearing should not be null", LocationIndicatorLayer.defaultBearing)
     assertNotNull("defaultBearingAsExpression should not be null", LocationIndicatorLayer.defaultBearingAsExpression)
@@ -940,6 +1008,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultEmphasisCircleColorAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorAsExpression)
     assertNotNull("defaultEmphasisCircleColorAsColorInt should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorAsColorInt)
     assertNotNull("defaultEmphasisCircleColorUseTheme should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme)
+    assertNotNull("defaultEmphasisCircleColorUseThemeAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorUseThemeAsExpression)
     assertNotNull("defaultEmphasisCircleColorTransition should not be null", LocationIndicatorLayer.defaultEmphasisCircleColorTransition)
     assertNotNull("defaultEmphasisCircleGlowRange should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRange)
     assertNotNull("defaultEmphasisCircleGlowRangeAsExpression should not be null", LocationIndicatorLayer.defaultEmphasisCircleGlowRangeAsExpression)

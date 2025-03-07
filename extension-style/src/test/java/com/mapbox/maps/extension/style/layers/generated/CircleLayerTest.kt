@@ -392,6 +392,61 @@ class CircleLayerTest {
   // Expression Tests
 
   @Test
+  fun circleColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "circle-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun circleColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.circleColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-color-use-theme") }
+  }
+
+  @Test
+  fun circleColorUseThemeAsExpressionGetNull() {
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.circleColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "circle-color-use-theme") }
+  }
+
+  @Test
+  fun circleColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.circleColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-color-use-theme") }
+  }
+
+  @Test
+  fun circleColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = circleLayer("id", "source") {
+      circleColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.circleColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-color-use-theme") }
+  }
+
+  @Test
   fun circleColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -1027,6 +1082,61 @@ class CircleLayerTest {
     verify { style.getStyleLayerProperty("id", "circle-stroke-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun circleStrokeColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleStrokeColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "circle-stroke-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.circleStrokeColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-stroke-color-use-theme") }
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeAsExpressionGetNull() {
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.circleStrokeColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "circle-stroke-color-use-theme") }
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.circleStrokeColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-stroke-color-use-theme") }
+  }
+
+  @Test
+  fun circleStrokeColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = circleLayer("id", "source") {
+      circleStrokeColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.circleStrokeColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-stroke-color-use-theme") }
+  }
 
   @Test
   fun circleStrokeColorAsExpressionSet() {

@@ -3404,6 +3404,61 @@ class SymbolLayerTest {
   // Expression Tests
 
   @Test
+  fun iconColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "icon-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun iconColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-use-theme") }
+  }
+
+  @Test
+  fun iconColorUseThemeAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.iconColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-color-use-theme") }
+  }
+
+  @Test
+  fun iconColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-use-theme") }
+  }
+
+  @Test
+  fun iconColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") {
+      iconColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.iconColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-use-theme") }
+  }
+
+  @Test
   fun iconColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -3903,6 +3958,61 @@ class SymbolLayerTest {
     verify { style.getStyleLayerProperty("id", "icon-halo-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun iconHaloColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconHaloColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "icon-halo-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun iconHaloColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-halo-color-use-theme") }
+  }
+
+  @Test
+  fun iconHaloColorUseThemeAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.iconHaloColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-halo-color-use-theme") }
+  }
+
+  @Test
+  fun iconHaloColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-halo-color-use-theme") }
+  }
+
+  @Test
+  fun iconHaloColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") {
+      iconHaloColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.iconHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-halo-color-use-theme") }
+  }
 
   @Test
   fun iconHaloColorAsExpressionSet() {
@@ -4795,6 +4905,61 @@ class SymbolLayerTest {
   // Expression Tests
 
   @Test
+  fun textColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "text-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun textColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.textColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-color-use-theme") }
+  }
+
+  @Test
+  fun textColorUseThemeAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.textColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "text-color-use-theme") }
+  }
+
+  @Test
+  fun textColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.textColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-color-use-theme") }
+  }
+
+  @Test
+  fun textColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") {
+      textColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.textColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-color-use-theme") }
+  }
+
+  @Test
   fun textColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -5187,6 +5352,61 @@ class SymbolLayerTest {
     verify { style.getStyleLayerProperty("id", "text-halo-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun textHaloColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textHaloColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "text-halo-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun textHaloColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.textHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-halo-color-use-theme") }
+  }
+
+  @Test
+  fun textHaloColorUseThemeAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.textHaloColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "text-halo-color-use-theme") }
+  }
+
+  @Test
+  fun textHaloColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.textHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-halo-color-use-theme") }
+  }
+
+  @Test
+  fun textHaloColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") {
+      textHaloColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.textHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-halo-color-use-theme") }
+  }
 
   @Test
   fun textHaloColorAsExpressionSet() {

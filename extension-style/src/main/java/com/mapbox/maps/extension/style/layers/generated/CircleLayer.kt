@@ -571,6 +571,41 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
+   * Сolor theme override for [circleColor].
+   */
+  @MapboxExperimental
+  val circleColorUseThemeAsExpression: Expression?
+    /**
+     * Get the CircleColorUseTheme property
+     *
+     * Use static method [CircleLayer.defaultCircleColorUseTheme] to get the default property.
+     *
+     * @return current CircleColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("circle-color-use-theme")?.let {
+        return it
+      }
+      circleColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the CircleColorUseTheme as Expression
+   *
+   * Use static method [CircleLayer.defaultCircleColorUseTheme] to get the default property.
+   *
+   * @param circleColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun circleColorUseTheme(circleColorUseTheme: Expression): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-color-use-theme", circleColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of circleEmissiveStrength is in intensity.
    */
   val circleEmissiveStrength: Double?
@@ -1158,6 +1193,41 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    */
   @MapboxExperimental
   override fun circleStrokeColorUseTheme(circleStrokeColorUseTheme: String): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-stroke-color-use-theme", circleStrokeColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [circleStrokeColor].
+   */
+  @MapboxExperimental
+  val circleStrokeColorUseThemeAsExpression: Expression?
+    /**
+     * Get the CircleStrokeColorUseTheme property
+     *
+     * Use static method [CircleLayer.defaultCircleStrokeColorUseTheme] to get the default property.
+     *
+     * @return current CircleStrokeColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("circle-stroke-color-use-theme")?.let {
+        return it
+      }
+      circleStrokeColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the CircleStrokeColorUseTheme as Expression
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeColorUseTheme] to get the default property.
+   *
+   * @param circleStrokeColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun circleStrokeColorUseTheme(circleStrokeColorUseTheme: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-color-use-theme", circleStrokeColorUseTheme)
     setProperty(propertyValue)
   }
@@ -1751,6 +1821,22 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [circleColor].
+     */
+    @MapboxExperimental
+    val defaultCircleColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the CircleColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("circle", "circle-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultCircleColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of circleEmissiveStrength is in intensity.
      */
     val defaultCircleEmissiveStrength: Double?
@@ -2052,6 +2138,22 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
        * @return String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-stroke-color-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [circleStrokeColor].
+     */
+    @MapboxExperimental
+    val defaultCircleStrokeColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the CircleStrokeColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("circle", "circle-stroke-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultCircleStrokeColorUseTheme?.let { Expression.literal(it) }
+      }
 
     /**
      * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
@@ -2404,6 +2506,14 @@ interface CircleLayerDsl {
   fun circleColorUseTheme(circleColorUseTheme: String): CircleLayer
 
   /**
+   * Set the circleColorUseTheme as Expression for [circleColor].
+   *
+   * @param circleColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun circleColorUseTheme(circleColorUseTheme: Expression): CircleLayer
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of circleEmissiveStrength is in intensity.
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength
@@ -2565,6 +2675,14 @@ interface CircleLayerDsl {
    */
   @MapboxExperimental
   fun circleStrokeColorUseTheme(circleStrokeColorUseTheme: String): CircleLayer
+
+  /**
+   * Set the circleStrokeColorUseTheme as Expression for [circleStrokeColor].
+   *
+   * @param circleStrokeColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun circleStrokeColorUseTheme(circleStrokeColorUseTheme: Expression): CircleLayer
 
   /**
    * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]

@@ -175,6 +175,28 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {
+      fillColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.fillColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = fillLayer("id", "source") {
+      fillColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.fillColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun fillColorAsColorIntTest() {
     val layer = fillLayer("id", "source") {
       fillColor(Color.CYAN)
@@ -365,6 +387,28 @@ class FillLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.fillOutlineColorAsExpression.toString())
     assertEquals(null, layer.fillOutlineColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillOutlineColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {
+      fillOutlineColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.fillOutlineColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillOutlineColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = fillLayer("id", "source") {
+      fillOutlineColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.fillOutlineColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -629,6 +673,7 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillColorAsExpression should not be null", FillLayer.defaultFillColorAsExpression)
     assertNotNull("defaultFillColorAsColorInt should not be null", FillLayer.defaultFillColorAsColorInt)
     assertNotNull("defaultFillColorUseTheme should not be null", FillLayer.defaultFillColorUseTheme)
+    assertNotNull("defaultFillColorUseThemeAsExpression should not be null", FillLayer.defaultFillColorUseThemeAsExpression)
     assertNotNull("defaultFillColorTransition should not be null", FillLayer.defaultFillColorTransition)
     assertNotNull("defaultFillEmissiveStrength should not be null", FillLayer.defaultFillEmissiveStrength)
     assertNotNull("defaultFillEmissiveStrengthAsExpression should not be null", FillLayer.defaultFillEmissiveStrengthAsExpression)
@@ -640,6 +685,7 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillOutlineColorAsExpression should not be null", FillLayer.defaultFillOutlineColorAsExpression)
     assertNotNull("defaultFillOutlineColorAsColorInt should not be null", FillLayer.defaultFillOutlineColorAsColorInt)
     assertNotNull("defaultFillOutlineColorUseTheme should not be null", FillLayer.defaultFillOutlineColorUseTheme)
+    assertNotNull("defaultFillOutlineColorUseThemeAsExpression should not be null", FillLayer.defaultFillOutlineColorUseThemeAsExpression)
     assertNotNull("defaultFillOutlineColorTransition should not be null", FillLayer.defaultFillOutlineColorTransition)
     assertNotNull("defaultFillPattern should not be null", FillLayer.defaultFillPattern)
     assertNotNull("defaultFillPatternAsExpression should not be null", FillLayer.defaultFillPatternAsExpression)

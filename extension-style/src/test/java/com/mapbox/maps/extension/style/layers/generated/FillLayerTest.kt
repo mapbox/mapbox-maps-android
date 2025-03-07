@@ -423,6 +423,61 @@ class FillLayerTest {
   // Expression Tests
 
   @Test
+  fun fillColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "fill-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-color-use-theme") }
+  }
+
+  @Test
+  fun fillColorUseThemeAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.fillColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-color-use-theme") }
+  }
+
+  @Test
+  fun fillColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-color-use-theme") }
+  }
+
+  @Test
+  fun fillColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") {
+      fillColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.fillColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-color-use-theme") }
+  }
+
+  @Test
   fun fillColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -815,6 +870,61 @@ class FillLayerTest {
     verify { style.getStyleLayerProperty("id", "fill-outline-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun fillOutlineColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillOutlineColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "fill-outline-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillOutlineColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-outline-color-use-theme") }
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.fillOutlineColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-outline-color-use-theme") }
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillOutlineColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-outline-color-use-theme") }
+  }
+
+  @Test
+  fun fillOutlineColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") {
+      fillOutlineColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.fillOutlineColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-outline-color-use-theme") }
+  }
 
   @Test
   fun fillOutlineColorAsExpressionSet() {

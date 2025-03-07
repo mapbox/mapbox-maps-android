@@ -101,6 +101,28 @@ class HeatmapLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun heatmapColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = heatmapLayer("id", "source") {
+      heatmapColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.heatmapColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun heatmapColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = heatmapLayer("id", "source") {
+      heatmapColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.heatmapColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun heatmapColorUseTheme() {
     val theme = "none"
     val layer = heatmapLayer("id", "source") {
@@ -342,6 +364,7 @@ class HeatmapLayerTest : BaseStyleTest() {
     assertNotNull("defaultMaxZoom should not be null", HeatmapLayer.defaultMaxZoom)
     assertNotNull("defaultHeatmapColor should not be null", HeatmapLayer.defaultHeatmapColor)
     assertNotNull("defaultHeatmapColorUseTheme should not be null", HeatmapLayer.defaultHeatmapColorUseTheme)
+    assertNotNull("defaultHeatmapColorUseThemeAsExpression should not be null", HeatmapLayer.defaultHeatmapColorUseThemeAsExpression)
     assertNotNull("defaultHeatmapIntensity should not be null", HeatmapLayer.defaultHeatmapIntensity)
     assertNotNull("defaultHeatmapIntensityAsExpression should not be null", HeatmapLayer.defaultHeatmapIntensityAsExpression)
     assertNotNull("defaultHeatmapIntensityTransition should not be null", HeatmapLayer.defaultHeatmapIntensityTransition)

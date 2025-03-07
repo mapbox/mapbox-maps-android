@@ -8,6 +8,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
 import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.extension.style.utils.TypeUtils
@@ -113,6 +114,26 @@ class AtmosphereTest {
   }
 
   // Expression Tests
+
+  @Test
+  fun colorUseThemeAsExpressionGetNull() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.colorUseThemeAsExpression)
+    verify { style.getStyleAtmosphereProperty("color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(expression.toString(), atmosphere.colorUseThemeAsExpression?.toString())
+    verify { style.getStyleAtmosphereProperty("color-use-theme") }
+  }
 
   @Test
   fun colorAsExpressionGetNull() {
@@ -306,6 +327,26 @@ class AtmosphereTest {
   }
 
   // Expression Tests
+
+  @Test
+  fun highColorUseThemeAsExpressionGetNull() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.highColorUseThemeAsExpression)
+    verify { style.getStyleAtmosphereProperty("high-color-use-theme") }
+  }
+
+  @Test
+  fun highColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(expression.toString(), atmosphere.highColorUseThemeAsExpression?.toString())
+    verify { style.getStyleAtmosphereProperty("high-color-use-theme") }
+  }
 
   @Test
   fun highColorAsExpressionGetNull() {
@@ -739,6 +780,26 @@ class AtmosphereTest {
   }
 
   // Expression Tests
+
+  @Test
+  fun spaceColorUseThemeAsExpressionGetNull() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.spaceColorUseThemeAsExpression)
+    verify { style.getStyleAtmosphereProperty("space-color-use-theme") }
+  }
+
+  @Test
+  fun spaceColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(expression.toString(), atmosphere.spaceColorUseThemeAsExpression?.toString())
+    verify { style.getStyleAtmosphereProperty("space-color-use-theme") }
+  }
 
   @Test
   fun spaceColorAsExpressionGetNull() {

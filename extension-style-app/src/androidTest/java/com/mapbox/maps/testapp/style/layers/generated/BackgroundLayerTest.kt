@@ -55,6 +55,28 @@ class BackgroundLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun backgroundColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = backgroundLayer("id") {
+      backgroundColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.backgroundColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun backgroundColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = backgroundLayer("id") {
+      backgroundColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.backgroundColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun backgroundColorAsColorIntTest() {
     val layer = backgroundLayer("id") {
       backgroundColor(Color.CYAN)
@@ -299,6 +321,7 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertNotNull("defaultBackgroundColorAsExpression should not be null", BackgroundLayer.defaultBackgroundColorAsExpression)
     assertNotNull("defaultBackgroundColorAsColorInt should not be null", BackgroundLayer.defaultBackgroundColorAsColorInt)
     assertNotNull("defaultBackgroundColorUseTheme should not be null", BackgroundLayer.defaultBackgroundColorUseTheme)
+    assertNotNull("defaultBackgroundColorUseThemeAsExpression should not be null", BackgroundLayer.defaultBackgroundColorUseThemeAsExpression)
     assertNotNull("defaultBackgroundColorTransition should not be null", BackgroundLayer.defaultBackgroundColorTransition)
     assertNotNull("defaultBackgroundEmissiveStrength should not be null", BackgroundLayer.defaultBackgroundEmissiveStrength)
     assertNotNull("defaultBackgroundEmissiveStrengthAsExpression should not be null", BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression)

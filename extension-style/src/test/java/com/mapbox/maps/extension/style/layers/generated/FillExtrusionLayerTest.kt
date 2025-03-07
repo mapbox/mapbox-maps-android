@@ -997,6 +997,61 @@ class FillExtrusionLayerTest {
   // Expression Tests
 
   @Test
+  fun fillExtrusionColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillExtrusionColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-color-use-theme") }
+  }
+
+  @Test
+  fun fillExtrusionColorUseThemeAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-color-use-theme") }
+  }
+
+  @Test
+  fun fillExtrusionColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-color-use-theme") }
+  }
+
+  @Test
+  fun fillExtrusionColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.fillExtrusionColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-color-use-theme") }
+  }
+
+  @Test
   fun fillExtrusionColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -1349,6 +1404,61 @@ class FillExtrusionLayerTest {
     verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionFloodLightColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionFloodLightColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme") }
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionFloodLightColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme") }
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionFloodLightColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme") }
+  }
+
+  @Test
+  fun fillExtrusionFloodLightColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionFloodLightColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.fillExtrusionFloodLightColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-flood-light-color-use-theme") }
+  }
 
   @Test
   fun fillExtrusionFloodLightColorAsExpressionSet() {

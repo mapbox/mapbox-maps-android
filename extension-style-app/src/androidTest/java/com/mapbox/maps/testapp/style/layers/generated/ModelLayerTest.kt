@@ -207,6 +207,28 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = modelLayer("id", "source") {
+      modelColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.modelColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = modelLayer("id", "source") {
+      modelColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.modelColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun modelColorAsColorIntTest() {
     val layer = modelLayer("id", "source") {
       modelColor(Color.CYAN)
@@ -894,6 +916,7 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelColorAsExpression should not be null", ModelLayer.defaultModelColorAsExpression)
     assertNotNull("defaultModelColorAsColorInt should not be null", ModelLayer.defaultModelColorAsColorInt)
     assertNotNull("defaultModelColorUseTheme should not be null", ModelLayer.defaultModelColorUseTheme)
+    assertNotNull("defaultModelColorUseThemeAsExpression should not be null", ModelLayer.defaultModelColorUseThemeAsExpression)
     assertNotNull("defaultModelColorTransition should not be null", ModelLayer.defaultModelColorTransition)
     assertNotNull("defaultModelColorMixIntensity should not be null", ModelLayer.defaultModelColorMixIntensity)
     assertNotNull("defaultModelColorMixIntensityAsExpression should not be null", ModelLayer.defaultModelColorMixIntensityAsExpression)

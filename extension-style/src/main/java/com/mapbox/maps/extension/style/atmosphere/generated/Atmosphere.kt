@@ -163,6 +163,36 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   }
 
   /**
+   * Сolor theme override for [color].
+   */
+  @MapboxExperimental
+  val colorUseThemeAsExpression: Expression?
+    /**
+     * Get the ColorUseTheme property
+     *
+     * @return current ColorUseTheme property as Expression.
+     */
+    get() {
+      getPropertyValue<Expression>("color-use-theme")?.let {
+        return it
+      }
+      colorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the ColorUseTheme as Expression
+   *
+   * @param colorUseThemeExpression theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun colorUseTheme(colorUseTheme: Expression): Atmosphere = apply {
+    val propertyValue = PropertyValue("color-use-theme", colorUseTheme)
+    setProperty(propertyValue)
+  }
+  /**
    * The color of the atmosphere region above the horizon, `high-color` extends further above the horizon than the `color` property and its spread can be controlled with `horizon-blend`. The opacity can be set to `0` to remove the high atmosphere color contribution. Default value: "#245cdf".
    */
   val highColorAsColorInt: Int?
@@ -296,6 +326,36 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
     setProperty(propertyValue)
   }
 
+  /**
+   * Сolor theme override for [highColor].
+   */
+  @MapboxExperimental
+  val highColorUseThemeAsExpression: Expression?
+    /**
+     * Get the HighColorUseTheme property
+     *
+     * @return current HighColorUseTheme property as Expression.
+     */
+    get() {
+      getPropertyValue<Expression>("high-color-use-theme")?.let {
+        return it
+      }
+      highColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the HighColorUseTheme as Expression
+   *
+   * @param highColorUseThemeExpression theme value for highColor. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun highColorUseTheme(highColorUseTheme: Expression): Atmosphere = apply {
+    val propertyValue = PropertyValue("high-color-use-theme", highColorUseTheme)
+    setProperty(propertyValue)
+  }
   /**
    * Horizon blend applies a smooth fade from the color of the atmosphere to the color of space. A value of zero leaves a sharp transition from atmosphere to space. Increasing the value blends the color of atmosphere into increasingly high angles of the sky. Default value: "["interpolate",["linear"],["zoom"],4,0.2,7,0.1]". Value range: [0, 1]
    */
@@ -597,6 +657,36 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   }
 
   /**
+   * Сolor theme override for [spaceColor].
+   */
+  @MapboxExperimental
+  val spaceColorUseThemeAsExpression: Expression?
+    /**
+     * Get the SpaceColorUseTheme property
+     *
+     * @return current SpaceColorUseTheme property as Expression.
+     */
+    get() {
+      getPropertyValue<Expression>("space-color-use-theme")?.let {
+        return it
+      }
+      spaceColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the SpaceColorUseTheme as Expression
+   *
+   * @param spaceColorUseThemeExpression theme value for spaceColor. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun spaceColorUseTheme(spaceColorUseTheme: Expression): Atmosphere = apply {
+    val propertyValue = PropertyValue("space-color-use-theme", spaceColorUseTheme)
+    setProperty(propertyValue)
+  }
+  /**
    * A value controlling the star intensity where `0` will show no stars and `1` will show stars at their maximum intensity. Default value: "["interpolate",["linear"],["zoom"],5,0.35,6,0]". Value range: [0, 1]
    */
   val starIntensity: Double?
@@ -883,6 +973,14 @@ interface AtmosphereDslReceiver {
   fun colorUseTheme(colorUseTheme: String): Atmosphere
 
   /**
+   * Set the colorUseTheme as Expression for [color].
+   *
+   * @param colorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun colorUseTheme(colorUseTheme: Expression): Atmosphere
+
+  /**
    * The color of the atmosphere region above the horizon, `high-color` extends further above the horizon than the `color` property and its spread can be controlled with `horizon-blend`. The opacity can be set to `0` to remove the high atmosphere color contribution. Default value: "#245cdf".
    *
    * @param highColor as int
@@ -920,6 +1018,14 @@ interface AtmosphereDslReceiver {
    */
   @MapboxExperimental
   fun highColorUseTheme(highColorUseTheme: String): Atmosphere
+
+  /**
+   * Set the highColorUseTheme as Expression for [highColor].
+   *
+   * @param highColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun highColorUseTheme(highColorUseTheme: Expression): Atmosphere
 
   /**
    * Horizon blend applies a smooth fade from the color of the atmosphere to the color of space. A value of zero leaves a sharp transition from atmosphere to space. Increasing the value blends the color of atmosphere into increasingly high angles of the sky. Default value: "["interpolate",["linear"],["zoom"],4,0.2,7,0.1]". Value range: [0, 1]
@@ -1009,6 +1115,14 @@ interface AtmosphereDslReceiver {
    */
   @MapboxExperimental
   fun spaceColorUseTheme(spaceColorUseTheme: String): Atmosphere
+
+  /**
+   * Set the spaceColorUseTheme as Expression for [spaceColor].
+   *
+   * @param spaceColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun spaceColorUseTheme(spaceColorUseTheme: Expression): Atmosphere
 
   /**
    * A value controlling the star intensity where `0` will show no stars and `1` will show stars at their maximum intensity. Default value: "["interpolate",["linear"],["zoom"],5,0.35,6,0]". Value range: [0, 1]

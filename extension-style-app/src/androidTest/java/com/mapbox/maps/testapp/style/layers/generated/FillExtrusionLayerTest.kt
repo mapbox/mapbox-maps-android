@@ -481,6 +481,28 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.fillExtrusionColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.fillExtrusionColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionColorAsColorIntTest() {
     val layer = fillExtrusionLayer("id", "source") {
       fillExtrusionColor(Color.CYAN)
@@ -642,6 +664,28 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(expression.toString(), layer.fillExtrusionFloodLightColorAsExpression.toString())
     assertEquals("rgba(0, 0, 0, 1)", layer.fillExtrusionFloodLightColor)
     assertEquals(Color.BLACK, layer.fillExtrusionFloodLightColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionFloodLightColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionFloodLightColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.fillExtrusionFloodLightColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionFloodLightColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionFloodLightColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.fillExtrusionFloodLightColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -1390,6 +1434,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsExpression)
     assertNotNull("defaultFillExtrusionColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsColorInt)
     assertNotNull("defaultFillExtrusionColorUseTheme should not be null", FillExtrusionLayer.defaultFillExtrusionColorUseTheme)
+    assertNotNull("defaultFillExtrusionColorUseThemeAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionColorUseThemeAsExpression)
     assertNotNull("defaultFillExtrusionColorTransition should not be null", FillExtrusionLayer.defaultFillExtrusionColorTransition)
     assertNotNull("defaultFillExtrusionCutoffFadeRange should not be null", FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange)
     assertNotNull("defaultFillExtrusionCutoffFadeRangeAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression)
@@ -1400,6 +1445,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionFloodLightColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsExpression)
     assertNotNull("defaultFillExtrusionFloodLightColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt)
     assertNotNull("defaultFillExtrusionFloodLightColorUseTheme should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorUseTheme)
+    assertNotNull("defaultFillExtrusionFloodLightColorUseThemeAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorUseThemeAsExpression)
     assertNotNull("defaultFillExtrusionFloodLightColorTransition should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorTransition)
     assertNotNull("defaultFillExtrusionFloodLightGroundAttenuation should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuation)
     assertNotNull("defaultFillExtrusionFloodLightGroundAttenuationAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuationAsExpression)

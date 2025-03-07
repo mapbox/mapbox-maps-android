@@ -43,6 +43,16 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun colorUseThemeAsExpression() {
+    val expression = literal("none")
+    val atmosphere = atmosphere {
+      colorUseTheme(expression)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(expression.toString(), atmosphere.colorUseThemeAsExpression.toString())
+  }
+  @Test
+  @UiThreadTest
   fun colorTest() {
     val atmosphere = atmosphere {
       color("rgba(0, 0, 0, 1)")
@@ -121,6 +131,16 @@ class AtmosphereTest : BaseStyleTest() {
     assertEquals(theme, atmosphere.highColorUseTheme)
   }
 
+  @Test
+  @UiThreadTest
+  fun highColorUseThemeAsExpression() {
+    val expression = literal("none")
+    val atmosphere = atmosphere {
+      highColorUseTheme(expression)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(expression.toString(), atmosphere.highColorUseThemeAsExpression.toString())
+  }
   @Test
   @UiThreadTest
   fun highColorTest() {
@@ -307,6 +327,16 @@ class AtmosphereTest : BaseStyleTest() {
     assertEquals(theme, atmosphere.spaceColorUseTheme)
   }
 
+  @Test
+  @UiThreadTest
+  fun spaceColorUseThemeAsExpression() {
+    val expression = literal("none")
+    val atmosphere = atmosphere {
+      spaceColorUseTheme(expression)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(expression.toString(), atmosphere.spaceColorUseThemeAsExpression.toString())
+  }
   @Test
   @UiThreadTest
   fun spaceColorTest() {
