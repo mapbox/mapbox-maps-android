@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.10.0-rc.1
 ## Features ✨ and improvements 🏁
 * Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
+* Add experimental `*UseTheme` support for annotations and `LocationPuck3D`.
 
 # 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁

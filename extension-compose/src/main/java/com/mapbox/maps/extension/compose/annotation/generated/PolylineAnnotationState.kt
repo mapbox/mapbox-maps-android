@@ -30,6 +30,8 @@ public class PolylineAnnotationState private constructor(
   initialLineOpacity: Double?,
   initialLinePattern: String?,
   initialLineWidth: Double?,
+  initialLineBorderColorUseTheme: String?,
+  initialLineColorUseTheme: String?,
   initialPolylineAnnotationInteractionsState: PolylineAnnotationInteractionsState,
 ) {
 
@@ -45,6 +47,8 @@ public class PolylineAnnotationState private constructor(
     initialLineOpacity = null,
     initialLinePattern = null,
     initialLineWidth = null,
+    initialLineBorderColorUseTheme = null,
+    initialLineColorUseTheme = null,
     initialPolylineAnnotationInteractionsState = PolylineAnnotationInteractionsState(),
 )
 
@@ -97,6 +101,16 @@ public class PolylineAnnotationState private constructor(
    * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   public var lineWidth: Double? by mutableStateOf(initialLineWidth)
+  /**
+   * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var lineBorderColorUseTheme: String? by mutableStateOf(initialLineBorderColorUseTheme)
+  /**
+   * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var lineColorUseTheme: String? by mutableStateOf(initialLineColorUseTheme)
 
   @Composable
   private fun UpdateLineJoin(
@@ -208,6 +222,26 @@ public class PolylineAnnotationState private constructor(
       }
     )
   }
+  @Composable
+  private fun UpdateLineBorderColorUseTheme(
+    annotationNode: PolylineAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.lineBorderColorUseTheme = lineBorderColorUseTheme
+      }
+    )
+  }
+  @Composable
+  private fun UpdateLineColorUseTheme(
+    annotationNode: PolylineAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.lineColorUseTheme = lineColorUseTheme
+      }
+    )
+  }
 
   @Composable
   internal fun UpdateProperties(
@@ -224,6 +258,8 @@ public class PolylineAnnotationState private constructor(
     UpdateLineOpacity(annotationNode)
     UpdateLinePattern(annotationNode)
     UpdateLineWidth(annotationNode)
+    UpdateLineBorderColorUseTheme(annotationNode)
+    UpdateLineColorUseTheme(annotationNode)
   }
 }
 

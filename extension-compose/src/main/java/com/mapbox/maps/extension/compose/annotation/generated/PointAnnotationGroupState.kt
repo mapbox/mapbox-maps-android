@@ -99,6 +99,10 @@ public class PointAnnotationGroupState private constructor(
   initialTextOpacity: Double?,
   initialTextTranslate: List<Double>?,
   initialTextTranslateAnchor: TextTranslateAnchor?,
+  initialIconColorUseTheme: String?,
+  initialIconHaloColorUseTheme: String?,
+  initialTextColorUseTheme: String?,
+  initialTextHaloColorUseTheme: String?,
   initialPointAnnotationGroupInteractionsState: PointAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
@@ -168,6 +172,10 @@ public class PointAnnotationGroupState private constructor(
     initialTextOpacity = null,
     initialTextTranslate = null,
     initialTextTranslateAnchor = null,
+    initialIconColorUseTheme = null,
+    initialIconHaloColorUseTheme = null,
+    initialTextColorUseTheme = null,
+    initialTextHaloColorUseTheme = null,
     initialPointAnnotationGroupInteractionsState = PointAnnotationGroupInteractionsState(),
   )
 
@@ -443,6 +451,26 @@ public class PointAnnotationGroupState private constructor(
    * Controls the frame of reference for `text-translate`. Default value: "map".
    */
   public var textTranslateAnchor: TextTranslateAnchor? by mutableStateOf(initialTextTranslateAnchor)
+  /**
+   * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var iconColorUseTheme: String? by mutableStateOf(initialIconColorUseTheme)
+  /**
+   * This property defines whether the `iconHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var iconHaloColorUseTheme: String? by mutableStateOf(initialIconHaloColorUseTheme)
+  /**
+   * This property defines whether the `textColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var textColorUseTheme: String? by mutableStateOf(initialTextColorUseTheme)
+  /**
+   * This property defines whether the `textHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var textHaloColorUseTheme: String? by mutableStateOf(initialTextHaloColorUseTheme)
 
   @Composable
   private fun UpdateIconAllowOverlap(annotationManager: PointAnnotationManager) {
@@ -719,6 +747,26 @@ public class PointAnnotationGroupState private constructor(
   private fun UpdateTextTranslateAnchor(annotationManager: PointAnnotationManager) {
     annotationManager.textTranslateAnchor = textTranslateAnchor
   }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateIconColorUseTheme(annotationManager: PointAnnotationManager) {
+    annotationManager.iconColorUseTheme = iconColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateIconHaloColorUseTheme(annotationManager: PointAnnotationManager) {
+    annotationManager.iconHaloColorUseTheme = iconHaloColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateTextColorUseTheme(annotationManager: PointAnnotationManager) {
+    annotationManager.textColorUseTheme = textColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateTextHaloColorUseTheme(annotationManager: PointAnnotationManager) {
+    annotationManager.textHaloColorUseTheme = textHaloColorUseTheme
+  }
 
   @Composable
   internal fun UpdateProperties(annotationManager: PointAnnotationManager) {
@@ -788,6 +836,10 @@ public class PointAnnotationGroupState private constructor(
     UpdateTextOpacity(annotationManager)
     UpdateTextTranslate(annotationManager)
     UpdateTextTranslateAnchor(annotationManager)
+    UpdateIconColorUseTheme(annotationManager)
+    UpdateIconHaloColorUseTheme(annotationManager)
+    UpdateTextColorUseTheme(annotationManager)
+    UpdateTextHaloColorUseTheme(annotationManager)
   }
 }
 

@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import androidx.annotation.ColorInt
 import com.mapbox.geojson.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -43,6 +44,7 @@ class CircleAnnotationManager(
    */
   override val clusterLongClickListeners: MutableList<OnClusterLongClickListener> = mutableListOf()
 
+  @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY -> {
@@ -77,6 +79,14 @@ class CircleAnnotationManager(
         layer.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
         dragLayer.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
       }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME -> {
+        layer.circleColorUseTheme(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME))
+        dragLayer.circleColorUseTheme(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME -> {
+        layer.circleStrokeColorUseTheme(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME))
+        dragLayer.circleStrokeColorUseTheme(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME))
+      }
     }
   }
 
@@ -94,6 +104,8 @@ class CircleAnnotationManager(
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR - String
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double
+   * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME - String
+   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -120,6 +132,8 @@ class CircleAnnotationManager(
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR - String
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double
+   * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME - String
+   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -657,6 +671,76 @@ class CircleAnnotationManager(
     }
 
   /**
+   * The default circleColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var circleColorUseTheme: String?
+    /**
+     * Get the circleColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the circleColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default circleStrokeColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `circleStrokeColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var circleStrokeColorUseTheme: String?
+    /**
+     * Get the circleStrokeColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The filter on the managed circleAnnotations.
    */
   override var layerFilter: Expression?
@@ -687,6 +771,8 @@ class CircleAnnotationManager(
     dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR] = false
     dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY] = false
     dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME] = false
   }
 
   /**

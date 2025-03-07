@@ -166,6 +166,14 @@ class PointAnnotationManagerTest {
     every { dragLayer.textOcclusionOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.textOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.textOpacity(any<Expression>()) } answers { dragLayer }
+    every { layer.iconColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.iconColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.iconHaloColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.iconHaloColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.textColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.textColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.textHaloColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.textHaloColorUseTheme(any<Expression>()) } answers { dragLayer }
   }
 
   @After
@@ -628,6 +636,26 @@ class PointAnnotationManagerTest {
     assertEquals(1.0, annotation.textOpacity)
     annotation.textOpacity = null
     assertNull(annotation.textOpacity)
+
+    annotation.iconColorUseTheme = "default"
+    assertEquals("default", annotation.iconColorUseTheme)
+    annotation.iconColorUseTheme = null
+    assertNull(annotation.iconColorUseTheme)
+
+    annotation.iconHaloColorUseTheme = "default"
+    assertEquals("default", annotation.iconHaloColorUseTheme)
+    annotation.iconHaloColorUseTheme = null
+    assertNull(annotation.iconHaloColorUseTheme)
+
+    annotation.textColorUseTheme = "default"
+    assertEquals("default", annotation.textColorUseTheme)
+    annotation.textColorUseTheme = null
+    assertNull(annotation.textColorUseTheme)
+
+    annotation.textHaloColorUseTheme = "default"
+    assertEquals("default", annotation.textHaloColorUseTheme)
+    annotation.textHaloColorUseTheme = null
+    assertNull(annotation.textHaloColorUseTheme)
   }
 
   @Test
@@ -2239,5 +2267,121 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
     verify(exactly = 1) { manager.dragLayer.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+  }
+
+  @Test
+  fun testIconColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testIconColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.iconColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testIconHaloColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconHaloColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testIconHaloColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.iconHaloColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.iconHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testTextColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testTextColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.textColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testTextHaloColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextHaloColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testTextHaloColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.textHaloColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.textHaloColorUseTheme(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)) }
   }
 }

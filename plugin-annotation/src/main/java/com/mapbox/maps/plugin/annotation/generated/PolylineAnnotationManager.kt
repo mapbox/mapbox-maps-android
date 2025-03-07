@@ -82,6 +82,14 @@ class PolylineAnnotationManager(
         layer.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
         dragLayer.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
       }
+      PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME -> {
+        layer.lineBorderColorUseTheme(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME))
+        dragLayer.lineBorderColorUseTheme(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME -> {
+        layer.lineColorUseTheme(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME))
+        dragLayer.lineColorUseTheme(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME))
+      }
     }
   }
 
@@ -103,6 +111,8 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String
    * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -133,6 +143,8 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String
    * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -1144,6 +1156,132 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The default lineBorderColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var lineBorderColorUseTheme: String?
+    /**
+     * Get the lineBorderColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default lineColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var lineColorUseTheme: String?
+    /**
+     * Get the lineColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The LineGradientUseTheme property
+   *
+   * This property defines whether the `lineGradient` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var lineGradientUseTheme: String?
+    /**
+     * Get the LineGradientUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get(): String? {
+      return layer.lineGradientUseTheme
+    }
+    /**
+     * Set the LineGradientUseTheme property
+     * @param value property wrapper value around String
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gradient-use-theme").value
+      }
+      setLayerProperty(wrappedValue, "line-gradient-use-theme")
+    }
+
+  /**
+   * The LineTrimColorUseTheme property
+   *
+   * This property defines whether the `lineTrimColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var lineTrimColorUseTheme: String?
+    /**
+     * Get the LineTrimColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get(): String? {
+      return layer.lineTrimColorUseTheme
+    }
+    /**
+     * Set the LineTrimColorUseTheme property
+     * @param value property wrapper value around String
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color-use-theme").value
+      }
+      setLayerProperty(wrappedValue, "line-trim-color-use-theme")
+    }
+
+  /**
    * The filter on the managed polylineAnnotations.
    */
   override var layerFilter: Expression?
@@ -1178,6 +1316,8 @@ class PolylineAnnotationManager(
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OPACITY] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_PATTERN] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_WIDTH] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME] = false
   }
 
   /**

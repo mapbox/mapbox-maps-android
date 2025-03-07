@@ -171,6 +171,16 @@ data class LocationPuck3D @JvmOverloads constructor(
    */
   @MapboxExperimental
   var modelElevationReference: ModelElevationReference = ModelElevationReference.GROUND,
+  /**
+   * This property defines whether the `modelColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style. Default value: "default".
+   */
+  @MapboxExperimental
+  var modelColorUseTheme: String = "default",
+  /**
+   * This property defines whether the `modelColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var modelColorUseThemeExpression: String? = null,
 ) : LocationPuck()
 
 /**

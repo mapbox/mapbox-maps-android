@@ -392,6 +392,54 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineBorderColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineBorderColorUseTheme = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineBorderColorUseTheme)
+      polylineAnnotationManager.lineBorderColorUseTheme = null
+      assertEquals(null, polylineAnnotationManager.lineBorderColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testLineColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineColorUseTheme = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineColorUseTheme)
+      polylineAnnotationManager.lineColorUseTheme = null
+      assertEquals(null, polylineAnnotationManager.lineColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testLineGradientUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineGradientUseTheme = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineGradientUseTheme)
+      polylineAnnotationManager.lineGradientUseTheme = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gradient-use-theme").silentUnwrap(), polylineAnnotationManager.lineGradientUseTheme)
+    }
+  }
+
+  @Test
+  fun testLineTrimColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineTrimColorUseTheme = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTrimColorUseTheme)
+      polylineAnnotationManager.lineTrimColorUseTheme = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color-use-theme").silentUnwrap(), polylineAnnotationManager.lineTrimColorUseTheme)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()

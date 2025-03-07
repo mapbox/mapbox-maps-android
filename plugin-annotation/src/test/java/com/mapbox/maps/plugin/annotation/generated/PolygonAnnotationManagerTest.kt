@@ -101,6 +101,10 @@ class PolygonAnnotationManagerTest {
     every { dragLayer.fillPattern(any<Expression>()) } answers { dragLayer }
     every { layer.fillZOffset(any<Expression>()) } answers { layer }
     every { dragLayer.fillZOffset(any<Expression>()) } answers { dragLayer }
+    every { layer.fillColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.fillColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.fillOutlineColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.fillOutlineColorUseTheme(any<Expression>()) } answers { dragLayer }
   }
 
   @After
@@ -255,6 +259,16 @@ class PolygonAnnotationManagerTest {
     assertEquals(0.0, annotation.fillZOffset)
     annotation.fillZOffset = null
     assertNull(annotation.fillZOffset)
+
+    annotation.fillColorUseTheme = "default"
+    assertEquals("default", annotation.fillColorUseTheme)
+    annotation.fillColorUseTheme = null
+    assertNull(annotation.fillColorUseTheme)
+
+    annotation.fillOutlineColorUseTheme = "default"
+    assertEquals("default", annotation.fillOutlineColorUseTheme)
+    annotation.fillOutlineColorUseTheme = null
+    assertNull(annotation.fillOutlineColorUseTheme)
   }
 
   @Test
@@ -831,5 +845,63 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
     verify(exactly = 1) { manager.dragLayer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+  }
+
+  @Test
+  fun testFillColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testFillColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testFillOutlineColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillOutlineColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testFillOutlineColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillOutlineColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
   }
 }

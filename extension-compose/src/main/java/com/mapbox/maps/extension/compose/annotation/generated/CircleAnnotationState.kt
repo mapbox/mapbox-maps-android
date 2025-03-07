@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationNode
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 
@@ -24,6 +25,8 @@ public class CircleAnnotationState private constructor(
   initialCircleStrokeColor: Color?,
   initialCircleStrokeOpacity: Double?,
   initialCircleStrokeWidth: Double?,
+  initialCircleColorUseTheme: String?,
+  initialCircleStrokeColorUseTheme: String?,
   initialCircleAnnotationInteractionsState: CircleAnnotationInteractionsState,
 ) {
 
@@ -35,6 +38,8 @@ public class CircleAnnotationState private constructor(
     initialCircleStrokeColor = null,
     initialCircleStrokeOpacity = null,
     initialCircleStrokeWidth = null,
+    initialCircleColorUseTheme = null,
+    initialCircleStrokeColorUseTheme = null,
     initialCircleAnnotationInteractionsState = CircleAnnotationInteractionsState(),
 )
 
@@ -70,6 +75,16 @@ public class CircleAnnotationState private constructor(
    * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
    */
   public var circleStrokeWidth: Double? by mutableStateOf(initialCircleStrokeWidth)
+  /**
+   * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var circleColorUseTheme: String? by mutableStateOf(initialCircleColorUseTheme)
+  /**
+   * This property defines whether the `circleStrokeColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var circleStrokeColorUseTheme: String? by mutableStateOf(initialCircleStrokeColorUseTheme)
 
   @Composable
   private fun UpdateCircleBlur(
@@ -141,6 +156,26 @@ public class CircleAnnotationState private constructor(
       }
     )
   }
+  @Composable
+  private fun UpdateCircleColorUseTheme(
+    annotationNode: CircleAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.circleColorUseTheme = circleColorUseTheme
+      }
+    )
+  }
+  @Composable
+  private fun UpdateCircleStrokeColorUseTheme(
+    annotationNode: CircleAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.circleStrokeColorUseTheme = circleStrokeColorUseTheme
+      }
+    )
+  }
 
   @Composable
   internal fun UpdateProperties(
@@ -153,6 +188,8 @@ public class CircleAnnotationState private constructor(
     UpdateCircleStrokeColor(annotationNode)
     UpdateCircleStrokeOpacity(annotationNode)
     UpdateCircleStrokeWidth(annotationNode)
+    UpdateCircleColorUseTheme(annotationNode)
+    UpdateCircleStrokeColorUseTheme(annotationNode)
   }
 }
 

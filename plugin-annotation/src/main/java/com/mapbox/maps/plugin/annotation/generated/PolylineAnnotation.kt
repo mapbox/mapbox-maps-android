@@ -515,6 +515,72 @@ class PolylineAnnotation(
     }
 
   /**
+   * The lineBorderColorUseTheme property
+   *
+   * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var lineBorderColorUseTheme: String?
+    /**
+     * Get the lineBorderColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderColorUseTheme property
+     *
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)
+      }
+    }
+
+  /**
+   * The lineColorUseTheme property
+   *
+   * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var lineColorUseTheme: String?
+    /**
+     * Get the lineColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineColorUseTheme property
+     *
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -581,6 +647,12 @@ class PolylineAnnotation(
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)
+    }
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)
+    }
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)
     }
   }
 

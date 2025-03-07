@@ -50,6 +50,10 @@ public class PolylineAnnotationGroupState private constructor(
   initialLineTrimFadeRange: List<Double>?,
   initialLineTrimOffset: List<Double>?,
   initialLineWidth: Double?,
+  initialLineBorderColorUseTheme: String?,
+  initialLineColorUseTheme: String?,
+  initialLineGradientUseTheme: String?,
+  initialLineTrimColorUseTheme: String?,
   initialPolylineAnnotationGroupInteractionsState: PolylineAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
@@ -80,6 +84,10 @@ public class PolylineAnnotationGroupState private constructor(
     initialLineTrimFadeRange = null,
     initialLineTrimOffset = null,
     initialLineWidth = null,
+    initialLineBorderColorUseTheme = null,
+    initialLineColorUseTheme = null,
+    initialLineGradientUseTheme = null,
+    initialLineTrimColorUseTheme = null,
     initialPolylineAnnotationGroupInteractionsState = PolylineAnnotationGroupInteractionsState(),
   )
 
@@ -201,6 +209,26 @@ public class PolylineAnnotationGroupState private constructor(
    * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   public var lineWidth: Double? by mutableStateOf(initialLineWidth)
+  /**
+   * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var lineBorderColorUseTheme: String? by mutableStateOf(initialLineBorderColorUseTheme)
+  /**
+   * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var lineColorUseTheme: String? by mutableStateOf(initialLineColorUseTheme)
+  /**
+   * This property defines whether the `lineGradient` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var lineGradientUseTheme: String? by mutableStateOf(initialLineGradientUseTheme)
+  /**
+   * This property defines whether the `lineTrimColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var lineTrimColorUseTheme: String? by mutableStateOf(initialLineTrimColorUseTheme)
 
   @Composable
   private fun UpdateLineCap(annotationManager: PolylineAnnotationManager) {
@@ -316,6 +344,26 @@ public class PolylineAnnotationGroupState private constructor(
   private fun UpdateLineWidth(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineWidth = lineWidth
   }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineBorderColorUseTheme(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineBorderColorUseTheme = lineBorderColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineColorUseTheme(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineColorUseTheme = lineColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineGradientUseTheme(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineGradientUseTheme = lineGradientUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineTrimColorUseTheme(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineTrimColorUseTheme = lineTrimColorUseTheme
+  }
 
   @Composable
   internal fun UpdateProperties(annotationManager: PolylineAnnotationManager) {
@@ -346,6 +394,10 @@ public class PolylineAnnotationGroupState private constructor(
     UpdateLineTrimFadeRange(annotationManager)
     UpdateLineTrimOffset(annotationManager)
     UpdateLineWidth(annotationManager)
+    UpdateLineBorderColorUseTheme(annotationManager)
+    UpdateLineColorUseTheme(annotationManager)
+    UpdateLineGradientUseTheme(annotationManager)
+    UpdateLineTrimColorUseTheme(annotationManager)
   }
 }
 

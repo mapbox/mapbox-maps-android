@@ -265,6 +265,42 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
+   * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var lineBorderColorUseTheme: String? = null
+
+  /**
+   * Set line-border-color-use-theme to initialise the polylineAnnotation with.
+   *
+   * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param lineBorderColorUseTheme the line-border-color-use-theme value
+   * @return this
+   */
+  fun withLineBorderColorUseTheme(lineBorderColorUseTheme: String): PolylineAnnotationOptions {
+    this.lineBorderColorUseTheme = lineBorderColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var lineColorUseTheme: String? = null
+
+  /**
+   * Set line-color-use-theme to initialise the polylineAnnotation with.
+   *
+   * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param lineColorUseTheme the line-color-use-theme value
+   * @return this
+   */
+  fun withLineColorUseTheme(lineColorUseTheme: String): PolylineAnnotationOptions {
+    this.lineColorUseTheme = lineColorUseTheme
+    return this
+  }
+
+  /**
    * Set a list of Point for the line, which represents the locations of the line on the map
    *
    * @param point a list of the locations of the line in a longitude and latitude pairs
@@ -395,6 +431,12 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
     lineWidth?.let {
       jsonObject.addProperty(PROPERTY_LINE_WIDTH, it)
     }
+    lineBorderColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_LINE_BORDER_COLOR_USE_THEME, it)
+    }
+    lineColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_LINE_COLOR_USE_THEME, it)
+    }
     val polylineAnnotation = PolylineAnnotation(id, annotationManager, jsonObject, geometry!!)
     polylineAnnotation.isDraggable = isDraggable
     polylineAnnotation.setData(data)
@@ -441,6 +483,12 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
     /** The property for line-width */
     const val PROPERTY_LINE_WIDTH = "line-width"
+
+    /** The property for line-border-color-use-theme */
+    const val PROPERTY_LINE_BORDER_COLOR_USE_THEME = "line-border-color-use-theme"
+
+    /** The property for line-color-use-theme */
+    const val PROPERTY_LINE_COLOR_USE_THEME = "line-color-use-theme"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -496,6 +544,12 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
       }
       if (feature.hasProperty(PROPERTY_LINE_WIDTH)) {
         options.lineWidth = feature.getProperty(PROPERTY_LINE_WIDTH).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_LINE_BORDER_COLOR_USE_THEME)) {
+        options.lineBorderColorUseTheme = feature.getProperty(PROPERTY_LINE_BORDER_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_LINE_COLOR_USE_THEME)) {
+        options.lineColorUseTheme = feature.getProperty(PROPERTY_LINE_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

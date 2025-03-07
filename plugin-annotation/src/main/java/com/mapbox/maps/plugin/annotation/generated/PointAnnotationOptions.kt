@@ -725,6 +725,78 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
+   * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var iconColorUseTheme: String? = null
+
+  /**
+   * Set icon-color-use-theme to initialise the pointAnnotation with.
+   *
+   * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param iconColorUseTheme the icon-color-use-theme value
+   * @return this
+   */
+  fun withIconColorUseTheme(iconColorUseTheme: String): PointAnnotationOptions {
+    this.iconColorUseTheme = iconColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `iconHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var iconHaloColorUseTheme: String? = null
+
+  /**
+   * Set icon-halo-color-use-theme to initialise the pointAnnotation with.
+   *
+   * This property defines whether the `iconHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param iconHaloColorUseTheme the icon-halo-color-use-theme value
+   * @return this
+   */
+  fun withIconHaloColorUseTheme(iconHaloColorUseTheme: String): PointAnnotationOptions {
+    this.iconHaloColorUseTheme = iconHaloColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `textColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var textColorUseTheme: String? = null
+
+  /**
+   * Set text-color-use-theme to initialise the pointAnnotation with.
+   *
+   * This property defines whether the `textColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param textColorUseTheme the text-color-use-theme value
+   * @return this
+   */
+  fun withTextColorUseTheme(textColorUseTheme: String): PointAnnotationOptions {
+    this.textColorUseTheme = textColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `textHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var textHaloColorUseTheme: String? = null
+
+  /**
+   * Set text-halo-color-use-theme to initialise the pointAnnotation with.
+   *
+   * This property defines whether the `textHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param textHaloColorUseTheme the text-halo-color-use-theme value
+   * @return this
+   */
+  fun withTextHaloColorUseTheme(textHaloColorUseTheme: String): PointAnnotationOptions {
+    this.textHaloColorUseTheme = textHaloColorUseTheme
+    return this
+  }
+
+  /**
    * Set the Point of the pointAnnotation, which represents the location of the pointAnnotation on the map
    *
    * @param point the location of the pointAnnotation in a longitude and latitude pair
@@ -926,6 +998,18 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     textOpacity?.let {
       jsonObject.addProperty(PROPERTY_TEXT_OPACITY, it)
     }
+    iconColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_ICON_COLOR_USE_THEME, it)
+    }
+    iconHaloColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_ICON_HALO_COLOR_USE_THEME, it)
+    }
+    textColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_COLOR_USE_THEME, it)
+    }
+    textHaloColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_HALO_COLOR_USE_THEME, it)
+    }
     val pointAnnotation = PointAnnotation(id, annotationManager, jsonObject, geometry!!)
     iconImageBitmap?.let {
       pointAnnotation.iconImageBitmap = iconImageBitmap
@@ -1044,6 +1128,18 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for text-opacity */
     const val PROPERTY_TEXT_OPACITY = "text-opacity"
+
+    /** The property for icon-color-use-theme */
+    const val PROPERTY_ICON_COLOR_USE_THEME = "icon-color-use-theme"
+
+    /** The property for icon-halo-color-use-theme */
+    const val PROPERTY_ICON_HALO_COLOR_USE_THEME = "icon-halo-color-use-theme"
+
+    /** The property for text-color-use-theme */
+    const val PROPERTY_TEXT_COLOR_USE_THEME = "text-color-use-theme"
+
+    /** The property for text-halo-color-use-theme */
+    const val PROPERTY_TEXT_HALO_COLOR_USE_THEME = "text-halo-color-use-theme"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -1168,6 +1264,18 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_TEXT_OPACITY)) {
         options.textOpacity = feature.getProperty(PROPERTY_TEXT_OPACITY).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_ICON_COLOR_USE_THEME)) {
+        options.iconColorUseTheme = feature.getProperty(PROPERTY_ICON_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_ICON_HALO_COLOR_USE_THEME)) {
+        options.iconHaloColorUseTheme = feature.getProperty(PROPERTY_ICON_HALO_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_TEXT_COLOR_USE_THEME)) {
+        options.textColorUseTheme = feature.getProperty(PROPERTY_TEXT_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_TEXT_HALO_COLOR_USE_THEME)) {
+        options.textHaloColorUseTheme = feature.getProperty(PROPERTY_TEXT_HALO_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

@@ -57,6 +57,14 @@ class PolygonAnnotationManager(
         layer.fillZOffset(get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET))
         dragLayer.fillZOffset(get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET))
       }
+      PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME -> {
+        layer.fillColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME))
+        dragLayer.fillColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME -> {
+        layer.fillOutlineColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME))
+        dragLayer.fillOutlineColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME))
+      }
     }
   }
 
@@ -72,6 +80,8 @@ class PolygonAnnotationManager(
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
    * PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -96,6 +106,8 @@ class PolygonAnnotationManager(
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
    * PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -567,6 +579,76 @@ class PolygonAnnotationManager(
     }
 
   /**
+   * The default fillColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var fillColorUseTheme: String?
+    /**
+     * Get the fillColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default fillOutlineColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `fillOutlineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var fillOutlineColorUseTheme: String?
+    /**
+     * Get the fillOutlineColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillOutlineColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The filter on the managed polygonAnnotations.
    */
   override var layerFilter: Expression?
@@ -595,6 +677,8 @@ class PolygonAnnotationManager(
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_PATTERN] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME] = false
   }
 
   /**
