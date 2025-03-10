@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ImportConfigs
+import com.mapbox.maps.extension.compose.style.StyleColorTheme
 
 /**
  * Create and remember a [StyleImportState] with init block.
@@ -30,14 +31,16 @@ public inline fun rememberStyleImportState(crossinline init: StyleImportState.()
 @Stable
 public class StyleImportState internal constructor(
   initialImportConfigs: ImportConfigs?,
-  initialStyleImportInteractionsState: StyleImportInteractionsState
+  initialStyleImportInteractionsState: StyleImportInteractionsState,
+  initialColorTheme: StyleColorTheme
 ) {
   /**
    * Construct a default [StyleImportState].
    */
   public constructor() : this(
     initialImportConfigs = null,
-    initialStyleImportInteractionsState = StyleImportInteractionsState()
+    initialStyleImportInteractionsState = StyleImportInteractionsState(),
+    initialColorTheme = StyleColorTheme.STYLE_DEFAULT
   )
 
   /**
@@ -50,4 +53,10 @@ public class StyleImportState internal constructor(
    */
   @MapboxExperimental
   public var interactionsState: StyleImportInteractionsState by mutableStateOf(initialStyleImportInteractionsState)
+
+  /**
+   * The color theme to be set to the style import. Defaults to initial color theme meaning no custom theme is added, default value is taken from [style] definition.
+   */
+  @MapboxExperimental
+  public var styleColorTheme: StyleColorTheme by mutableStateOf(initialColorTheme)
 }

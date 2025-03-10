@@ -8,6 +8,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
 * Add experimental `*UseTheme` support for annotations and `LocationPuck3D`.
+* Introduce experimental `Style.setImportColorTheme`, which allows changing the color theme of the style import.
+* [compose] Introduce experimental `StyleImportState.styleColorTheme` which allows changing the color theme of the style import.
 
 # 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁

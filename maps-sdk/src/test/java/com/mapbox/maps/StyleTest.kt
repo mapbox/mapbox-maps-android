@@ -692,4 +692,49 @@ class StyleTest {
     assertEquals(true, slot.captured.isStylePropertyValue)
     assertEquals(Value.valueOf(encodedTheme), slot.captured.stylePropertyValue.value)
   }
+
+  @Test
+  fun setImportColorThemeTest() {
+    val image = mockk<Image>()
+    val importId = "import-id"
+    style.setImportColorTheme(importId, image)
+    val slot = slot<ColorTheme>()
+    verifyOnce { styleManager.setImportColorTheme(importId, capture(slot)) }
+    assertEquals(image, slot.captured.image)
+  }
+
+  @Test
+  fun setImportImageColorThemeTest() {
+    val image = mockk<Image>()
+    val importId = "import-id"
+    style.setImportColorTheme(importId, image)
+    val slot = slot<ColorTheme>()
+    verifyOnce { styleManager.setImportColorTheme(importId, capture(slot)) }
+    assertEquals(image, slot.captured.image)
+  }
+
+  @Test
+  fun setImportBitmapColorThemeTest() {
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    every { DataRef.allocateNative(any()) } returns nativeDataRef
+    val bitmap = Bitmap.createBitmap(1024, 32, Bitmap.Config.ARGB_8888)
+    val importId = "import-id"
+    style.setImportColorTheme(importId, bitmap)
+    val slot = slot<ColorTheme>()
+    verifyOnce { styleManager.setImportColorTheme(importId, capture(slot)) }
+    assertEquals(1024, slot.captured.image.width)
+    assertEquals(32, slot.captured.image.height)
+    assertEquals(nativeDataRef, slot.captured.image.data)
+  }
+
+  @Test
+  fun setImportBase64ColorThemeTest() {
+    val importId = "import-id"
+    val encodedTheme = "base64"
+    style.setImportColorTheme(importId, encodedTheme)
+    val slot = slot<ColorTheme>()
+    verifyOnce { styleManager.setImportColorTheme(importId, capture(slot)) }
+    assertEquals(Value.valueOf(encodedTheme), slot.captured.stylePropertyValue.value)
+  }
 }

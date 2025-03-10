@@ -201,6 +201,10 @@ package com.mapbox.maps {
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleModel(String modelId);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleSource(String sourceId);
     method @CallSuper @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleSourceUnchecked(String sourceId);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setImportColorTheme(String importId, com.mapbox.maps.ColorTheme? colorTheme);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setImportColorTheme(String importId, String base64);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setImportColorTheme(String importId, android.graphics.Bitmap bitmap);
+    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setImportColorTheme(String importId, com.mapbox.maps.Image image);
     method @CallSuper @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public void setInitialStyleColorTheme();
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphere(com.mapbox.bindgen.Value properties);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphereProperty(String property, com.mapbox.bindgen.Value value);

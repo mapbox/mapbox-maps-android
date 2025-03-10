@@ -1560,10 +1560,13 @@ package com.mapbox.maps.extension.compose.style.imports {
     ctor public StyleImportState();
     method public com.mapbox.maps.extension.compose.style.ImportConfigs? getImportConfigs();
     method public com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState getInteractionsState();
+    method public com.mapbox.maps.extension.compose.style.StyleColorTheme getStyleColorTheme();
     method public void setImportConfigs(com.mapbox.maps.extension.compose.style.ImportConfigs?);
     method public void setInteractionsState(com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState);
+    method public void setStyleColorTheme(com.mapbox.maps.extension.compose.style.StyleColorTheme);
     property public final com.mapbox.maps.extension.compose.style.ImportConfigs? importConfigs;
     property public final com.mapbox.maps.extension.compose.style.imports.StyleImportInteractionsState interactionsState;
+    property public final com.mapbox.maps.extension.compose.style.StyleColorTheme styleColorTheme;
   }
 
   public final class StyleImportStateKt {

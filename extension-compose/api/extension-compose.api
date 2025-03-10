@@ -1321,8 +1321,10 @@ public final class com/mapbox/maps/extension/compose/style/imports/StyleImportSt
 	public fun <init> ()V
 	public final fun getImportConfigs ()Lcom/mapbox/maps/extension/compose/style/ImportConfigs;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public final fun getStyleColorTheme ()Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
 	public final fun setImportConfigs (Lcom/mapbox/maps/extension/compose/style/ImportConfigs;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;)V
+	public final fun setStyleColorTheme (Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/imports/StyleImportStateKt {

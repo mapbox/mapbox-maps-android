@@ -1622,4 +1622,85 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   open fun setStyleColorTheme(image: Image): Expected<String, None> {
     return setStyleColorTheme(ColorTheme.valueOf(image))
   }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param colorTheme for the style. Providing null value deletes the theme.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setImportColorTheme(importId: String, colorTheme: ColorTheme?): Expected<String, None> {
+    ThreadChecker.throwIfNotMainThread()
+    return styleManager.setImportColorTheme(importId, colorTheme)
+  }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param base64 Base64 encoded representation of an LUT image. The height of the image cannot be more than 32 pixels.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setImportColorTheme(importId: String, base64: String): Expected<String, None> {
+    return setImportColorTheme(
+      importId,
+      ColorTheme.valueOf(
+        StylePropertyValue(
+          Value.valueOf(base64), StylePropertyValueKind.CONSTANT
+        )
+      )
+    )
+  }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param bitmap The bitmap image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @OptIn(MapboxDelicateApi::class)
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setImportColorTheme(importId: String, bitmap: Bitmap): Expected<String, None> {
+    return setImportColorTheme(importId, ColorTheme.valueOf(bitmap.toMapboxImage()))
+  }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param image The image data of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @CallSuper
+  @MainThread
+  @MapboxExperimental
+  open fun setImportColorTheme(importId: String, image: Image): Expected<String, None> {
+    return setImportColorTheme(importId, ColorTheme.valueOf(image))
+  }
 }

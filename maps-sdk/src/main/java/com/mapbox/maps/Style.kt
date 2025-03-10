@@ -1331,6 +1331,77 @@ class Style internal constructor(
   }
 
   /**
+   * Set color theme to style import.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param colorTheme Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setImportColorTheme(importId: String, colorTheme: ColorTheme?): Expected<String, None> {
+    checkNativeStyle("setImportColorTheme")
+    return super.setImportColorTheme(importId, colorTheme)
+  }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param bitmap [Bitmap] of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setImportColorTheme(importId: String, bitmap: Bitmap): Expected<String, None> {
+    checkNativeStyle("setImportColorTheme")
+    return super.setImportColorTheme(importId, bitmap)
+  }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param base64 base64 representation of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setImportColorTheme(importId: String, base64: String): Expected<String, None> {
+    checkNativeStyle("setImportColorTheme")
+    return super.setImportColorTheme(importId, base64)
+  }
+
+  /**
+   * Set color theme to style import.
+   * Color theme can be used as a global modifier for the colors of the style and style imports.
+   *  In order to use custom color theme you need to provide an image that will represent LUT (color grading lookup table).
+   *  Image height must be less or equal to 32 pixels and width of the image should be equal to the height squared.
+   *  Either image or base64 image representation should be provided. Providing null value deletes the theme.
+   *
+   * @param importId String id of the style import to which the color theme will be applied.
+   * @param image image data of an LUT image.
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  @MapboxExperimental
+  override fun setImportColorTheme(importId: String, image: Image): Expected<String, None> {
+    checkNativeStyle("setImportColorTheme")
+    return super.setImportColorTheme(importId, image)
+  }
+
+  /**
    * Note! This is an experimental feature. It can be changed or removed in future versions.
    *
    * Adds a custom raster source to be used in the style. To add the data, implement the fetchTile@MainThread
