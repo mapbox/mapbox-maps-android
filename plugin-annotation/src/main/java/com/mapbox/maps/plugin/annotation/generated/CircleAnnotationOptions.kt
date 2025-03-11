@@ -191,6 +191,42 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   }
 
   /**
+   * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var circleColorUseTheme: String? = null
+
+  /**
+   * Set circle-color-use-theme to initialise the circleAnnotation with.
+   *
+   * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param circleColorUseTheme the circle-color-use-theme value
+   * @return this
+   */
+  fun withCircleColorUseTheme(circleColorUseTheme: String): CircleAnnotationOptions {
+    this.circleColorUseTheme = circleColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `circleStrokeColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var circleStrokeColorUseTheme: String? = null
+
+  /**
+   * Set circle-stroke-color-use-theme to initialise the circleAnnotation with.
+   *
+   * This property defines whether the `circleStrokeColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param circleStrokeColorUseTheme the circle-stroke-color-use-theme value
+   * @return this
+   */
+  fun withCircleStrokeColorUseTheme(circleStrokeColorUseTheme: String): CircleAnnotationOptions {
+    this.circleStrokeColorUseTheme = circleStrokeColorUseTheme
+    return this
+  }
+
+  /**
    * Set the Point of the circleAnnotation, which represents the location of the circleAnnotation on the map
    *
    * @param point the location of the circleAnnotation in a longitude and latitude pair
@@ -311,6 +347,12 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
     circleStrokeWidth?.let {
       jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_WIDTH, it)
     }
+    circleColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_COLOR_USE_THEME, it)
+    }
+    circleStrokeColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME, it)
+    }
     val circleAnnotation = CircleAnnotation(id, annotationManager, jsonObject, geometry!!)
     circleAnnotation.isDraggable = isDraggable
     circleAnnotation.setData(data)
@@ -345,6 +387,12 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
     /** The property for circle-stroke-width */
     const val PROPERTY_CIRCLE_STROKE_WIDTH = "circle-stroke-width"
+
+    /** The property for circle-color-use-theme */
+    const val PROPERTY_CIRCLE_COLOR_USE_THEME = "circle-color-use-theme"
+
+    /** The property for circle-stroke-color-use-theme */
+    const val PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME = "circle-stroke-color-use-theme"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -388,6 +436,12 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_CIRCLE_STROKE_WIDTH)) {
         options.circleStrokeWidth = feature.getProperty(PROPERTY_CIRCLE_STROKE_WIDTH).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_CIRCLE_COLOR_USE_THEME)) {
+        options.circleColorUseTheme = feature.getProperty(PROPERTY_CIRCLE_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) {
+        options.circleStrokeColorUseTheme = feature.getProperty(PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

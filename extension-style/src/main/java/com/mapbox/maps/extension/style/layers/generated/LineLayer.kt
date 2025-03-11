@@ -1119,6 +1119,41 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * Сolor theme override for [lineBorderColor].
+   */
+  @MapboxExperimental
+  val lineBorderColorUseThemeAsExpression: Expression?
+    /**
+     * Get the LineBorderColorUseTheme property
+     *
+     * Use static method [LineLayer.defaultLineBorderColorUseTheme] to get the default property.
+     *
+     * @return current LineBorderColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("line-border-color-use-theme")?.let {
+        return it
+      }
+      lineBorderColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the LineBorderColorUseTheme as Expression
+   *
+   * Use static method [LineLayer.defaultLineBorderColorUseTheme] to get the default property.
+   *
+   * @param lineBorderColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun lineBorderColorUseTheme(lineBorderColorUseTheme: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-color-use-theme", lineBorderColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    */
   val lineBorderWidth: Double?
@@ -1372,6 +1407,41 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    */
   @MapboxExperimental
   override fun lineColorUseTheme(lineColorUseTheme: String): LineLayer = apply {
+    val propertyValue = PropertyValue("line-color-use-theme", lineColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [lineColor].
+   */
+  @MapboxExperimental
+  val lineColorUseThemeAsExpression: Expression?
+    /**
+     * Get the LineColorUseTheme property
+     *
+     * Use static method [LineLayer.defaultLineColorUseTheme] to get the default property.
+     *
+     * @return current LineColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("line-color-use-theme")?.let {
+        return it
+      }
+      lineColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the LineColorUseTheme as Expression
+   *
+   * Use static method [LineLayer.defaultLineColorUseTheme] to get the default property.
+   *
+   * @param lineColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun lineColorUseTheme(lineColorUseTheme: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-color-use-theme", lineColorUseTheme)
     setProperty(propertyValue)
   }
@@ -1790,6 +1860,41 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    */
   @MapboxExperimental
   override fun lineGradientUseTheme(lineGradientUseTheme: String): LineLayer = apply {
+    val propertyValue = PropertyValue("line-gradient-use-theme", lineGradientUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [lineGradient].
+   */
+  @MapboxExperimental
+  val lineGradientUseThemeAsExpression: Expression?
+    /**
+     * Get the LineGradientUseTheme property
+     *
+     * Use static method [LineLayer.defaultLineGradientUseTheme] to get the default property.
+     *
+     * @return current LineGradientUseTheme property as Expression
+     */
+    get() {
+      getPropertyValue<Expression>("line-gradient-use-theme")?.let {
+        return it
+      }
+      lineGradientUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the LineGradientUseTheme as Expression
+   *
+   * Use static method [LineLayer.defaultLineGradientUseTheme] to get the default property.
+   *
+   * @param lineGradientUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun lineGradientUseTheme(lineGradientUseTheme: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-gradient-use-theme", lineGradientUseTheme)
     setProperty(propertyValue)
   }
@@ -2487,6 +2592,41 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    */
   @MapboxExperimental
   override fun lineTrimColorUseTheme(lineTrimColorUseTheme: String): LineLayer = apply {
+    val propertyValue = PropertyValue("line-trim-color-use-theme", lineTrimColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [lineTrimColor].
+   */
+  @MapboxExperimental
+  val lineTrimColorUseThemeAsExpression: Expression?
+    /**
+     * Get the LineTrimColorUseTheme property
+     *
+     * Use static method [LineLayer.defaultLineTrimColorUseTheme] to get the default property.
+     *
+     * @return current LineTrimColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("line-trim-color-use-theme")?.let {
+        return it
+      }
+      lineTrimColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the LineTrimColorUseTheme as Expression
+   *
+   * Use static method [LineLayer.defaultLineTrimColorUseTheme] to get the default property.
+   *
+   * @param lineTrimColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun lineTrimColorUseTheme(lineTrimColorUseTheme: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-trim-color-use-theme", lineTrimColorUseTheme)
     setProperty(propertyValue)
   }
@@ -3264,6 +3404,22 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [lineBorderColor].
+     */
+    @MapboxExperimental
+    val defaultLineBorderColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the LineBorderColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("line", "line-border-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultLineBorderColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
      */
     val defaultLineBorderWidth: Double?
@@ -3389,6 +3545,22 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        * @return String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-color-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [lineColor].
+     */
+    @MapboxExperimental
+    val defaultLineColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the LineColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("line", "line-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultLineColorUseTheme?.let { Expression.literal(it) }
+      }
 
     /**
      * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
@@ -3582,6 +3754,22 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        * @return Expression
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-gradient-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [lineGradient].
+     */
+    @MapboxExperimental
+    val defaultLineGradientUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the LineGradient property as Expression
+       *
+       * @return Expression
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("line", "line-gradient-use-theme")
+          .silentUnwrap<Expression>() ?: defaultLineGradientUseTheme?.let { Expression.literal(it) }
+      }
 
     /**
      * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
@@ -3934,6 +4122,22 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        * @return String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-color-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [lineTrimColor].
+     */
+    @MapboxExperimental
+    val defaultLineTrimColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the LineTrimColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("line", "line-trim-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultLineTrimColorUseTheme?.let { Expression.literal(it) }
+      }
 
     /**
      * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
@@ -4346,6 +4550,14 @@ interface LineLayerDsl {
   fun lineBorderColorUseTheme(lineBorderColorUseTheme: String): LineLayer
 
   /**
+   * Set the lineBorderColorUseTheme as Expression for [lineBorderColor].
+   *
+   * @param lineBorderColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun lineBorderColorUseTheme(lineBorderColorUseTheme: Expression): LineLayer
+
+  /**
    * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    *
    * @param lineBorderWidth value of lineBorderWidth
@@ -4419,6 +4631,14 @@ interface LineLayerDsl {
    */
   @MapboxExperimental
   fun lineColorUseTheme(lineColorUseTheme: String): LineLayer
+
+  /**
+   * Set the lineColorUseTheme as Expression for [lineColor].
+   *
+   * @param lineColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun lineColorUseTheme(lineColorUseTheme: Expression): LineLayer
 
   /**
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
@@ -4538,6 +4758,14 @@ interface LineLayerDsl {
    */
   @MapboxExperimental
   fun lineGradientUseTheme(lineGradientUseTheme: String): LineLayer
+
+  /**
+   * Set the lineGradientUseTheme as Expression for [lineGradient].
+   *
+   * @param lineGradientUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun lineGradientUseTheme(lineGradientUseTheme: Expression): LineLayer
 
   /**
    * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
@@ -4736,6 +4964,14 @@ interface LineLayerDsl {
    */
   @MapboxExperimental
   fun lineTrimColorUseTheme(lineTrimColorUseTheme: String): LineLayer
+
+  /**
+   * Set the lineTrimColorUseTheme as Expression for [lineTrimColor].
+   *
+   * @param lineTrimColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun lineTrimColorUseTheme(lineTrimColorUseTheme: Expression): LineLayer
 
   /**
    * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].

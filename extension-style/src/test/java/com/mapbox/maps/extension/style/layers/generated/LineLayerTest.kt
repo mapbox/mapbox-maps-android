@@ -934,6 +934,61 @@ class LineLayerTest {
   // Expression Tests
 
   @Test
+  fun lineBorderColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "line-border-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun lineBorderColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineBorderColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color-use-theme") }
+  }
+
+  @Test
+  fun lineBorderColorUseThemeAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.lineBorderColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-border-color-use-theme") }
+  }
+
+  @Test
+  fun lineBorderColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineBorderColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color-use-theme") }
+  }
+
+  @Test
+  fun lineBorderColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") {
+      lineBorderColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.lineBorderColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color-use-theme") }
+  }
+
+  @Test
   fun lineBorderColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -1219,6 +1274,61 @@ class LineLayerTest {
     verify { style.getStyleLayerProperty("id", "line-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun lineColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "line-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun lineColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-color-use-theme") }
+  }
+
+  @Test
+  fun lineColorUseThemeAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.lineColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-color-use-theme") }
+  }
+
+  @Test
+  fun lineColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-color-use-theme") }
+  }
+
+  @Test
+  fun lineColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") {
+      lineColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.lineColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-color-use-theme") }
+  }
 
   @Test
   fun lineColorAsExpressionSet() {
@@ -2466,6 +2576,61 @@ class LineLayerTest {
     verify { style.getStyleLayerProperty("id", "line-trim-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun lineTrimColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "line-trim-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun lineTrimColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineTrimColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color-use-theme") }
+  }
+
+  @Test
+  fun lineTrimColorUseThemeAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.lineTrimColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-trim-color-use-theme") }
+  }
+
+  @Test
+  fun lineTrimColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineTrimColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color-use-theme") }
+  }
+
+  @Test
+  fun lineTrimColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") {
+      lineTrimColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.lineTrimColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-color-use-theme") }
+  }
 
   @Test
   fun lineTrimColorAsExpressionSet() {

@@ -156,6 +156,42 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   }
 
   /**
+   * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillColorUseTheme: String? = null
+
+  /**
+   * Set fill-color-use-theme to initialise the polygonAnnotation with.
+   *
+   * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param fillColorUseTheme the fill-color-use-theme value
+   * @return this
+   */
+  fun withFillColorUseTheme(fillColorUseTheme: String): PolygonAnnotationOptions {
+    this.fillColorUseTheme = fillColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `fillOutlineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillOutlineColorUseTheme: String? = null
+
+  /**
+   * Set fill-outline-color-use-theme to initialise the polygonAnnotation with.
+   *
+   * This property defines whether the `fillOutlineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param fillOutlineColorUseTheme the fill-outline-color-use-theme value
+   * @return this
+   */
+  fun withFillOutlineColorUseTheme(fillOutlineColorUseTheme: String): PolygonAnnotationOptions {
+    this.fillOutlineColorUseTheme = fillOutlineColorUseTheme
+    return this
+  }
+
+  /**
    * Set a list of lists of Point for the fill, which represents the locations of the fill on the map
    *
    * @param points a list of a lists of the locations of the line in a longitude and latitude pairs
@@ -268,6 +304,12 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
     fillZOffset?.let {
       jsonObject.addProperty(PROPERTY_FILL_Z_OFFSET, it)
     }
+    fillColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_FILL_COLOR_USE_THEME, it)
+    }
+    fillOutlineColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_FILL_OUTLINE_COLOR_USE_THEME, it)
+    }
     val polygonAnnotation = PolygonAnnotation(id, annotationManager, jsonObject, geometry!!)
     polygonAnnotation.isDraggable = isDraggable
     polygonAnnotation.setData(data)
@@ -296,6 +338,12 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
     /** The property for fill-z-offset */
     const val PROPERTY_FILL_Z_OFFSET = "fill-z-offset"
+
+    /** The property for fill-color-use-theme */
+    const val PROPERTY_FILL_COLOR_USE_THEME = "fill-color-use-theme"
+
+    /** The property for fill-outline-color-use-theme */
+    const val PROPERTY_FILL_OUTLINE_COLOR_USE_THEME = "fill-outline-color-use-theme"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -332,6 +380,12 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_FILL_Z_OFFSET)) {
         options.fillZOffset = feature.getProperty(PROPERTY_FILL_Z_OFFSET).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_FILL_COLOR_USE_THEME)) {
+        options.fillColorUseTheme = feature.getProperty(PROPERTY_FILL_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) {
+        options.fillOutlineColorUseTheme = feature.getProperty(PROPERTY_FILL_OUTLINE_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

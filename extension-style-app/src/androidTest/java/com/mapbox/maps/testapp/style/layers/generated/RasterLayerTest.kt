@@ -220,6 +220,28 @@ class RasterLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun rasterColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = rasterLayer("id", "source") {
+      rasterColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.rasterColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun rasterColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = rasterLayer("id", "source") {
+      rasterColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.rasterColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun rasterColorUseTheme() {
     val theme = "none"
     val layer = rasterLayer("id", "source") {
@@ -758,6 +780,7 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterBrightnessMinAsExpression should not be null", RasterLayer.defaultRasterBrightnessMinAsExpression)
     assertNotNull("defaultRasterBrightnessMinTransition should not be null", RasterLayer.defaultRasterBrightnessMinTransition)
     assertNotNull("defaultRasterColorUseTheme should not be null", RasterLayer.defaultRasterColorUseTheme)
+    assertNotNull("defaultRasterColorUseThemeAsExpression should not be null", RasterLayer.defaultRasterColorUseThemeAsExpression)
     assertNotNull("defaultRasterColorMix should not be null", RasterLayer.defaultRasterColorMix)
     assertNotNull("defaultRasterColorMixAsExpression should not be null", RasterLayer.defaultRasterColorMixAsExpression)
     assertNotNull("defaultRasterColorMixTransition should not be null", RasterLayer.defaultRasterColorMixTransition)

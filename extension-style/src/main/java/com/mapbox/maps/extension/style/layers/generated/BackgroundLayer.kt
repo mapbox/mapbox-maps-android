@@ -345,6 +345,41 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
+   * Сolor theme override for [backgroundColor].
+   */
+  @MapboxExperimental
+  val backgroundColorUseThemeAsExpression: Expression?
+    /**
+     * Get the BackgroundColorUseTheme property
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundColorUseTheme] to get the default property.
+     *
+     * @return current BackgroundColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("background-color-use-theme")?.let {
+        return it
+      }
+      backgroundColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the BackgroundColorUseTheme as Expression
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundColorUseTheme] to get the default property.
+   *
+   * @param backgroundColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun backgroundColorUseTheme(backgroundColorUseTheme: Expression): BackgroundLayer = apply {
+    val propertyValue = PropertyValue("background-color-use-theme", backgroundColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    */
   val backgroundEmissiveStrength: Double?
@@ -818,6 +853,22 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [backgroundColor].
+     */
+    @MapboxExperimental
+    val defaultBackgroundColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the BackgroundColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("background", "background-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultBackgroundColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
      */
     val defaultBackgroundEmissiveStrength: Double?
@@ -1093,6 +1144,14 @@ interface BackgroundLayerDsl {
    */
   @MapboxExperimental
   fun backgroundColorUseTheme(backgroundColorUseTheme: String): BackgroundLayer
+
+  /**
+   * Set the backgroundColorUseTheme as Expression for [backgroundColor].
+   *
+   * @param backgroundColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun backgroundColorUseTheme(backgroundColorUseTheme: Expression): BackgroundLayer
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.

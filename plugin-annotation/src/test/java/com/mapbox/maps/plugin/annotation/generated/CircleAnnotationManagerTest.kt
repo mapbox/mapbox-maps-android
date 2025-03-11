@@ -101,6 +101,10 @@ class CircleAnnotationManagerTest {
     every { dragLayer.circleStrokeOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.circleStrokeWidth(any<Expression>()) } answers { layer }
     every { dragLayer.circleStrokeWidth(any<Expression>()) } answers { dragLayer }
+    every { layer.circleColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.circleColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.circleStrokeColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.circleStrokeColorUseTheme(any<Expression>()) } answers { dragLayer }
   }
 
   @After
@@ -295,6 +299,16 @@ class CircleAnnotationManagerTest {
     assertEquals(0.0, annotation.circleStrokeWidth)
     annotation.circleStrokeWidth = null
     assertNull(annotation.circleStrokeWidth)
+
+    annotation.circleColorUseTheme = "default"
+    assertEquals("default", annotation.circleColorUseTheme)
+    annotation.circleColorUseTheme = null
+    assertNull(annotation.circleColorUseTheme)
+
+    annotation.circleStrokeColorUseTheme = "default"
+    assertEquals("default", annotation.circleStrokeColorUseTheme)
+    annotation.circleStrokeColorUseTheme = null
+    assertNull(annotation.circleStrokeColorUseTheme)
   }
 
   @Test
@@ -1095,5 +1109,63 @@ class CircleAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+  }
+
+  @Test
+  fun testCircleColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withCircleColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testCircleColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.circleColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testCircleStrokeColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withCircleStrokeColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testCircleStrokeColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+    val options = CircleAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+    manager.circleStrokeColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.circleStrokeColorUseTheme(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)) }
   }
 }

@@ -58,17 +58,20 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getColorUseTheme ()Ljava/lang/String;
+	public final fun getColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHighColor ()Ljava/lang/String;
 	public final fun getHighColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getHighColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHighColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getHighColorUseTheme ()Ljava/lang/String;
+	public final fun getHighColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHorizonBlend ()Ljava/lang/Double;
 	public final fun getHorizonBlendAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHorizonBlendTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -80,6 +83,7 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 	public final fun getSpaceColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSpaceColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getSpaceColorUseTheme ()Ljava/lang/String;
+	public final fun getSpaceColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getStarIntensity ()Ljava/lang/Double;
 	public final fun getStarIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getStarIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -91,6 +95,7 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 	public fun highColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun highColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun highColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun highColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun highColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun horizonBlend (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun horizonBlend (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
@@ -105,6 +110,7 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 	public fun spaceColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun spaceColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun spaceColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun spaceColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun spaceColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun starIntensity (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun starIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
@@ -122,12 +128,14 @@ public abstract interface class com/mapbox/maps/extension/style/atmosphere/gener
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun highColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun horizonBlend (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun horizonBlend (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
@@ -142,6 +150,7 @@ public abstract interface class com/mapbox/maps/extension/style/atmosphere/gener
 	public abstract fun spaceColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun spaceColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun spaceColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun spaceColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun spaceColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun starIntensity (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun starIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
@@ -1141,6 +1150,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/BackgroundLa
 	public fun backgroundColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public fun backgroundColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public fun backgroundColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
+	public fun backgroundColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public fun backgroundColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public fun backgroundEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public fun backgroundEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
@@ -1159,6 +1169,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/BackgroundLa
 	public final fun getBackgroundColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getBackgroundColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getBackgroundColorUseTheme ()Ljava/lang/String;
+	public final fun getBackgroundColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getBackgroundEmissiveStrength ()Ljava/lang/Double;
 	public final fun getBackgroundEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getBackgroundEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1193,6 +1204,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/BackgroundLa
 	public final fun getDefaultBackgroundColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultBackgroundColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultBackgroundColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultBackgroundColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultBackgroundEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultBackgroundEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultBackgroundEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1214,6 +1226,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun backgroundColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public abstract fun backgroundColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public abstract fun backgroundColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
+	public abstract fun backgroundColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public abstract fun backgroundColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public abstract fun backgroundEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
 	public abstract fun backgroundEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/BackgroundLayer;
@@ -1257,6 +1270,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayer 
 	public fun circleColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
+	public fun circleColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
@@ -1281,6 +1295,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayer 
 	public fun circleStrokeColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleStrokeColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleStrokeColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
+	public fun circleStrokeColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleStrokeColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleStrokeOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public fun circleStrokeOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
@@ -1305,6 +1320,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayer 
 	public final fun getCircleColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getCircleColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getCircleColorUseTheme ()Ljava/lang/String;
+	public final fun getCircleColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCircleEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getCircleEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1325,6 +1341,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayer 
 	public final fun getCircleStrokeColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getCircleStrokeColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getCircleStrokeColorUseTheme ()Ljava/lang/String;
+	public final fun getCircleStrokeColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getCircleStrokeOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1367,6 +1384,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayer$
 	public final fun getDefaultCircleColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultCircleColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultCircleColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultCircleColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultCircleEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultCircleEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1387,6 +1405,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/CircleLayer$
 	public final fun getDefaultCircleStrokeColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultCircleStrokeColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultCircleStrokeColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultCircleStrokeColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getDefaultCircleStrokeOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultCircleStrokeOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1413,6 +1432,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun circleColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
+	public abstract fun circleColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
@@ -1437,6 +1457,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun circleStrokeColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleStrokeColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleStrokeColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
+	public abstract fun circleStrokeColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleStrokeColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleStrokeOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
 	public abstract fun circleStrokeOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/CircleLayer;
@@ -1581,6 +1602,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public fun fillExtrusionColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public fun fillExtrusionColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionCutoffFadeRange (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionCutoffFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1595,6 +1617,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public fun fillExtrusionFloodLightColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionFloodLightColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionFloodLightColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public fun fillExtrusionFloodLightColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionFloodLightColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionFloodLightGroundAttenuation (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionFloodLightGroundAttenuation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1668,6 +1691,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getFillExtrusionColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getFillExtrusionColorUseTheme ()Ljava/lang/String;
+	public final fun getFillExtrusionColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionCutoffFadeRange ()Ljava/lang/Double;
 	public final fun getFillExtrusionCutoffFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionEdgeRadius ()Ljava/lang/Double;
@@ -1680,6 +1704,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getFillExtrusionFloodLightColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionFloodLightColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getFillExtrusionFloodLightColorUseTheme ()Ljava/lang/String;
+	public final fun getFillExtrusionFloodLightColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionFloodLightGroundAttenuation ()Ljava/lang/Double;
 	public final fun getFillExtrusionFloodLightGroundAttenuationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionFloodLightGroundAttenuationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1765,6 +1790,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getDefaultFillExtrusionColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultFillExtrusionColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultFillExtrusionColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionCutoffFadeRange ()Ljava/lang/Double;
 	public final fun getDefaultFillExtrusionCutoffFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionEdgeRadius ()Ljava/lang/Double;
@@ -1777,6 +1803,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getDefaultFillExtrusionFloodLightColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionFloodLightColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultFillExtrusionFloodLightColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultFillExtrusionFloodLightColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionFloodLightGroundAttenuation ()Ljava/lang/Double;
 	public final fun getDefaultFillExtrusionFloodLightGroundAttenuationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionFloodLightGroundAttenuationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -1851,6 +1878,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun fillExtrusionColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public abstract fun fillExtrusionColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionCutoffFadeRange (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionCutoffFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1865,6 +1893,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun fillExtrusionFloodLightColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionFloodLightColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionFloodLightColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
+	public abstract fun fillExtrusionFloodLightColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionFloodLightColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionFloodLightGroundAttenuation (D)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionFloodLightGroundAttenuation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1963,6 +1992,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillLayer : 
 	public fun fillColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
+	public fun fillColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillElevationReference (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
@@ -1979,6 +2009,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillLayer : 
 	public fun fillOutlineColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillOutlineColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillOutlineColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
+	public fun fillOutlineColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillOutlineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillPattern (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public fun fillPattern (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
@@ -2002,6 +2033,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillLayer : 
 	public final fun getFillColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getFillColorUseTheme ()Ljava/lang/String;
+	public final fun getFillColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getFillElevationReferenceAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
@@ -2015,6 +2047,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillLayer : 
 	public final fun getFillOutlineColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillOutlineColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
+	public final fun getFillOutlineColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillPatternAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillSortKey ()Ljava/lang/Double;
@@ -2057,6 +2090,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillLayer$Co
 	public final fun getDefaultFillColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultFillColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultFillColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getDefaultFillElevationReferenceAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillEmissiveStrength ()Ljava/lang/Double;
@@ -2070,6 +2104,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillLayer$Co
 	public final fun getDefaultFillOutlineColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillOutlineColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultFillOutlineColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultFillOutlineColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillPattern ()Ljava/lang/String;
 	public final fun getDefaultFillPatternAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillSortKey ()Ljava/lang/Double;
@@ -2095,6 +2130,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun fillColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
+	public abstract fun fillColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillElevationReference (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
@@ -2111,6 +2147,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun fillOutlineColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillOutlineColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillOutlineColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
+	public abstract fun fillOutlineColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillOutlineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillPattern (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
 	public abstract fun fillPattern (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillLayer;
@@ -2157,6 +2194,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HeatmapLayer
 	public final fun getFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHeatmapColor ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHeatmapColorUseTheme ()Ljava/lang/String;
+	public final fun getHeatmapColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHeatmapIntensity ()Ljava/lang/Double;
 	public final fun getHeatmapIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHeatmapIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2177,6 +2215,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HeatmapLayer
 	public fun getVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
 	public fun getVisibilityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public fun heatmapColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
+	public fun heatmapColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public fun heatmapColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public fun heatmapIntensity (D)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public fun heatmapIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
@@ -2208,6 +2247,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HeatmapLayer
 public final class com/mapbox/maps/extension/style/layers/generated/HeatmapLayer$Companion {
 	public final fun getDefaultHeatmapColor ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHeatmapColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultHeatmapColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHeatmapIntensity ()Ljava/lang/Double;
 	public final fun getDefaultHeatmapIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHeatmapIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2227,6 +2267,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HeatmapLayer
 public abstract interface class com/mapbox/maps/extension/style/layers/generated/HeatmapLayerDsl {
 	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public abstract fun heatmapColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
+	public abstract fun heatmapColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public abstract fun heatmapColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public abstract fun heatmapIntensity (D)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
 	public abstract fun heatmapIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HeatmapLayer;
@@ -2269,6 +2310,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public final fun getHillshadeAccentColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeAccentColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getHillshadeAccentColorUseTheme ()Ljava/lang/String;
+	public final fun getHillshadeAccentColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeEmissiveStrength ()Ljava/lang/Double;
 	public final fun getHillshadeEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2280,6 +2322,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public final fun getHillshadeHighlightColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeHighlightColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getHillshadeHighlightColorUseTheme ()Ljava/lang/String;
+	public final fun getHillshadeHighlightColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeIlluminationAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/HillshadeIlluminationAnchor;
 	public final fun getHillshadeIlluminationAnchorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeIlluminationDirection ()Ljava/lang/Double;
@@ -2289,6 +2332,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public final fun getHillshadeShadowColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getHillshadeShadowColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getHillshadeShadowColorUseTheme ()Ljava/lang/String;
+	public final fun getHillshadeShadowColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public fun getLayerId ()Ljava/lang/String;
 	public fun getMaxZoom ()Ljava/lang/Double;
 	public fun getMinZoom ()Ljava/lang/Double;
@@ -2302,6 +2346,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public fun hillshadeAccentColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeAccentColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeAccentColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
+	public fun hillshadeAccentColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeAccentColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
@@ -2316,6 +2361,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public fun hillshadeHighlightColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeHighlightColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeHighlightColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
+	public fun hillshadeHighlightColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeHighlightColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeIlluminationAnchor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeIlluminationAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/HillshadeIlluminationAnchor;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
@@ -2326,6 +2372,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public fun hillshadeShadowColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeShadowColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeShadowColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
+	public fun hillshadeShadowColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public fun hillshadeShadowColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public synthetic fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
@@ -2346,6 +2393,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public final fun getDefaultHillshadeAccentColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeAccentColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultHillshadeAccentColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultHillshadeAccentColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultHillshadeEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2357,6 +2405,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public final fun getDefaultHillshadeHighlightColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeHighlightColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultHillshadeHighlightColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultHillshadeHighlightColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeIlluminationAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/HillshadeIlluminationAnchor;
 	public final fun getDefaultHillshadeIlluminationAnchorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeIlluminationDirection ()Ljava/lang/Double;
@@ -2366,6 +2415,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/HillshadeLay
 	public final fun getDefaultHillshadeShadowColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultHillshadeShadowColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultHillshadeShadowColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultHillshadeShadowColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
 	public final fun getDefaultVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
@@ -2377,6 +2427,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun hillshadeAccentColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeAccentColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeAccentColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
+	public abstract fun hillshadeAccentColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeAccentColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
@@ -2391,6 +2442,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun hillshadeHighlightColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeHighlightColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeHighlightColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
+	public abstract fun hillshadeHighlightColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeHighlightColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeIlluminationAnchor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeIlluminationAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/HillshadeIlluminationAnchor;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
@@ -2401,6 +2453,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun hillshadeShadowColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeShadowColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeShadowColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
+	public abstract fun hillshadeShadowColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun hillshadeShadowColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
 	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/HillshadeLayer;
@@ -2438,6 +2491,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineBorderColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineBorderColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
+	public final fun getLineBorderColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineBorderWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineBorderWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2448,6 +2502,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineColorUseTheme ()Ljava/lang/String;
+	public final fun getLineColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineCrossSlope ()Ljava/lang/Double;
 	public final fun getLineCrossSlopeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineDasharray ()Ljava/util/List;
@@ -2465,6 +2520,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineGapWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineGradient ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineGradientUseTheme ()Ljava/lang/String;
+	public final fun getLineGradientUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineJoinAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineMiterLimit ()Ljava/lang/Double;
@@ -2494,6 +2550,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineTrimColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineTrimColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineTrimColorUseTheme ()Ljava/lang/String;
+	public final fun getLineTrimColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineTrimFadeRange ()Ljava/util/List;
 	public final fun getLineTrimFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineTrimOffset ()Ljava/util/List;
@@ -2521,6 +2578,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineBorderColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineBorderColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2533,6 +2591,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineCrossSlope (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineCrossSlope (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2553,6 +2612,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineGapWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineGapWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineGradient (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineGradientUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineGradientUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineJoin (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2587,6 +2647,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineTrimColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineTrimColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineTrimFadeRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2622,6 +2683,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineBorderColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineBorderColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineBorderColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultLineBorderColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineBorderWidth ()Ljava/lang/Double;
 	public final fun getDefaultLineBorderWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineBorderWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2632,6 +2694,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultLineColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineCrossSlope ()Ljava/lang/Double;
 	public final fun getDefaultLineCrossSlopeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineDasharray ()Ljava/util/List;
@@ -2648,6 +2711,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineGapWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineGapWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineGradientUseTheme ()Ljava/lang/String;
+	public final fun getDefaultLineGradientUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getDefaultLineJoinAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineMiterLimit ()Ljava/lang/Double;
@@ -2677,6 +2741,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineTrimColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineTrimColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineTrimColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultLineTrimColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineTrimFadeRange ()Ljava/util/List;
 	public final fun getDefaultLineTrimFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineTrimOffset ()Ljava/util/List;
@@ -2704,6 +2769,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineBorderColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineBorderColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2716,6 +2782,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineCrossSlope (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineCrossSlope (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2736,6 +2803,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineGapWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineGapWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineGradient (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineGradientUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineGradientUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineJoin (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2770,6 +2838,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineTrimColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineTrimColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineTrimFadeRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2831,12 +2900,14 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public fun accuracyRadiusBorderColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusBorderColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusBorderColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun accuracyRadiusBorderColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusColor (I)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun accuracyRadiusColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun accuracyRadiusTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
@@ -2855,6 +2926,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public fun emphasisCircleColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun emphasisCircleColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleGlowRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleGlowRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
@@ -2871,11 +2943,13 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getAccuracyRadiusBorderColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getAccuracyRadiusBorderColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getAccuracyRadiusBorderColorUseTheme ()Ljava/lang/String;
+	public final fun getAccuracyRadiusBorderColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getAccuracyRadiusColor ()Ljava/lang/String;
 	public final fun getAccuracyRadiusColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getAccuracyRadiusColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getAccuracyRadiusColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getAccuracyRadiusColorUseTheme ()Ljava/lang/String;
+	public final fun getAccuracyRadiusColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getAccuracyRadiusTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getBearing ()Ljava/lang/Double;
 	public final fun getBearingAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -2890,6 +2964,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getEmphasisCircleColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getEmphasisCircleColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getEmphasisCircleColorUseTheme ()Ljava/lang/String;
+	public final fun getEmphasisCircleColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getEmphasisCircleGlowRange ()Ljava/util/List;
 	public final fun getEmphasisCircleGlowRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getEmphasisCircleGlowRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2966,11 +3041,13 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getDefaultAccuracyRadiusBorderColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultAccuracyRadiusBorderColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultAccuracyRadiusBorderColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultAccuracyRadiusBorderColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultAccuracyRadiusColor ()Ljava/lang/String;
 	public final fun getDefaultAccuracyRadiusColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultAccuracyRadiusColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultAccuracyRadiusColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultAccuracyRadiusColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultAccuracyRadiusColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultAccuracyRadiusTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultBearing ()Ljava/lang/Double;
 	public final fun getDefaultBearingAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -2985,6 +3062,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getDefaultEmphasisCircleColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultEmphasisCircleColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultEmphasisCircleColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultEmphasisCircleColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultEmphasisCircleGlowRange ()Ljava/util/List;
 	public final fun getDefaultEmphasisCircleGlowRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultEmphasisCircleGlowRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3024,12 +3102,14 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun accuracyRadiusBorderColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusBorderColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusBorderColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun accuracyRadiusBorderColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusColor (I)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun accuracyRadiusColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun accuracyRadiusTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
@@ -3048,6 +3128,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun emphasisCircleColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun emphasisCircleColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleGlowRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleGlowRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
@@ -3130,6 +3211,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public final fun getModelColorMixIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getModelColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getModelColorUseTheme ()Ljava/lang/String;
+	public final fun getModelColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelCutoffFadeRange ()Ljava/lang/Double;
 	public final fun getModelCutoffFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
@@ -3187,6 +3269,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun modelColorMixIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelCutoffFadeRange (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelCutoffFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3253,6 +3336,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$C
 	public final fun getDefaultModelColorMixIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultModelColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultModelColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultModelColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelCutoffFadeRange ()Ljava/lang/Double;
 	public final fun getDefaultModelCutoffFadeRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
@@ -3308,6 +3392,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun modelColorMixIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelCutoffFadeRange (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelCutoffFadeRange (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3401,6 +3486,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public final fun getRasterColorRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterColorRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getRasterColorUseTheme ()Ljava/lang/String;
+	public final fun getRasterColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterContrast ()Ljava/lang/Double;
 	public final fun getRasterContrastAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterContrastTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3451,6 +3537,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public fun rasterColorRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorRangeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorRangeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterContrast (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterContrast (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3507,6 +3594,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer$
 	public final fun getDefaultRasterColorRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterColorRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultRasterColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultRasterColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterContrast ()Ljava/lang/Double;
 	public final fun getDefaultRasterContrastAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterContrastTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3554,6 +3642,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun rasterColorRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorRangeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorRangeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterContrast (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterContrast (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3619,6 +3708,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterPartic
 	public final fun getRasterParticleArrayBandAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterParticleColor ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterParticleColorUseTheme ()Ljava/lang/String;
+	public final fun getRasterParticleColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterParticleCount ()Ljava/lang/Long;
 	public final fun getRasterParticleCountAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterParticleFadeOpacityFactor ()Ljava/lang/Double;
@@ -3643,6 +3733,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterPartic
 	public fun rasterParticleArrayBand (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public fun rasterParticleArrayBand (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public fun rasterParticleColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public fun rasterParticleColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public fun rasterParticleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public fun rasterParticleCount (J)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public fun rasterParticleCount (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
@@ -3674,6 +3765,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterPartic
 	public final fun getDefaultRasterParticleArrayBandAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterParticleColor ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterParticleColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultRasterParticleColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterParticleCount ()Ljava/lang/Long;
 	public final fun getDefaultRasterParticleCountAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterParticleFadeOpacityFactor ()Ljava/lang/Double;
@@ -3696,6 +3788,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun rasterParticleArrayBand (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public abstract fun rasterParticleArrayBand (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public abstract fun rasterParticleColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
+	public abstract fun rasterParticleColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public abstract fun rasterParticleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public abstract fun rasterParticleCount (J)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
 	public abstract fun rasterParticleCount (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterParticleLayer;
@@ -3741,10 +3834,12 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer : c
 	public final fun getSkyAtmosphereColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getSkyAtmosphereColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyAtmosphereColorUseTheme ()Ljava/lang/String;
+	public final fun getSkyAtmosphereColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyAtmosphereHaloColor ()Ljava/lang/String;
 	public final fun getSkyAtmosphereHaloColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getSkyAtmosphereHaloColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyAtmosphereHaloColorUseTheme ()Ljava/lang/String;
+	public final fun getSkyAtmosphereHaloColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyAtmosphereSun ()Ljava/util/List;
 	public final fun getSkyAtmosphereSunAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyAtmosphereSunIntensity ()Ljava/lang/Double;
@@ -3755,6 +3850,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer : c
 	public final fun getSkyGradientRadius ()Ljava/lang/Double;
 	public final fun getSkyGradientRadiusAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyGradientUseTheme ()Ljava/lang/String;
+	public final fun getSkyGradientUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyOpacity ()Ljava/lang/Double;
 	public final fun getSkyOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSkyOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3770,10 +3866,12 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer : c
 	public fun skyAtmosphereColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
+	public fun skyAtmosphereColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereHaloColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereHaloColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
+	public fun skyAtmosphereHaloColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereSun (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyAtmosphereSun (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
@@ -3784,6 +3882,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer : c
 	public fun skyGradientCenter (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyGradientRadius (D)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyGradientRadius (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
+	public fun skyGradientUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyGradientUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public fun skyOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
@@ -3806,10 +3905,12 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer$Com
 	public final fun getDefaultSkyAtmosphereColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultSkyAtmosphereColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyAtmosphereColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultSkyAtmosphereColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyAtmosphereHaloColor ()Ljava/lang/String;
 	public final fun getDefaultSkyAtmosphereHaloColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultSkyAtmosphereHaloColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyAtmosphereHaloColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultSkyAtmosphereHaloColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyAtmosphereSun ()Ljava/util/List;
 	public final fun getDefaultSkyAtmosphereSunAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyAtmosphereSunIntensity ()Ljava/lang/Double;
@@ -3820,6 +3921,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SkyLayer$Com
 	public final fun getDefaultSkyGradientRadius ()Ljava/lang/Double;
 	public final fun getDefaultSkyGradientRadiusAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyGradientUseTheme ()Ljava/lang/String;
+	public final fun getDefaultSkyGradientUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyOpacity ()Ljava/lang/Double;
 	public final fun getDefaultSkyOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSkyOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3835,10 +3937,12 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun skyAtmosphereColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
+	public abstract fun skyAtmosphereColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereHaloColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereHaloColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
+	public abstract fun skyAtmosphereHaloColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereSun (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyAtmosphereSun (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
@@ -3849,6 +3953,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun skyGradientCenter (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyGradientRadius (D)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyGradientRadius (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
+	public abstract fun skyGradientUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyGradientUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
 	public abstract fun skyOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SkyLayer;
@@ -3920,6 +4025,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getIconColorSaturationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getIconColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getIconColorUseTheme ()Ljava/lang/String;
+	public final fun getIconColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3931,6 +4037,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getIconHaloColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconHaloColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
+	public final fun getIconHaloColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconHaloWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconHaloWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4006,6 +4113,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getTextColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getTextColorUseTheme ()Ljava/lang/String;
+	public final fun getTextColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4022,6 +4130,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getTextHaloColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextHaloColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getTextHaloColorUseTheme ()Ljava/lang/String;
+	public final fun getTextHaloColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextHaloWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getTextHaloWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4089,6 +4198,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun iconColorSaturationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun iconColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4103,6 +4213,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun iconHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconHaloColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconHaloColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun iconHaloColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconHaloWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconHaloWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4186,6 +4297,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun textColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun textColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4206,6 +4318,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun textHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textHaloColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textHaloColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun textHaloColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textHaloWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun textHaloWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4282,6 +4395,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultIconColorSaturationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultIconColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultIconColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultIconColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultIconEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4293,6 +4407,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultIconHaloColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconHaloColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultIconHaloColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultIconHaloColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconHaloWidth ()Ljava/lang/Double;
 	public final fun getDefaultIconHaloWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconHaloWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4364,6 +4479,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultTextColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultTextColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultTextColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultTextEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4380,6 +4496,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultTextHaloColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextHaloColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultTextHaloColorUseTheme ()Ljava/lang/String;
+	public final fun getDefaultTextHaloColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextHaloWidth ()Ljava/lang/Double;
 	public final fun getDefaultTextHaloWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultTextHaloWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4450,6 +4567,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun iconColorSaturationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun iconColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4464,6 +4582,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun iconHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconHaloColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconHaloColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun iconHaloColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconHaloWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconHaloWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4544,6 +4663,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun textColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun textColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4564,6 +4684,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun textHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textHaloColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textHaloColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun textHaloColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textHaloWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun textHaloWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;

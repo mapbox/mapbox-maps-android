@@ -215,6 +215,30 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testCircleColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.circleColorUseTheme = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.circleColorUseTheme)
+      circleAnnotationManager.circleColorUseTheme = null
+      assertEquals(null, circleAnnotationManager.circleColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testCircleStrokeColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.circleStrokeColorUseTheme = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.circleStrokeColorUseTheme)
+      circleAnnotationManager.circleStrokeColorUseTheme = null
+      assertEquals(null, circleAnnotationManager.circleStrokeColorUseTheme)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()

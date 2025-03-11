@@ -21,6 +21,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
+import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -31,7 +32,10 @@ import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.importConfigs
 import com.mapbox.maps.extension.compose.style.imports.rememberStyleImportState
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
+import com.mapbox.maps.extension.compose.style.rememberColorTheme
+import com.mapbox.maps.extension.compose.style.rememberStyleColorTheme
 import com.mapbox.maps.extension.compose.style.slotsContent
+import com.mapbox.maps.extension.style.color.colorTheme
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeatureStateKey
 import com.mapbox.maps.interactions.FeaturesetFeature
@@ -53,6 +57,21 @@ public class StyleImportsActivity : ComponentActivity() {
       var showBackgroundLayer by remember {
         mutableStateOf(true)
       }
+      val defaultColorTheme by remember {
+        mutableStateOf(colorTheme())
+      }
+      // creating monochrome StyleColorTheme from a drawable LUT resource
+      val monochromeColorTheme = rememberColorTheme(resourceId = R.drawable.monochrome_lut)
+      var useMonochromeThemeInStyleImport by remember {
+        mutableStateOf(false)
+      }
+      // holder for current color theme
+      val currentColorTheme by remember(useMonochromeThemeInStyleImport) {
+        mutableStateOf(
+          if (useMonochromeThemeInStyleImport) monochromeColorTheme else defaultColorTheme
+        )
+      }
+      val currentStyleColorTheme = rememberStyleColorTheme(currentColorTheme)
       MapboxMapComposeTheme {
         ExampleScaffold(
           floatingActionButton = {
@@ -93,6 +112,18 @@ public class StyleImportsActivity : ComponentActivity() {
                   text = "Toggle background layer at top slot to ${if (showBackgroundLayer) "disabled" else "enabled"}"
                 )
               }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  useMonochromeThemeInStyleImport = !useMonochromeThemeInStyleImport
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Toggle import color theme"
+                )
+              }
             }
           }
         ) {
@@ -120,6 +151,7 @@ public class StyleImportsActivity : ComponentActivity() {
                       importId = STANDARD_STYLE_IMPORT_ID,
                       style = "asset://fragment-realestate-NY.json",
                       styleImportState = rememberStyleImportState {
+                        styleColorTheme = currentStyleColorTheme
                         importConfigs = importConfigs {
                           config("showTransitLabels", Value(false))
                         }

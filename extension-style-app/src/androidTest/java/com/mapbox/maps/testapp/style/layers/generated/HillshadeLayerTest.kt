@@ -83,6 +83,28 @@ class HillshadeLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun hillshadeAccentColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeAccentColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.hillshadeAccentColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun hillshadeAccentColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeAccentColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.hillshadeAccentColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun hillshadeAccentColorAsColorIntTest() {
     val layer = hillshadeLayer("id", "source") {
       hillshadeAccentColor(Color.CYAN)
@@ -275,6 +297,28 @@ class HillshadeLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun hillshadeHighlightColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeHighlightColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.hillshadeHighlightColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun hillshadeHighlightColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeHighlightColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.hillshadeHighlightColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun hillshadeHighlightColorAsColorIntTest() {
     val layer = hillshadeLayer("id", "source") {
       hillshadeHighlightColor(Color.CYAN)
@@ -404,6 +448,28 @@ class HillshadeLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun hillshadeShadowColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeShadowColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.hillshadeShadowColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun hillshadeShadowColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeShadowColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.hillshadeShadowColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun hillshadeShadowColorAsColorIntTest() {
     val layer = hillshadeLayer("id", "source") {
       hillshadeShadowColor(Color.CYAN)
@@ -491,6 +557,7 @@ class HillshadeLayerTest : BaseStyleTest() {
     assertNotNull("defaultHillshadeAccentColorAsExpression should not be null", HillshadeLayer.defaultHillshadeAccentColorAsExpression)
     assertNotNull("defaultHillshadeAccentColorAsColorInt should not be null", HillshadeLayer.defaultHillshadeAccentColorAsColorInt)
     assertNotNull("defaultHillshadeAccentColorUseTheme should not be null", HillshadeLayer.defaultHillshadeAccentColorUseTheme)
+    assertNotNull("defaultHillshadeAccentColorUseThemeAsExpression should not be null", HillshadeLayer.defaultHillshadeAccentColorUseThemeAsExpression)
     assertNotNull("defaultHillshadeAccentColorTransition should not be null", HillshadeLayer.defaultHillshadeAccentColorTransition)
     assertNotNull("defaultHillshadeEmissiveStrength should not be null", HillshadeLayer.defaultHillshadeEmissiveStrength)
     assertNotNull("defaultHillshadeEmissiveStrengthAsExpression should not be null", HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression)
@@ -502,6 +569,7 @@ class HillshadeLayerTest : BaseStyleTest() {
     assertNotNull("defaultHillshadeHighlightColorAsExpression should not be null", HillshadeLayer.defaultHillshadeHighlightColorAsExpression)
     assertNotNull("defaultHillshadeHighlightColorAsColorInt should not be null", HillshadeLayer.defaultHillshadeHighlightColorAsColorInt)
     assertNotNull("defaultHillshadeHighlightColorUseTheme should not be null", HillshadeLayer.defaultHillshadeHighlightColorUseTheme)
+    assertNotNull("defaultHillshadeHighlightColorUseThemeAsExpression should not be null", HillshadeLayer.defaultHillshadeHighlightColorUseThemeAsExpression)
     assertNotNull("defaultHillshadeHighlightColorTransition should not be null", HillshadeLayer.defaultHillshadeHighlightColorTransition)
     assertNotNull("defaultHillshadeIlluminationAnchor should not be null", HillshadeLayer.defaultHillshadeIlluminationAnchor)
     assertNotNull("defaultHillshadeIlluminationAnchorAsExpression should not be null", HillshadeLayer.defaultHillshadeIlluminationAnchorAsExpression)
@@ -511,6 +579,7 @@ class HillshadeLayerTest : BaseStyleTest() {
     assertNotNull("defaultHillshadeShadowColorAsExpression should not be null", HillshadeLayer.defaultHillshadeShadowColorAsExpression)
     assertNotNull("defaultHillshadeShadowColorAsColorInt should not be null", HillshadeLayer.defaultHillshadeShadowColorAsColorInt)
     assertNotNull("defaultHillshadeShadowColorUseTheme should not be null", HillshadeLayer.defaultHillshadeShadowColorUseTheme)
+    assertNotNull("defaultHillshadeShadowColorUseThemeAsExpression should not be null", HillshadeLayer.defaultHillshadeShadowColorUseThemeAsExpression)
     assertNotNull("defaultHillshadeShadowColorTransition should not be null", HillshadeLayer.defaultHillshadeShadowColorTransition)
   }
 

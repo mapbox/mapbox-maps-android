@@ -521,6 +521,10 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/MapboxStyleManager {
 	public fun removeStyleLayer (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleModel (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSource (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
+	public fun setImportColorTheme (Ljava/lang/String;Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;
+	public fun setImportColorTheme (Ljava/lang/String;Lcom/mapbox/maps/ColorTheme;)Lcom/mapbox/bindgen/Expected;
+	public fun setImportColorTheme (Ljava/lang/String;Lcom/mapbox/maps/Image;)Lcom/mapbox/bindgen/Expected;
+	public fun setImportColorTheme (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleColorTheme (Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;

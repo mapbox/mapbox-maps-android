@@ -13,6 +13,7 @@ import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.ImportConfigs
+import com.mapbox.maps.extension.compose.style.StyleColorTheme
 import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
@@ -20,10 +21,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
+@OptIn(MapboxExperimental::class)
 internal class StyleImportNode(
   private var importId: String,
   private var style: String,
   private var config: ImportConfigs?,
+  private var styleColorTheme: StyleColorTheme,
   private val coroutineScope: CoroutineScope
 ) : MapNode() {
   private lateinit var mapStyleNode: MapStyleNode
@@ -58,6 +61,9 @@ internal class StyleImportNode(
         }.onValue {
           logD(TAG, "added StyleImport($importId, $style, $config, null)")
         }
+        if (!styleColorTheme.isStyleDefault) {
+          mapboxMap.setImportColorTheme(importId, styleColorTheme.colorTheme)
+        }
       }
     }
   }
@@ -90,6 +96,10 @@ internal class StyleImportNode(
 
   internal fun updateConfigs(configs: ImportConfigs?) {
     mapStyleNode.mapboxMap.setStyleImportConfigProperties(importId, configs?.configs ?: hashMapOf())
+  }
+
+  internal fun updateColorTheme(styleColorTheme: StyleColorTheme) {
+    mapStyleNode.mapboxMap.setImportColorTheme(importId, styleColorTheme.colorTheme)
   }
 
   override fun onRemoved(parent: MapNode) {
@@ -178,7 +188,13 @@ public class StyleImportsScope internal constructor() {
     // Insert a MapNode to the MapApplier node tree
     ComposeNode<StyleImportNode, MapApplier>(
       factory = {
-        StyleImportNode(importId, style, styleImportState.importConfigs, coroutineScope)
+        StyleImportNode(
+          importId,
+          style,
+          styleImportState.importConfigs,
+          styleImportState.styleColorTheme,
+          coroutineScope
+        )
       },
       update = {
         update(importId) {
@@ -189,6 +205,9 @@ public class StyleImportsScope internal constructor() {
         }
         update(styleImportState.importConfigs) {
           updateConfigs(styleImportState.importConfigs)
+        }
+        update(styleImportState.styleColorTheme) {
+          updateColorTheme(it)
         }
       }
     )

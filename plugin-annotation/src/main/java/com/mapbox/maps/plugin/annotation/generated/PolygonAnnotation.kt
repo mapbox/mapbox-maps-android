@@ -316,6 +316,72 @@ class PolygonAnnotation(
     }
 
   /**
+   * The fillColorUseTheme property
+   *
+   * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillColorUseTheme: String?
+    /**
+     * Get the fillColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillColorUseTheme property
+     *
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
+      }
+    }
+
+  /**
+   * The fillOutlineColorUseTheme property
+   *
+   * This property defines whether the `fillOutlineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillOutlineColorUseTheme: String?
+    /**
+     * Get the fillOutlineColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillOutlineColorUseTheme property
+     *
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -366,6 +432,12 @@ class PolygonAnnotation(
     }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+    }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
+    }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
     }
   }
 

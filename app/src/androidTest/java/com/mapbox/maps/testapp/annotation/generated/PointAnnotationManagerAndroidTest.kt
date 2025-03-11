@@ -863,6 +863,54 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testIconColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconColorUseTheme = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconColorUseTheme)
+      pointAnnotationManager.iconColorUseTheme = null
+      assertEquals(null, pointAnnotationManager.iconColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testIconHaloColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconHaloColorUseTheme = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconHaloColorUseTheme)
+      pointAnnotationManager.iconHaloColorUseTheme = null
+      assertEquals(null, pointAnnotationManager.iconHaloColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testTextColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.textColorUseTheme = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.textColorUseTheme)
+      pointAnnotationManager.textColorUseTheme = null
+      assertEquals(null, pointAnnotationManager.textColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testTextHaloColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.textHaloColorUseTheme = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.textHaloColorUseTheme)
+      pointAnnotationManager.textHaloColorUseTheme = null
+      assertEquals(null, pointAnnotationManager.textHaloColorUseTheme)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()

@@ -70,6 +70,28 @@ class SkyLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun skyAtmosphereColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = skyLayer("id") {
+      skyAtmosphereColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.skyAtmosphereColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun skyAtmosphereColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = skyLayer("id") {
+      skyAtmosphereColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.skyAtmosphereColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun skyAtmosphereColorAsColorIntTest() {
     val layer = skyLayer("id") {
       skyAtmosphereColor(Color.CYAN)
@@ -117,6 +139,28 @@ class SkyLayerTest : BaseStyleTest() {
     assertEquals(expression.toString(), layer.skyAtmosphereHaloColorAsExpression.toString())
     assertEquals("rgba(0, 0, 0, 1)", layer.skyAtmosphereHaloColor)
     assertEquals(Color.BLACK, layer.skyAtmosphereHaloColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun skyAtmosphereHaloColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = skyLayer("id") {
+      skyAtmosphereHaloColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.skyAtmosphereHaloColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun skyAtmosphereHaloColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = skyLayer("id") {
+      skyAtmosphereHaloColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.skyAtmosphereHaloColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -218,6 +262,28 @@ class SkyLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(testValue.toString(), layer.skyGradient?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun skyGradientUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = skyLayer("id") {
+      skyGradientUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.skyGradientUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun skyGradientUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = skyLayer("id") {
+      skyGradientUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.skyGradientUseThemeAsExpression.toString())
   }
 
   @Test
@@ -394,16 +460,19 @@ class SkyLayerTest : BaseStyleTest() {
     assertNotNull("defaultSkyAtmosphereColorAsExpression should not be null", SkyLayer.defaultSkyAtmosphereColorAsExpression)
     assertNotNull("defaultSkyAtmosphereColorAsColorInt should not be null", SkyLayer.defaultSkyAtmosphereColorAsColorInt)
     assertNotNull("defaultSkyAtmosphereColorUseTheme should not be null", SkyLayer.defaultSkyAtmosphereColorUseTheme)
+    assertNotNull("defaultSkyAtmosphereColorUseThemeAsExpression should not be null", SkyLayer.defaultSkyAtmosphereColorUseThemeAsExpression)
     assertNotNull("defaultSkyAtmosphereHaloColor should not be null", SkyLayer.defaultSkyAtmosphereHaloColor)
     assertNotNull("defaultSkyAtmosphereHaloColorAsExpression should not be null", SkyLayer.defaultSkyAtmosphereHaloColorAsExpression)
     assertNotNull("defaultSkyAtmosphereHaloColorAsColorInt should not be null", SkyLayer.defaultSkyAtmosphereHaloColorAsColorInt)
     assertNotNull("defaultSkyAtmosphereHaloColorUseTheme should not be null", SkyLayer.defaultSkyAtmosphereHaloColorUseTheme)
+    assertNotNull("defaultSkyAtmosphereHaloColorUseThemeAsExpression should not be null", SkyLayer.defaultSkyAtmosphereHaloColorUseThemeAsExpression)
     assertNotNull("defaultSkyAtmosphereSun should not be null", SkyLayer.defaultSkyAtmosphereSun)
     assertNotNull("defaultSkyAtmosphereSunAsExpression should not be null", SkyLayer.defaultSkyAtmosphereSunAsExpression)
     assertNotNull("defaultSkyAtmosphereSunIntensity should not be null", SkyLayer.defaultSkyAtmosphereSunIntensity)
     assertNotNull("defaultSkyAtmosphereSunIntensityAsExpression should not be null", SkyLayer.defaultSkyAtmosphereSunIntensityAsExpression)
     assertNotNull("defaultSkyGradient should not be null", SkyLayer.defaultSkyGradient)
     assertNotNull("defaultSkyGradientUseTheme should not be null", SkyLayer.defaultSkyGradientUseTheme)
+    assertNotNull("defaultSkyGradientUseThemeAsExpression should not be null", SkyLayer.defaultSkyGradientUseThemeAsExpression)
     assertNotNull("defaultSkyGradientCenter should not be null", SkyLayer.defaultSkyGradientCenter)
     assertNotNull("defaultSkyGradientCenterAsExpression should not be null", SkyLayer.defaultSkyGradientCenterAsExpression)
     assertNotNull("defaultSkyGradientRadius should not be null", SkyLayer.defaultSkyGradientRadius)

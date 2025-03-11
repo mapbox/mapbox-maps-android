@@ -84,6 +84,8 @@ internal object LocationComponentAttributeParser {
               emptyList()
             },
             modelElevationReference = ModelElevationReference.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelElevationReference, ModelElevationReference.GROUND.ordinal)],
+            modelColorUseTheme = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelColorUseTheme) ?: "default",
+            modelColorUseThemeExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelColorUseThemeExpression),
           )
           else -> createDefault2DPuck(withBearing = puckBearingEnabled)
         }

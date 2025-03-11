@@ -1353,6 +1353,138 @@ class PointAnnotation(
     }
 
   /**
+   * The iconColorUseTheme property
+   *
+   * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var iconColorUseTheme: String?
+    /**
+     * Get the iconColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconColorUseTheme property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)
+      }
+    }
+
+  /**
+   * The iconHaloColorUseTheme property
+   *
+   * This property defines whether the `iconHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var iconHaloColorUseTheme: String?
+    /**
+     * Get the iconHaloColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloColorUseTheme property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)
+      }
+    }
+
+  /**
+   * The textColorUseTheme property
+   *
+   * This property defines whether the `textColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var textColorUseTheme: String?
+    /**
+     * Get the textColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textColorUseTheme property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)
+      }
+    }
+
+  /**
+   * The textHaloColorUseTheme property
+   *
+   * This property defines whether the `textHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var textHaloColorUseTheme: String?
+    /**
+     * Get the textHaloColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textHaloColorUseTheme property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -1479,6 +1611,18 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)
     }
   }
 

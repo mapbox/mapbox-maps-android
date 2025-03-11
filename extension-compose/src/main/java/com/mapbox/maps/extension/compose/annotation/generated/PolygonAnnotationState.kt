@@ -23,6 +23,8 @@ public class PolygonAnnotationState private constructor(
   initialFillOutlineColor: Color?,
   initialFillPattern: String?,
   initialFillZOffset: Double?,
+  initialFillColorUseTheme: String?,
+  initialFillOutlineColorUseTheme: String?,
   initialPolygonAnnotationInteractionsState: PolygonAnnotationInteractionsState,
 ) {
 
@@ -32,6 +34,8 @@ public class PolygonAnnotationState private constructor(
     initialFillOutlineColor = null,
     initialFillPattern = null,
     initialFillZOffset = null,
+    initialFillColorUseTheme = null,
+    initialFillOutlineColorUseTheme = null,
     initialPolygonAnnotationInteractionsState = PolygonAnnotationInteractionsState(),
 )
 
@@ -60,6 +64,16 @@ public class PolygonAnnotationState private constructor(
    */
   @MapboxExperimental
   public var fillZOffset: Double? by mutableStateOf(initialFillZOffset)
+  /**
+   * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var fillColorUseTheme: String? by mutableStateOf(initialFillColorUseTheme)
+  /**
+   * This property defines whether the `fillOutlineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var fillOutlineColorUseTheme: String? by mutableStateOf(initialFillOutlineColorUseTheme)
 
   @Composable
   private fun UpdateFillColor(
@@ -111,6 +125,26 @@ public class PolygonAnnotationState private constructor(
       }
     )
   }
+  @Composable
+  private fun UpdateFillColorUseTheme(
+    annotationNode: PolygonAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.fillColorUseTheme = fillColorUseTheme
+      }
+    )
+  }
+  @Composable
+  private fun UpdateFillOutlineColorUseTheme(
+    annotationNode: PolygonAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.fillOutlineColorUseTheme = fillOutlineColorUseTheme
+      }
+    )
+  }
 
   @Composable
   internal fun UpdateProperties(
@@ -121,6 +155,8 @@ public class PolygonAnnotationState private constructor(
     UpdateFillOutlineColor(annotationNode)
     UpdateFillPattern(annotationNode)
     UpdateFillZOffset(annotationNode)
+    UpdateFillColorUseTheme(annotationNode)
+    UpdateFillOutlineColorUseTheme(annotationNode)
   }
 }
 

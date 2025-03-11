@@ -186,6 +186,61 @@ class HillshadeLayerTest {
   // Expression Tests
 
   @Test
+  fun hillshadeAccentColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.hillshadeAccentColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "hillshade-accent-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun hillshadeAccentColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeAccentColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-accent-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeAccentColorUseThemeAsExpressionGetNull() {
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.hillshadeAccentColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "hillshade-accent-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeAccentColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeAccentColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-accent-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeAccentColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeAccentColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.hillshadeAccentColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-accent-color-use-theme") }
+  }
+
+  @Test
   fun hillshadeAccentColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -580,6 +635,61 @@ class HillshadeLayerTest {
   // Expression Tests
 
   @Test
+  fun hillshadeHighlightColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.hillshadeHighlightColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "hillshade-highlight-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeHighlightColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-highlight-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeAsExpressionGetNull() {
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.hillshadeHighlightColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "hillshade-highlight-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeHighlightColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-highlight-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeHighlightColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeHighlightColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.hillshadeHighlightColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-highlight-color-use-theme") }
+  }
+
+  @Test
   fun hillshadeHighlightColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -893,6 +1003,61 @@ class HillshadeLayerTest {
     verify { style.getStyleLayerProperty("id", "hillshade-shadow-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun hillshadeShadowColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.hillshadeShadowColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "hillshade-shadow-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun hillshadeShadowColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeShadowColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-shadow-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeShadowColorUseThemeAsExpressionGetNull() {
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.hillshadeShadowColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "hillshade-shadow-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeShadowColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeShadowColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-shadow-color-use-theme") }
+  }
+
+  @Test
+  fun hillshadeShadowColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = hillshadeLayer("id", "source") {
+      hillshadeShadowColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.hillshadeShadowColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-shadow-color-use-theme") }
+  }
 
   @Test
   fun hillshadeShadowColorAsExpressionSet() {

@@ -119,6 +119,61 @@ class BackgroundLayerTest {
   // Expression Tests
 
   @Test
+  fun backgroundColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    layer.backgroundColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "background-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun backgroundColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.backgroundColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "background-color-use-theme") }
+  }
+
+  @Test
+  fun backgroundColorUseThemeAsExpressionGetNull() {
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.backgroundColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "background-color-use-theme") }
+  }
+
+  @Test
+  fun backgroundColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.backgroundColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "background-color-use-theme") }
+  }
+
+  @Test
+  fun backgroundColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = backgroundLayer("id") {
+      backgroundColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.backgroundColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "background-color-use-theme") }
+  }
+
+  @Test
   fun backgroundColorAsExpressionSet() {
     val expression = sum {
       literal(2)

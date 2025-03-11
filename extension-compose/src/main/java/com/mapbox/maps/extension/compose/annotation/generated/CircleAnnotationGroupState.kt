@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment
 import com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale
 import com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor
@@ -33,6 +34,8 @@ public class CircleAnnotationGroupState private constructor(
   initialCircleStrokeWidth: Double?,
   initialCircleTranslate: List<Double>?,
   initialCircleTranslateAnchor: CircleTranslateAnchor?,
+  initialCircleColorUseTheme: String?,
+  initialCircleStrokeColorUseTheme: String?,
   initialCircleAnnotationGroupInteractionsState: CircleAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
@@ -49,6 +52,8 @@ public class CircleAnnotationGroupState private constructor(
     initialCircleStrokeWidth = null,
     initialCircleTranslate = null,
     initialCircleTranslateAnchor = null,
+    initialCircleColorUseTheme = null,
+    initialCircleStrokeColorUseTheme = null,
     initialCircleAnnotationGroupInteractionsState = CircleAnnotationGroupInteractionsState(),
   )
 
@@ -108,6 +113,16 @@ public class CircleAnnotationGroupState private constructor(
    * Controls the frame of reference for `circle-translate`. Default value: "map".
    */
   public var circleTranslateAnchor: CircleTranslateAnchor? by mutableStateOf(initialCircleTranslateAnchor)
+  /**
+   * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var circleColorUseTheme: String? by mutableStateOf(initialCircleColorUseTheme)
+  /**
+   * This property defines whether the `circleStrokeColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var circleStrokeColorUseTheme: String? by mutableStateOf(initialCircleStrokeColorUseTheme)
 
   @Composable
   private fun UpdateCircleSortKey(annotationManager: CircleAnnotationManager) {
@@ -161,6 +176,16 @@ public class CircleAnnotationGroupState private constructor(
   private fun UpdateCircleTranslateAnchor(annotationManager: CircleAnnotationManager) {
     annotationManager.circleTranslateAnchor = circleTranslateAnchor
   }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateCircleColorUseTheme(annotationManager: CircleAnnotationManager) {
+    annotationManager.circleColorUseTheme = circleColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateCircleStrokeColorUseTheme(annotationManager: CircleAnnotationManager) {
+    annotationManager.circleStrokeColorUseTheme = circleStrokeColorUseTheme
+  }
 
   @Composable
   internal fun UpdateProperties(annotationManager: CircleAnnotationManager) {
@@ -177,6 +202,8 @@ public class CircleAnnotationGroupState private constructor(
     UpdateCircleStrokeWidth(annotationManager)
     UpdateCircleTranslate(annotationManager)
     UpdateCircleTranslateAnchor(annotationManager)
+    UpdateCircleColorUseTheme(annotationManager)
+    UpdateCircleStrokeColorUseTheme(annotationManager)
   }
 }
 

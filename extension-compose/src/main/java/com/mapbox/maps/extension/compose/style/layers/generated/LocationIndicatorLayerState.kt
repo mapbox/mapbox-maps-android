@@ -26,9 +26,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  */
 @Stable
 public class LocationIndicatorLayerState private constructor(
-  initialBearingImage: ImageValue,
-  initialShadowImage: ImageValue,
-  initialTopImage: ImageValue,
   initialAccuracyRadius: DoubleValue,
   initialAccuracyRadiusTransition: Transition,
   initialAccuracyRadiusBorderColor: ColorValue,
@@ -39,6 +36,7 @@ public class LocationIndicatorLayerState private constructor(
   initialAccuracyRadiusColorTransition: Transition,
   initialBearing: DoubleValue,
   initialBearingTransition: Transition,
+  initialBearingImage: ImageValue,
   initialBearingImageSize: DoubleValue,
   initialBearingImageSizeTransition: Transition,
   initialEmphasisCircleColor: ColorValue,
@@ -54,8 +52,10 @@ public class LocationIndicatorLayerState private constructor(
   initialLocationIndicatorOpacity: DoubleValue,
   initialLocationIndicatorOpacityTransition: Transition,
   initialPerspectiveCompensation: DoubleValue,
+  initialShadowImage: ImageValue,
   initialShadowImageSize: DoubleValue,
   initialShadowImageSizeTransition: Transition,
+  initialTopImage: ImageValue,
   initialTopImageSize: DoubleValue,
   initialTopImageSizeTransition: Transition,
   initialVisibility: VisibilityValue,
@@ -68,9 +68,6 @@ public class LocationIndicatorLayerState private constructor(
    * Construct an default [LocationIndicatorLayerState].
    */
   public constructor() : this(
-    initialBearingImage = ImageValue.INITIAL,
-    initialShadowImage = ImageValue.INITIAL,
-    initialTopImage = ImageValue.INITIAL,
     initialAccuracyRadius = DoubleValue.INITIAL,
     initialAccuracyRadiusTransition = Transition.INITIAL,
     initialAccuracyRadiusBorderColor = ColorValue.INITIAL,
@@ -81,6 +78,7 @@ public class LocationIndicatorLayerState private constructor(
     initialAccuracyRadiusColorTransition = Transition.INITIAL,
     initialBearing = DoubleValue.INITIAL,
     initialBearingTransition = Transition.INITIAL,
+    initialBearingImage = ImageValue.INITIAL,
     initialBearingImageSize = DoubleValue.INITIAL,
     initialBearingImageSizeTransition = Transition.INITIAL,
     initialEmphasisCircleColor = ColorValue.INITIAL,
@@ -96,8 +94,10 @@ public class LocationIndicatorLayerState private constructor(
     initialLocationIndicatorOpacity = DoubleValue.INITIAL,
     initialLocationIndicatorOpacityTransition = Transition.INITIAL,
     initialPerspectiveCompensation = DoubleValue.INITIAL,
+    initialShadowImage = ImageValue.INITIAL,
     initialShadowImageSize = DoubleValue.INITIAL,
     initialShadowImageSizeTransition = Transition.INITIAL,
+    initialTopImage = ImageValue.INITIAL,
     initialTopImageSize = DoubleValue.INITIAL,
     initialTopImageSizeTransition = Transition.INITIAL,
     initialVisibility = VisibilityValue.INITIAL,
@@ -107,18 +107,6 @@ public class LocationIndicatorLayerState private constructor(
     initialFilter = Filter.INITIAL,
   )
 
-  /**
-   *  Name of image in sprite to use as the middle of the location indicator.
-   */
-  public var bearingImage: ImageValue by mutableStateOf(initialBearingImage)
-  /**
-   *  Name of image in sprite to use as the background of the location indicator.
-   */
-  public var shadowImage: ImageValue by mutableStateOf(initialShadowImage)
-  /**
-   *  Name of image in sprite to use as the top of the location indicator.
-   */
-  public var topImage: ImageValue by mutableStateOf(initialTopImage)
   /**
    *  The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    */
@@ -161,6 +149,10 @@ public class LocationIndicatorLayerState private constructor(
    *  Defines the transition of [bearing].
    */
   public var bearingTransition: Transition by mutableStateOf(initialBearingTransition)
+  /**
+   *  Name of image in sprite to use as the middle of the location indicator.
+   */
+  public var bearingImage: ImageValue by mutableStateOf(initialBearingImage)
   /**
    *  The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
    */
@@ -223,6 +215,10 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var perspectiveCompensation: DoubleValue by mutableStateOf(initialPerspectiveCompensation)
   /**
+   *  Name of image in sprite to use as the background of the location indicator.
+   */
+  public var shadowImage: ImageValue by mutableStateOf(initialShadowImage)
+  /**
    *  The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    */
   public var shadowImageSize: DoubleValue by mutableStateOf(initialShadowImageSize)
@@ -230,6 +226,10 @@ public class LocationIndicatorLayerState private constructor(
    *  Defines the transition of [shadowImageSize].
    */
   public var shadowImageSizeTransition: Transition by mutableStateOf(initialShadowImageSizeTransition)
+  /**
+   *  Name of image in sprite to use as the top of the location indicator.
+   */
+  public var topImage: ImageValue by mutableStateOf(initialTopImage)
   /**
    *  The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
    */
@@ -259,33 +259,6 @@ public class LocationIndicatorLayerState private constructor(
    */
   public var filter: Filter by mutableStateOf(initialFilter)
 
-  @Composable
-  private fun UpdateBearingImage(layerNode: LayerNode) {
-    if (bearingImage.notInitial) {
-      bearingImage.styleImage?.let {
-        layerNode.addImage(it)
-      }
-      layerNode.setProperty("bearing-image", bearingImage.value)
-    }
-  }
-  @Composable
-  private fun UpdateShadowImage(layerNode: LayerNode) {
-    if (shadowImage.notInitial) {
-      shadowImage.styleImage?.let {
-        layerNode.addImage(it)
-      }
-      layerNode.setProperty("shadow-image", shadowImage.value)
-    }
-  }
-  @Composable
-  private fun UpdateTopImage(layerNode: LayerNode) {
-    if (topImage.notInitial) {
-      topImage.styleImage?.let {
-        layerNode.addImage(it)
-      }
-      layerNode.setProperty("top-image", topImage.value)
-    }
-  }
   @Composable
   private fun UpdateAccuracyRadius(layerNode: LayerNode) {
     if (accuracyRadius.notInitial) {
@@ -346,6 +319,15 @@ public class LocationIndicatorLayerState private constructor(
   private fun UpdateBearingTransition(layerNode: LayerNode) {
     if (bearingTransition.notInitial) {
       layerNode.setProperty("bearing-transition", bearingTransition.value)
+    }
+  }
+  @Composable
+  private fun UpdateBearingImage(layerNode: LayerNode) {
+    if (bearingImage.notInitial) {
+      bearingImage.styleImage?.let {
+        layerNode.addImage(it)
+      }
+      layerNode.setProperty("bearing-image", bearingImage.value)
     }
   }
   @Composable
@@ -440,6 +422,15 @@ public class LocationIndicatorLayerState private constructor(
     }
   }
   @Composable
+  private fun UpdateShadowImage(layerNode: LayerNode) {
+    if (shadowImage.notInitial) {
+      shadowImage.styleImage?.let {
+        layerNode.addImage(it)
+      }
+      layerNode.setProperty("shadow-image", shadowImage.value)
+    }
+  }
+  @Composable
   private fun UpdateShadowImageSize(layerNode: LayerNode) {
     if (shadowImageSize.notInitial) {
       layerNode.setProperty("shadow-image-size", shadowImageSize.value)
@@ -449,6 +440,15 @@ public class LocationIndicatorLayerState private constructor(
   private fun UpdateShadowImageSizeTransition(layerNode: LayerNode) {
     if (shadowImageSizeTransition.notInitial) {
       layerNode.setProperty("shadow-image-size-transition", shadowImageSizeTransition.value)
+    }
+  }
+  @Composable
+  private fun UpdateTopImage(layerNode: LayerNode) {
+    if (topImage.notInitial) {
+      topImage.styleImage?.let {
+        layerNode.addImage(it)
+      }
+      layerNode.setProperty("top-image", topImage.value)
     }
   }
   @Composable
@@ -496,9 +496,6 @@ public class LocationIndicatorLayerState private constructor(
 
   @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
-    UpdateBearingImage(layerNode)
-    UpdateShadowImage(layerNode)
-    UpdateTopImage(layerNode)
     UpdateAccuracyRadius(layerNode)
     UpdateAccuracyRadiusTransition(layerNode)
     UpdateAccuracyRadiusBorderColor(layerNode)
@@ -509,6 +506,7 @@ public class LocationIndicatorLayerState private constructor(
     UpdateAccuracyRadiusColorTransition(layerNode)
     UpdateBearing(layerNode)
     UpdateBearingTransition(layerNode)
+    UpdateBearingImage(layerNode)
     UpdateBearingImageSize(layerNode)
     UpdateBearingImageSizeTransition(layerNode)
     UpdateEmphasisCircleColor(layerNode)
@@ -524,8 +522,10 @@ public class LocationIndicatorLayerState private constructor(
     UpdateLocationIndicatorOpacity(layerNode)
     UpdateLocationIndicatorOpacityTransition(layerNode)
     UpdatePerspectiveCompensation(layerNode)
+    UpdateShadowImage(layerNode)
     UpdateShadowImageSize(layerNode)
     UpdateShadowImageSizeTransition(layerNode)
+    UpdateTopImage(layerNode)
     UpdateTopImageSize(layerNode)
     UpdateTopImageSizeTransition(layerNode)
     UpdateVisibility(layerNode)

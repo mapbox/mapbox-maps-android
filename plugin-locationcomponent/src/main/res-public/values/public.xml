@@ -102,5 +102,9 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DNodeOverrides" type="attr" />
     <!-- Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground". -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelElevationReference" type="attr" />
+    <!-- This property defines whether the `modelColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style. Default value: "default". -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorUseTheme" type="attr" />
+    <!-- This property defines whether the `modelColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorUseThemeExpression" type="attr" />
 </resources>
 <!-- End of generated file. -->

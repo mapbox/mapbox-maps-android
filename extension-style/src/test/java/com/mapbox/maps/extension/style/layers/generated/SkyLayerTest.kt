@@ -149,6 +149,61 @@ class SkyLayerTest {
   // Expression Tests
 
   @Test
+  fun skyAtmosphereColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    layer.skyAtmosphereColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "sky-atmosphere-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun skyAtmosphereColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.skyAtmosphereColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-color-use-theme") }
+  }
+
+  @Test
+  fun skyAtmosphereColorUseThemeAsExpressionGetNull() {
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.skyAtmosphereColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-color-use-theme") }
+  }
+
+  @Test
+  fun skyAtmosphereColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.skyAtmosphereColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-color-use-theme") }
+  }
+
+  @Test
+  fun skyAtmosphereColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = skyLayer("id") {
+      skyAtmosphereColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.skyAtmosphereColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-color-use-theme") }
+  }
+
+  @Test
   fun skyAtmosphereColorAsExpressionSet() {
     val expression = sum {
       literal(2)
@@ -287,6 +342,61 @@ class SkyLayerTest {
     verify { style.getStyleLayerProperty("id", "sky-atmosphere-halo-color-use-theme") }
   }
   // Expression Tests
+
+  @Test
+  fun skyAtmosphereHaloColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    layer.skyAtmosphereHaloColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "sky-atmosphere-halo-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun skyAtmosphereHaloColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.skyAtmosphereHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-halo-color-use-theme") }
+  }
+
+  @Test
+  fun skyAtmosphereHaloColorUseThemeAsExpressionGetNull() {
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.skyAtmosphereHaloColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-halo-color-use-theme") }
+  }
+
+  @Test
+  fun skyAtmosphereHaloColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = skyLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.skyAtmosphereHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-halo-color-use-theme") }
+  }
+
+  @Test
+  fun skyAtmosphereHaloColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = skyLayer("id") {
+      skyAtmosphereHaloColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.skyAtmosphereHaloColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "sky-atmosphere-halo-color-use-theme") }
+  }
 
   @Test
   fun skyAtmosphereHaloColorAsExpressionSet() {

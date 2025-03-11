@@ -227,6 +227,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public fun <init> ()V
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getCircleColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;
@@ -234,6 +235,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun getCircleRadius ()Ljava/lang/Double;
 	public final fun getCircleSortKey ()Ljava/lang/Double;
 	public final fun getCircleStrokeColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getCircleStrokeColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public final fun getCircleTranslate ()Ljava/util/List;
@@ -241,6 +243,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCirclePitchAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;)V
@@ -248,6 +251,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun setCircleRadius (Ljava/lang/Double;)V
 	public final fun setCircleSortKey (Ljava/lang/Double;)V
 	public final fun setCircleStrokeColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setCircleStrokeColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleStrokeOpacity (Ljava/lang/Double;)V
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
 	public final fun setCircleTranslate (Ljava/util/List;)V
@@ -286,17 +290,21 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public fun <init> ()V
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getCircleColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCircleRadius ()Ljava/lang/Double;
 	public final fun getCircleStrokeColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getCircleStrokeColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCircleRadius (Ljava/lang/Double;)V
 	public final fun setCircleStrokeColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setCircleStrokeColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleStrokeOpacity (Ljava/lang/Double;)V
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState;)V
@@ -332,9 +340,11 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getIconColorSaturation ()Ljava/lang/Double;
+	public final fun getIconColorUseTheme ()Ljava/lang/String;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconIgnorePlacement ()Ljava/lang/Boolean;
 	public final fun getIconImage ()Lcom/mapbox/maps/extension/compose/annotation/IconImage;
@@ -366,11 +376,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getTextAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getTextColorUseTheme ()Ljava/lang/String;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextFont ()Ljava/util/List;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getTextHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextIgnorePlacement ()Ljava/lang/Boolean;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
@@ -399,9 +411,11 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setIconColorSaturation (Ljava/lang/Double;)V
+	public final fun setIconColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconIgnorePlacement (Ljava/lang/Boolean;)V
 	public final fun setIconImage (Lcom/mapbox/maps/extension/compose/annotation/IconImage;)V
@@ -433,11 +447,13 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setTextAllowOverlap (Ljava/lang/Boolean;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setTextColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextFont (Ljava/util/List;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setTextHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextIgnorePlacement (Ljava/lang/Boolean;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
@@ -497,9 +513,11 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public fun <init> ()V
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getIconColorUseTheme ()Ljava/lang/String;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Lcom/mapbox/maps/extension/compose/annotation/IconImage;
 	public final fun getIconImageCrossFade ()Ljava/lang/Double;
@@ -514,10 +532,12 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getTextColorUseTheme ()Ljava/lang/String;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getTextHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
 	public final fun getTextLetterSpacing ()Ljava/lang/Double;
@@ -532,9 +552,11 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getTextTransform ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTransform;
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setIconColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Lcom/mapbox/maps/extension/compose/annotation/IconImage;)V
 	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
@@ -549,10 +571,12 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setTextColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setTextHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
 	public final fun setTextLetterSpacing (Ljava/lang/Double;)V
@@ -593,10 +617,12 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public fun <init> ()V
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
 	public final fun getFillColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillColorUseTheme ()Ljava/lang/String;
 	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
@@ -605,10 +631,12 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)V
 	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
@@ -647,14 +675,18 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationState {
 	public fun <init> ()V
 	public final fun getFillColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillColorUseTheme ()Ljava/lang/String;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;)V
@@ -687,15 +719,18 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
 	public final fun getLineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineCrossSlope ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
 	public final fun getLineElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;
 	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
+	public final fun getLineGradientUseTheme ()Ljava/lang/String;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineMiterLimit ()Ljava/lang/Double;
 	public final fun getLineOcclusionOpacity ()Ljava/lang/Double;
@@ -707,6 +742,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineTranslate ()Ljava/util/List;
 	public final fun getLineTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;
 	public final fun getLineTrimColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getLineTrimColorUseTheme ()Ljava/lang/String;
 	public final fun getLineTrimFadeRange ()Ljava/util/List;
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun getLineWidth ()Ljava/lang/Double;
@@ -715,15 +751,18 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;)V
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineCrossSlope (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
 	public final fun setLineDepthOcclusionFactor (Ljava/lang/Double;)V
 	public final fun setLineElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;)V
 	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
+	public final fun setLineGradientUseTheme (Ljava/lang/String;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineMiterLimit (Ljava/lang/Double;)V
 	public final fun setLineOcclusionOpacity (Ljava/lang/Double;)V
@@ -735,6 +774,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineTranslate (Ljava/util/List;)V
 	public final fun setLineTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;)V
 	public final fun setLineTrimColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setLineTrimColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineTrimFadeRange (Ljava/util/List;)V
 	public final fun setLineTrimOffset (Ljava/util/List;)V
 	public final fun setLineWidth (Ljava/lang/Double;)V
@@ -774,8 +814,10 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineOffset ()Ljava/lang/Double;
@@ -786,8 +828,10 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState;)V
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineOffset (Ljava/lang/Double;)V
@@ -1277,8 +1321,10 @@ public final class com/mapbox/maps/extension/compose/style/imports/StyleImportSt
 	public fun <init> ()V
 	public final fun getImportConfigs ()Lcom/mapbox/maps/extension/compose/style/ImportConfigs;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;
+	public final fun getStyleColorTheme ()Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;
 	public final fun setImportConfigs (Lcom/mapbox/maps/extension/compose/style/ImportConfigs;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/imports/StyleImportInteractionsState;)V
+	public final fun setStyleColorTheme (Lcom/mapbox/maps/extension/compose/style/StyleColorTheme;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/imports/StyleImportStateKt {

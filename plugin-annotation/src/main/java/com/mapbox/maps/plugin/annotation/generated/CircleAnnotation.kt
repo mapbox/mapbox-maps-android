@@ -381,6 +381,72 @@ class CircleAnnotation(
     }
 
   /**
+   * The circleColorUseTheme property
+   *
+   * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var circleColorUseTheme: String?
+    /**
+     * Get the circleColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the circleColorUseTheme property
+     *
+     * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)
+      }
+    }
+
+  /**
+   * The circleStrokeColorUseTheme property
+   *
+   * This property defines whether the `circleStrokeColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var circleStrokeColorUseTheme: String?
+    /**
+     * Get the circleStrokeColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeColorUseTheme property
+     *
+     * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -426,6 +492,12 @@ class CircleAnnotation(
     }
     jsonObject.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+    }
+    jsonObject.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME)
+    }
+    jsonObject.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME)
     }
   }
 

@@ -372,6 +372,41 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
   }
 
   /**
+   * Сolor theme override for [rasterParticleColor].
+   */
+  @MapboxExperimental
+  val rasterParticleColorUseThemeAsExpression: Expression?
+    /**
+     * Get the RasterParticleColorUseTheme property
+     *
+     * Use static method [RasterParticleLayer.defaultRasterParticleColorUseTheme] to get the default property.
+     *
+     * @return current RasterParticleColorUseTheme property as Expression
+     */
+    get() {
+      getPropertyValue<Expression>("raster-particle-color-use-theme")?.let {
+        return it
+      }
+      rasterParticleColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the RasterParticleColorUseTheme as Expression
+   *
+   * Use static method [RasterParticleLayer.defaultRasterParticleColorUseTheme] to get the default property.
+   *
+   * @param rasterParticleColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun rasterParticleColorUseTheme(rasterParticleColorUseTheme: Expression): RasterParticleLayer = apply {
+    val propertyValue = PropertyValue("raster-particle-color-use-theme", rasterParticleColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
    */
   @MapboxExperimental
@@ -917,6 +952,22 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [rasterParticleColor].
+     */
+    @MapboxExperimental
+    val defaultRasterParticleColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the RasterParticleColor property as Expression
+       *
+       * @return Expression
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("raster-particle", "raster-particle-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultRasterParticleColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
      */
     @MapboxExperimental
@@ -1244,6 +1295,14 @@ interface RasterParticleLayerDsl {
    */
   @MapboxExperimental
   fun rasterParticleColorUseTheme(rasterParticleColorUseTheme: String): RasterParticleLayer
+
+  /**
+   * Set the rasterParticleColorUseTheme as Expression for [rasterParticleColor].
+   *
+   * @param rasterParticleColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun rasterParticleColorUseTheme(rasterParticleColorUseTheme: Expression): RasterParticleLayer
 
   /**
    * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.

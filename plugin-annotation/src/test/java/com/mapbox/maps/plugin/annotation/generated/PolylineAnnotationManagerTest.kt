@@ -114,6 +114,10 @@ class PolylineAnnotationManagerTest {
     every { dragLayer.linePattern(any<Expression>()) } answers { dragLayer }
     every { layer.lineWidth(any<Expression>()) } answers { layer }
     every { dragLayer.lineWidth(any<Expression>()) } answers { dragLayer }
+    every { layer.lineBorderColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.lineBorderColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.lineColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.lineColorUseTheme(any<Expression>()) } answers { dragLayer }
   }
 
   @After
@@ -298,6 +302,16 @@ class PolylineAnnotationManagerTest {
     assertEquals(1.0, annotation.lineWidth)
     annotation.lineWidth = null
     assertNull(annotation.lineWidth)
+
+    annotation.lineBorderColorUseTheme = "default"
+    assertEquals("default", annotation.lineBorderColorUseTheme)
+    annotation.lineBorderColorUseTheme = null
+    assertNull(annotation.lineBorderColorUseTheme)
+
+    annotation.lineColorUseTheme = "default"
+    assertEquals("default", annotation.lineColorUseTheme)
+    annotation.lineColorUseTheme = null
+    assertNull(annotation.lineColorUseTheme)
   }
 
   @Test
@@ -1048,5 +1062,63 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+  }
+
+  @Test
+  fun testLineBorderColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineBorderColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testLineBorderColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineBorderColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.lineBorderColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testLineColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testLineColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.lineColorUseTheme(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME)) }
   }
 }

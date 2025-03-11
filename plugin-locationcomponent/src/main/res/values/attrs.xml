@@ -113,6 +113,10 @@
           <!-- Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them. -->
           <enum name="ground" value="1"/>
         </attr>
+        <!-- This property defines whether the `modelColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style. Default value: "default". -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorUseTheme" format="string"/>
+        <!-- This property defines whether the `modelColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelColorUseThemeExpression" format="string"/>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

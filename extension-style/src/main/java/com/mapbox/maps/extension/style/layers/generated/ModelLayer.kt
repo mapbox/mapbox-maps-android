@@ -659,6 +659,41 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Сolor theme override for [modelColor].
+   */
+  @MapboxExperimental
+  val modelColorUseThemeAsExpression: Expression?
+    /**
+     * Get the ModelColorUseTheme property
+     *
+     * Use static method [ModelLayer.defaultModelColorUseTheme] to get the default property.
+     *
+     * @return current ModelColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("model-color-use-theme")?.let {
+        return it
+      }
+      modelColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the ModelColorUseTheme as Expression
+   *
+   * Use static method [ModelLayer.defaultModelColorUseTheme] to get the default property.
+   *
+   * @param modelColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun modelColorUseTheme(modelColorUseTheme: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-color-use-theme", modelColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
@@ -2132,6 +2167,22 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [modelColor].
+     */
+    @MapboxExperimental
+    val defaultModelColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the ModelColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("model", "model-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultModelColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
@@ -2936,6 +2987,14 @@ interface ModelLayerDsl {
    */
   @MapboxExperimental
   fun modelColorUseTheme(modelColorUseTheme: String): ModelLayer
+
+  /**
+   * Set the modelColorUseTheme as Expression for [modelColor].
+   *
+   * @param modelColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun modelColorUseTheme(modelColorUseTheme: Expression): ModelLayer
 
   /**
    * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]

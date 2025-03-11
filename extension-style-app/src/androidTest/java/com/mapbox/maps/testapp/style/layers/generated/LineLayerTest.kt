@@ -383,6 +383,28 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineBorderColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {
+      lineBorderColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.lineBorderColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = lineLayer("id", "source") {
+      lineBorderColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.lineBorderColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun lineBorderColorAsColorIntTest() {
     val layer = lineLayer("id", "source") {
       lineBorderColor(Color.CYAN)
@@ -518,6 +540,28 @@ class LineLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.lineColorAsExpression.toString())
     assertEquals(null, layer.lineColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {
+      lineColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.lineColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = lineLayer("id", "source") {
+      lineColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.lineColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -795,6 +839,28 @@ class LineLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(testValue.toString(), layer.lineGradient?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineGradientUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {
+      lineGradientUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.lineGradientUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineGradientUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = lineLayer("id", "source") {
+      lineGradientUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.lineGradientUseThemeAsExpression.toString())
   }
 
   @Test
@@ -1121,6 +1187,28 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineTrimColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {
+      lineTrimColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.lineTrimColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = lineLayer("id", "source") {
+      lineTrimColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.lineTrimColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun lineTrimColorAsColorIntTest() {
     val layer = lineLayer("id", "source") {
       lineTrimColor(Color.CYAN)
@@ -1336,6 +1424,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineBorderColorAsExpression should not be null", LineLayer.defaultLineBorderColorAsExpression)
     assertNotNull("defaultLineBorderColorAsColorInt should not be null", LineLayer.defaultLineBorderColorAsColorInt)
     assertNotNull("defaultLineBorderColorUseTheme should not be null", LineLayer.defaultLineBorderColorUseTheme)
+    assertNotNull("defaultLineBorderColorUseThemeAsExpression should not be null", LineLayer.defaultLineBorderColorUseThemeAsExpression)
     assertNotNull("defaultLineBorderColorTransition should not be null", LineLayer.defaultLineBorderColorTransition)
     assertNotNull("defaultLineBorderWidth should not be null", LineLayer.defaultLineBorderWidth)
     assertNotNull("defaultLineBorderWidthAsExpression should not be null", LineLayer.defaultLineBorderWidthAsExpression)
@@ -1344,6 +1433,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineColorAsExpression should not be null", LineLayer.defaultLineColorAsExpression)
     assertNotNull("defaultLineColorAsColorInt should not be null", LineLayer.defaultLineColorAsColorInt)
     assertNotNull("defaultLineColorUseTheme should not be null", LineLayer.defaultLineColorUseTheme)
+    assertNotNull("defaultLineColorUseThemeAsExpression should not be null", LineLayer.defaultLineColorUseThemeAsExpression)
     assertNotNull("defaultLineColorTransition should not be null", LineLayer.defaultLineColorTransition)
     assertNotNull("defaultLineDasharray should not be null", LineLayer.defaultLineDasharray)
     assertNotNull("defaultLineDasharrayAsExpression should not be null", LineLayer.defaultLineDasharrayAsExpression)
@@ -1357,6 +1447,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineGapWidthAsExpression should not be null", LineLayer.defaultLineGapWidthAsExpression)
     assertNotNull("defaultLineGapWidthTransition should not be null", LineLayer.defaultLineGapWidthTransition)
     assertNotNull("defaultLineGradientUseTheme should not be null", LineLayer.defaultLineGradientUseTheme)
+    assertNotNull("defaultLineGradientUseThemeAsExpression should not be null", LineLayer.defaultLineGradientUseThemeAsExpression)
     assertNotNull("defaultLineOcclusionOpacity should not be null", LineLayer.defaultLineOcclusionOpacity)
     assertNotNull("defaultLineOcclusionOpacityAsExpression should not be null", LineLayer.defaultLineOcclusionOpacityAsExpression)
     assertNotNull("defaultLineOcclusionOpacityTransition should not be null", LineLayer.defaultLineOcclusionOpacityTransition)
@@ -1377,6 +1468,7 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineTrimColorAsExpression should not be null", LineLayer.defaultLineTrimColorAsExpression)
     assertNotNull("defaultLineTrimColorAsColorInt should not be null", LineLayer.defaultLineTrimColorAsColorInt)
     assertNotNull("defaultLineTrimColorUseTheme should not be null", LineLayer.defaultLineTrimColorUseTheme)
+    assertNotNull("defaultLineTrimColorUseThemeAsExpression should not be null", LineLayer.defaultLineTrimColorUseThemeAsExpression)
     assertNotNull("defaultLineTrimColorTransition should not be null", LineLayer.defaultLineTrimColorTransition)
     assertNotNull("defaultLineTrimFadeRange should not be null", LineLayer.defaultLineTrimFadeRange)
     assertNotNull("defaultLineTrimFadeRangeAsExpression should not be null", LineLayer.defaultLineTrimFadeRangeAsExpression)

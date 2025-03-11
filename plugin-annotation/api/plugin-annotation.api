@@ -78,11 +78,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotation 
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColorInt ()Ljava/lang/Integer;
 	public final fun getCircleColorString ()Ljava/lang/String;
+	public final fun getCircleColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCircleRadius ()Ljava/lang/Double;
 	public final fun getCircleSortKey ()Ljava/lang/Double;
 	public final fun getCircleStrokeColorInt ()Ljava/lang/Integer;
 	public final fun getCircleStrokeColorString ()Ljava/lang/String;
+	public final fun getCircleStrokeColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public synthetic fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Geometry;
@@ -92,11 +94,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotation 
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColorInt (Ljava/lang/Integer;)V
 	public final fun setCircleColorString (Ljava/lang/String;)V
+	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCircleRadius (Ljava/lang/Double;)V
 	public final fun setCircleSortKey (Ljava/lang/Double;)V
 	public final fun setCircleStrokeColorInt (Ljava/lang/Integer;)V
 	public final fun setCircleStrokeColorString (Ljava/lang/String;)V
+	public final fun setCircleStrokeColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleStrokeOpacity (Ljava/lang/Double;)V
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
 	public final fun setPoint (Lcom/mapbox/geojson/Point;)V
@@ -118,6 +122,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColorInt ()Ljava/lang/Integer;
 	public final fun getCircleColorString ()Ljava/lang/String;
+	public final fun getCircleColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;
@@ -126,6 +131,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun getCircleSortKey ()Ljava/lang/Double;
 	public final fun getCircleStrokeColorInt ()Ljava/lang/Integer;
 	public final fun getCircleStrokeColorString ()Ljava/lang/String;
+	public final fun getCircleStrokeColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public final fun getCircleTranslate ()Ljava/util/List;
@@ -139,6 +145,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColorInt (Ljava/lang/Integer;)V
 	public final fun setCircleColorString (Ljava/lang/String;)V
+	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCirclePitchAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;)V
@@ -147,6 +154,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun setCircleSortKey (Ljava/lang/Double;)V
 	public final fun setCircleStrokeColorInt (Ljava/lang/Integer;)V
 	public final fun setCircleStrokeColorString (Ljava/lang/String;)V
+	public final fun setCircleStrokeColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleStrokeOpacity (Ljava/lang/Double;)V
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
 	public final fun setCircleTranslate (Ljava/util/List;)V
@@ -169,10 +177,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationO
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions$Companion;
 	public static final field PROPERTY_CIRCLE_BLUR Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_COLOR Ljava/lang/String;
+	public static final field PROPERTY_CIRCLE_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_RADIUS Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_SORT_KEY Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_STROKE_COLOR Ljava/lang/String;
+	public static final field PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_STROKE_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_STROKE_WIDTH Ljava/lang/String;
 	public fun <init> ()V
@@ -180,10 +190,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationO
 	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotation;
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColor ()Ljava/lang/String;
+	public final fun getCircleColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCircleRadius ()Ljava/lang/Double;
 	public final fun getCircleSortKey ()Ljava/lang/Double;
 	public final fun getCircleStrokeColor ()Ljava/lang/String;
+	public final fun getCircleStrokeColorUseTheme ()Ljava/lang/String;
 	public final fun getCircleStrokeOpacity ()Ljava/lang/Double;
 	public final fun getCircleStrokeWidth ()Ljava/lang/Double;
 	public final fun getData ()Lcom/google/gson/JsonElement;
@@ -192,20 +204,24 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationO
 	public final fun getPoint ()Lcom/mapbox/geojson/Point;
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor (Ljava/lang/String;)V
+	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCircleRadius (Ljava/lang/Double;)V
 	public final fun setCircleSortKey (Ljava/lang/Double;)V
 	public final fun setCircleStrokeColor (Ljava/lang/String;)V
+	public final fun setCircleStrokeColorUseTheme (Ljava/lang/String;)V
 	public final fun setCircleStrokeOpacity (Ljava/lang/Double;)V
 	public final fun setCircleStrokeWidth (Ljava/lang/Double;)V
 	public final fun withCircleBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleColor (I)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
+	public final fun withCircleColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleRadius (D)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleSortKey (D)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleStrokeColor (I)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleStrokeColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
+	public final fun withCircleStrokeColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleStrokeOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withCircleStrokeWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
 	public final fun withData (Lcom/google/gson/JsonElement;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationOptions;
@@ -274,10 +290,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColorInt ()Ljava/lang/Integer;
 	public final fun getIconColorString ()Ljava/lang/String;
+	public final fun getIconColorUseTheme ()Ljava/lang/String;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColorInt ()Ljava/lang/Integer;
 	public final fun getIconHaloColorString ()Ljava/lang/String;
+	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Ljava/lang/String;
 	public final fun getIconImageBitmap ()Landroid/graphics/Bitmap;
@@ -297,11 +315,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColorInt ()Ljava/lang/Integer;
 	public final fun getTextColorString ()Ljava/lang/String;
+	public final fun getTextColorUseTheme ()Ljava/lang/String;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColorInt ()Ljava/lang/Integer;
 	public final fun getTextHaloColorString ()Ljava/lang/String;
+	public final fun getTextHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
 	public final fun getTextLetterSpacing ()Ljava/lang/Double;
@@ -318,10 +338,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColorInt (Ljava/lang/Integer;)V
 	public final fun setIconColorString (Ljava/lang/String;)V
+	public final fun setIconColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColorInt (Ljava/lang/Integer;)V
 	public final fun setIconHaloColorString (Ljava/lang/String;)V
+	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Ljava/lang/String;)V
 	public final fun setIconImageBitmap (Landroid/graphics/Bitmap;)V
@@ -339,11 +361,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColorInt (Ljava/lang/Integer;)V
 	public final fun setTextColorString (Ljava/lang/String;)V
+	public final fun setTextColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColorInt (Ljava/lang/Integer;)V
 	public final fun setTextHaloColorString (Ljava/lang/String;)V
+	public final fun setTextHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
 	public final fun setTextLetterSpacing (Ljava/lang/Double;)V
@@ -378,10 +402,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getIconColorInt ()Ljava/lang/Integer;
 	public final fun getIconColorSaturation ()Ljava/lang/Double;
 	public final fun getIconColorString ()Ljava/lang/String;
+	public final fun getIconColorUseTheme ()Ljava/lang/String;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColorInt ()Ljava/lang/Integer;
 	public final fun getIconHaloColorString ()Ljava/lang/String;
+	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconIgnorePlacement ()Ljava/lang/Boolean;
 	public final fun getIconImage ()Ljava/lang/String;
@@ -416,12 +442,14 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColorInt ()Ljava/lang/Integer;
 	public final fun getTextColorString ()Ljava/lang/String;
+	public final fun getTextColorUseTheme ()Ljava/lang/String;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextFont ()Ljava/util/List;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColorInt ()Ljava/lang/Integer;
 	public final fun getTextHaloColorString ()Ljava/lang/String;
+	public final fun getTextHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextIgnorePlacement ()Ljava/lang/Boolean;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
@@ -453,10 +481,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setIconColorInt (Ljava/lang/Integer;)V
 	public final fun setIconColorSaturation (Ljava/lang/Double;)V
 	public final fun setIconColorString (Ljava/lang/String;)V
+	public final fun setIconColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColorInt (Ljava/lang/Integer;)V
 	public final fun setIconHaloColorString (Ljava/lang/String;)V
+	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconIgnorePlacement (Ljava/lang/Boolean;)V
 	public final fun setIconImage (Ljava/lang/String;)V
@@ -491,12 +521,14 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColorInt (Ljava/lang/Integer;)V
 	public final fun setTextColorString (Ljava/lang/String;)V
+	public final fun setTextColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextFont (Ljava/util/List;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColorInt (Ljava/lang/Integer;)V
 	public final fun setTextHaloColorString (Ljava/lang/String;)V
+	public final fun setTextHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextIgnorePlacement (Ljava/lang/Boolean;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
@@ -537,9 +569,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions$Companion;
 	public static final field PROPERTY_ICON_ANCHOR Ljava/lang/String;
 	public static final field PROPERTY_ICON_COLOR Ljava/lang/String;
+	public static final field PROPERTY_ICON_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_ICON_EMISSIVE_STRENGTH Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_BLUR Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_COLOR Ljava/lang/String;
+	public static final field PROPERTY_ICON_HALO_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_ICON_IMAGE Ljava/lang/String;
 	public static final field PROPERTY_ICON_IMAGE_CROSS_FADE Ljava/lang/String;
@@ -554,10 +588,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field PROPERTY_SYMBOL_Z_OFFSET Ljava/lang/String;
 	public static final field PROPERTY_TEXT_ANCHOR Ljava/lang/String;
 	public static final field PROPERTY_TEXT_COLOR Ljava/lang/String;
+	public static final field PROPERTY_TEXT_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_TEXT_EMISSIVE_STRENGTH Ljava/lang/String;
 	public static final field PROPERTY_TEXT_FIELD Ljava/lang/String;
 	public static final field PROPERTY_TEXT_HALO_BLUR Ljava/lang/String;
 	public static final field PROPERTY_TEXT_HALO_COLOR Ljava/lang/String;
+	public static final field PROPERTY_TEXT_HALO_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_TEXT_HALO_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_TEXT_JUSTIFY Ljava/lang/String;
 	public static final field PROPERTY_TEXT_LETTER_SPACING Ljava/lang/String;
@@ -578,9 +614,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getGeometry ()Lcom/mapbox/geojson/Point;
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColor ()Ljava/lang/String;
+	public final fun getIconColorUseTheme ()Ljava/lang/String;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColor ()Ljava/lang/String;
+	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Ljava/lang/String;
 	public final fun getIconImageCrossFade ()Ljava/lang/Double;
@@ -596,10 +634,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getSymbolZOffset ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor ()Ljava/lang/String;
+	public final fun getTextColorUseTheme ()Ljava/lang/String;
 	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColor ()Ljava/lang/String;
+	public final fun getTextHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
 	public final fun getTextLetterSpacing ()Ljava/lang/Double;
@@ -614,9 +654,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getTextTransform ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTransform;
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColor (Ljava/lang/String;)V
+	public final fun setIconColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColor (Ljava/lang/String;)V
+	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Ljava/lang/String;)V
 	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
@@ -631,10 +673,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun setSymbolZOffset (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor (Ljava/lang/String;)V
+	public final fun setTextColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColor (Ljava/lang/String;)V
+	public final fun setTextHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
 	public final fun setTextLetterSpacing (Ljava/lang/Double;)V
@@ -653,10 +697,12 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun withIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconEmissiveStrength (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconImage (Landroid/graphics/Bitmap;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconImage (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
@@ -674,11 +720,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun withTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withTextColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextEmissiveStrength (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextField (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextHaloBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextHaloColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withTextHaloColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextHaloWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextLetterSpacing (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
@@ -703,9 +751,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Polygon;)V
 	public final fun getFillColorInt ()Ljava/lang/Integer;
 	public final fun getFillColorString ()Ljava/lang/String;
+	public final fun getFillColorUseTheme ()Ljava/lang/String;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColorInt ()Ljava/lang/Integer;
 	public final fun getFillOutlineColorString ()Ljava/lang/String;
+	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillZOffset ()Ljava/lang/Double;
@@ -715,9 +765,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public fun getType ()Lcom/mapbox/maps/plugin/annotation/AnnotationType;
 	public final fun setFillColorInt (Ljava/lang/Integer;)V
 	public final fun setFillColorString (Ljava/lang/String;)V
+	public final fun setFillColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColorInt (Ljava/lang/Integer;)V
 	public final fun setFillOutlineColorString (Ljava/lang/String;)V
+	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
@@ -738,11 +790,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
 	public final fun getFillColorInt ()Ljava/lang/Integer;
 	public final fun getFillColorString ()Ljava/lang/String;
+	public final fun getFillColorUseTheme ()Ljava/lang/String;
 	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColorInt ()Ljava/lang/Integer;
 	public final fun getFillOutlineColorString ()Ljava/lang/String;
+	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
@@ -753,11 +807,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillColorInt (Ljava/lang/Integer;)V
 	public final fun setFillColorString (Ljava/lang/String;)V
+	public final fun setFillColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)V
 	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColorInt (Ljava/lang/Integer;)V
 	public final fun setFillOutlineColorString (Ljava/lang/String;)V
+	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
@@ -780,8 +836,10 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions : com/mapbox/maps/plugin/annotation/AnnotationOptions {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions$Companion;
 	public static final field PROPERTY_FILL_COLOR Ljava/lang/String;
+	public static final field PROPERTY_FILL_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_FILL_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_FILL_OUTLINE_COLOR Ljava/lang/String;
+	public static final field PROPERTY_FILL_OUTLINE_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_FILL_PATTERN Ljava/lang/String;
 	public static final field PROPERTY_FILL_SORT_KEY Ljava/lang/String;
 	public static final field PROPERTY_FILL_Z_OFFSET Ljava/lang/String;
@@ -791,16 +849,20 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getData ()Lcom/google/gson/JsonElement;
 	public final fun getDraggable ()Z
 	public final fun getFillColor ()Ljava/lang/String;
+	public final fun getFillColorUseTheme ()Ljava/lang/String;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor ()Ljava/lang/String;
+	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getGeometry ()Lcom/mapbox/geojson/Polygon;
 	public final fun getPoints ()Ljava/util/List;
 	public final fun setFillColor (Ljava/lang/String;)V
+	public final fun setFillColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor (Ljava/lang/String;)V
+	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
@@ -808,9 +870,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun withDraggable (Z)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOutlineColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOutlineColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillOutlineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillPattern (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillSortKey (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillZOffset (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
@@ -829,9 +893,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColorInt ()Ljava/lang/Integer;
 	public final fun getLineBorderColorString ()Ljava/lang/String;
+	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColorInt ()Ljava/lang/Integer;
 	public final fun getLineColorString ()Ljava/lang/String;
+	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineOffset ()Ljava/lang/Double;
@@ -847,9 +913,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColorInt (Ljava/lang/Integer;)V
 	public final fun setLineBorderColorString (Ljava/lang/String;)V
+	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColorInt (Ljava/lang/Integer;)V
 	public final fun setLineColorString (Ljava/lang/String;)V
+	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineOffset (Ljava/lang/Double;)V
@@ -876,16 +944,19 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColorInt ()Ljava/lang/Integer;
 	public final fun getLineBorderColorString ()Ljava/lang/String;
+	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
 	public final fun getLineColorInt ()Ljava/lang/Integer;
 	public final fun getLineColorString ()Ljava/lang/String;
+	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineCrossSlope ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
 	public final fun getLineElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;
 	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
+	public final fun getLineGradientUseTheme ()Ljava/lang/String;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineMiterLimit ()Ljava/lang/Double;
 	public final fun getLineOcclusionOpacity ()Ljava/lang/Double;
@@ -899,6 +970,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineTrimColor ()Ljava/lang/String;
 	public final fun getLineTrimColorInt ()Ljava/lang/Integer;
 	public final fun getLineTrimColorString ()Ljava/lang/String;
+	public final fun getLineTrimColorUseTheme ()Ljava/lang/String;
 	public final fun getLineTrimFadeRange ()Ljava/util/List;
 	public final fun getLineTrimOffset ()Ljava/util/List;
 	public final fun getLineWidth ()Ljava/lang/Double;
@@ -909,16 +981,19 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColorInt (Ljava/lang/Integer;)V
 	public final fun setLineBorderColorString (Ljava/lang/String;)V
+	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineColorInt (Ljava/lang/Integer;)V
 	public final fun setLineColorString (Ljava/lang/String;)V
+	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineCrossSlope (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
 	public final fun setLineDepthOcclusionFactor (Ljava/lang/Double;)V
 	public final fun setLineElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;)V
 	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
+	public final fun setLineGradientUseTheme (Ljava/lang/String;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineMiterLimit (Ljava/lang/Double;)V
 	public final fun setLineOcclusionOpacity (Ljava/lang/Double;)V
@@ -932,6 +1007,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineTrimColor (Ljava/lang/String;)V
 	public final fun setLineTrimColorInt (Ljava/lang/Integer;)V
 	public final fun setLineTrimColorString (Ljava/lang/String;)V
+	public final fun setLineTrimColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineTrimFadeRange (Ljava/util/List;)V
 	public final fun setLineTrimOffset (Ljava/util/List;)V
 	public final fun setLineWidth (Ljava/lang/Double;)V
@@ -954,8 +1030,10 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions$Companion;
 	public static final field PROPERTY_LINE_BLUR Ljava/lang/String;
 	public static final field PROPERTY_LINE_BORDER_COLOR Ljava/lang/String;
+	public static final field PROPERTY_LINE_BORDER_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_LINE_BORDER_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_COLOR Ljava/lang/String;
+	public static final field PROPERTY_LINE_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_LINE_GAP_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_JOIN Ljava/lang/String;
 	public static final field PROPERTY_LINE_OFFSET Ljava/lang/String;
@@ -972,8 +1050,10 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getGeometry ()Lcom/mapbox/geojson/LineString;
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColor ()Ljava/lang/String;
+	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColor ()Ljava/lang/String;
+	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineOffset ()Ljava/lang/Double;
@@ -985,8 +1065,10 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getPoints ()Ljava/util/List;
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor (Ljava/lang/String;)V
+	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColor (Ljava/lang/String;)V
+	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineOffset (Ljava/lang/Double;)V
@@ -1001,9 +1083,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun withLineBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineBorderColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineBorderColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
+	public final fun withLineBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineBorderWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
+	public final fun withLineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineGapWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineOffset (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;

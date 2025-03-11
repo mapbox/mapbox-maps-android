@@ -1335,6 +1335,28 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun iconColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {
+      iconColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.iconColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = symbolLayer("id", "source") {
+      iconColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.iconColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun iconColorAsColorIntTest() {
     val layer = symbolLayer("id", "source") {
       iconColor(Color.CYAN)
@@ -1586,6 +1608,28 @@ class SymbolLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.iconHaloColorAsExpression.toString())
     assertEquals(null, layer.iconHaloColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconHaloColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {
+      iconHaloColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.iconHaloColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconHaloColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = symbolLayer("id", "source") {
+      iconHaloColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.iconHaloColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -2043,6 +2087,28 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun textColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {
+      textColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.textColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun textColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = symbolLayer("id", "source") {
+      textColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.textColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun textColorAsColorIntTest() {
     val layer = symbolLayer("id", "source") {
       textColor(Color.CYAN)
@@ -2237,6 +2303,28 @@ class SymbolLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.textHaloColorAsExpression.toString())
     assertEquals(null, layer.textHaloColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun textHaloColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = symbolLayer("id", "source") {
+      textHaloColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.textHaloColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun textHaloColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = symbolLayer("id", "source") {
+      textHaloColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.textHaloColorUseThemeAsExpression.toString())
   }
 
   @Test
@@ -2674,6 +2762,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconColorAsExpression should not be null", SymbolLayer.defaultIconColorAsExpression)
     assertNotNull("defaultIconColorAsColorInt should not be null", SymbolLayer.defaultIconColorAsColorInt)
     assertNotNull("defaultIconColorUseTheme should not be null", SymbolLayer.defaultIconColorUseTheme)
+    assertNotNull("defaultIconColorUseThemeAsExpression should not be null", SymbolLayer.defaultIconColorUseThemeAsExpression)
     assertNotNull("defaultIconColorTransition should not be null", SymbolLayer.defaultIconColorTransition)
     assertNotNull("defaultIconColorSaturation should not be null", SymbolLayer.defaultIconColorSaturation)
     assertNotNull("defaultIconColorSaturationAsExpression should not be null", SymbolLayer.defaultIconColorSaturationAsExpression)
@@ -2689,6 +2778,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconHaloColorAsExpression should not be null", SymbolLayer.defaultIconHaloColorAsExpression)
     assertNotNull("defaultIconHaloColorAsColorInt should not be null", SymbolLayer.defaultIconHaloColorAsColorInt)
     assertNotNull("defaultIconHaloColorUseTheme should not be null", SymbolLayer.defaultIconHaloColorUseTheme)
+    assertNotNull("defaultIconHaloColorUseThemeAsExpression should not be null", SymbolLayer.defaultIconHaloColorUseThemeAsExpression)
     assertNotNull("defaultIconHaloColorTransition should not be null", SymbolLayer.defaultIconHaloColorTransition)
     assertNotNull("defaultIconHaloWidth should not be null", SymbolLayer.defaultIconHaloWidth)
     assertNotNull("defaultIconHaloWidthAsExpression should not be null", SymbolLayer.defaultIconHaloWidthAsExpression)
@@ -2714,6 +2804,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultTextColorAsExpression should not be null", SymbolLayer.defaultTextColorAsExpression)
     assertNotNull("defaultTextColorAsColorInt should not be null", SymbolLayer.defaultTextColorAsColorInt)
     assertNotNull("defaultTextColorUseTheme should not be null", SymbolLayer.defaultTextColorUseTheme)
+    assertNotNull("defaultTextColorUseThemeAsExpression should not be null", SymbolLayer.defaultTextColorUseThemeAsExpression)
     assertNotNull("defaultTextColorTransition should not be null", SymbolLayer.defaultTextColorTransition)
     assertNotNull("defaultTextEmissiveStrength should not be null", SymbolLayer.defaultTextEmissiveStrength)
     assertNotNull("defaultTextEmissiveStrengthAsExpression should not be null", SymbolLayer.defaultTextEmissiveStrengthAsExpression)
@@ -2725,6 +2816,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultTextHaloColorAsExpression should not be null", SymbolLayer.defaultTextHaloColorAsExpression)
     assertNotNull("defaultTextHaloColorAsColorInt should not be null", SymbolLayer.defaultTextHaloColorAsColorInt)
     assertNotNull("defaultTextHaloColorUseTheme should not be null", SymbolLayer.defaultTextHaloColorUseTheme)
+    assertNotNull("defaultTextHaloColorUseThemeAsExpression should not be null", SymbolLayer.defaultTextHaloColorUseThemeAsExpression)
     assertNotNull("defaultTextHaloColorTransition should not be null", SymbolLayer.defaultTextHaloColorTransition)
     assertNotNull("defaultTextHaloWidth should not be null", SymbolLayer.defaultTextHaloWidth)
     assertNotNull("defaultTextHaloWidthAsExpression should not be null", SymbolLayer.defaultTextHaloWidthAsExpression)

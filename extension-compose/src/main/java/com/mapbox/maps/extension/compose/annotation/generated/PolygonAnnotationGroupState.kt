@@ -31,6 +31,8 @@ public class PolygonAnnotationGroupState private constructor(
   initialFillTranslate: List<Double>?,
   initialFillTranslateAnchor: FillTranslateAnchor?,
   initialFillZOffset: Double?,
+  initialFillColorUseTheme: String?,
+  initialFillOutlineColorUseTheme: String?,
   initialPolygonAnnotationGroupInteractionsState: PolygonAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
@@ -45,6 +47,8 @@ public class PolygonAnnotationGroupState private constructor(
     initialFillTranslate = null,
     initialFillTranslateAnchor = null,
     initialFillZOffset = null,
+    initialFillColorUseTheme = null,
+    initialFillOutlineColorUseTheme = null,
     initialPolygonAnnotationGroupInteractionsState = PolygonAnnotationGroupInteractionsState(),
   )
 
@@ -98,6 +102,16 @@ public class PolygonAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var fillZOffset: Double? by mutableStateOf(initialFillZOffset)
+  /**
+   * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var fillColorUseTheme: String? by mutableStateOf(initialFillColorUseTheme)
+  /**
+   * This property defines whether the `fillOutlineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var fillOutlineColorUseTheme: String? by mutableStateOf(initialFillOutlineColorUseTheme)
 
   @Composable
   @OptIn(MapboxExperimental::class)
@@ -145,6 +159,16 @@ public class PolygonAnnotationGroupState private constructor(
   private fun UpdateFillZOffset(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillZOffset = fillZOffset
   }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillColorUseTheme(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillColorUseTheme = fillColorUseTheme
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillOutlineColorUseTheme(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillOutlineColorUseTheme = fillOutlineColorUseTheme
+  }
 
   @Composable
   internal fun UpdateProperties(annotationManager: PolygonAnnotationManager) {
@@ -159,6 +183,8 @@ public class PolygonAnnotationGroupState private constructor(
     UpdateFillTranslate(annotationManager)
     UpdateFillTranslateAnchor(annotationManager)
     UpdateFillZOffset(annotationManager)
+    UpdateFillColorUseTheme(annotationManager)
+    UpdateFillOutlineColorUseTheme(annotationManager)
   }
 }
 

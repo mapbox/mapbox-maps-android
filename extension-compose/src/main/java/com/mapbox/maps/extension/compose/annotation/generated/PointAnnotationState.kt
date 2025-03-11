@@ -58,6 +58,10 @@ public class PointAnnotationState private constructor(
   initialTextHaloWidth: Double?,
   initialTextOcclusionOpacity: Double?,
   initialTextOpacity: Double?,
+  initialIconColorUseTheme: String?,
+  initialIconHaloColorUseTheme: String?,
+  initialTextColorUseTheme: String?,
+  initialTextHaloColorUseTheme: String?,
   initialPointAnnotationInteractionsState: PointAnnotationInteractionsState,
 ) {
 
@@ -96,6 +100,10 @@ public class PointAnnotationState private constructor(
     initialTextHaloWidth = null,
     initialTextOcclusionOpacity = null,
     initialTextOpacity = null,
+    initialIconColorUseTheme = null,
+    initialIconHaloColorUseTheme = null,
+    initialTextColorUseTheme = null,
+    initialTextHaloColorUseTheme = null,
     initialPointAnnotationInteractionsState = PointAnnotationInteractionsState(),
 )
 
@@ -240,6 +248,26 @@ public class PointAnnotationState private constructor(
    * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
    */
   public var textOpacity: Double? by mutableStateOf(initialTextOpacity)
+  /**
+   * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var iconColorUseTheme: String? by mutableStateOf(initialIconColorUseTheme)
+  /**
+   * This property defines whether the `iconHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var iconHaloColorUseTheme: String? by mutableStateOf(initialIconHaloColorUseTheme)
+  /**
+   * This property defines whether the `textColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var textColorUseTheme: String? by mutableStateOf(initialTextColorUseTheme)
+  /**
+   * This property defines whether the `textHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var textHaloColorUseTheme: String? by mutableStateOf(initialTextHaloColorUseTheme)
 
   @Composable
   private fun UpdateIconAnchor(
@@ -588,6 +616,46 @@ public class PointAnnotationState private constructor(
       }
     )
   }
+  @Composable
+  private fun UpdateIconColorUseTheme(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.iconColorUseTheme = iconColorUseTheme
+      }
+    )
+  }
+  @Composable
+  private fun UpdateIconHaloColorUseTheme(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.iconHaloColorUseTheme = iconHaloColorUseTheme
+      }
+    )
+  }
+  @Composable
+  private fun UpdateTextColorUseTheme(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.textColorUseTheme = textColorUseTheme
+      }
+    )
+  }
+  @Composable
+  private fun UpdateTextHaloColorUseTheme(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.textHaloColorUseTheme = textHaloColorUseTheme
+      }
+    )
+  }
 
   @Composable
   internal fun UpdateProperties(
@@ -627,6 +695,10 @@ public class PointAnnotationState private constructor(
     UpdateTextHaloWidth(annotationNode)
     UpdateTextOcclusionOpacity(annotationNode)
     UpdateTextOpacity(annotationNode)
+    UpdateIconColorUseTheme(annotationNode)
+    UpdateIconHaloColorUseTheme(annotationNode)
+    UpdateTextColorUseTheme(annotationNode)
+    UpdateTextHaloColorUseTheme(annotationNode)
   }
 }
 

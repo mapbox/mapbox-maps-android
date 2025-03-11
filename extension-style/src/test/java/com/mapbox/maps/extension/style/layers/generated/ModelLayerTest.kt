@@ -463,6 +463,61 @@ class ModelLayerTest {
   // Expression Tests
 
   @Test
+  fun modelColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "model-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun modelColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-color-use-theme") }
+  }
+
+  @Test
+  fun modelColorUseThemeAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.modelColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-color-use-theme") }
+  }
+
+  @Test
+  fun modelColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-color-use-theme") }
+  }
+
+  @Test
+  fun modelColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") {
+      modelColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.modelColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-color-use-theme") }
+  }
+
+  @Test
   fun modelColorAsExpressionSet() {
     val expression = sum {
       literal(2)

@@ -186,201 +186,6 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   // Property getters and setters
 
   /**
-   * Name of image in sprite to use as the middle of the location indicator.
-   */
-  val bearingImage: String?
-    /**
-     * Name of image in sprite to use as the middle of the location indicator.
-     *
-     * Use static method [LocationIndicatorLayer.defaultBearingImage] to get the default property.
-     *
-     * @return String
-     */
-    get() {
-      return getPropertyValue<String>("bearing-image")
-    }
-
-  /**
-   * Name of image in sprite to use as the middle of the location indicator.
-   *
-   * Use static method [LocationIndicatorLayer.defaultBearingImage] to set the default property.
-   *
-   * @param bearingImage value of bearingImage
-   */
-  override fun bearingImage(bearingImage: String): LocationIndicatorLayer = apply {
-    val propertyValue = PropertyValue("bearing-image", bearingImage)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Name of image in sprite to use as the middle of the location indicator.
-   *
-   * This is an Expression representation of "bearing-image".
-   *
-   */
-  val bearingImageAsExpression: Expression?
-    /**
-     * Name of image in sprite to use as the middle of the location indicator.
-     *
-     * Get the BearingImage property as an Expression
-     *
-     * Use static method [LocationIndicatorLayer.defaultBearingImageAsExpression] to get the default property.
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("bearing-image")?.let {
-        return it
-      }
-      bearingImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
-   * Name of image in sprite to use as the middle of the location indicator.
-   *
-   * Use static method [LocationIndicatorLayer.defaultBearingImageAsExpression] to set the default property.
-   *
-   * @param bearingImage value of bearingImage as Expression
-   */
-  override fun bearingImage(bearingImage: Expression): LocationIndicatorLayer = apply {
-    val propertyValue = PropertyValue("bearing-image", bearingImage)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Name of image in sprite to use as the background of the location indicator.
-   */
-  val shadowImage: String?
-    /**
-     * Name of image in sprite to use as the background of the location indicator.
-     *
-     * Use static method [LocationIndicatorLayer.defaultShadowImage] to get the default property.
-     *
-     * @return String
-     */
-    get() {
-      return getPropertyValue<String>("shadow-image")
-    }
-
-  /**
-   * Name of image in sprite to use as the background of the location indicator.
-   *
-   * Use static method [LocationIndicatorLayer.defaultShadowImage] to set the default property.
-   *
-   * @param shadowImage value of shadowImage
-   */
-  override fun shadowImage(shadowImage: String): LocationIndicatorLayer = apply {
-    val propertyValue = PropertyValue("shadow-image", shadowImage)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Name of image in sprite to use as the background of the location indicator.
-   *
-   * This is an Expression representation of "shadow-image".
-   *
-   */
-  val shadowImageAsExpression: Expression?
-    /**
-     * Name of image in sprite to use as the background of the location indicator.
-     *
-     * Get the ShadowImage property as an Expression
-     *
-     * Use static method [LocationIndicatorLayer.defaultShadowImageAsExpression] to get the default property.
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("shadow-image")?.let {
-        return it
-      }
-      shadowImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
-   * Name of image in sprite to use as the background of the location indicator.
-   *
-   * Use static method [LocationIndicatorLayer.defaultShadowImageAsExpression] to set the default property.
-   *
-   * @param shadowImage value of shadowImage as Expression
-   */
-  override fun shadowImage(shadowImage: Expression): LocationIndicatorLayer = apply {
-    val propertyValue = PropertyValue("shadow-image", shadowImage)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Name of image in sprite to use as the top of the location indicator.
-   */
-  val topImage: String?
-    /**
-     * Name of image in sprite to use as the top of the location indicator.
-     *
-     * Use static method [LocationIndicatorLayer.defaultTopImage] to get the default property.
-     *
-     * @return String
-     */
-    get() {
-      return getPropertyValue<String>("top-image")
-    }
-
-  /**
-   * Name of image in sprite to use as the top of the location indicator.
-   *
-   * Use static method [LocationIndicatorLayer.defaultTopImage] to set the default property.
-   *
-   * @param topImage value of topImage
-   */
-  override fun topImage(topImage: String): LocationIndicatorLayer = apply {
-    val propertyValue = PropertyValue("top-image", topImage)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Name of image in sprite to use as the top of the location indicator.
-   *
-   * This is an Expression representation of "top-image".
-   *
-   */
-  val topImageAsExpression: Expression?
-    /**
-     * Name of image in sprite to use as the top of the location indicator.
-     *
-     * Get the TopImage property as an Expression
-     *
-     * Use static method [LocationIndicatorLayer.defaultTopImageAsExpression] to get the default property.
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("top-image")?.let {
-        return it
-      }
-      topImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
-   * Name of image in sprite to use as the top of the location indicator.
-   *
-   * Use static method [LocationIndicatorLayer.defaultTopImageAsExpression] to set the default property.
-   *
-   * @param topImage value of topImage as Expression
-   */
-  override fun topImage(topImage: Expression): LocationIndicatorLayer = apply {
-    val propertyValue = PropertyValue("top-image", topImage)
-    setProperty(propertyValue)
-  }
-
-  /**
    * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    */
   val accuracyRadius: Double?
@@ -639,6 +444,41 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Сolor theme override for [accuracyRadiusBorderColor].
+   */
+  @MapboxExperimental
+  val accuracyRadiusBorderColorUseThemeAsExpression: Expression?
+    /**
+     * Get the AccuracyRadiusBorderColorUseTheme property
+     *
+     * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme] to get the default property.
+     *
+     * @return current AccuracyRadiusBorderColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("accuracy-radius-border-color-use-theme")?.let {
+        return it
+      }
+      accuracyRadiusBorderColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the AccuracyRadiusBorderColorUseTheme as Expression
+   *
+   * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusBorderColorUseTheme] to get the default property.
+   *
+   * @param accuracyRadiusBorderColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseTheme: Expression): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("accuracy-radius-border-color-use-theme", accuracyRadiusBorderColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
    */
   val accuracyRadiusColor: String?
@@ -798,6 +638,41 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Сolor theme override for [accuracyRadiusColor].
+   */
+  @MapboxExperimental
+  val accuracyRadiusColorUseThemeAsExpression: Expression?
+    /**
+     * Get the AccuracyRadiusColorUseTheme property
+     *
+     * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme] to get the default property.
+     *
+     * @return current AccuracyRadiusColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("accuracy-radius-color-use-theme")?.let {
+        return it
+      }
+      accuracyRadiusColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the AccuracyRadiusColorUseTheme as Expression
+   *
+   * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusColorUseTheme] to get the default property.
+   *
+   * @param accuracyRadiusColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun accuracyRadiusColorUseTheme(accuracyRadiusColorUseTheme: Expression): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("accuracy-radius-color-use-theme", accuracyRadiusColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    */
   val bearing: Double?
@@ -894,6 +769,71 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   override fun bearingTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     bearingTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   */
+  val bearingImage: String?
+    /**
+     * Name of image in sprite to use as the middle of the location indicator.
+     *
+     * Use static method [LocationIndicatorLayer.defaultBearingImage] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      return getPropertyValue<String>("bearing-image")
+    }
+
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   *
+   * Use static method [LocationIndicatorLayer.defaultBearingImage] to set the default property.
+   *
+   * @param bearingImage value of bearingImage
+   */
+  override fun bearingImage(bearingImage: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("bearing-image", bearingImage)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   *
+   * This is an Expression representation of "bearing-image".
+   *
+   */
+  val bearingImageAsExpression: Expression?
+    /**
+     * Name of image in sprite to use as the middle of the location indicator.
+     *
+     * Get the BearingImage property as an Expression
+     *
+     * Use static method [LocationIndicatorLayer.defaultBearingImageAsExpression] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("bearing-image")?.let {
+        return it
+      }
+      bearingImage?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   *
+   * Use static method [LocationIndicatorLayer.defaultBearingImageAsExpression] to set the default property.
+   *
+   * @param bearingImage value of bearingImage as Expression
+   */
+  override fun bearingImage(bearingImage: Expression): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("bearing-image", bearingImage)
+    setProperty(propertyValue)
   }
 
   /**
@@ -1150,6 +1090,41 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   @MapboxExperimental
   override fun emphasisCircleColorUseTheme(emphasisCircleColorUseTheme: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("emphasis-circle-color-use-theme", emphasisCircleColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [emphasisCircleColor].
+   */
+  @MapboxExperimental
+  val emphasisCircleColorUseThemeAsExpression: Expression?
+    /**
+     * Get the EmphasisCircleColorUseTheme property
+     *
+     * Use static method [LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme] to get the default property.
+     *
+     * @return current EmphasisCircleColorUseTheme property as String
+     */
+    get() {
+      getPropertyValue<Expression>("emphasis-circle-color-use-theme")?.let {
+        return it
+      }
+      emphasisCircleColorUseTheme?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the EmphasisCircleColorUseTheme as Expression
+   *
+   * Use static method [LocationIndicatorLayer.defaultEmphasisCircleColorUseTheme] to get the default property.
+   *
+   * @param emphasisCircleColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun emphasisCircleColorUseTheme(emphasisCircleColorUseTheme: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-color-use-theme", emphasisCircleColorUseTheme)
     setProperty(propertyValue)
   }
@@ -1681,6 +1656,71 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Name of image in sprite to use as the background of the location indicator.
+   */
+  val shadowImage: String?
+    /**
+     * Name of image in sprite to use as the background of the location indicator.
+     *
+     * Use static method [LocationIndicatorLayer.defaultShadowImage] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      return getPropertyValue<String>("shadow-image")
+    }
+
+  /**
+   * Name of image in sprite to use as the background of the location indicator.
+   *
+   * Use static method [LocationIndicatorLayer.defaultShadowImage] to set the default property.
+   *
+   * @param shadowImage value of shadowImage
+   */
+  override fun shadowImage(shadowImage: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("shadow-image", shadowImage)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Name of image in sprite to use as the background of the location indicator.
+   *
+   * This is an Expression representation of "shadow-image".
+   *
+   */
+  val shadowImageAsExpression: Expression?
+    /**
+     * Name of image in sprite to use as the background of the location indicator.
+     *
+     * Get the ShadowImage property as an Expression
+     *
+     * Use static method [LocationIndicatorLayer.defaultShadowImageAsExpression] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("shadow-image")?.let {
+        return it
+      }
+      shadowImage?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Name of image in sprite to use as the background of the location indicator.
+   *
+   * Use static method [LocationIndicatorLayer.defaultShadowImageAsExpression] to set the default property.
+   *
+   * @param shadowImage value of shadowImage as Expression
+   */
+  override fun shadowImage(shadowImage: Expression): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("shadow-image", shadowImage)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    */
   val shadowImageSize: Double?
@@ -1777,6 +1817,71 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   override fun shadowImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     shadowImageSizeTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   */
+  val topImage: String?
+    /**
+     * Name of image in sprite to use as the top of the location indicator.
+     *
+     * Use static method [LocationIndicatorLayer.defaultTopImage] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      return getPropertyValue<String>("top-image")
+    }
+
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   *
+   * Use static method [LocationIndicatorLayer.defaultTopImage] to set the default property.
+   *
+   * @param topImage value of topImage
+   */
+  override fun topImage(topImage: String): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("top-image", topImage)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   *
+   * This is an Expression representation of "top-image".
+   *
+   */
+  val topImageAsExpression: Expression?
+    /**
+     * Name of image in sprite to use as the top of the location indicator.
+     *
+     * Get the TopImage property as an Expression
+     *
+     * Use static method [LocationIndicatorLayer.defaultTopImageAsExpression] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("top-image")?.let {
+        return it
+      }
+      topImage?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   *
+   * Use static method [LocationIndicatorLayer.defaultTopImageAsExpression] to set the default property.
+   *
+   * @param topImage value of topImage as Expression
+   */
+  override fun topImage(topImage: Expression): LocationIndicatorLayer = apply {
+    val propertyValue = PropertyValue("top-image", topImage)
+    setProperty(propertyValue)
   }
 
   /**
@@ -1938,117 +2043,6 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "maxzoom").silentUnwrap()
 
     /**
-     * Name of image in sprite to use as the middle of the location indicator.
-     */
-    val defaultBearingImage: String?
-      /**
-       * Name of image in sprite to use as the middle of the location indicator.
-       *
-       * Get the default value of BearingImage property
-       *
-       * @return String
-       */
-      get() {
-        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image").silentUnwrap()
-      }
-
-    /**
-     * Name of image in sprite to use as the middle of the location indicator.
-     *
-     * This is an Expression representation of "bearing-image".
-     *
-     */
-    val defaultBearingImageAsExpression: Expression?
-      /**
-       * Get default value of the BearingImage property as an Expression
-       *
-       * @return String
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultBearingImage?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
-     * Name of image in sprite to use as the background of the location indicator.
-     */
-    val defaultShadowImage: String?
-      /**
-       * Name of image in sprite to use as the background of the location indicator.
-       *
-       * Get the default value of ShadowImage property
-       *
-       * @return String
-       */
-      get() {
-        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image").silentUnwrap()
-      }
-
-    /**
-     * Name of image in sprite to use as the background of the location indicator.
-     *
-     * This is an Expression representation of "shadow-image".
-     *
-     */
-    val defaultShadowImageAsExpression: Expression?
-      /**
-       * Get default value of the ShadowImage property as an Expression
-       *
-       * @return String
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultShadowImage?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
-     * Name of image in sprite to use as the top of the location indicator.
-     */
-    val defaultTopImage: String?
-      /**
-       * Name of image in sprite to use as the top of the location indicator.
-       *
-       * Get the default value of TopImage property
-       *
-       * @return String
-       */
-      get() {
-        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image").silentUnwrap()
-      }
-
-    /**
-     * Name of image in sprite to use as the top of the location indicator.
-     *
-     * This is an Expression representation of "top-image".
-     *
-     */
-    val defaultTopImageAsExpression: Expression?
-      /**
-       * Get default value of the TopImage property as an Expression
-       *
-       * @return String
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultTopImage?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
      * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
      */
     val defaultAccuracyRadius: Double?
@@ -2176,6 +2170,22 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-border-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [accuracyRadiusBorderColor].
+     */
+    @MapboxExperimental
+    val defaultAccuracyRadiusBorderColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the AccuracyRadiusBorderColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-border-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultAccuracyRadiusBorderColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
      */
     val defaultAccuracyRadiusColor: String?
@@ -2255,6 +2265,22 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-use-theme").silentUnwrap()
 
     /**
+     * Default color theme for [accuracyRadiusColor].
+     */
+    @MapboxExperimental
+    val defaultAccuracyRadiusColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the AccuracyRadiusColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("location-indicator", "accuracy-radius-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultAccuracyRadiusColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
      */
     val defaultBearing: Double?
@@ -2301,6 +2327,43 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-transition").silentUnwrap()
+
+    /**
+     * Name of image in sprite to use as the middle of the location indicator.
+     */
+    val defaultBearingImage: String?
+      /**
+       * Name of image in sprite to use as the middle of the location indicator.
+       *
+       * Get the default value of BearingImage property
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image").silentUnwrap()
+      }
+
+    /**
+     * Name of image in sprite to use as the middle of the location indicator.
+     *
+     * This is an Expression representation of "bearing-image".
+     *
+     */
+    val defaultBearingImageAsExpression: Expression?
+      /**
+       * Get default value of the BearingImage property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-image").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultBearingImage?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
 
     /**
      * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
@@ -2428,6 +2491,22 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
        * @return String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [emphasisCircleColor].
+     */
+    @MapboxExperimental
+    val defaultEmphasisCircleColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the EmphasisCircleColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("location-indicator", "emphasis-circle-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultEmphasisCircleColorUseTheme?.let { Expression.literal(it) }
+      }
 
     /**
      * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
@@ -2696,6 +2775,43 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * Name of image in sprite to use as the background of the location indicator.
+     */
+    val defaultShadowImage: String?
+      /**
+       * Name of image in sprite to use as the background of the location indicator.
+       *
+       * Get the default value of ShadowImage property
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image").silentUnwrap()
+      }
+
+    /**
+     * Name of image in sprite to use as the background of the location indicator.
+     *
+     * This is an Expression representation of "shadow-image".
+     *
+     */
+    val defaultShadowImageAsExpression: Expression?
+      /**
+       * Get default value of the ShadowImage property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultShadowImage?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
      */
     val defaultShadowImageSize: Double?
@@ -2742,6 +2858,43 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "shadow-image-size-transition").silentUnwrap()
+
+    /**
+     * Name of image in sprite to use as the top of the location indicator.
+     */
+    val defaultTopImage: String?
+      /**
+       * Name of image in sprite to use as the top of the location indicator.
+       *
+       * Get the default value of TopImage property
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image").silentUnwrap()
+      }
+
+    /**
+     * Name of image in sprite to use as the top of the location indicator.
+     *
+     * This is an Expression representation of "top-image".
+     *
+     */
+    val defaultTopImageAsExpression: Expression?
+      /**
+       * Get default value of the TopImage property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "top-image").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultTopImage?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
 
     /**
      * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
@@ -2849,48 +3002,6 @@ interface LocationIndicatorLayerDsl {
   // Property getters and setters
 
   /**
-   * Name of image in sprite to use as the middle of the location indicator.
-   *
-   * @param bearingImage value of bearingImage
-   */
-  fun bearingImage(bearingImage: String): LocationIndicatorLayer
-
-  /**
-   * Name of image in sprite to use as the middle of the location indicator.
-   *
-   * @param bearingImage value of bearingImage as Expression
-   */
-  fun bearingImage(bearingImage: Expression): LocationIndicatorLayer
-
-  /**
-   * Name of image in sprite to use as the background of the location indicator.
-   *
-   * @param shadowImage value of shadowImage
-   */
-  fun shadowImage(shadowImage: String): LocationIndicatorLayer
-
-  /**
-   * Name of image in sprite to use as the background of the location indicator.
-   *
-   * @param shadowImage value of shadowImage as Expression
-   */
-  fun shadowImage(shadowImage: Expression): LocationIndicatorLayer
-
-  /**
-   * Name of image in sprite to use as the top of the location indicator.
-   *
-   * @param topImage value of topImage
-   */
-  fun topImage(topImage: String): LocationIndicatorLayer
-
-  /**
-   * Name of image in sprite to use as the top of the location indicator.
-   *
-   * @param topImage value of topImage as Expression
-   */
-  fun topImage(topImage: Expression): LocationIndicatorLayer
-
-  /**
    * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
    *
    * @param accuracyRadius value of accuracyRadius
@@ -2966,6 +3077,14 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseTheme: String): LocationIndicatorLayer
 
   /**
+   * Set the accuracyRadiusBorderColorUseTheme as Expression for [accuracyRadiusBorderColor].
+   *
+   * @param accuracyRadiusBorderColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun accuracyRadiusBorderColorUseTheme(accuracyRadiusBorderColorUseTheme: Expression): LocationIndicatorLayer
+
+  /**
    * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
@@ -3011,6 +3130,14 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusColorUseTheme(accuracyRadiusColorUseTheme: String): LocationIndicatorLayer
 
   /**
+   * Set the accuracyRadiusColorUseTheme as Expression for [accuracyRadiusColor].
+   *
+   * @param accuracyRadiusColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun accuracyRadiusColorUseTheme(accuracyRadiusColorUseTheme: Expression): LocationIndicatorLayer
+
+  /**
    * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
    *
    * @param bearing value of bearing
@@ -3039,6 +3166,20 @@ interface LocationIndicatorLayerDsl {
    * DSL for [bearingTransition].
    */
   fun bearingTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
+
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   *
+   * @param bearingImage value of bearingImage
+   */
+  fun bearingImage(bearingImage: String): LocationIndicatorLayer
+
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   *
+   * @param bearingImage value of bearingImage as Expression
+   */
+  fun bearingImage(bearingImage: Expression): LocationIndicatorLayer
 
   /**
    * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
@@ -3114,6 +3255,14 @@ interface LocationIndicatorLayerDsl {
    */
   @MapboxExperimental
   fun emphasisCircleColorUseTheme(emphasisCircleColorUseTheme: String): LocationIndicatorLayer
+
+  /**
+   * Set the emphasisCircleColorUseTheme as Expression for [emphasisCircleColor].
+   *
+   * @param emphasisCircleColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun emphasisCircleColorUseTheme(emphasisCircleColorUseTheme: Expression): LocationIndicatorLayer
 
   /**
    * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
@@ -3264,6 +3413,20 @@ interface LocationIndicatorLayerDsl {
   fun perspectiveCompensation(perspectiveCompensation: Expression): LocationIndicatorLayer
 
   /**
+   * Name of image in sprite to use as the background of the location indicator.
+   *
+   * @param shadowImage value of shadowImage
+   */
+  fun shadowImage(shadowImage: String): LocationIndicatorLayer
+
+  /**
+   * Name of image in sprite to use as the background of the location indicator.
+   *
+   * @param shadowImage value of shadowImage as Expression
+   */
+  fun shadowImage(shadowImage: Expression): LocationIndicatorLayer
+
+  /**
    * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
    *
    * @param shadowImageSize value of shadowImageSize
@@ -3292,6 +3455,20 @@ interface LocationIndicatorLayerDsl {
    * DSL for [shadowImageSizeTransition].
    */
   fun shadowImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
+
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   *
+   * @param topImage value of topImage
+   */
+  fun topImage(topImage: String): LocationIndicatorLayer
+
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   *
+   * @param topImage value of topImage as Expression
+   */
+  fun topImage(topImage: Expression): LocationIndicatorLayer
 
   /**
    * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.

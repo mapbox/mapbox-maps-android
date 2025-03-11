@@ -127,6 +127,28 @@ class RasterParticleLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun rasterParticleColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = rasterParticleLayer("id", "source") {
+      rasterParticleColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.rasterParticleColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun rasterParticleColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = rasterParticleLayer("id", "source") {
+      rasterParticleColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.rasterParticleColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun rasterParticleColorUseTheme() {
     val theme = "none"
     val layer = rasterParticleLayer("id", "source") {
@@ -354,6 +376,7 @@ class RasterParticleLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterParticleArrayBand should not be null", RasterParticleLayer.defaultRasterParticleArrayBand)
     assertNotNull("defaultRasterParticleArrayBandAsExpression should not be null", RasterParticleLayer.defaultRasterParticleArrayBandAsExpression)
     assertNotNull("defaultRasterParticleColorUseTheme should not be null", RasterParticleLayer.defaultRasterParticleColorUseTheme)
+    assertNotNull("defaultRasterParticleColorUseThemeAsExpression should not be null", RasterParticleLayer.defaultRasterParticleColorUseThemeAsExpression)
     assertNotNull("defaultRasterParticleCount should not be null", RasterParticleLayer.defaultRasterParticleCount)
     assertNotNull("defaultRasterParticleCountAsExpression should not be null", RasterParticleLayer.defaultRasterParticleCountAsExpression)
     assertNotNull("defaultRasterParticleFadeOpacityFactor should not be null", RasterParticleLayer.defaultRasterParticleFadeOpacityFactor)

@@ -191,6 +191,22 @@ class PointAnnotationManager(
         layer.textOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY))
         dragLayer.textOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY))
       }
+      PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME -> {
+        layer.iconColorUseTheme(get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME))
+        dragLayer.iconColorUseTheme(get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME -> {
+        layer.iconHaloColorUseTheme(get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME))
+        dragLayer.iconHaloColorUseTheme(get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME -> {
+        layer.textColorUseTheme(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME))
+        dragLayer.textColorUseTheme(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME -> {
+        layer.textHaloColorUseTheme(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME))
+        dragLayer.textHaloColorUseTheme(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME))
+      }
     }
   }
 
@@ -235,6 +251,10 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double
+   * PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME - String
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME - String
+   * PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME - String
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -288,6 +308,10 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double
+   * PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME - String
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME - String
+   * PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME - String
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -2541,6 +2565,146 @@ class PointAnnotationManager(
     }
 
   /**
+   * The default iconColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var iconColorUseTheme: String?
+    /**
+     * Get the iconColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default iconHaloColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `iconHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var iconHaloColorUseTheme: String?
+    /**
+     * Get the iconHaloColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `textColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var textColorUseTheme: String?
+    /**
+     * Get the textColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default textHaloColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `textHaloColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var textHaloColorUseTheme: String?
+    /**
+     * Get the textHaloColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the textHaloColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The filter on the managed pointAnnotations.
    */
   override var layerFilter: Expression?
@@ -2598,6 +2762,10 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_OCCLUSION_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_OPACITY] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME] = false
 
     // Show all icons and texts by default.
     iconAllowOverlap = true
