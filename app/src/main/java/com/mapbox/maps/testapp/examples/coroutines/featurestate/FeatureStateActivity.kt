@@ -33,7 +33,6 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.logD
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.databinding.ActivityFeatureStateBinding
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.flow.map
@@ -101,9 +100,6 @@ class FeatureStateActivity : AppCompatActivity() {
 
     // Observe camera changes and query the rendered features under the crosshair.
     mapboxMap.cameraChangedEvents
-      // Conflate the flow to only process the latest event and don't block the main
-      // thread when queryRenderedFeatures is slow.
-      .conflate()
       .map { _ ->
         mapboxMap
           .queryRenderedFeatures(

@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.11.0-rc.1
+* Conflate `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` by default to avoid blocking main thread due to slow collectors.
+
 # 11.10.0-rc.1
 ## Features ✨ and improvements 🏁
 * Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
