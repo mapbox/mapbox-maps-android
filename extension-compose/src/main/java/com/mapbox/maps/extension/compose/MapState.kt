@@ -116,77 +116,77 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   }
 
   /**
-   * [Flow] of [MapLoaded] updates from [MapboxMap.subscribeMapLoaded].
+   * Conflated [Flow] of [MapLoaded] updates from [MapboxMap.subscribeMapLoaded].
    */
   public val mapLoadedEvents: Flow<MapLoaded> = mapboxMapFlow.flatMapLatest {
     it?.mapLoadedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [MapLoadingError] updates from [MapboxMap.subscribeMapLoadingError].
+   * Conflated [Flow] of [MapLoadingError] updates from [MapboxMap.subscribeMapLoadingError].
    */
   public val mapLoadingErrorEvents: Flow<MapLoadingError> = mapboxMapFlow.flatMapLatest {
     it?.mapLoadingErrorEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [StyleLoaded] updates from [MapboxMap.subscribeStyleLoaded].
+   * Conflated [Flow] of [StyleLoaded] updates from [MapboxMap.subscribeStyleLoaded].
    */
   public val styleLoadedEvents: Flow<StyleLoaded> = mapboxMapFlow.flatMapLatest {
     it?.styleLoadedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [StyleDataLoaded] updates from [MapboxMap.subscribeStyleDataLoaded].
+   * Conflated [Flow] of [StyleDataLoaded] updates from [MapboxMap.subscribeStyleDataLoaded].
    */
   public val styleDataLoadedEvents: Flow<StyleDataLoaded> = mapboxMapFlow.flatMapLatest {
     it?.styleDataLoadedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [CameraChanged] updates from [MapboxMap.subscribeCameraChanged].
+   * Conflated [Flow] of [CameraChanged] updates from [MapboxMap.subscribeCameraChanged].
    */
   public val cameraChangedEvents: Flow<CameraChanged> = mapboxMapFlow.flatMapLatest {
     it?.cameraChangedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [MapIdle] updates from [MapboxMap.subscribeMapIdle].
+   * Conflated [Flow] of [MapIdle] updates from [MapboxMap.subscribeMapIdle].
    */
   public val mapIdleEvents: Flow<MapIdle> = mapboxMapFlow.flatMapLatest {
     it?.mapIdleEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [SourceAdded] updates from [MapboxMap.subscribeSourceAdded].
+   * Conflated [Flow] of [SourceAdded] updates from [MapboxMap.subscribeSourceAdded].
    */
   public val sourceAddedEvents: Flow<SourceAdded> = mapboxMapFlow.flatMapLatest {
     it?.sourceAddedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [SourceRemoved] updates from [MapboxMap.subscribeSourceRemoved].
+   * Conflated [Flow] of [SourceRemoved] updates from [MapboxMap.subscribeSourceRemoved].
    */
   public val sourceRemovedEvents: Flow<SourceRemoved> = mapboxMapFlow.flatMapLatest {
     it?.sourceRemovedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [SourceDataLoaded] updates from [MapboxMap.subscribeSourceDataLoaded].
+   * Conflated [Flow] of [SourceDataLoaded] updates from [MapboxMap.subscribeSourceDataLoaded].
    */
   public val sourceDataLoadedEvents: Flow<SourceDataLoaded> = mapboxMapFlow.flatMapLatest {
     it?.sourceDataLoadedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [StyleImageMissing] updates from [MapboxMap.subscribeStyleImageMissing].
+   * Conflated [Flow] of [StyleImageMissing] updates from [MapboxMap.subscribeStyleImageMissing].
    */
   public val styleImageMissingEvents: Flow<StyleImageMissing> = mapboxMapFlow.flatMapLatest {
     it?.styleImageMissingEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [StyleImageRemoveUnused] updates from [MapboxMap.subscribeStyleImageRemoveUnused].
+   * Conflated [Flow] of [StyleImageRemoveUnused] updates from [MapboxMap.subscribeStyleImageRemoveUnused].
    */
   public val styleImageRemoveUnusedEvents: Flow<StyleImageRemoveUnused> =
     mapboxMapFlow.flatMapLatest {
@@ -194,28 +194,28 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
     }
 
   /**
-   * [Flow] of [RenderFrameStarted] updates from [MapboxMap.subscribeRenderFrameStarted].
+   * Conflated [Flow] of [RenderFrameStarted] updates from [MapboxMap.subscribeRenderFrameStarted].
    */
   public val renderFrameStartedEvents: Flow<RenderFrameStarted> = mapboxMapFlow.flatMapLatest {
     it?.renderFrameStartedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [RenderFrameFinished] updates from [MapboxMap.subscribeRenderFrameFinished].
+   * Conflated [Flow] of [RenderFrameFinished] updates from [MapboxMap.subscribeRenderFrameFinished].
    */
   public val renderFrameFinishedEvents: Flow<RenderFrameFinished> = mapboxMapFlow.flatMapLatest {
     it?.renderFrameFinishedEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [ResourceRequest] updates from [MapboxMap.subscribeResourceRequest].
+   * Conflated [Flow] of [ResourceRequest] updates from [MapboxMap.subscribeResourceRequest].
    */
   public val resourceRequestEvents: Flow<ResourceRequest> = mapboxMapFlow.flatMapLatest {
     it?.resourceRequestEvents ?: emptyFlow()
   }
 
   /**
-   * [Flow] of [GenericEvent] updates from [MapboxMap.subscribeGenericEvent].
+   * Conflated [Flow] of [GenericEvent] updates from [MapboxMap.subscribeGenericEvent].
    */
   @MapboxExperimental
   public fun genericEvents(eventName: String): Flow<GenericEvent> = mapboxMapFlow.flatMapLatest {

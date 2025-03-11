@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add experimental `*UseTheme` support for annotations and `LocationPuck3D`.
 * Introduce experimental `Style.setImportColorTheme`, which allows changing the color theme of the style import.
 * [compose] Introduce experimental `StyleImportState.styleColorTheme` which allows changing the color theme of the style import.
+* Conflate `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` by default to avoid blocking main thread due to slow collectors.
 
 # 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁
