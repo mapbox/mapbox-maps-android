@@ -77,9 +77,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -112,7 +110,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -144,12 +142,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -190,9 +183,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -225,9 +216,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -290,18 +279,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionEdgeRadius property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-edge-radius")?.let {
-        return it
-      }
-      fillExtrusionEdgeRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-edge-radius")
 
   /**
    * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
@@ -359,18 +339,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionAmbientOcclusionGroundAttenuation property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-ground-attenuation")?.let {
-        return it
-      }
-      fillExtrusionAmbientOcclusionGroundAttenuation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-ambient-occlusion-ground-attenuation")
 
   /**
    * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
@@ -465,18 +436,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionAmbientOcclusionGroundRadius property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-ground-radius")?.let {
-        return it
-      }
-      fillExtrusionAmbientOcclusionGroundRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-ambient-occlusion-ground-radius")
 
   /**
    * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
@@ -568,18 +530,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionAmbientOcclusionIntensity property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-intensity")?.let {
-        return it
-      }
-      fillExtrusionAmbientOcclusionIntensity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-ambient-occlusion-intensity")
 
   /**
    * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings. Default value: 0. Value range: [0, 1]
@@ -667,18 +620,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionAmbientOcclusionRadius property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-radius")?.let {
-        return it
-      }
-      fillExtrusionAmbientOcclusionRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-ambient-occlusion-radius")
 
   /**
    * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead. Default value: 3. Minimum value: 0.
@@ -769,18 +713,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionAmbientOcclusionWallRadius property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-wall-radius")?.let {
-        return it
-      }
-      fillExtrusionAmbientOcclusionWallRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-ambient-occlusion-wall-radius")
 
   /**
    * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. Default value: 3. Minimum value: 0.
@@ -872,18 +807,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionBase property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-base")?.let {
-        return it
-      }
-      fillExtrusionBase?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-base")
 
   /**
    * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`. Default value: 0. Minimum value: 0. The unit of fillExtrusionBase is in meters.
@@ -977,18 +903,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionBaseAlignment property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression] to get the default property.
-     *
-     * @return FillExtrusionBaseAlignment
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-base-alignment")?.let {
-        return it
-      }
-      fillExtrusionBaseAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-extrusion-base-alignment")
+        ?: fillExtrusionBaseAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the behavior of fill extrusion base over terrain Default value: "terrain".
@@ -1046,15 +966,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionColor property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-extrusion-color")
 
   /**
    * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
@@ -1174,15 +1088,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return current FillExtrusionColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-color-use-theme")?.let {
-        return it
-      }
-      fillExtrusionColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-color-use-theme")
 
   /**
    * Set the FillExtrusionColorUseTheme as Expression
@@ -1237,18 +1143,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionCutoffFadeRange property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-cutoff-fade-range")?.let {
-        return it
-      }
-      fillExtrusionCutoffFadeRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-cutoff-fade-range")
 
   /**
    * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. Fade out is implemented by scaling down and removing buildings in the fade range in a staggered fashion. Opacity is not changed. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
@@ -1302,18 +1199,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionEmissiveStrength property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-emissive-strength")?.let {
-        return it
-      }
-      fillExtrusionEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillExtrusionEmissiveStrength is in intensity.
@@ -1407,15 +1295,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionFloodLightColor property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-flood-light-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-extrusion-flood-light-color")
 
   /**
    * The color of the flood light effect on the walls of the extruded buildings. Default value: "#ffffff".
@@ -1541,15 +1423,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      *
      * @return current FillExtrusionFloodLightColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-flood-light-color-use-theme")?.let {
-        return it
-      }
-      fillExtrusionFloodLightColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-color-use-theme")
 
   /**
    * Set the FillExtrusionFloodLightColorUseTheme as Expression
@@ -1607,18 +1481,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionFloodLightGroundAttenuation property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-flood-light-ground-attenuation")?.let {
-        return it
-      }
-      fillExtrusionFloodLightGroundAttenuation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-ground-attenuation")
 
   /**
    * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. Default value: 0.69. Value range: [0, 1]
@@ -1713,18 +1578,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionFloodLightGroundRadius property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-flood-light-ground-radius")?.let {
-        return it
-      }
-      fillExtrusionFloodLightGroundRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-ground-radius")
 
   /**
    * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
@@ -1819,18 +1675,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionFloodLightIntensity property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-flood-light-intensity")?.let {
-        return it
-      }
-      fillExtrusionFloodLightIntensity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-intensity")
 
   /**
    * The intensity of the flood light color. Default value: 0. Value range: [0, 1]
@@ -1925,18 +1772,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionFloodLightWallRadius property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-flood-light-wall-radius")?.let {
-        return it
-      }
-      fillExtrusionFloodLightWallRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-wall-radius")
 
   /**
    * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
@@ -2028,18 +1866,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionHeight property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-height")?.let {
-        return it
-      }
-      fillExtrusionHeight?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-height")
 
   /**
    * The height with which to extrude this layer. Default value: 0. Minimum value: 0. The unit of fillExtrusionHeight is in meters.
@@ -2133,18 +1962,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionHeightAlignment property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionHeightAlignmentAsExpression] to get the default property.
-     *
-     * @return FillExtrusionHeightAlignment
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-height-alignment")?.let {
-        return it
-      }
-      fillExtrusionHeightAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-extrusion-height-alignment")
+        ?: fillExtrusionHeightAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the behavior of fill extrusion height over terrain Default value: "flat".
@@ -2202,18 +2025,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionLineWidth property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionLineWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-line-width")?.let {
-        return it
-      }
-      fillExtrusionLineWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-line-width")
 
   /**
    * If a non-zero value is provided, it sets the fill-extrusion layer into wall rendering mode. The value is used to render the feature with the given width over the outlines of the geometry. Note: This property is experimental and some other fill-extrusion properties might not be supported with non-zero line width. Default value: 0. Minimum value: 0. The unit of fillExtrusionLineWidth is in meters.
@@ -2305,18 +2119,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionOpacity property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-opacity")?.let {
-        return it
-      }
-      fillExtrusionOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-opacity")
 
   /**
    * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
@@ -2376,7 +2181,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * @return String
      */
     get() {
-      return getPropertyValue<String>("fill-extrusion-pattern")
+      return getPropertyValue("fill-extrusion-pattern")
     }
 
   /**
@@ -2404,18 +2209,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionPattern property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-pattern")?.let {
-        return it
-      }
-      fillExtrusionPattern?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-pattern")
 
   /**
    * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -2472,18 +2268,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionRoundedRoof property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-rounded-roof")?.let {
-        return it
-      }
-      fillExtrusionRoundedRoof?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-rounded-roof")
 
   /**
    * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
@@ -2510,7 +2297,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("fill-extrusion-translate")
+      return getPropertyValue("fill-extrusion-translate")
     }
 
   /**
@@ -2538,18 +2325,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionTranslate property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-translate")?.let {
-        return it
-      }
-      fillExtrusionTranslate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-translate")
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively. Default value: [0,0]. The unit of fillExtrusionTranslate is in pixels.
@@ -2640,18 +2418,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionTranslateAnchor property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionTranslateAnchorAsExpression] to get the default property.
-     *
-     * @return FillExtrusionTranslateAnchor
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-translate-anchor")?.let {
-        return it
-      }
-      fillExtrusionTranslateAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-extrusion-translate-anchor")
+        ?: fillExtrusionTranslateAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the frame of reference for `fill-extrusion-translate`. Default value: "map".
@@ -2705,18 +2477,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionVerticalGradient property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalGradientAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-vertical-gradient")?.let {
-        return it
-      }
-      fillExtrusionVerticalGradient?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-vertical-gradient")
 
   /**
    * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down. Default value: true.
@@ -2773,18 +2536,9 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * Get the FillExtrusionVerticalScale property as an Expression
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionVerticalScaleAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-extrusion-vertical-scale")?.let {
-        return it
-      }
-      fillExtrusionVerticalScale?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-vertical-scale")
 
   /**
    * A global multiplier that can be used to scale base, height, AO, and flood light of the fill extrusions. Default value: 1. Minimum value: 0.

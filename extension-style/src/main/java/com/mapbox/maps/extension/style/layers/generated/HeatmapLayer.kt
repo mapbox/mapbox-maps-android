@@ -73,9 +73,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -108,7 +106,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -140,12 +138,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -186,9 +179,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -221,9 +212,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -311,15 +300,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * @return current HeatmapColorUseTheme property as Expression
      */
-    get() {
-      getPropertyValue<Expression>("heatmap-color-use-theme")?.let {
-        return it
-      }
-      heatmapColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("heatmap-color-use-theme")
 
   /**
    * Set the HeatmapColorUseTheme as Expression
@@ -374,18 +355,9 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      * Get the HeatmapIntensity property as an Expression
      *
      * Use static method [HeatmapLayer.defaultHeatmapIntensityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("heatmap-intensity")?.let {
-        return it
-      }
-      heatmapIntensity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("heatmap-intensity")
 
   /**
    * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level. Default value: 1. Minimum value: 0.
@@ -473,18 +445,9 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      * Get the HeatmapOpacity property as an Expression
      *
      * Use static method [HeatmapLayer.defaultHeatmapOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("heatmap-opacity")?.let {
-        return it
-      }
-      heatmapOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("heatmap-opacity")
 
   /**
    * The global opacity at which the heatmap layer will be drawn. Default value: 1. Value range: [0, 1]
@@ -572,18 +535,9 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      * Get the HeatmapRadius property as an Expression
      *
      * Use static method [HeatmapLayer.defaultHeatmapRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("heatmap-radius")?.let {
-        return it
-      }
-      heatmapRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("heatmap-radius")
 
   /**
    * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius. Default value: 30. Minimum value: 1. The unit of heatmapRadius is in pixels.
@@ -671,18 +625,9 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      * Get the HeatmapWeight property as an Expression
      *
      * Use static method [HeatmapLayer.defaultHeatmapWeightAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("heatmap-weight")?.let {
-        return it
-      }
-      heatmapWeight?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("heatmap-weight")
 
   /**
    * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering. Default value: 1. Minimum value: 0.

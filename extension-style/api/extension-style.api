@@ -6763,8 +6763,10 @@ public final class com/mapbox/maps/extension/style/utils/TypeUtilsKt {
 	public static final fun toValue (Lcom/mapbox/geojson/FeatureCollection;)Lcom/mapbox/bindgen/Value;
 	public static final fun toValue (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/bindgen/Value;
 	public static final fun transition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/TransitionOptions;
+	public static final fun unwrap (Lcom/mapbox/maps/StylePropertyValue;Ljava/lang/Class;)Ljava/lang/Object;
 	public static final fun unwrapToAny (Lcom/mapbox/bindgen/Value;)Ljava/lang/Object;
 	public static final fun unwrapToExpression (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun unwrapToStyleTransition (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public static final fun unwrapToTyped (Lcom/mapbox/bindgen/Value;Ljava/lang/Class;)Ljava/lang/Object;
 }
 

@@ -72,9 +72,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -107,7 +105,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -139,12 +137,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -185,9 +178,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -220,9 +211,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -254,7 +243,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      * @return List<String>
      */
     get() {
-      return getPropertyValue<List<String>>("clip-layer-scope")
+      return getPropertyValue("clip-layer-scope")
     }
 
   /**
@@ -282,18 +271,9 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      * Get the ClipLayerScope property as an Expression
      *
      * Use static method [ClipLayer.defaultClipLayerScopeAsExpression] to get the default property.
-     *
-     * @return List<String>
      */
-    get() {
-      getPropertyValue<Expression>("clip-layer-scope")?.let {
-        return it
-      }
-      clipLayerScope?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("clip-layer-scope")
 
   /**
    * Removes content from layers with the specified scope. By default all layers are affected. For example specifying `basemap` will only remove content from the Mapbox Standard style layers which have the same scope Default value: [].
@@ -319,7 +299,7 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      * @return List<String>
      */
     get() {
-      return getPropertyValue<List<String>>("clip-layer-types")
+      return getPropertyValue("clip-layer-types")
     }
 
   /**
@@ -347,18 +327,9 @@ class ClipLayer(override val layerId: String, val sourceId: String) : ClipLayerD
      * Get the ClipLayerTypes property as an Expression
      *
      * Use static method [ClipLayer.defaultClipLayerTypesAsExpression] to get the default property.
-     *
-     * @return List<String>
      */
-    get() {
-      getPropertyValue<Expression>("clip-layer-types")?.let {
-        return it
-      }
-      clipLayerTypes?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("clip-layer-types")
 
   /**
    * Layer types that will also be removed if fallen below this clip layer. Default value: [].

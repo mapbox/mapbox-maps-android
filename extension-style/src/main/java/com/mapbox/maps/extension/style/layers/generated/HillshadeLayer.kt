@@ -77,9 +77,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * Whether this layer is displayed.
@@ -111,12 +109,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -157,9 +150,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -192,9 +183,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -257,15 +246,9 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeAccentColor property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeAccentColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-accent-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("hillshade-accent-color")
 
   /**
    * The shading color used to accentuate rugged terrain like sharp cliffs and gorges. Default value: "#000000".
@@ -385,15 +368,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return current HillshadeAccentColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-accent-color-use-theme")?.let {
-        return it
-      }
-      hillshadeAccentColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("hillshade-accent-color-use-theme")
 
   /**
    * Set the HillshadeAccentColorUseTheme as Expression
@@ -448,18 +423,9 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeEmissiveStrength property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-emissive-strength")?.let {
-        return it
-      }
-      hillshadeEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("hillshade-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of hillshadeEmissiveStrength is in intensity.
@@ -547,18 +513,9 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeExaggeration property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeExaggerationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-exaggeration")?.let {
-        return it
-      }
-      hillshadeExaggeration?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("hillshade-exaggeration")
 
   /**
    * Intensity of the hillshade Default value: 0.5. Value range: [0, 1]
@@ -649,15 +606,9 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeHighlightColor property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeHighlightColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-highlight-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("hillshade-highlight-color")
 
   /**
    * The shading color of areas that faces towards the light source. Default value: "#FFFFFF".
@@ -777,15 +728,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return current HillshadeHighlightColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-highlight-color-use-theme")?.let {
-        return it
-      }
-      hillshadeHighlightColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("hillshade-highlight-color-use-theme")
 
   /**
    * Set the HillshadeHighlightColorUseTheme as Expression
@@ -843,18 +786,12 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeIlluminationAnchor property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeIlluminationAnchorAsExpression] to get the default property.
-     *
-     * @return HillshadeIlluminationAnchor
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-illumination-anchor")?.let {
-        return it
-      }
-      hillshadeIlluminationAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("hillshade-illumination-anchor")
+        ?: hillshadeIlluminationAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Direction of light source when map is rotated. Default value: "viewport".
@@ -908,18 +845,9 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeIlluminationDirection property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirectionAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-illumination-direction")?.let {
-        return it
-      }
-      hillshadeIlluminationDirection?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("hillshade-illumination-direction")
 
   /**
    * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead. Default value: 335. Value range: [0, 359]
@@ -976,15 +904,9 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      * Get the HillshadeShadowColor property as an Expression
      *
      * Use static method [HillshadeLayer.defaultHillshadeShadowColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-shadow-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("hillshade-shadow-color")
 
   /**
    * The shading color of areas that face away from the light source. Default value: "#000000".
@@ -1104,15 +1026,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      *
      * @return current HillshadeShadowColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("hillshade-shadow-color-use-theme")?.let {
-        return it
-      }
-      hillshadeShadowColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("hillshade-shadow-color-use-theme")
 
   /**
    * Set the HillshadeShadowColorUseTheme as Expression

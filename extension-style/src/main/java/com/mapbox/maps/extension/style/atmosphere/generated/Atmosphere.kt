@@ -887,9 +887,13 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   }
 
   private inline fun <reified T> getPropertyValue(propertyName: String): T? {
+      return getPropertyValue(propertyName, T::class.java)
+  }
+
+  private fun <T> getPropertyValue(propertyName: String, clazz: Class<T>): T? {
     delegate?.let {
       return try {
-        it.getStyleAtmosphereProperty(propertyName).unwrap()
+        it.getStyleAtmosphereProperty(propertyName).unwrap(clazz)
       } catch (e: RuntimeException) {
         Log.e(TAG, "Get atmosphere property failed: ${e.message}")
         Log.e(TAG, it.getStyleAtmosphereProperty(propertyName).toString())

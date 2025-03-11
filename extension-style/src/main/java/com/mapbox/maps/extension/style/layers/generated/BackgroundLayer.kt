@@ -48,9 +48,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * Whether this layer is displayed.
@@ -82,12 +80,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -128,9 +121,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -163,9 +154,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -228,15 +217,9 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * Get the BackgroundColor property as an Expression
      *
      * Use static method [BackgroundLayer.defaultBackgroundColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("background-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("background-color")
 
   /**
    * The color with which the background will be drawn. Default value: "#000000".
@@ -356,15 +339,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * @return current BackgroundColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("background-color-use-theme")?.let {
-        return it
-      }
-      backgroundColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("background-color-use-theme")
 
   /**
    * Set the BackgroundColorUseTheme as Expression
@@ -419,18 +394,9 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * Get the BackgroundEmissiveStrength property as an Expression
      *
      * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("background-emissive-strength")?.let {
-        return it
-      }
-      backgroundEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("background-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
@@ -518,18 +484,9 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * Get the BackgroundOpacity property as an Expression
      *
      * Use static method [BackgroundLayer.defaultBackgroundOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("background-opacity")?.let {
-        return it
-      }
-      backgroundOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("background-opacity")
 
   /**
    * The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
@@ -589,7 +546,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * @return String
      */
     get() {
-      return getPropertyValue<String>("background-pattern")
+      return getPropertyValue("background-pattern")
     }
 
   /**
@@ -617,18 +574,9 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * Get the BackgroundPattern property as an Expression
      *
      * Use static method [BackgroundLayer.defaultBackgroundPatternAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("background-pattern")?.let {
-        return it
-      }
-      backgroundPattern?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("background-pattern")
 
   /**
    * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -688,18 +636,12 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * Get the BackgroundPitchAlignment property as an Expression
      *
      * Use static method [BackgroundLayer.defaultBackgroundPitchAlignmentAsExpression] to get the default property.
-     *
-     * @return BackgroundPitchAlignment
      */
-    get() {
-      getPropertyValue<Expression>("background-pitch-alignment")?.let {
-        return it
-      }
-      backgroundPitchAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("background-pitch-alignment")
+        ?: backgroundPitchAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Orientation of background layer. Default value: "map".

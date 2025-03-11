@@ -52,9 +52,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -87,7 +85,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -119,12 +117,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -165,9 +158,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -200,9 +191,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -265,15 +254,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyAtmosphereColor property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyAtmosphereColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("sky-atmosphere-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("sky-atmosphere-color")
 
   /**
    * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density. Default value: "white".
@@ -359,15 +342,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return current SkyAtmosphereColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("sky-atmosphere-color-use-theme")?.let {
-        return it
-      }
-      skyAtmosphereColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("sky-atmosphere-color-use-theme")
 
   /**
    * Set the SkyAtmosphereColorUseTheme as Expression
@@ -425,15 +400,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyAtmosphereHaloColor property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyAtmosphereHaloColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("sky-atmosphere-halo-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("sky-atmosphere-halo-color")
 
   /**
    * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer. Default value: "white".
@@ -519,15 +488,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return current SkyAtmosphereHaloColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("sky-atmosphere-halo-color-use-theme")?.let {
-        return it
-      }
-      skyAtmosphereHaloColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("sky-atmosphere-halo-color-use-theme")
 
   /**
    * Set the SkyAtmosphereHaloColorUseTheme as Expression
@@ -554,7 +515,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("sky-atmosphere-sun")
+      return getPropertyValue("sky-atmosphere-sun")
     }
 
   /**
@@ -582,18 +543,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyAtmosphereSun property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyAtmosphereSunAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("sky-atmosphere-sun")?.let {
-        return it
-      }
-      skyAtmosphereSun?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("sky-atmosphere-sun")
 
   /**
    * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyAtmosphereSun is in degrees.
@@ -647,18 +599,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyAtmosphereSunIntensity property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyAtmosphereSunIntensityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("sky-atmosphere-sun-intensity")?.let {
-        return it
-      }
-      skyAtmosphereSunIntensity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("sky-atmosphere-sun-intensity")
 
   /**
    * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky. Default value: 10. Value range: [0, 100]
@@ -740,15 +683,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      *
      * @return current SkyGradientUseTheme property as Expression
      */
-    get() {
-      getPropertyValue<Expression>("sky-gradient-use-theme")?.let {
-        return it
-      }
-      skyGradientUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("sky-gradient-use-theme")
 
   /**
    * Set the SkyGradientUseTheme as Expression
@@ -775,7 +710,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("sky-gradient-center")
+      return getPropertyValue("sky-gradient-center")
     }
 
   /**
@@ -803,18 +738,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyGradientCenter property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyGradientCenterAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("sky-gradient-center")?.let {
-        return it
-      }
-      skyGradientCenter?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("sky-gradient-center")
 
   /**
    * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyGradientCenter is in degrees.
@@ -868,18 +794,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyGradientRadius property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyGradientRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("sky-gradient-radius")?.let {
-        return it
-      }
-      skyGradientRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("sky-gradient-radius")
 
   /**
    * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`. Default value: 90. Value range: [0, 180]
@@ -933,18 +850,9 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyOpacity property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("sky-opacity")?.let {
-        return it
-      }
-      skyOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("sky-opacity")
 
   /**
    * The opacity of the entire sky layer. Default value: 1. Value range: [0, 1]
@@ -1035,18 +943,12 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      * Get the SkyType property as an Expression
      *
      * Use static method [SkyLayer.defaultSkyTypeAsExpression] to get the default property.
-     *
-     * @return SkyType
      */
-    get() {
-      getPropertyValue<Expression>("sky-type")?.let {
-        return it
-      }
-      skyType?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("sky-type")
+        ?: skyType?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * The type of the sky Default value: "atmosphere".

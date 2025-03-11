@@ -73,9 +73,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * Whether this layer is displayed.
@@ -107,12 +105,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -153,9 +146,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -188,9 +179,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -253,18 +242,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterArrayBand property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterArrayBandAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("raster-array-band")?.let {
-        return it
-      }
-      rasterArrayBand?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-array-band")
 
   /**
    * Displayed band of raster array source layer. Defaults to the first band if not set.
@@ -319,18 +299,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterBrightnessMax property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterBrightnessMaxAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-brightness-max")?.let {
-        return it
-      }
-      rasterBrightnessMax?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-brightness-max")
 
   /**
    * Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
@@ -418,18 +389,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterBrightnessMin property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterBrightnessMinAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-brightness-min")?.let {
-        return it
-      }
-      rasterBrightnessMin?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-brightness-min")
 
   /**
    * Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
@@ -545,15 +507,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      *
      * @return current RasterColorUseTheme property as Expression
      */
-    get() {
-      getPropertyValue<Expression>("raster-color-use-theme")?.let {
-        return it
-      }
-      rasterColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("raster-color-use-theme")
 
   /**
    * Set the RasterColorUseTheme as Expression
@@ -580,7 +534,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("raster-color-mix")
+      return getPropertyValue("raster-color-mix")
     }
 
   /**
@@ -608,18 +562,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterColorMix property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterColorMixAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("raster-color-mix")?.let {
-        return it
-      }
-      rasterColorMix?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-color-mix")
 
   /**
    * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
@@ -679,7 +624,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("raster-color-range")
+      return getPropertyValue("raster-color-range")
     }
 
   /**
@@ -707,18 +652,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterColorRange property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterColorRangeAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("raster-color-range")?.let {
-        return it
-      }
-      rasterColorRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-color-range")
 
   /**
    * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
@@ -806,18 +742,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterContrast property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterContrastAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-contrast")?.let {
-        return it
-      }
-      rasterContrast?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-contrast")
 
   /**
    * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
@@ -908,18 +835,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterElevation property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterElevationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-elevation")?.let {
-        return it
-      }
-      rasterElevation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-elevation")
 
   /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
@@ -1011,18 +929,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterEmissiveStrength property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-emissive-strength")?.let {
-        return it
-      }
-      rasterEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
@@ -1110,18 +1019,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterFadeDuration property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterFadeDurationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-fade-duration")?.let {
-        return it
-      }
-      rasterFadeDuration?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-fade-duration")
 
   /**
    * Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
@@ -1175,18 +1075,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterHueRotate property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterHueRotateAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-hue-rotate")?.let {
-        return it
-      }
-      rasterHueRotate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-hue-rotate")
 
   /**
    * Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
@@ -1274,18 +1165,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterOpacity property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-opacity")?.let {
-        return it
-      }
-      rasterOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-opacity")
 
   /**
    * The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
@@ -1376,18 +1258,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterResampling property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterResamplingAsExpression] to get the default property.
-     *
-     * @return RasterResampling
      */
-    get() {
-      getPropertyValue<Expression>("raster-resampling")?.let {
-        return it
-      }
-      rasterResampling?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("raster-resampling")
+        ?: rasterResampling?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
@@ -1441,18 +1317,9 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * Get the RasterSaturation property as an Expression
      *
      * Use static method [RasterLayer.defaultRasterSaturationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-saturation")?.let {
-        return it
-      }
-      rasterSaturation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-saturation")
 
   /**
    * Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]

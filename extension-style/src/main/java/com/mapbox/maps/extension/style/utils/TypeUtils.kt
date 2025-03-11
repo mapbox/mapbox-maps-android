@@ -125,6 +125,8 @@ object TypeUtils {
 
 /**
  * Extension function for [Value] to unwrap Value to [Any].
+ *
+ * @throws UnsupportedOperationException if type is not supported.
  */
 fun Value.unwrapToAny(): Any {
   when (val contents = this.contents) {
@@ -160,16 +162,64 @@ fun Value.unwrapToAny(): Any {
 }
 
 /**
+ * Extension function for [Value] to unwrap Value to a literal [Expression].
+ */
+private fun Value.unwrapToLiteralExpression(): Expression {
+  when (val contents = this.contents) {
+    is Double -> return Expression.literal(contents)
+    is Long -> return Expression.literal(contents)
+    is Boolean -> return Expression.literal(contents)
+    is String -> return Expression.literal(contents)
+    is DoubleArray -> return Expression.literal(contents.asList())
+    is LongArray -> return Expression.literal(contents.asList())
+    is BooleanArray -> return Expression.literal(contents.asList())
+    is List<*> -> {
+      @Suppress("UNCHECKED_CAST")
+      val valueList = contents as List<Value>
+      val ret = ArrayList<Any>()
+      valueList.forEach {
+        ret.add(it.unwrapToAny())
+      }
+      return Expression.literal(ret)
+    }
+    is HashMap<*, *> -> {
+      @Suppress("UNCHECKED_CAST")
+      val valueMap = contents as HashMap<String, Value>
+      val ret = HashMap<String, Any>()
+      valueMap.keys.forEach { key ->
+        valueMap[key]?.let { value ->
+          ret[key] = value.unwrapToAny()
+        }
+      }
+      return Expression.literal(ret)
+    }
+  }
+  throw UnsupportedOperationException("unable to unwrap Value of content type: ${this.contents?.let { it::class.java.simpleName }}")
+}
+
+/**
  * Extension function for [Value] to unwrap Value to the given type.
  *
  * Throws exception if type doesn't match.
  */
 inline fun <reified T> Value.unwrapToTyped(): T {
+  return unwrapToTyped(T::class.java)
+}
+
+/**
+ * Extension function for [Value] to unwrap Value to the given type.
+ *
+ * Throws exception if type doesn't match.
+ *
+ * @param clazz the class to unwrap to.
+ */
+fun <T> Value.unwrapToTyped(clazz: Class<T>): T {
   val unwrappedValue = unwrapToAny()
-  return if (unwrappedValue is T) {
-    unwrappedValue
+  if (clazz.isInstance(unwrappedValue)) {
+    @Suppress("UNCHECKED_CAST")
+    return unwrappedValue as T
   } else {
-    throw UnsupportedOperationException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedValue::class.java.simpleName}")
+    throw UnsupportedOperationException("Requested type ${clazz.simpleName} doesn't match ${unwrappedValue::class.java.simpleName}")
   }
 }
 
@@ -299,25 +349,36 @@ fun Value.unwrapToExpression(): Expression {
  *
  * Throws exception if couldn't convert or type doesn't match.
  */
-inline fun <reified T> StylePropertyValue.unwrap(): T {
+inline fun <reified T> StylePropertyValue.unwrap(): T = unwrap(T::class.java)
+
+/**
+ * Extension function for [StylePropertyValue] to unwrap [StylePropertyValue] to given type.
+ *
+ * Throws exception if couldn't convert or type doesn't match.
+ *
+ * @param clazz the class to unwrap to.
+ */
+fun <T> StylePropertyValue.unwrap(clazz: Class<T>): T {
   when (this.kind) {
     StylePropertyValueKind.CONSTANT -> {
-      return this.value.unwrapToTyped()
+      return this.value.unwrapToTyped(clazz)
     }
     StylePropertyValueKind.TRANSITION -> {
       val unwrappedTransition = this.value.unwrapToStyleTransition()
-      if (unwrappedTransition is T) {
-        return unwrappedTransition
+      @Suppress("UNCHECKED_CAST")
+      if (clazz.isInstance(unwrappedTransition)) {
+        return unwrappedTransition as T
       } else {
-        throw IllegalArgumentException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedTransition::class.java.simpleName}")
+        throw IllegalArgumentException("Requested type ${clazz.simpleName} doesn't match ${unwrappedTransition::class.java.simpleName}")
       }
     }
     StylePropertyValueKind.EXPRESSION -> {
       val unwrappedExpression = this.value.unwrapToExpression()
-      if (unwrappedExpression is T) {
-        return unwrappedExpression
+      if (clazz.isInstance(unwrappedExpression)) {
+        @Suppress("UNCHECKED_CAST")
+        return unwrappedExpression as T
       } else {
-        throw IllegalArgumentException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedExpression::class.java.simpleName}")
+        throw IllegalArgumentException("Requested type ${clazz.simpleName} doesn't match ${unwrappedExpression::class.java.simpleName}")
       }
     }
     StylePropertyValueKind.UNDEFINED -> {
@@ -328,13 +389,28 @@ inline fun <reified T> StylePropertyValue.unwrap(): T {
 }
 
 /**
+ * Extension function for [StylePropertyValue] to unwrap [StylePropertyValue] to an [Expression].
+ *
+ * Throws exception if couldn't convert.
+ *
+ * @throws UnsupportedOperationException if type can't be wrapped to an Expression.
+ */
+internal fun StylePropertyValue.unwrapToExpressionOrLiteralExpression(): Expression =
+  when (this.kind) {
+    StylePropertyValueKind.CONSTANT -> this.value.unwrapToLiteralExpression()
+    StylePropertyValueKind.EXPRESSION -> this.value.unwrapToExpression()
+    // Only CONSTANT and EXPRESSION can be unwrapped to Expression the rest throw exception
+    else -> throw UnsupportedOperationException("parsing [${this.kind}] as an expression is not supported")
+  }
+
+/**
  * Extension function for [StylePropertyValue] to silently unwrap [StylePropertyValue] to given type.
  *
  * Returns null if couldn't convert or type doesn't match.
  */
 inline fun <reified T> StylePropertyValue.silentUnwrap(): T? {
   return try {
-    this.unwrap()
+    this.unwrap(T::class.java)
   } catch (e: RuntimeException) {
     null
   }

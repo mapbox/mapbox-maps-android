@@ -48,9 +48,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * Whether this layer is displayed.
@@ -82,12 +80,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -128,9 +121,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -163,9 +154,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -225,18 +214,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the AccuracyRadius property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("accuracy-radius")?.let {
-        return it
-      }
-      accuracyRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("accuracy-radius")
 
   /**
    * The accuracy, in meters, of the position source used to retrieve the position of the location indicator. Default value: 0. The unit of accuracyRadius is in meters.
@@ -327,15 +307,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the AccuracyRadiusBorderColor property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusBorderColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("accuracy-radius-border-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("accuracy-radius-border-color")
 
   /**
    * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
@@ -455,15 +429,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return current AccuracyRadiusBorderColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("accuracy-radius-border-color-use-theme")?.let {
-        return it
-      }
-      accuracyRadiusBorderColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("accuracy-radius-border-color-use-theme")
 
   /**
    * Set the AccuracyRadiusBorderColorUseTheme as Expression
@@ -521,15 +487,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the AccuracyRadiusColor property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultAccuracyRadiusColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("accuracy-radius-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("accuracy-radius-color")
 
   /**
    * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
@@ -649,15 +609,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return current AccuracyRadiusColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("accuracy-radius-color-use-theme")?.let {
-        return it
-      }
-      accuracyRadiusColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("accuracy-radius-color-use-theme")
 
   /**
    * Set the AccuracyRadiusColorUseTheme as Expression
@@ -712,18 +664,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the Bearing property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultBearingAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("bearing")?.let {
-        return it
-      }
-      bearing?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("bearing")
 
   /**
    * The bearing of the location indicator. Values under 0.01 degree variation are ignored. Default value: 0. The unit of bearing is in degrees.
@@ -783,7 +726,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * @return String
      */
     get() {
-      return getPropertyValue<String>("bearing-image")
+      return getPropertyValue("bearing-image")
     }
 
   /**
@@ -811,18 +754,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the BearingImage property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultBearingImageAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("bearing-image")?.let {
-        return it
-      }
-      bearingImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("bearing-image")
 
   /**
    * Name of image in sprite to use as the middle of the location indicator.
@@ -876,18 +810,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the BearingImageSize property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultBearingImageSizeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("bearing-image-size")?.let {
-        return it
-      }
-      bearingImageSize?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("bearing-image-size")
 
   /**
    * The size of the bearing image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of bearingImageSize is in factor of the original icon size.
@@ -978,15 +903,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the EmphasisCircleColor property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultEmphasisCircleColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("emphasis-circle-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("emphasis-circle-color")
 
   /**
    * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly. Default value: "#ffffff".
@@ -1106,15 +1025,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      *
      * @return current EmphasisCircleColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("emphasis-circle-color-use-theme")?.let {
-        return it
-      }
-      emphasisCircleColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("emphasis-circle-color-use-theme")
 
   /**
    * Set the EmphasisCircleColorUseTheme as Expression
@@ -1141,7 +1052,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("emphasis-circle-glow-range")
+      return getPropertyValue("emphasis-circle-glow-range")
     }
 
   /**
@@ -1169,18 +1080,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the EmphasisCircleGlowRange property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultEmphasisCircleGlowRangeAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("emphasis-circle-glow-range")?.let {
-        return it
-      }
-      emphasisCircleGlowRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("emphasis-circle-glow-range")
 
   /**
    * Specifies a glow effect range of the emphasis circle, in pixels. If [0,0] values are provided, it renders the circle as a solid color. The first value specifies the start of the glow effect where it is equal to the circle's color, the second is the end, where it's fully transparent. Between the two values the effect is linearly faded out. Default value: [0,0].
@@ -1268,18 +1170,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the EmphasisCircleRadius property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultEmphasisCircleRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("emphasis-circle-radius")?.let {
-        return it
-      }
-      emphasisCircleRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("emphasis-circle-radius")
 
   /**
    * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow. Default value: 0. The unit of emphasisCircleRadius is in pixels.
@@ -1367,18 +1260,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the ImagePitchDisplacement property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultImagePitchDisplacementAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("image-pitch-displacement")?.let {
-        return it
-      }
-      imagePitchDisplacement?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("image-pitch-displacement")
 
   /**
    * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence. Default value: "0". The unit of imagePitchDisplacement is in pixels.
@@ -1404,7 +1288,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("location")
+      return getPropertyValue("location")
     }
 
   /**
@@ -1432,18 +1316,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the Location property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultLocationAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("location")?.let {
-        return it
-      }
-      location?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("location")
 
   /**
    * An array of [latitude, longitude, altitude] position of the location indicator. Values under 0.000001 variation are ignored. Default value: [0,0,0].
@@ -1531,18 +1406,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the LocationIndicatorOpacity property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultLocationIndicatorOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("location-indicator-opacity")?.let {
-        return it
-      }
-      locationIndicatorOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("location-indicator-opacity")
 
   /**
    * The opacity of the entire location indicator layer. Default value: 1. Value range: [0, 1]
@@ -1630,18 +1496,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the PerspectiveCompensation property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultPerspectiveCompensationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("perspective-compensation")?.let {
-        return it
-      }
-      perspectiveCompensation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("perspective-compensation")
 
   /**
    * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection. Default value: "0.85".
@@ -1667,7 +1524,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * @return String
      */
     get() {
-      return getPropertyValue<String>("shadow-image")
+      return getPropertyValue("shadow-image")
     }
 
   /**
@@ -1695,18 +1552,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the ShadowImage property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultShadowImageAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("shadow-image")?.let {
-        return it
-      }
-      shadowImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("shadow-image")
 
   /**
    * Name of image in sprite to use as the background of the location indicator.
@@ -1760,18 +1608,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the ShadowImageSize property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultShadowImageSizeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("shadow-image-size")?.let {
-        return it
-      }
-      shadowImageSize?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("shadow-image-size")
 
   /**
    * The size of the shadow image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of shadowImageSize is in factor of the original icon size.
@@ -1831,7 +1670,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * @return String
      */
     get() {
-      return getPropertyValue<String>("top-image")
+      return getPropertyValue("top-image")
     }
 
   /**
@@ -1859,18 +1698,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the TopImage property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultTopImageAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("top-image")?.let {
-        return it
-      }
-      topImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("top-image")
 
   /**
    * Name of image in sprite to use as the top of the location indicator.
@@ -1924,18 +1754,9 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      * Get the TopImageSize property as an Expression
      *
      * Use static method [LocationIndicatorLayer.defaultTopImageSizeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("top-image-size")?.let {
-        return it
-      }
-      topImageSize?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("top-image-size")
 
   /**
    * The size of the top image, as a scale factor applied to the size of the specified image. Default value: 1. The unit of topImageSize is in factor of the original icon size.
