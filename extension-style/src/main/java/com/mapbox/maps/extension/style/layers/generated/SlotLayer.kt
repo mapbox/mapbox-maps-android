@@ -40,9 +40,7 @@ class SlotLayer(override val layerId: String) : SlotLayerDsl, Layer() {
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * No-op.

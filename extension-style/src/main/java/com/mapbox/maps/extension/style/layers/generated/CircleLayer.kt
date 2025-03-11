@@ -77,9 +77,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -112,7 +110,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -144,12 +142,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -190,9 +183,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -225,9 +216,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -287,18 +276,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleSortKey property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleSortKeyAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-sort-key")?.let {
-        return it
-      }
-      circleSortKey?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-sort-key")
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -352,18 +332,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleBlur property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleBlurAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-blur")?.let {
-        return it
-      }
-      circleBlur?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-blur")
 
   /**
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity. Setting a negative value renders the blur as an inner glow effect. Default value: 0.
@@ -454,15 +425,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleColor property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("circle-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("circle-color")
 
   /**
    * The fill color of the circle. Default value: "#000000".
@@ -582,15 +547,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return current CircleColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("circle-color-use-theme")?.let {
-        return it
-      }
-      circleColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("circle-color-use-theme")
 
   /**
    * Set the CircleColorUseTheme as Expression
@@ -645,18 +602,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleEmissiveStrength property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-emissive-strength")?.let {
-        return it
-      }
-      circleEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of circleEmissiveStrength is in intensity.
@@ -744,18 +692,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleOpacity property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-opacity")?.let {
-        return it
-      }
-      circleOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-opacity")
 
   /**
    * The opacity at which the circle will be drawn. Default value: 1. Value range: [0, 1]
@@ -846,18 +785,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CirclePitchAlignment property as an Expression
      *
      * Use static method [CircleLayer.defaultCirclePitchAlignmentAsExpression] to get the default property.
-     *
-     * @return CirclePitchAlignment
      */
-    get() {
-      getPropertyValue<Expression>("circle-pitch-alignment")?.let {
-        return it
-      }
-      circlePitchAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("circle-pitch-alignment")
+        ?: circlePitchAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Orientation of circle when map is pitched. Default value: "viewport".
@@ -914,18 +847,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CirclePitchScale property as an Expression
      *
      * Use static method [CircleLayer.defaultCirclePitchScaleAsExpression] to get the default property.
-     *
-     * @return CirclePitchScale
      */
-    get() {
-      getPropertyValue<Expression>("circle-pitch-scale")?.let {
-        return it
-      }
-      circlePitchScale?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("circle-pitch-scale")
+        ?: circlePitchScale?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the scaling behavior of the circle when the map is pitched. Default value: "map".
@@ -979,18 +906,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleRadius property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleRadiusAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-radius")?.let {
-        return it
-      }
-      circleRadius?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-radius")
 
   /**
    * Circle radius. Default value: 5. Minimum value: 0. The unit of circleRadius is in pixels.
@@ -1081,15 +999,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleStrokeColor property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleStrokeColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("circle-stroke-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("circle-stroke-color")
 
   /**
    * The stroke color of the circle. Default value: "#000000".
@@ -1209,15 +1121,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * @return current CircleStrokeColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("circle-stroke-color-use-theme")?.let {
-        return it
-      }
-      circleStrokeColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("circle-stroke-color-use-theme")
 
   /**
    * Set the CircleStrokeColorUseTheme as Expression
@@ -1272,18 +1176,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleStrokeOpacity property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleStrokeOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-stroke-opacity")?.let {
-        return it
-      }
-      circleStrokeOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-stroke-opacity")
 
   /**
    * The opacity of the circle's stroke. Default value: 1. Value range: [0, 1]
@@ -1371,18 +1266,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleStrokeWidth property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleStrokeWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("circle-stroke-width")?.let {
-        return it
-      }
-      circleStrokeWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-stroke-width")
 
   /**
    * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`. Default value: 0. Minimum value: 0. The unit of circleStrokeWidth is in pixels.
@@ -1442,7 +1328,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("circle-translate")
+      return getPropertyValue("circle-translate")
     }
 
   /**
@@ -1470,18 +1356,9 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleTranslate property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleTranslateAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("circle-translate")?.let {
-        return it
-      }
-      circleTranslate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("circle-translate")
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of circleTranslate is in pixels.
@@ -1572,18 +1449,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * Get the CircleTranslateAnchor property as an Expression
      *
      * Use static method [CircleLayer.defaultCircleTranslateAnchorAsExpression] to get the default property.
-     *
-     * @return CircleTranslateAnchor
      */
-    get() {
-      getPropertyValue<Expression>("circle-translate-anchor")?.let {
-        return it
-      }
-      circleTranslateAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("circle-translate-anchor")
+        ?: circleTranslateAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the frame of reference for `circle-translate`. Default value: "map".

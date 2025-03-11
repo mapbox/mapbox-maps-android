@@ -77,9 +77,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -112,7 +110,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -144,12 +142,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -190,9 +183,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -225,9 +216,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -290,18 +279,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineCap property as an Expression
      *
      * Use static method [LineLayer.defaultLineCapAsExpression] to get the default property.
-     *
-     * @return LineCap
      */
-    get() {
-      getPropertyValue<Expression>("line-cap")?.let {
-        return it
-      }
-      lineCap?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-cap")
+        ?: lineCap?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * The display of line endings. Default value: "butt".
@@ -358,18 +341,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineCrossSlope property as an Expression
      *
      * Use static method [LineLayer.defaultLineCrossSlopeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-cross-slope")?.let {
-        return it
-      }
-      lineCrossSlope?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-cross-slope")
 
   /**
    * Defines the slope of an elevated line. A value of 0 creates a horizontal line. A value of 1 creates a vertical line. Other values are currently not supported. If undefined, the line follows the terrain slope. This is an experimental property with some known issues:  - Vertical lines don't support line caps  - `line-join: round` is not supported with this property
@@ -430,18 +404,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineElevationReference property as an Expression
      *
      * Use static method [LineLayer.defaultLineElevationReferenceAsExpression] to get the default property.
-     *
-     * @return LineElevationReference
      */
-    get() {
-      getPropertyValue<Expression>("line-elevation-reference")?.let {
-        return it
-      }
-      lineElevationReference?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-elevation-reference")
+        ?: lineElevationReference?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
@@ -499,18 +467,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineJoin property as an Expression
      *
      * Use static method [LineLayer.defaultLineJoinAsExpression] to get the default property.
-     *
-     * @return LineJoin
      */
-    get() {
-      getPropertyValue<Expression>("line-join")?.let {
-        return it
-      }
-      lineJoin?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-join")
+        ?: lineJoin?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * The display of lines when joining. Default value: "miter".
@@ -564,18 +526,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineMiterLimit property as an Expression
      *
      * Use static method [LineLayer.defaultLineMiterLimitAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-miter-limit")?.let {
-        return it
-      }
-      lineMiterLimit?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-miter-limit")
 
   /**
    * Used to automatically convert miter joins to bevel joins for sharp angles. Default value: 2.
@@ -629,18 +582,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineRoundLimit property as an Expression
      *
      * Use static method [LineLayer.defaultLineRoundLimitAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-round-limit")?.let {
-        return it
-      }
-      lineRoundLimit?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-round-limit")
 
   /**
    * Used to automatically convert round joins to miter joins for shallow angles. Default value: 1.05.
@@ -694,18 +638,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineSortKey property as an Expression
      *
      * Use static method [LineLayer.defaultLineSortKeyAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-sort-key")?.let {
-        return it
-      }
-      lineSortKey?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-sort-key")
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -765,18 +700,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineWidthUnit property as an Expression
      *
      * Use static method [LineLayer.defaultLineWidthUnitAsExpression] to get the default property.
-     *
-     * @return LineWidthUnit
      */
-    get() {
-      getPropertyValue<Expression>("line-width-unit")?.let {
-        return it
-      }
-      lineWidthUnit?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-width-unit")
+        ?: lineWidthUnit?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Selects the unit of line-width. The same unit is automatically used for line-blur and line-offset. Note: This is an experimental property and might be removed in a future release. Default value: "pixels".
@@ -834,18 +763,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineZOffset property as an Expression
      *
      * Use static method [LineLayer.defaultLineZOffsetAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-z-offset")?.let {
-        return it
-      }
-      lineZOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-z-offset")
 
   /**
    * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
@@ -900,18 +820,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineBlur property as an Expression
      *
      * Use static method [LineLayer.defaultLineBlurAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-blur")?.let {
-        return it
-      }
-      lineBlur?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-blur")
 
   /**
    * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
@@ -1002,15 +913,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineBorderColor property as an Expression
      *
      * Use static method [LineLayer.defaultLineBorderColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("line-border-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-border-color")
 
   /**
    * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. Default value: "rgba(0, 0, 0, 0)".
@@ -1130,15 +1035,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return current LineBorderColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("line-border-color-use-theme")?.let {
-        return it
-      }
-      lineBorderColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("line-border-color-use-theme")
 
   /**
    * Set the LineBorderColorUseTheme as Expression
@@ -1193,18 +1090,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineBorderWidth property as an Expression
      *
      * Use static method [LineLayer.defaultLineBorderWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-border-width")?.let {
-        return it
-      }
-      lineBorderWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-border-width")
 
   /**
    * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
@@ -1295,15 +1183,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineColor property as an Expression
      *
      * Use static method [LineLayer.defaultLineColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("line-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-color")
 
   /**
    * The color with which the line will be drawn. Default value: "#000000".
@@ -1423,15 +1305,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return current LineColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("line-color-use-theme")?.let {
-        return it
-      }
-      lineColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("line-color-use-theme")
 
   /**
    * Set the LineColorUseTheme as Expression
@@ -1458,7 +1332,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("line-dasharray")
+      return getPropertyValue("line-dasharray")
     }
 
   /**
@@ -1486,18 +1360,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineDasharray property as an Expression
      *
      * Use static method [LineLayer.defaultLineDasharrayAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("line-dasharray")?.let {
-        return it
-      }
-      lineDasharray?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-dasharray")
 
   /**
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
@@ -1551,18 +1416,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineDepthOcclusionFactor property as an Expression
      *
      * Use static method [LineLayer.defaultLineDepthOcclusionFactorAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-depth-occlusion-factor")?.let {
-        return it
-      }
-      lineDepthOcclusionFactor?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-depth-occlusion-factor")
 
   /**
    * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
@@ -1650,18 +1506,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineEmissiveStrength property as an Expression
      *
      * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-emissive-strength")?.let {
-        return it
-      }
-      lineEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
@@ -1749,18 +1596,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineGapWidth property as an Expression
      *
      * Use static method [LineLayer.defaultLineGapWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-gap-width")?.let {
-        return it
-      }
-      lineGapWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-gap-width")
 
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
@@ -1876,15 +1714,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return current LineGradientUseTheme property as Expression
      */
-    get() {
-      getPropertyValue<Expression>("line-gradient-use-theme")?.let {
-        return it
-      }
-      lineGradientUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("line-gradient-use-theme")
 
   /**
    * Set the LineGradientUseTheme as Expression
@@ -1939,18 +1769,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineOcclusionOpacity property as an Expression
      *
      * Use static method [LineLayer.defaultLineOcclusionOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-occlusion-opacity")?.let {
-        return it
-      }
-      lineOcclusionOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-occlusion-opacity")
 
   /**
    * Opacity multiplier (multiplies line-opacity value) of the line part that is occluded by 3D objects. Value 0 hides occluded part, value 1 means the same opacity as non-occluded part. The property is not supported when `line-opacity` has data-driven styling. Default value: 0. Value range: [0, 1]
@@ -2038,18 +1859,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineOffset property as an Expression
      *
      * Use static method [LineLayer.defaultLineOffsetAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-offset")?.let {
-        return it
-      }
-      lineOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-offset")
 
   /**
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. Default value: 0. The unit of lineOffset is in pixels.
@@ -2137,18 +1949,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineOpacity property as an Expression
      *
      * Use static method [LineLayer.defaultLineOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-opacity")?.let {
-        return it
-      }
-      lineOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-opacity")
 
   /**
    * The opacity at which the line will be drawn. Default value: 1. Value range: [0, 1]
@@ -2208,7 +2011,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return String
      */
     get() {
-      return getPropertyValue<String>("line-pattern")
+      return getPropertyValue("line-pattern")
     }
 
   /**
@@ -2236,18 +2039,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LinePattern property as an Expression
      *
      * Use static method [LineLayer.defaultLinePatternAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("line-pattern")?.let {
-        return it
-      }
-      linePattern?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-pattern")
 
   /**
    * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -2273,7 +2067,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("line-translate")
+      return getPropertyValue("line-translate")
     }
 
   /**
@@ -2301,18 +2095,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineTranslate property as an Expression
      *
      * Use static method [LineLayer.defaultLineTranslateAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("line-translate")?.let {
-        return it
-      }
-      lineTranslate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-translate")
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
@@ -2403,18 +2188,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineTranslateAnchor property as an Expression
      *
      * Use static method [LineLayer.defaultLineTranslateAnchorAsExpression] to get the default property.
-     *
-     * @return LineTranslateAnchor
      */
-    get() {
-      getPropertyValue<Expression>("line-translate-anchor")?.let {
-        return it
-      }
-      lineTranslateAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-translate-anchor")
+        ?: lineTranslateAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the frame of reference for `line-translate`. Default value: "map".
@@ -2474,15 +2253,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineTrimColor property as an Expression
      *
      * Use static method [LineLayer.defaultLineTrimColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("line-trim-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("line-trim-color")
 
   /**
    * The color to be used for rendering the trimmed line section that is defined by the `line-trim-offset` property. Default value: "transparent".
@@ -2608,15 +2381,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return current LineTrimColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("line-trim-color-use-theme")?.let {
-        return it
-      }
-      lineTrimColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("line-trim-color-use-theme")
 
   /**
    * Set the LineTrimColorUseTheme as Expression
@@ -2644,7 +2409,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("line-trim-fade-range")
+      return getPropertyValue("line-trim-fade-range")
     }
 
   /**
@@ -2674,18 +2439,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineTrimFadeRange property as an Expression
      *
      * Use static method [LineLayer.defaultLineTrimFadeRangeAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("line-trim-fade-range")?.let {
-        return it
-      }
-      lineTrimFadeRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-trim-fade-range")
 
   /**
    * The fade range for the trim-start and trim-end points is defined by the `line-trim-offset` property. The first element of the array represents the fade range from the trim-start point toward the end of the line, while the second element defines the fade range from the trim-end point toward the beginning of the line. The fade result is achieved by interpolating between `line-trim-color` and the color specified by the `line-color` or the `line-gradient` property. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
@@ -2712,7 +2468,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("line-trim-offset")
+      return getPropertyValue("line-trim-offset")
     }
 
   /**
@@ -2740,18 +2496,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineTrimOffset property as an Expression
      *
      * Use static method [LineLayer.defaultLineTrimOffsetAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("line-trim-offset")?.let {
-        return it
-      }
-      lineTrimOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-trim-offset")
 
   /**
    * The line part between [trim-start, trim-end] will be painted using `line-trim-color,` which is transparent by default to produce a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0]. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [1,1].
@@ -2805,18 +2552,9 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * Get the LineWidth property as an Expression
      *
      * Use static method [LineLayer.defaultLineWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("line-width")?.let {
-        return it
-      }
-      lineWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-width")
 
   /**
    * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.

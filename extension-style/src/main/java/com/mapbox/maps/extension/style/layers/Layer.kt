@@ -13,6 +13,7 @@ import com.mapbox.maps.extension.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.utils.unwrap
+import com.mapbox.maps.extension.style.utils.unwrapToExpressionOrLiteralExpression
 
 /**
  * Base class for the different Layer types
@@ -223,19 +224,39 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   }
 
   internal inline fun <reified T> getPropertyValue(propertyName: String): T? {
+    return getPropertyValueWithType(propertyName, T::class.java)
+  }
+
+  private fun <T> getPropertyValueWithType(propertyName: String, clazz: Class<T>): T? {
     delegate?.let {
       return try {
-        it.getStyleLayerProperty(layerId, propertyName).unwrap()
+        it.getStyleLayerProperty(layerId, propertyName).unwrap(clazz)
       } catch (e: RuntimeException) {
         // logging an error is misleading as it is valid to set a property
         // with a concrete value (e.g. Double) and then read it as an expression
-        if (T::class != Expression::class) {
+        if (clazz != Expression::class.java) {
           Log.e(
             TAG,
             "Get layer property=$propertyName for layerId=$layerId failed: ${e.message}. " +
               "Value obtained: ${it.getStyleLayerProperty(layerId, propertyName)}"
           )
         }
+        null
+      }
+    }
+    throw MapboxStyleException("Couldn't get $propertyName: layer is not added to style yet.")
+  }
+
+  internal fun getPropertyValueAsExpressionOrLiteralExpression(propertyName: String): Expression? {
+    delegate?.let {
+      return try {
+        it.getStyleLayerProperty(layerId, propertyName).unwrapToExpressionOrLiteralExpression()
+      } catch (e: RuntimeException) {
+        Log.e(
+          TAG,
+          "Get layer property=$propertyName for layerId=$layerId failed: ${e.message}. " +
+            "Value obtained: ${it.getStyleLayerProperty(layerId, propertyName)}"
+        )
         null
       }
     }

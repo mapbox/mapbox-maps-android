@@ -71,12 +71,7 @@ class CustomLayer constructor(
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -117,9 +112,7 @@ class CustomLayer constructor(
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -152,9 +145,7 @@ class CustomLayer constructor(
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -193,9 +184,7 @@ class CustomLayer constructor(
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   override fun addPersistentLayer(
     delegate: MapboxStyleManager,

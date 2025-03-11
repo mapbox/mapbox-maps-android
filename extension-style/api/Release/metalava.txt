@@ -7957,10 +7957,12 @@ package com.mapbox.maps.extension.style.utils {
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.FeatureCollection);
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.Geometry);
     method public static inline com.mapbox.maps.TransitionOptions transition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.TransitionOptions.Builder,kotlin.Unit> block);
+    method public static <T> T! unwrap(com.mapbox.maps.StylePropertyValue, Class<T> clazz);
     method public static inline <reified T> T! unwrap(com.mapbox.maps.StylePropertyValue);
     method public static Object unwrapToAny(com.mapbox.bindgen.Value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression unwrapToExpression(com.mapbox.bindgen.Value);
     method public static com.mapbox.maps.extension.style.types.StyleTransition unwrapToStyleTransition(com.mapbox.bindgen.Value);
+    method public static <T> T! unwrapToTyped(com.mapbox.bindgen.Value, Class<T> clazz);
     method public static inline <reified T> T! unwrapToTyped(com.mapbox.bindgen.Value);
   }
 

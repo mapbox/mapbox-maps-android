@@ -77,9 +77,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -112,7 +110,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -144,12 +142,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -190,9 +183,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -225,9 +216,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -293,18 +282,12 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillElevationReference property as an Expression
      *
      * Use static method [FillLayer.defaultFillElevationReferenceAsExpression] to get the default property.
-     *
-     * @return FillElevationReference
      */
-    get() {
-      getPropertyValue<Expression>("fill-elevation-reference")?.let {
-        return it
-      }
-      fillElevationReference?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-elevation-reference")
+        ?: fillElevationReference?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
@@ -359,18 +342,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillSortKey property as an Expression
      *
      * Use static method [FillLayer.defaultFillSortKeyAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-sort-key")?.let {
-        return it
-      }
-      fillSortKey?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-sort-key")
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -424,18 +398,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillAntialias property as an Expression
      *
      * Use static method [FillLayer.defaultFillAntialiasAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("fill-antialias")?.let {
-        return it
-      }
-      fillAntialias?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-antialias")
 
   /**
    * Whether or not the fill should be antialiased. Default value: true.
@@ -492,15 +457,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillColor property as an Expression
      *
      * Use static method [FillLayer.defaultFillColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("fill-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-color")
 
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
@@ -620,15 +579,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return current FillColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("fill-color-use-theme")?.let {
-        return it
-      }
-      fillColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("fill-color-use-theme")
 
   /**
    * Set the FillColorUseTheme as Expression
@@ -683,18 +634,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillEmissiveStrength property as an Expression
      *
      * Use static method [FillLayer.defaultFillEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-emissive-strength")?.let {
-        return it
-      }
-      fillEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of fillEmissiveStrength is in intensity.
@@ -782,18 +724,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillOpacity property as an Expression
      *
      * Use static method [FillLayer.defaultFillOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-opacity")?.let {
-        return it
-      }
-      fillOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-opacity")
 
   /**
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used. Default value: 1. Value range: [0, 1]
@@ -884,15 +817,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillOutlineColor property as an Expression
      *
      * Use static method [FillLayer.defaultFillOutlineColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("fill-outline-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-outline-color")
 
   /**
    * The outline color of the fill. Matches the value of `fill-color` if unspecified.
@@ -1012,15 +939,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * @return current FillOutlineColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("fill-outline-color-use-theme")?.let {
-        return it
-      }
-      fillOutlineColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("fill-outline-color-use-theme")
 
   /**
    * Set the FillOutlineColorUseTheme as Expression
@@ -1047,7 +966,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * @return String
      */
     get() {
-      return getPropertyValue<String>("fill-pattern")
+      return getPropertyValue("fill-pattern")
     }
 
   /**
@@ -1075,18 +994,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillPattern property as an Expression
      *
      * Use static method [FillLayer.defaultFillPatternAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("fill-pattern")?.let {
-        return it
-      }
-      fillPattern?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-pattern")
 
   /**
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -1112,7 +1022,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("fill-translate")
+      return getPropertyValue("fill-translate")
     }
 
   /**
@@ -1140,18 +1050,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillTranslate property as an Expression
      *
      * Use static method [FillLayer.defaultFillTranslateAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("fill-translate")?.let {
-        return it
-      }
-      fillTranslate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-translate")
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
@@ -1242,18 +1143,12 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillTranslateAnchor property as an Expression
      *
      * Use static method [FillLayer.defaultFillTranslateAnchorAsExpression] to get the default property.
-     *
-     * @return FillTranslateAnchor
      */
-    get() {
-      getPropertyValue<Expression>("fill-translate-anchor")?.let {
-        return it
-      }
-      fillTranslateAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("fill-translate-anchor")
+        ?: fillTranslateAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the frame of reference for `fill-translate`. Default value: "map".
@@ -1310,18 +1205,9 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * Get the FillZOffset property as an Expression
      *
      * Use static method [FillLayer.defaultFillZOffsetAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("fill-z-offset")?.let {
-        return it
-      }
-      fillZOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-z-offset")
 
   /**
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.

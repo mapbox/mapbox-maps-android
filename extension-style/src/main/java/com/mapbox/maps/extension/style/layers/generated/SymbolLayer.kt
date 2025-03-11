@@ -77,9 +77,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -112,7 +110,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -144,12 +142,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -190,9 +183,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -225,9 +216,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -287,18 +276,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconAllowOverlap property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconAllowOverlapAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("icon-allow-overlap")?.let {
-        return it
-      }
-      iconAllowOverlap?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-allow-overlap")
 
   /**
    * If true, the icon will be visible even if it collides with other previously drawn symbols. Default value: false.
@@ -355,18 +335,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconAnchor property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconAnchorAsExpression] to get the default property.
-     *
-     * @return IconAnchor
      */
-    get() {
-      getPropertyValue<Expression>("icon-anchor")?.let {
-        return it
-      }
-      iconAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-anchor")
+        ?: iconAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Part of the icon placed closest to the anchor. Default value: "center".
@@ -420,18 +394,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconIgnorePlacement property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconIgnorePlacementAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("icon-ignore-placement")?.let {
-        return it
-      }
-      iconIgnorePlacement?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-ignore-placement")
 
   /**
    * If true, other symbols can be visible even if they collide with the icon. Default value: false.
@@ -457,7 +422,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return String
      */
     get() {
-      return getPropertyValue<String>("icon-image")
+      return getPropertyValue("icon-image")
     }
 
   /**
@@ -485,18 +450,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconImage property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconImageAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("icon-image")?.let {
-        return it
-      }
-      iconImage?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-image")
 
   /**
    * Name of image in sprite to use for drawing an image background.
@@ -550,18 +506,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconKeepUpright property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconKeepUprightAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("icon-keep-upright")?.let {
-        return it
-      }
-      iconKeepUpright?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-keep-upright")
 
   /**
    * If true, the icon may be flipped to prevent it from being rendered upside-down. Default value: false.
@@ -587,7 +534,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("icon-offset")
+      return getPropertyValue("icon-offset")
     }
 
   /**
@@ -615,18 +562,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconOffset property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconOffsetAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("icon-offset")?.let {
-        return it
-      }
-      iconOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-offset")
 
   /**
    * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up. Default value: [0,0].
@@ -680,18 +618,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconOptional property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconOptionalAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("icon-optional")?.let {
-        return it
-      }
-      iconOptional?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-optional")
 
   /**
    * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not. Default value: false.
@@ -745,18 +674,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconPadding property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconPaddingAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-padding")?.let {
-        return it
-      }
-      iconPadding?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-padding")
 
   /**
    * Size of the additional area around the icon bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of iconPadding is in pixels.
@@ -813,18 +733,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconPitchAlignment property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconPitchAlignmentAsExpression] to get the default property.
-     *
-     * @return IconPitchAlignment
      */
-    get() {
-      getPropertyValue<Expression>("icon-pitch-alignment")?.let {
-        return it
-      }
-      iconPitchAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-pitch-alignment")
+        ?: iconPitchAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Orientation of icon when map is pitched. Default value: "auto".
@@ -878,18 +792,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconRotate property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconRotateAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-rotate")?.let {
-        return it
-      }
-      iconRotate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-rotate")
 
   /**
    * Rotates the icon clockwise. Default value: 0. The unit of iconRotate is in degrees.
@@ -946,18 +851,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconRotationAlignment property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconRotationAlignmentAsExpression] to get the default property.
-     *
-     * @return IconRotationAlignment
      */
-    get() {
-      getPropertyValue<Expression>("icon-rotation-alignment")?.let {
-        return it
-      }
-      iconRotationAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-rotation-alignment")
+        ?: iconRotationAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * In combination with `symbol-placement`, determines the rotation behavior of icons. Default value: "auto".
@@ -1011,18 +910,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconSize property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconSizeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-size")?.let {
-        return it
-      }
-      iconSize?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-size")
 
   /**
    * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image. Default value: 1. Minimum value: 0. The unit of iconSize is in factor of the original icon size.
@@ -1049,7 +939,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("icon-size-scale-range")
+      return getPropertyValue("icon-size-scale-range")
     }
 
   /**
@@ -1079,18 +969,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconSizeScaleRange property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconSizeScaleRangeAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("icon-size-scale-range")?.let {
-        return it
-      }
-      iconSizeScaleRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-size-scale-range")
 
   /**
    * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
@@ -1148,18 +1029,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconTextFit property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconTextFitAsExpression] to get the default property.
-     *
-     * @return IconTextFit
      */
-    get() {
-      getPropertyValue<Expression>("icon-text-fit")?.let {
-        return it
-      }
-      iconTextFit?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-text-fit")
+        ?: iconTextFit?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Scales the icon to fit around the associated text. Default value: "none".
@@ -1185,7 +1060,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("icon-text-fit-padding")
+      return getPropertyValue("icon-text-fit-padding")
     }
 
   /**
@@ -1213,18 +1088,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconTextFitPadding property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconTextFitPaddingAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("icon-text-fit-padding")?.let {
-        return it
-      }
-      iconTextFitPadding?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-text-fit-padding")
 
   /**
    * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left. Default value: [0,0,0,0]. The unit of iconTextFitPadding is in pixels.
@@ -1278,18 +1144,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolAvoidEdges property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolAvoidEdgesAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("symbol-avoid-edges")?.let {
-        return it
-      }
-      symbolAvoidEdges?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("symbol-avoid-edges")
 
   /**
    * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries. Default value: false.
@@ -1349,18 +1206,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolElevationReference property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolElevationReferenceAsExpression] to get the default property.
-     *
-     * @return SymbolElevationReference
      */
-    get() {
-      getPropertyValue<Expression>("symbol-elevation-reference")?.let {
-        return it
-      }
-      symbolElevationReference?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("symbol-elevation-reference")
+        ?: symbolElevationReference?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Selects the base of symbol-elevation. Default value: "ground".
@@ -1418,18 +1269,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolPlacement property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolPlacementAsExpression] to get the default property.
-     *
-     * @return SymbolPlacement
      */
-    get() {
-      getPropertyValue<Expression>("symbol-placement")?.let {
-        return it
-      }
-      symbolPlacement?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("symbol-placement")
+        ?: symbolPlacement?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Label placement relative to its geometry. Default value: "point".
@@ -1483,18 +1328,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolSortKey property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolSortKeyAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("symbol-sort-key")?.let {
-        return it
-      }
-      symbolSortKey?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("symbol-sort-key")
 
   /**
    * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
@@ -1548,18 +1384,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolSpacing property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolSpacingAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("symbol-spacing")?.let {
-        return it
-      }
-      symbolSpacing?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("symbol-spacing")
 
   /**
    * Distance between two symbol anchors. Default value: 250. Minimum value: 1. The unit of symbolSpacing is in pixels.
@@ -1613,18 +1440,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolZElevate property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolZElevateAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("symbol-z-elevate")?.let {
-        return it
-      }
-      symbolZElevate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("symbol-z-elevate")
 
   /**
    * Position symbol on buildings (both fill extrusions and models) rooftops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and remains unchanged. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building rooftops. Symbols are sorted by elevation, except in cases when `viewport-y` sorting or `symbol-sort-key` are applied. Default value: false.
@@ -1681,18 +1499,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolZOrder property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolZOrderAsExpression] to get the default property.
-     *
-     * @return SymbolZOrder
      */
-    get() {
-      getPropertyValue<Expression>("symbol-z-order")?.let {
-        return it
-      }
-      symbolZOrder?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("symbol-z-order")
+        ?: symbolZOrder?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`. Default value: "auto".
@@ -1746,18 +1558,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextAllowOverlap property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextAllowOverlapAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("text-allow-overlap")?.let {
-        return it
-      }
-      textAllowOverlap?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-allow-overlap")
 
   /**
    * If true, the text will be visible even if it collides with other previously drawn symbols. Default value: false.
@@ -1814,18 +1617,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextAnchor property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextAnchorAsExpression] to get the default property.
-     *
-     * @return TextAnchor
      */
-    get() {
-      getPropertyValue<Expression>("text-anchor")?.let {
-        return it
-      }
-      textAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-anchor")
+        ?: textAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Part of the text placed closest to the anchor. Default value: "center".
@@ -1882,15 +1679,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextField property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextFieldAsExpression] to get the default property.
-     *
-     * @return Formatted
      */
-    get() {
-      getPropertyValue<Expression>("text-field")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-field")
 
   /**
    * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored. Default value: "".
@@ -1955,7 +1746,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<String>
      */
     get() {
-      return getPropertyValue<List<String>>("text-font")
+      return getPropertyValue("text-font")
     }
 
   /**
@@ -1983,18 +1774,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextFont property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextFontAsExpression] to get the default property.
-     *
-     * @return List<String>
      */
-    get() {
-      getPropertyValue<Expression>("text-font")?.let {
-        return it
-      }
-      textFont?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-font")
 
   /**
    * Font stack to use for displaying text.
@@ -2048,18 +1830,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextIgnorePlacement property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextIgnorePlacementAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("text-ignore-placement")?.let {
-        return it
-      }
-      textIgnorePlacement?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-ignore-placement")
 
   /**
    * If true, other symbols can be visible even if they collide with the text. Default value: false.
@@ -2116,18 +1889,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextJustify property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextJustifyAsExpression] to get the default property.
-     *
-     * @return TextJustify
      */
-    get() {
-      getPropertyValue<Expression>("text-justify")?.let {
-        return it
-      }
-      textJustify?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-justify")
+        ?: textJustify?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Text justification options. Default value: "center".
@@ -2181,18 +1948,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextKeepUpright property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextKeepUprightAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("text-keep-upright")?.let {
-        return it
-      }
-      textKeepUpright?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-keep-upright")
 
   /**
    * If true, the text may be flipped vertically to prevent it from being rendered upside-down. Default value: true.
@@ -2246,18 +2004,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextLetterSpacing property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextLetterSpacingAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-letter-spacing")?.let {
-        return it
-      }
-      textLetterSpacing?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-letter-spacing")
 
   /**
    * Text tracking amount. Default value: 0. The unit of textLetterSpacing is in ems.
@@ -2311,18 +2060,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextLineHeight property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextLineHeightAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-line-height")?.let {
-        return it
-      }
-      textLineHeight?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-line-height")
 
   /**
    * Text leading value for multi-line text. Default value: 1.2. The unit of textLineHeight is in ems.
@@ -2376,18 +2116,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextMaxAngle property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextMaxAngleAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-max-angle")?.let {
-        return it
-      }
-      textMaxAngle?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-max-angle")
 
   /**
    * Maximum angle change between adjacent characters. Default value: 45. The unit of textMaxAngle is in degrees.
@@ -2441,18 +2172,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextMaxWidth property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextMaxWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-max-width")?.let {
-        return it
-      }
-      textMaxWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-max-width")
 
   /**
    * The maximum line width for text wrapping. Default value: 10. Minimum value: 0. The unit of textMaxWidth is in ems.
@@ -2478,7 +2200,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("text-offset")
+      return getPropertyValue("text-offset")
     }
 
   /**
@@ -2506,18 +2228,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextOffset property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextOffsetAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("text-offset")?.let {
-        return it
-      }
-      textOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-offset")
 
   /**
    * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. Default value: [0,0]. The unit of textOffset is in ems.
@@ -2571,18 +2284,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextOptional property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextOptionalAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("text-optional")?.let {
-        return it
-      }
-      textOptional?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-optional")
 
   /**
    * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not. Default value: false.
@@ -2636,18 +2340,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextPadding property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextPaddingAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-padding")?.let {
-        return it
-      }
-      textPadding?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-padding")
 
   /**
    * Size of the additional area around the text bounding box used for detecting symbol collisions. Default value: 2. Minimum value: 0. The unit of textPadding is in pixels.
@@ -2704,18 +2399,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextPitchAlignment property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextPitchAlignmentAsExpression] to get the default property.
-     *
-     * @return TextPitchAlignment
      */
-    get() {
-      getPropertyValue<Expression>("text-pitch-alignment")?.let {
-        return it
-      }
-      textPitchAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-pitch-alignment")
+        ?: textPitchAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Orientation of text when map is pitched. Default value: "auto".
@@ -2769,18 +2458,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextRadialOffset property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextRadialOffsetAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-radial-offset")?.let {
-        return it
-      }
-      textRadialOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-radial-offset")
 
   /**
    * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present. Default value: 0. The unit of textRadialOffset is in ems.
@@ -2834,18 +2514,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextRotate property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextRotateAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-rotate")?.let {
-        return it
-      }
-      textRotate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-rotate")
 
   /**
    * Rotates the text clockwise. Default value: 0. The unit of textRotate is in degrees.
@@ -2902,18 +2573,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextRotationAlignment property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextRotationAlignmentAsExpression] to get the default property.
-     *
-     * @return TextRotationAlignment
      */
-    get() {
-      getPropertyValue<Expression>("text-rotation-alignment")?.let {
-        return it
-      }
-      textRotationAlignment?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-rotation-alignment")
+        ?: textRotationAlignment?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text. Default value: "auto".
@@ -2967,18 +2632,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextSize property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextSizeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-size")?.let {
-        return it
-      }
-      textSize?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-size")
 
   /**
    * Font size. Default value: 16. Minimum value: 0. The unit of textSize is in pixels.
@@ -3005,7 +2661,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("text-size-scale-range")
+      return getPropertyValue("text-size-scale-range")
     }
 
   /**
@@ -3035,18 +2691,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextSizeScaleRange property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextSizeScaleRangeAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("text-size-scale-range")?.let {
-        return it
-      }
-      textSizeScaleRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-size-scale-range")
 
   /**
    * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
@@ -3104,18 +2751,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextTransform property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextTransformAsExpression] to get the default property.
-     *
-     * @return TextTransform
      */
-    get() {
-      getPropertyValue<Expression>("text-transform")?.let {
-        return it
-      }
-      textTransform?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-transform")
+        ?: textTransform?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Specifies how to capitalize text, similar to the CSS `text-transform` property. Default value: "none".
@@ -3141,7 +2782,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<String>
      */
     get() {
-      return getPropertyValue<List<String>>("text-variable-anchor")
+      return getPropertyValue("text-variable-anchor")
     }
 
   /**
@@ -3169,18 +2810,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextVariableAnchor property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextVariableAnchorAsExpression] to get the default property.
-     *
-     * @return List<String>
      */
-    get() {
-      getPropertyValue<Expression>("text-variable-anchor")?.let {
-        return it
-      }
-      textVariableAnchor?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-variable-anchor")
 
   /**
    * To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
@@ -3206,7 +2838,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<String>
      */
     get() {
-      return getPropertyValue<List<String>>("text-writing-mode")
+      return getPropertyValue("text-writing-mode")
     }
 
   /**
@@ -3234,18 +2866,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextWritingMode property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextWritingModeAsExpression] to get the default property.
-     *
-     * @return List<String>
      */
-    get() {
-      getPropertyValue<Expression>("text-writing-mode")?.let {
-        return it
-      }
-      textWritingMode?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-writing-mode")
 
   /**
    * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
@@ -3302,15 +2925,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconColor property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("icon-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-color")
 
   /**
    * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "#000000".
@@ -3430,15 +3047,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return current IconColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("icon-color-use-theme")?.let {
-        return it
-      }
-      iconColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("icon-color-use-theme")
 
   /**
    * Set the IconColorUseTheme as Expression
@@ -3493,18 +3102,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconColorSaturation property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconColorSaturationAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-color-saturation")?.let {
-        return it
-      }
-      iconColorSaturation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-color-saturation")
 
   /**
    * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
@@ -3592,18 +3192,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconEmissiveStrength property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-emissive-strength")?.let {
-        return it
-      }
-      iconEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of iconEmissiveStrength is in intensity.
@@ -3691,18 +3282,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconHaloBlur property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconHaloBlurAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-halo-blur")?.let {
-        return it
-      }
-      iconHaloBlur?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-halo-blur")
 
   /**
    * Fade out the halo towards the outside. Default value: 0. Minimum value: 0. The unit of iconHaloBlur is in pixels.
@@ -3793,15 +3375,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconHaloColor property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconHaloColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("icon-halo-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-halo-color")
 
   /**
    * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). Default value: "rgba(0, 0, 0, 0)".
@@ -3921,15 +3497,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return current IconHaloColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("icon-halo-color-use-theme")?.let {
-        return it
-      }
-      iconHaloColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("icon-halo-color-use-theme")
 
   /**
    * Set the IconHaloColorUseTheme as Expression
@@ -3984,18 +3552,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconHaloWidth property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconHaloWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-halo-width")?.let {
-        return it
-      }
-      iconHaloWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-halo-width")
 
   /**
    * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
@@ -4083,18 +3642,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconImageCrossFade property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconImageCrossFadeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-image-cross-fade")?.let {
-        return it
-      }
-      iconImageCrossFade?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-image-cross-fade")
 
   /**
    * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
@@ -4182,18 +3732,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconOcclusionOpacity property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconOcclusionOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-occlusion-opacity")?.let {
-        return it
-      }
-      iconOcclusionOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-occlusion-opacity")
 
   /**
    * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
@@ -4281,18 +3822,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconOpacity property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("icon-opacity")?.let {
-        return it
-      }
-      iconOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-opacity")
 
   /**
    * The opacity at which the icon will be drawn. Default value: 1. Value range: [0, 1]
@@ -4352,7 +3884,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("icon-translate")
+      return getPropertyValue("icon-translate")
     }
 
   /**
@@ -4380,18 +3912,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconTranslate property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconTranslateAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("icon-translate")?.let {
-        return it
-      }
-      iconTranslate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("icon-translate")
 
   /**
    * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of iconTranslate is in pixels.
@@ -4482,18 +4005,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the IconTranslateAnchor property as an Expression
      *
      * Use static method [SymbolLayer.defaultIconTranslateAnchorAsExpression] to get the default property.
-     *
-     * @return IconTranslateAnchor
      */
-    get() {
-      getPropertyValue<Expression>("icon-translate-anchor")?.let {
-        return it
-      }
-      iconTranslateAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("icon-translate-anchor")
+        ?: iconTranslateAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the frame of reference for `icon-translate`. Default value: "map".
@@ -4550,18 +4067,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the SymbolZOffset property as an Expression
      *
      * Use static method [SymbolLayer.defaultSymbolZOffsetAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("symbol-z-offset")?.let {
-        return it
-      }
-      symbolZOffset?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("symbol-z-offset")
 
   /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
@@ -4656,15 +4164,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextColor property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("text-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-color")
 
   /**
    * The color with which the text will be drawn. Default value: "#000000".
@@ -4784,15 +4286,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return current TextColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("text-color-use-theme")?.let {
-        return it
-      }
-      textColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("text-color-use-theme")
 
   /**
    * Set the TextColorUseTheme as Expression
@@ -4847,18 +4341,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextEmissiveStrength property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-emissive-strength")?.let {
-        return it
-      }
-      textEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-emissive-strength")
 
   /**
    * Controls the intensity of light emitted on the source features. Default value: 1. Minimum value: 0. The unit of textEmissiveStrength is in intensity.
@@ -4946,18 +4431,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextHaloBlur property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextHaloBlurAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-halo-blur")?.let {
-        return it
-      }
-      textHaloBlur?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-halo-blur")
 
   /**
    * The halo's fadeout distance towards the outside. Default value: 0. Minimum value: 0. The unit of textHaloBlur is in pixels.
@@ -5048,15 +4524,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextHaloColor property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextHaloColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("text-halo-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-halo-color")
 
   /**
    * The color of the text's halo, which helps it stand out from backgrounds. Default value: "rgba(0, 0, 0, 0)".
@@ -5176,15 +4646,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      *
      * @return current TextHaloColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("text-halo-color-use-theme")?.let {
-        return it
-      }
-      textHaloColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("text-halo-color-use-theme")
 
   /**
    * Set the TextHaloColorUseTheme as Expression
@@ -5239,18 +4701,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextHaloWidth property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextHaloWidthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-halo-width")?.let {
-        return it
-      }
-      textHaloWidth?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-halo-width")
 
   /**
    * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. Default value: 0. Minimum value: 0. The unit of textHaloWidth is in pixels.
@@ -5338,18 +4791,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextOcclusionOpacity property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextOcclusionOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-occlusion-opacity")?.let {
-        return it
-      }
-      textOcclusionOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-occlusion-opacity")
 
   /**
    * The opacity at which the text will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
@@ -5437,18 +4881,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextOpacity property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("text-opacity")?.let {
-        return it
-      }
-      textOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-opacity")
 
   /**
    * The opacity at which the text will be drawn. Default value: 1. Value range: [0, 1]
@@ -5508,7 +4943,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("text-translate")
+      return getPropertyValue("text-translate")
     }
 
   /**
@@ -5536,18 +4971,9 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextTranslate property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextTranslateAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("text-translate")?.let {
-        return it
-      }
-      textTranslate?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("text-translate")
 
   /**
    * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. Default value: [0,0]. The unit of textTranslate is in pixels.
@@ -5638,18 +5064,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * Get the TextTranslateAnchor property as an Expression
      *
      * Use static method [SymbolLayer.defaultTextTranslateAnchorAsExpression] to get the default property.
-     *
-     * @return TextTranslateAnchor
      */
-    get() {
-      getPropertyValue<Expression>("text-translate-anchor")?.let {
-        return it
-      }
-      textTranslateAnchor?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("text-translate-anchor")
+        ?: textTranslateAnchor?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Controls the frame of reference for `text-translate`. Default value: "map".

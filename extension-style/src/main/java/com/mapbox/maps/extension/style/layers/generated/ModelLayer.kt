@@ -76,9 +76,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -111,7 +109,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -143,12 +141,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -189,9 +182,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -224,9 +215,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -289,18 +278,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelId property as an Expression
      *
      * Use static method [ModelLayer.defaultModelIdAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("model-id")?.let {
-        return it
-      }
-      modelId?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-id")
 
   /**
    * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
@@ -358,18 +338,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelAmbientOcclusionIntensity property as an Expression
      *
      * Use static method [ModelLayer.defaultModelAmbientOcclusionIntensityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("model-ambient-occlusion-intensity")?.let {
-        return it
-      }
-      modelAmbientOcclusionIntensity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-ambient-occlusion-intensity")
 
   /**
    * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
@@ -464,18 +435,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelCastShadows property as an Expression
      *
      * Use static method [ModelLayer.defaultModelCastShadowsAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("model-cast-shadows")?.let {
-        return it
-      }
-      modelCastShadows?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-cast-shadows")
 
   /**
    * Enable/Disable shadow casting for this layer Default value: true.
@@ -536,15 +498,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelColor property as an Expression
      *
      * Use static method [ModelLayer.defaultModelColorAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("model-color")?.let {
-        return it
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("model-color")
 
   /**
    * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
@@ -670,15 +626,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      *
      * @return current ModelColorUseTheme property as String
      */
-    get() {
-      getPropertyValue<Expression>("model-color-use-theme")?.let {
-        return it
-      }
-      modelColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("model-color-use-theme")
 
   /**
    * Set the ModelColorUseTheme as Expression
@@ -736,18 +684,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelColorMixIntensity property as an Expression
      *
      * Use static method [ModelLayer.defaultModelColorMixIntensityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("model-color-mix-intensity")?.let {
-        return it
-      }
-      modelColorMixIntensity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-color-mix-intensity")
 
   /**
    * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
@@ -842,18 +781,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelCutoffFadeRange property as an Expression
      *
      * Use static method [ModelLayer.defaultModelCutoffFadeRangeAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("model-cutoff-fade-range")?.let {
-        return it
-      }
-      modelCutoffFadeRange?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-cutoff-fade-range")
 
   /**
    * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
@@ -914,18 +844,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelElevationReference property as an Expression
      *
      * Use static method [ModelLayer.defaultModelElevationReferenceAsExpression] to get the default property.
-     *
-     * @return ModelElevationReference
      */
-    get() {
-      getPropertyValue<Expression>("model-elevation-reference")?.let {
-        return it
-      }
-      modelElevationReference?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("model-elevation-reference")
+        ?: modelElevationReference?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
@@ -983,18 +907,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelEmissiveStrength property as an Expression
      *
      * Use static method [ModelLayer.defaultModelEmissiveStrengthAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("model-emissive-strength")?.let {
-        return it
-      }
-      modelEmissiveStrength?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-emissive-strength")
 
   /**
    * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
@@ -1059,7 +974,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("model-height-based-emissive-strength-multiplier")
+      return getPropertyValue("model-height-based-emissive-strength-multiplier")
     }
 
   /**
@@ -1089,18 +1004,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelHeightBasedEmissiveStrengthMultiplier property as an Expression
      *
      * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("model-height-based-emissive-strength-multiplier")?.let {
-        return it
-      }
-      modelHeightBasedEmissiveStrengthMultiplier?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-height-based-emissive-strength-multiplier")
 
   /**
    * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
@@ -1195,18 +1101,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelOpacity property as an Expression
      *
      * Use static method [ModelLayer.defaultModelOpacityAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("model-opacity")?.let {
-        return it
-      }
-      modelOpacity?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-opacity")
 
   /**
    * The opacity of the model layer. Default value: 1. Value range: [0, 1]
@@ -1301,18 +1198,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelReceiveShadows property as an Expression
      *
      * Use static method [ModelLayer.defaultModelReceiveShadowsAsExpression] to get the default property.
-     *
-     * @return Boolean
      */
-    get() {
-      getPropertyValue<Expression>("model-receive-shadows")?.let {
-        return it
-      }
-      modelReceiveShadows?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-receive-shadows")
 
   /**
    * Enable/Disable shadow receiving for this layer Default value: true.
@@ -1340,7 +1228,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("model-rotation")
+      return getPropertyValue("model-rotation")
     }
 
   /**
@@ -1370,18 +1258,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelRotation property as an Expression
      *
      * Use static method [ModelLayer.defaultModelRotationAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("model-rotation")?.let {
-        return it
-      }
-      modelRotation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-rotation")
 
   /**
    * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
@@ -1476,18 +1355,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelRoughness property as an Expression
      *
      * Use static method [ModelLayer.defaultModelRoughnessAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("model-roughness")?.let {
-        return it
-      }
-      modelRoughness?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-roughness")
 
   /**
    * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
@@ -1552,7 +1422,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("model-scale")
+      return getPropertyValue("model-scale")
     }
 
   /**
@@ -1582,18 +1452,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelScale property as an Expression
      *
      * Use static method [ModelLayer.defaultModelScaleAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("model-scale")?.let {
-        return it
-      }
-      modelScale?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-scale")
 
   /**
    * The scale of the model. Default value: [1,1,1].
@@ -1691,18 +1552,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelScaleMode property as an Expression
      *
      * Use static method [ModelLayer.defaultModelScaleModeAsExpression] to get the default property.
-     *
-     * @return ModelScaleMode
      */
-    get() {
-      getPropertyValue<Expression>("model-scale-mode")?.let {
-        return it
-      }
-      modelScaleMode?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("model-scale-mode")
+        ?: modelScaleMode?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
@@ -1730,7 +1585,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * @return List<Double>
      */
     get() {
-      return getPropertyValue<List<Double>>("model-translation")
+      return getPropertyValue("model-translation")
     }
 
   /**
@@ -1760,18 +1615,9 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelTranslation property as an Expression
      *
      * Use static method [ModelLayer.defaultModelTranslationAsExpression] to get the default property.
-     *
-     * @return List<Double>
      */
-    get() {
-      getPropertyValue<Expression>("model-translation")?.let {
-        return it
-      }
-      modelTranslation?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-translation")
 
   /**
    * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
@@ -1869,18 +1715,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * Get the ModelType property as an Expression
      *
      * Use static method [ModelLayer.defaultModelTypeAsExpression] to get the default property.
-     *
-     * @return ModelType
      */
-    get() {
-      getPropertyValue<Expression>("model-type")?.let {
-        return it
-      }
-      modelType?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
+    get() =
+      getPropertyValue("model-type")
+        ?: modelType?.let {
+          Expression.literal(it.value)
+        }
 
   /**
    * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".

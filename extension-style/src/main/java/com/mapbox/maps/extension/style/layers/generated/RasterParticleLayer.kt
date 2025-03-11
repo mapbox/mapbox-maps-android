@@ -74,9 +74,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      *
      * @return slot
      */
-    get() {
-      return getPropertyValue("slot")
-    }
+    get() = getPropertyValue("slot")
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -109,7 +107,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      *
      * @return filter
      */
-    get() = getPropertyValue<Expression>("filter")
+    get() = getPropertyValue("filter")
 
   /**
    * Whether this layer is displayed.
@@ -141,12 +139,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      *
      * @return VISIBILITY as expression
      */
-    get() {
-      getPropertyValue<Expression>("visibility")?.let {
-        return it
-      }
-      return null
-    }
+    get() = getPropertyValue("visibility")
 
   /**
    * Whether this layer is displayed.
@@ -187,9 +180,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      *
      * @return minzoom
      */
-    get() {
-      return getPropertyValue("minzoom")
-    }
+    get() = getPropertyValue("minzoom")
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
@@ -222,9 +213,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      *
      * @return maxzoom
      */
-    get() {
-      return getPropertyValue("maxzoom")
-    }
+    get() = getPropertyValue("maxzoom")
 
   /**
    * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
@@ -287,18 +276,9 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * Get the RasterParticleArrayBand property as an Expression
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleArrayBandAsExpression] to get the default property.
-     *
-     * @return String
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-array-band")?.let {
-        return it
-      }
-      rasterParticleArrayBand?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-particle-array-band")
 
   /**
    * Displayed band of raster array source layer
@@ -383,15 +363,7 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      *
      * @return current RasterParticleColorUseTheme property as Expression
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-color-use-theme")?.let {
-        return it
-      }
-      rasterParticleColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() = getPropertyValueAsExpressionOrLiteralExpression("raster-particle-color-use-theme")
 
   /**
    * Set the RasterParticleColorUseTheme as Expression
@@ -449,18 +421,14 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * Get the RasterParticleCount property as an Expression
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleCountAsExpression] to get the default property.
-     *
-     * @return Long
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-count")?.let {
-        return it
-      }
-      rasterParticleCount?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-particle-count")
+        ?.let { expression ->
+          // Try to convert the expression to Long if it contains a Number, otherwise return the expression
+          (expression.literalValue as? Number)?.toLong()?.let { Expression.literal(it) }
+            ?: expression
+        }
 
   /**
    * Defines the amount of particles per tile. Default value: 512. Minimum value: 1.
@@ -518,18 +486,9 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * Get the RasterParticleFadeOpacityFactor property as an Expression
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleFadeOpacityFactorAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-fade-opacity-factor")?.let {
-        return it
-      }
-      rasterParticleFadeOpacityFactor?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-particle-fade-opacity-factor")
 
   /**
    * Defines defines the opacity coefficient applied to the faded particles in each frame. In practice, this property controls the length of the particle tail. Default value: 0.98. Value range: [0, 1]
@@ -624,18 +583,9 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * Get the RasterParticleMaxSpeed property as an Expression
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleMaxSpeedAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-max-speed")?.let {
-        return it
-      }
-      rasterParticleMaxSpeed?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-particle-max-speed")
 
   /**
    * Defines the maximum speed for particles. Velocities with magnitudes equal to or exceeding this value are clamped to the max value. Default value: 1. Minimum value: 1.
@@ -693,18 +643,9 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * Get the RasterParticleResetRateFactor property as an Expression
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleResetRateFactorAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-reset-rate-factor")?.let {
-        return it
-      }
-      rasterParticleResetRateFactor?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-particle-reset-rate-factor")
 
   /**
    * Defines a coefficient for a time period at which particles will restart at a random position, to avoid degeneration (empty areas without particles). Default value: 0.8. Value range: [0, 1]
@@ -762,18 +703,9 @@ class RasterParticleLayer(override val layerId: String, val sourceId: String) : 
      * Get the RasterParticleSpeedFactor property as an Expression
      *
      * Use static method [RasterParticleLayer.defaultRasterParticleSpeedFactorAsExpression] to get the default property.
-     *
-     * @return Double
      */
-    get() {
-      getPropertyValue<Expression>("raster-particle-speed-factor")?.let {
-        return it
-      }
-      rasterParticleSpeedFactor?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("raster-particle-speed-factor")
 
   /**
    * Defines a coefficient for the speed of particles’ motion. Default value: 0.2. Value range: [0, 1]
