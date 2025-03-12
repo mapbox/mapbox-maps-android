@@ -12,6 +12,14 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Introduce experimental `StyleImportState.styleColorTheme` which allows changing the color theme of the style import.
 * Conflate `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` by default to avoid blocking main thread due to slow collectors.
 
+## Bug fixes 🐞
+* Fixed incorrect rgba to hsla conversion for white color.
+* Fix vector images rasterization.
+* Make katakana and CJK symbol rendered correctly in vertical writing mode.
+
+## Dependencies
+* Update gl-native to v11.11.0-rc.1 and common to v24.11.0-rc.1.
+
 # 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁
 * Support expression input for `PromoteId`.
