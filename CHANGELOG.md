@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.11.0-rc.1
+
+# 11.11.0-rc.1 March 12, 2025
 ## Features ✨ and improvements 🏁
 * Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
 * Add experimental `*UseTheme` support for annotations and `LocationPuck3D`.
@@ -19,6 +20,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.11.0-rc.1 and common to v24.11.0-rc.1.
+
 
 # 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁
