@@ -23,34 +23,61 @@ class MapboxTracingTest {
   @After
   fun cleanUp() {
     unmockkStatic("com.mapbox.maps.Tracing")
-    MapboxTracing.disableAll()
   }
 
   @Test
-  fun enableAll() {
+  fun enableAllTracerAvailable() {
+    MapboxTracing.tracerAvailable = true
     MapboxTracing.enableAll()
     verifyOnce { Tracing.setTracingBackendType(TracingBackendType.PLATFORM) }
     assert(MapboxTracing.platformTracingEnabled)
   }
 
+  @Test(expected = RuntimeException::class)
+  fun enableAllTracerNotAvailable() {
+    MapboxTracing.tracerAvailable = false
+    MapboxTracing.enableAll()
+  }
+
   @Test
-  fun enablePlatform() {
+  fun enablePlatformTracerAvailable() {
+    MapboxTracing.tracerAvailable = true
     MapboxTracing.enablePlatform()
     verifyNo { Tracing.setTracingBackendType(any()) }
     assert(MapboxTracing.platformTracingEnabled)
   }
 
+  @Test(expected = RuntimeException::class)
+  fun enablePlatformTracerNotAvailable() {
+    MapboxTracing.tracerAvailable = false
+    MapboxTracing.enablePlatform()
+  }
+
   @Test
-  fun enableCore() {
+  fun enableCoreTracerAvailable() {
+    MapboxTracing.tracerAvailable = true
     MapboxTracing.enableCore()
     verifyOnce { Tracing.setTracingBackendType(TracingBackendType.PLATFORM) }
     assert(!MapboxTracing.platformTracingEnabled)
   }
 
+  @Test(expected = RuntimeException::class)
+  fun enableCoreTracerNotAvailable() {
+    MapboxTracing.tracerAvailable = false
+    MapboxTracing.enableCore()
+  }
+
   @Test
-  fun disableAll() {
+  fun disableAllTracerAvailable() {
+    MapboxTracing.tracerAvailable = true
     MapboxTracing.disableAll()
     verifyOnce { Tracing.setTracingBackendType(TracingBackendType.NOOP) }
     assert(!MapboxTracing.platformTracingEnabled)
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun disableAllTracerNotAvailable() {
+    MapboxTracing.tracerAvailable = false
+    MapboxTracing.disableAll()
   }
 }

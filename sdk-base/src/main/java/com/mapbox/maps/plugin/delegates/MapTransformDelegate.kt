@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.delegates
 
-import androidx.annotation.RestrictTo
 import com.mapbox.maps.*
 
 /**
@@ -52,19 +51,6 @@ interface MapTransformDelegate {
    * @param inProgress Bool representing if user animation is in progress
    */
   fun setUserAnimationInProgress(inProgress: Boolean)
-
-  /**
-   * This method provides hints for animations, enabling the rendering engine to pre-process animation
-   * frames and apply performance optimizations.
-   *
-   * The provided data is taken into action on the next
-   * [setUserAnimationInProgress(true)][setUserAnimationInProgress] call.
-   *
-   * @param cameraAnimationHint the camera animation hint
-   */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
-  @MapboxExperimental
-  fun setCameraAnimationHint(cameraAnimationHint: CameraAnimationHint)
 
   /**
    * Returns if user animation is currently in progress.

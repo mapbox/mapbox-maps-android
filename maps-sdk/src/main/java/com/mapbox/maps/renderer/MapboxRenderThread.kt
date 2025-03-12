@@ -84,8 +84,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
 
-  @OptIn(MapboxExperimental::class)
-  internal var renderThreadStatsRecorder: RenderThreadStatsRecorder? = null
+  internal var renderThreadRecorder: RenderThreadRecorder? = null
 
   /**
    * We track moment when native renderer is prepared.
@@ -147,11 +146,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private inline fun trace(sectionName: String, section: (() -> Unit)) {
     if (MapboxTracing.platformTracingEnabled) {
       Trace.beginSection("$MAPBOX_TRACE_ID: $sectionName")
-      try {
-        section.invoke()
-      } finally {
-        Trace.endSection()
-      }
+      section.invoke()
+      Trace.endSection()
     } else {
       section.invoke()
     }
@@ -357,9 +353,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
   }
 
-  @OptIn(MapboxExperimental::class)
   private fun draw(frameTimeNanos: Long) {
-    if (!fpsManager.preRender(frameTimeNanos, renderThreadStatsRecorder?.isRecording == true)) {
+    if (!fpsManager.preRender(frameTimeNanos, renderThreadRecorder?.recording == true)) {
       // when we have FPS limited and desire to skip core render - we must schedule new draw call
       // otherwise map may remain in not fully loaded state
       postPrepareRenderFrame()
@@ -605,11 +600,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  @OptIn(MapboxExperimental::class)
   @RenderThread
   override fun doFrame(frameTimeNanos: Long) {
     trace("do-frame") {
-      val startTime = if (renderThreadStatsRecorder?.isRecording == true) {
+      val startTime = if (renderThreadRecorder?.recording == true) {
         SystemClock.elapsedRealtimeNanos()
       } else {
         0L
@@ -623,13 +617,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // With `awaitingNextVsync = false` we will always schedule recursive tasks for later execution
       // via `renderHandlerThread.postDelayed` instead of updating queue concurrently that is being drained (which may lead to deadlock in core).
       drainQueue(nonRenderEventQueue)
-      val endTime = if (renderThreadStatsRecorder?.isRecording == true) {
+      val endTime = if (renderThreadRecorder?.recording == true) {
         SystemClock.elapsedRealtimeNanos()
       } else {
         0L
       }
       if (startTime != 0L && endTime != 0L) {
-        renderThreadStatsRecorder?.addFrameStats(
+        renderThreadRecorder?.addFrameStats(
           (endTime - startTime) / 1e6,
           fpsManager.skippedNow
         )

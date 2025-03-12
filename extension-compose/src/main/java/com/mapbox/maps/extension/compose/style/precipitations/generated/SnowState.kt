@@ -13,11 +13,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
-import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.extension.compose.style.precipitations.SnowStateApplier
@@ -55,7 +53,6 @@ public class SnowState private constructor(
   centerThinningTransition: Transition,
   color: ColorValue,
   colorTransition: Transition,
-  colorUseTheme: StringValue,
   density: DoubleValue,
   densityTransition: Transition,
   direction: DoubleListValue,
@@ -69,7 +66,6 @@ public class SnowState private constructor(
   vignette: DoubleValue,
   vignetteColor: ColorValue,
   vignetteColorTransition: Transition,
-  vignetteColorUseTheme: StringValue,
   vignetteTransition: Transition,
 ) {
   public constructor() : this(enabled = true)
@@ -80,7 +76,6 @@ public class SnowState private constructor(
     Transition.INITIAL,
     ColorValue.INITIAL,
     Transition.INITIAL,
-    StringValue.INITIAL,
     DoubleValue.INITIAL,
     Transition.INITIAL,
     DoubleListValue.INITIAL,
@@ -94,7 +89,6 @@ public class SnowState private constructor(
     DoubleValue.INITIAL,
     ColorValue.INITIAL,
     Transition.INITIAL,
-    StringValue.INITIAL,
     Transition.INITIAL,
   )
 
@@ -108,6 +102,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var centerThinning: DoubleValue by centerThinningState
 
+  @Composable
+  private fun UpdateCenterThinning() {
+    centerThinningState.value.apply {
+      if (notInitial) {
+        applier.setProperty("center-thinning", value)
+      }
+    }
+  }
   private val centerThinningTransitionState: MutableState<Transition> = mutableStateOf(centerThinningTransition)
 
   /**
@@ -117,6 +119,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var centerThinningTransition: Transition by centerThinningTransitionState
 
+  @Composable
+  private fun UpdateCenterThinningTransition() {
+    centerThinningTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("center-thinning-transition", value)
+      }
+    }
+  }
   private val colorState: MutableState<ColorValue> = mutableStateOf(color)
 
   /**
@@ -126,6 +136,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var color: ColorValue by colorState
 
+  @Composable
+  private fun UpdateColor() {
+    colorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("color", value)
+      }
+    }
+  }
   private val colorTransitionState: MutableState<Transition> = mutableStateOf(colorTransition)
 
   /**
@@ -135,16 +153,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var colorTransition: Transition by colorTransitionState
 
-  private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(colorUseTheme)
-
-  /**
-   * Overrides applying of color theme for [color] if "none" is set. To follow default theme "default"
-   * should be set.
-   * Default value: "default".
-   */
-  @MapboxExperimental
-  public var colorUseTheme: StringValue by colorUseThemeState
-
+  @Composable
+  private fun UpdateColorTransition() {
+    colorTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("color-transition", value)
+      }
+    }
+  }
   private val densityState: MutableState<DoubleValue> = mutableStateOf(density)
 
   /**
@@ -154,6 +170,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var density: DoubleValue by densityState
 
+  @Composable
+  private fun UpdateDensity() {
+    densityState.value.apply {
+      if (notInitial) {
+        applier.setProperty("density", value)
+      }
+    }
+  }
   private val densityTransitionState: MutableState<Transition> = mutableStateOf(densityTransition)
 
   /**
@@ -163,6 +187,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var densityTransition: Transition by densityTransitionState
 
+  @Composable
+  private fun UpdateDensityTransition() {
+    densityTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("density-transition", value)
+      }
+    }
+  }
   private val directionState: MutableState<DoubleListValue> = mutableStateOf(direction)
 
   /**
@@ -172,6 +204,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var direction: DoubleListValue by directionState
 
+  @Composable
+  private fun UpdateDirection() {
+    directionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("direction", value)
+      }
+    }
+  }
   private val directionTransitionState: MutableState<Transition> = mutableStateOf(directionTransition)
 
   /**
@@ -181,6 +221,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var directionTransition: Transition by directionTransitionState
 
+  @Composable
+  private fun UpdateDirectionTransition() {
+    directionTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("direction-transition", value)
+      }
+    }
+  }
   private val flakeSizeState: MutableState<DoubleValue> = mutableStateOf(flakeSize)
 
   /**
@@ -190,6 +238,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var flakeSize: DoubleValue by flakeSizeState
 
+  @Composable
+  private fun UpdateFlakeSize() {
+    flakeSizeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("flake-size", value)
+      }
+    }
+  }
   private val flakeSizeTransitionState: MutableState<Transition> = mutableStateOf(flakeSizeTransition)
 
   /**
@@ -199,6 +255,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var flakeSizeTransition: Transition by flakeSizeTransitionState
 
+  @Composable
+  private fun UpdateFlakeSizeTransition() {
+    flakeSizeTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("flake-size-transition", value)
+      }
+    }
+  }
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(intensity)
 
   /**
@@ -208,6 +272,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var intensity: DoubleValue by intensityState
 
+  @Composable
+  private fun UpdateIntensity() {
+    intensityState.value.apply {
+      if (notInitial) {
+        applier.setProperty("intensity", value)
+      }
+    }
+  }
   private val intensityTransitionState: MutableState<Transition> = mutableStateOf(intensityTransition)
 
   /**
@@ -217,6 +289,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var intensityTransition: Transition by intensityTransitionState
 
+  @Composable
+  private fun UpdateIntensityTransition() {
+    intensityTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("intensity-transition", value)
+      }
+    }
+  }
   private val opacityState: MutableState<DoubleValue> = mutableStateOf(opacity)
 
   /**
@@ -226,6 +306,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var opacity: DoubleValue by opacityState
 
+  @Composable
+  private fun UpdateOpacity() {
+    opacityState.value.apply {
+      if (notInitial) {
+        applier.setProperty("opacity", value)
+      }
+    }
+  }
   private val opacityTransitionState: MutableState<Transition> = mutableStateOf(opacityTransition)
 
   /**
@@ -235,6 +323,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var opacityTransition: Transition by opacityTransitionState
 
+  @Composable
+  private fun UpdateOpacityTransition() {
+    opacityTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("opacity-transition", value)
+      }
+    }
+  }
   private val vignetteState: MutableState<DoubleValue> = mutableStateOf(vignette)
 
   /**
@@ -244,6 +340,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var vignette: DoubleValue by vignetteState
 
+  @Composable
+  private fun UpdateVignette() {
+    vignetteState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette", value)
+      }
+    }
+  }
   private val vignetteColorState: MutableState<ColorValue> = mutableStateOf(vignetteColor)
 
   /**
@@ -253,6 +357,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var vignetteColor: ColorValue by vignetteColorState
 
+  @Composable
+  private fun UpdateVignetteColor() {
+    vignetteColorState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color", value)
+      }
+    }
+  }
   private val vignetteColorTransitionState: MutableState<Transition> = mutableStateOf(vignetteColorTransition)
 
   /**
@@ -262,16 +374,14 @@ public class SnowState private constructor(
   @MapboxExperimental
   public var vignetteColorTransition: Transition by vignetteColorTransitionState
 
-  private val vignetteColorUseThemeState: MutableState<StringValue> = mutableStateOf(vignetteColorUseTheme)
-
-  /**
-   * Overrides applying of color theme for [vignetteColor] if "none" is set. To follow default theme "default"
-   * should be set.
-   * Default value: "default".
-   */
-  @MapboxExperimental
-  public var vignetteColorUseTheme: StringValue by vignetteColorUseThemeState
-
+  @Composable
+  private fun UpdateVignetteColorTransition() {
+    vignetteColorTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color-transition", value)
+      }
+    }
+  }
   private val vignetteTransitionState: MutableState<Transition> = mutableStateOf(vignetteTransition)
 
   /**
@@ -282,52 +392,56 @@ public class SnowState private constructor(
   public var vignetteTransition: Transition by vignetteTransitionState
 
   @Composable
+  private fun UpdateVignetteTransition() {
+    vignetteTransitionState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-transition", value)
+      }
+    }
+  }
+
+  @Composable
   internal fun UpdateProperties() {
-    val action = applier::setProperty
-    ActionWhenNotInitial(action, centerThinningState, "center-thinning")
-    ActionWhenNotInitial(action, centerThinningTransitionState, "center-thinning-transition")
-    ActionWhenNotInitial(action, colorState, "color")
-    ActionWhenNotInitial(action, colorTransitionState, "color-transition")
-    ActionWhenNotInitial(action, colorUseThemeState, "color-use-theme")
-    ActionWhenNotInitial(action, densityState, "density")
-    ActionWhenNotInitial(action, densityTransitionState, "density-transition")
-    ActionWhenNotInitial(action, directionState, "direction")
-    ActionWhenNotInitial(action, directionTransitionState, "direction-transition")
-    ActionWhenNotInitial(action, flakeSizeState, "flake-size")
-    ActionWhenNotInitial(action, flakeSizeTransitionState, "flake-size-transition")
-    ActionWhenNotInitial(action, intensityState, "intensity")
-    ActionWhenNotInitial(action, intensityTransitionState, "intensity-transition")
-    ActionWhenNotInitial(action, opacityState, "opacity")
-    ActionWhenNotInitial(action, opacityTransitionState, "opacity-transition")
-    ActionWhenNotInitial(action, vignetteState, "vignette")
-    ActionWhenNotInitial(action, vignetteColorState, "vignette-color")
-    ActionWhenNotInitial(action, vignetteColorTransitionState, "vignette-color-transition")
-    ActionWhenNotInitial(action, vignetteColorUseThemeState, "vignette-color-use-theme")
-    ActionWhenNotInitial(action, vignetteTransitionState, "vignette-transition")
+    UpdateCenterThinning()
+    UpdateCenterThinningTransition()
+    UpdateColor()
+    UpdateColorTransition()
+    UpdateDensity()
+    UpdateDensityTransition()
+    UpdateDirection()
+    UpdateDirectionTransition()
+    UpdateFlakeSize()
+    UpdateFlakeSizeTransition()
+    UpdateIntensity()
+    UpdateIntensityTransition()
+    UpdateOpacity()
+    UpdateOpacityTransition()
+    UpdateVignette()
+    UpdateVignetteColor()
+    UpdateVignetteColorTransition()
+    UpdateVignetteTransition()
   }
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("center-thinning" to centerThinning.value).takeIf { centerThinning.isNotInitial() },
-      ("center-thinning-transition" to centerThinningTransition.value).takeIf { centerThinningTransition.isNotInitial() },
-      ("color" to color.value).takeIf { color.isNotInitial() },
-      ("color-transition" to colorTransition.value).takeIf { colorTransition.isNotInitial() },
-      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.isNotInitial() },
-      ("density" to density.value).takeIf { density.isNotInitial() },
-      ("density-transition" to densityTransition.value).takeIf { densityTransition.isNotInitial() },
-      ("direction" to direction.value).takeIf { direction.isNotInitial() },
-      ("direction-transition" to directionTransition.value).takeIf { directionTransition.isNotInitial() },
-      ("flake-size" to flakeSize.value).takeIf { flakeSize.isNotInitial() },
-      ("flake-size-transition" to flakeSizeTransition.value).takeIf { flakeSizeTransition.isNotInitial() },
-      ("intensity" to intensity.value).takeIf { intensity.isNotInitial() },
-      ("intensity-transition" to intensityTransition.value).takeIf { intensityTransition.isNotInitial() },
-      ("opacity" to opacity.value).takeIf { opacity.isNotInitial() },
-      ("opacity-transition" to opacityTransition.value).takeIf { opacityTransition.isNotInitial() },
-      ("vignette" to vignette.value).takeIf { vignette.isNotInitial() },
-      ("vignette-color" to vignetteColor.value).takeIf { vignetteColor.isNotInitial() },
-      ("vignette-color-transition" to vignetteColorTransition.value).takeIf { vignetteColorTransition.isNotInitial() },
-      ("vignette-color-use-theme" to vignetteColorUseTheme.value).takeIf { vignetteColorUseTheme.isNotInitial() },
-      ("vignette-transition" to vignetteTransition.value).takeIf { vignetteTransition.isNotInitial() },
+      ("center-thinning" to centerThinning.value).takeIf { centerThinning.notInitial },
+      ("center-thinning-transition" to centerThinningTransition.value).takeIf { centerThinningTransition.notInitial },
+      ("color" to color.value).takeIf { color.notInitial },
+      ("color-transition" to colorTransition.value).takeIf { colorTransition.notInitial },
+      ("density" to density.value).takeIf { density.notInitial },
+      ("density-transition" to densityTransition.value).takeIf { densityTransition.notInitial },
+      ("direction" to direction.value).takeIf { direction.notInitial },
+      ("direction-transition" to directionTransition.value).takeIf { directionTransition.notInitial },
+      ("flake-size" to flakeSize.value).takeIf { flakeSize.notInitial },
+      ("flake-size-transition" to flakeSizeTransition.value).takeIf { flakeSizeTransition.notInitial },
+      ("intensity" to intensity.value).takeIf { intensity.notInitial },
+      ("intensity-transition" to intensityTransition.value).takeIf { intensityTransition.notInitial },
+      ("opacity" to opacity.value).takeIf { opacity.notInitial },
+      ("opacity-transition" to opacityTransition.value).takeIf { opacityTransition.notInitial },
+      ("vignette" to vignette.value).takeIf { vignette.notInitial },
+      ("vignette-color" to vignetteColor.value).takeIf { vignetteColor.notInitial },
+      ("vignette-color-transition" to vignetteColorTransition.value).takeIf { vignetteColorTransition.notInitial },
+      ("vignette-transition" to vignetteTransition.value).takeIf { vignetteTransition.notInitial },
     ).toMap()
 
   /**
@@ -344,7 +458,6 @@ public class SnowState private constructor(
     if (centerThinningTransition != other.centerThinningTransition) return false
     if (color != other.color) return false
     if (colorTransition != other.colorTransition) return false
-    if (colorUseTheme != other.colorUseTheme) return false
     if (density != other.density) return false
     if (densityTransition != other.densityTransition) return false
     if (direction != other.direction) return false
@@ -358,7 +471,6 @@ public class SnowState private constructor(
     if (vignette != other.vignette) return false
     if (vignetteColor != other.vignetteColor) return false
     if (vignetteColorTransition != other.vignetteColorTransition) return false
-    if (vignetteColorUseTheme != other.vignetteColorUseTheme) return false
     if (vignetteTransition != other.vignetteTransition) return false
 
     return true
@@ -373,7 +485,6 @@ public class SnowState private constructor(
     centerThinningTransition,
     color,
     colorTransition,
-    colorUseTheme,
     density,
     densityTransition,
     direction,
@@ -387,7 +498,6 @@ public class SnowState private constructor(
     vignette,
     vignetteColor,
     vignetteColorTransition,
-    vignetteColorUseTheme,
     vignetteTransition,
   )
 
@@ -395,7 +505,7 @@ public class SnowState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "SnowState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, flakeSize=$flakeSize, flakeSizeTransition=$flakeSizeTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteColor=$vignetteColor, vignetteColorTransition=$vignetteColorTransition, vignetteColorUseTheme=$vignetteColorUseTheme, vignetteTransition=$vignetteTransition)"
+    "SnowState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, flakeSize=$flakeSize, flakeSizeTransition=$flakeSizeTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteColor=$vignetteColor, vignetteColorTransition=$vignetteColorTransition, vignetteTransition=$vignetteTransition)"
 
   /**
    * Snow Holder class to be used within [Saver].
@@ -430,7 +540,6 @@ public class SnowState private constructor(
           centerThinningTransition = holder.savedProperties["center-thinning-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           color = holder.savedProperties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           colorTransition = holder.savedProperties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
-          colorUseTheme = holder.savedProperties["color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           density = holder.savedProperties["density"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           densityTransition = holder.savedProperties["density-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           direction = holder.savedProperties["direction"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,
@@ -444,7 +553,6 @@ public class SnowState private constructor(
           vignette = holder.savedProperties["vignette"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           vignetteColor = holder.savedProperties["vignette-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           vignetteColorTransition = holder.savedProperties["vignette-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
-          vignetteColorUseTheme = holder.savedProperties["vignette-color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           vignetteTransition = holder.savedProperties["vignette-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )
       }

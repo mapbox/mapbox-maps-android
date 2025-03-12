@@ -6,6 +6,7 @@ import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
+import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.light.generated.*
 import com.mapbox.maps.extension.style.types.*
 import com.mapbox.maps.testapp.style.BaseStyleTest
@@ -130,26 +131,6 @@ class AmbientLightTest : BaseStyleTest() {
     }
     setupLight(light, directionalLight { })
     assertEquals(transition, light.intensityTransition)
-  }
-  @Test
-  @UiThreadTest
-  fun colorUseThemeTest() {
-    val light = ambientLight {
-      colorUseTheme("default")
-    }
-    setupLight(light, directionalLight { })
-    assertEquals("default", light.colorUseTheme)
-  }
-  // Add Expression Test
-  @Test
-  @UiThreadTest
-  fun colorUseThemeAsExpressionTest() {
-    val expression = literal("default")
-    val light = ambientLight {
-      colorUseTheme(expression)
-    }
-    setupLight(light, directionalLight { })
-    assertEquals(expression.toString(), light.colorUseThemeAsExpression.toString())
   }
 }
 // End of generated file.

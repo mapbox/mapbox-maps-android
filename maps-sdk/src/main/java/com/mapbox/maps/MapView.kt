@@ -20,7 +20,6 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
@@ -473,14 +472,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
     mapController.setOnFpsChangedListener(listener)
-  }
-
-  /**
-   * Set [RenderThreadStatsRecorder] to record frame stats.
-   */
-  @MapboxExperimental
-  override fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder) {
-    mapController.setRenderThreadStatsRecorder(renderThreadStatsRecorder)
   }
 
   /**

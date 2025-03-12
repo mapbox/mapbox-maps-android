@@ -65,7 +65,7 @@ internal class ScaleBarComposePlugin(
       cameraState.center.latitude(),
       cameraState.zoom
     )
-    val pixelRatio = scaleBar.pixelRatio
+    val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
     scaleBar.distancePerPixel = (metersPerPixelAtLatitude / pixelRatio).toFloat()
   }
 

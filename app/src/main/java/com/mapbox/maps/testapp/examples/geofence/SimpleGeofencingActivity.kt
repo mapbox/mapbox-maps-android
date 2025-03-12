@@ -132,6 +132,7 @@ class SimpleGeofencingActivity : AppCompatActivity() {
       // Postpone access to Geofence engine until we get location permissions
       geofencing.configure(
         GeofencingOptions.Builder().apply {
+          defaultRadius = CUSTOM_GEOFENCE_RADIUS
           maximumMonitoredFeatures = 300_000
         }.build(),
         logGeofencingError("configure")
@@ -178,7 +179,6 @@ class SimpleGeofencingActivity : AppCompatActivity() {
 
     val properties = JsonObject()
     properties.addProperty(GeofencingPropertiesKeys.DWELL_TIME_KEY, DWELL_TIME)
-    properties.addProperty(GeofencingPropertiesKeys.POINT_RADIUS_KEY, CUSTOM_GEOFENCE_RADIUS)
     // for geofences represented by Point the defaultRadius from [GeofencingOptions] is used.
     val pointFeature = Feature.fromGeometry(
       point,

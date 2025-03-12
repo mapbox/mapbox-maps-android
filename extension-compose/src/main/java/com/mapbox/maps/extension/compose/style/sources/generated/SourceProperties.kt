@@ -2,10 +2,8 @@
 
 package com.mapbox.maps.extension.compose.style.sources.generated
 
-import androidx.annotation.RestrictTo
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
@@ -14,7 +12,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class SchemeValue(public override val value: Value) : HoldsValue {
+public data class SchemeValue(public val value: Value) {
   /**
    * Construct the SchemeValue with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -23,8 +21,8 @@ public data class SchemeValue(public override val value: Value) : HoldsValue {
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.
@@ -68,7 +66,7 @@ public data class SchemeValue(public override val value: Value) : HoldsValue {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class EncodingValue(public override val value: Value) : HoldsValue {
+public data class EncodingValue(public val value: Value) {
   /**
    * Construct the EncodingValue with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -77,8 +75,8 @@ public data class EncodingValue(public override val value: Value) : HoldsValue {
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.

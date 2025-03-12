@@ -58,15 +58,13 @@ public final class com/mapbox/maps/ExtensionUtils {
 public final class com/mapbox/maps/ImageHolder : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lcom/mapbox/maps/ImageHolder$Companion;
-	public synthetic fun <init> (Ljava/lang/Integer;Landroid/graphics/Bitmap;Lcom/mapbox/maps/Image;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/Integer;Landroid/graphics/Bitmap;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public static final fun from (I)Lcom/mapbox/maps/ImageHolder;
 	public static final fun from (Landroid/graphics/Bitmap;)Lcom/mapbox/maps/ImageHolder;
-	public static final fun from (Lcom/mapbox/maps/Image;)Lcom/mapbox/maps/ImageHolder;
 	public final fun getBitmap ()Landroid/graphics/Bitmap;
 	public final fun getDrawableId ()Ljava/lang/Integer;
-	public final fun getImage ()Lcom/mapbox/maps/Image;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -75,7 +73,6 @@ public final class com/mapbox/maps/ImageHolder : android/os/Parcelable {
 public final class com/mapbox/maps/ImageHolder$Companion {
 	public final fun from (I)Lcom/mapbox/maps/ImageHolder;
 	public final fun from (Landroid/graphics/Bitmap;)Lcom/mapbox/maps/ImageHolder;
-	public final fun from (Lcom/mapbox/maps/Image;)Lcom/mapbox/maps/ImageHolder;
 }
 
 public final class com/mapbox/maps/ImageHolder$Creator : android/os/Parcelable$Creator {
@@ -2265,7 +2262,6 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapTransformDel
 	public abstract fun getSize ()Lcom/mapbox/maps/Size;
 	public abstract fun isGestureInProgress ()Z
 	public abstract fun isUserAnimationInProgress ()Z
-	public abstract fun setCameraAnimationHint (Lcom/mapbox/maps/CameraAnimationHint;)V
 	public abstract fun setConstrainMode (Lcom/mapbox/maps/ConstrainMode;)V
 	public abstract fun setGestureInProgress (Z)V
 	public abstract fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V

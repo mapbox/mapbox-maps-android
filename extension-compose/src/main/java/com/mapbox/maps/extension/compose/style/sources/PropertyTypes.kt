@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose.style.sources
 
-import androidx.annotation.RestrictTo
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -8,7 +7,6 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.TileCacheBudgetInMegabytes
 import com.mapbox.maps.TileCacheBudgetInTiles
-import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.sources.generated.RasterArraySource
@@ -23,7 +21,7 @@ For more advanced use cases, in place of `operator`, you can use a custom reduce
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class ClusterProperties(public override val value: Value) : HoldsValue {
+public data class ClusterProperties(public val value: Value) {
   /**
    * Construct the ClusterProperties with [HashMap<String, Any>].
    */
@@ -36,8 +34,8 @@ public data class ClusterProperties(public override val value: Value) : HoldsVal
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.
@@ -69,7 +67,7 @@ public data class ClusterProperties(public override val value: Value) : HoldsVal
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TileCacheBudget(public override val value: Value) : HoldsValue {
+public data class TileCacheBudget(public val value: Value) {
   /**
    * Construct the TileCacheBudget with [TileCacheBudgetInMegabytes].
    */
@@ -88,8 +86,8 @@ public data class TileCacheBudget(public override val value: Value) : HoldsValue
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.
@@ -121,7 +119,7 @@ public data class TileCacheBudget(public override val value: Value) : HoldsValue
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class RasterLayers(public override val value: Value) : HoldsValue {
+public data class RasterLayers(public val value: Value) {
   /**
    * Construct the RasterLayers with [List<RasterDataLayer>].
    */
@@ -138,8 +136,8 @@ public data class RasterLayers(public override val value: Value) : HoldsValue {
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.
@@ -176,7 +174,7 @@ public data class RasterLayers(public override val value: Value) : HoldsValue {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class PromoteIdValue(public override val value: Value) : HoldsValue {
+public data class PromoteIdValue(public val value: Value) {
   /**
    * Construct the [PromoteIdValue] with [propertyName] and optional [sourceId].
    * - If only [propertyName] is specified then the same property is used across all its source
@@ -202,8 +200,8 @@ public data class PromoteIdValue(public override val value: Value) : HoldsValue 
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.

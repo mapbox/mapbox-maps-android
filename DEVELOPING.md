@@ -498,36 +498,6 @@ There are 2 types of traces that could be enabled:
 
 It is also possible to enable all the traces with `MapboxTracing.enableAll()`. Tracing could be disabled with `MapboxTracing.disableAll()`.
 
-### Recording traces using Perfetto UI
-
-The Perfetto Record settings can be edited when recording a new trace from [ui.perfetto.dev](https://ui.perfetto.dev/#!/record).
-We recommend to enable the following options in Perfetto and combine them with `MapboxTracing.enableAll()` enabled in application code:
-
-In **GPU** section. Enable `GPU frequency`, `GPU memory` and `GPU work period`:
-
-<img src="https://github.com/user-attachments/assets/7cc524c6-5253-4c33-a399-11a95d8f4315" width="400" height="300" alt="image">
-
-
-In **CPU** section. 
-Enable `Coarse CPU usage counter`, `Scheduling details` and `CPU frequency and idle states` (with default `Poll interval`).
-Please make sure the “Syscalls” **is not** selected, otherwise the trace gets bloated with these records and becomes unreadable.
-
-<img src="https://github.com/user-attachments/assets/2d6a29b1-3087-4501-998f-077db5038bce" width="400" height="300" alt="image">
-
-
-**Android apps & svcs**
-
-Please make sure the “Atrace userspace annotations” is selected and “Record events from all Android apps and services” is enabled (it is also required to record the Mapbox trace annotations).
-
-<img src="https://github.com/user-attachments/assets/f4978e0d-3165-4aa1-80e0-b747e7eda791" width="400" height="300" alt="image">
-
-Please note that this UI auto-generates the corresponding command line instructions - “Cmdline instructions” section
-
-<img src="https://github.com/user-attachments/assets/f55532df-fdff-4ba2-ac87-823deebfb1c0" width="400" height="300" alt="image">
-
-Produced html file can be opened in https://ui.perfetto.dev viewer.
-
-
 ### Recording traces using Android studio
 
 There are several ways of capturing traces for Android which are described in [official documentation](https://developer.android.com/topic/performance/tracing). As a reference we will describe the steps of recording traces using Android Studio Profiler:
@@ -556,6 +526,16 @@ After we exported trace recording we could use [Perfetto](https://ui.perfetto.de
 ### Other ways to record traces
 
 There are several other ways how to record traces.
+
+#### From ui.perfetto.dev over WebUSB
+
+<img width="240" alt="image" src="https://github.com/mapbox/mapbox-maps-android-internal/assets/1001009/ee1f1ff9-350a-436e-898a-8e0d05fae920">
+
+Enable Atrace events (other optional probes can be enabled if needed).
+
+<img width="70%" alt="image" src="https://github.com/mapbox/mapbox-maps-android-internal/assets/1001009/36cad2eb-9b0b-4545-ab4f-b3fb0cd5da7f">
+
+After `stop recording` is pressed, trace will be visible in the UI.
 
 #### Directly from the device (supported on Google Pixel devices)
 

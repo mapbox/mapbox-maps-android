@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.light.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.Light
@@ -32,8 +31,11 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
      * @return color as int
      */
     @ColorInt
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorInt(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
     }
   /**
    * Color of the ambient light. Default value: "#ffffff".
@@ -53,8 +55,11 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
      *
      * @return color as String
      */
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorString(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
   /**
    * Color of the ambient light. Default value: "#ffffff".
@@ -102,7 +107,9 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
      *
      * @return transition options for color
      */
-    get() = getTransitionProperty("color-transition")
+    get() {
+      return getTransitionProperty("color-transition")
+    }
   /**
    * Set the Color property transition options.
    *
@@ -119,6 +126,7 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
   override fun colorTransition(block: StyleTransition.Builder.() -> Unit): AmbientLight = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
+
   /**
    * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    */
@@ -128,7 +136,9 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
      *
      * @return intensity as Double
      */
-    get() = getPropertyValue("intensity")
+    get() {
+      return getPropertyValue("intensity")
+    }
   /**
    * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
@@ -178,7 +188,9 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
      *
      * @return transition options for intensity
      */
-    get() = getTransitionProperty("intensity-transition")
+    get() {
+      return getTransitionProperty("intensity-transition")
+    }
   /**
    * Set the Intensity property transition options.
    *
@@ -194,60 +206,6 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
    */
   override fun intensityTransition(block: StyleTransition.Builder.() -> Unit): AmbientLight = apply {
     intensityTransition(StyleTransition.Builder().apply(block).build())
-  }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   */
-  @MapboxExperimental
-  val colorUseTheme: String?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * @return colorUseTheme as String
-     */
-    get() = getPropertyValue("color-use-theme")
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: String): AmbientLight = apply {
-    setProperty(PropertyValue("color-use-theme", colorUseTheme))
-  }
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * This is an Expression representation of "color-use-theme".
-   */
-  @MapboxExperimental
-  val colorUseThemeAsExpression: Expression?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * Get the ColorUseTheme property as an Expression
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("color-use-theme")?.let {
-        return it
-      }
-      colorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: Expression): AmbientLight = apply {
-    val propertyValue = PropertyValue("color-use-theme", colorUseTheme)
-    setProperty(propertyValue)
   }
 
   /**
@@ -300,6 +258,7 @@ interface AmbientLightDslReceiver {
    * DSL for [colorTransition].
    */
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): AmbientLight
+
   /**
    * A multiplier for the color of the ambient light. Default value: 0.5. Value range: [0, 1]
    *
@@ -325,21 +284,6 @@ interface AmbientLightDslReceiver {
    * DSL for [intensityTransition].
    */
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): AmbientLight
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: String): AmbientLight
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: Expression): AmbientLight
 }
 
 /**

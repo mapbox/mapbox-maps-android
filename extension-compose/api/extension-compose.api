@@ -879,7 +879,7 @@ public final class com/mapbox/maps/extension/compose/ornaments/scalebar/MapScale
 	public final fun ScaleBar-vLKV3eY (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JJJFFFFJZJZFZLandroidx/compose/runtime/Composer;III)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/BooleanValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/BooleanValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/BooleanValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -890,16 +890,15 @@ public final class com/mapbox/maps/extension/compose/style/BooleanValue : com/ma
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/BooleanValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBooleanOrNull ()Ljava/lang/Boolean;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/BooleanValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/ColorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/ColorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/ColorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -910,16 +909,15 @@ public final class com/mapbox/maps/extension/compose/style/ColorValue : com/mapb
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColorOrNull-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/ColorValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/DoubleListValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/DoubleListValue {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/DoubleListValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -932,16 +930,15 @@ public final class com/mapbox/maps/extension/compose/style/DoubleListValue : com
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDoubleListOrNull ()Ljava/util/List;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/DoubleListValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/DoubleRangeValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/DoubleRangeValue {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;
@@ -954,16 +951,15 @@ public final class com/mapbox/maps/extension/compose/style/DoubleRangeValue : co
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getRangeOrNull ()Landroid/util/Range;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/DoubleRangeValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/DoubleValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/DoubleValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/DoubleValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public fun <init> (D)V
@@ -974,9 +970,8 @@ public final class com/mapbox/maps/extension/compose/style/DoubleValue : com/map
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDoubleOrNull ()Ljava/lang/Double;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1014,7 +1009,7 @@ public final class com/mapbox/maps/extension/compose/style/LayerPositionedConten
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/extension/compose/style/LongValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/LongValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/LongValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public fun <init> (J)V
@@ -1025,9 +1020,8 @@ public final class com/mapbox/maps/extension/compose/style/LongValue : com/mapbo
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getLongOrNull ()Ljava/lang/Long;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1037,7 +1031,7 @@ public final class com/mapbox/maps/extension/compose/style/LongValue$Companion {
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {
 }
 
-public final class com/mapbox/maps/extension/compose/style/PointListValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/PointListValue {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/PointListValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/PointListValue;
@@ -1051,9 +1045,8 @@ public final class com/mapbox/maps/extension/compose/style/PointListValue : com/
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/PointListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/PointListValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPointsOrNull ()Ljava/util/List;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1070,7 +1063,7 @@ public final class com/mapbox/maps/extension/compose/style/SlotsContent {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/extension/compose/style/StringListValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/StringListValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/StringListValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/StringListValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -1082,16 +1075,15 @@ public final class com/mapbox/maps/extension/compose/style/StringListValue : com
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/StringListValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStringListOrNull ()Ljava/util/List;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/StringListValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/StringValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/StringValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/StringValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -1102,9 +1094,8 @@ public final class com/mapbox/maps/extension/compose/style/StringValue : com/map
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStringOrNull ()Ljava/lang/String;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1216,7 +1207,7 @@ public final class com/mapbox/maps/extension/compose/style/StyleStateKt {
 	public static final fun rememberStyleState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleState;
 }
 
-public final class com/mapbox/maps/extension/compose/style/Transition : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/Transition {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/Transition$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -1228,9 +1219,8 @@ public final class com/mapbox/maps/extension/compose/style/Transition : com/mapb
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDelayMillis ()J
 	public final fun getDurationMillis ()J
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1402,7 +1392,7 @@ public final class com/mapbox/maps/extension/compose/style/interactions/generate
 	public static fun setStandardPoiState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/Filter : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/Filter {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/Filter$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/Filter;
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
@@ -1410,16 +1400,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/Filter : com/m
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/Filter;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/Filter;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/Filter;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/Filter$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/FormattedValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/FormattedValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue;
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
@@ -1429,9 +1418,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/FormattedValue
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/FormattedValue;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStringOrNull ()Ljava/lang/String;
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1526,7 +1514,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Back
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
@@ -1537,9 +1525,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Back
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1615,7 +1602,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;
@@ -1626,16 +1613,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignmentValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;
@@ -1646,16 +1632,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScaleValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;
@@ -1666,9 +1651,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1716,7 +1700,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Clip
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypes$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -1726,16 +1710,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Clip
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ClipLayerTypesListValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;
 	public static final field HD_ROAD_BASE Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;
@@ -1747,16 +1730,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
 	public static final field FLAT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
@@ -1767,16 +1749,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBaseAlignmentValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
 	public static final field FLAT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
@@ -1787,9 +1768,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeightAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1909,7 +1889,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;
@@ -1920,9 +1900,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1988,7 +1967,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
@@ -1999,9 +1978,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2047,7 +2025,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Heat
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;
@@ -2058,9 +2036,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Hill
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2118,7 +2095,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Hill
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue {
 	public static final field BOTTOM Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;
 	public static final field BOTTOM_LEFT Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;
 	public static final field BOTTOM_RIGHT Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;
@@ -2136,16 +2113,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Icon
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/IconAnchorValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue {
 	public static final field AUTO Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;
@@ -2157,16 +2133,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Icon
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignmentValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue {
 	public static final field AUTO Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;
@@ -2178,16 +2153,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Icon
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignmentValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue {
 	public static final field BOTH Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;
@@ -2200,16 +2174,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Icon
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/IconTextFitValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;
@@ -2220,16 +2193,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Icon
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchorValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/LineCapValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LineCapValue {
 	public static final field BUTT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;
@@ -2241,16 +2213,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineCapValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;
 	public static final field GROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;
@@ -2263,16 +2234,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue {
 	public static final field BEVEL Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
@@ -2285,9 +2255,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoinValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2405,7 +2374,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;
@@ -2416,16 +2385,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchorValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue;
 	public static final field METERS Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue;
@@ -2436,9 +2404,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidthUnitValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2528,7 +2495,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Loca
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public static final field GROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
@@ -2539,9 +2506,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2625,7 +2591,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;
@@ -2636,16 +2602,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelScaleModeValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue {
 	public static final field COMMON_3D Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;
@@ -2656,9 +2621,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTypeValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2777,7 +2741,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;
 	public static final field LINEAR Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;
@@ -2788,9 +2752,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResamplingValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2842,7 +2805,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyL
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue {
 	public static final field ATMOSPHERE Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;
@@ -2853,16 +2816,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyT
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SkyTypeValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
 	public static final field GROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
@@ -2874,9 +2836,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolElevationReferenceValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3082,7 +3043,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun setVisibility (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;
 	public static final field LINE Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;
@@ -3094,16 +3055,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacementValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue {
 	public static final field AUTO Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;
@@ -3115,16 +3075,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrderValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue {
 	public static final field BOTTOM Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
 	public static final field BOTTOM_LEFT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
 	public static final field BOTTOM_RIGHT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
@@ -3142,16 +3101,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextAnchorValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue {
 	public static final field AUTO Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;
 	public static final field CENTER Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue$Companion;
@@ -3164,16 +3122,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextJustifyValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue {
 	public static final field AUTO Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;
@@ -3185,16 +3142,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignmentValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue {
 	public static final field AUTO Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;
@@ -3206,16 +3162,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignmentValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;
 	public static final field LOWERCASE Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;
@@ -3227,16 +3182,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextTransformValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;
@@ -3247,9 +3201,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3279,7 +3232,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchor$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -3289,9 +3242,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchorListValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3314,7 +3266,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextWritingMode$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -3324,16 +3276,15 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Text
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/TextWritingModeListValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public static final field NONE Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
@@ -3344,9 +3295,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Visi
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3371,14 +3321,12 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Ambi
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;
@@ -3415,7 +3363,7 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Ambi
 	public static final fun rememberAmbientLightState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/lights/generated/AmbientLightState;
 }
 
-public final class com/mapbox/maps/extension/compose/style/lights/generated/AnchorValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/lights/generated/AnchorValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
 	public static final field MAP Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
@@ -3426,9 +3374,8 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Anch
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3443,7 +3390,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 	public final fun getCastShadows ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getDirectionTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getId ()Ljava/lang/String;
@@ -3455,7 +3401,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 	public final fun setCastShadows (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setDirectionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
@@ -3504,7 +3449,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Flat
 	public final fun getAnchor ()Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -3514,7 +3458,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Flat
 	public final fun setAnchor (Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setPosition (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
@@ -3557,13 +3500,12 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Companion;
 	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
 	public fun <init> ()V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/RainStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/RainStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCenterThinning ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getCenterThinningTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getDensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -3579,14 +3521,12 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun getVignette ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getVignetteColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getVignetteColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getVignetteColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
 	public final fun setCenterThinning (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setCenterThinningTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setDensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setDensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
@@ -3602,7 +3542,6 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun setVignette (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setVignetteColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setVignetteColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setVignetteColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setVignetteTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;
 }
@@ -3643,13 +3582,12 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Companion;
 	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
 	public fun <init> ()V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/SnowStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/SnowStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCenterThinning ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getCenterThinningTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getDensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -3663,14 +3601,12 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun getVignette ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getVignetteColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getVignetteColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getVignetteColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
 	public final fun setCenterThinning (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setCenterThinningTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setDensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setDensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
@@ -3684,7 +3620,6 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun setVignette (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setVignetteColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setVignetteColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setVignetteColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setVignetteTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;
 }
@@ -3739,7 +3674,7 @@ public final class com/mapbox/maps/extension/compose/style/projection/generated/
 public final class com/mapbox/maps/extension/compose/style/projection/generated/Projection$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/ClusterProperties : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/sources/ClusterProperties {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -3749,9 +3684,8 @@ public final class com/mapbox/maps/extension/compose/style/sources/ClusterProper
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/ClusterProperties;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3776,7 +3710,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/GeoJSONData {
 public final class com/mapbox/maps/extension/compose/style/sources/GeoJSONData$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -3789,16 +3723,15 @@ public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValu
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValue$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/RasterLayers : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/sources/RasterLayers {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -3808,9 +3741,8 @@ public final class com/mapbox/maps/extension/compose/style/sources/RasterLayers 
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/RasterLayers;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -3821,8 +3753,6 @@ public abstract class com/mapbox/maps/extension/compose/style/sources/SourceStat
 	public static final field $stable I
 	protected final fun getGeoJSONData ()Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;
 	protected final fun getProperty (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
-	protected final fun getSetBuilderPropertyAction ()Lkotlin/reflect/KFunction;
-	protected final fun getSetPropertyAction ()Lkotlin/reflect/KFunction;
 	public final fun getSourceId ()Ljava/lang/String;
 	protected final fun setGeoJSONData (Lcom/mapbox/maps/extension/compose/style/sources/GeoJSONData;)V
 	public fun toString ()Ljava/lang/String;
@@ -3855,7 +3785,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/SourceState$H
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/TileCacheBudget : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/sources/TileCacheBudget {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -3866,16 +3796,15 @@ public final class com/mapbox/maps/extension/compose/style/sources/TileCacheBudg
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/TileCacheBudget;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/TileCacheBudget$Companion {
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/EncodingValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/sources/generated/EncodingValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
 	public static final field MAPBOX Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
@@ -3886,9 +3815,8 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Enc
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/EncodingValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -4101,7 +4029,7 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public static final fun rememberRasterSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/SchemeValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+public final class com/mapbox/maps/extension/compose/style/sources/generated/SchemeValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
 	public static final field TMS Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
@@ -4112,9 +4040,8 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Sch
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/generated/SchemeValue;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
-	public fun isNotInitial ()Z
 	public fun toString ()Ljava/lang/String;
 }
 

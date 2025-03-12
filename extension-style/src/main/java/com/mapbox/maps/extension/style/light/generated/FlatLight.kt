@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.light.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -37,8 +36,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return anchor as Anchor
      */
-    get() = getPropertyValue<String>("anchor")?.let {
-      Anchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+    get() {
+      getPropertyValue<String>("anchor")?.let {
+        return Anchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
     }
   /**
    * Whether extruded geometries are lit relative to the map or viewport. Default value: "viewport".
@@ -90,8 +92,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      * @return color as int
      */
     @ColorInt
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorInt(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
     }
   /**
    * Color tint for lighting extruded geometries. Default value: "#ffffff".
@@ -111,8 +116,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return color as String
      */
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorString(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
   /**
    * Color tint for lighting extruded geometries. Default value: "#ffffff".
@@ -160,7 +168,9 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return transition options for color
      */
-    get() = getTransitionProperty("color-transition")
+    get() {
+      return getTransitionProperty("color-transition")
+    }
   /**
    * Set the Color property transition options.
    *
@@ -177,6 +187,7 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
   override fun colorTransition(block: StyleTransition.Builder.() -> Unit): FlatLight = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
+
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    */
@@ -186,7 +197,9 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return intensity as Double
      */
-    get() = getPropertyValue("intensity")
+    get() {
+      return getPropertyValue("intensity")
+    }
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
@@ -236,7 +249,9 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return transition options for intensity
      */
-    get() = getTransitionProperty("intensity-transition")
+    get() {
+      return getTransitionProperty("intensity-transition")
+    }
   /**
    * Set the Intensity property transition options.
    *
@@ -262,8 +277,11 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return position as LightPosition
      */
-    get() = getPropertyValue<List<Double>>("position")?.let {
-      LightPosition.fromList(it)
+    get() {
+      getPropertyValue<List<Double>>("position")?.let {
+        return LightPosition.fromList(it)
+      }
+      return null
     }
 
   /**
@@ -323,7 +341,9 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
      *
      * @return transition options for position
      */
-    get() = getTransitionProperty("position-transition")
+    get() {
+      return getTransitionProperty("position-transition")
+    }
   /**
    * Set the Position property transition options.
    *
@@ -339,60 +359,6 @@ class FlatLight internal constructor(override val lightId: String) : FlatLightDs
    */
   override fun positionTransition(block: StyleTransition.Builder.() -> Unit): FlatLight = apply {
     positionTransition(StyleTransition.Builder().apply(block).build())
-  }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   */
-  @MapboxExperimental
-  val colorUseTheme: String?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * @return colorUseTheme as String
-     */
-    get() = getPropertyValue("color-use-theme")
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: String): FlatLight = apply {
-    setProperty(PropertyValue("color-use-theme", colorUseTheme))
-  }
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * This is an Expression representation of "color-use-theme".
-   */
-  @MapboxExperimental
-  val colorUseThemeAsExpression: Expression?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * Get the ColorUseTheme property as an Expression
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("color-use-theme")?.let {
-        return it
-      }
-      colorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: Expression): FlatLight = apply {
-    val propertyValue = PropertyValue("color-use-theme", colorUseTheme)
-    setProperty(propertyValue)
   }
 
   /**
@@ -467,6 +433,7 @@ interface FlatLightDslReceiver {
    * DSL for [colorTransition].
    */
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
+
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast. Default value: 0.5. Value range: [0, 1]
    *
@@ -524,21 +491,6 @@ interface FlatLightDslReceiver {
    * DSL for [positionTransition].
    */
   fun positionTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: String): FlatLight
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: Expression): FlatLight
 }
 
 /**

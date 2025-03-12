@@ -37,7 +37,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return center-thinning as Double
      */
-    get() = getPropertyValue("center-thinning")
+    get() {
+      return getPropertyValue("center-thinning")
+    }
 
   /**
    * Thinning factor of snow particles from center. 0 - no thinning. 1 - maximal central area thinning. Default value: 0.4. Value range: [0, 1]
@@ -59,7 +61,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for center-thinning
      */
-    get() = getTransitionProperty("center-thinning-transition")
+    get() {
+      return getTransitionProperty("center-thinning-transition")
+    }
 
   /**
    * Set the CenterThinning property transition options.
@@ -71,6 +75,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("center-thinning-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [centerThinningTransition].
    */
@@ -123,8 +128,11 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      * @return color as int
      */
     @ColorInt
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorInt(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
     }
   /**
    * Snow particles color. Default value: "#ffffff".
@@ -146,8 +154,11 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return color as String
      */
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorString(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
 
   /**
@@ -170,7 +181,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for color
      */
-    get() = getTransitionProperty("color-transition")
+    get() {
+      return getTransitionProperty("color-transition")
+    }
 
   /**
    * Set the Color property transition options.
@@ -182,6 +195,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("color-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [colorTransition].
    */
@@ -230,7 +244,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return density as Double
      */
-    get() = getPropertyValue("density")
+    get() {
+      return getPropertyValue("density")
+    }
 
   /**
    * Snow particles density. Controls the overall particles number. Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.85]". Value range: [0, 1]
@@ -252,7 +268,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for density
      */
-    get() = getTransitionProperty("density-transition")
+    get() {
+      return getTransitionProperty("density-transition")
+    }
 
   /**
    * Set the Density property transition options.
@@ -264,6 +282,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("density-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [densityTransition].
    */
@@ -315,7 +334,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return direction as List<Double>
      */
-    get() = getPropertyValue("direction")
+    get() {
+      return getPropertyValue("direction")
+    }
 
   /**
    * Main snow particles direction. Azimuth and polar angles Default value: [0,50]. Value range: [0, 360]
@@ -337,7 +358,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for direction
      */
-    get() = getTransitionProperty("direction-transition")
+    get() {
+      return getTransitionProperty("direction-transition")
+    }
 
   /**
    * Set the Direction property transition options.
@@ -349,6 +372,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("direction-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [directionTransition].
    */
@@ -400,7 +424,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return flake-size as Double
      */
-    get() = getPropertyValue("flake-size")
+    get() {
+      return getPropertyValue("flake-size")
+    }
 
   /**
    * Snow flake particle size. Correlates with individual particle screen size Default value: 0.71. Value range: [0, 5]
@@ -422,7 +448,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for flake-size
      */
-    get() = getTransitionProperty("flake-size-transition")
+    get() {
+      return getTransitionProperty("flake-size-transition")
+    }
 
   /**
    * Set the FlakeSize property transition options.
@@ -434,6 +462,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("flake-size-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [flakeSizeTransition].
    */
@@ -485,7 +514,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return intensity as Double
      */
-    get() = getPropertyValue("intensity")
+    get() {
+      return getPropertyValue("intensity")
+    }
 
   /**
    * Snow particles movement factor. Controls the overall particles movement speed. Default value: 1. Value range: [0, 1]
@@ -507,7 +538,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for intensity
      */
-    get() = getTransitionProperty("intensity-transition")
+    get() {
+      return getTransitionProperty("intensity-transition")
+    }
 
   /**
    * Set the Intensity property transition options.
@@ -519,6 +552,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("intensity-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [intensityTransition].
    */
@@ -570,7 +604,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return opacity as Double
      */
-    get() = getPropertyValue("opacity")
+    get() {
+      return getPropertyValue("opacity")
+    }
 
   /**
    * Snow particles opacity. Default value: 1. Value range: [0, 1]
@@ -592,7 +628,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for opacity
      */
-    get() = getTransitionProperty("opacity-transition")
+    get() {
+      return getTransitionProperty("opacity-transition")
+    }
 
   /**
    * Set the Opacity property transition options.
@@ -604,6 +642,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("opacity-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [opacityTransition].
    */
@@ -655,7 +694,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return vignette as Double
      */
-    get() = getPropertyValue("vignette")
+    get() {
+      return getPropertyValue("vignette")
+    }
 
   /**
    * Snow vignette screen-space effect. Adds snow tint to screen corners Default value: "["interpolate",["linear"],["zoom"],11,0,13,0.3]". Value range: [0, 1]
@@ -677,7 +718,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for vignette
      */
-    get() = getTransitionProperty("vignette-transition")
+    get() {
+      return getTransitionProperty("vignette-transition")
+    }
 
   /**
    * Set the Vignette property transition options.
@@ -689,6 +732,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("vignette-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [vignetteTransition].
    */
@@ -741,8 +785,11 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      * @return vignetteColor as int
      */
     @ColorInt
-    get() = vignetteColorAsExpression?.let {
-      rgbaExpressionToColorInt(it)
+    get() {
+      vignetteColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
     }
   /**
    * Snow vignette screen-space corners tint color. Default value: "#ffffff".
@@ -764,8 +811,11 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return vignette-color as String
      */
-    get() = vignetteColorAsExpression?.let {
-      rgbaExpressionToColorString(it)
+    get() {
+      vignetteColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
 
   /**
@@ -788,7 +838,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
      *
      * @return transition options for vignette-color
      */
-    get() = getTransitionProperty("vignette-color-transition")
+    get() {
+      return getTransitionProperty("vignette-color-transition")
+    }
 
   /**
    * Set the VignetteColor property transition options.
@@ -800,6 +852,7 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("vignette-color-transition", options)
     setProperty(propertyValue)
   }
+
   /**
    * DSL for [vignetteColorTransition].
    */
@@ -838,116 +891,6 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
     val propertyValue = PropertyValue("vignette-color", vignetteColor)
     setProperty(propertyValue)
   }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   */
-  @MapboxExperimental
-  val colorUseTheme: String?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * @return color-use-theme as String
-     */
-    get() = getPropertyValue("color-use-theme")
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: String): Snow = apply {
-    setProperty(PropertyValue("color-use-theme", colorUseTheme))
-  }
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * This is an Expression representation of "color-use-theme".
-   */
-  @MapboxExperimental
-  val colorUseThemeAsExpression: Expression?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * Get the colorUseTheme property as an Expression
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("color-use-theme")?.let {
-        return it
-      }
-      colorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: Expression): Snow = apply {
-    val propertyValue = PropertyValue("color-use-theme", colorUseTheme)
-    setProperty(propertyValue)
-  }
-  /**
-   * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   */
-  @MapboxExperimental
-  val vignetteColorUseTheme: String?
-    /**
-     * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * @return vignette-color-use-theme as String
-     */
-    get() = getPropertyValue("vignette-color-use-theme")
-
-  /**
-   * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param vignetteColorUseTheme as String
-   */
-  @MapboxExperimental
-  override fun vignetteColorUseTheme(vignetteColorUseTheme: String): Snow = apply {
-    setProperty(PropertyValue("vignette-color-use-theme", vignetteColorUseTheme))
-  }
-
-  /**
-   * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * This is an Expression representation of "vignette-color-use-theme".
-   */
-  @MapboxExperimental
-  val vignetteColorUseThemeAsExpression: Expression?
-    /**
-     * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * Get the vignetteColorUseTheme property as an Expression
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("vignette-color-use-theme")?.let {
-        return it
-      }
-      vignetteColorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-  /**
-   * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param vignetteColorUseTheme value of vignetteColorUseTheme as Expression
-   */
-  @MapboxExperimental
-  override fun vignetteColorUseTheme(vignetteColorUseTheme: Expression): Snow = apply {
-    val propertyValue = PropertyValue("vignette-color-use-theme", vignetteColorUseTheme)
-    setProperty(propertyValue)
-  }
 
   /**
    * Bind snow to the map controller.
@@ -983,13 +926,9 @@ class Snow : SnowDslReceiver, StyleContract.StyleSnowExtension {
   }
 
   private inline fun <reified T> getPropertyValue(propertyName: String): T? {
-    return getPropertyValueWithType(propertyName, T::class.java)
-  }
-
-  private fun <T> getPropertyValueWithType(propertyName: String, clazz: Class<T>): T? {
     delegate?.let {
       return try {
-        it.getStyleSnowProperty(propertyName).unwrap(clazz)
+        it.getStyleSnowProperty(propertyName).unwrap()
       } catch (e: RuntimeException) {
         Log.e(TAG, "Get snow property failed: ${e.message}")
         Log.e(TAG, it.getStyleSnowProperty(propertyName).toString())
@@ -1084,6 +1023,7 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun color(color: Expression): Snow
+
   /**
    * Set the Color property transition options.
    *
@@ -1287,6 +1227,7 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun vignetteColor(vignetteColor: Expression): Snow
+
   /**
    * Set the VignetteColor property transition options.
    *
@@ -1300,36 +1241,6 @@ interface SnowDslReceiver {
    */
   @MapboxExperimental
   fun vignetteColorTransition(block: StyleTransition.Builder.() -> Unit): Snow
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: String): Snow
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: Expression): Snow
-  /**
-   * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param vignetteColorUseTheme as String
-   */
-  @MapboxExperimental
-  fun vignetteColorUseTheme(vignetteColorUseTheme: String): Snow
-
-  /**
-   * This property defines whether the `vignetteColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param vignetteColorUseTheme value of vignetteColorUseTheme as Expression
-   */
-  @MapboxExperimental
-  fun vignetteColorUseTheme(vignetteColorUseTheme: Expression): Snow
 }
 
 /**

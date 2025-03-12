@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.light.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.Light
@@ -31,7 +30,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return castShadows as Boolean
      */
-    get() = getPropertyValue("cast-shadows")
+    get() {
+      return getPropertyValue("cast-shadows")
+    }
   /**
    * Enable/Disable shadow casting for this light Default value: false.
    *
@@ -82,8 +83,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      * @return color as int
      */
     @ColorInt
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorInt(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
     }
   /**
    * Color of the directional light. Default value: "#ffffff".
@@ -103,8 +107,11 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return color as String
      */
-    get() = colorAsExpression?.let {
-      rgbaExpressionToColorString(it)
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
   /**
    * Color of the directional light. Default value: "#ffffff".
@@ -152,7 +159,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return transition options for color
      */
-    get() = getTransitionProperty("color-transition")
+    get() {
+      return getTransitionProperty("color-transition")
+    }
   /**
    * Set the Color property transition options.
    *
@@ -169,6 +178,7 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
   override fun colorTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
+
   /**
    * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    */
@@ -178,7 +188,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return direction as List<Double>
      */
-    get() = getPropertyValue("direction")
+    get() {
+      return getPropertyValue("direction")
+    }
   /**
    * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
@@ -228,7 +240,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return transition options for direction
      */
-    get() = getTransitionProperty("direction-transition")
+    get() {
+      return getTransitionProperty("direction-transition")
+    }
   /**
    * Set the Direction property transition options.
    *
@@ -254,7 +268,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return intensity as Double
      */
-    get() = getPropertyValue("intensity")
+    get() {
+      return getPropertyValue("intensity")
+    }
   /**
    * A multiplier for the color of the directional light. Default value: 0.5. Value range: [0, 1]
    *
@@ -304,7 +320,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return transition options for intensity
      */
-    get() = getTransitionProperty("intensity-transition")
+    get() {
+      return getTransitionProperty("intensity-transition")
+    }
   /**
    * Set the Intensity property transition options.
    *
@@ -330,7 +348,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return shadowIntensity as Double
      */
-    get() = getPropertyValue("shadow-intensity")
+    get() {
+      return getPropertyValue("shadow-intensity")
+    }
   /**
    * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *
@@ -380,7 +400,9 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
      *
      * @return transition options for shadow-intensity
      */
-    get() = getTransitionProperty("shadow-intensity-transition")
+    get() {
+      return getTransitionProperty("shadow-intensity-transition")
+    }
   /**
    * Set the ShadowIntensity property transition options.
    *
@@ -396,60 +418,6 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
    */
   override fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight = apply {
     shadowIntensityTransition(StyleTransition.Builder().apply(block).build())
-  }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   */
-  @MapboxExperimental
-  val colorUseTheme: String?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * @return colorUseTheme as String
-     */
-    get() = getPropertyValue("color-use-theme")
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: String): DirectionalLight = apply {
-    setProperty(PropertyValue("color-use-theme", colorUseTheme))
-  }
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * This is an Expression representation of "color-use-theme".
-   */
-  @MapboxExperimental
-  val colorUseThemeAsExpression: Expression?
-    /**
-     * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-     *
-     * Get the ColorUseTheme property as an Expression
-     *
-     * @return String
-     */
-    get() {
-      getPropertyValue<Expression>("color-use-theme")?.let {
-        return it
-      }
-      colorUseTheme?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  override fun colorUseTheme(colorUseTheme: Expression): DirectionalLight = apply {
-    val propertyValue = PropertyValue("color-use-theme", colorUseTheme)
-    setProperty(propertyValue)
   }
 
   /**
@@ -515,6 +483,7 @@ interface DirectionalLightDslReceiver {
    * DSL for [colorTransition].
    */
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
+
   /**
    * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below). Default value: [210,30]. Minimum value: [0,0]. Maximum value: [360,90].
    *
@@ -590,21 +559,6 @@ interface DirectionalLightDslReceiver {
    * DSL for [shadowIntensityTransition].
    */
   fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme as String
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: String): DirectionalLight
-
-  /**
-   * This property defines whether the `color` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   *
-   * @param colorUseTheme value of colorUseTheme as Expression
-   */
-  @MapboxExperimental
-  fun colorUseTheme(colorUseTheme: Expression): DirectionalLight
 }
 
 /**

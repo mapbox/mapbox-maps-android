@@ -13,14 +13,11 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
-import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLightId
-import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.logD
@@ -63,7 +60,6 @@ public class AmbientLightState internal constructor(
   public val id: String,
   initialColor: ColorValue = ColorValue.INITIAL,
   initialColorTransition: Transition = Transition.INITIAL,
-  initialColorUseTheme: StringValue = StringValue.INITIAL,
   initialIntensity: DoubleValue = DoubleValue.INITIAL,
   initialIntensityTransition: Transition = Transition.INITIAL,
 ) {
@@ -71,14 +67,12 @@ public class AmbientLightState internal constructor(
     id = id,
     initialColor = ColorValue.INITIAL,
     initialColorTransition = Transition.INITIAL,
-    initialColorUseTheme = StringValue.INITIAL,
     initialIntensity = DoubleValue.INITIAL,
     initialIntensityTransition = Transition.INITIAL,
   )
 
   private val colorState: MutableState<ColorValue> = mutableStateOf(initialColor)
   private val colorTransitionState: MutableState<Transition> = mutableStateOf(initialColorTransition)
-  private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(initialColorUseTheme)
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(initialIntensity)
   private val intensityTransitionState: MutableState<Transition> = mutableStateOf(initialIntensityTransition)
 
@@ -95,14 +89,6 @@ public class AmbientLightState internal constructor(
   public var colorTransition: Transition by colorTransitionState
 
   /**
-   * Overrides applying of color theme for [color] if "none" is set. To follow default theme "default"
-   * should be set.
-   * Default value: "default".
-   */
-  @MapboxExperimental
-  public var colorUseTheme: StringValue by colorUseThemeState
-
-  /**
    * A multiplier for the color of the ambient light.
    * Default value: 0.5. Value range: [0, 1]
    */
@@ -115,40 +101,57 @@ public class AmbientLightState internal constructor(
   public var intensityTransition: Transition by intensityTransitionState
 
   @Composable
-  private fun MapboxStyleManager.UpdateLightProperty(
-    state: MutableState<out HoldsValue>,
-    name: String
-  ) {
-    val value = state.value
-    if (value.isNotInitial()) {
-      logD(TAG, "update Ambient light property: $id, $name, $value")
-      setStyleLightProperty(id, name, value.value)
-        .onError {
-          logE(TAG, it)
-        }
+  private fun UpdateColor(mapboxMap: MapboxStyleManager) {
+    if (color.notInitial) {
+      mapboxMap.updateLightProperty("color", color.value)
     }
   }
 
-  @OptIn(MapboxExperimental::class)
+  @Composable
+  private fun UpdateColorTransition(mapboxMap: MapboxStyleManager) {
+    if (colorTransition.notInitial) {
+      mapboxMap.updateLightProperty("color-transition", colorTransition.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateIntensity(mapboxMap: MapboxStyleManager) {
+    if (intensity.notInitial) {
+      mapboxMap.updateLightProperty("intensity", intensity.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateIntensityTransition(mapboxMap: MapboxStyleManager) {
+    if (intensityTransition.notInitial) {
+      mapboxMap.updateLightProperty("intensity-transition", intensityTransition.value)
+    }
+  }
+
+  private fun MapboxStyleManager.updateLightProperty(name: String, value: Value) {
+    logD(TAG, "update light property: $id, $name, $value")
+    setStyleLightProperty(id, name, value)
+      .onError {
+        logE(TAG, it)
+      }
+  }
+
   internal fun getProperties(): HashMap<String, Value> {
     return hashMapOf(
       "id" to Value(id),
       "type" to Value("ambient"),
       "properties" to Value(
         hashMapOf<String, Value>().apply {
-          if (color.isNotInitial()) {
+          if (color.notInitial) {
             this["color"] = color.value
           }
-          if (colorTransition.isNotInitial()) {
+          if (colorTransition.notInitial) {
             this["color-transition"] = colorTransition.value
           }
-          if (colorUseTheme.isNotInitial()) {
-            this["color-use-theme"] = colorUseTheme.value
-          }
-          if (intensity.isNotInitial()) {
+          if (intensity.notInitial) {
             this["intensity"] = intensity.value
           }
-          if (intensityTransition.isNotInitial()) {
+          if (intensityTransition.notInitial) {
             this["intensity-transition"] = intensityTransition.value
           }
         }
@@ -158,22 +161,19 @@ public class AmbientLightState internal constructor(
 
   @Composable
   internal fun UpdateProperties(mapboxMap: MapboxMap) {
-    mapboxMap.UpdateLightProperty(colorState, "color")
-    mapboxMap.UpdateLightProperty(colorTransitionState, "color-transition")
-    mapboxMap.UpdateLightProperty(colorUseThemeState, "color-use-theme")
-    mapboxMap.UpdateLightProperty(intensityState, "intensity")
-    mapboxMap.UpdateLightProperty(intensityTransitionState, "intensity-transition")
+    UpdateColor(mapboxMap)
+    UpdateColorTransition(mapboxMap)
+    UpdateIntensity(mapboxMap)
+    UpdateIntensityTransition(mapboxMap)
   }
 
   /**
    * Overwrite the hashcode for [AmbientLightState].
    */
-  @OptIn(MapboxExperimental::class)
   override fun hashCode(): Int {
     return Objects.hash(
       color,
       colorTransition,
-      colorUseTheme,
       intensity,
       intensityTransition,
     )
@@ -182,7 +182,6 @@ public class AmbientLightState internal constructor(
   /**
    * Overwrite the equals for [AmbientLightState].
    */
-  @OptIn(MapboxExperimental::class)
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
@@ -190,7 +189,6 @@ public class AmbientLightState internal constructor(
     if (id != other.id) return false
     if (color != other.color) return false
     if (colorTransition != other.colorTransition) return false
-    if (colorUseTheme != other.colorUseTheme) return false
     if (intensity != other.intensity) return false
     if (intensityTransition != other.intensityTransition) return false
     return true
@@ -199,9 +197,8 @@ public class AmbientLightState internal constructor(
   /**
    * Overwrite the toString for [AmbientLightState].
    */
-  @OptIn(MapboxExperimental::class)
   override fun toString(): String {
-    return "AmbientLightState(color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, intensity=$intensity, intensityTransition=$intensityTransition)"
+    return "AmbientLightState(color=$color, colorTransition=$colorTransition, intensity=$intensity, intensityTransition=$intensityTransition)"
   }
 
   /**
@@ -239,7 +236,6 @@ public class AmbientLightState internal constructor(
           id = id,
           initialColor = properties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           initialColorTransition = properties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
-          initialColorUseTheme = properties["color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           initialIntensity = properties["intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           initialIntensityTransition = properties["intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )

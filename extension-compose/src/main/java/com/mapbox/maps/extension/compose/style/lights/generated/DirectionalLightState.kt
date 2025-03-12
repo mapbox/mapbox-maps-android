@@ -13,16 +13,13 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
-import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLightId
-import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.logD
@@ -66,7 +63,6 @@ public class DirectionalLightState internal constructor(
   initialCastShadows: BooleanValue = BooleanValue.INITIAL,
   initialColor: ColorValue = ColorValue.INITIAL,
   initialColorTransition: Transition = Transition.INITIAL,
-  initialColorUseTheme: StringValue = StringValue.INITIAL,
   initialDirection: DoubleListValue = DoubleListValue.INITIAL,
   initialDirectionTransition: Transition = Transition.INITIAL,
   initialIntensity: DoubleValue = DoubleValue.INITIAL,
@@ -79,7 +75,6 @@ public class DirectionalLightState internal constructor(
     initialCastShadows = BooleanValue.INITIAL,
     initialColor = ColorValue.INITIAL,
     initialColorTransition = Transition.INITIAL,
-    initialColorUseTheme = StringValue.INITIAL,
     initialDirection = DoubleListValue.INITIAL,
     initialDirectionTransition = Transition.INITIAL,
     initialIntensity = DoubleValue.INITIAL,
@@ -91,7 +86,6 @@ public class DirectionalLightState internal constructor(
   private val castShadowsState: MutableState<BooleanValue> = mutableStateOf(initialCastShadows)
   private val colorState: MutableState<ColorValue> = mutableStateOf(initialColor)
   private val colorTransitionState: MutableState<Transition> = mutableStateOf(initialColorTransition)
-  private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(initialColorUseTheme)
   private val directionState: MutableState<DoubleListValue> = mutableStateOf(initialDirection)
   private val directionTransitionState: MutableState<Transition> = mutableStateOf(initialDirectionTransition)
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(initialIntensity)
@@ -116,14 +110,6 @@ public class DirectionalLightState internal constructor(
    * Default value: "#ffffff".
    */
   public var colorTransition: Transition by colorTransitionState
-
-  /**
-   * Overrides applying of color theme for [color] if "none" is set. To follow default theme "default"
-   * should be set.
-   * Default value: "default".
-   */
-  @MapboxExperimental
-  public var colorUseTheme: StringValue by colorUseThemeState
 
   /**
    * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates
@@ -166,55 +152,107 @@ public class DirectionalLightState internal constructor(
   public var shadowIntensityTransition: Transition by shadowIntensityTransitionState
 
   @Composable
-  private fun MapboxStyleManager.UpdateLightProperty(
-    state: MutableState<out HoldsValue>,
-    name: String
-  ) {
-    val value = state.value
-    if (value.isNotInitial()) {
-      logD(TAG, "update Directional light property: $id, $name, $value")
-      setStyleLightProperty(id, name, value.value)
-        .onError {
-          logE(TAG, it)
-        }
+  private fun UpdateCastShadows(mapboxMap: MapboxStyleManager) {
+    if (castShadows.notInitial) {
+      mapboxMap.updateLightProperty("cast-shadows", castShadows.value)
     }
   }
 
-  @OptIn(MapboxExperimental::class)
+  @Composable
+  private fun UpdateColor(mapboxMap: MapboxStyleManager) {
+    if (color.notInitial) {
+      mapboxMap.updateLightProperty("color", color.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateColorTransition(mapboxMap: MapboxStyleManager) {
+    if (colorTransition.notInitial) {
+      mapboxMap.updateLightProperty("color-transition", colorTransition.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateDirection(mapboxMap: MapboxStyleManager) {
+    if (direction.notInitial) {
+      mapboxMap.updateLightProperty("direction", direction.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateDirectionTransition(mapboxMap: MapboxStyleManager) {
+    if (directionTransition.notInitial) {
+      mapboxMap.updateLightProperty("direction-transition", directionTransition.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateIntensity(mapboxMap: MapboxStyleManager) {
+    if (intensity.notInitial) {
+      mapboxMap.updateLightProperty("intensity", intensity.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateIntensityTransition(mapboxMap: MapboxStyleManager) {
+    if (intensityTransition.notInitial) {
+      mapboxMap.updateLightProperty("intensity-transition", intensityTransition.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateShadowIntensity(mapboxMap: MapboxStyleManager) {
+    if (shadowIntensity.notInitial) {
+      mapboxMap.updateLightProperty("shadow-intensity", shadowIntensity.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateShadowIntensityTransition(mapboxMap: MapboxStyleManager) {
+    if (shadowIntensityTransition.notInitial) {
+      mapboxMap.updateLightProperty("shadow-intensity-transition", shadowIntensityTransition.value)
+    }
+  }
+
+  private fun MapboxStyleManager.updateLightProperty(name: String, value: Value) {
+    logD(TAG, "update light property: $id, $name, $value")
+    setStyleLightProperty(id, name, value)
+      .onError {
+        logE(TAG, it)
+      }
+  }
+
   internal fun getProperties(): HashMap<String, Value> {
     return hashMapOf(
       "id" to Value(id),
       "type" to Value("directional"),
       "properties" to Value(
         hashMapOf<String, Value>().apply {
-          if (castShadows.isNotInitial()) {
+          if (castShadows.notInitial) {
             this["cast-shadows"] = castShadows.value
           }
-          if (color.isNotInitial()) {
+          if (color.notInitial) {
             this["color"] = color.value
           }
-          if (colorTransition.isNotInitial()) {
+          if (colorTransition.notInitial) {
             this["color-transition"] = colorTransition.value
           }
-          if (colorUseTheme.isNotInitial()) {
-            this["color-use-theme"] = colorUseTheme.value
-          }
-          if (direction.isNotInitial()) {
+          if (direction.notInitial) {
             this["direction"] = direction.value
           }
-          if (directionTransition.isNotInitial()) {
+          if (directionTransition.notInitial) {
             this["direction-transition"] = directionTransition.value
           }
-          if (intensity.isNotInitial()) {
+          if (intensity.notInitial) {
             this["intensity"] = intensity.value
           }
-          if (intensityTransition.isNotInitial()) {
+          if (intensityTransition.notInitial) {
             this["intensity-transition"] = intensityTransition.value
           }
-          if (shadowIntensity.isNotInitial()) {
+          if (shadowIntensity.notInitial) {
             this["shadow-intensity"] = shadowIntensity.value
           }
-          if (shadowIntensityTransition.isNotInitial()) {
+          if (shadowIntensityTransition.notInitial) {
             this["shadow-intensity-transition"] = shadowIntensityTransition.value
           }
         }
@@ -224,28 +262,25 @@ public class DirectionalLightState internal constructor(
 
   @Composable
   internal fun UpdateProperties(mapboxMap: MapboxMap) {
-    mapboxMap.UpdateLightProperty(castShadowsState, "cast-shadows")
-    mapboxMap.UpdateLightProperty(colorState, "color")
-    mapboxMap.UpdateLightProperty(colorTransitionState, "color-transition")
-    mapboxMap.UpdateLightProperty(colorUseThemeState, "color-use-theme")
-    mapboxMap.UpdateLightProperty(directionState, "direction")
-    mapboxMap.UpdateLightProperty(directionTransitionState, "direction-transition")
-    mapboxMap.UpdateLightProperty(intensityState, "intensity")
-    mapboxMap.UpdateLightProperty(intensityTransitionState, "intensity-transition")
-    mapboxMap.UpdateLightProperty(shadowIntensityState, "shadow-intensity")
-    mapboxMap.UpdateLightProperty(shadowIntensityTransitionState, "shadow-intensity-transition")
+    UpdateCastShadows(mapboxMap)
+    UpdateColor(mapboxMap)
+    UpdateColorTransition(mapboxMap)
+    UpdateDirection(mapboxMap)
+    UpdateDirectionTransition(mapboxMap)
+    UpdateIntensity(mapboxMap)
+    UpdateIntensityTransition(mapboxMap)
+    UpdateShadowIntensity(mapboxMap)
+    UpdateShadowIntensityTransition(mapboxMap)
   }
 
   /**
    * Overwrite the hashcode for [DirectionalLightState].
    */
-  @OptIn(MapboxExperimental::class)
   override fun hashCode(): Int {
     return Objects.hash(
       castShadows,
       color,
       colorTransition,
-      colorUseTheme,
       direction,
       directionTransition,
       intensity,
@@ -258,7 +293,6 @@ public class DirectionalLightState internal constructor(
   /**
    * Overwrite the equals for [DirectionalLightState].
    */
-  @OptIn(MapboxExperimental::class)
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
@@ -267,7 +301,6 @@ public class DirectionalLightState internal constructor(
     if (castShadows != other.castShadows) return false
     if (color != other.color) return false
     if (colorTransition != other.colorTransition) return false
-    if (colorUseTheme != other.colorUseTheme) return false
     if (direction != other.direction) return false
     if (directionTransition != other.directionTransition) return false
     if (intensity != other.intensity) return false
@@ -280,9 +313,8 @@ public class DirectionalLightState internal constructor(
   /**
    * Overwrite the toString for [DirectionalLightState].
    */
-  @OptIn(MapboxExperimental::class)
   override fun toString(): String {
-    return "DirectionalLightState(castShadows=$castShadows, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, shadowIntensity=$shadowIntensity, shadowIntensityTransition=$shadowIntensityTransition)"
+    return "DirectionalLightState(castShadows=$castShadows, color=$color, colorTransition=$colorTransition, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, shadowIntensity=$shadowIntensity, shadowIntensityTransition=$shadowIntensityTransition)"
   }
 
   /**
@@ -321,7 +353,6 @@ public class DirectionalLightState internal constructor(
           initialCastShadows = properties["cast-shadows"]?.let { BooleanValue(it) } ?: BooleanValue.INITIAL,
           initialColor = properties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           initialColorTransition = properties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
-          initialColorUseTheme = properties["color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           initialDirection = properties["direction"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,
           initialDirectionTransition = properties["direction-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           initialIntensity = properties["intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,

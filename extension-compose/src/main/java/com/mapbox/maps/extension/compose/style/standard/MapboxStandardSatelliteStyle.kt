@@ -61,19 +61,19 @@ public fun MapboxStandardSatelliteStyle(
       styleImportsConfig = styleImportsConfig {
         importConfig(importId = "basemap") {
           with(standardSatelliteStyleConfigurationState) {
-            if (showPlaceLabels.isNotInitial()) {
+            if (showPlaceLabels.notInitial) {
               config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
             }
-            if (showRoadLabels.isNotInitial()) {
+            if (showRoadLabels.notInitial) {
               config(BaseStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
             }
-            if (showPointOfInterestLabels.isNotInitial()) {
+            if (showPointOfInterestLabels.notInitial) {
               config(
                 BaseStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
                 showPointOfInterestLabels.value
               )
             }
-            if (showTransitLabels.isNotInitial()) {
+            if (showTransitLabels.notInitial) {
               config(
                 BaseStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
                 showTransitLabels.value
@@ -82,16 +82,16 @@ public fun MapboxStandardSatelliteStyle(
             if (lightPreset.notInitial) {
               config(BaseStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
             }
-            if (font.isNotInitial()) {
+            if (font.notInitial) {
               config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
             }
-            if (showRoadsAndTransit.isNotInitial()) {
+            if (showRoadsAndTransit.notInitial) {
               config(
                 StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ROADS_AND_TRANSIT,
                 showRoadsAndTransit.value
               )
             }
-            if (showPedestrianRoads.isNotInitial()) {
+            if (showPedestrianRoads.notInitial) {
               config(
                 StandardSatelliteStyleConfigurationState.CONFIG_SHOW_PEDESTRIAN_ROADS,
                 showPedestrianRoads.value

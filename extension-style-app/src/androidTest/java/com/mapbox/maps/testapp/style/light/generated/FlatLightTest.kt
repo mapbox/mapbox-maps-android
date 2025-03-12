@@ -212,25 +212,5 @@ class FlatLightTest : BaseStyleTest() {
     setupLight(light)
     assertEquals(transition, light.positionTransition)
   }
-  @Test
-  @UiThreadTest
-  fun colorUseThemeTest() {
-    val light = flatLight {
-      colorUseTheme("default")
-    }
-    setupLight(light)
-    assertEquals("default", light.colorUseTheme)
-  }
-  // Add Expression Test
-  @Test
-  @UiThreadTest
-  fun colorUseThemeAsExpressionTest() {
-    val expression = literal("default")
-    val light = flatLight {
-      colorUseTheme(expression)
-    }
-    setupLight(light)
-    assertEquals(expression.toString(), light.colorUseThemeAsExpression.toString())
-  }
 }
 // End of generated file.

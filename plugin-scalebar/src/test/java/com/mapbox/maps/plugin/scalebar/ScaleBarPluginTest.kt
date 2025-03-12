@@ -12,11 +12,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarAttributeParser
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.mockkStatic
-import io.mockk.verify
+import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -62,7 +58,6 @@ class ScaleBarPluginTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
-    every { scaleBarView.pixelRatio } returns 1.5f
 
     scaleBarPlugin = ScaleBarPluginImpl { scaleBarView }
     scaleBarPlugin.onDelegateProvider(delegateProvider)

@@ -12,7 +12,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -111,6 +110,14 @@ public class VectorSourceState private constructor(
    */
   public var url: StringValue by urlState
 
+  @Composable
+  private fun UpdateUrl() {
+    urlState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("url", value)
+      }
+    }
+  }
   private val tilesState: MutableState<StringListValue> = mutableStateOf(tiles)
 
   /**
@@ -119,6 +126,14 @@ public class VectorSourceState private constructor(
    */
   public var tiles: StringListValue by tilesState
 
+  @Composable
+  private fun UpdateTiles() {
+    tilesState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("tiles", value)
+      }
+    }
+  }
   private val boundsState: MutableState<DoubleListValue> = mutableStateOf(bounds)
 
   /**
@@ -129,6 +144,14 @@ public class VectorSourceState private constructor(
    */
   public var bounds: DoubleListValue by boundsState
 
+  @Composable
+  private fun UpdateBounds() {
+    boundsState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("bounds", value)
+      }
+    }
+  }
   private val schemeState: MutableState<SchemeValue> = mutableStateOf(scheme)
 
   /**
@@ -137,6 +160,14 @@ public class VectorSourceState private constructor(
    */
   public var scheme: SchemeValue by schemeState
 
+  @Composable
+  private fun UpdateScheme() {
+    schemeState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("scheme", value)
+      }
+    }
+  }
   private val minZoomState: MutableState<LongValue> = mutableStateOf(minZoom)
 
   /**
@@ -145,6 +176,14 @@ public class VectorSourceState private constructor(
    */
   public var minZoom: LongValue by minZoomState
 
+  @Composable
+  private fun UpdateMinZoom() {
+    minZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("minzoom", value)
+      }
+    }
+  }
   private val maxZoomState: MutableState<LongValue> = mutableStateOf(maxZoom)
 
   /**
@@ -154,6 +193,14 @@ public class VectorSourceState private constructor(
    */
   public var maxZoom: LongValue by maxZoomState
 
+  @Composable
+  private fun UpdateMaxZoom() {
+    maxZoomState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("maxzoom", value)
+      }
+    }
+  }
   private val attributionState: MutableState<StringValue> = mutableStateOf(attribution)
 
   /**
@@ -161,6 +208,14 @@ public class VectorSourceState private constructor(
    */
   public var attribution: StringValue by attributionState
 
+  @Composable
+  private fun UpdateAttribution() {
+    attributionState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("attribution", value)
+      }
+    }
+  }
   private val promoteIdState: MutableState<PromoteIdValue> = mutableStateOf(promoteId)
 
   /**
@@ -171,6 +226,14 @@ public class VectorSourceState private constructor(
    */
   public var promoteId: PromoteIdValue by promoteIdState
 
+  @Composable
+  private fun UpdatePromoteId() {
+    promoteIdState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("promoteId", value)
+      }
+    }
+  }
   private val volatileState: MutableState<BooleanValue> = mutableStateOf(volatile)
 
   /**
@@ -179,6 +242,14 @@ public class VectorSourceState private constructor(
    */
   public var volatile: BooleanValue by volatileState
 
+  @Composable
+  private fun UpdateVolatile() {
+    volatileState.value.apply {
+      if (notInitial) {
+        setBuilderProperty("volatile", value)
+      }
+    }
+  }
   private val prefetchZoomDeltaState: MutableState<LongValue> = mutableStateOf(prefetchZoomDelta)
 
   /**
@@ -190,6 +261,14 @@ public class VectorSourceState private constructor(
    */
   public var prefetchZoomDelta: LongValue by prefetchZoomDeltaState
 
+  @Composable
+  private fun UpdatePrefetchZoomDelta() {
+    prefetchZoomDeltaState.value.apply {
+      if (notInitial) {
+        setProperty("prefetch-zoom-delta", value)
+      }
+    }
+  }
   private val tileCacheBudgetState: MutableState<TileCacheBudget> = mutableStateOf(tileCacheBudget)
 
   /**
@@ -200,6 +279,14 @@ public class VectorSourceState private constructor(
    */
   public var tileCacheBudget: TileCacheBudget by tileCacheBudgetState
 
+  @Composable
+  private fun UpdateTileCacheBudget() {
+    tileCacheBudgetState.value.apply {
+      if (notInitial) {
+        setProperty("tile-cache-budget", value)
+      }
+    }
+  }
   private val minimumTileUpdateIntervalState: MutableState<DoubleValue> = mutableStateOf(minimumTileUpdateInterval)
 
   /**
@@ -210,6 +297,14 @@ public class VectorSourceState private constructor(
    */
   public var minimumTileUpdateInterval: DoubleValue by minimumTileUpdateIntervalState
 
+  @Composable
+  private fun UpdateMinimumTileUpdateInterval() {
+    minimumTileUpdateIntervalState.value.apply {
+      if (notInitial) {
+        setProperty("minimum-tile-update-interval", value)
+      }
+    }
+  }
   private val maxOverscaleFactorForParentTilesState: MutableState<LongValue> = mutableStateOf(maxOverscaleFactorForParentTiles)
 
   /**
@@ -220,6 +315,14 @@ public class VectorSourceState private constructor(
    */
   public var maxOverscaleFactorForParentTiles: LongValue by maxOverscaleFactorForParentTilesState
 
+  @Composable
+  private fun UpdateMaxOverscaleFactorForParentTiles() {
+    maxOverscaleFactorForParentTilesState.value.apply {
+      if (notInitial) {
+        setProperty("max-overscale-factor-for-parent-tiles", value)
+      }
+    }
+  }
   private val tileRequestsDelayState: MutableState<DoubleValue> = mutableStateOf(tileRequestsDelay)
 
   /**
@@ -230,6 +333,14 @@ public class VectorSourceState private constructor(
    */
   public var tileRequestsDelay: DoubleValue by tileRequestsDelayState
 
+  @Composable
+  private fun UpdateTileRequestsDelay() {
+    tileRequestsDelayState.value.apply {
+      if (notInitial) {
+        setProperty("tile-requests-delay", value)
+      }
+    }
+  }
   private val tileNetworkRequestsDelayState: MutableState<DoubleValue> = mutableStateOf(tileNetworkRequestsDelay)
 
   /**
@@ -242,41 +353,50 @@ public class VectorSourceState private constructor(
   public var tileNetworkRequestsDelay: DoubleValue by tileNetworkRequestsDelayState
 
   @Composable
+  private fun UpdateTileNetworkRequestsDelay() {
+    tileNetworkRequestsDelayState.value.apply {
+      if (notInitial) {
+        setProperty("tile-network-requests-delay", value)
+      }
+    }
+  }
+
+  @Composable
   override fun UpdateProperties() {
-    ActionWhenNotInitial(setBuilderPropertyAction, urlState, "url")
-    ActionWhenNotInitial(setBuilderPropertyAction, tilesState, "tiles")
-    ActionWhenNotInitial(setBuilderPropertyAction, boundsState, "bounds")
-    ActionWhenNotInitial(setBuilderPropertyAction, schemeState, "scheme")
-    ActionWhenNotInitial(setBuilderPropertyAction, minZoomState, "minzoom")
-    ActionWhenNotInitial(setBuilderPropertyAction, maxZoomState, "maxzoom")
-    ActionWhenNotInitial(setBuilderPropertyAction, attributionState, "attribution")
-    ActionWhenNotInitial(setBuilderPropertyAction, promoteIdState, "promoteId")
-    ActionWhenNotInitial(setBuilderPropertyAction, volatileState, "volatile")
-    ActionWhenNotInitial(setPropertyAction, prefetchZoomDeltaState, "prefetch-zoom-delta")
-    ActionWhenNotInitial(setPropertyAction, tileCacheBudgetState, "tile-cache-budget")
-    ActionWhenNotInitial(setPropertyAction, minimumTileUpdateIntervalState, "minimum-tile-update-interval")
-    ActionWhenNotInitial(setPropertyAction, maxOverscaleFactorForParentTilesState, "max-overscale-factor-for-parent-tiles")
-    ActionWhenNotInitial(setPropertyAction, tileRequestsDelayState, "tile-requests-delay")
-    ActionWhenNotInitial(setPropertyAction, tileNetworkRequestsDelayState, "tile-network-requests-delay")
+    UpdateUrl()
+    UpdateTiles()
+    UpdateBounds()
+    UpdateScheme()
+    UpdateMinZoom()
+    UpdateMaxZoom()
+    UpdateAttribution()
+    UpdatePromoteId()
+    UpdateVolatile()
+    UpdatePrefetchZoomDelta()
+    UpdateTileCacheBudget()
+    UpdateMinimumTileUpdateInterval()
+    UpdateMaxOverscaleFactorForParentTiles()
+    UpdateTileRequestsDelay()
+    UpdateTileNetworkRequestsDelay()
   }
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("url" to url.value).takeIf { url.isNotInitial() },
-      ("tiles" to tiles.value).takeIf { tiles.isNotInitial() },
-      ("bounds" to bounds.value).takeIf { bounds.isNotInitial() },
-      ("scheme" to scheme.value).takeIf { scheme.isNotInitial() },
-      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
-      ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
-      ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
-      ("promoteId" to promoteId.value).takeIf { promoteId.isNotInitial() },
-      ("volatile" to volatile.value).takeIf { volatile.isNotInitial() },
-      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.isNotInitial() },
-      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.isNotInitial() },
-      ("minimum-tile-update-interval" to minimumTileUpdateInterval.value).takeIf { minimumTileUpdateInterval.isNotInitial() },
-      ("max-overscale-factor-for-parent-tiles" to maxOverscaleFactorForParentTiles.value).takeIf { maxOverscaleFactorForParentTiles.isNotInitial() },
-      ("tile-requests-delay" to tileRequestsDelay.value).takeIf { tileRequestsDelay.isNotInitial() },
-      ("tile-network-requests-delay" to tileNetworkRequestsDelay.value).takeIf { tileNetworkRequestsDelay.isNotInitial() },
+      ("url" to url.value).takeIf { url.notInitial },
+      ("tiles" to tiles.value).takeIf { tiles.notInitial },
+      ("bounds" to bounds.value).takeIf { bounds.notInitial },
+      ("scheme" to scheme.value).takeIf { scheme.notInitial },
+      ("minzoom" to minZoom.value).takeIf { minZoom.notInitial },
+      ("maxzoom" to maxZoom.value).takeIf { maxZoom.notInitial },
+      ("attribution" to attribution.value).takeIf { attribution.notInitial },
+      ("promoteId" to promoteId.value).takeIf { promoteId.notInitial },
+      ("volatile" to volatile.value).takeIf { volatile.notInitial },
+      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.notInitial },
+      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.notInitial },
+      ("minimum-tile-update-interval" to minimumTileUpdateInterval.value).takeIf { minimumTileUpdateInterval.notInitial },
+      ("max-overscale-factor-for-parent-tiles" to maxOverscaleFactorForParentTiles.value).takeIf { maxOverscaleFactorForParentTiles.notInitial },
+      ("tile-requests-delay" to tileRequestsDelay.value).takeIf { tileRequestsDelay.notInitial },
+      ("tile-network-requests-delay" to tileNetworkRequestsDelay.value).takeIf { tileNetworkRequestsDelay.notInitial },
     ).toMap()
 
   /**

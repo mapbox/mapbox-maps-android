@@ -310,8 +310,6 @@ internal constructor(
             focalPoint
           )
         )
-        // skip updating the annotation's position as the drag is already ended
-        return
       }
       val moveObject = mapMoveDetector.getMoveObject(0)
       val x = moveObject.currentX

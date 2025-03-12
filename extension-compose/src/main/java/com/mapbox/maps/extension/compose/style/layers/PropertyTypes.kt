@@ -1,10 +1,8 @@
 package com.mapbox.maps.extension.compose.style.layers
 
-import androidx.annotation.RestrictTo
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.StyleImage
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -15,7 +13,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  * @param value the filter expression wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class Filter internal constructor(public override val value: Value) : HoldsValue {
+public data class Filter internal constructor(public val value: Value) {
 
   /**
    * Construct the [Filter] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -25,8 +23,8 @@ public data class Filter internal constructor(public override val value: Value) 
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * Public companion object.
@@ -57,7 +55,7 @@ public data class Filter internal constructor(public override val value: Value) 
  * @param value the Formatted expression wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class FormattedValue internal constructor(public override val value: Value) : HoldsValue {
+public data class FormattedValue internal constructor(public val value: Value) {
   /**
    * Construct the [FormattedValue] with [String].
    */
@@ -71,8 +69,8 @@ public data class FormattedValue internal constructor(public override val value:
   /**
    * True if the this value is not [INITIAL]
    */
-  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-  override fun isNotInitial(): Boolean = this !== INITIAL
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
 
   /**
    * The [String] represented by [value] or `null` if the stored [Value] is not a [String].

@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -48,7 +47,6 @@ import com.mapbox.maps.extension.compose.style.styleImportsConfig
  */
 public class GenericStylePositionsActivity : ComponentActivity() {
 
-  @OptIn(MapboxDelicateApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {

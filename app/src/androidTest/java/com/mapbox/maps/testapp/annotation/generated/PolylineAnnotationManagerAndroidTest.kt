@@ -394,7 +394,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineBorderColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "default"
+      val expectedValue = "abc"
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
       polylineAnnotationManager.lineBorderColorUseTheme = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineBorderColorUseTheme)
@@ -406,7 +406,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "default"
+      val expectedValue = "abc"
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
       polylineAnnotationManager.lineColorUseTheme = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineColorUseTheme)
@@ -418,7 +418,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineGradientUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "default"
+      val expectedValue = "abc"
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
       polylineAnnotationManager.lineGradientUseTheme = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineGradientUseTheme)
@@ -430,7 +430,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTrimColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "default"
+      val expectedValue = "abc"
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
       polylineAnnotationManager.lineTrimColorUseTheme = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineTrimColorUseTheme)

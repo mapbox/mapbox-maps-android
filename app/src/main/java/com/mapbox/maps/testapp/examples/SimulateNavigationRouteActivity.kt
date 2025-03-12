@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -9,12 +8,7 @@ import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.logI
-import com.mapbox.maps.renderer.RenderThreadStats
-import com.mapbox.maps.renderer.RenderThreadStatsRecorder
-import com.mapbox.maps.testapp.examples.SimulateNavigationRouteActivity.Companion.SIMULATION_DURATION
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
 import kotlinx.coroutines.Dispatchers
@@ -24,15 +18,12 @@ import kotlinx.coroutines.withContext
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
- * route line and camera tracking. Gestures are disabled.
- * The simulation will run [repetitions] times, and the network stack will be disabled after the 5th.
- * On each iteration, the simulation will run for [SIMULATION_DURATION] milliseconds and some frame
- * stats will be logged.
+ * route line and camera tracking. The activity has disabled gestures and will run for 20 seconds.
+ * At the end of the activity, there will be a toast showing the average fps, overtime frames
  */
-@OptIn(MapboxExperimental::class)
 class SimulateNavigationRouteActivity : AppCompatActivity() {
 
-  private val repetitions = 3
+  private lateinit var navigationSimulator: NavigationSimulator
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -46,8 +37,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         zoom(9.0)
       }
     )
-    // Prevent screen from sleeping while running the simulation
-    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     lifecycleScope.launch {
       val routePoints = withContext(Dispatchers.Default) {
         LineString.fromPolyline(
@@ -60,13 +49,10 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
           Constants.PRECISION_6
         )
       }
-      repeat(repetitions) {
-        val renderThreadStatsRecorder = RenderThreadStatsRecorder()
-        mapView.setRenderThreadStatsRecorder(renderThreadStatsRecorder)
-        val navigationSimulator = NavigationSimulator(mapView, routePoints)
-        navigationSimulator.disableGestures()
-        renderThreadStatsRecorder.start()
-        navigationSimulator.playCustomNavigationScripts(
+      navigationSimulator = NavigationSimulator(mapView, routePoints)
+      navigationSimulator.apply {
+        disableGestures()
+        playCustomNavigationScripts(
           NavigationSimulator.NavigationStep(INITIAL_OVERVIEW_DELAY_MS) {
             setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
           },
@@ -77,30 +63,22 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
             setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
           }
         )
-        delay(SIMULATION_DURATION)
-        logStats(renderThreadStatsRecorder.end())
-        navigationSimulator.onDestroy()
       }
+      delay(SIMULATION_DURATION)
       finish()
+      // Uncomment below to play the default navigation script in loop.
+      // navigationSimulator.playDefaultNavigationScriptsInLoop()
     }
   }
 
-  private fun logStats(renderThreadStats: RenderThreadStats) = with(renderThreadStats) {
-    logI(TAG, "RenderThread Stats:")
-    logI(TAG, "\ttotal time: $totalTime ms")
-    logI(TAG, "\ttotal frames (rendered + skipped): $totalFrames")
-    logI(TAG, "\taverage FPS: ${(totalFrames / (totalTime / 1000F)).format()}")
-    logI(TAG, "\tskipped frames: $totalDroppedFrames")
-    logI(TAG, "\t50 percentile: ${percentile50.format()} ms")
-    logI(TAG, "\t90 percentile: ${percentile90.format()} ms")
-    logI(TAG, "\t95 percentile: ${percentile95.format()} ms")
-    logI(TAG, "\t99 percentile: ${percentile99.format()} ms")
+  override fun onDestroy() {
+    super.onDestroy()
+    if (this::navigationSimulator.isInitialized) {
+      navigationSimulator.onDestroy()
+    }
   }
 
-  private fun Number?.format() = "%.3f".format(this)
-
   companion object {
-    private const val TAG = "SimulateNavigationRoute"
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
     private const val INITIAL_OVERVIEW_DELAY_MS = 3000L
     private const val FIRST_FOLLOW_MODE_DELAY_MS = 8000L

@@ -208,14 +208,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   }
 
   /**
-   * Set [RenderThreadStatsRecorder] to record frame stats.
-   */
-  @MapboxExperimental
-  override fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder) {
-    mapController.setRenderThreadStatsRecorder(renderThreadStatsRecorder)
-  }
-
-  /**
    * Called to resume rendering
    */
   override fun onStart() {

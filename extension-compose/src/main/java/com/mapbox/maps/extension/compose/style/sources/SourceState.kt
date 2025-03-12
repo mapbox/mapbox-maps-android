@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.TypeParceler
-import kotlin.reflect.KFunction2
 
 /**
  * A [MutableStateFlow] to keep the latest value for a Source Property
@@ -400,9 +399,6 @@ public abstract class SourceState internal constructor(
 
   @Composable
   internal abstract fun UpdateProperties()
-
-  protected val setBuilderPropertyAction: KFunction2<String, Value, Unit> = ::setBuilderProperty
-  protected val setPropertyAction: KFunction2<String, Value, Unit> = ::setProperty
 
   private companion object {
     private const val TAG = "SourceState"
