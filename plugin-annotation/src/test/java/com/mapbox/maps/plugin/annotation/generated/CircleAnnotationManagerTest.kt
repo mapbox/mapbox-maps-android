@@ -852,6 +852,112 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun testScaleDoesNotTriggerDrag() {
+    mockkObject(DragInteraction.Companion)
+    val onDragBeginLayerIdSlot = slot<((FeaturesetFeature<FeatureState>, InteractionContext) -> Boolean)>()
+    val onDragSlot = slot<((InteractionContext) -> Unit)>()
+    val onDragEndSlot = slot<((InteractionContext) -> Unit)>()
+    val customLayerId = "customLayerId"
+    every {
+      DragInteraction.layer(
+        id = customLayerId,
+        filter = any(),
+        onDragBegin = capture(onDragBeginLayerIdSlot),
+        onDrag = capture(onDragSlot),
+        onDragEnd = capture(onDragEndSlot)
+      )
+    } answers {
+      mockk()
+    }
+    every {
+      DragInteraction.layer(
+        id = any(),
+        filter = any(),
+        onDragBegin = { _, _ -> return@layer false },
+        onDrag = { },
+        onDragEnd = { }
+      )
+    } returns mockk()
+    every { mapInteractionDelegate.dispatch(any()) } just runs
+    val manager = CircleAnnotationManager(
+      delegateProvider,
+      annotationConfig = AnnotationConfig(layerId = customLayerId)
+    )
+    manager.onSizeChanged(100, 100)
+    val annotation = manager.create(
+      CircleAnnotationOptions()
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    assertEquals(annotation, manager.annotations[0])
+
+    every { feature.getProperty(any()).asString } returns annotation.id
+
+    val listener = mockk<OnCircleAnnotationDragListener>(relaxed = true)
+    manager.addDragListener(listener)
+
+    annotation.isDraggable = true
+    val pointF = PointF(0f, 0f)
+    every { moveGestureDetector.pointersCount } returns 2
+    every { moveGestureDetector.focalPoint } returns pointF
+
+    every { feature.properties() } returns JsonObject().apply {
+      addProperty(CircleAnnotation.ID_KEY, annotation.id)
+    }
+    every { feature.id() } returns "featureId"
+    every { feature.geometry() } returns Point.fromLngLat(0.0, 0.0)
+
+    onDragBeginLayerIdSlot.captured.invoke(
+      FeaturesetFeature(
+        id = FeaturesetFeatureId(feature.id()!!, null),
+        descriptor = TypedFeaturesetDescriptor.Layer(customLayerId),
+        originalFeature = feature,
+        state = FeatureState { }
+      ),
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
+    verify { listener.onAnnotationDragStarted(annotation) }
+    assertEquals(1, manager.annotations.size)
+
+    val moveDistancesObject = mockk<MoveDistancesObject>()
+    every { moveDistancesObject.currentX } returns 1f
+    every { moveDistancesObject.currentY } returns 1f
+    every { moveDistancesObject.distanceXSinceLast } returns 1f
+    every { moveDistancesObject.distanceYSinceLast } returns 1f
+    every { moveGestureDetector.getMoveObject(any()) } returns moveDistancesObject
+    onDragSlot.captured.invoke(
+      InteractionContext(
+        CoordinateInfo(
+          Point.fromLngLat(0.0, 0.0),
+          true
+        ),
+        ScreenCoordinate(0.0, 0.0)
+      )
+    )
+    verify(exactly = 0) { listener.onAnnotationDrag(annotation) }
+    verify(exactly = 1) { listener.onAnnotationDragFinished(annotation) }
+
+    manager.removeDragListener(listener)
+    assertTrue(manager.dragListeners.isEmpty())
+    assertEquals(1, manager.annotations.size)
+
+    // Verify update after drag
+    annotation.point = Point.fromLngLat(1.0, 1.0)
+    manager.update(annotation)
+    assertEquals(annotation, manager.annotations[0])
+
+    // Verify delete after drag
+    manager.delete(annotation)
+    assertTrue(manager.annotations.isEmpty())
+    unmockkObject(DragInteraction.Companion)
+  }
+
+  @Test
   fun testCircleSortKeyLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
