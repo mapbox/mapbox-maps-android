@@ -3987,15 +3987,18 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     ctor public AmbientLightState(String id = generateRandomLightId("ambient"));
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getColorUseTheme();
     method public String getId();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
     property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue colorUseTheme;
     property public final String id;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
     property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
@@ -4042,6 +4045,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public com.mapbox.maps.extension.compose.style.BooleanValue getCastShadows();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
     method public com.mapbox.maps.extension.compose.style.Transition getDirectionTransition();
     method public String getId();
@@ -4052,6 +4056,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public void setCastShadows(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -4061,6 +4066,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue castShadows;
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
     property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue colorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
     property public final com.mapbox.maps.extension.compose.style.Transition directionTransition;
     property public final String id;
@@ -4095,6 +4101,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue getAnchor();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getColorUseTheme();
     method public String getId();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
@@ -4103,6 +4110,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public void setAnchor(com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue);
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setPosition(com.mapbox.maps.extension.compose.style.DoubleListValue);
@@ -4110,6 +4118,7 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue anchor;
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
     property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue colorUseTheme;
     property public final String id;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
     property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
@@ -4154,6 +4163,7 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getCenterThinningTransition();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getDensity();
     method public com.mapbox.maps.extension.compose.style.Transition getDensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
@@ -4169,11 +4179,13 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getVignette();
     method public com.mapbox.maps.extension.compose.style.ColorValue getVignetteColor();
     method public com.mapbox.maps.extension.compose.style.Transition getVignetteColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getVignetteColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.Transition getVignetteTransition();
     method public void setCenterThinning(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setCenterThinningTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setDensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setDensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
@@ -4189,11 +4201,13 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public void setVignette(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setVignetteColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setVignetteColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setVignetteColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVignetteTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.DoubleValue centerThinning;
     property public final com.mapbox.maps.extension.compose.style.Transition centerThinningTransition;
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
     property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue colorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue density;
     property public final com.mapbox.maps.extension.compose.style.Transition densityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
@@ -4209,6 +4223,7 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue vignette;
     property public final com.mapbox.maps.extension.compose.style.ColorValue vignetteColor;
     property public final com.mapbox.maps.extension.compose.style.Transition vignetteColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue vignetteColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.Transition vignetteTransition;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.RainState DISABLED;
@@ -4239,6 +4254,7 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getCenterThinningTransition();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColor();
     method public com.mapbox.maps.extension.compose.style.Transition getColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getDensity();
     method public com.mapbox.maps.extension.compose.style.Transition getDensityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getDirection();
@@ -4252,11 +4268,13 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getVignette();
     method public com.mapbox.maps.extension.compose.style.ColorValue getVignetteColor();
     method public com.mapbox.maps.extension.compose.style.Transition getVignetteColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getVignetteColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.Transition getVignetteTransition();
     method public void setCenterThinning(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setCenterThinningTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setDensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setDensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setDirection(com.mapbox.maps.extension.compose.style.DoubleListValue);
@@ -4270,11 +4288,13 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     method public void setVignette(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setVignetteColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setVignetteColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setVignetteColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVignetteTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.DoubleValue centerThinning;
     property public final com.mapbox.maps.extension.compose.style.Transition centerThinningTransition;
     property public final com.mapbox.maps.extension.compose.style.ColorValue color;
     property public final com.mapbox.maps.extension.compose.style.Transition colorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue colorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue density;
     property public final com.mapbox.maps.extension.compose.style.Transition densityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue direction;
@@ -4288,6 +4308,7 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue vignette;
     property public final com.mapbox.maps.extension.compose.style.ColorValue vignetteColor;
     property public final com.mapbox.maps.extension.compose.style.Transition vignetteColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue vignetteColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.Transition vignetteTransition;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState DISABLED;

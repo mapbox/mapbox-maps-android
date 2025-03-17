@@ -5493,10 +5493,14 @@ public final class com/mapbox/maps/extension/style/light/generated/AmbientLight 
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
+	public fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
+	public fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getColorUseTheme ()Ljava/lang/String;
+	public final fun getColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIntensity ()Ljava/lang/Double;
 	public final fun getIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -5513,6 +5517,8 @@ public abstract interface class com/mapbox/maps/extension/style/light/generated/
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
+	public abstract fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
+	public abstract fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public abstract fun intensity (D)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public abstract fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
 	public abstract fun intensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/AmbientLight;
@@ -5537,6 +5543,8 @@ public final class com/mapbox/maps/extension/style/light/generated/DirectionalLi
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
+	public fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
+	public fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun direction (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun direction (Ljava/util/List;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun directionTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
@@ -5547,6 +5555,8 @@ public final class com/mapbox/maps/extension/style/light/generated/DirectionalLi
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getColorUseTheme ()Ljava/lang/String;
+	public final fun getColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDirection ()Ljava/util/List;
 	public final fun getDirectionAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDirectionTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -5575,6 +5585,8 @@ public abstract interface class com/mapbox/maps/extension/style/light/generated/
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
+	public abstract fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
+	public abstract fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun direction (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun direction (Ljava/util/List;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun directionTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
@@ -5611,12 +5623,16 @@ public final class com/mapbox/maps/extension/style/light/generated/FlatLight : c
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
+	public fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
+	public fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public final fun getAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Anchor;
 	public final fun getAnchorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getColorUseTheme ()Ljava/lang/String;
+	public final fun getColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIntensity ()Ljava/lang/Double;
 	public final fun getIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -5643,6 +5659,8 @@ public abstract interface class com/mapbox/maps/extension/style/light/generated/
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
+	public abstract fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
+	public abstract fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public abstract fun intensity (D)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public abstract fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
 	public abstract fun intensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/FlatLight;
@@ -5695,6 +5713,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Rain
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun density (D)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun density (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun densityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
@@ -5718,6 +5738,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Rain
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getColorUseTheme ()Ljava/lang/String;
+	public final fun getColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDensity ()Ljava/lang/Double;
 	public final fun getDensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -5742,6 +5764,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Rain
 	public final fun getVignetteColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getVignetteColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getVignetteColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getVignetteColorUseTheme ()Ljava/lang/String;
+	public final fun getVignetteColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public fun intensity (D)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
@@ -5758,6 +5782,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Rain
 	public fun vignetteColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun vignetteColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun vignetteColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public fun vignetteColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public fun vignetteColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun vignetteTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public fun vignetteTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 }
@@ -5772,6 +5798,8 @@ public abstract interface class com/mapbox/maps/extension/style/precipitations/g
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public abstract fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public abstract fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun density (D)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun density (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun densityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
@@ -5803,6 +5831,8 @@ public abstract interface class com/mapbox/maps/extension/style/precipitations/g
 	public abstract fun vignetteColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun vignetteColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun vignetteColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public abstract fun vignetteColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
+	public abstract fun vignetteColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun vignetteTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 	public abstract fun vignetteTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Rain;
 }
@@ -5842,6 +5872,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Snow
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun density (D)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun density (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun densityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
@@ -5861,6 +5893,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Snow
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getColorUseTheme ()Ljava/lang/String;
+	public final fun getColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDensity ()Ljava/lang/Double;
 	public final fun getDensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -5882,6 +5916,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Snow
 	public final fun getVignetteColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getVignetteColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getVignetteColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getVignetteColorUseTheme ()Ljava/lang/String;
+	public final fun getVignetteColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public fun intensity (D)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
@@ -5898,6 +5934,8 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Snow
 	public fun vignetteColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun vignetteColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun vignetteColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public fun vignetteColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public fun vignetteColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun vignetteTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public fun vignetteTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 }
@@ -5912,6 +5950,8 @@ public abstract interface class com/mapbox/maps/extension/style/precipitations/g
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public abstract fun colorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public abstract fun colorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun density (D)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun density (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun densityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
@@ -5939,6 +5979,8 @@ public abstract interface class com/mapbox/maps/extension/style/precipitations/g
 	public abstract fun vignetteColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun vignetteColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun vignetteColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public abstract fun vignetteColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
+	public abstract fun vignetteColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun vignetteTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 	public abstract fun vignetteTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/precipitations/generated/Snow;
 }

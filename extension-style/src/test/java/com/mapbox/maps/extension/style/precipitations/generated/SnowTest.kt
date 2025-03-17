@@ -231,7 +231,6 @@ class SnowTest {
     assertEquals("rgba(0, 0, 0, 1)".toString(), snow.color!!.toString())
     verify { style.getStyleSnowProperty("color") }
   }
-
   // Expression Tests
 
   @Test
@@ -1112,7 +1111,6 @@ class SnowTest {
     assertEquals("rgba(0, 0, 0, 1)".toString(), snow.vignetteColor!!.toString())
     verify { style.getStyleSnowProperty("vignette-color") }
   }
-
   // Expression Tests
 
   @Test
@@ -1213,6 +1211,100 @@ class SnowTest {
     snow.bindTo(style)
     verify { style.setStyleSnow(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("vignette-color-transition={duration=100, delay=200}"))
+  }
+  @Test
+  fun colorUseThemeSet() {
+    val snow = snow {
+      colorUseTheme("default")
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("color-use-theme=default"))
+  }
+
+  @Test
+  fun colorUseThemeSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.colorUseTheme("default")
+    verify { style.setStyleSnowProperty("color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("default"))
+  }
+
+  @Test
+  fun colorUseThemeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals("default".toString(), snow.colorUseTheme!!.toString())
+    verify { style.getStyleSnowProperty("color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun colorUseThemeAsExpressionGetNull() {
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals(null, snow.colorUseThemeAsExpression)
+    verify { style.getStyleSnowProperty("color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals("default", snow.colorUseThemeAsExpression.toString())
+    assertEquals("default", snow.colorUseTheme)
+    verify { style.getStyleSnowProperty("color-use-theme") }
+  }
+  @Test
+  fun vignetteColorUseThemeSet() {
+    val snow = snow {
+      vignetteColorUseTheme("default")
+    }
+    snow.bindTo(style)
+    verify { style.setStyleSnow(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color-use-theme=default"))
+  }
+
+  @Test
+  fun vignetteColorUseThemeSetAfterInitialization() {
+    val snow = snow { }
+    snow.bindTo(style)
+    snow.vignetteColorUseTheme("default")
+    verify { style.setStyleSnowProperty("vignette-color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("default"))
+  }
+
+  @Test
+  fun vignetteColorUseThemeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals("default".toString(), snow.vignetteColorUseTheme!!.toString())
+    verify { style.getStyleSnowProperty("vignette-color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun vignetteColorUseThemeAsExpressionGetNull() {
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals(null, snow.vignetteColorUseThemeAsExpression)
+    verify { style.getStyleSnowProperty("vignette-color-use-theme") }
+  }
+
+  @Test
+  fun vignetteColorUseThemeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+    val snow = snow { }
+    snow.bindTo(style)
+    assertEquals("default", snow.vignetteColorUseThemeAsExpression.toString())
+    assertEquals("default", snow.vignetteColorUseTheme)
+    verify { style.getStyleSnowProperty("vignette-color-use-theme") }
   }
 
   @Test

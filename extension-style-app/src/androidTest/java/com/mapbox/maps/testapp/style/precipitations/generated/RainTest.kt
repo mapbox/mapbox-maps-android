@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 @OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class RainTest : BaseStyleTest() {
+
   @Test
   @UiThreadTest
   fun centerThinningTest() {
@@ -143,6 +144,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.colorTransition)
   }
+
   @Test
   @UiThreadTest
   fun densityTest() {
@@ -196,6 +198,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.densityTransition)
   }
+
   @Test
   @UiThreadTest
   fun directionTest() {
@@ -249,6 +252,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.directionTransition)
   }
+
   @Test
   @UiThreadTest
   fun distortionStrengthTest() {
@@ -302,6 +306,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.distortionStrengthTransition)
   }
+
   @Test
   @UiThreadTest
   fun dropletSizeTest() {
@@ -355,6 +360,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.dropletSizeTransition)
   }
+
   @Test
   @UiThreadTest
   fun intensityTest() {
@@ -408,6 +414,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.intensityTransition)
   }
+
   @Test
   @UiThreadTest
   fun opacityTest() {
@@ -461,6 +468,7 @@ class RainTest : BaseStyleTest() {
     setupRain(rain)
     assertEquals(transition, rain.opacityTransition)
   }
+
   @Test
   @UiThreadTest
   fun vignetteTest() {
@@ -582,6 +590,52 @@ class RainTest : BaseStyleTest() {
     }
     setupRain(rain)
     assertEquals(transition, rain.vignetteColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun colorUseThemeTest() {
+    val rain = rain {
+      colorUseTheme("default")
+    }
+    setupRain(rain)
+    assertEquals("default", rain.colorUseTheme)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun colorUseThemeAsExpressionTest() {
+    val expression = literal("default")
+
+    val rain = rain {
+      colorUseTheme(expression)
+    }
+    setupRain(rain)
+    assertEquals(expression.toString(), rain.colorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun vignetteColorUseThemeTest() {
+    val rain = rain {
+      vignetteColorUseTheme("default")
+    }
+    setupRain(rain)
+    assertEquals("default", rain.vignetteColorUseTheme)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun vignetteColorUseThemeAsExpressionTest() {
+    val expression = literal("default")
+
+    val rain = rain {
+      vignetteColorUseTheme(expression)
+    }
+    setupRain(rain)
+    assertEquals(expression.toString(), rain.vignetteColorUseThemeAsExpression.toString())
   }
 }
 

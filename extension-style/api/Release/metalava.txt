@@ -6609,10 +6609,14 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.AmbientLight colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.AmbientLight colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method public String? getColor();
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public String? getColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorUseThemeAsExpression();
     method public Double? getIntensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
@@ -6625,6 +6629,8 @@ package com.mapbox.maps.extension.style.light.generated {
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final String? colorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorUseThemeAsExpression;
     property public final Double? intensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
@@ -6637,6 +6643,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.AmbientLight colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.AmbientLight colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensity(double intensity = 0.5);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6655,6 +6663,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(java.util.List<java.lang.Double> direction);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6665,6 +6675,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public String? getColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorUseThemeAsExpression();
     method public java.util.List<java.lang.Double>? getDirection();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDirectionAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDirectionTransition();
@@ -6689,6 +6701,8 @@ package com.mapbox.maps.extension.style.light.generated {
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final String? colorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorUseThemeAsExpression;
     property public final java.util.List<java.lang.Double>? direction;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? directionAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? directionTransition;
@@ -6709,6 +6723,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(java.util.List<java.lang.Double> direction = listOf(210.0, 30.0));
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6736,12 +6752,16 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.FlatLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.FlatLight colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.FlatLight colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor? getAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getAnchorAsExpression();
     method public String? getColor();
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public String? getColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorUseThemeAsExpression();
     method public Double? getIntensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
@@ -6764,6 +6784,8 @@ package com.mapbox.maps.extension.style.light.generated {
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final String? colorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorUseThemeAsExpression;
     property public final Double? intensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
@@ -6781,6 +6803,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.FlatLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.FlatLight colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.FlatLight colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight intensity(double intensity = 0.5);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6834,6 +6858,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(double density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6857,6 +6883,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public String? getColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorUseThemeAsExpression();
     method public Double? getDensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDensityTransition();
@@ -6881,6 +6909,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @ColorInt public Integer? getVignetteColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVignetteColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getVignetteColorTransition();
+    method public String? getVignetteColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVignetteColorUseThemeAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getVignetteTransition();
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(double intensity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
@@ -6897,6 +6927,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorUseTheme(String vignetteColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     property public final Double? centerThinning;
@@ -6906,6 +6938,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final String? colorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorUseThemeAsExpression;
     property public final Double? density;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? densityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? densityTransition;
@@ -6930,6 +6964,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     property @ColorInt public final Integer? vignetteColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? vignetteColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? vignetteColorTransition;
+    property public final String? vignetteColorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? vignetteColorUseThemeAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? vignetteTransition;
   }
 
@@ -6943,6 +6979,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain color(com.mapbox.maps.extension.style.expressions.generated.Expression color = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "measure-light" + "\"" + "," + "\"" + "brightness" + "\"" + "],0," + "\"" + "#03113d" + "\"" + ",0.3," + "\"" + "#a8adbc" + "\"" + "]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(double density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain density(com.mapbox.maps.extension.style.expressions.generated.Expression density = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],11,0,13,0.5]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6974,6 +7012,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "measure-light" + "\"" + "," + "\"" + "brightness" + "\"" + "],0," + "\"" + "#001736" + "\"" + ",0.3," + "\"" + "#464646" + "\"" + "]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorUseTheme(String vignetteColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Rain vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
   }
@@ -7000,6 +7040,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(double density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(com.mapbox.maps.extension.style.expressions.generated.Expression density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -7019,6 +7061,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public String? getColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorUseThemeAsExpression();
     method public Double? getDensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDensityTransition();
@@ -7040,6 +7084,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @ColorInt public Integer? getVignetteColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVignetteColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getVignetteColorTransition();
+    method public String? getVignetteColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVignetteColorUseThemeAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getVignetteTransition();
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(double intensity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
@@ -7056,6 +7102,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorUseTheme(String vignetteColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     property public final Double? centerThinning;
@@ -7065,6 +7113,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final String? colorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorUseThemeAsExpression;
     property public final Double? density;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? densityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? densityTransition;
@@ -7086,6 +7136,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     property @ColorInt public final Integer? vignetteColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? vignetteColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? vignetteColorTransition;
+    property public final String? vignetteColorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? vignetteColorUseThemeAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? vignetteTransition;
   }
 
@@ -7099,6 +7151,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorUseTheme(String colorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow colorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression colorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(double density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow density(com.mapbox.maps.extension.style.expressions.generated.Expression density = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],11,0,13,0.85]".trimIndent()));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow densityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -7126,6 +7180,8 @@ package com.mapbox.maps.extension.style.precipitations.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColor(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorUseTheme(String vignetteColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression vignetteColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.precipitations.generated.Snow vignetteTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
   }

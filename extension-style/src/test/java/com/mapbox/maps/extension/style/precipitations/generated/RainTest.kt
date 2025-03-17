@@ -231,7 +231,6 @@ class RainTest {
     assertEquals("rgba(0, 0, 0, 1)".toString(), rain.color!!.toString())
     verify { style.getStyleRainProperty("color") }
   }
-
   // Expression Tests
 
   @Test
@@ -1230,7 +1229,6 @@ class RainTest {
     assertEquals("rgba(0, 0, 0, 1)".toString(), rain.vignetteColor!!.toString())
     verify { style.getStyleRainProperty("vignette-color") }
   }
-
   // Expression Tests
 
   @Test
@@ -1331,6 +1329,100 @@ class RainTest {
     rain.bindTo(style)
     verify { style.setStyleRain(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("vignette-color-transition={duration=100, delay=200}"))
+  }
+  @Test
+  fun colorUseThemeSet() {
+    val rain = rain {
+      colorUseTheme("default")
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("color-use-theme=default"))
+  }
+
+  @Test
+  fun colorUseThemeSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.colorUseTheme("default")
+    verify { style.setStyleRainProperty("color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("default"))
+  }
+
+  @Test
+  fun colorUseThemeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals("default".toString(), rain.colorUseTheme!!.toString())
+    verify { style.getStyleRainProperty("color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun colorUseThemeAsExpressionGetNull() {
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(null, rain.colorUseThemeAsExpression)
+    verify { style.getStyleRainProperty("color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals("default", rain.colorUseThemeAsExpression.toString())
+    assertEquals("default", rain.colorUseTheme)
+    verify { style.getStyleRainProperty("color-use-theme") }
+  }
+  @Test
+  fun vignetteColorUseThemeSet() {
+    val rain = rain {
+      vignetteColorUseTheme("default")
+    }
+    rain.bindTo(style)
+    verify { style.setStyleRain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vignette-color-use-theme=default"))
+  }
+
+  @Test
+  fun vignetteColorUseThemeSetAfterInitialization() {
+    val rain = rain { }
+    rain.bindTo(style)
+    rain.vignetteColorUseTheme("default")
+    verify { style.setStyleRainProperty("vignette-color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("default"))
+  }
+
+  @Test
+  fun vignetteColorUseThemeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals("default".toString(), rain.vignetteColorUseTheme!!.toString())
+    verify { style.getStyleRainProperty("vignette-color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun vignetteColorUseThemeAsExpressionGetNull() {
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals(null, rain.vignetteColorUseThemeAsExpression)
+    verify { style.getStyleRainProperty("vignette-color-use-theme") }
+  }
+
+  @Test
+  fun vignetteColorUseThemeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+    val rain = rain { }
+    rain.bindTo(style)
+    assertEquals("default", rain.vignetteColorUseThemeAsExpression.toString())
+    assertEquals("default", rain.vignetteColorUseTheme)
+    verify { style.getStyleRainProperty("vignette-color-use-theme") }
   }
 
   @Test

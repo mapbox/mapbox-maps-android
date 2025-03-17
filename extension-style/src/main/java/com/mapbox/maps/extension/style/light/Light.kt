@@ -55,9 +55,13 @@ abstract class Light internal constructor() {
   }
 
   internal inline fun <reified T> getPropertyValue(propertyName: String): T? {
+    return getPropertyValueWithType(propertyName, T::class.java)
+  }
+
+  private fun <T> getPropertyValueWithType(propertyName: String, clazz: Class<T>): T? {
     delegate?.let {
       return try {
-        it.getStyleLightProperty(lightId, propertyName).unwrap()
+        it.getStyleLightProperty(lightId, propertyName).unwrap(clazz)
       } catch (e: RuntimeException) {
         logE(TAG, "Get light property $propertyName failed: ${e.message}")
         logE(TAG, it.getStyleLightProperty(lightId, propertyName).toString())

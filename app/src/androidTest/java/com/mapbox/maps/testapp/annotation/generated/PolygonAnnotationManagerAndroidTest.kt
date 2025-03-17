@@ -193,7 +193,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "abc"
+      val expectedValue = "default"
       val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
       polygonAnnotationManager.fillColorUseTheme = expectedValue
       assertEquals(expectedValue, polygonAnnotationManager.fillColorUseTheme)
@@ -205,7 +205,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillOutlineColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "abc"
+      val expectedValue = "default"
       val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
       polygonAnnotationManager.fillOutlineColorUseTheme = expectedValue
       assertEquals(expectedValue, polygonAnnotationManager.fillOutlineColorUseTheme)

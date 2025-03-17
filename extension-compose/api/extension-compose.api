@@ -3321,12 +3321,14 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Ambi
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;
@@ -3390,6 +3392,7 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 	public final fun getCastShadows ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getDirectionTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getId ()Ljava/lang/String;
@@ -3401,6 +3404,7 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 	public final fun setCastShadows (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setDirectionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
@@ -3449,6 +3453,7 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Flat
 	public final fun getAnchor ()Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -3458,6 +3463,7 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Flat
 	public final fun setAnchor (Lcom/mapbox/maps/extension/compose/style/lights/generated/AnchorValue;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setPosition (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
@@ -3500,12 +3506,13 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState$Companion;
 	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;
 	public fun <init> ()V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/RainStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/RainStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCenterThinning ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getCenterThinningTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getDensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -3521,12 +3528,14 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun getVignette ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getVignetteColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getVignetteColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getVignetteColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
 	public final fun setCenterThinning (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setCenterThinningTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setDensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setDensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
@@ -3542,6 +3551,7 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun setVignette (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setVignetteColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setVignetteColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setVignetteColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setVignetteTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;
 }
@@ -3582,12 +3592,13 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState$Companion;
 	public static final field DISABLED Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;
 	public fun <init> ()V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/SnowStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/precipitations/SnowStateApplier;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleListValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/DoubleValue;Lcom/mapbox/maps/extension/compose/style/ColorValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/Transition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCenterThinning ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getCenterThinningTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getDensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getDensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getDirection ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -3601,12 +3612,14 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun getVignette ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getVignetteColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getVignetteColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getVignetteColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVignetteTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
 	public final fun setCenterThinning (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setCenterThinningTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setDensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setDensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setDirection (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
@@ -3620,6 +3633,7 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 	public final fun setVignette (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setVignetteColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setVignetteColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setVignetteColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setVignetteTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;
 }

@@ -9,6 +9,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
 import com.mapbox.maps.extension.style.light.setLights
 import com.mapbox.maps.extension.style.types.transitionOptions
@@ -77,12 +78,7 @@ class DirectionalLightTest {
 
   @Test
   fun castShadowsAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(true)
 
     val light = directionalLight("id") {
       castShadows(expression)
@@ -110,12 +106,7 @@ class DirectionalLightTest {
 
   @Test
   fun castShadowsAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(true)
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
     every { styleProperty.value } returns expression
 
@@ -219,9 +210,9 @@ class DirectionalLightTest {
   @Test
   fun colorAsExpressionSet() {
     val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
       literal(1.0)
     }
 
@@ -252,9 +243,9 @@ class DirectionalLightTest {
   @Test
   fun colorAsExpressionGet() {
     val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
       literal(1.0)
     }
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
@@ -396,12 +387,7 @@ class DirectionalLightTest {
 
   @Test
   fun directionAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(listOf(0.0, 1.0))
 
     val light = directionalLight("id") {
       direction(expression)
@@ -429,12 +415,7 @@ class DirectionalLightTest {
 
   @Test
   fun directionAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(listOf(0.0, 1.0))
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
     every { styleProperty.value } returns expression
 
@@ -461,6 +442,7 @@ class DirectionalLightTest {
     assertEquals(listOf(0.0, 1.0), light.direction)
     verify { style.getStyleLightProperty("id", "direction") }
   }
+
   @Test
   fun directionTransitionSet() {
     val light = directionalLight("id") {
@@ -564,12 +546,7 @@ class DirectionalLightTest {
 
   @Test
   fun intensityAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(1.0)
 
     val light = directionalLight("id") {
       intensity(expression)
@@ -597,12 +574,7 @@ class DirectionalLightTest {
 
   @Test
   fun intensityAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(1.0)
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
     every { styleProperty.value } returns expression
 
@@ -629,6 +601,7 @@ class DirectionalLightTest {
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
+
   @Test
   fun intensityTransitionSet() {
     val light = directionalLight("id") {
@@ -732,12 +705,7 @@ class DirectionalLightTest {
 
   @Test
   fun shadowIntensityAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(1.0)
 
     val light = directionalLight("id") {
       shadowIntensity(expression)
@@ -765,12 +733,7 @@ class DirectionalLightTest {
 
   @Test
   fun shadowIntensityAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(1.0)
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
     every { styleProperty.value } returns expression
 
@@ -797,6 +760,7 @@ class DirectionalLightTest {
     assertEquals(1.0, light.shadowIntensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "shadow-intensity") }
   }
+
   @Test
   fun shadowIntensityTransitionSet() {
     val light = directionalLight("id") {
@@ -866,6 +830,94 @@ class DirectionalLightTest {
     style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("shadow-intensity-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun colorUseThemeSet() {
+    val light = directionalLight("id") {
+      colorUseTheme("default")
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("color-use-theme=default"))
+  }
+
+  @Test
+  fun colorUseThemeSetAfterInitialization() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.colorUseTheme("default")
+    verify { style.setStyleLightProperty("id", "color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("default"))
+  }
+
+  @Test
+  fun colorUseThemeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals("default".toString(), light.colorUseTheme!!.toString())
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun colorUseThemeAsExpressionSet() {
+    val expression = literal("default")
+
+    val light = directionalLight("id") {
+      colorUseTheme(expression)
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionSetAfterInitialization() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.colorUseTheme(expression)
+    verify { style.setStyleLightProperty("id", "color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGet() {
+    val expression = literal("default")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(expression.toString(), light.colorUseThemeAsExpression?.toString())
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetNull() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(null, light.colorUseThemeAsExpression)
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertTrue(light.colorUseThemeAsExpression.toString().contains("default"))
+    assertEquals("default", light.colorUseTheme)
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
   }
 }
 
