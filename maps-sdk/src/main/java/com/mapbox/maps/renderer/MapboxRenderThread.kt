@@ -146,8 +146,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private inline fun trace(sectionName: String, section: (() -> Unit)) {
     if (MapboxTracing.platformTracingEnabled) {
       Trace.beginSection("$MAPBOX_TRACE_ID: $sectionName")
-      section.invoke()
-      Trace.endSection()
+      try {
+        section.invoke()
+      } finally {
+        Trace.endSection()
+      }
     } else {
       section.invoke()
     }
