@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.11.0
 ## Bug fixes 🐞
 * Fix annotation drag being triggered when multi-finger gesture is in progress.
 
