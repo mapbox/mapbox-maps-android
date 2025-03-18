@@ -3,12 +3,15 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-## Bug fixes 🐞
-* Fix annotation drag being triggered when multi-finger gesture is in progress.
+
 ## Features ✨ and improvements 🏁
 * Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
 * [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
 * [compose] Introduce experimental `vignetteColorUseTheme` and `colorUseTheme` for `RainState` and `SnowState` which allows overriding color theme of precipitations.
+
+# 11.11.0
+## Bug fixes 🐞
+* Fix annotation drag being triggered when multi-finger gesture is in progress.
 
 # 11.11.0-rc.1 March 12, 2025
 ## Features ✨ and improvements 🏁
