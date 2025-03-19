@@ -13,6 +13,14 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix annotation drag being triggered when multi-finger gesture is in progress.
 
+# 11.10.3
+## Bug fixes 🐞
+* Fix a bug that may cause style packs to be either inaccessible or incorrect when updating an older tile store database created with Maps SDK 11.9 or earlier versions. **In systems that have already used Maps SDK 10.10.0 through 10.10.2, a re-download of style packs may be necessary.**
+* Fix a map start time regression by speed up tile loading.
+
+## Dependencies
+* Update gl-native to v11.10.3, common to v24.10.1.
+
 # 11.11.0-rc.1 March 12, 2025
 ## Features ✨ and improvements 🏁
 * Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
