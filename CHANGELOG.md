@@ -16,7 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.10.3 March 19, 2025
 ## Bug fixes 🐞
-* Fix a bug that may cause style packs to be either inaccessible or incorrect when updating an older tile store database created with Maps SDK 11.9 or earlier versions. **In systems that have already used Maps SDK 10.10.0 through 10.10.2, a re-download of style packs may be necessary.**
+* Fix a bug that may cause style packs to be either inaccessible or incorrect when updating an older tile store database created with Maps SDK 11.9 or earlier versions. **In systems that have already used Maps SDK 11.10.0 through 11.10.2, a re-download of style packs may be necessary.**
 * Fix a map start time regression by speed up tile loading.
 
 ## Dependencies
