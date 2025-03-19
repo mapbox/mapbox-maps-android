@@ -51,11 +51,11 @@ allprojects {
 
 // In your build.gradle, add the compose extension with your other dependencies.
 dependencies {
-  implementation 'com.mapbox.extension:maps-compose:11.10.2'
+  implementation 'com.mapbox.extension:maps-compose:11.10.3'
 
   // Pick your versions of Android Mapbox Map SDK
   // Note that Compose extension is compatible with Maps SDK v11.0+.
-  implementation 'com.mapbox.maps:android:11.10.2'
+  implementation 'com.mapbox.maps:android:11.10.3'
 }
 ```
 
