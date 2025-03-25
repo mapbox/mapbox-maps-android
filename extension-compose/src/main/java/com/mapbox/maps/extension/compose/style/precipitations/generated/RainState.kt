@@ -16,6 +16,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.extension.compose.style.precipitations.RainStateApplier
@@ -53,6 +54,7 @@ public class RainState private constructor(
   centerThinningTransition: Transition,
   color: ColorValue,
   colorTransition: Transition,
+  colorUseTheme: StringValue,
   density: DoubleValue,
   densityTransition: Transition,
   direction: DoubleListValue,
@@ -68,6 +70,7 @@ public class RainState private constructor(
   vignette: DoubleValue,
   vignetteColor: ColorValue,
   vignetteColorTransition: Transition,
+  vignetteColorUseTheme: StringValue,
   vignetteTransition: Transition,
 ) {
   public constructor() : this(enabled = true)
@@ -78,6 +81,7 @@ public class RainState private constructor(
     Transition.INITIAL,
     ColorValue.INITIAL,
     Transition.INITIAL,
+    StringValue.INITIAL,
     DoubleValue.INITIAL,
     Transition.INITIAL,
     DoubleListValue.INITIAL,
@@ -93,6 +97,7 @@ public class RainState private constructor(
     DoubleValue.INITIAL,
     ColorValue.INITIAL,
     Transition.INITIAL,
+    StringValue.INITIAL,
     Transition.INITIAL,
   )
 
@@ -162,6 +167,24 @@ public class RainState private constructor(
     colorTransitionState.value.apply {
       if (notInitial) {
         applier.setProperty("color-transition", value)
+      }
+    }
+  }
+  private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(colorUseTheme)
+
+  /**
+   * Overrides applying of color theme for [color] if "none" is set. To follow default theme "default"
+   * should be set.
+   * Default value: "default".
+   */
+  @MapboxExperimental
+  public var colorUseTheme: StringValue by colorUseThemeState
+
+  @Composable
+  private fun UpdateColorUseTheme() {
+    colorUseThemeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("color-use-theme", value)
       }
     }
   }
@@ -420,6 +443,24 @@ public class RainState private constructor(
       }
     }
   }
+  private val vignetteColorUseThemeState: MutableState<StringValue> = mutableStateOf(vignetteColorUseTheme)
+
+  /**
+   * Overrides applying of color theme for [vignetteColor] if "none" is set. To follow default theme "default"
+   * should be set.
+   * Default value: "default".
+   */
+  @MapboxExperimental
+  public var vignetteColorUseTheme: StringValue by vignetteColorUseThemeState
+
+  @Composable
+  private fun UpdateVignetteColorUseTheme() {
+    vignetteColorUseThemeState.value.apply {
+      if (notInitial) {
+        applier.setProperty("vignette-color-use-theme", value)
+      }
+    }
+  }
   private val vignetteTransitionState: MutableState<Transition> = mutableStateOf(vignetteTransition)
 
   /**
@@ -444,6 +485,7 @@ public class RainState private constructor(
     UpdateCenterThinningTransition()
     UpdateColor()
     UpdateColorTransition()
+    UpdateColorUseTheme()
     UpdateDensity()
     UpdateDensityTransition()
     UpdateDirection()
@@ -459,6 +501,7 @@ public class RainState private constructor(
     UpdateVignette()
     UpdateVignetteColor()
     UpdateVignetteColorTransition()
+    UpdateVignetteColorUseTheme()
     UpdateVignetteTransition()
   }
 
@@ -468,6 +511,7 @@ public class RainState private constructor(
       ("center-thinning-transition" to centerThinningTransition.value).takeIf { centerThinningTransition.notInitial },
       ("color" to color.value).takeIf { color.notInitial },
       ("color-transition" to colorTransition.value).takeIf { colorTransition.notInitial },
+      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.notInitial },
       ("density" to density.value).takeIf { density.notInitial },
       ("density-transition" to densityTransition.value).takeIf { densityTransition.notInitial },
       ("direction" to direction.value).takeIf { direction.notInitial },
@@ -483,6 +527,7 @@ public class RainState private constructor(
       ("vignette" to vignette.value).takeIf { vignette.notInitial },
       ("vignette-color" to vignetteColor.value).takeIf { vignetteColor.notInitial },
       ("vignette-color-transition" to vignetteColorTransition.value).takeIf { vignetteColorTransition.notInitial },
+      ("vignette-color-use-theme" to vignetteColorUseTheme.value).takeIf { vignetteColorUseTheme.notInitial },
       ("vignette-transition" to vignetteTransition.value).takeIf { vignetteTransition.notInitial },
     ).toMap()
 
@@ -500,6 +545,7 @@ public class RainState private constructor(
     if (centerThinningTransition != other.centerThinningTransition) return false
     if (color != other.color) return false
     if (colorTransition != other.colorTransition) return false
+    if (colorUseTheme != other.colorUseTheme) return false
     if (density != other.density) return false
     if (densityTransition != other.densityTransition) return false
     if (direction != other.direction) return false
@@ -515,6 +561,7 @@ public class RainState private constructor(
     if (vignette != other.vignette) return false
     if (vignetteColor != other.vignetteColor) return false
     if (vignetteColorTransition != other.vignetteColorTransition) return false
+    if (vignetteColorUseTheme != other.vignetteColorUseTheme) return false
     if (vignetteTransition != other.vignetteTransition) return false
 
     return true
@@ -529,6 +576,7 @@ public class RainState private constructor(
     centerThinningTransition,
     color,
     colorTransition,
+    colorUseTheme,
     density,
     densityTransition,
     direction,
@@ -544,6 +592,7 @@ public class RainState private constructor(
     vignette,
     vignetteColor,
     vignetteColorTransition,
+    vignetteColorUseTheme,
     vignetteTransition,
   )
 
@@ -551,7 +600,7 @@ public class RainState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "RainState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, distortionStrength=$distortionStrength, distortionStrengthTransition=$distortionStrengthTransition, dropletSize=$dropletSize, dropletSizeTransition=$dropletSizeTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteColor=$vignetteColor, vignetteColorTransition=$vignetteColorTransition, vignetteTransition=$vignetteTransition)"
+    "RainState(centerThinning=$centerThinning, centerThinningTransition=$centerThinningTransition, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, density=$density, densityTransition=$densityTransition, direction=$direction, directionTransition=$directionTransition, distortionStrength=$distortionStrength, distortionStrengthTransition=$distortionStrengthTransition, dropletSize=$dropletSize, dropletSizeTransition=$dropletSizeTransition, intensity=$intensity, intensityTransition=$intensityTransition, opacity=$opacity, opacityTransition=$opacityTransition, vignette=$vignette, vignetteColor=$vignetteColor, vignetteColorTransition=$vignetteColorTransition, vignetteColorUseTheme=$vignetteColorUseTheme, vignetteTransition=$vignetteTransition)"
 
   /**
    * Rain Holder class to be used within [Saver].
@@ -586,6 +635,7 @@ public class RainState private constructor(
           centerThinningTransition = holder.savedProperties["center-thinning-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           color = holder.savedProperties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           colorTransition = holder.savedProperties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          colorUseTheme = holder.savedProperties["color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           density = holder.savedProperties["density"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           densityTransition = holder.savedProperties["density-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           direction = holder.savedProperties["direction"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,
@@ -601,6 +651,7 @@ public class RainState private constructor(
           vignette = holder.savedProperties["vignette"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           vignetteColor = holder.savedProperties["vignette-color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           vignetteColorTransition = holder.savedProperties["vignette-color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          vignetteColorUseTheme = holder.savedProperties["vignette-color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           vignetteTransition = holder.savedProperties["vignette-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )
       }

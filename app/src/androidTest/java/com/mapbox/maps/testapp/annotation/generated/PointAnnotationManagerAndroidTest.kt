@@ -865,7 +865,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "abc"
+      val expectedValue = "default"
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
       pointAnnotationManager.iconColorUseTheme = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconColorUseTheme)
@@ -877,7 +877,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconHaloColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "abc"
+      val expectedValue = "default"
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
       pointAnnotationManager.iconHaloColorUseTheme = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconHaloColorUseTheme)
@@ -889,7 +889,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "abc"
+      val expectedValue = "default"
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
       pointAnnotationManager.textColorUseTheme = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.textColorUseTheme)
@@ -901,7 +901,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextHaloColorUseTheme() {
     rule.runOnUiThread {
-      val expectedValue = "abc"
+      val expectedValue = "default"
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
       pointAnnotationManager.textHaloColorUseTheme = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.textHaloColorUseTheme)

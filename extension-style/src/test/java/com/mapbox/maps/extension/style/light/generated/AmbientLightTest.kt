@@ -9,6 +9,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
 import com.mapbox.maps.extension.style.light.setLights
 import com.mapbox.maps.extension.style.types.transitionOptions
@@ -121,9 +122,9 @@ class AmbientLightTest {
   @Test
   fun colorAsExpressionSet() {
     val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
       literal(1.0)
     }
 
@@ -154,9 +155,9 @@ class AmbientLightTest {
   @Test
   fun colorAsExpressionGet() {
     val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
+      literal(0.0)
+      literal(0.0)
+      literal(0.0)
       literal(1.0)
     }
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
@@ -298,12 +299,7 @@ class AmbientLightTest {
 
   @Test
   fun intensityAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(1.0)
 
     val light = ambientLight("id") {
       intensity(expression)
@@ -331,12 +327,7 @@ class AmbientLightTest {
 
   @Test
   fun intensityAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
+    val expression = literal(1.0)
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
     every { styleProperty.value } returns expression
 
@@ -363,6 +354,7 @@ class AmbientLightTest {
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
+
   @Test
   fun intensityTransitionSet() {
     val light = ambientLight("id") {
@@ -432,6 +424,94 @@ class AmbientLightTest {
     style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun colorUseThemeSet() {
+    val light = ambientLight("id") {
+      colorUseTheme("default")
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("color-use-theme=default"))
+  }
+
+  @Test
+  fun colorUseThemeSetAfterInitialization() {
+    val light = ambientLight("id") { }
+    style.setLights(listOf(light))
+    light.colorUseTheme("default")
+    verify { style.setStyleLightProperty("id", "color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("default"))
+  }
+
+  @Test
+  fun colorUseThemeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+
+    val light = ambientLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals("default".toString(), light.colorUseTheme!!.toString())
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun colorUseThemeAsExpressionSet() {
+    val expression = literal("default")
+
+    val light = ambientLight("id") {
+      colorUseTheme(expression)
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionSetAfterInitialization() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+
+    val light = ambientLight("id") { }
+    style.setLights(listOf(light))
+    light.colorUseTheme(expression)
+    verify { style.setStyleLightProperty("id", "color-use-theme", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGet() {
+    val expression = literal("default")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val light = ambientLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(expression.toString(), light.colorUseThemeAsExpression?.toString())
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetNull() {
+    val light = ambientLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(null, light.colorUseThemeAsExpression)
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
+  }
+
+  @Test
+  fun colorUseThemeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("default")
+    val light = ambientLight("id") { }
+    style.setLights(listOf(light))
+    assertTrue(light.colorUseThemeAsExpression.toString().contains("default"))
+    assertEquals("default", light.colorUseTheme)
+    verify { style.getStyleLightProperty("id", "color-use-theme") }
   }
 }
 

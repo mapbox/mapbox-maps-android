@@ -13,12 +13,14 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLightId
+import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.logD
@@ -62,6 +64,7 @@ public class FlatLightState internal constructor(
   initialAnchor: AnchorValue = AnchorValue.INITIAL,
   initialColor: ColorValue = ColorValue.INITIAL,
   initialColorTransition: Transition = Transition.INITIAL,
+  initialColorUseTheme: StringValue = StringValue.INITIAL,
   initialIntensity: DoubleValue = DoubleValue.INITIAL,
   initialIntensityTransition: Transition = Transition.INITIAL,
   initialPosition: DoubleListValue = DoubleListValue.INITIAL,
@@ -72,6 +75,7 @@ public class FlatLightState internal constructor(
     initialAnchor = AnchorValue.INITIAL,
     initialColor = ColorValue.INITIAL,
     initialColorTransition = Transition.INITIAL,
+    initialColorUseTheme = StringValue.INITIAL,
     initialIntensity = DoubleValue.INITIAL,
     initialIntensityTransition = Transition.INITIAL,
     initialPosition = DoubleListValue.INITIAL,
@@ -81,6 +85,7 @@ public class FlatLightState internal constructor(
   private val anchorState: MutableState<AnchorValue> = mutableStateOf(initialAnchor)
   private val colorState: MutableState<ColorValue> = mutableStateOf(initialColor)
   private val colorTransitionState: MutableState<Transition> = mutableStateOf(initialColorTransition)
+  private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(initialColorUseTheme)
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(initialIntensity)
   private val intensityTransitionState: MutableState<Transition> = mutableStateOf(initialIntensityTransition)
   private val positionState: MutableState<DoubleListValue> = mutableStateOf(initialPosition)
@@ -103,6 +108,14 @@ public class FlatLightState internal constructor(
    * Default value: "#ffffff".
    */
   public var colorTransition: Transition by colorTransitionState
+
+  /**
+   * Overrides applying of color theme for [color] if "none" is set. To follow default theme "default"
+   * should be set.
+   * Default value: "default".
+   */
+  @MapboxExperimental
+  public var colorUseTheme: StringValue by colorUseThemeState
 
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more
@@ -152,6 +165,13 @@ public class FlatLightState internal constructor(
   private fun UpdateColorTransition(mapboxMap: MapboxStyleManager) {
     if (colorTransition.notInitial) {
       mapboxMap.updateLightProperty("color-transition", colorTransition.value)
+    }
+  }
+
+  @Composable
+  private fun UpdateColorUseTheme(mapboxMap: MapboxStyleManager) {
+    if (colorUseTheme.notInitial) {
+      mapboxMap.updateLightProperty("color-use-theme", colorUseTheme.value)
     }
   }
 
@@ -206,6 +226,9 @@ public class FlatLightState internal constructor(
           if (colorTransition.notInitial) {
             this["color-transition"] = colorTransition.value
           }
+          if (colorUseTheme.notInitial) {
+            this["color-use-theme"] = colorUseTheme.value
+          }
           if (intensity.notInitial) {
             this["intensity"] = intensity.value
           }
@@ -228,6 +251,7 @@ public class FlatLightState internal constructor(
     UpdateAnchor(mapboxMap)
     UpdateColor(mapboxMap)
     UpdateColorTransition(mapboxMap)
+    UpdateColorUseTheme(mapboxMap)
     UpdateIntensity(mapboxMap)
     UpdateIntensityTransition(mapboxMap)
     UpdatePosition(mapboxMap)
@@ -242,6 +266,7 @@ public class FlatLightState internal constructor(
       anchor,
       color,
       colorTransition,
+      colorUseTheme,
       intensity,
       intensityTransition,
       position,
@@ -260,6 +285,7 @@ public class FlatLightState internal constructor(
     if (anchor != other.anchor) return false
     if (color != other.color) return false
     if (colorTransition != other.colorTransition) return false
+    if (colorUseTheme != other.colorUseTheme) return false
     if (intensity != other.intensity) return false
     if (intensityTransition != other.intensityTransition) return false
     if (position != other.position) return false
@@ -271,7 +297,7 @@ public class FlatLightState internal constructor(
    * Overwrite the toString for [FlatLightState].
    */
   override fun toString(): String {
-    return "FlatLightState(anchor=$anchor, color=$color, colorTransition=$colorTransition, intensity=$intensity, intensityTransition=$intensityTransition, position=$position, positionTransition=$positionTransition)"
+    return "FlatLightState(anchor=$anchor, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, intensity=$intensity, intensityTransition=$intensityTransition, position=$position, positionTransition=$positionTransition)"
   }
 
   /**
@@ -310,6 +336,7 @@ public class FlatLightState internal constructor(
           initialAnchor = properties["anchor"]?.let { AnchorValue(it) } ?: AnchorValue.INITIAL,
           initialColor = properties["color"]?.let { ColorValue(it) } ?: ColorValue.INITIAL,
           initialColorTransition = properties["color-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
+          initialColorUseTheme = properties["color-use-theme"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           initialIntensity = properties["intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           initialIntensityTransition = properties["intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           initialPosition = properties["position"]?.let { DoubleListValue(it) } ?: DoubleListValue.INITIAL,

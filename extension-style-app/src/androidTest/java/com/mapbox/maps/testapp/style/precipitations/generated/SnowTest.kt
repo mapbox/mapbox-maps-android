@@ -21,16 +21,6 @@ import org.junit.runner.RunWith
 @OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class SnowTest : BaseStyleTest() {
-  @Test
-  @UiThreadTest
-  fun centerThinningTest() {
-    val snow = snow {
-      centerThinning(1.0)
-    }
-    setupSnow(snow)
-    assertEquals(1.0, snow.centerThinning!!, 1E-5)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -84,17 +74,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(Color.CYAN, snow.colorAsColorInt)
   }
-
-  @Test
-  @UiThreadTest
-  fun colorTest() {
-    val snow = snow {
-      color("rgba(0, 0, 0, 1)")
-    }
-    setupSnow(snow)
-    assertEquals("rgba(0, 0, 0, 1)", snow.color)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -143,16 +122,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.colorTransition)
   }
-  @Test
-  @UiThreadTest
-  fun densityTest() {
-    val snow = snow {
-      density(1.0)
-    }
-    setupSnow(snow)
-    assertEquals(1.0, snow.density!!, 1E-5)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -196,16 +165,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.densityTransition)
   }
-  @Test
-  @UiThreadTest
-  fun directionTest() {
-    val snow = snow {
-      direction(listOf(0.0, 1.0))
-    }
-    setupSnow(snow)
-    assertEquals(listOf(0.0, 1.0), snow.direction)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -249,16 +208,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.directionTransition)
   }
-  @Test
-  @UiThreadTest
-  fun flakeSizeTest() {
-    val snow = snow {
-      flakeSize(1.0)
-    }
-    setupSnow(snow)
-    assertEquals(1.0, snow.flakeSize!!, 1E-5)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -302,16 +251,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.flakeSizeTransition)
   }
-  @Test
-  @UiThreadTest
-  fun intensityTest() {
-    val snow = snow {
-      intensity(1.0)
-    }
-    setupSnow(snow)
-    assertEquals(1.0, snow.intensity!!, 1E-5)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -355,16 +294,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.intensityTransition)
   }
-  @Test
-  @UiThreadTest
-  fun opacityTest() {
-    val snow = snow {
-      opacity(1.0)
-    }
-    setupSnow(snow)
-    assertEquals(1.0, snow.opacity!!, 1E-5)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -408,16 +337,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(transition, snow.opacityTransition)
   }
-  @Test
-  @UiThreadTest
-  fun vignetteTest() {
-    val snow = snow {
-      vignette(1.0)
-    }
-    setupSnow(snow)
-    assertEquals(1.0, snow.vignette!!, 1E-5)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -471,17 +390,6 @@ class SnowTest : BaseStyleTest() {
     setupSnow(snow)
     assertEquals(Color.CYAN, snow.vignetteColorAsColorInt)
   }
-
-  @Test
-  @UiThreadTest
-  fun vignetteColorTest() {
-    val snow = snow {
-      vignetteColor("rgba(0, 0, 0, 1)")
-    }
-    setupSnow(snow)
-    assertEquals("rgba(0, 0, 0, 1)", snow.vignetteColor)
-  }
-
   // Add Expression Test
   @Test
   @UiThreadTest
@@ -529,6 +437,30 @@ class SnowTest : BaseStyleTest() {
     }
     setupSnow(snow)
     assertEquals(transition, snow.vignetteColorTransition)
+  }
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun colorUseThemeAsExpressionTest() {
+    val expression = literal("default")
+
+    val snow = snow {
+      colorUseTheme(expression)
+    }
+    setupSnow(snow)
+    assertEquals(expression.toString(), snow.colorUseThemeAsExpression.toString())
+  }
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun vignetteColorUseThemeAsExpressionTest() {
+    val expression = literal("default")
+
+    val snow = snow {
+      vignetteColorUseTheme(expression)
+    }
+    setupSnow(snow)
+    assertEquals(expression.toString(), snow.vignetteColorUseThemeAsExpression.toString())
   }
 }
 

@@ -53,16 +53,20 @@ package com.mapbox.maps {
   @kotlinx.parcelize.Parcelize public final class ImageHolder implements android.os.Parcelable {
     method public static com.mapbox.maps.ImageHolder from(@DrawableRes int drawableId);
     method public static com.mapbox.maps.ImageHolder from(android.graphics.Bitmap bitmap);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public static com.mapbox.maps.ImageHolder from(com.mapbox.maps.Image image);
     method public android.graphics.Bitmap? getBitmap();
     method public Integer? getDrawableId();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public com.mapbox.maps.Image? getImage();
     property public final android.graphics.Bitmap? bitmap;
     property public final Integer? drawableId;
+    property @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.Image? image;
     field public static final com.mapbox.maps.ImageHolder.Companion Companion;
   }
 
   public static final class ImageHolder.Companion {
     method public com.mapbox.maps.ImageHolder from(@DrawableRes int drawableId);
     method public com.mapbox.maps.ImageHolder from(android.graphics.Bitmap bitmap);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public com.mapbox.maps.ImageHolder from(com.mapbox.maps.Image image);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class LongClickInteraction<T extends com.mapbox.maps.interactions.FeaturesetFeature<?>> extends com.mapbox.maps.MapInteraction {

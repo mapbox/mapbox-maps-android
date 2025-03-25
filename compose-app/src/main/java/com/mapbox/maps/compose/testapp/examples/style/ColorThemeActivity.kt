@@ -3,10 +3,16 @@ package com.mapbox.maps.compose.testapp.examples.style
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.FloatingActionButton
@@ -14,6 +20,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
+import com.mapbox.maps.ColorTheme
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -31,9 +39,14 @@ import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.ColorValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.rememberAtmosphereState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.RainState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.rememberRainState
+import com.mapbox.maps.extension.compose.style.precipitations.generated.rememberSnowState
 import com.mapbox.maps.extension.compose.style.rememberColorTheme
 import com.mapbox.maps.extension.compose.style.rememberStyleColorTheme
 import com.mapbox.maps.extension.compose.style.rememberStyleState
@@ -68,43 +81,145 @@ public class ColorThemeActivity : ComponentActivity() {
         mutableStateOf(initialAtmosphereState)
       }
 
+      val blueSnowState = rememberSnowState().apply {
+        color = ColorValue(Color.Blue)
+      }
+      var currentSnowState by remember {
+        mutableStateOf(SnowState.DISABLED)
+      }
+
+      val greenRainState = rememberRainState().apply {
+        color = ColorValue(Color.Green)
+        opacity = DoubleValue(0.8)
+      }
+      var currentRainState by remember {
+        mutableStateOf(RainState.DISABLED)
+      }
+
       // When state is toggled, update atmosphere state with correct string value.
       // Setting it to "none" means that color theme will not affect atmosphere.
       currentAtmosphereState.colorUseTheme = StringValue(
         if (atmosphereUseTheme) "default" else "none"
       )
 
+      var showSnowMenu by remember { mutableStateOf(false) }
+      var showRainMenu by remember { mutableStateOf(false) }
+      var showThemeMenu by remember { mutableStateOf(false) }
+
       MapboxMapComposeTheme {
         ExampleScaffold(
           floatingActionButton = {
-            Column {
-              FloatingActionButton(
-                modifier = Modifier.padding(bottom = 10.dp),
-                onClick = {
-                  currentColorTheme = monochromeColorTheme
-                },
-                shape = RoundedCornerShape(16.dp),
+            Column(modifier = Modifier.padding(horizontal = 32.dp)) {
+              Row(
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
               ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Monochrome")
-              }
-              FloatingActionButton(
-                modifier = Modifier.padding(bottom = 10.dp),
-                onClick = {
-                  currentColorTheme = base64ColorTheme
-                },
-                shape = RoundedCornerShape(16.dp),
-              ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Red")
-              }
-              FloatingActionButton(
-                modifier = Modifier.padding(bottom = 10.dp),
-                onClick = {
-                  // creating empty style color theme which will reset color theme when set to color theme state.
-                  currentColorTheme = colorTheme()
-                },
-                shape = RoundedCornerShape(16.dp),
-              ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Reset")
+                Box {
+                  FloatingActionButton(
+                    modifier = Modifier.padding(bottom = 10.dp),
+                    onClick = { showThemeMenu = true },
+                    shape = RoundedCornerShape(16.dp),
+                  ) {
+                    Text(modifier = Modifier.padding(10.dp), text = "Theme")
+                  }
+                  ThemeSelector(
+                    items = listOf(
+                      "Monochrome" to monochromeColorTheme,
+                      "Red" to base64ColorTheme,
+                      "Reset" to colorTheme(),
+                    ),
+                    expanded = showThemeMenu,
+                    onDismissRequest = { showThemeMenu = false },
+                    {
+                      currentColorTheme = it
+                      showThemeMenu = false
+                    }
+                  )
+                }
+
+                Box {
+                  FloatingActionButton(
+                    modifier = Modifier.padding(bottom = 10.dp),
+                    onClick = { showSnowMenu = true },
+                    shape = RoundedCornerShape(16.dp),
+                  ) {
+                    Text(modifier = Modifier.padding(10.dp), text = "Snow")
+                  }
+                  DropdownMenu(
+                    expanded = showSnowMenu,
+                    onDismissRequest = { showSnowMenu = false }
+                  ) {
+                    DropdownMenuItem(
+                      onClick = {
+                        currentSnowState = blueSnowState.apply {
+                          colorUseTheme = StringValue("default")
+                        }
+                        showSnowMenu = false
+                      },
+                      content = { Text("Enable (colorUseTheme=default)") }
+                    )
+
+                    DropdownMenuItem(
+                      onClick = {
+                        currentSnowState = blueSnowState.apply {
+                          colorUseTheme = StringValue("none")
+                        }
+                        showSnowMenu = false
+                      },
+                      content = { Text("Enable (colorUseTheme=none)") }
+                    )
+
+                    DropdownMenuItem(
+                      onClick = {
+                        currentSnowState = SnowState.DISABLED
+                        showSnowMenu = false
+                      },
+                      content = { Text("Disable") }
+                    )
+                  }
+                }
+
+                Box {
+                  FloatingActionButton(
+                    modifier = Modifier.padding(bottom = 10.dp),
+                    onClick = { showRainMenu = true },
+                    shape = RoundedCornerShape(16.dp),
+                  ) {
+                    Text(modifier = Modifier.padding(10.dp), text = "Rain")
+                  }
+                  DropdownMenu(
+                    expanded = showRainMenu,
+                    onDismissRequest = { showRainMenu = false }
+                  ) {
+                    DropdownMenuItem(
+                      onClick = {
+                        currentRainState = greenRainState.apply {
+                          colorUseTheme = StringValue("default")
+                        }
+                        showRainMenu = false
+                      },
+                      content = { Text("Enable (colorUseTheme=default)") }
+                    )
+
+                    DropdownMenuItem(
+                      onClick = {
+                        currentRainState = greenRainState.apply {
+                          colorUseTheme = StringValue("none")
+                        }
+                        showRainMenu = false
+                      },
+                      content = { Text("Enable (colorUseTheme=none)") }
+                    )
+
+                    DropdownMenuItem(
+                      onClick = {
+                        currentRainState = RainState.DISABLED
+                        showRainMenu = false
+                      },
+                      content = { Text("Disable") }
+                    )
+                  }
+                }
               }
 
               FilterChip(
@@ -140,10 +255,31 @@ public class ColorThemeActivity : ComponentActivity() {
                 styleState = rememberStyleState {
                   styleColorTheme = currentStyleColorTheme
                   atmosphereState = currentAtmosphereState
+                  snowState = currentSnowState
+                  rainState = currentRainState
                 },
               )
             }
           )
+        }
+      }
+    }
+  }
+
+  @Composable
+  private fun ThemeSelector(
+    items: List<Pair<String, ColorTheme>>,
+    expanded: Boolean,
+    onDismissRequest: () -> Unit,
+    onThemeSelected: (ColorTheme) -> Unit
+  ) {
+    DropdownMenu(
+      expanded = expanded,
+      onDismissRequest = onDismissRequest
+    ) {
+      items.forEach { (name, theme) ->
+        DropdownMenuItem(onClick = { onThemeSelected(theme) }) {
+          Text(name)
         }
       }
     }

@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import androidx.annotation.RestrictTo
 import kotlinx.parcelize.Parcelize
 import java.util.Objects
 
@@ -18,7 +19,12 @@ class ImageHolder private constructor(
   /**
    * Image represented as the bitmap.
    */
-  val bitmap: Bitmap?
+  val bitmap: Bitmap?,
+  /**
+   * Image represented as the internal Mapbox image.
+   */
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val image: Image?,
 ) : Parcelable {
 
   /**
@@ -28,21 +34,21 @@ class ImageHolder private constructor(
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
     other as ImageHolder
-    return drawableId == other.drawableId && bitmap == other.bitmap
+    return drawableId == other.drawableId && bitmap == other.bitmap && image == other.image
   }
 
   /**
    * Overloaded hashCode function based on all class properties.
    */
   override fun hashCode(): Int {
-    return Objects.hash(drawableId, bitmap)
+    return Objects.hash(drawableId, bitmap, image)
   }
 
   /**
    * Overloaded toString function.
    */
   override fun toString(): String {
-    return "ImageHolder(bitmap=$bitmap, drawableId=$drawableId)"
+    return "ImageHolder(bitmap=$bitmap, drawableId=$drawableId, image=$image)"
   }
 
   /**
@@ -54,7 +60,7 @@ class ImageHolder private constructor(
      */
     @JvmStatic
     fun from(@DrawableRes drawableId: Int): ImageHolder {
-      return ImageHolder(drawableId, null)
+      return ImageHolder(drawableId, null, null)
     }
 
     /**
@@ -62,7 +68,16 @@ class ImageHolder private constructor(
      */
     @JvmStatic
     fun from(bitmap: Bitmap): ImageHolder {
-      return ImageHolder(null, bitmap)
+      return ImageHolder(null, bitmap, null)
+    }
+
+    /**
+     * Create an instance of [ImageHolder] from given [Image].
+     */
+    @JvmStatic
+    @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+    fun from(image: Image): ImageHolder {
+      return ImageHolder(null, null, image)
     }
   }
 }

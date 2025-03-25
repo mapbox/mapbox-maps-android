@@ -4,13 +4,41 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.11.0-rc.1
+## Features ✨ and improvements 🏁
+* Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
+* [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
+* [compose] Introduce experimental `vignetteColorUseTheme` and `colorUseTheme` for `RainState` and `SnowState` which allows overriding color theme of precipitations.
+
+# 11.11.0
+## Bug fixes 🐞
+* Fix annotation drag being triggered when multi-finger gesture is in progress.
+
+
+# 11.10.3 March 19, 2025
+## Bug fixes 🐞
+* Fix a bug that may cause style packs to be either inaccessible or incorrect when updating an older tile store database created with Maps SDK 11.9 or earlier versions. **In systems that have already used Maps SDK 11.10.0 through 11.10.2, a re-download of style packs may be necessary.**
+* Fix a map start time regression by speed up tile loading.
+
+## Dependencies
+* Update gl-native to v11.10.3, common to v24.10.1.
+
+
+# 11.11.0-rc.1 March 12, 2025
 ## Features ✨ and improvements 🏁
 * Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
 * Add experimental `*UseTheme` support for annotations and `LocationPuck3D`.
 * Introduce experimental `Style.setImportColorTheme`, which allows changing the color theme of the style import.
 * [compose] Introduce experimental `StyleImportState.styleColorTheme` which allows changing the color theme of the style import.
 * Conflate `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` by default to avoid blocking main thread due to slow collectors.
+
+## Bug fixes 🐞
+* Fixed incorrect rgba to hsla conversion for white color.
+* Fix vector images rasterization.
+* Make katakana and CJK symbol rendered correctly in vertical writing mode.
+
+## Dependencies
+* Update gl-native to v11.11.0-rc.1 and common to v24.11.0-rc.1.
+
 
 # 11.11.0-beta.1 March 03, 2025
 ## Features ✨ and improvements 🏁
