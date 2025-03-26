@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.11.0
+
+# 11.11.0 March 26, 2025
 ## Features ✨ and improvements 🏁
 * Support for landmark icons. Landmark icons are stylized, uniquely designed POI icons that indicate the most popular and recognizable landmarks on the map.
 * Support expression input for `PromoteId`.
@@ -39,6 +40,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.11.0 and common to v24.11.0.
+
+
 
 # 11.11.0-rc.1 March 12, 2025
 ## Features ✨ and improvements 🏁
