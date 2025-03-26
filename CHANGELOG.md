@@ -9,7 +9,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
 * [compose] Introduce experimental `vignetteColorUseTheme` and `colorUseTheme` for `RainState` and `SnowState` which allows overriding color theme of precipitations.
 
-# 11.11.0
+
+# 11.11.0 March 26, 2025
 ## Features ✨ and improvements 🏁
 * Support for landmark icons. Landmark icons are stylized, uniquely designed POI icons that indicate the most popular and recognizable landmarks on the map.
 * Support expression input for `PromoteId`.
@@ -44,6 +45,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.11.0 and common to v24.11.0.
+
 
 
 # 11.10.3 March 19, 2025
