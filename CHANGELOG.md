@@ -5,8 +5,40 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.11.0
+## Features ✨ and improvements 🏁
+* Support for landmark icons. Landmark icons are stylized, uniquely designed POI icons that indicate the most popular and recognizable landmarks on the map.
+* Support expression input for `PromoteId`.
+* Add a setting that allows geofencing users with Android <= 28 to access background locations. Add `mapbox-location-config.xml` file with the following content:
+```xml
+<resources>
+  <bool name="com.mapbox.common.location.sdk28_use_background_permissions">true</bool>
+</resources>
+```
+* Add `Expression` support for `*UseTheme` style properties to override color theme for particular color properties in all layers.
+* Add experimental `*UseTheme` support for annotations and `LocationPuck3D`.
+* Introduce experimental `Style.setImportColorTheme`, which allows changing the color theme of the style import.
+* [compose] Introduce experimental `StyleImportState.styleColorTheme` which allows changing the color theme of the style import.
+* Conflate `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` by default to avoid blocking main thread due to slow collectors.
+
 ## Bug fixes 🐞
 * Fix annotation drag being triggered when multi-finger gesture is in progress.
+* Fix missing vector images after style change.
+* Ensure background color is correctly set.
+* Fix background layer not being updated if raster image was updated in-place or if color theme changed.
+* Trigger DVA replacement if zoom diff is big.
+* Fix line placement symbol disappearing issue when in zoom level 5.
+* Place view annotation away from camera when pitch > 45.
+* Fix dark shades of gradient effect in night preset.
+* Fix Custom Raster Source behavior on re-creation.
+* Change unreachable connection retries to use exponential backoff.
+* Fixed incorrect rgba to hsla conversion for white color.
+* Fix vector images rasterization.
+* Make katakana and CJK symbol rendered correctly in vertical writing mode.
+* Fix a bug that may cause style packs to be either inaccessible or incorrect when updating an older tile store database created with Maps SDK 11.9 or earlier versions. **In systems that have already used Maps SDK 11.10.0 through 11.10.2, a re-download of style packs may be necessary.**
+* Fix a map start time regression by speed up tile loading.
+
+## Dependencies
+* Update gl-native to v11.11.0 and common to v24.11.0.
 
 # 11.11.0-rc.1 March 12, 2025
 ## Features ✨ and improvements 🏁
