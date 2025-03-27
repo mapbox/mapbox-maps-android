@@ -234,7 +234,6 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
       // Postpone access to Geofence engine until we get location permissions
       geofencing.configure(
         GeofencingOptions.Builder().apply {
-          defaultRadius = CUSTOM_GEOFENCE_RADIUS
           maximumMonitoredFeatures = 300_000
         }.build(),
         logGeofencingError("configure")
