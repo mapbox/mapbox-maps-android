@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.LongValue
@@ -99,14 +100,6 @@ public class RasterArraySourceState private constructor(
    */
   public var url: StringValue by urlState
 
-  @Composable
-  private fun UpdateUrl() {
-    urlState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("url", value)
-      }
-    }
-  }
   private val tilesState: MutableState<StringListValue> = mutableStateOf(tiles)
 
   /**
@@ -115,14 +108,6 @@ public class RasterArraySourceState private constructor(
    */
   public var tiles: StringListValue by tilesState
 
-  @Composable
-  private fun UpdateTiles() {
-    tilesState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("tiles", value)
-      }
-    }
-  }
   private val boundsState: MutableState<DoubleListValue> = mutableStateOf(bounds)
 
   /**
@@ -133,14 +118,6 @@ public class RasterArraySourceState private constructor(
    */
   public var bounds: DoubleListValue by boundsState
 
-  @Composable
-  private fun UpdateBounds() {
-    boundsState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("bounds", value)
-      }
-    }
-  }
   private val minZoomState: MutableState<LongValue> = mutableStateOf(minZoom)
 
   /**
@@ -149,14 +126,6 @@ public class RasterArraySourceState private constructor(
    */
   public var minZoom: LongValue by minZoomState
 
-  @Composable
-  private fun UpdateMinZoom() {
-    minZoomState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("minzoom", value)
-      }
-    }
-  }
   private val maxZoomState: MutableState<LongValue> = mutableStateOf(maxZoom)
 
   /**
@@ -166,14 +135,6 @@ public class RasterArraySourceState private constructor(
    */
   public var maxZoom: LongValue by maxZoomState
 
-  @Composable
-  private fun UpdateMaxZoom() {
-    maxZoomState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("maxzoom", value)
-      }
-    }
-  }
   private val tileSizeState: MutableState<LongValue> = mutableStateOf(tileSize)
 
   /**
@@ -182,14 +143,6 @@ public class RasterArraySourceState private constructor(
    */
   public var tileSize: LongValue by tileSizeState
 
-  @Composable
-  private fun UpdateTileSize() {
-    tileSizeState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("tileSize", value)
-      }
-    }
-  }
   private val attributionState: MutableState<StringValue> = mutableStateOf(attribution)
 
   /**
@@ -197,14 +150,6 @@ public class RasterArraySourceState private constructor(
    */
   public var attribution: StringValue by attributionState
 
-  @Composable
-  private fun UpdateAttribution() {
-    attributionState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("attribution", value)
-      }
-    }
-  }
   private val rasterLayersState: MutableState<RasterLayers> = mutableStateOf(rasterLayers)
 
   /**
@@ -212,14 +157,6 @@ public class RasterArraySourceState private constructor(
    */
   public var rasterLayers: RasterLayers by rasterLayersState
 
-  @Composable
-  private fun UpdateRasterLayers() {
-    rasterLayersState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("rasterLayers", value)
-      }
-    }
-  }
   private val tileCacheBudgetState: MutableState<TileCacheBudget> = mutableStateOf(tileCacheBudget)
 
   /**
@@ -231,38 +168,29 @@ public class RasterArraySourceState private constructor(
   public var tileCacheBudget: TileCacheBudget by tileCacheBudgetState
 
   @Composable
-  private fun UpdateTileCacheBudget() {
-    tileCacheBudgetState.value.apply {
-      if (notInitial) {
-        setProperty("tile-cache-budget", value)
-      }
-    }
-  }
-
-  @Composable
   override fun UpdateProperties() {
-    UpdateUrl()
-    UpdateTiles()
-    UpdateBounds()
-    UpdateMinZoom()
-    UpdateMaxZoom()
-    UpdateTileSize()
-    UpdateAttribution()
-    UpdateRasterLayers()
-    UpdateTileCacheBudget()
+    ActionWhenNotInitial(setBuilderPropertyAction, urlState, "url")
+    ActionWhenNotInitial(setBuilderPropertyAction, tilesState, "tiles")
+    ActionWhenNotInitial(setBuilderPropertyAction, boundsState, "bounds")
+    ActionWhenNotInitial(setBuilderPropertyAction, minZoomState, "minzoom")
+    ActionWhenNotInitial(setBuilderPropertyAction, maxZoomState, "maxzoom")
+    ActionWhenNotInitial(setBuilderPropertyAction, tileSizeState, "tileSize")
+    ActionWhenNotInitial(setBuilderPropertyAction, attributionState, "attribution")
+    ActionWhenNotInitial(setBuilderPropertyAction, rasterLayersState, "rasterLayers")
+    ActionWhenNotInitial(setPropertyAction, tileCacheBudgetState, "tile-cache-budget")
   }
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("url" to url.value).takeIf { url.notInitial },
-      ("tiles" to tiles.value).takeIf { tiles.notInitial },
-      ("bounds" to bounds.value).takeIf { bounds.notInitial },
-      ("minzoom" to minZoom.value).takeIf { minZoom.notInitial },
-      ("maxzoom" to maxZoom.value).takeIf { maxZoom.notInitial },
-      ("tileSize" to tileSize.value).takeIf { tileSize.notInitial },
-      ("attribution" to attribution.value).takeIf { attribution.notInitial },
-      ("rasterLayers" to rasterLayers.value).takeIf { rasterLayers.notInitial },
-      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.notInitial },
+      ("url" to url.value).takeIf { url.isNotInitial() },
+      ("tiles" to tiles.value).takeIf { tiles.isNotInitial() },
+      ("bounds" to bounds.value).takeIf { bounds.isNotInitial() },
+      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
+      ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
+      ("tileSize" to tileSize.value).takeIf { tileSize.isNotInitial() },
+      ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
+      ("rasterLayers" to rasterLayers.value).takeIf { rasterLayers.isNotInitial() },
+      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.isNotInitial() },
     ).toMap()
 
   /**

@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleRangeValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -100,14 +101,6 @@ public class AtmosphereState private constructor(
    */
   public var color: ColorValue by colorState
 
-  @Composable
-  private fun UpdateColor() {
-    colorState.value.apply {
-      if (notInitial) {
-        applier.setProperty("color", value)
-      }
-    }
-  }
   private val colorTransitionState: MutableState<Transition> = mutableStateOf(colorTransition)
 
   /**
@@ -116,14 +109,6 @@ public class AtmosphereState private constructor(
    */
   public var colorTransition: Transition by colorTransitionState
 
-  @Composable
-  private fun UpdateColorTransition() {
-    colorTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("color-transition", value)
-      }
-    }
-  }
   private val colorUseThemeState: MutableState<StringValue> = mutableStateOf(colorUseTheme)
 
   /**
@@ -134,14 +119,6 @@ public class AtmosphereState private constructor(
   @MapboxExperimental
   public var colorUseTheme: StringValue by colorUseThemeState
 
-  @Composable
-  private fun UpdateColorUseTheme() {
-    colorUseThemeState.value.apply {
-      if (notInitial) {
-        applier.setProperty("color-use-theme", value)
-      }
-    }
-  }
   private val highColorState: MutableState<ColorValue> = mutableStateOf(highColor)
 
   /**
@@ -152,14 +129,6 @@ public class AtmosphereState private constructor(
    */
   public var highColor: ColorValue by highColorState
 
-  @Composable
-  private fun UpdateHighColor() {
-    highColorState.value.apply {
-      if (notInitial) {
-        applier.setProperty("high-color", value)
-      }
-    }
-  }
   private val highColorTransitionState: MutableState<Transition> = mutableStateOf(highColorTransition)
 
   /**
@@ -168,14 +137,6 @@ public class AtmosphereState private constructor(
    */
   public var highColorTransition: Transition by highColorTransitionState
 
-  @Composable
-  private fun UpdateHighColorTransition() {
-    highColorTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("high-color-transition", value)
-      }
-    }
-  }
   private val highColorUseThemeState: MutableState<StringValue> = mutableStateOf(highColorUseTheme)
 
   /**
@@ -186,14 +147,6 @@ public class AtmosphereState private constructor(
   @MapboxExperimental
   public var highColorUseTheme: StringValue by highColorUseThemeState
 
-  @Composable
-  private fun UpdateHighColorUseTheme() {
-    highColorUseThemeState.value.apply {
-      if (notInitial) {
-        applier.setProperty("high-color-use-theme", value)
-      }
-    }
-  }
   private val horizonBlendState: MutableState<DoubleValue> = mutableStateOf(horizonBlend)
 
   /**
@@ -204,14 +157,6 @@ public class AtmosphereState private constructor(
    */
   public var horizonBlend: DoubleValue by horizonBlendState
 
-  @Composable
-  private fun UpdateHorizonBlend() {
-    horizonBlendState.value.apply {
-      if (notInitial) {
-        applier.setProperty("horizon-blend", value)
-      }
-    }
-  }
   private val horizonBlendTransitionState: MutableState<Transition> = mutableStateOf(horizonBlendTransition)
 
   /**
@@ -220,14 +165,6 @@ public class AtmosphereState private constructor(
    */
   public var horizonBlendTransition: Transition by horizonBlendTransitionState
 
-  @Composable
-  private fun UpdateHorizonBlendTransition() {
-    horizonBlendTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("horizon-blend-transition", value)
-      }
-    }
-  }
   private val rangeState: MutableState<DoubleRangeValue> = mutableStateOf(range)
 
   /**
@@ -238,14 +175,6 @@ public class AtmosphereState private constructor(
    */
   public var range: DoubleRangeValue by rangeState
 
-  @Composable
-  private fun UpdateRange() {
-    rangeState.value.apply {
-      if (notInitial) {
-        applier.setProperty("range", value)
-      }
-    }
-  }
   private val rangeTransitionState: MutableState<Transition> = mutableStateOf(rangeTransition)
 
   /**
@@ -254,14 +183,6 @@ public class AtmosphereState private constructor(
    */
   public var rangeTransition: Transition by rangeTransitionState
 
-  @Composable
-  private fun UpdateRangeTransition() {
-    rangeTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("range-transition", value)
-      }
-    }
-  }
   private val spaceColorState: MutableState<ColorValue> = mutableStateOf(spaceColor)
 
   /**
@@ -271,14 +192,6 @@ public class AtmosphereState private constructor(
    */
   public var spaceColor: ColorValue by spaceColorState
 
-  @Composable
-  private fun UpdateSpaceColor() {
-    spaceColorState.value.apply {
-      if (notInitial) {
-        applier.setProperty("space-color", value)
-      }
-    }
-  }
   private val spaceColorTransitionState: MutableState<Transition> = mutableStateOf(spaceColorTransition)
 
   /**
@@ -287,14 +200,6 @@ public class AtmosphereState private constructor(
    */
   public var spaceColorTransition: Transition by spaceColorTransitionState
 
-  @Composable
-  private fun UpdateSpaceColorTransition() {
-    spaceColorTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("space-color-transition", value)
-      }
-    }
-  }
   private val spaceColorUseThemeState: MutableState<StringValue> = mutableStateOf(spaceColorUseTheme)
 
   /**
@@ -305,14 +210,6 @@ public class AtmosphereState private constructor(
   @MapboxExperimental
   public var spaceColorUseTheme: StringValue by spaceColorUseThemeState
 
-  @Composable
-  private fun UpdateSpaceColorUseTheme() {
-    spaceColorUseThemeState.value.apply {
-      if (notInitial) {
-        applier.setProperty("space-color-use-theme", value)
-      }
-    }
-  }
   private val starIntensityState: MutableState<DoubleValue> = mutableStateOf(starIntensity)
 
   /**
@@ -322,14 +219,6 @@ public class AtmosphereState private constructor(
    */
   public var starIntensity: DoubleValue by starIntensityState
 
-  @Composable
-  private fun UpdateStarIntensity() {
-    starIntensityState.value.apply {
-      if (notInitial) {
-        applier.setProperty("star-intensity", value)
-      }
-    }
-  }
   private val starIntensityTransitionState: MutableState<Transition> = mutableStateOf(starIntensityTransition)
 
   /**
@@ -338,14 +227,6 @@ public class AtmosphereState private constructor(
    */
   public var starIntensityTransition: Transition by starIntensityTransitionState
 
-  @Composable
-  private fun UpdateStarIntensityTransition() {
-    starIntensityTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("star-intensity-transition", value)
-      }
-    }
-  }
   private val verticalRangeState: MutableState<DoubleRangeValue> = mutableStateOf(verticalRange)
 
   /**
@@ -356,14 +237,6 @@ public class AtmosphereState private constructor(
    */
   public var verticalRange: DoubleRangeValue by verticalRangeState
 
-  @Composable
-  private fun UpdateVerticalRange() {
-    verticalRangeState.value.apply {
-      if (notInitial) {
-        applier.setProperty("vertical-range", value)
-      }
-    }
-  }
   private val verticalRangeTransitionState: MutableState<Transition> = mutableStateOf(verticalRangeTransition)
 
   /**
@@ -373,59 +246,53 @@ public class AtmosphereState private constructor(
   public var verticalRangeTransition: Transition by verticalRangeTransitionState
 
   @Composable
-  private fun UpdateVerticalRangeTransition() {
-    verticalRangeTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("vertical-range-transition", value)
-      }
-    }
-  }
-
-  @Composable
   internal fun UpdateProperties() {
-    UpdateColor()
-    UpdateColorTransition()
-    UpdateColorUseTheme()
-    UpdateHighColor()
-    UpdateHighColorTransition()
-    UpdateHighColorUseTheme()
-    UpdateHorizonBlend()
-    UpdateHorizonBlendTransition()
-    UpdateRange()
-    UpdateRangeTransition()
-    UpdateSpaceColor()
-    UpdateSpaceColorTransition()
-    UpdateSpaceColorUseTheme()
-    UpdateStarIntensity()
-    UpdateStarIntensityTransition()
-    UpdateVerticalRange()
-    UpdateVerticalRangeTransition()
+    val action = applier::setProperty
+    ActionWhenNotInitial(action, colorState, "color")
+    ActionWhenNotInitial(action, colorTransitionState, "color-transition")
+    ActionWhenNotInitial(action, colorUseThemeState, "color-use-theme")
+    ActionWhenNotInitial(action, highColorState, "high-color")
+    ActionWhenNotInitial(action, highColorTransitionState, "high-color-transition")
+    ActionWhenNotInitial(action, highColorUseThemeState, "high-color-use-theme")
+    ActionWhenNotInitial(action, horizonBlendState, "horizon-blend")
+    ActionWhenNotInitial(action, horizonBlendTransitionState, "horizon-blend-transition")
+    ActionWhenNotInitial(action, rangeState, "range")
+    ActionWhenNotInitial(action, rangeTransitionState, "range-transition")
+    ActionWhenNotInitial(action, spaceColorState, "space-color")
+    ActionWhenNotInitial(action, spaceColorTransitionState, "space-color-transition")
+    ActionWhenNotInitial(action, spaceColorUseThemeState, "space-color-use-theme")
+    ActionWhenNotInitial(action, starIntensityState, "star-intensity")
+    ActionWhenNotInitial(action, starIntensityTransitionState, "star-intensity-transition")
+    ActionWhenNotInitial(action, verticalRangeState, "vertical-range")
+    ActionWhenNotInitial(action, verticalRangeTransitionState, "vertical-range-transition")
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("color" to color.value).takeIf { color.notInitial },
-      ("color-transition" to colorTransition.value).takeIf { colorTransition.notInitial },
-      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.notInitial },
-      ("high-color" to highColor.value).takeIf { highColor.notInitial },
-      ("high-color-transition" to highColorTransition.value).takeIf { highColorTransition.notInitial },
-      ("high-color-use-theme" to highColorUseTheme.value).takeIf { highColorUseTheme.notInitial },
-      ("horizon-blend" to horizonBlend.value).takeIf { horizonBlend.notInitial },
-      ("horizon-blend-transition" to horizonBlendTransition.value).takeIf { horizonBlendTransition.notInitial },
-      ("range" to range.value).takeIf { range.notInitial },
-      ("range-transition" to rangeTransition.value).takeIf { rangeTransition.notInitial },
-      ("space-color" to spaceColor.value).takeIf { spaceColor.notInitial },
-      ("space-color-transition" to spaceColorTransition.value).takeIf { spaceColorTransition.notInitial },
-      ("space-color-use-theme" to spaceColorUseTheme.value).takeIf { spaceColorUseTheme.notInitial },
-      ("star-intensity" to starIntensity.value).takeIf { starIntensity.notInitial },
-      ("star-intensity-transition" to starIntensityTransition.value).takeIf { starIntensityTransition.notInitial },
-      ("vertical-range" to verticalRange.value).takeIf { verticalRange.notInitial },
-      ("vertical-range-transition" to verticalRangeTransition.value).takeIf { verticalRangeTransition.notInitial },
+      ("color" to color.value).takeIf { color.isNotInitial() },
+      ("color-transition" to colorTransition.value).takeIf { colorTransition.isNotInitial() },
+      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.isNotInitial() },
+      ("high-color" to highColor.value).takeIf { highColor.isNotInitial() },
+      ("high-color-transition" to highColorTransition.value).takeIf { highColorTransition.isNotInitial() },
+      ("high-color-use-theme" to highColorUseTheme.value).takeIf { highColorUseTheme.isNotInitial() },
+      ("horizon-blend" to horizonBlend.value).takeIf { horizonBlend.isNotInitial() },
+      ("horizon-blend-transition" to horizonBlendTransition.value).takeIf { horizonBlendTransition.isNotInitial() },
+      ("range" to range.value).takeIf { range.isNotInitial() },
+      ("range-transition" to rangeTransition.value).takeIf { rangeTransition.isNotInitial() },
+      ("space-color" to spaceColor.value).takeIf { spaceColor.isNotInitial() },
+      ("space-color-transition" to spaceColorTransition.value).takeIf { spaceColorTransition.isNotInitial() },
+      ("space-color-use-theme" to spaceColorUseTheme.value).takeIf { spaceColorUseTheme.isNotInitial() },
+      ("star-intensity" to starIntensity.value).takeIf { starIntensity.isNotInitial() },
+      ("star-intensity-transition" to starIntensityTransition.value).takeIf { starIntensityTransition.isNotInitial() },
+      ("vertical-range" to verticalRange.value).takeIf { verticalRange.isNotInitial() },
+      ("vertical-range-transition" to verticalRangeTransition.value).takeIf { verticalRangeTransition.isNotInitial() },
     ).toMap()
 
   /**
    * See [Any.equals]
    */
+  @OptIn(MapboxExperimental::class)
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
@@ -457,6 +324,7 @@ public class AtmosphereState private constructor(
   /**
    * See [Any.hashCode]
    */
+  @OptIn(MapboxExperimental::class)
   override fun hashCode(): Int = Objects.hash(
     applier,
     color,
@@ -481,6 +349,7 @@ public class AtmosphereState private constructor(
   /**
    * Returns a string representation of the object.
    */
+  @OptIn(MapboxExperimental::class)
   override fun toString(): String =
     "AtmosphereState(color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, highColor=$highColor, highColorTransition=$highColorTransition, highColorUseTheme=$highColorUseTheme, horizonBlend=$horizonBlend, horizonBlendTransition=$horizonBlendTransition, range=$range, rangeTransition=$rangeTransition, spaceColor=$spaceColor, spaceColorTransition=$spaceColorTransition, spaceColorUseTheme=$spaceColorUseTheme, starIntensity=$starIntensity, starIntensityTransition=$starIntensityTransition, verticalRange=$verticalRange, verticalRangeTransition=$verticalRangeTransition)"
 

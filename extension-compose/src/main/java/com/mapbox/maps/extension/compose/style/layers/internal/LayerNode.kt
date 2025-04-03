@@ -208,6 +208,8 @@ internal class LayerNode(
     }
   }
 
+  internal val setPropertyAction = ::setProperty
+
   override fun getLayerIds(): List<String> {
     return listOf(layerId)
   }

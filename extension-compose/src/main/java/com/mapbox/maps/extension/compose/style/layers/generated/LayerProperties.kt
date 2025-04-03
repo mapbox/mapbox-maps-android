@@ -2,12 +2,13 @@
 
 package com.mapbox.maps.extension.compose.style.layers.generated
 
+import androidx.annotation.RestrictTo
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-
 /**
  * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
  *
@@ -15,7 +16,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  */
 @Immutable
 @MapboxExperimental
-public data class FillElevationReferenceValue(public val value: Value) {
+public data class FillElevationReferenceValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [FillElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -24,8 +25,8 @@ public data class FillElevationReferenceValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -74,7 +75,7 @@ public data class FillElevationReferenceValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class FillTranslateAnchorValue(public val value: Value) {
+public data class FillTranslateAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [FillTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -83,8 +84,8 @@ public data class FillTranslateAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -127,7 +128,7 @@ public data class FillTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class VisibilityValue(public val value: Value) {
+public data class VisibilityValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [VisibilityValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -136,8 +137,8 @@ public data class VisibilityValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -180,7 +181,7 @@ public data class VisibilityValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class LineCapValue(public val value: Value) {
+public data class LineCapValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [LineCapValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -189,8 +190,8 @@ public data class LineCapValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -240,7 +241,7 @@ public data class LineCapValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class LineElevationReferenceValue(public val value: Value) {
+public data class LineElevationReferenceValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [LineElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -249,8 +250,8 @@ public data class LineElevationReferenceValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -305,7 +306,7 @@ public data class LineElevationReferenceValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class LineJoinValue(public val value: Value) {
+public data class LineJoinValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [LineJoinValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -314,8 +315,8 @@ public data class LineJoinValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -371,7 +372,7 @@ public data class LineJoinValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class LineWidthUnitValue(public val value: Value) {
+public data class LineWidthUnitValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [LineWidthUnitValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -380,8 +381,8 @@ public data class LineWidthUnitValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -424,7 +425,7 @@ public data class LineWidthUnitValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class LineTranslateAnchorValue(public val value: Value) {
+public data class LineTranslateAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [LineTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -433,8 +434,8 @@ public data class LineTranslateAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -477,7 +478,7 @@ public data class LineTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class IconAnchorValue(public val value: Value) {
+public data class IconAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [IconAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -486,8 +487,8 @@ public data class IconAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -572,7 +573,7 @@ public data class IconAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class IconPitchAlignmentValue(public val value: Value) {
+public data class IconPitchAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [IconPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -581,8 +582,8 @@ public data class IconPitchAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -631,7 +632,7 @@ public data class IconPitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class IconRotationAlignmentValue(public val value: Value) {
+public data class IconRotationAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [IconRotationAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -640,8 +641,8 @@ public data class IconRotationAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -690,7 +691,7 @@ public data class IconRotationAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class IconTextFitValue(public val value: Value) {
+public data class IconTextFitValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [IconTextFitValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -699,8 +700,8 @@ public data class IconTextFitValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -756,7 +757,7 @@ public data class IconTextFitValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class SymbolElevationReferenceValue(public val value: Value) {
+public data class SymbolElevationReferenceValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [SymbolElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -765,8 +766,8 @@ public data class SymbolElevationReferenceValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -815,7 +816,7 @@ public data class SymbolElevationReferenceValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class SymbolPlacementValue(public val value: Value) {
+public data class SymbolPlacementValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [SymbolPlacementValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -824,8 +825,8 @@ public data class SymbolPlacementValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -874,7 +875,7 @@ public data class SymbolPlacementValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class SymbolZOrderValue(public val value: Value) {
+public data class SymbolZOrderValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [SymbolZOrderValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -883,8 +884,8 @@ public data class SymbolZOrderValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -933,7 +934,7 @@ public data class SymbolZOrderValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextAnchorValue(public val value: Value) {
+public data class TextAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -942,8 +943,8 @@ public data class TextAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1028,7 +1029,7 @@ public data class TextAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextJustifyValue(public val value: Value) {
+public data class TextJustifyValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextJustifyValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1037,8 +1038,8 @@ public data class TextJustifyValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1093,7 +1094,7 @@ public data class TextJustifyValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextPitchAlignmentValue(public val value: Value) {
+public data class TextPitchAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1102,8 +1103,8 @@ public data class TextPitchAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1152,7 +1153,7 @@ public data class TextPitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextRotationAlignmentValue(public val value: Value) {
+public data class TextRotationAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextRotationAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1161,8 +1162,8 @@ public data class TextRotationAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1211,7 +1212,7 @@ public data class TextRotationAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextTransformValue(public val value: Value) {
+public data class TextTransformValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextTransformValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1220,8 +1221,8 @@ public data class TextTransformValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1270,7 +1271,7 @@ public data class TextTransformValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextVariableAnchorListValue(public val value: Value) {
+public data class TextVariableAnchorListValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextVariableAnchorListValue] with [TextVariableAnchor].
    */
@@ -1284,8 +1285,8 @@ public data class TextVariableAnchorListValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1377,14 +1378,13 @@ public data class TextVariableAnchor internal constructor(public val value: Valu
     public val BOTTOM_RIGHT: TextVariableAnchor = TextVariableAnchor(Value("bottom-right"))
   }
 }
-
 /**
  * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextWritingModeListValue(public val value: Value) {
+public data class TextWritingModeListValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextWritingModeListValue] with [TextWritingMode].
    */
@@ -1398,8 +1398,8 @@ public data class TextWritingModeListValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1449,14 +1449,13 @@ public data class TextWritingMode internal constructor(public val value: Value) 
     public val VERTICAL: TextWritingMode = TextWritingMode(Value("vertical"))
   }
 }
-
 /**
  * Controls the frame of reference for `icon-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class IconTranslateAnchorValue(public val value: Value) {
+public data class IconTranslateAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [IconTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1465,8 +1464,8 @@ public data class IconTranslateAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1509,7 +1508,7 @@ public data class IconTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class TextTranslateAnchorValue(public val value: Value) {
+public data class TextTranslateAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [TextTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1518,8 +1517,8 @@ public data class TextTranslateAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1562,7 +1561,7 @@ public data class TextTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class CirclePitchAlignmentValue(public val value: Value) {
+public data class CirclePitchAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [CirclePitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1571,8 +1570,8 @@ public data class CirclePitchAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1615,7 +1614,7 @@ public data class CirclePitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class CirclePitchScaleValue(public val value: Value) {
+public data class CirclePitchScaleValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [CirclePitchScaleValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1624,8 +1623,8 @@ public data class CirclePitchScaleValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1668,7 +1667,7 @@ public data class CirclePitchScaleValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class CircleTranslateAnchorValue(public val value: Value) {
+public data class CircleTranslateAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [CircleTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1677,8 +1676,8 @@ public data class CircleTranslateAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1722,7 +1721,7 @@ public data class CircleTranslateAnchorValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class FillExtrusionBaseAlignmentValue(public val value: Value) {
+public data class FillExtrusionBaseAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [FillExtrusionBaseAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1731,8 +1730,8 @@ public data class FillExtrusionBaseAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1776,7 +1775,7 @@ public data class FillExtrusionBaseAlignmentValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class FillExtrusionHeightAlignmentValue(public val value: Value) {
+public data class FillExtrusionHeightAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [FillExtrusionHeightAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1785,8 +1784,8 @@ public data class FillExtrusionHeightAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1829,7 +1828,7 @@ public data class FillExtrusionHeightAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class FillExtrusionTranslateAnchorValue(public val value: Value) {
+public data class FillExtrusionTranslateAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [FillExtrusionTranslateAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1838,8 +1837,8 @@ public data class FillExtrusionTranslateAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1882,7 +1881,7 @@ public data class FillExtrusionTranslateAnchorValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class RasterResamplingValue(public val value: Value) {
+public data class RasterResamplingValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [RasterResamplingValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1891,8 +1890,8 @@ public data class RasterResamplingValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1935,7 +1934,7 @@ public data class RasterResamplingValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class HillshadeIlluminationAnchorValue(public val value: Value) {
+public data class HillshadeIlluminationAnchorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [HillshadeIlluminationAnchorValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1944,8 +1943,8 @@ public data class HillshadeIlluminationAnchorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -1989,7 +1988,7 @@ public data class HillshadeIlluminationAnchorValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class ModelElevationReferenceValue(public val value: Value) {
+public data class ModelElevationReferenceValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ModelElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -1998,8 +1997,8 @@ public data class ModelElevationReferenceValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -2043,7 +2042,7 @@ public data class ModelElevationReferenceValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class ModelScaleModeValue(public val value: Value) {
+public data class ModelScaleModeValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ModelScaleModeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2052,8 +2051,8 @@ public data class ModelScaleModeValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -2097,7 +2096,7 @@ public data class ModelScaleModeValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class ModelTypeValue(public val value: Value) {
+public data class ModelTypeValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ModelTypeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2106,8 +2105,8 @@ public data class ModelTypeValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -2151,7 +2150,7 @@ public data class ModelTypeValue(public val value: Value) {
  */
 @Immutable
 @MapboxExperimental
-public data class BackgroundPitchAlignmentValue(public val value: Value) {
+public data class BackgroundPitchAlignmentValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [BackgroundPitchAlignmentValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2160,8 +2159,8 @@ public data class BackgroundPitchAlignmentValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -2204,7 +2203,7 @@ public data class BackgroundPitchAlignmentValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class SkyTypeValue(public val value: Value) {
+public data class SkyTypeValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [SkyTypeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
    */
@@ -2213,8 +2212,8 @@ public data class SkyTypeValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -2257,7 +2256,7 @@ public data class SkyTypeValue(public val value: Value) {
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-public data class ClipLayerTypesListValue(public val value: Value) {
+public data class ClipLayerTypesListValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ClipLayerTypesListValue] with [ClipLayerTypes].
    */
@@ -2271,8 +2270,8 @@ public data class ClipLayerTypesListValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.

@@ -3,11 +3,14 @@
 package com.mapbox.maps.extension.compose.style.layers.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
+import com.mapbox.maps.extension.compose.style.AddImageWhenNotInitial
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.LongValue
@@ -22,7 +25,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#background)
  */
 @Stable
-public class BackgroundLayerState private constructor(
+public class BackgroundLayerState
+@OptIn(MapboxExperimental::class)
+private constructor(
   initialBackgroundColor: ColorValue,
   initialBackgroundColorUseTheme: StringValue,
   initialBackgroundColorTransition: Transition,
@@ -39,6 +44,7 @@ public class BackgroundLayerState private constructor(
   /**
    * Construct an default [BackgroundLayerState].
    */
+  @OptIn(MapboxExperimental::class)
   public constructor() : this(
     initialBackgroundColor = ColorValue.INITIAL,
     initialBackgroundColorUseTheme = StringValue.INITIAL,
@@ -54,149 +60,97 @@ public class BackgroundLayerState private constructor(
     initialMaxZoom = LongValue.INITIAL,
   )
 
+  private val backgroundColorState: MutableState<ColorValue> = mutableStateOf(initialBackgroundColor)
   /**
    *  The color with which the background will be drawn. Default value: "#000000".
    */
-  public var backgroundColor: ColorValue by mutableStateOf(initialBackgroundColor)
+  public var backgroundColor: ColorValue by backgroundColorState
+
+  @MapboxExperimental
+  private val backgroundColorUseThemeState: MutableState<StringValue> = mutableStateOf(initialBackgroundColorUseTheme)
   /**
    *  Overrides applying of color theme for [backgroundColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
    */
   @MapboxExperimental
-  public var backgroundColorUseTheme: StringValue by mutableStateOf(initialBackgroundColorUseTheme)
+  public var backgroundColorUseTheme: StringValue by backgroundColorUseThemeState
+
+  private val backgroundColorTransitionState: MutableState<Transition> = mutableStateOf(initialBackgroundColorTransition)
   /**
    *  Defines the transition of [backgroundColor].
    */
-  public var backgroundColorTransition: Transition by mutableStateOf(initialBackgroundColorTransition)
+  public var backgroundColorTransition: Transition by backgroundColorTransitionState
+
+  private val backgroundEmissiveStrengthState: MutableState<DoubleValue> = mutableStateOf(initialBackgroundEmissiveStrength)
   /**
    *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of backgroundEmissiveStrength is in intensity.
    */
-  public var backgroundEmissiveStrength: DoubleValue by mutableStateOf(initialBackgroundEmissiveStrength)
+  public var backgroundEmissiveStrength: DoubleValue by backgroundEmissiveStrengthState
+
+  private val backgroundEmissiveStrengthTransitionState: MutableState<Transition> = mutableStateOf(initialBackgroundEmissiveStrengthTransition)
   /**
    *  Defines the transition of [backgroundEmissiveStrength].
    */
-  public var backgroundEmissiveStrengthTransition: Transition by mutableStateOf(initialBackgroundEmissiveStrengthTransition)
+  public var backgroundEmissiveStrengthTransition: Transition by backgroundEmissiveStrengthTransitionState
+
+  private val backgroundOpacityState: MutableState<DoubleValue> = mutableStateOf(initialBackgroundOpacity)
   /**
    *  The opacity at which the background will be drawn. Default value: 1. Value range: [0, 1]
    */
-  public var backgroundOpacity: DoubleValue by mutableStateOf(initialBackgroundOpacity)
+  public var backgroundOpacity: DoubleValue by backgroundOpacityState
+
+  private val backgroundOpacityTransitionState: MutableState<Transition> = mutableStateOf(initialBackgroundOpacityTransition)
   /**
    *  Defines the transition of [backgroundOpacity].
    */
-  public var backgroundOpacityTransition: Transition by mutableStateOf(initialBackgroundOpacityTransition)
+  public var backgroundOpacityTransition: Transition by backgroundOpacityTransitionState
+
+  private val backgroundPatternState: MutableState<ImageValue> = mutableStateOf(initialBackgroundPattern)
   /**
    *  Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
-  public var backgroundPattern: ImageValue by mutableStateOf(initialBackgroundPattern)
+  public var backgroundPattern: ImageValue by backgroundPatternState
+
+  @MapboxExperimental
+  private val backgroundPitchAlignmentState: MutableState<BackgroundPitchAlignmentValue> = mutableStateOf(initialBackgroundPitchAlignment)
   /**
    *  Orientation of background layer. Default value: "map".
    */
   @MapboxExperimental
-  public var backgroundPitchAlignment: BackgroundPitchAlignmentValue by mutableStateOf(initialBackgroundPitchAlignment)
+  public var backgroundPitchAlignment: BackgroundPitchAlignmentValue by backgroundPitchAlignmentState
+
+  private val visibilityState: MutableState<VisibilityValue> = mutableStateOf(initialVisibility)
   /**
    *  Whether this layer is displayed. Default value: "visible".
    */
-  public var visibility: VisibilityValue by mutableStateOf(initialVisibility)
+  public var visibility: VisibilityValue by visibilityState
+
+  private val minZoomState: MutableState<LongValue> = mutableStateOf(initialMinZoom)
   /**
    *  The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
    */
-  public var minZoom: LongValue by mutableStateOf(initialMinZoom)
+  public var minZoom: LongValue by minZoomState
+
+  private val maxZoomState: MutableState<LongValue> = mutableStateOf(initialMaxZoom)
   /**
    *  The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
    */
-  public var maxZoom: LongValue by mutableStateOf(initialMaxZoom)
+  public var maxZoom: LongValue by maxZoomState
 
   @Composable
-  private fun UpdateBackgroundColor(layerNode: LayerNode) {
-    if (backgroundColor.notInitial) {
-      layerNode.setProperty("background-color", backgroundColor.value)
-    }
-  }
-  @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateBackgroundColorUseTheme(layerNode: LayerNode) {
-    if (backgroundColorUseTheme.notInitial) {
-      layerNode.setProperty("background-color-use-theme", backgroundColorUseTheme.value)
-    }
-  }
-  @Composable
-  private fun UpdateBackgroundColorTransition(layerNode: LayerNode) {
-    if (backgroundColorTransition.notInitial) {
-      layerNode.setProperty("background-color-transition", backgroundColorTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateBackgroundEmissiveStrength(layerNode: LayerNode) {
-    if (backgroundEmissiveStrength.notInitial) {
-      layerNode.setProperty("background-emissive-strength", backgroundEmissiveStrength.value)
-    }
-  }
-  @Composable
-  private fun UpdateBackgroundEmissiveStrengthTransition(layerNode: LayerNode) {
-    if (backgroundEmissiveStrengthTransition.notInitial) {
-      layerNode.setProperty("background-emissive-strength-transition", backgroundEmissiveStrengthTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateBackgroundOpacity(layerNode: LayerNode) {
-    if (backgroundOpacity.notInitial) {
-      layerNode.setProperty("background-opacity", backgroundOpacity.value)
-    }
-  }
-  @Composable
-  private fun UpdateBackgroundOpacityTransition(layerNode: LayerNode) {
-    if (backgroundOpacityTransition.notInitial) {
-      layerNode.setProperty("background-opacity-transition", backgroundOpacityTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateBackgroundPattern(layerNode: LayerNode) {
-    if (backgroundPattern.notInitial) {
-      backgroundPattern.styleImage?.let {
-        layerNode.addImage(it)
-      }
-      layerNode.setProperty("background-pattern", backgroundPattern.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateBackgroundPitchAlignment(layerNode: LayerNode) {
-    if (backgroundPitchAlignment.notInitial) {
-      layerNode.setProperty("background-pitch-alignment", backgroundPitchAlignment.value)
-    }
-  }
-  @Composable
-  private fun UpdateVisibility(layerNode: LayerNode) {
-    if (visibility.notInitial) {
-      layerNode.setProperty("visibility", visibility.value)
-    }
-  }
-  @Composable
-  private fun UpdateMinZoom(layerNode: LayerNode) {
-    if (minZoom.notInitial) {
-      layerNode.setProperty("minzoom", minZoom.value)
-    }
-  }
-  @Composable
-  private fun UpdateMaxZoom(layerNode: LayerNode) {
-    if (maxZoom.notInitial) {
-      layerNode.setProperty("maxzoom", maxZoom.value)
-    }
-  }
-
-  @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
-    UpdateBackgroundColor(layerNode)
-    UpdateBackgroundColorUseTheme(layerNode)
-    UpdateBackgroundColorTransition(layerNode)
-    UpdateBackgroundEmissiveStrength(layerNode)
-    UpdateBackgroundEmissiveStrengthTransition(layerNode)
-    UpdateBackgroundOpacity(layerNode)
-    UpdateBackgroundOpacityTransition(layerNode)
-    UpdateBackgroundPattern(layerNode)
-    UpdateBackgroundPitchAlignment(layerNode)
-    UpdateVisibility(layerNode)
-    UpdateMinZoom(layerNode)
-    UpdateMaxZoom(layerNode)
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundColorState, "background-color")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundColorUseThemeState, "background-color-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundColorTransitionState, "background-color-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundEmissiveStrengthState, "background-emissive-strength")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundEmissiveStrengthTransitionState, "background-emissive-strength-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundOpacityState, "background-opacity")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundOpacityTransitionState, "background-opacity-transition")
+    AddImageWhenNotInitial(layerNode, backgroundPatternState, "background-pattern")
+    ActionWhenNotInitial(layerNode.setPropertyAction, backgroundPitchAlignmentState, "background-pitch-alignment")
+    ActionWhenNotInitial(layerNode.setPropertyAction, visibilityState, "visibility")
+    ActionWhenNotInitial(layerNode.setPropertyAction, minZoomState, "minzoom")
+    ActionWhenNotInitial(layerNode.setPropertyAction, maxZoomState, "maxzoom")
   }
 }
 // End of generated file.

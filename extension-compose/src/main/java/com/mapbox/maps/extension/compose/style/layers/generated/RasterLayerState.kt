@@ -3,11 +3,13 @@
 package com.mapbox.maps.extension.compose.style.layers.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleRangeValue
@@ -26,7 +28,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  */
 @Stable
 @OptIn(MapboxExperimental::class)
-public class RasterLayerState private constructor(
+public class RasterLayerState
+@OptIn(MapboxExperimental::class)
+private constructor(
   initialRasterArrayBand: StringValue,
   initialRasterBrightnessMax: DoubleValue,
   initialRasterBrightnessMaxTransition: Transition,
@@ -62,6 +66,7 @@ public class RasterLayerState private constructor(
   /**
    * Construct an default [RasterLayerState].
    */
+  @OptIn(MapboxExperimental::class)
   public constructor() : this(
     initialRasterArrayBand = StringValue.INITIAL,
     initialRasterBrightnessMax = DoubleValue.INITIAL,
@@ -102,348 +107,227 @@ public class RasterLayerState private constructor(
   @MapboxExperimental
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
 
+  @MapboxExperimental
+  private val rasterArrayBandState: MutableState<StringValue> = mutableStateOf(initialRasterArrayBand)
   /**
    *  Displayed band of raster array source layer. Defaults to the first band if not set.
    */
   @MapboxExperimental
-  public var rasterArrayBand: StringValue by mutableStateOf(initialRasterArrayBand)
+  public var rasterArrayBand: StringValue by rasterArrayBandState
+
+  private val rasterBrightnessMaxState: MutableState<DoubleValue> = mutableStateOf(initialRasterBrightnessMax)
   /**
    *  Increase or reduce the brightness of the image. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
    */
-  public var rasterBrightnessMax: DoubleValue by mutableStateOf(initialRasterBrightnessMax)
+  public var rasterBrightnessMax: DoubleValue by rasterBrightnessMaxState
+
+  private val rasterBrightnessMaxTransitionState: MutableState<Transition> = mutableStateOf(initialRasterBrightnessMaxTransition)
   /**
    *  Defines the transition of [rasterBrightnessMax].
    */
-  public var rasterBrightnessMaxTransition: Transition by mutableStateOf(initialRasterBrightnessMaxTransition)
+  public var rasterBrightnessMaxTransition: Transition by rasterBrightnessMaxTransitionState
+
+  private val rasterBrightnessMinState: MutableState<DoubleValue> = mutableStateOf(initialRasterBrightnessMin)
   /**
    *  Increase or reduce the brightness of the image. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
    */
-  public var rasterBrightnessMin: DoubleValue by mutableStateOf(initialRasterBrightnessMin)
+  public var rasterBrightnessMin: DoubleValue by rasterBrightnessMinState
+
+  private val rasterBrightnessMinTransitionState: MutableState<Transition> = mutableStateOf(initialRasterBrightnessMinTransition)
   /**
    *  Defines the transition of [rasterBrightnessMin].
    */
-  public var rasterBrightnessMinTransition: Transition by mutableStateOf(initialRasterBrightnessMinTransition)
+  public var rasterBrightnessMinTransition: Transition by rasterBrightnessMinTransitionState
+
+  private val rasterColorState: MutableState<ColorValue> = mutableStateOf(initialRasterColor)
   /**
    *  Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
    */
-  public var rasterColor: ColorValue by mutableStateOf(initialRasterColor)
+  public var rasterColor: ColorValue by rasterColorState
+
+  @MapboxExperimental
+  private val rasterColorUseThemeState: MutableState<StringValue> = mutableStateOf(initialRasterColorUseTheme)
   /**
    *  Overrides applying of color theme for [rasterColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
    */
   @MapboxExperimental
-  public var rasterColorUseTheme: StringValue by mutableStateOf(initialRasterColorUseTheme)
+  public var rasterColorUseTheme: StringValue by rasterColorUseThemeState
+
+  private val rasterColorMixState: MutableState<DoubleListValue> = mutableStateOf(initialRasterColorMix)
   /**
    *  When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r - src.r + mix.g - src.g + mix.b - src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is -not- multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity. Default value: [0.2126,0.7152,0.0722,0].
    */
-  public var rasterColorMix: DoubleListValue by mutableStateOf(initialRasterColorMix)
+  public var rasterColorMix: DoubleListValue by rasterColorMixState
+
+  private val rasterColorMixTransitionState: MutableState<Transition> = mutableStateOf(initialRasterColorMixTransition)
   /**
    *  Defines the transition of [rasterColorMix].
    */
-  public var rasterColorMixTransition: Transition by mutableStateOf(initialRasterColorMixTransition)
+  public var rasterColorMixTransition: Transition by rasterColorMixTransitionState
+
+  private val rasterColorRangeState: MutableState<DoubleRangeValue> = mutableStateOf(initialRasterColorRange)
   /**
    *  When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`. For `rasterarray` sources, if `raster-color-range` is unspecified, the source's stated data range is used.
    */
-  public var rasterColorRange: DoubleRangeValue by mutableStateOf(initialRasterColorRange)
+  public var rasterColorRange: DoubleRangeValue by rasterColorRangeState
+
+  private val rasterColorRangeTransitionState: MutableState<Transition> = mutableStateOf(initialRasterColorRangeTransition)
   /**
    *  Defines the transition of [rasterColorRange].
    */
-  public var rasterColorRangeTransition: Transition by mutableStateOf(initialRasterColorRangeTransition)
+  public var rasterColorRangeTransition: Transition by rasterColorRangeTransitionState
+
+  private val rasterContrastState: MutableState<DoubleValue> = mutableStateOf(initialRasterContrast)
   /**
    *  Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    */
-  public var rasterContrast: DoubleValue by mutableStateOf(initialRasterContrast)
+  public var rasterContrast: DoubleValue by rasterContrastState
+
+  private val rasterContrastTransitionState: MutableState<Transition> = mutableStateOf(initialRasterContrastTransition)
   /**
    *  Defines the transition of [rasterContrast].
    */
-  public var rasterContrastTransition: Transition by mutableStateOf(initialRasterContrastTransition)
+  public var rasterContrastTransition: Transition by rasterContrastTransitionState
+
+  @MapboxExperimental
+  private val rasterElevationState: MutableState<DoubleValue> = mutableStateOf(initialRasterElevation)
   /**
    *  Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
-  public var rasterElevation: DoubleValue by mutableStateOf(initialRasterElevation)
+  public var rasterElevation: DoubleValue by rasterElevationState
+
+  @MapboxExperimental
+  private val rasterElevationTransitionState: MutableState<Transition> = mutableStateOf(initialRasterElevationTransition)
   /**
    *  Defines the transition of [rasterElevation].
    */
   @MapboxExperimental
-  public var rasterElevationTransition: Transition by mutableStateOf(initialRasterElevationTransition)
+  public var rasterElevationTransition: Transition by rasterElevationTransitionState
+
+  private val rasterEmissiveStrengthState: MutableState<DoubleValue> = mutableStateOf(initialRasterEmissiveStrength)
   /**
    *  Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of rasterEmissiveStrength is in intensity.
    */
-  public var rasterEmissiveStrength: DoubleValue by mutableStateOf(initialRasterEmissiveStrength)
+  public var rasterEmissiveStrength: DoubleValue by rasterEmissiveStrengthState
+
+  private val rasterEmissiveStrengthTransitionState: MutableState<Transition> = mutableStateOf(initialRasterEmissiveStrengthTransition)
   /**
    *  Defines the transition of [rasterEmissiveStrength].
    */
-  public var rasterEmissiveStrengthTransition: Transition by mutableStateOf(initialRasterEmissiveStrengthTransition)
+  public var rasterEmissiveStrengthTransition: Transition by rasterEmissiveStrengthTransitionState
+
+  private val rasterFadeDurationState: MutableState<DoubleValue> = mutableStateOf(initialRasterFadeDuration)
   /**
    *  Fade duration when a new tile is added. Default value: 300. Minimum value: 0. The unit of rasterFadeDuration is in milliseconds.
    */
-  public var rasterFadeDuration: DoubleValue by mutableStateOf(initialRasterFadeDuration)
+  public var rasterFadeDuration: DoubleValue by rasterFadeDurationState
+
+  private val rasterHueRotateState: MutableState<DoubleValue> = mutableStateOf(initialRasterHueRotate)
   /**
    *  Rotates hues around the color wheel. Default value: 0. The unit of rasterHueRotate is in degrees.
    */
-  public var rasterHueRotate: DoubleValue by mutableStateOf(initialRasterHueRotate)
+  public var rasterHueRotate: DoubleValue by rasterHueRotateState
+
+  private val rasterHueRotateTransitionState: MutableState<Transition> = mutableStateOf(initialRasterHueRotateTransition)
   /**
    *  Defines the transition of [rasterHueRotate].
    */
-  public var rasterHueRotateTransition: Transition by mutableStateOf(initialRasterHueRotateTransition)
+  public var rasterHueRotateTransition: Transition by rasterHueRotateTransitionState
+
+  private val rasterOpacityState: MutableState<DoubleValue> = mutableStateOf(initialRasterOpacity)
   /**
    *  The opacity at which the image will be drawn. Default value: 1. Value range: [0, 1]
    */
-  public var rasterOpacity: DoubleValue by mutableStateOf(initialRasterOpacity)
+  public var rasterOpacity: DoubleValue by rasterOpacityState
+
+  private val rasterOpacityTransitionState: MutableState<Transition> = mutableStateOf(initialRasterOpacityTransition)
   /**
    *  Defines the transition of [rasterOpacity].
    */
-  public var rasterOpacityTransition: Transition by mutableStateOf(initialRasterOpacityTransition)
+  public var rasterOpacityTransition: Transition by rasterOpacityTransitionState
+
+  private val rasterResamplingState: MutableState<RasterResamplingValue> = mutableStateOf(initialRasterResampling)
   /**
    *  The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
    */
-  public var rasterResampling: RasterResamplingValue by mutableStateOf(initialRasterResampling)
+  public var rasterResampling: RasterResamplingValue by rasterResamplingState
+
+  private val rasterSaturationState: MutableState<DoubleValue> = mutableStateOf(initialRasterSaturation)
   /**
    *  Increase or reduce the saturation of the image. Default value: 0. Value range: [-1, 1]
    */
-  public var rasterSaturation: DoubleValue by mutableStateOf(initialRasterSaturation)
+  public var rasterSaturation: DoubleValue by rasterSaturationState
+
+  private val rasterSaturationTransitionState: MutableState<Transition> = mutableStateOf(initialRasterSaturationTransition)
   /**
    *  Defines the transition of [rasterSaturation].
    */
-  public var rasterSaturationTransition: Transition by mutableStateOf(initialRasterSaturationTransition)
+  public var rasterSaturationTransition: Transition by rasterSaturationTransitionState
+
+  private val visibilityState: MutableState<VisibilityValue> = mutableStateOf(initialVisibility)
   /**
    *  Whether this layer is displayed. Default value: "visible".
    */
-  public var visibility: VisibilityValue by mutableStateOf(initialVisibility)
+  public var visibility: VisibilityValue by visibilityState
+
+  private val minZoomState: MutableState<LongValue> = mutableStateOf(initialMinZoom)
   /**
    *  The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
    */
-  public var minZoom: LongValue by mutableStateOf(initialMinZoom)
+  public var minZoom: LongValue by minZoomState
+
+  private val maxZoomState: MutableState<LongValue> = mutableStateOf(initialMaxZoom)
   /**
    *  The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
    */
-  public var maxZoom: LongValue by mutableStateOf(initialMaxZoom)
+  public var maxZoom: LongValue by maxZoomState
+
+  private val sourceLayerState: MutableState<StringValue> = mutableStateOf(initialSourceLayer)
   /**
    *  Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
    */
-  public var sourceLayer: StringValue by mutableStateOf(initialSourceLayer)
+  public var sourceLayer: StringValue by sourceLayerState
+
+  private val filterState: MutableState<Filter> = mutableStateOf(initialFilter)
   /**
    *  An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
    */
-  public var filter: Filter by mutableStateOf(initialFilter)
+  public var filter: Filter by filterState
 
   @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateRasterArrayBand(layerNode: LayerNode) {
-    if (rasterArrayBand.notInitial) {
-      layerNode.setProperty("raster-array-band", rasterArrayBand.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterBrightnessMax(layerNode: LayerNode) {
-    if (rasterBrightnessMax.notInitial) {
-      layerNode.setProperty("raster-brightness-max", rasterBrightnessMax.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterBrightnessMaxTransition(layerNode: LayerNode) {
-    if (rasterBrightnessMaxTransition.notInitial) {
-      layerNode.setProperty("raster-brightness-max-transition", rasterBrightnessMaxTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterBrightnessMin(layerNode: LayerNode) {
-    if (rasterBrightnessMin.notInitial) {
-      layerNode.setProperty("raster-brightness-min", rasterBrightnessMin.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterBrightnessMinTransition(layerNode: LayerNode) {
-    if (rasterBrightnessMinTransition.notInitial) {
-      layerNode.setProperty("raster-brightness-min-transition", rasterBrightnessMinTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterColor(layerNode: LayerNode) {
-    if (rasterColor.notInitial) {
-      layerNode.setProperty("raster-color", rasterColor.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateRasterColorUseTheme(layerNode: LayerNode) {
-    if (rasterColorUseTheme.notInitial) {
-      layerNode.setProperty("raster-color-use-theme", rasterColorUseTheme.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterColorMix(layerNode: LayerNode) {
-    if (rasterColorMix.notInitial) {
-      layerNode.setProperty("raster-color-mix", rasterColorMix.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterColorMixTransition(layerNode: LayerNode) {
-    if (rasterColorMixTransition.notInitial) {
-      layerNode.setProperty("raster-color-mix-transition", rasterColorMixTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterColorRange(layerNode: LayerNode) {
-    if (rasterColorRange.notInitial) {
-      layerNode.setProperty("raster-color-range", rasterColorRange.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterColorRangeTransition(layerNode: LayerNode) {
-    if (rasterColorRangeTransition.notInitial) {
-      layerNode.setProperty("raster-color-range-transition", rasterColorRangeTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterContrast(layerNode: LayerNode) {
-    if (rasterContrast.notInitial) {
-      layerNode.setProperty("raster-contrast", rasterContrast.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterContrastTransition(layerNode: LayerNode) {
-    if (rasterContrastTransition.notInitial) {
-      layerNode.setProperty("raster-contrast-transition", rasterContrastTransition.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateRasterElevation(layerNode: LayerNode) {
-    if (rasterElevation.notInitial) {
-      layerNode.setProperty("raster-elevation", rasterElevation.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateRasterElevationTransition(layerNode: LayerNode) {
-    if (rasterElevationTransition.notInitial) {
-      layerNode.setProperty("raster-elevation-transition", rasterElevationTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterEmissiveStrength(layerNode: LayerNode) {
-    if (rasterEmissiveStrength.notInitial) {
-      layerNode.setProperty("raster-emissive-strength", rasterEmissiveStrength.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterEmissiveStrengthTransition(layerNode: LayerNode) {
-    if (rasterEmissiveStrengthTransition.notInitial) {
-      layerNode.setProperty("raster-emissive-strength-transition", rasterEmissiveStrengthTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterFadeDuration(layerNode: LayerNode) {
-    if (rasterFadeDuration.notInitial) {
-      layerNode.setProperty("raster-fade-duration", rasterFadeDuration.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterHueRotate(layerNode: LayerNode) {
-    if (rasterHueRotate.notInitial) {
-      layerNode.setProperty("raster-hue-rotate", rasterHueRotate.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterHueRotateTransition(layerNode: LayerNode) {
-    if (rasterHueRotateTransition.notInitial) {
-      layerNode.setProperty("raster-hue-rotate-transition", rasterHueRotateTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterOpacity(layerNode: LayerNode) {
-    if (rasterOpacity.notInitial) {
-      layerNode.setProperty("raster-opacity", rasterOpacity.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterOpacityTransition(layerNode: LayerNode) {
-    if (rasterOpacityTransition.notInitial) {
-      layerNode.setProperty("raster-opacity-transition", rasterOpacityTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterResampling(layerNode: LayerNode) {
-    if (rasterResampling.notInitial) {
-      layerNode.setProperty("raster-resampling", rasterResampling.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterSaturation(layerNode: LayerNode) {
-    if (rasterSaturation.notInitial) {
-      layerNode.setProperty("raster-saturation", rasterSaturation.value)
-    }
-  }
-  @Composable
-  private fun UpdateRasterSaturationTransition(layerNode: LayerNode) {
-    if (rasterSaturationTransition.notInitial) {
-      layerNode.setProperty("raster-saturation-transition", rasterSaturationTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateVisibility(layerNode: LayerNode) {
-    if (visibility.notInitial) {
-      layerNode.setProperty("visibility", visibility.value)
-    }
-  }
-  @Composable
-  private fun UpdateMinZoom(layerNode: LayerNode) {
-    if (minZoom.notInitial) {
-      layerNode.setProperty("minzoom", minZoom.value)
-    }
-  }
-  @Composable
-  private fun UpdateMaxZoom(layerNode: LayerNode) {
-    if (maxZoom.notInitial) {
-      layerNode.setProperty("maxzoom", maxZoom.value)
-    }
-  }
-  @Composable
-  private fun UpdateSourceLayer(layerNode: LayerNode) {
-    if (sourceLayer.notInitial) {
-      layerNode.setProperty("source-layer", sourceLayer.value)
-    }
-  }
-  @Composable
-  private fun UpdateFilter(layerNode: LayerNode) {
-    if (filter.notInitial) {
-      layerNode.setProperty("filter", filter.value)
-    }
-  }
-
-  @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
-    UpdateRasterArrayBand(layerNode)
-    UpdateRasterBrightnessMax(layerNode)
-    UpdateRasterBrightnessMaxTransition(layerNode)
-    UpdateRasterBrightnessMin(layerNode)
-    UpdateRasterBrightnessMinTransition(layerNode)
-    UpdateRasterColor(layerNode)
-    UpdateRasterColorUseTheme(layerNode)
-    UpdateRasterColorMix(layerNode)
-    UpdateRasterColorMixTransition(layerNode)
-    UpdateRasterColorRange(layerNode)
-    UpdateRasterColorRangeTransition(layerNode)
-    UpdateRasterContrast(layerNode)
-    UpdateRasterContrastTransition(layerNode)
-    UpdateRasterElevation(layerNode)
-    UpdateRasterElevationTransition(layerNode)
-    UpdateRasterEmissiveStrength(layerNode)
-    UpdateRasterEmissiveStrengthTransition(layerNode)
-    UpdateRasterFadeDuration(layerNode)
-    UpdateRasterHueRotate(layerNode)
-    UpdateRasterHueRotateTransition(layerNode)
-    UpdateRasterOpacity(layerNode)
-    UpdateRasterOpacityTransition(layerNode)
-    UpdateRasterResampling(layerNode)
-    UpdateRasterSaturation(layerNode)
-    UpdateRasterSaturationTransition(layerNode)
-    UpdateVisibility(layerNode)
-    UpdateMinZoom(layerNode)
-    UpdateMaxZoom(layerNode)
-    UpdateSourceLayer(layerNode)
-    UpdateFilter(layerNode)
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterArrayBandState, "raster-array-band")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterBrightnessMaxState, "raster-brightness-max")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterBrightnessMaxTransitionState, "raster-brightness-max-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterBrightnessMinState, "raster-brightness-min")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterBrightnessMinTransitionState, "raster-brightness-min-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorState, "raster-color")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorUseThemeState, "raster-color-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorMixState, "raster-color-mix")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorMixTransitionState, "raster-color-mix-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorRangeState, "raster-color-range")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorRangeTransitionState, "raster-color-range-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterContrastState, "raster-contrast")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterContrastTransitionState, "raster-contrast-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterElevationState, "raster-elevation")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterElevationTransitionState, "raster-elevation-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterEmissiveStrengthState, "raster-emissive-strength")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterEmissiveStrengthTransitionState, "raster-emissive-strength-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterFadeDurationState, "raster-fade-duration")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterHueRotateState, "raster-hue-rotate")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterHueRotateTransitionState, "raster-hue-rotate-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterOpacityState, "raster-opacity")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterOpacityTransitionState, "raster-opacity-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterResamplingState, "raster-resampling")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterSaturationState, "raster-saturation")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterSaturationTransitionState, "raster-saturation-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, visibilityState, "visibility")
+    ActionWhenNotInitial(layerNode.setPropertyAction, minZoomState, "minzoom")
+    ActionWhenNotInitial(layerNode.setPropertyAction, maxZoomState, "maxzoom")
+    ActionWhenNotInitial(layerNode.setPropertyAction, sourceLayerState, "source-layer")
+    ActionWhenNotInitial(layerNode.setPropertyAction, filterState, "filter")
   }
 }
 // End of generated file.
