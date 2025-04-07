@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
 * [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
 * [compose] Introduce experimental `vignetteColorUseTheme` and `colorUseTheme` for `RainState` and `SnowState` which allows overriding color theme of precipitations.
+* [compose] Annotate `rememberGeoJsonSourceState` as delicate API due to performance implications when used with large GeoJsonData.
 
 
 # 11.11.0 March 26, 2025

@@ -4601,7 +4601,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class GeoJsonSourceStateKt {
-    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState rememberGeoJsonSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxDelicateApi public static inline com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState rememberGeoJsonSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("geojson")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState,kotlin.Unit> init = {});
   }
