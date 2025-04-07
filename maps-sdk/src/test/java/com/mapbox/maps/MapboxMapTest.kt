@@ -1833,6 +1833,14 @@ class MapboxMapTest {
     verifyOnce { mapboxMap.getViewAnnotationAvoidLayers() }
     assertEquals(layerIds, mapboxMap.getViewAnnotationAvoidLayers())
   }
+
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
+  @Test
+  fun getNativeMap() {
+    val map = mockk<Map>()
+    every { nativeMap.map } returns map
+    assertEquals(mapboxMap.getNativeMap(), map)
+  }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)

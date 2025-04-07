@@ -220,6 +220,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public fun getMapOptions ()Lcom/mapbox/maps/MapOptions;
 	public fun getMetersPerPixelAtLatitude (D)D
 	public fun getMetersPerPixelAtLatitude (DD)D
+	public final fun getNativeMap ()Lcom/mapbox/maps/Map;
 	public final fun getPrefetchZoomDelta ()B
 	public final fun getRenderWorldCopies ()Z
 	public fun getSize ()Lcom/mapbox/maps/Size;

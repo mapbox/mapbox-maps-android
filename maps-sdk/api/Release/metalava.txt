@@ -220,6 +220,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.MapOptions getMapOptions();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.Map getNativeMap();
     method public byte getPrefetchZoomDelta();
     method public boolean getRenderWorldCopies();
     method public com.mapbox.maps.Size getSize();

@@ -2843,6 +2843,14 @@ class MapboxMap :
   }
 
   /**
+   * For internal usage only.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun getNativeMap(): Map = nativeMap.map
+
+  /**
    * A convenience object to access MapboxMap's static utilities.
    */
   companion object {
