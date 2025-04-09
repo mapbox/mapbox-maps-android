@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.12.0-beta.1 April 09, 2025
+
 ## Features ✨ and improvements 🏁
 * Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
 * [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
@@ -29,6 +31,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.12.0-beta.1 and common to v24.12.0-beta.1.
+
 
 # 11.11.0 March 26, 2025
 ## Features ✨ and improvements 🏁
