@@ -4,7 +4,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.12.0-beta.1
 ## Features ✨ and improvements 🏁
 * Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
 * [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
