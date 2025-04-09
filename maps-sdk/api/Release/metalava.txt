@@ -292,6 +292,7 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
     method public void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
+    method public void setCameraAnimationHint(com.mapbox.maps.CameraAnimationHint cameraAnimationHint);
     method public void setCenterAltitudeMode(com.mapbox.maps.MapCenterAltitudeMode mode);
     method public void setConstrainMode(com.mapbox.maps.ConstrainMode constrainMode);
     method @Deprecated public void setDebug(java.util.List<? extends com.mapbox.maps.MapDebugOptions> debugOptions, boolean enabled);

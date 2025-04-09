@@ -20,7 +20,7 @@ abstract class CameraAnimator<out T> (
   /**
    * [TypeEvaluator] for generic type
    */
-  evaluator: TypeEvaluator<T>,
+  private val evaluator: TypeEvaluator<T>,
   /**
    * Camera animator options.
    */
@@ -121,6 +121,19 @@ abstract class CameraAnimator<out T> (
       return targets.last() as Any
     }
     return super.getAnimatedValue()
+  }
+
+  /**
+   * @throws UnsupportedOperationException if this animator does not support this method
+   */
+  internal fun getAnimatedValueAt(fraction: Float): T {
+    if (startValue == null || targets.size > 1) {
+      throw UnsupportedOperationException(
+        "getAnimatedValueAt() is only supported for single target animations with a start value."
+      )
+    }
+    val interpolation = interpolator.getInterpolation(fraction)
+    return evaluator.evaluate(interpolation, startValue, targets.last())
   }
 
   /**

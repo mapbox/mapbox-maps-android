@@ -111,6 +111,12 @@ internal class NativeMapImpl(val map: Map) {
     map.isUserAnimationInProgress = inProgress
   }
 
+  @MapboxExperimental
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  fun setCameraAnimationHint(cameraAnimationHint: CameraAnimationHint) {
+    map.setCameraAnimationHint(cameraAnimationHint)
+  }
+
   fun invalidateStyleCustomGeometrySourceRegion(
     sourceId: String,
     coordinateBounds: CoordinateBounds

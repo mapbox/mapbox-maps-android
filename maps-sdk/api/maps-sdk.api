@@ -295,6 +295,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public fun setBounds (Lcom/mapbox/maps/CameraBoundsOptions;)Lcom/mapbox/bindgen/Expected;
 	public fun setCamera (Lcom/mapbox/maps/CameraOptions;)V
 	public fun setCamera (Lcom/mapbox/maps/FreeCameraOptions;)V
+	public fun setCameraAnimationHint (Lcom/mapbox/maps/CameraAnimationHint;)V
 	public fun setCenterAltitudeMode (Lcom/mapbox/maps/MapCenterAltitudeMode;)V
 	public fun setConstrainMode (Lcom/mapbox/maps/ConstrainMode;)V
 	public final fun setDebug (Ljava/util/List;Z)V
