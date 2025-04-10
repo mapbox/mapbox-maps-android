@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
+
 
 # 11.12.0-beta.1 April 09, 2025
 
