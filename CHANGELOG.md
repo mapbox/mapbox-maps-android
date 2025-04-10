@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.12.0-rc.1
 ## Features ✨ and improvements 🏁
 * Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
 
