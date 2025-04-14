@@ -10,6 +10,7 @@ public abstract interface class com/mapbox/maps/MapControllable : com/mapbox/map
 	public abstract fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public abstract fun setMaximumFps (I)V
 	public abstract fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
+	public abstract fun setRenderThreadStatsRecorder (Lcom/mapbox/maps/renderer/RenderThreadStatsRecorder;)V
 	public abstract fun snapshot ()Landroid/graphics/Bitmap;
 	public abstract fun snapshot (Lcom/mapbox/maps/MapView$OnSnapshotReady;)V
 }
@@ -94,6 +95,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
+	public fun setRenderThreadStatsRecorder (Lcom/mapbox/maps/renderer/RenderThreadStatsRecorder;)V
 	public fun snapshot ()Landroid/graphics/Bitmap;
 	public fun snapshot (Lcom/mapbox/maps/MapView$OnSnapshotReady;)V
 	public final fun surfaceChanged (II)V
@@ -136,6 +138,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public final fun setDebugOptions (Ljava/util/Set;)V
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
+	public fun setRenderThreadStatsRecorder (Lcom/mapbox/maps/renderer/RenderThreadStatsRecorder;)V
 	public final fun setSnapshotLegacyMode (Z)V
 	public fun snapshot ()Landroid/graphics/Bitmap;
 	public fun snapshot (Lcom/mapbox/maps/MapView$OnSnapshotReady;)V
@@ -697,32 +700,26 @@ public abstract interface class com/mapbox/maps/renderer/OnFpsChangedListener {
 public abstract interface annotation class com/mapbox/maps/renderer/RenderThread : java/lang/annotation/Annotation {
 }
 
-public final class com/mapbox/maps/renderer/RenderThreadRecorder {
-	public static final field Companion Lcom/mapbox/maps/renderer/RenderThreadRecorder$Companion;
-	public final fun end ()Lcom/mapbox/maps/renderer/RenderThreadStats;
-	public final fun getRecording ()Z
-	public final fun start ()V
-}
-
-public final class com/mapbox/maps/renderer/RenderThreadRecorder$Companion {
-	public final fun create (Lcom/mapbox/maps/MapView;)Lcom/mapbox/maps/renderer/RenderThreadRecorder;
-}
-
 public final class com/mapbox/maps/renderer/RenderThreadStats {
-	public fun <init> (JJJLjava/util/List;)V
-	public final fun component1 ()J
-	public final fun component2 ()J
-	public final fun component3 ()J
-	public final fun component4 ()Ljava/util/List;
-	public final fun copy (JJJLjava/util/List;)Lcom/mapbox/maps/renderer/RenderThreadStats;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/renderer/RenderThreadStats;JJJLjava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/renderer/RenderThreadStats;
+	public synthetic fun <init> (JJJLjava/util/List;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFrameTimeList ()Ljava/util/List;
+	public final fun getPercentile50 ()Ljava/lang/Double;
+	public final fun getPercentile90 ()Ljava/lang/Double;
+	public final fun getPercentile95 ()Ljava/lang/Double;
+	public final fun getPercentile99 ()Ljava/lang/Double;
 	public final fun getTotalDroppedFrames ()J
 	public final fun getTotalFrames ()J
 	public final fun getTotalTime ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/renderer/RenderThreadStatsRecorder {
+	public fun <init> ()V
+	public final fun end ()Lcom/mapbox/maps/renderer/RenderThreadStats;
+	public final fun isRecording ()Z
+	public final fun start ()V
 }
 
 public final class com/mapbox/maps/renderer/RendererError {

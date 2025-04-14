@@ -2236,7 +2236,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.Size getSize();
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
-    method public void setCameraAnimationHint(com.mapbox.maps.CameraAnimationHint cameraAnimationHint);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public void setCameraAnimationHint(com.mapbox.maps.CameraAnimationHint cameraAnimationHint);
     method public void setConstrainMode(com.mapbox.maps.ConstrainMode constrainMode);
     method public void setGestureInProgress(boolean inProgress);
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);

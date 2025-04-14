@@ -10,7 +10,7 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.logI
-import com.mapbox.maps.renderer.RenderThreadRecorder
+import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,18 +19,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.math.ceil
 
 /**
  * Utility class to record [MapView] frame stats.
  */
+@OptIn(MapboxExperimental::class)
 public class FrameStatsRecorder {
 
-  private lateinit var recorder: RenderThreadRecorder
+  private lateinit var recorder: RenderThreadStatsRecorder
   private var writeSummaryJob: Job = Job().apply { cancel() }
 
   public fun register(mapView: MapView) {
-    recorder = RenderThreadRecorder.create(mapView)
+    recorder = RenderThreadStatsRecorder()
+    mapView.setRenderThreadStatsRecorder(recorder)
     recorder.start()
   }
 
@@ -42,34 +43,26 @@ public class FrameStatsRecorder {
     if (stats.totalFrames == 0L) {
       return jsonObject
     }
-    val frameStats = stats.frameTimeList.sorted()
     jsonObject.addProperty(KEY_TOTAL_FRAMES, stats.totalFrames)
     jsonObject.addProperty(KEY_TOTAL_TIME, stats.totalTime)
     jsonObject.addProperty(KEY_DROPPED, stats.totalDroppedFrames)
     jsonObject.addProperty(
       KEY_DROPPED_PERCENT,
       BigDecimal
-        .valueOf(stats.totalDroppedFrames.toDouble() / stats.totalFrames * 100.0)
+        .valueOf((stats.totalDroppedFrames.toDouble() / stats.totalFrames) * 100.0)
         .setScale(2, RoundingMode.HALF_UP)
         .toDouble()
     )
-    if (frameStats.isNotEmpty()) {
-      jsonObject.addProperty(KEY_AVERAGE, frameStats.average())
-      jsonObject.addProperty(KEY_PERCENTILE_50, percentileOfSortedList(frameStats, 50.0))
-      jsonObject.addProperty(KEY_PERCENTILE_90, percentileOfSortedList(frameStats, 90.0))
-      jsonObject.addProperty(KEY_PERCENTILE_95, percentileOfSortedList(frameStats, 95.0))
-      jsonObject.addProperty(KEY_PERCENTILE_99, percentileOfSortedList(frameStats, 99.0))
-    }
+    jsonObject.addProperty(KEY_AVERAGE, stats.frameTimeList.average())
+    jsonObject.addProperty(KEY_PERCENTILE_50, stats.percentile50)
+    jsonObject.addProperty(KEY_PERCENTILE_90, stats.percentile90)
+    jsonObject.addProperty(KEY_PERCENTILE_95, stats.percentile95)
+    jsonObject.addProperty(KEY_PERCENTILE_99, stats.percentile99)
     return jsonObject
   }
 
   public fun stop(mapView: MapView) {
     writeSummary(mapView.context, getStatisticalModel())
-  }
-
-  private fun percentileOfSortedList(stats: List<Number>, percentile: Double): Number {
-    val index = ceil(percentile / 100.0 * stats.size).toInt()
-    return stats[index - 1]
   }
 
   @OptIn(DelicateCoroutinesApi::class)
@@ -112,7 +105,6 @@ public class FrameStatsRecorder {
  * When used, the [FrameStatsRecorder] will start logging frame stats once the map enters composition, and the recorder
  * will be stopped when [MapboxMap] leaves composition. Result will be printed in logcat and also saved on disk.
  */
-@OptIn(MapboxExperimental::class)
 @MapboxMapComposable
 @Composable
 public fun RecordFrameStats() {

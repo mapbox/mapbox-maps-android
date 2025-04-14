@@ -37,6 +37,7 @@ import com.mapbox.maps.plugin.scalebar.createScaleBarPlugin
 import com.mapbox.maps.plugin.viewport.createViewportPlugin
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.CopyOnWriteArraySet
@@ -251,6 +252,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
     renderer.setOnFpsChangedListener(listener)
+  }
+
+  override fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder) {
+    renderer.renderThread.renderThreadStatsRecorder = renderThreadStatsRecorder
   }
 
   @OptIn(MapboxExperimental::class)

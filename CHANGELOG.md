@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Expose `RenderThreadStatsRecorder` as experimental API. 
+
 
 # 11.12.0-rc.1
 ## Features ✨ and improvements 🏁

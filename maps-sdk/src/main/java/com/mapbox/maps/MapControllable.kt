@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
 
@@ -73,6 +74,12 @@ interface MapControllable : MapboxLifecycleObserver {
    * Set [OnFpsChangedListener] to get map rendering FPS.
    */
   fun setOnFpsChangedListener(listener: OnFpsChangedListener)
+
+  /**
+   * Set [RenderThreadStatsRecorder] to record frame stats.
+   */
+  @MapboxExperimental
+  fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder)
 
   /**
    * Add [Widget] to the map.
