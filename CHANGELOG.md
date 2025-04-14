@@ -2,9 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+
 # 11.12.0-rc.1
 ## Features ✨ and improvements 🏁
 * Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
+* Promote `MapView.attribution.getMapAttributionDelegate().extraAttributions` to stable.
 
 
 # 11.12.0-beta.1 April 09, 2025
