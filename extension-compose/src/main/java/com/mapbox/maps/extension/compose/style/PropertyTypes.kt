@@ -1,13 +1,53 @@
 package com.mapbox.maps.extension.compose.style
 
 import android.util.Range
+import androidx.annotation.RestrictTo
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
+import com.mapbox.maps.extension.compose.style.layers.ImageValue
+import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.utils.ColorUtils
+
+internal interface HoldsValue {
+  val value: Value
+
+  fun isNotInitial(): Boolean
+}
+
+@Composable
+internal fun ActionWhenNotInitial(
+  action: (name: String, value: Value) -> Unit,
+  state: MutableState<out HoldsValue>,
+  name: String
+) {
+  with(state.value) {
+    if (isNotInitial()) {
+      action(name, value)
+    }
+  }
+}
+
+@Composable
+internal fun AddImageWhenNotInitial(
+  layerNode: LayerNode,
+  state: MutableState<ImageValue>,
+  name: String
+) {
+  with(state.value) {
+    if (notInitial) {
+      styleImage?.let {
+        layerNode.addImage(it)
+      }
+      layerNode.setProperty(name, value)
+    }
+  }
+}
 
 /**
  * Defines the color used by the Maps render engine.
@@ -16,7 +56,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
  * @param value a value representing the color. See [Color](https://docs.mapbox.com/style-spec/reference/types/#color).
  */
 @Immutable
-public data class ColorValue(public val value: Value) {
+public data class ColorValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the Color with [Color].
    */
@@ -44,8 +84,8 @@ public data class ColorValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [ColorValue]'s companion object.
@@ -77,7 +117,7 @@ public data class ColorValue(public val value: Value) {
  * @param value a value representing a number. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
 @Immutable
-public data class DoubleValue(public val value: Value) {
+public data class DoubleValue(public override val value: Value) : HoldsValue {
   /**
    * Create a [DoubleValue] that contains finite double [value].
    *
@@ -99,8 +139,8 @@ public data class DoubleValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [DoubleValue]'s companion object.
@@ -131,7 +171,7 @@ public data class DoubleValue(public val value: Value) {
  *
  * @param value a value representing an array of two numbers. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
-public data class DoubleRangeValue(public val value: Value) {
+public data class DoubleRangeValue(public override val value: Value) : HoldsValue {
 
   /**
    * Create a [DoubleRangeValue] that contains a list of [Double] that represent a range.
@@ -181,8 +221,8 @@ public data class DoubleRangeValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [DoubleRangeValue]'s companion object.
@@ -214,7 +254,7 @@ public data class DoubleRangeValue(public val value: Value) {
  * @param value a value representing a number. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
 @Immutable
-public data class LongValue(public val value: Value) {
+public data class LongValue(public override val value: Value) : HoldsValue {
   /**
    * Create a [LongValue] that contains long [value].
    *
@@ -236,8 +276,8 @@ public data class LongValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [LongValue]'s companion object.
@@ -269,7 +309,7 @@ public data class LongValue(public val value: Value) {
  * @param value a value representing a boolean.
  */
 @Immutable
-public data class BooleanValue(public val value: Value) {
+public data class BooleanValue(public override val value: Value) : HoldsValue {
   /**
    * Create a [BooleanValue] that contains boolean [value].
    *
@@ -289,10 +329,10 @@ public data class BooleanValue(public val value: Value) {
     get() = value.contents as? Boolean
 
   /**
-   * True if the this value is not [INITIAL]
+   * True if this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [BooleanValue]'s companion object.
@@ -324,7 +364,7 @@ public data class BooleanValue(public val value: Value) {
  * @param value a value representing a string.
  */
 @Immutable
-public data class StringValue(public val value: Value) {
+public data class StringValue(public override val value: Value) : HoldsValue {
   /**
    * Create a [StringValue] that contains string [value].
    *
@@ -346,8 +386,8 @@ public data class StringValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [StringValue]'s companion object.
@@ -379,7 +419,7 @@ public data class StringValue(public val value: Value) {
  * @param value a value representing a string.
  */
 @Immutable
-public data class StringListValue(public val value: Value) {
+public data class StringListValue(public override val value: Value) : HoldsValue {
   /**
    * Create a [StringListValue] that contains string [value].
    *
@@ -426,8 +466,8 @@ public data class StringListValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [StringValue]'s companion object.
@@ -458,7 +498,7 @@ public data class StringListValue(public val value: Value) {
  *
  * @param value a value representing an array of numbers. See [Number](https://docs.mapbox.com/style-spec/reference/types/#number)
  */
-public data class DoubleListValue(public val value: Value) {
+public data class DoubleListValue(public override val value: Value) : HoldsValue {
   /**
    * Create a [DoubleListValue] from a list of [Double].
    *
@@ -505,8 +545,8 @@ public data class DoubleListValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [DoubleListValue]'s companion object.
@@ -537,7 +577,7 @@ public data class DoubleListValue(public val value: Value) {
  *
  * @param value the transition wrapped in [Value] to be used with native renderer.
  */
-public data class Transition internal constructor(public val value: Value) {
+public data class Transition internal constructor(public override val value: Value) : HoldsValue {
 
   /**
    * Construct the [Transition] with duration and delay.
@@ -568,8 +608,8 @@ public data class Transition internal constructor(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * Public companion object.
@@ -599,7 +639,7 @@ public data class Transition internal constructor(public val value: Value) {
  *
  * @param value a value representing an array of coordinates. See [Array](https://docs.mapbox.com/style-spec/reference/types/#array)
  */
-public data class PointListValue(public val value: Value) {
+public data class PointListValue(public override val value: Value) : HoldsValue {
 
   /**
    * Create a [PointListValue] that contains a list of [Point]s.
@@ -654,8 +694,8 @@ public data class PointListValue(public val value: Value) {
   /**
    * True if the this value is not [INITIAL]
    */
-  internal val notInitial: Boolean
-    get() = this !== INITIAL
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
 
   /**
    * [PointListValue]'s companion object.

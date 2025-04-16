@@ -2265,6 +2265,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapTransformDel
 	public abstract fun getSize ()Lcom/mapbox/maps/Size;
 	public abstract fun isGestureInProgress ()Z
 	public abstract fun isUserAnimationInProgress ()Z
+	public abstract fun setCameraAnimationHint (Lcom/mapbox/maps/CameraAnimationHint;)V
 	public abstract fun setConstrainMode (Lcom/mapbox/maps/ConstrainMode;)V
 	public abstract fun setGestureInProgress (Z)V
 	public abstract fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V

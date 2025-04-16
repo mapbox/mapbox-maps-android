@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
 import android.content.Context
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.attribution.Attribution
@@ -47,7 +46,6 @@ interface MapAttributionDelegate {
    * List of extra attributions for the data shown in the map.
    * Pass empty list to remove any extra attribution.
    */
-  @MapboxExperimental
   var extraAttributions: List<Attribution>
     get() = emptyList()
     set(_) = throw NotImplementedError()

@@ -25,7 +25,6 @@ import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsBase
 internal class ScaleBarPluginImpl(
   private val viewImplProvider: (Context) -> ScaleBarImpl = { ScaleBarImpl(it) }
 ) : ScaleBarPlugin, ScaleBarSettingsBase() {
-
   private lateinit var scaleBar: ScaleBar
   private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
@@ -91,8 +90,7 @@ internal class ScaleBarPluginImpl(
       cameraState.center.latitude(),
       cameraState.zoom
     )
-    val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
-    scaleBar.distancePerPixel = (metersPerPixelAtLatitude / pixelRatio).toFloat()
+    scaleBar.distancePerPixel = (metersPerPixelAtLatitude / scaleBar.pixelRatio).toFloat()
   }
 
   /**

@@ -18,6 +18,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLightId
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
@@ -114,67 +115,40 @@ public class AmbientLightState internal constructor(
   public var intensityTransition: Transition by intensityTransitionState
 
   @Composable
-  private fun UpdateColor(mapboxMap: MapboxStyleManager) {
-    if (color.notInitial) {
-      mapboxMap.updateLightProperty("color", color.value)
+  private fun MapboxStyleManager.UpdateLightProperty(
+    state: MutableState<out HoldsValue>,
+    name: String
+  ) {
+    val value = state.value
+    if (value.isNotInitial()) {
+      logD(TAG, "update Ambient light property: $id, $name, $value")
+      setStyleLightProperty(id, name, value.value)
+        .onError {
+          logE(TAG, it)
+        }
     }
   }
 
-  @Composable
-  private fun UpdateColorTransition(mapboxMap: MapboxStyleManager) {
-    if (colorTransition.notInitial) {
-      mapboxMap.updateLightProperty("color-transition", colorTransition.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateColorUseTheme(mapboxMap: MapboxStyleManager) {
-    if (colorUseTheme.notInitial) {
-      mapboxMap.updateLightProperty("color-use-theme", colorUseTheme.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateIntensity(mapboxMap: MapboxStyleManager) {
-    if (intensity.notInitial) {
-      mapboxMap.updateLightProperty("intensity", intensity.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateIntensityTransition(mapboxMap: MapboxStyleManager) {
-    if (intensityTransition.notInitial) {
-      mapboxMap.updateLightProperty("intensity-transition", intensityTransition.value)
-    }
-  }
-
-  private fun MapboxStyleManager.updateLightProperty(name: String, value: Value) {
-    logD(TAG, "update light property: $id, $name, $value")
-    setStyleLightProperty(id, name, value)
-      .onError {
-        logE(TAG, it)
-      }
-  }
-
+  @OptIn(MapboxExperimental::class)
   internal fun getProperties(): HashMap<String, Value> {
     return hashMapOf(
       "id" to Value(id),
       "type" to Value("ambient"),
       "properties" to Value(
         hashMapOf<String, Value>().apply {
-          if (color.notInitial) {
+          if (color.isNotInitial()) {
             this["color"] = color.value
           }
-          if (colorTransition.notInitial) {
+          if (colorTransition.isNotInitial()) {
             this["color-transition"] = colorTransition.value
           }
-          if (colorUseTheme.notInitial) {
+          if (colorUseTheme.isNotInitial()) {
             this["color-use-theme"] = colorUseTheme.value
           }
-          if (intensity.notInitial) {
+          if (intensity.isNotInitial()) {
             this["intensity"] = intensity.value
           }
-          if (intensityTransition.notInitial) {
+          if (intensityTransition.isNotInitial()) {
             this["intensity-transition"] = intensityTransition.value
           }
         }
@@ -184,16 +158,17 @@ public class AmbientLightState internal constructor(
 
   @Composable
   internal fun UpdateProperties(mapboxMap: MapboxMap) {
-    UpdateColor(mapboxMap)
-    UpdateColorTransition(mapboxMap)
-    UpdateColorUseTheme(mapboxMap)
-    UpdateIntensity(mapboxMap)
-    UpdateIntensityTransition(mapboxMap)
+    mapboxMap.UpdateLightProperty(colorState, "color")
+    mapboxMap.UpdateLightProperty(colorTransitionState, "color-transition")
+    mapboxMap.UpdateLightProperty(colorUseThemeState, "color-use-theme")
+    mapboxMap.UpdateLightProperty(intensityState, "intensity")
+    mapboxMap.UpdateLightProperty(intensityTransitionState, "intensity-transition")
   }
 
   /**
    * Overwrite the hashcode for [AmbientLightState].
    */
+  @OptIn(MapboxExperimental::class)
   override fun hashCode(): Int {
     return Objects.hash(
       color,
@@ -207,6 +182,7 @@ public class AmbientLightState internal constructor(
   /**
    * Overwrite the equals for [AmbientLightState].
    */
+  @OptIn(MapboxExperimental::class)
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
@@ -223,6 +199,7 @@ public class AmbientLightState internal constructor(
   /**
    * Overwrite the toString for [AmbientLightState].
    */
+  @OptIn(MapboxExperimental::class)
   override fun toString(): String {
     return "AmbientLightState(color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, intensity=$intensity, intensityTransition=$intensityTransition)"
   }

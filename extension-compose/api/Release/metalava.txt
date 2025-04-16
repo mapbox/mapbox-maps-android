@@ -1128,8 +1128,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.BooleanValue copy(com.mapbox.bindgen.Value value);
     method public Boolean? getBooleanOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final Boolean? booleanOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.BooleanValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.BooleanValue DEFAULT;
   }
@@ -1145,8 +1146,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.ColorValue copy(com.mapbox.bindgen.Value value);
     method public androidx.compose.ui.graphics.Color? getColorOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final androidx.compose.ui.graphics.Color? colorOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.ColorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.ColorValue DEFAULT;
   }
@@ -1163,8 +1165,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.DoubleListValue copy(com.mapbox.bindgen.Value value);
     method public java.util.List<java.lang.Double>? getDoubleListOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final java.util.List<java.lang.Double>? doubleListOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.DoubleListValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.DoubleListValue DEFAULT;
   }
@@ -1181,8 +1184,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.DoubleRangeValue copy(com.mapbox.bindgen.Value value);
     method public android.util.Range<java.lang.Double>? getRangeOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final android.util.Range<java.lang.Double>? rangeOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.DoubleRangeValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.DoubleRangeValue DEFAULT;
   }
@@ -1198,8 +1202,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.DoubleValue copy(com.mapbox.bindgen.Value value);
     method public Double? getDoubleOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final Double? doubleOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.DoubleValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.DoubleValue DEFAULT;
   }
@@ -1235,8 +1240,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.LongValue copy(com.mapbox.bindgen.Value value);
     method public Long? getLongOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final Long? longOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.LongValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.LongValue DEFAULT;
   }
@@ -1257,13 +1263,17 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.PointListValue copy(com.mapbox.bindgen.Value value);
     method public java.util.List<com.mapbox.geojson.Point>? getPointsOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final java.util.List<com.mapbox.geojson.Point>? pointsOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.PointListValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.PointListValue DEFAULT;
   }
 
   public static final class PointListValue.Companion {
+  }
+
+  public final class PropertyTypesKt {
   }
 
   @androidx.compose.runtime.Stable public final class SlotsContent {
@@ -1280,8 +1290,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.StringListValue copy(com.mapbox.bindgen.Value value);
     method public java.util.List<java.lang.String>? getStringListOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final java.util.List<java.lang.String>? stringListOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.StringListValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.StringListValue DEFAULT;
   }
@@ -1297,8 +1308,9 @@ package com.mapbox.maps.extension.compose.style {
     method public com.mapbox.maps.extension.compose.style.StringValue copy(com.mapbox.bindgen.Value value);
     method public String? getStringOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final String? stringOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.StringValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.StringValue DEFAULT;
   }
@@ -1444,9 +1456,10 @@ package com.mapbox.maps.extension.compose.style {
     method public long getDelayMillis();
     method public long getDurationMillis();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final long delayMillis;
     property public final long durationMillis;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.Transition.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.Transition DEFAULT;
   }
@@ -1657,7 +1670,8 @@ package com.mapbox.maps.extension.compose.style.layers {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.Filter copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.Filter.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.Filter DEFAULT;
   }
@@ -1672,8 +1686,9 @@ package com.mapbox.maps.extension.compose.style.layers {
     method public com.mapbox.maps.extension.compose.style.layers.FormattedValue copy(com.mapbox.bindgen.Value value);
     method public String? getStringOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
     property public final String? stringOrNull;
-    property public final com.mapbox.bindgen.Value value;
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.FormattedValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.FormattedValue DEFAULT;
   }
@@ -1794,7 +1809,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPitchAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPitchAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPitchAlignmentValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.BackgroundPitchAlignmentValue MAP;
@@ -1915,7 +1931,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchAlignmentValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchAlignmentValue MAP;
@@ -1931,7 +1948,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchScaleValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchScaleValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchScaleValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CirclePitchScaleValue MAP;
@@ -1947,7 +1965,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleTranslateAnchorValue MAP;
@@ -2016,7 +2035,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ClipLayerTypesListValue DEFAULT;
   }
@@ -2030,7 +2050,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue HD_ROAD_BASE;
@@ -2047,7 +2068,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue FLAT;
@@ -2063,7 +2085,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionHeightAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionHeightAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionHeightAlignmentValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionHeightAlignmentValue FLAT;
@@ -2250,7 +2273,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue MAP;
@@ -2356,7 +2380,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue MAP;
@@ -2432,7 +2457,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.HillshadeIlluminationAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.HillshadeIlluminationAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.HillshadeIlluminationAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.HillshadeIlluminationAnchorValue MAP;
@@ -2526,7 +2552,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue BOTTOM;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue BOTTOM_LEFT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue BOTTOM_RIGHT;
@@ -2549,7 +2576,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconPitchAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconPitchAlignmentValue AUTO;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconPitchAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconPitchAlignmentValue DEFAULT;
@@ -2566,7 +2594,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue AUTO;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconRotationAlignmentValue DEFAULT;
@@ -2583,7 +2612,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue BOTH;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconTextFitValue DEFAULT;
@@ -2601,7 +2631,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.IconTranslateAnchorValue MAP;
@@ -2617,7 +2648,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue BUTT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue DEFAULT;
@@ -2634,7 +2666,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue GROUND;
@@ -2652,7 +2685,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue BEVEL;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineJoinValue DEFAULT;
@@ -2838,7 +2872,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineTranslateAnchorValue MAP;
@@ -2854,7 +2889,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.LineWidthUnitValue METERS;
@@ -2996,7 +3032,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue GROUND;
@@ -3129,7 +3166,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ModelScaleModeValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelScaleModeValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelScaleModeValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelScaleModeValue MAP;
@@ -3145,7 +3183,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.ModelTypeValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelTypeValue COMMON_3D;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelTypeValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelTypeValue DEFAULT;
@@ -3332,7 +3371,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.RasterResamplingValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterResamplingValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterResamplingValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterResamplingValue LINEAR;
@@ -3417,7 +3457,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SkyTypeValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SkyTypeValue ATMOSPHERE;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SkyTypeValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SkyTypeValue DEFAULT;
@@ -3433,7 +3474,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue GROUND;
@@ -3750,7 +3792,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolPlacementValue LINE;
@@ -3767,7 +3810,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue AUTO;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.SymbolZOrderValue DEFAULT;
@@ -3784,7 +3828,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue BOTTOM;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue BOTTOM_LEFT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextAnchorValue BOTTOM_RIGHT;
@@ -3807,7 +3852,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextJustifyValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextJustifyValue AUTO;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextJustifyValue CENTER;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextJustifyValue.Companion Companion;
@@ -3825,7 +3871,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextPitchAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextPitchAlignmentValue AUTO;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextPitchAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextPitchAlignmentValue DEFAULT;
@@ -3842,7 +3889,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue AUTO;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextRotationAlignmentValue DEFAULT;
@@ -3859,7 +3907,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextTransformValue LOWERCASE;
@@ -3876,7 +3925,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextTranslateAnchorValue MAP;
@@ -3913,7 +3963,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextVariableAnchorListValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextVariableAnchorListValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextVariableAnchorListValue DEFAULT;
   }
@@ -3941,7 +3992,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.TextWritingModeListValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextWritingModeListValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.TextWritingModeListValue DEFAULT;
   }
@@ -3955,7 +4007,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue NONE;
@@ -4030,7 +4083,8 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.lights.generated.AnchorValue MAP;
@@ -4364,7 +4418,8 @@ package com.mapbox.maps.extension.compose.style.sources {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.ClusterProperties copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.sources.ClusterProperties.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.sources.ClusterProperties DEFAULT;
   }
@@ -4394,7 +4449,8 @@ package com.mapbox.maps.extension.compose.style.sources {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.PromoteIdValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.sources.PromoteIdValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.sources.PromoteIdValue DEFAULT;
   }
@@ -4409,7 +4465,8 @@ package com.mapbox.maps.extension.compose.style.sources {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.RasterLayers copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.sources.RasterLayers.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.sources.RasterLayers DEFAULT;
   }
@@ -4420,9 +4477,13 @@ package com.mapbox.maps.extension.compose.style.sources {
   public abstract class SourceState {
     method protected final com.mapbox.maps.extension.compose.style.sources.GeoJSONData getGeoJSONData();
     method protected final com.mapbox.bindgen.Value? getProperty(String name);
+    method protected final kotlin.reflect.KFunction<kotlin.Unit> getSetBuilderPropertyAction();
+    method protected final kotlin.reflect.KFunction<kotlin.Unit> getSetPropertyAction();
     method public final String getSourceId();
     method protected final void setGeoJSONData(com.mapbox.maps.extension.compose.style.sources.GeoJSONData);
     property protected final com.mapbox.maps.extension.compose.style.sources.GeoJSONData geoJSONData;
+    property protected final kotlin.reflect.KFunction<kotlin.Unit> setBuilderPropertyAction;
+    property protected final kotlin.reflect.KFunction<kotlin.Unit> setPropertyAction;
     property public final String sourceId;
   }
 
@@ -4451,7 +4512,8 @@ package com.mapbox.maps.extension.compose.style.sources {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.TileCacheBudget copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.sources.TileCacheBudget.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.sources.TileCacheBudget DEFAULT;
   }
@@ -4469,7 +4531,8 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.generated.EncodingValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.EncodingValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.EncodingValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.EncodingValue MAPBOX;
@@ -4538,7 +4601,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
   }
 
   public final class GeoJsonSourceStateKt {
-    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState rememberGeoJsonSourceState(String? key = null, String sourceId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxDelicateApi public static inline com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState rememberGeoJsonSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("geojson")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState,kotlin.Unit> init = {});
   }
@@ -4739,7 +4802,8 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.sources.generated.SchemeValue copy(com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Value getValue();
-    property public final com.mapbox.bindgen.Value value;
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.SchemeValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.SchemeValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.SchemeValue TMS;

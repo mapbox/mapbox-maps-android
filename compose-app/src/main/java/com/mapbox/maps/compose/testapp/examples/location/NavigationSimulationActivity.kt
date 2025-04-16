@@ -24,6 +24,7 @@ import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -192,6 +193,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
     }
   }
 
+  @OptIn(MapboxDelicateApi::class)
   @MapboxStyleComposable
   @Composable
   public fun NavigationStyle(

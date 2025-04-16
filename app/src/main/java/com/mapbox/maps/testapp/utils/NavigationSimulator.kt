@@ -195,10 +195,9 @@ class NavigationSimulator(
       )
       it.addLayer(casingLayer)
       it.addLayer(routeLayer)
-    mapView.recordFrameStats()
-    initLocationComponent()
-    viewportPlugin.transitionTo(overviewViewportState)
-    enableGestures()
+      initLocationComponent()
+      viewportPlugin.transitionTo(overviewViewportState)
+      enableGestures()
     }
   }
 
@@ -342,6 +341,11 @@ class NavigationSimulator(
   }
 
   fun onDestroy() {
+    mapView.mapboxMap.getStyle {
+      it.removeStyleLayer(casingLayer.layerId)
+      it.removeStyleLayer(routeLayer.layerId)
+      it.removeStyleSourceUnchecked(GEOJSON_SOURCE_ID)
+    }
     handler.removeCallbacksAndMessages(null)
     mapView.location.removeOnIndicatorPositionChangedListener(this)
     mapView.gestures.apply {
@@ -373,7 +377,6 @@ class NavigationSimulator(
   )
 
   companion object {
-    private const val TAG = "NavigationSimulator"
     private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 5000L
     private const val DEFAULT_SCRIPT_DURATION_MS = 20000L
     private const val DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION = 2000L

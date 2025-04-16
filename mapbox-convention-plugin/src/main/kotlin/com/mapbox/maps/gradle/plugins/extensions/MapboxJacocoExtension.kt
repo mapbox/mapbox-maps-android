@@ -168,7 +168,7 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
       "**/*\$Lambda\$*.*",
       "**/*Test*.*",
       "**/*MapboxStyleManager.class",
-      "**/*RenderThreadRecorder.class",
+      "**/*RenderThreadStatsRecorder.class",
       "com/mapbox/maps/plugin/*/generated/*",
     )
   }

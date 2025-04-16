@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
@@ -90,14 +91,6 @@ public class TerrainState private constructor(
    */
   public var exaggeration: DoubleValue by exaggerationState
 
-  @Composable
-  private fun UpdateExaggeration() {
-    exaggerationState.value.apply {
-      if (notInitial) {
-        applier.setProperty("exaggeration", value)
-      }
-    }
-  }
   private val exaggerationTransitionState: MutableState<Transition> = mutableStateOf(exaggerationTransition)
 
   /**
@@ -107,25 +100,17 @@ public class TerrainState private constructor(
   public var exaggerationTransition: Transition by exaggerationTransitionState
 
   @Composable
-  private fun UpdateExaggerationTransition() {
-    exaggerationTransitionState.value.apply {
-      if (notInitial) {
-        applier.setProperty("exaggeration-transition", value)
-      }
-    }
-  }
-
-  @Composable
   internal fun UpdateProperties() {
     applier.rasterDemSourceState?.UpdateProperties()
-    UpdateExaggeration()
-    UpdateExaggerationTransition()
+    val action = applier::setProperty
+    ActionWhenNotInitial(action, exaggerationState, "exaggeration")
+    ActionWhenNotInitial(action, exaggerationTransitionState, "exaggeration-transition")
   }
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("exaggeration" to exaggeration.value).takeIf { exaggeration.notInitial },
-      ("exaggeration-transition" to exaggerationTransition.value).takeIf { exaggerationTransition.notInitial },
+      ("exaggeration" to exaggeration.value).takeIf { exaggeration.isNotInitial() },
+      ("exaggeration-transition" to exaggerationTransition.value).takeIf { exaggerationTransition.isNotInitial() },
     ).toMap()
 
   /**

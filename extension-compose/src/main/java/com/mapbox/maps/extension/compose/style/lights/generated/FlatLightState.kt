@@ -19,6 +19,7 @@ import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLightId
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
@@ -148,97 +149,49 @@ public class FlatLightState internal constructor(
   public var positionTransition: Transition by positionTransitionState
 
   @Composable
-  private fun UpdateAnchor(mapboxMap: MapboxStyleManager) {
-    if (anchor.notInitial) {
-      mapboxMap.updateLightProperty("anchor", anchor.value)
+  private fun MapboxStyleManager.UpdateLightProperty(
+    state: MutableState<out HoldsValue>,
+    name: String
+  ) {
+    val value = state.value
+    if (value.isNotInitial()) {
+      logD(TAG, "update Flat light property: $id, $name, $value")
+      setStyleLightProperty(id, name, value.value)
+        .onError {
+          logE(TAG, it)
+        }
     }
   }
 
-  @Composable
-  private fun UpdateColor(mapboxMap: MapboxStyleManager) {
-    if (color.notInitial) {
-      mapboxMap.updateLightProperty("color", color.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateColorTransition(mapboxMap: MapboxStyleManager) {
-    if (colorTransition.notInitial) {
-      mapboxMap.updateLightProperty("color-transition", colorTransition.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateColorUseTheme(mapboxMap: MapboxStyleManager) {
-    if (colorUseTheme.notInitial) {
-      mapboxMap.updateLightProperty("color-use-theme", colorUseTheme.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateIntensity(mapboxMap: MapboxStyleManager) {
-    if (intensity.notInitial) {
-      mapboxMap.updateLightProperty("intensity", intensity.value)
-    }
-  }
-
-  @Composable
-  private fun UpdateIntensityTransition(mapboxMap: MapboxStyleManager) {
-    if (intensityTransition.notInitial) {
-      mapboxMap.updateLightProperty("intensity-transition", intensityTransition.value)
-    }
-  }
-
-  @Composable
-  private fun UpdatePosition(mapboxMap: MapboxStyleManager) {
-    if (position.notInitial) {
-      mapboxMap.updateLightProperty("position", position.value)
-    }
-  }
-
-  @Composable
-  private fun UpdatePositionTransition(mapboxMap: MapboxStyleManager) {
-    if (positionTransition.notInitial) {
-      mapboxMap.updateLightProperty("position-transition", positionTransition.value)
-    }
-  }
-
-  private fun MapboxStyleManager.updateLightProperty(name: String, value: Value) {
-    logD(TAG, "update light property: $id, $name, $value")
-    setStyleLightProperty(id, name, value)
-      .onError {
-        logE(TAG, it)
-      }
-  }
-
+  @OptIn(MapboxExperimental::class)
   internal fun getProperties(): HashMap<String, Value> {
     return hashMapOf(
       "id" to Value(id),
       "type" to Value("flat"),
       "properties" to Value(
         hashMapOf<String, Value>().apply {
-          if (anchor.notInitial) {
+          if (anchor.isNotInitial()) {
             this["anchor"] = anchor.value
           }
-          if (color.notInitial) {
+          if (color.isNotInitial()) {
             this["color"] = color.value
           }
-          if (colorTransition.notInitial) {
+          if (colorTransition.isNotInitial()) {
             this["color-transition"] = colorTransition.value
           }
-          if (colorUseTheme.notInitial) {
+          if (colorUseTheme.isNotInitial()) {
             this["color-use-theme"] = colorUseTheme.value
           }
-          if (intensity.notInitial) {
+          if (intensity.isNotInitial()) {
             this["intensity"] = intensity.value
           }
-          if (intensityTransition.notInitial) {
+          if (intensityTransition.isNotInitial()) {
             this["intensity-transition"] = intensityTransition.value
           }
-          if (position.notInitial) {
+          if (position.isNotInitial()) {
             this["position"] = position.value
           }
-          if (positionTransition.notInitial) {
+          if (positionTransition.isNotInitial()) {
             this["position-transition"] = positionTransition.value
           }
         }
@@ -248,19 +201,20 @@ public class FlatLightState internal constructor(
 
   @Composable
   internal fun UpdateProperties(mapboxMap: MapboxMap) {
-    UpdateAnchor(mapboxMap)
-    UpdateColor(mapboxMap)
-    UpdateColorTransition(mapboxMap)
-    UpdateColorUseTheme(mapboxMap)
-    UpdateIntensity(mapboxMap)
-    UpdateIntensityTransition(mapboxMap)
-    UpdatePosition(mapboxMap)
-    UpdatePositionTransition(mapboxMap)
+    mapboxMap.UpdateLightProperty(anchorState, "anchor")
+    mapboxMap.UpdateLightProperty(colorState, "color")
+    mapboxMap.UpdateLightProperty(colorTransitionState, "color-transition")
+    mapboxMap.UpdateLightProperty(colorUseThemeState, "color-use-theme")
+    mapboxMap.UpdateLightProperty(intensityState, "intensity")
+    mapboxMap.UpdateLightProperty(intensityTransitionState, "intensity-transition")
+    mapboxMap.UpdateLightProperty(positionState, "position")
+    mapboxMap.UpdateLightProperty(positionTransitionState, "position-transition")
   }
 
   /**
    * Overwrite the hashcode for [FlatLightState].
    */
+  @OptIn(MapboxExperimental::class)
   override fun hashCode(): Int {
     return Objects.hash(
       anchor,
@@ -277,6 +231,7 @@ public class FlatLightState internal constructor(
   /**
    * Overwrite the equals for [FlatLightState].
    */
+  @OptIn(MapboxExperimental::class)
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
@@ -296,6 +251,7 @@ public class FlatLightState internal constructor(
   /**
    * Overwrite the toString for [FlatLightState].
    */
+  @OptIn(MapboxExperimental::class)
   override fun toString(): String {
     return "FlatLightState(anchor=$anchor, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, intensity=$intensity, intensityTransition=$intensityTransition, position=$position, positionTransition=$positionTransition)"
   }

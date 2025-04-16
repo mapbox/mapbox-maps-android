@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.LongValue
 import com.mapbox.maps.extension.compose.style.PointListValue
@@ -81,14 +82,6 @@ public class ImageSourceState private constructor(
    */
   public var url: StringValue by urlState
 
-  @Composable
-  private fun UpdateUrl() {
-    urlState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("url", value)
-      }
-    }
-  }
   private val coordinatesState: MutableState<PointListValue> = mutableStateOf(coordinates)
 
   /**
@@ -98,14 +91,6 @@ public class ImageSourceState private constructor(
    */
   public var coordinates: PointListValue by coordinatesState
 
-  @Composable
-  private fun UpdateCoordinates() {
-    coordinatesState.value.apply {
-      if (notInitial) {
-        setBuilderProperty("coordinates", value)
-      }
-    }
-  }
   private val prefetchZoomDeltaState: MutableState<LongValue> = mutableStateOf(prefetchZoomDelta)
 
   /**
@@ -118,26 +103,17 @@ public class ImageSourceState private constructor(
   public var prefetchZoomDelta: LongValue by prefetchZoomDeltaState
 
   @Composable
-  private fun UpdatePrefetchZoomDelta() {
-    prefetchZoomDeltaState.value.apply {
-      if (notInitial) {
-        setProperty("prefetch-zoom-delta", value)
-      }
-    }
-  }
-
-  @Composable
   override fun UpdateProperties() {
-    UpdateUrl()
-    UpdateCoordinates()
-    UpdatePrefetchZoomDelta()
+    ActionWhenNotInitial(setBuilderPropertyAction, urlState, "url")
+    ActionWhenNotInitial(setBuilderPropertyAction, coordinatesState, "coordinates")
+    ActionWhenNotInitial(setPropertyAction, prefetchZoomDeltaState, "prefetch-zoom-delta")
   }
 
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
-      ("url" to url.value).takeIf { url.notInitial },
-      ("coordinates" to coordinates.value).takeIf { coordinates.notInitial },
-      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.notInitial },
+      ("url" to url.value).takeIf { url.isNotInitial() },
+      ("coordinates" to coordinates.value).takeIf { coordinates.isNotInitial() },
+      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.isNotInitial() },
     ).toMap()
 
   /**

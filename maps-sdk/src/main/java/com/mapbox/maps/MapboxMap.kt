@@ -619,6 +619,22 @@ class MapboxMap :
   }
 
   /**
+   * This method provides hints for animations, enabling the rendering engine to pre-process animation
+   * frames and apply performance optimizations.
+   *
+   * The provided data is taken into action on the next
+   * [setUserAnimationInProgress(true)][setUserAnimationInProgress] call.
+   *
+   * @param cameraAnimationHint the camera animation hint
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  @MapboxExperimental
+  override fun setCameraAnimationHint(cameraAnimationHint: CameraAnimationHint) {
+    checkNativeMap("setCameraAnimationHint")
+    nativeMap.setCameraAnimationHint(cameraAnimationHint)
+  }
+
+  /**
    * Returns if user animation is currently in progress.
    *
    * @return Return true if a user animation is in progress.
@@ -2841,6 +2857,14 @@ class MapboxMap :
       }
     }
   }
+
+  /**
+   * For internal usage only.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun getNativeMap(): Map = nativeMap.map
 
   /**
    * A convenience object to access MapboxMap's static utilities.

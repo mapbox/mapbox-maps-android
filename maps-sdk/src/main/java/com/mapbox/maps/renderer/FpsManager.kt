@@ -67,7 +67,7 @@ internal class FpsManager(
    * Return true if rendering should happen this frame and false otherwise.
    *
    * @param frameTimeNs time value from Choreographer in [System.nanoTime] timebase.
-   * @param recorderStarted whether [RenderThreadRecorder.start] has been called
+   * @param recorderStarted whether [RenderThreadStatsRecorder.start] has been called
    * - in that case we want to [updateFrameStats] even if there is no [OnFpsChangedListener] attached and no frame pacing needed
    */
   fun preRender(frameTimeNs: Long, recorderStarted: Boolean = false): Boolean {

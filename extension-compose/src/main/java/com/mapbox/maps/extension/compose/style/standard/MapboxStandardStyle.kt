@@ -61,19 +61,19 @@ public fun MapboxStandardStyle(
       styleImportsConfig = styleImportsConfig {
         importConfig(importId = "basemap") {
           with(standardStyleConfigurationState) {
-            if (showPlaceLabels.notInitial) {
+            if (showPlaceLabels.isNotInitial()) {
               config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
             }
-            if (showRoadLabels.notInitial) {
+            if (showRoadLabels.isNotInitial()) {
               config(BaseStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
             }
-            if (showPointOfInterestLabels.notInitial) {
+            if (showPointOfInterestLabels.isNotInitial()) {
               config(
                 BaseStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
                 showPointOfInterestLabels.value
               )
             }
-            if (showTransitLabels.notInitial) {
+            if (showTransitLabels.isNotInitial()) {
               config(
                 BaseStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
                 showTransitLabels.value
@@ -82,10 +82,10 @@ public fun MapboxStandardStyle(
             if (lightPreset.notInitial) {
               config(BaseStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
             }
-            if (font.notInitial) {
+            if (font.isNotInitial()) {
               config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
             }
-            if (show3dObjects.notInitial) {
+            if (show3dObjects.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_SHOW_3D_OBJECTS, show3dObjects.value)
             }
             if (theme.notInitial) {

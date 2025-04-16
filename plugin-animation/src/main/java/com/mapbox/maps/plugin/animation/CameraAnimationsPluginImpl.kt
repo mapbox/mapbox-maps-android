@@ -9,6 +9,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraAnimationHint
+import com.mapbox.maps.CameraAnimationHintStage
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxCameraAnimationException
@@ -353,14 +355,18 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     CameraAnimatorType.PITCH -> animationObjectValues.all { Objects.equals(pitch, it) }
   }
 
-  private fun updateCameraValue(cameraAnimator: CameraAnimator<*>) {
+  private fun updateCameraValue(
+    cameraAnimator: CameraAnimator<*>,
+    animatedValue: Any?,
+    cameraOptionsBuilder: CameraOptions.Builder
+  ) {
     when (cameraAnimator) {
-      is CameraCenterAnimator -> cameraOptionsBuilder.center(cameraAnimator.animatedValue as? Point)
-      is CameraZoomAnimator -> cameraOptionsBuilder.zoom(cameraAnimator.animatedValue as? Double)
-      is CameraAnchorAnimator -> cameraOptionsBuilder.anchor(cameraAnimator.animatedValue as? ScreenCoordinate)
-      is CameraPaddingAnimator -> cameraOptionsBuilder.padding(cameraAnimator.animatedValue as? EdgeInsets)
-      is CameraBearingAnimator -> cameraOptionsBuilder.bearing(cameraAnimator.animatedValue as? Double)
-      is CameraPitchAnimator -> cameraOptionsBuilder.pitch(cameraAnimator.animatedValue as? Double)
+      is CameraCenterAnimator -> cameraOptionsBuilder.center(animatedValue as? Point)
+      is CameraZoomAnimator -> cameraOptionsBuilder.zoom(animatedValue as? Double)
+      is CameraAnchorAnimator -> cameraOptionsBuilder.anchor(animatedValue as? ScreenCoordinate)
+      is CameraPaddingAnimator -> cameraOptionsBuilder.padding(animatedValue as? EdgeInsets)
+      is CameraBearingAnimator -> cameraOptionsBuilder.bearing(animatedValue as? Double)
+      is CameraPitchAnimator -> cameraOptionsBuilder.pitch(animatedValue as? Double)
     }
   }
 
@@ -482,6 +488,86 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     }
   }
 
+  /**
+   * Animation fraction at which the camera animation hints will be calculated.
+   * Note: at least 1.0F should be present and entries should be in ascent order.
+   */
+  private val cameraAnimationHintFractions = listOf(0.25F, 0.5F, 0.75F, 1.0F)
+  private fun calculateCameraAnimationHint(animatorSet: AnimatorSet) {
+    // this method requires that all animators have:
+    // 1. same duration
+    // 2. no delay
+    // 3. start value
+    // TODO: support different duration, start delay and no start value
+
+    // No need to calculate camera animation hints if the animation is instant
+    if (animatorSet.duration == 0L) {
+      return
+    }
+
+    // Make sure all animators in animatorSet are camera animators
+    val cameraAnimators = animatorSet.childAnimations.map { it as CameraAnimator<*> }
+    if (cameraAnimators.isEmpty() || cameraAnimators.size != animatorSet.childAnimations.size) {
+      return
+    }
+
+    val cameraOptionsBuilder = CameraOptions.Builder()
+    // Keep track of the duration to make sure all animators have the same duration
+    val duration = cameraAnimators[0].duration
+
+    val stages = cameraAnimationHintFractions.map { fraction ->
+      cameraOptionsBuilder.clear()
+      cameraAnimators.map { cameraAnimator ->
+        if (cameraAnimator.startDelay != 0L) {
+          logW(
+            TAG,
+            "Unable to calculate animated value ahead of time for ${cameraAnimator.type.name}: startDelay != 0 is not supported"
+          )
+          return
+        }
+        if (cameraAnimator.duration != duration) {
+          logW(
+            TAG,
+            "Unable to calculate animated value ahead of time for ${cameraAnimator.type.name}: different duration is not supported"
+          )
+          return
+        }
+        try {
+          val value = cameraAnimator.getAnimatedValueAt(fraction)
+          updateCameraValue(cameraAnimator, value, cameraOptionsBuilder)
+        } catch (e: UnsupportedOperationException) {
+          logW(
+            TAG,
+            "Unable to calculate animated value ahead of time for ${cameraAnimator.type.name}: ${e.message}"
+          )
+        }
+      }
+      val camera = cameraOptionsBuilder.build()
+      // We use animatorSet.duration to keep track of the progress because that's the total duration of the animation. That is,
+      // the time between `setUserAnimationInProgress(true)` and `setUserAnimationInProgress(false)`
+      val progress = (animatorSet.duration * fraction).toLong()
+      CameraAnimationHintStage.Builder()
+        .camera(camera)
+        .progress(progress)
+        .build()
+    }
+    val cameraAnimationHint = CameraAnimationHint.Builder().stages(stages).build()
+    mapTransformDelegate.setCameraAnimationHint(cameraAnimationHint)
+  }
+
+  /**
+   * Convenience method to clear camera options so it can be reused instead of creating
+   * new [CameraOptions.Builder].
+   */
+  private fun CameraOptions.Builder.clear() {
+    center(null)
+      .padding(null)
+      .anchor(null)
+      .zoom(null)
+      .bearing(null)
+      .pitch(null)
+  }
+
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
     animator.addInternalUpdateListener {
       postOnMainThread { onAnimationUpdateInternal(animator, it) }
@@ -493,7 +579,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     runningAnimatorsQueue.add(animator)
 
     // set current animator value in any case
-    updateCameraValue(animator)
+    updateCameraValue(animator, animator.animatedValue, cameraOptionsBuilder)
 
     if (animator.type == CameraAnimatorType.ANCHOR) {
       anchor = valueAnimator.animatedValue as ScreenCoordinate
@@ -1054,6 +1140,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
       }
       playTogether(*animators)
     }
+    calculateCameraAnimationHint(animatorSet)
+
     return HighLevelAnimatorSet(animationOptions?.owner, animatorSet).also {
       highLevelAnimatorSet = it
       postOnAnimatorThread { it.animatorSet.start() }

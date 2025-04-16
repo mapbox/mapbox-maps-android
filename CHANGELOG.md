@@ -3,11 +3,43 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Expose `RenderThreadStatsRecorder` as experimental API. 
+
+
+# 11.12.0-rc.1
+## Features ✨ and improvements 🏁
+* Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
+* Promote `MapView.attribution.getMapAttributionDelegate().extraAttributions` to stable.
+
+
+# 11.12.0-beta.1 April 09, 2025
 
 ## Features ✨ and improvements 🏁
 * Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
 * [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
 * [compose] Introduce experimental `vignetteColorUseTheme` and `colorUseTheme` for `RainState` and `SnowState` which allows overriding color theme of precipitations.
+* [compose] Annotate `rememberGeoJsonSourceState` as delicate API due to performance implications when used with large GeoJsonData.
+* Avoid dynamic view annotation overlapping given symbol layers.
+* Vector icons can now also be retrieved via `getStyleImage` API.
+* Revert changes to `at` expression and add new `at-interpolated` expression.
+* Enable tile pack v2 format by default.
+
+## Bug fixes 🐞
+* Fix semi transparent landmark icons.
+* Return null for config expression if requested config option is missing.
+* Fix clipPath and mask rendering for vector icon rasterization.
+* Fix dotted lines on tile borders.
+* Fix pattern not found when using imports.
+* Fix line layer not rendering if using `line-pattern` inside an imported style.
+* Fix ground effect gradient not working with multiple polygons.
+* Add simple bounds check to avoid crash during centroid computation.
+* Fix invisible line when interpolating line-width from 0 to 1 using line-progress.
+* Tile loading speedup.
+* Fix URL migration to DB v10.
+
+## Dependencies
+* Update gl-native to v11.12.0-beta.1 and common to v24.12.0-beta.1.
 
 
 # 11.11.0 March 26, 2025

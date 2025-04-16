@@ -3,11 +3,13 @@
 package com.mapbox.maps.extension.compose.style.layers.generated
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
@@ -23,7 +25,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#sky)
  */
 @Stable
-public class SkyLayerState private constructor(
+public class SkyLayerState
+@OptIn(MapboxExperimental::class)
+private constructor(
   initialSkyAtmosphereColor: ColorValue,
   initialSkyAtmosphereColorUseTheme: StringValue,
   initialSkyAtmosphereHaloColor: ColorValue,
@@ -46,6 +50,7 @@ public class SkyLayerState private constructor(
   /**
    * Construct an default [SkyLayerState].
    */
+  @OptIn(MapboxExperimental::class)
   public constructor() : this(
     initialSkyAtmosphereColor = ColorValue.INITIAL,
     initialSkyAtmosphereColorUseTheme = StringValue.INITIAL,
@@ -67,214 +72,141 @@ public class SkyLayerState private constructor(
     initialFilter = Filter.INITIAL,
   )
 
+  private val skyAtmosphereColorState: MutableState<ColorValue> = mutableStateOf(initialSkyAtmosphereColor)
   /**
    *  A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density. Default value: "white".
    */
-  public var skyAtmosphereColor: ColorValue by mutableStateOf(initialSkyAtmosphereColor)
+  public var skyAtmosphereColor: ColorValue by skyAtmosphereColorState
+
+  @MapboxExperimental
+  private val skyAtmosphereColorUseThemeState: MutableState<StringValue> = mutableStateOf(initialSkyAtmosphereColorUseTheme)
   /**
    *  Overrides applying of color theme for [skyAtmosphereColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
    */
   @MapboxExperimental
-  public var skyAtmosphereColorUseTheme: StringValue by mutableStateOf(initialSkyAtmosphereColorUseTheme)
+  public var skyAtmosphereColorUseTheme: StringValue by skyAtmosphereColorUseThemeState
+
+  private val skyAtmosphereHaloColorState: MutableState<ColorValue> = mutableStateOf(initialSkyAtmosphereHaloColor)
   /**
    *  A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer. Default value: "white".
    */
-  public var skyAtmosphereHaloColor: ColorValue by mutableStateOf(initialSkyAtmosphereHaloColor)
+  public var skyAtmosphereHaloColor: ColorValue by skyAtmosphereHaloColorState
+
+  @MapboxExperimental
+  private val skyAtmosphereHaloColorUseThemeState: MutableState<StringValue> = mutableStateOf(initialSkyAtmosphereHaloColorUseTheme)
   /**
    *  Overrides applying of color theme for [skyAtmosphereHaloColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
    */
   @MapboxExperimental
-  public var skyAtmosphereHaloColorUseTheme: StringValue by mutableStateOf(initialSkyAtmosphereHaloColorUseTheme)
+  public var skyAtmosphereHaloColorUseTheme: StringValue by skyAtmosphereHaloColorUseThemeState
+
+  private val skyAtmosphereSunState: MutableState<DoubleListValue> = mutableStateOf(initialSkyAtmosphereSun)
   /**
    *  Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyAtmosphereSun is in degrees.
    */
-  public var skyAtmosphereSun: DoubleListValue by mutableStateOf(initialSkyAtmosphereSun)
+  public var skyAtmosphereSun: DoubleListValue by skyAtmosphereSunState
+
+  private val skyAtmosphereSunIntensityState: MutableState<DoubleValue> = mutableStateOf(initialSkyAtmosphereSunIntensity)
   /**
    *  Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky. Default value: 10. Value range: [0, 100]
    */
-  public var skyAtmosphereSunIntensity: DoubleValue by mutableStateOf(initialSkyAtmosphereSunIntensity)
+  public var skyAtmosphereSunIntensity: DoubleValue by skyAtmosphereSunIntensityState
+
+  private val skyGradientState: MutableState<ColorValue> = mutableStateOf(initialSkyGradient)
   /**
    *  Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`. Default value: ["interpolate",["linear"],["sky-radial-progress"],0.8,"#87ceeb",1,"white"].
    */
-  public var skyGradient: ColorValue by mutableStateOf(initialSkyGradient)
+  public var skyGradient: ColorValue by skyGradientState
+
+  @MapboxExperimental
+  private val skyGradientUseThemeState: MutableState<StringValue> = mutableStateOf(initialSkyGradientUseTheme)
   /**
    *  Overrides applying of color theme for [skyGradient] if "none" is set. To follow default theme "default" should be set. Default value: "default".
    */
   @MapboxExperimental
-  public var skyGradientUseTheme: StringValue by mutableStateOf(initialSkyGradientUseTheme)
+  public var skyGradientUseTheme: StringValue by skyGradientUseThemeState
+
+  private val skyGradientCenterState: MutableState<DoubleListValue> = mutableStateOf(initialSkyGradientCenter)
   /**
    *  Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon. Default value: [0,0]. Minimum value: [0,0]. Maximum value: [360,180]. The unit of skyGradientCenter is in degrees.
    */
-  public var skyGradientCenter: DoubleListValue by mutableStateOf(initialSkyGradientCenter)
+  public var skyGradientCenter: DoubleListValue by skyGradientCenterState
+
+  private val skyGradientRadiusState: MutableState<DoubleValue> = mutableStateOf(initialSkyGradientRadius)
   /**
    *  The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`. Default value: 90. Value range: [0, 180]
    */
-  public var skyGradientRadius: DoubleValue by mutableStateOf(initialSkyGradientRadius)
+  public var skyGradientRadius: DoubleValue by skyGradientRadiusState
+
+  private val skyOpacityState: MutableState<DoubleValue> = mutableStateOf(initialSkyOpacity)
   /**
    *  The opacity of the entire sky layer. Default value: 1. Value range: [0, 1]
    */
-  public var skyOpacity: DoubleValue by mutableStateOf(initialSkyOpacity)
+  public var skyOpacity: DoubleValue by skyOpacityState
+
+  private val skyOpacityTransitionState: MutableState<Transition> = mutableStateOf(initialSkyOpacityTransition)
   /**
    *  Defines the transition of [skyOpacity].
    */
-  public var skyOpacityTransition: Transition by mutableStateOf(initialSkyOpacityTransition)
+  public var skyOpacityTransition: Transition by skyOpacityTransitionState
+
+  private val skyTypeState: MutableState<SkyTypeValue> = mutableStateOf(initialSkyType)
   /**
    *  The type of the sky Default value: "atmosphere".
    */
-  public var skyType: SkyTypeValue by mutableStateOf(initialSkyType)
+  public var skyType: SkyTypeValue by skyTypeState
+
+  private val visibilityState: MutableState<VisibilityValue> = mutableStateOf(initialVisibility)
   /**
    *  Whether this layer is displayed. Default value: "visible".
    */
-  public var visibility: VisibilityValue by mutableStateOf(initialVisibility)
+  public var visibility: VisibilityValue by visibilityState
+
+  private val minZoomState: MutableState<LongValue> = mutableStateOf(initialMinZoom)
   /**
    *  The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
    */
-  public var minZoom: LongValue by mutableStateOf(initialMinZoom)
+  public var minZoom: LongValue by minZoomState
+
+  private val maxZoomState: MutableState<LongValue> = mutableStateOf(initialMaxZoom)
   /**
    *  The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
    */
-  public var maxZoom: LongValue by mutableStateOf(initialMaxZoom)
+  public var maxZoom: LongValue by maxZoomState
+
+  private val sourceLayerState: MutableState<StringValue> = mutableStateOf(initialSourceLayer)
   /**
    *  Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.
    */
-  public var sourceLayer: StringValue by mutableStateOf(initialSourceLayer)
+  public var sourceLayer: StringValue by sourceLayerState
+
+  private val filterState: MutableState<Filter> = mutableStateOf(initialFilter)
   /**
    *  An expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `["feature-state", ...]` expression is not supported in filter expressions. The `["pitch"]` and `["distance-from-center"]` expressions are supported only for filter expressions on the symbol layer.
    */
-  public var filter: Filter by mutableStateOf(initialFilter)
+  public var filter: Filter by filterState
 
   @Composable
-  private fun UpdateSkyAtmosphereColor(layerNode: LayerNode) {
-    if (skyAtmosphereColor.notInitial) {
-      layerNode.setProperty("sky-atmosphere-color", skyAtmosphereColor.value)
-    }
-  }
-  @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateSkyAtmosphereColorUseTheme(layerNode: LayerNode) {
-    if (skyAtmosphereColorUseTheme.notInitial) {
-      layerNode.setProperty("sky-atmosphere-color-use-theme", skyAtmosphereColorUseTheme.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyAtmosphereHaloColor(layerNode: LayerNode) {
-    if (skyAtmosphereHaloColor.notInitial) {
-      layerNode.setProperty("sky-atmosphere-halo-color", skyAtmosphereHaloColor.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateSkyAtmosphereHaloColorUseTheme(layerNode: LayerNode) {
-    if (skyAtmosphereHaloColorUseTheme.notInitial) {
-      layerNode.setProperty("sky-atmosphere-halo-color-use-theme", skyAtmosphereHaloColorUseTheme.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyAtmosphereSun(layerNode: LayerNode) {
-    if (skyAtmosphereSun.notInitial) {
-      layerNode.setProperty("sky-atmosphere-sun", skyAtmosphereSun.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyAtmosphereSunIntensity(layerNode: LayerNode) {
-    if (skyAtmosphereSunIntensity.notInitial) {
-      layerNode.setProperty("sky-atmosphere-sun-intensity", skyAtmosphereSunIntensity.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyGradient(layerNode: LayerNode) {
-    if (skyGradient.notInitial) {
-      layerNode.setProperty("sky-gradient", skyGradient.value)
-    }
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateSkyGradientUseTheme(layerNode: LayerNode) {
-    if (skyGradientUseTheme.notInitial) {
-      layerNode.setProperty("sky-gradient-use-theme", skyGradientUseTheme.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyGradientCenter(layerNode: LayerNode) {
-    if (skyGradientCenter.notInitial) {
-      layerNode.setProperty("sky-gradient-center", skyGradientCenter.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyGradientRadius(layerNode: LayerNode) {
-    if (skyGradientRadius.notInitial) {
-      layerNode.setProperty("sky-gradient-radius", skyGradientRadius.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyOpacity(layerNode: LayerNode) {
-    if (skyOpacity.notInitial) {
-      layerNode.setProperty("sky-opacity", skyOpacity.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyOpacityTransition(layerNode: LayerNode) {
-    if (skyOpacityTransition.notInitial) {
-      layerNode.setProperty("sky-opacity-transition", skyOpacityTransition.value)
-    }
-  }
-  @Composable
-  private fun UpdateSkyType(layerNode: LayerNode) {
-    if (skyType.notInitial) {
-      layerNode.setProperty("sky-type", skyType.value)
-    }
-  }
-  @Composable
-  private fun UpdateVisibility(layerNode: LayerNode) {
-    if (visibility.notInitial) {
-      layerNode.setProperty("visibility", visibility.value)
-    }
-  }
-  @Composable
-  private fun UpdateMinZoom(layerNode: LayerNode) {
-    if (minZoom.notInitial) {
-      layerNode.setProperty("minzoom", minZoom.value)
-    }
-  }
-  @Composable
-  private fun UpdateMaxZoom(layerNode: LayerNode) {
-    if (maxZoom.notInitial) {
-      layerNode.setProperty("maxzoom", maxZoom.value)
-    }
-  }
-  @Composable
-  private fun UpdateSourceLayer(layerNode: LayerNode) {
-    if (sourceLayer.notInitial) {
-      layerNode.setProperty("source-layer", sourceLayer.value)
-    }
-  }
-  @Composable
-  private fun UpdateFilter(layerNode: LayerNode) {
-    if (filter.notInitial) {
-      layerNode.setProperty("filter", filter.value)
-    }
-  }
-
-  @Composable
   internal fun UpdateProperties(layerNode: LayerNode) {
-    UpdateSkyAtmosphereColor(layerNode)
-    UpdateSkyAtmosphereColorUseTheme(layerNode)
-    UpdateSkyAtmosphereHaloColor(layerNode)
-    UpdateSkyAtmosphereHaloColorUseTheme(layerNode)
-    UpdateSkyAtmosphereSun(layerNode)
-    UpdateSkyAtmosphereSunIntensity(layerNode)
-    UpdateSkyGradient(layerNode)
-    UpdateSkyGradientUseTheme(layerNode)
-    UpdateSkyGradientCenter(layerNode)
-    UpdateSkyGradientRadius(layerNode)
-    UpdateSkyOpacity(layerNode)
-    UpdateSkyOpacityTransition(layerNode)
-    UpdateSkyType(layerNode)
-    UpdateVisibility(layerNode)
-    UpdateMinZoom(layerNode)
-    UpdateMaxZoom(layerNode)
-    UpdateSourceLayer(layerNode)
-    UpdateFilter(layerNode)
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyAtmosphereColorState, "sky-atmosphere-color")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyAtmosphereColorUseThemeState, "sky-atmosphere-color-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyAtmosphereHaloColorState, "sky-atmosphere-halo-color")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyAtmosphereHaloColorUseThemeState, "sky-atmosphere-halo-color-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyAtmosphereSunState, "sky-atmosphere-sun")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyAtmosphereSunIntensityState, "sky-atmosphere-sun-intensity")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyGradientState, "sky-gradient")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyGradientUseThemeState, "sky-gradient-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyGradientCenterState, "sky-gradient-center")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyGradientRadiusState, "sky-gradient-radius")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyOpacityState, "sky-opacity")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyOpacityTransitionState, "sky-opacity-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, skyTypeState, "sky-type")
+    ActionWhenNotInitial(layerNode.setPropertyAction, visibilityState, "visibility")
+    ActionWhenNotInitial(layerNode.setPropertyAction, minZoomState, "minzoom")
+    ActionWhenNotInitial(layerNode.setPropertyAction, maxZoomState, "maxzoom")
+    ActionWhenNotInitial(layerNode.setPropertyAction, sourceLayerState, "source-layer")
+    ActionWhenNotInitial(layerNode.setPropertyAction, filterState, "filter")
   }
 }
 // End of generated file.
