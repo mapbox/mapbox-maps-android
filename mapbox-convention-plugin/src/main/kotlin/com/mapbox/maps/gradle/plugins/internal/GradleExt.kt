@@ -36,9 +36,18 @@ internal fun <T> ListProperty<T>.setDisallowChanges(value: List<T>?) {
  */
 internal fun Project.appendNdkIfNeeded(value: String): String {
   val ndkMajor: String? = project.findProperty("ndkMajor")?.toString()
-  return if (ndkMajor != null) {
+  return if (ndkMajor != null && ndkMajor != findDefaultNdkMajor()) {
     "$value-ndk$ndkMajor"
   } else {
     value
   }
 }
+
+/**
+ * @return the `defaultNdkMajor` version defined `projects/common/platform/android/gradle/libs.versions.toml`.
+ */
+private fun Project.findDefaultNdkMajor(): String =
+  getVersionCatalog().findVersion("defaultNdkMajor").get().toString()
+
+private fun Project.getVersionCatalog() =
+  extensions.getByType(VersionCatalogsExtension::class.java).named("commonLibs")

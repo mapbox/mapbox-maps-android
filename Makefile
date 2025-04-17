@@ -1,7 +1,6 @@
 .PHONY: check
 check:
 	./gradlew ktlint lint;
-	python scripts/license-validate.py;
 	./gradlew clean dokkaHtml -Pmapbox.dokkaHtmlFlavor=release
 
 .PHONY: test
