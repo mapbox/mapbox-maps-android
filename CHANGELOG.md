@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
 * Promote `MapView.attribution.getMapAttributionDelegate().extraAttributions` to stable.
+* Expose an experimental API to define a non-rectangular screen culling shape(`MapboxMap.get/setScreenCullingShape`)
 
 
 # 11.12.0-beta.1 April 09, 2025

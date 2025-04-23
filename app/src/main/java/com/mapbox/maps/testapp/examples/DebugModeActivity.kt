@@ -1,9 +1,20 @@
 package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.BlurMaskFilter
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.CornerPathEffect
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +24,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.PerformanceSamplerOptions
 import com.mapbox.maps.PerformanceStatisticsOptions
 import com.mapbox.maps.Style
+import com.mapbox.maps.Vec2
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
@@ -58,9 +70,39 @@ class DebugModeActivity : AppCompatActivity() {
 
     mapboxMap.loadStyle(Style.STANDARD)
     setupPerformanceStatisticsCollection()
+    setupScreenShapeButton()
     binding.mapView.compass.opacity = 0.5f
     binding.mapView.debugOptions = debugOptions
     registerListeners(mapboxMap)
+  }
+  private var overlayView: HexSpotlightView? = null
+
+  private fun setupScreenShapeButton() {
+    binding.screenShapeButton.setOnClickListener {
+      when (binding.screenShapeButton.text) {
+        SCREEN_SHAPE_RECT -> {
+          binding.screenShapeButton.text = SCREEN_SHAPE_CUSTOM
+
+          mapboxMap.setScreenCullingShape(emptyList())
+          (overlayView?.parent as? ViewGroup)?.removeView(overlayView)
+        }
+        SCREEN_SHAPE_CUSTOM -> {
+          val shape = listOf(
+            Vec2(0.35, 0.34),
+            Vec2(0.65, 0.34),
+            Vec2(0.85, 0.50),
+            Vec2(0.65, 0.66),
+            Vec2(0.35, 0.66),
+            Vec2(0.15, 0.50)
+          )
+
+          overlayView = HexSpotlightView(this, shape)
+          addContentView(overlayView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+          mapboxMap.setScreenCullingShape(shape)
+          binding.screenShapeButton.text = SCREEN_SHAPE_RECT
+        }
+      }
+    }
   }
 
   private fun setupPerformanceStatisticsCollection() {
@@ -229,5 +271,71 @@ class DebugModeActivity : AppCompatActivity() {
     private const val TAG_PERFORMANCE_STATISTICS = "PerformanceStatistics"
     private const val PERF_STAT_STOP_COLLECT_BUTTON = "Stop collecting"
     private const val PERF_STAT_START_COLLECT_BUTTON = "Collect Perf Stats"
+    private const val SCREEN_SHAPE_CUSTOM = "Hex screen"
+    private const val SCREEN_SHAPE_RECT = "Rect screen"
+  }
+}
+
+@SuppressLint("ViewConstructor")
+class HexSpotlightView(context: Context, private val shape: List<Vec2>) : View(context) {
+
+  private val overlayPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    color = Color.parseColor("#80000000") // dimmed background
+  }
+
+  private val clearPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+  }
+
+  private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    color = Color.WHITE
+    style = Paint.Style.STROKE
+    strokeWidth = 4F * context.resources.displayMetrics.density
+    strokeJoin = Paint.Join.ROUND
+    pathEffect = CornerPathEffect(12F * context.resources.displayMetrics.density)
+  }
+  private var hexPath: Path = createPath(width.toFloat(), height.toFloat())
+
+  private val glowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    color = Color.WHITE
+    style = Paint.Style.STROKE
+    strokeWidth = 4F * context.resources.displayMetrics.density
+    maskFilter = BlurMaskFilter(32F, BlurMaskFilter.Blur.OUTER)
+    strokeJoin = Paint.Join.ROUND
+    pathEffect = CornerPathEffect(12F * context.resources.displayMetrics.density)
+  }
+
+  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    super.onLayout(changed, left, top, right, bottom)
+
+    hexPath = createPath(width.toFloat(), height.toFloat())
+  }
+
+  override fun onDraw(canvas: Canvas) {
+    super.onDraw(canvas)
+
+    val layer = canvas.saveLayer(null, null)
+
+    // Draw full dim overlay
+    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), overlayPaint)
+
+    // Draw hexagon cutout
+    canvas.drawPath(hexPath, clearPaint)
+    canvas.drawPath(hexPath, glowPaint)
+    canvas.drawPath(hexPath, glowPaint)
+    canvas.drawPath(hexPath, strokePaint)
+
+    canvas.restoreToCount(layer)
+  }
+
+  private fun createPath(w: Float, h: Float): Path {
+    val path = Path()
+    shape.forEachIndexed { index, pt ->
+      val x = pt.x * w
+      val y = pt.y * h
+      if (index == 0) path.moveTo(x.toFloat(), y.toFloat()) else path.lineTo(x.toFloat(), y.toFloat())
+    }
+    path.close()
+    return path
   }
 }

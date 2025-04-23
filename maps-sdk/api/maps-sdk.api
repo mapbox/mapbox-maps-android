@@ -223,6 +223,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun getNativeMap ()Lcom/mapbox/maps/Map;
 	public final fun getPrefetchZoomDelta ()B
 	public final fun getRenderWorldCopies ()Z
+	public final fun getScreenCullingShape ()Ljava/util/List;
 	public fun getSize ()Lcom/mapbox/maps/Size;
 	public final fun getStyle ()Lcom/mapbox/maps/Style;
 	public final fun getStyle (Lcom/mapbox/maps/Style$OnStyleLoaded;)V
@@ -311,6 +312,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V
 	public final fun setPrefetchZoomDelta (B)V
 	public final fun setRenderWorldCopies (Z)V
+	public final fun setScreenCullingShape (Ljava/util/List;)V
 	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
 	public fun setUserAnimationInProgress (Z)V
 	public fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
