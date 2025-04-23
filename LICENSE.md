@@ -482,7 +482,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,11.13.0-SNAPSHOT-04-23--04-29.git-3eea307,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,11.13.0-SNAPSHOT-04-23--05-20.git-ad48dc8,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Core Maps version 11.0

@@ -706,6 +706,14 @@ internal class NativeMapImpl(val map: Map) {
     return map.centerAltitudeMode
   }
 
+  fun setScreenCullingShape(shape: List<Vec2>) {
+    map.screenCullingShape = shape
+  }
+
+  fun getScreenCullingShape(): List<Vec2> {
+    return map.screenCullingShape
+  }
+
   fun startPerformanceStatisticsCollection(
     options: PerformanceStatisticsOptions,
     callback: PerformanceStatisticsCallback,

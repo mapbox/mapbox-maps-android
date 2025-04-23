@@ -1020,4 +1020,19 @@ class NativeMapTest {
     nativeMap.stopPerformanceStatisticsCollection()
     verify { map.stopPerformanceStatisticsCollection() }
   }
+
+  @Test
+  fun getScreenCullingShape() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.getScreenCullingShape()
+    verify { map.screenCullingShape }
+  }
+
+  @Test
+  fun setCustomScreenShape() {
+    val shape = mockk<List<Vec2>>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setScreenCullingShape(shape)
+    verify { map.screenCullingShape = shape }
+  }
 }

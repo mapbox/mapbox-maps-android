@@ -1887,6 +1887,19 @@ class PixelForCoordinatesTest(
     assertEquals(expected, screenCoordinates)
   }
 
+  @Test
+  fun getScreenCullingShape() {
+    mapboxMap.getScreenCullingShape()
+    verify { nativeMap.getScreenCullingShape() }
+  }
+
+  @Test
+  fun setScreenShape() {
+    val shape = mockk<List<Vec2>>()
+    mapboxMap.setScreenCullingShape(shape)
+    verify { nativeMap.setScreenCullingShape(shape) }
+  }
+
   @After
   fun cleanUp() {
     unmockkStatic(Map::class)
