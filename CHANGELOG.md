@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.12.0-rc.1
+
+# 11.12.0-rc.1 April 24, 2025
 ## Bug fixes 🐞
 * Fix map flickering caused by the fill-extrusion pan tiles and missing stencil in 3D layers.
 
@@ -13,6 +14,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.12.0-rc.1 and common to v24.12.0-rc.1.
+
+
 
 # 11.12.0-beta.1 April 09, 2025
 
