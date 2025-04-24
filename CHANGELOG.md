@@ -2,14 +2,17 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
-
 # 11.12.0-rc.1
+## Bug fixes 🐞
+* Fix map flickering caused by the fill-extrusion pan tiles and missing stencil in 3D layers.
+
 ## Features ✨ and improvements 🏁
 * Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
 * Promote `MapView.attribution.getMapAttributionDelegate().extraAttributions` to stable.
 * Expose an experimental API to define a non-rectangular screen culling shape(`MapboxMap.get/setScreenCullingShape`)
 
+## Dependencies
+* Update gl-native to v11.12.0-rc.1 and common to v24.12.0-rc.1.
 
 # 11.12.0-beta.1 April 09, 2025
 
