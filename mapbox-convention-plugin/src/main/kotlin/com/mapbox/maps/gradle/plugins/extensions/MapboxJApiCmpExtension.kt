@@ -94,9 +94,12 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
 
       val publishing = project.extensions.getByType(PublishingExtension::class.java)
       val releasePublication = publishing.publications.named("release").get() as MavenPublication
+      val lastStableVersion = providers.gradleProperty("LAST_STABLE_VERSION").orNull
 
       val versionToFetch = if (previousVersionProperty.isPresent) {
         previousVersionProperty.get()
+      } else if (lastStableVersion != null) {
+        lastStableVersion
       } else {
         val currentVersion =
           currentVersionProperty.getOrElse(releasePublication.version as String)
