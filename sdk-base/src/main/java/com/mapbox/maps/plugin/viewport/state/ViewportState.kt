@@ -55,6 +55,8 @@ interface ViewportState {
    * Indicates the current [ViewportState] is now responsible for updating the camera.
    *
    * [ViewportPlugin] calls this method at the end of a successful transition into this state.
+   *
+   * @warning Don't call this method directly, instead activate the viewport via [ViewportPlugin.transitionTo].
    */
   fun startUpdatingCamera()
 
@@ -65,6 +67,8 @@ interface ViewportState {
    *
    * Implementations must stop updating the camera immediately and should typically cancel any ongoing
    * animations that they started when this method is invoked.
+   *
+   * @warning Don't call this method directly. Instead, use [ViewportPlugin.idle] to stop animations in progress.
    */
   fun stopUpdatingCamera()
 }
