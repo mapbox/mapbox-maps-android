@@ -3,10 +3,14 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -26,12 +30,13 @@ import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityInsetMapBinding
 import com.mapbox.maps.testapp.examples.fragment.MapFragment
+import kotlinx.coroutines.launch
 
 /**
  * Example demonstrating displaying two maps: main map and small map with lower zoom
  * in bottom-right corner with optional bounds showing what area is covered by main map.
  */
-class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
+class InsetMapActivity : AppCompatActivity() {
 
   private lateinit var mainMapboxMap: MapboxMap
   private var insetMapboxMap: MapboxMap? = null
@@ -44,7 +49,17 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     mainMapboxMap.setCamera(MAIN_MAP_CAMERA_POSITION)
     mainMapboxMap.loadStyle(
       style = STYLE_URL
-    ) { mainMapboxMap.subscribeCameraChanged(this@InsetMapActivity) }
+    )
+
+    lifecycleScope.launch {
+      // repeatOnLifecycle launches the block in a new coroutine every time the
+      // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
+      repeatOnLifecycle(Lifecycle.State.STARTED) {
+        mainMapboxMap.cameraChangedEvents.collect {
+          updateInsetMapCamera(it.cameraState)
+        }
+      }
+    }
 
     var insetMapFragment: MapFragment? =
       supportFragmentManager.findFragmentByTag(INSET_FRAGMENT_TAG) as? MapFragment
@@ -76,10 +91,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
         loadStyle(
           style = STYLE_URL
         ) { style ->
-          val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
-            feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
-          }
-          style.addSource(source)
+          style.addSource(geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {})
           // The layer properties for our line. This is where we make the line dotted, set the color, etc.
           val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
             lineCap(LineCap.ROUND)
@@ -89,7 +101,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
             visibility(Visibility.VISIBLE)
           }
           style.addLayer(layer)
-          updateInsetMapLineLayerBounds(style)
+          updateInsetMapLineLayerBounds(style, mainMapboxMap.cameraState)
         }
       }
       insetMapFragment.getMapView().apply {
@@ -106,8 +118,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     }
   }
 
-  override fun run(cameraChanged: CameraChanged) {
-    val mainCameraPosition = mainMapboxMap.cameraState
+  private fun updateInsetMapCamera(mainCameraPosition: CameraState) {
     val insetCameraPosition = CameraOptions.Builder()
       .zoom(mainCameraPosition.zoom.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
       .pitch(mainCameraPosition.pitch)
@@ -115,18 +126,21 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
       .center(mainCameraPosition.center)
       .build()
     insetMapboxMap?.setCamera(insetCameraPosition)
-    insetMapboxMap?.getStyle { style -> updateInsetMapLineLayerBounds(style) }
+    insetMapboxMap?.getStyle { style -> updateInsetMapLineLayerBounds(style, mainCameraPosition) }
   }
 
-  private fun updateInsetMapLineLayerBounds(fullyLoadedStyle: Style) {
+  private fun updateInsetMapLineLayerBounds(
+    fullyLoadedStyle: Style,
+    mainMapCameraState: CameraState
+  ) {
     (fullyLoadedStyle.getSource(BOUNDS_LINE_LAYER_SOURCE_ID) as? GeoJsonSource)?.apply {
-      feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
+      feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints(mainMapCameraState))))
     }
   }
 
-  private fun getRectanglePoints(): List<Point> {
+  private fun getRectanglePoints(mainMapCameraState: CameraState): List<Point> {
     val bounds = mainMapboxMap.coordinateBoundsForCamera(
-      mainMapboxMap.cameraState.toCameraOptions()
+      mainMapCameraState.toCameraOptions()
     )
     return listOf(
       Point.fromLngLat(bounds.northeast.longitude(), bounds.northeast.latitude()),

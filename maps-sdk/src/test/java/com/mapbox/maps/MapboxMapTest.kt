@@ -1703,6 +1703,14 @@ class MapboxMapTest {
     verify { nativeObserver.subscribeCameraChanged(listener) }
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @Test
+  fun subscribeCameraChangeCoalesced() {
+    val callback = mockk<CameraChangedCoalescedCallback>()
+    mapboxMap.subscribeCameraChangedCoalesced(callback)
+    verify { nativeObserver.subscribeCameraChangedCoalesced(callback) }
+  }
+
   @Test
   fun subscribeMapIdleListener() {
     val listener = mockk<MapIdleCallback>()

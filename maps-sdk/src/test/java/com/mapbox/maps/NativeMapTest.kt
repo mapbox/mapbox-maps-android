@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
@@ -11,8 +12,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.*
-import kotlin.collections.HashMap
 
 @RunWith(RobolectricTestRunner::class)
 @Config(
@@ -31,6 +30,12 @@ class NativeMapTest {
   @Test
   fun subscribeCameraChangeEvent() {
     subscribeEvent<CameraChangedCallback>(NativeMapImpl::subscribe, Map::subscribe)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun subscribeCameraChangeCoalescedEvent() {
+    subscribeEvent<CameraChangedCoalescedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test

@@ -1,7 +1,8 @@
 package com.mapbox.maps.debugoptions
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.CameraChangedCallback
+import com.mapbox.maps.CameraChangedCoalescedCallback
 import com.mapbox.maps.MapDebugOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
@@ -15,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 class DebugOptionsControllerTest {
   private val mapboxMap: MapboxMap = mockk(relaxed = true)
@@ -35,14 +37,14 @@ class DebugOptionsControllerTest {
 
   @Test
   fun updatesDebugViewsWhenCameraUpdated() {
-    val onCameraChangeListenerSlot = slot<CameraChangedCallback>()
-    every { mapboxMap.subscribeCameraChanged(capture(onCameraChangeListenerSlot)) } returns mockk()
+    val onCameraChangeCoalescedListenerSlot = slot<CameraChangedCoalescedCallback>()
+    every { mapboxMap.subscribeCameraChangedCoalesced(capture(onCameraChangeCoalescedListenerSlot)) } returns mockk()
 
     debugOptionsController.started = true
     debugOptionsController.options = setOf(MapViewDebugOptions.CAMERA, MapViewDebugOptions.PADDING)
 
-    val onCameraChangeListener = onCameraChangeListenerSlot.captured
-    onCameraChangeListener.run(mockk(relaxed = true))
+    val onCameraChangeCoalescedListener = onCameraChangeCoalescedListenerSlot.captured
+    onCameraChangeCoalescedListener.run(mockk(relaxed = true))
 
     verify { cameraDebugView.update(any()) }
     verify { paddingDebugView.update(any()) }
@@ -91,11 +93,11 @@ class DebugOptionsControllerTest {
   fun subscribesToCameraUpdatesOnStart() {
     debugOptionsController.options = setOf(MapViewDebugOptions.CAMERA)
 
-    verifyNo { mapboxMap.subscribeCameraChanged(any()) }
+    verifyNo { mapboxMap.subscribeCameraChangedCoalesced(any()) }
 
     debugOptionsController.started = true
 
-    verify { mapboxMap.subscribeCameraChanged(any()) }
+    verify { mapboxMap.subscribeCameraChangedCoalesced(any()) }
   }
 
   @Test
@@ -104,31 +106,31 @@ class DebugOptionsControllerTest {
 
     debugOptionsController.started = true
 
-    verifyNo { mapboxMap.subscribeCameraChanged(any()) }
+    verifyNo { mapboxMap.subscribeCameraChangedCoalesced(any()) }
   }
 
   @Test
   fun subscribesToCameraUpdatesAfterStart() {
     debugOptionsController.started = true
 
-    verifyNo { mapboxMap.subscribeCameraChanged(any()) }
+    verifyNo { mapboxMap.subscribeCameraChangedCoalesced(any()) }
 
     debugOptionsController.options = setOf(MapViewDebugOptions.PADDING)
 
-    verify { mapboxMap.subscribeCameraChanged(any()) }
+    verify { mapboxMap.subscribeCameraChangedCoalesced(any()) }
   }
 
   @Test
   fun doesNotSubscribeToCameraUpdatesBeforeStart() {
     debugOptionsController.options = setOf(MapViewDebugOptions.CAMERA)
 
-    verifyNo { mapboxMap.subscribeCameraChanged(any()) }
+    verifyNo { mapboxMap.subscribeCameraChangedCoalesced(any()) }
   }
 
   @Test
   fun unsubscribesFromCameraUpdatesOnStop() {
     val cancelableMock = mockk<Cancelable>(relaxed = true)
-    every { mapboxMap.subscribeCameraChanged(any()) } returns cancelableMock
+    every { mapboxMap.subscribeCameraChangedCoalesced(any()) } returns cancelableMock
 
     debugOptionsController.options = setOf(MapViewDebugOptions.CAMERA)
     debugOptionsController.started = true
@@ -141,7 +143,7 @@ class DebugOptionsControllerTest {
   @Test
   fun unsubscribesFromCameraUpdatesWhenNeeded() {
     val cancelableMock = mockk<Cancelable>(relaxed = true)
-    every { mapboxMap.subscribeCameraChanged(any()) } returns cancelableMock
+    every { mapboxMap.subscribeCameraChangedCoalesced(any()) } returns cancelableMock
     debugOptionsController.options = setOf(MapViewDebugOptions.CAMERA)
     debugOptionsController.started = true
 

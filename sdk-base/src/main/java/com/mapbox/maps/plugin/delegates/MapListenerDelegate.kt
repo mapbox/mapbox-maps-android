@@ -1,8 +1,38 @@
 package com.mapbox.maps.plugin.delegates
 
+import androidx.annotation.RestrictTo
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.*
-import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.CameraChangedCallback
+import com.mapbox.maps.CameraChangedCoalesced
+import com.mapbox.maps.CameraChangedCoalescedCallback
+import com.mapbox.maps.GenericEventCallback
+import com.mapbox.maps.MapIdleCallback
+import com.mapbox.maps.MapLoadedCallback
+import com.mapbox.maps.MapLoadingErrorCallback
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.RenderFrameFinishedCallback
+import com.mapbox.maps.RenderFrameStartedCallback
+import com.mapbox.maps.ResourceRequestCallback
+import com.mapbox.maps.SourceAddedCallback
+import com.mapbox.maps.SourceDataLoadedCallback
+import com.mapbox.maps.SourceRemovedCallback
+import com.mapbox.maps.StyleDataLoadedCallback
+import com.mapbox.maps.StyleImageMissingCallback
+import com.mapbox.maps.StyleImageRemoveUnusedCallback
+import com.mapbox.maps.StyleLoadedCallback
+import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameFinishedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameStartedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceAddedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceRemovedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 
 /**
  * Definition of a listener manager delegate to manage all kinds of listeners.
@@ -287,6 +317,17 @@ interface MapListenerDelegate {
    * @param cameraChangedCallback
    */
   fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable
+
+  /**
+   * Subscribes to [CameraChangedCoalesced] event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param cameraChangedCoalescedCallback the callback to be invoked when the camera changes.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  @com.mapbox.annotation.MapboxExperimental
+  fun subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback: CameraChangedCoalescedCallback): Cancelable
 
   /**
    * Subscribes to `MapLoaded` event.

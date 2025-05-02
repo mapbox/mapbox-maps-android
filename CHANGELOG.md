@@ -7,6 +7,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose `RenderThreadStatsRecorder` as experimental API. 
 * Expose an experimental API to define a non-rectangular screen culling shape(`MapboxMap.get/setScreenCullingShape`)
 
+## Bug fixes 🐞
+* Fix registering camera change listener every time `mapView.scalebar.enabled` is called with value `true` and it was already enabled.
 
 # 11.12.0-rc.1
 ## Features ✨ and improvements 🏁

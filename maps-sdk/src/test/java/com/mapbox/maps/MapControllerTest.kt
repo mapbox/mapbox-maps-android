@@ -87,11 +87,12 @@ class MapControllerTest {
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @Test
   fun onStart() {
     every { mockPluginRegistry.onStart() } just Runs
     every { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) } just Runs
-    every { mockNativeObserver.subscribeCameraChanged(any()) } returns cancelable
+    every { mockNativeObserver.subscribeCameraChangedCoalesced(any()) } returns cancelable
     every { mockNativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
     every { mockRenderer.onStart() } just Runs
     every { mockMapboxMap.isStyleLoadInitiated } returns false
@@ -102,7 +103,7 @@ class MapControllerTest {
 
     verifySequence {
       mockMapboxMap.style
-      mockNativeObserver.subscribeCameraChanged(any())
+      mockNativeObserver.subscribeCameraChangedCoalesced(any())
       mockNativeObserver.subscribeStyleDataLoaded(any())
       mockRenderer.onStart()
       mockMapboxMap.isStyleLoadInitiated
@@ -111,12 +112,13 @@ class MapControllerTest {
     }
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @Test
   fun onStartWithStyleLoaded() {
     every { mockMapboxMap.isStyleLoadInitiated } returns true
     every { mockPluginRegistry.onStart() } just Runs
     every { mockRenderer.onStart() } just Runs
-    every { mockNativeObserver.subscribeCameraChanged(any()) } returns cancelable
+    every { mockNativeObserver.subscribeCameraChangedCoalesced(any()) } returns cancelable
     every { mockNativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
     every { mockMapboxMap.style } returns mockk()
     every { mockPluginRegistry.onStyleChanged(any()) } just Runs
@@ -142,6 +144,7 @@ class MapControllerTest {
     }
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @Test
   fun onStartDeliversUpdatedStyle() {
     every { mockPluginRegistry.onStyleChanged(any()) } just Runs
@@ -149,7 +152,7 @@ class MapControllerTest {
     every { mockPluginRegistry.onStart() } just Runs
     every { mockRenderer.onStop() } just Runs
     every { mockRenderer.onStart() } just Runs
-    every { mockNativeObserver.subscribeCameraChanged(any()) } returns cancelable
+    every { mockNativeObserver.subscribeCameraChangedCoalesced(any()) } returns cancelable
     every { mockNativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
     every { cancelable.cancel() } just Runs
     every { mockMapboxMap.isStyleLoadInitiated } returns false
@@ -240,30 +243,36 @@ class MapControllerTest {
     assertEquals(mockMapboxMap, testMapController.mapboxMap)
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @Test
   fun cameraPluginNotified() {
     val onCameraChangeListenerSlot = slot<CameraChangedCallback>()
+    val cameraChangedCoalescedCallbackSlot = slot<CameraChangedCoalescedCallback>()
     every { mockNativeObserver.subscribeCameraChanged(capture(onCameraChangeListenerSlot)) } returns cancelable
+    every { mockNativeObserver.subscribeCameraChangedCoalesced(capture(cameraChangedCoalescedCallbackSlot)) } returns cancelable
     every { mockNativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
     every { mockPluginRegistry.onStart() } just Runs
     every { mockRenderer.onStart() } just Runs
     every { mockPluginRegistry.onCameraMove(mockCameraState) } just Runs
     every { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) } just Runs
-    every { mockNativeMap.getCameraState() } returns mockCameraState
+//    every { mockNativeMap.getCameraState() } returns mockCameraState
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
     every { mockMapboxMap.style } returns null
 
     testMapController.onStart()
-    val onCameraChangeListener = onCameraChangeListenerSlot.captured
-    onCameraChangeListener.run(mockk())
+
+    // Make sure MapController uses the coalesced callback instead of normal one.
+    assertFalse(onCameraChangeListenerSlot.isCaptured)
+
+    val cameraChangedCoalescedCallback = cameraChangedCoalescedCallbackSlot.captured
+    cameraChangedCoalescedCallback.run(CameraChangedCoalesced(mockCameraState, mockk()))
 
     verifySequence {
       mockMapboxMap.style
       mockMapboxMap.isStyleLoadInitiated
       mockMapboxMap.loadStyle(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
-      mockNativeMap.getCameraState()
       mockPluginRegistry.onCameraMove(mockCameraState)
     }
   }

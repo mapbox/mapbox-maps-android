@@ -41,6 +41,7 @@ package com.mapbox.maps.extension.compose {
   @androidx.compose.runtime.Stable public final class MapState {
     ctor public MapState();
     method @com.mapbox.maps.MapboxExperimental public kotlinx.coroutines.flow.Flow<com.mapbox.maps.GenericEvent> genericEvents(String eventName);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> getCameraChangedCoalescedEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState> Object? getFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, kotlin.coroutines.Continuation<? super FS>);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getGesturesSettings();
@@ -67,6 +68,7 @@ package com.mapbox.maps.extension.compose {
     method @com.mapbox.maps.MapboxExperimental public suspend Object? resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState> Object? setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    property @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> cameraChangedCoalescedEvents;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
     property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapIdle> mapIdleEvents;

@@ -148,6 +148,7 @@ class DebugModeActivity : AppCompatActivity() {
     }
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   private fun registerListeners(mapboxMap: MapboxMap) {
     mapboxMap.subscribeStyleLoaded {
       logI(TAG, "StyleLoadedCallback: $it")
@@ -172,6 +173,9 @@ class DebugModeActivity : AppCompatActivity() {
     }
     mapboxMap.subscribeCameraChanged {
       logI(TAG, "CameraChangedCallback: $it")
+    }
+    mapboxMap.subscribeCameraChangedCoalesced {
+      logI(TAG, "CameraChangedCoalescedCallback: $it")
     }
     mapboxMap.subscribeRenderFrameStarted {
       logI(TAG, "RenderFrameStartedCallback: $it")

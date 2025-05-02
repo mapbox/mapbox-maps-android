@@ -673,6 +673,11 @@ internal class NativeMapImpl(val map: Map) {
     return map.subscribe(cameraChangedCallback)
   }
 
+  @com.mapbox.annotation.MapboxExperimental
+  fun subscribe(cameraChangedCoalescedCallback: CameraChangedCoalescedCallback): Cancelable {
+    return map.subscribe(cameraChangedCoalescedCallback)
+  }
+
   fun subscribe(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
     return map.subscribe(renderFrameStartedCallback)
   }

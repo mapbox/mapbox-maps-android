@@ -52,7 +52,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val _mapboxMap: MapboxMap
   private val pluginRegistry: MapPluginRegistry
   private val styleDataLoadedCallback: StyleDataLoadedCallback
-  private val cameraChangedCallback: CameraChangedCallback
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  private val cameraChangedCoalescedCallback: CameraChangedCoalescedCallback
   private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -64,7 +65,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   override val mapboxMap: MapboxMap
     get() = _mapboxMap
 
-  @OptIn(MapboxExperimental::class)
+  @OptIn(MapboxExperimental::class, com.mapbox.annotation.MapboxExperimental::class)
   constructor(
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
@@ -93,7 +94,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       ),
       MapProvider.getMapGeofencingConsent(),
     )
-    this.cameraChangedCallback = CameraChangedCallback {
+    this.cameraChangedCoalescedCallback = CameraChangedCoalescedCallback {
       pluginRegistry.onCameraMove(it.cameraState)
     }
     this.styleDataLoadedCallback = StyleDataLoadedCallback { eventData ->
@@ -110,6 +111,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @VisibleForTesting(otherwise = VisibleForTesting.NONE)
   constructor(
     renderer: MapboxRenderer,
@@ -128,8 +130,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.nativeMap = nativeMap
     this._mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
-    this.cameraChangedCallback = CameraChangedCallback {
-      pluginRegistry.onCameraMove(nativeMap.getCameraState())
+    this.cameraChangedCoalescedCallback = CameraChangedCoalescedCallback {
+      pluginRegistry.onCameraMove(it.cameraState)
     }
     this.styleDataLoadedCallback = onStyleLoadingFinishedListener
   }
@@ -153,6 +155,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   fun getMapboxMap(): MapboxMap = mapboxMap
 
   override fun onStart() {
+
     if (lifecycleState == LifecycleState.STATE_STARTED) {
       return
     }
@@ -165,7 +168,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     nativeObserver.apply {
-      cancelableSubscriberSet.add(subscribeCameraChanged(cameraChangedCallback))
+      cancelableSubscriberSet.add(subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback))
       cancelableSubscriberSet.add(subscribeStyleDataLoaded(styleDataLoadedCallback))
     }
     renderer.onStart()

@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose
 
 import android.os.Parcelable
+import androidx.annotation.RestrictTo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -13,6 +14,7 @@ import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraChanged
+import com.mapbox.maps.CameraChangedCoalesced
 import com.mapbox.maps.GenericEvent
 import com.mapbox.maps.MapIdle
 import com.mapbox.maps.MapLoaded
@@ -36,6 +38,7 @@ import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleImageMissing
 import com.mapbox.maps.StyleImageRemoveUnused
 import com.mapbox.maps.StyleLoaded
+import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.genericEvents
 import com.mapbox.maps.coroutine.mapIdleEvents
@@ -148,6 +151,15 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    */
   public val cameraChangedEvents: Flow<CameraChanged> = mapboxMapFlow.flatMapLatest {
     it?.cameraChangedEvents ?: emptyFlow()
+  }
+
+  /**
+   * Conflated [Flow] of [CameraChangedCoalesced] updates from [MapboxMap.subscribeCameraChangedCoalesced].
+   */
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  @com.mapbox.annotation.MapboxExperimental
+  public val cameraChangedCoalescedEvents: Flow<CameraChangedCoalesced> = mapboxMapFlow.flatMapLatest {
+    it?.cameraChangedCoalescedEvents ?: emptyFlow()
   }
 
   /**

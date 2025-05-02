@@ -2,8 +2,9 @@ package com.mapbox.maps.extension.compose.ornaments.scalebar.internal
 
 import android.content.Context
 import android.util.AttributeSet
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.CameraChangedCallback
+import com.mapbox.maps.CameraChangedCoalescedCallback
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
 import com.mapbox.maps.plugin.ContextBinder
@@ -24,7 +25,7 @@ internal class ScaleBarComposePlugin(
   private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
-  private val cameraChangeListener = CameraChangedCallback {
+  private val cameraChangedCoalescedListener = CameraChangedCoalescedCallback {
     invalidateScaleBar(it.cameraState)
   }
   private var cancelable: Cancelable? = null
@@ -52,8 +53,9 @@ internal class ScaleBarComposePlugin(
   /**
    * Called when the plugin is first added to the map.
    */
+  @OptIn(MapboxExperimental::class)
   override fun initialize() {
-    cancelable = mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
+    cancelable = mapListenerDelegate.subscribeCameraChangedCoalesced(cameraChangedCoalescedListener)
     invalidateScaleBar()
   }
 

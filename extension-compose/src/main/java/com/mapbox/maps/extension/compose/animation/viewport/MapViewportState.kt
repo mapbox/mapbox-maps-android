@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -20,7 +21,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.coroutine.cameraChangedEvents
+import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -79,6 +80,7 @@ public class MapViewportState(
   private val _mapViewportStatusChangedReason: MutableState<ViewportStatusChangeReason?> =
     mutableStateOf(null)
 
+  @OptIn(MapboxExperimental::class)
   @Composable
   private fun UpdateCameraState(mapView: MapView) {
     LaunchedEffect(Unit) {
@@ -86,7 +88,7 @@ public class MapViewportState(
       cameraState?.let {
         setCameraOptions(it.toCameraOptions())
       }
-      mapView.mapboxMap.cameraChangedEvents.collect {
+      mapView.mapboxMap.cameraChangedCoalescedEvents.collect {
         _cameraState.value = it.cameraState
       }
     }
