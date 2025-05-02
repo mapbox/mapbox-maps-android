@@ -22,6 +22,24 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   private var geometry: Polygon? = null
 
   /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   */
+  var fillConstructBridgeGuardRail: Boolean? = null
+
+  /**
+   * Set fill-construct-bridge-guard-rail to initialise the polygonAnnotation with.
+   *
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   *
+   * @param fillConstructBridgeGuardRail the fill-construct-bridge-guard-rail value
+   * @return this
+   */
+  fun withFillConstructBridgeGuardRail(fillConstructBridgeGuardRail: Boolean): PolygonAnnotationOptions {
+    this.fillConstructBridgeGuardRail = fillConstructBridgeGuardRail
+    return this
+  }
+
+  /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   var fillSortKey: Double? = null
@@ -36,6 +54,37 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
    */
   fun withFillSortKey(fillSortKey: Double): PolygonAnnotationOptions {
     this.fillSortKey = fillSortKey
+    return this
+  }
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  var fillBridgeGuardRailColor: String? = null
+
+  /**
+   * Set fill-bridge-guard-rail-color to initialise the polygonAnnotation with.
+   *
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillBridgeGuardRailColor the fill-bridge-guard-rail-color value
+   * @return this
+   */
+  fun withFillBridgeGuardRailColor(fillBridgeGuardRailColor: String): PolygonAnnotationOptions {
+    this.fillBridgeGuardRailColor = fillBridgeGuardRailColor
+    return this
+  }
+
+  /**
+   * Set fill-bridge-guard-rail-color to initialise the polygonAnnotation with.
+   *
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillBridgeGuardRailColor the fill-bridge-guard-rail-color value with ColorInt format
+   * @return this
+   */
+  fun withFillBridgeGuardRailColor(@ColorInt fillBridgeGuardRailColor: Int): PolygonAnnotationOptions {
+    this.fillBridgeGuardRailColor = ColorUtils.colorToRgbaString(fillBridgeGuardRailColor)
     return this
   }
 
@@ -138,6 +187,37 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
   }
 
   /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  var fillTunnelStructureColor: String? = null
+
+  /**
+   * Set fill-tunnel-structure-color to initialise the polygonAnnotation with.
+   *
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillTunnelStructureColor the fill-tunnel-structure-color value
+   * @return this
+   */
+  fun withFillTunnelStructureColor(fillTunnelStructureColor: String): PolygonAnnotationOptions {
+    this.fillTunnelStructureColor = fillTunnelStructureColor
+    return this
+  }
+
+  /**
+   * Set fill-tunnel-structure-color to initialise the polygonAnnotation with.
+   *
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillTunnelStructureColor the fill-tunnel-structure-color value with ColorInt format
+   * @return this
+   */
+  fun withFillTunnelStructureColor(@ColorInt fillTunnelStructureColor: Int): PolygonAnnotationOptions {
+    this.fillTunnelStructureColor = ColorUtils.colorToRgbaString(fillTunnelStructureColor)
+    return this
+  }
+
+  /**
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
    */
   var fillZOffset: Double? = null
@@ -152,6 +232,24 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
    */
   fun withFillZOffset(fillZOffset: Double): PolygonAnnotationOptions {
     this.fillZOffset = fillZOffset
+    return this
+  }
+
+  /**
+   * This property defines whether the `fillBridgeGuardRailColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillBridgeGuardRailColorUseTheme: String? = null
+
+  /**
+   * Set fill-bridge-guard-rail-color-use-theme to initialise the polygonAnnotation with.
+   *
+   * This property defines whether the `fillBridgeGuardRailColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param fillBridgeGuardRailColorUseTheme the fill-bridge-guard-rail-color-use-theme value
+   * @return this
+   */
+  fun withFillBridgeGuardRailColorUseTheme(fillBridgeGuardRailColorUseTheme: String): PolygonAnnotationOptions {
+    this.fillBridgeGuardRailColorUseTheme = fillBridgeGuardRailColorUseTheme
     return this
   }
 
@@ -188,6 +286,24 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
    */
   fun withFillOutlineColorUseTheme(fillOutlineColorUseTheme: String): PolygonAnnotationOptions {
     this.fillOutlineColorUseTheme = fillOutlineColorUseTheme
+    return this
+  }
+
+  /**
+   * This property defines whether the `fillTunnelStructureColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillTunnelStructureColorUseTheme: String? = null
+
+  /**
+   * Set fill-tunnel-structure-color-use-theme to initialise the polygonAnnotation with.
+   *
+   * This property defines whether the `fillTunnelStructureColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   *
+   * @param fillTunnelStructureColorUseTheme the fill-tunnel-structure-color-use-theme value
+   * @return this
+   */
+  fun withFillTunnelStructureColorUseTheme(fillTunnelStructureColorUseTheme: String): PolygonAnnotationOptions {
+    this.fillTunnelStructureColorUseTheme = fillTunnelStructureColorUseTheme
     return this
   }
 
@@ -286,8 +402,14 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
       throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
+    fillConstructBridgeGuardRail?.let {
+      jsonObject.addProperty(PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL, it)
+    }
     fillSortKey?.let {
       jsonObject.addProperty(PROPERTY_FILL_SORT_KEY, it)
+    }
+    fillBridgeGuardRailColor?.let {
+      jsonObject.addProperty(PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR, it)
     }
     fillColor?.let {
       jsonObject.addProperty(PROPERTY_FILL_COLOR, it)
@@ -301,14 +423,23 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
     fillPattern?.let {
       jsonObject.addProperty(PROPERTY_FILL_PATTERN, it)
     }
+    fillTunnelStructureColor?.let {
+      jsonObject.addProperty(PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR, it)
+    }
     fillZOffset?.let {
       jsonObject.addProperty(PROPERTY_FILL_Z_OFFSET, it)
+    }
+    fillBridgeGuardRailColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME, it)
     }
     fillColorUseTheme?.let {
       jsonObject.addProperty(PROPERTY_FILL_COLOR_USE_THEME, it)
     }
     fillOutlineColorUseTheme?.let {
       jsonObject.addProperty(PROPERTY_FILL_OUTLINE_COLOR_USE_THEME, it)
+    }
+    fillTunnelStructureColorUseTheme?.let {
+      jsonObject.addProperty(PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME, it)
     }
     val polygonAnnotation = PolygonAnnotation(id, annotationManager, jsonObject, geometry!!)
     polygonAnnotation.isDraggable = isDraggable
@@ -321,8 +452,14 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
    */
   companion object {
 
+    /** The property for fill-construct-bridge-guard-rail */
+    const val PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL = "fill-construct-bridge-guard-rail"
+
     /** The property for fill-sort-key */
     const val PROPERTY_FILL_SORT_KEY = "fill-sort-key"
+
+    /** The property for fill-bridge-guard-rail-color */
+    const val PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR = "fill-bridge-guard-rail-color"
 
     /** The property for fill-color */
     const val PROPERTY_FILL_COLOR = "fill-color"
@@ -336,14 +473,23 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
     /** The property for fill-pattern */
     const val PROPERTY_FILL_PATTERN = "fill-pattern"
 
+    /** The property for fill-tunnel-structure-color */
+    const val PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR = "fill-tunnel-structure-color"
+
     /** The property for fill-z-offset */
     const val PROPERTY_FILL_Z_OFFSET = "fill-z-offset"
+
+    /** The property for fill-bridge-guard-rail-color-use-theme */
+    const val PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME = "fill-bridge-guard-rail-color-use-theme"
 
     /** The property for fill-color-use-theme */
     const val PROPERTY_FILL_COLOR_USE_THEME = "fill-color-use-theme"
 
     /** The property for fill-outline-color-use-theme */
     const val PROPERTY_FILL_OUTLINE_COLOR_USE_THEME = "fill-outline-color-use-theme"
+
+    /** The property for fill-tunnel-structure-color-use-theme */
+    const val PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME = "fill-tunnel-structure-color-use-theme"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -363,8 +509,14 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
       val options = PolygonAnnotationOptions()
       options.geometry = feature.geometry() as (Polygon)
+      if (feature.hasProperty(PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) {
+        options.fillConstructBridgeGuardRail = feature.getProperty(PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL).asBoolean
+      }
       if (feature.hasProperty(PROPERTY_FILL_SORT_KEY)) {
         options.fillSortKey = feature.getProperty(PROPERTY_FILL_SORT_KEY).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) {
+        options.fillBridgeGuardRailColor = feature.getProperty(PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR).asString
       }
       if (feature.hasProperty(PROPERTY_FILL_COLOR)) {
         options.fillColor = feature.getProperty(PROPERTY_FILL_COLOR).asString
@@ -378,14 +530,23 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
       if (feature.hasProperty(PROPERTY_FILL_PATTERN)) {
         options.fillPattern = feature.getProperty(PROPERTY_FILL_PATTERN).asString
       }
+      if (feature.hasProperty(PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) {
+        options.fillTunnelStructureColor = feature.getProperty(PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR).asString
+      }
       if (feature.hasProperty(PROPERTY_FILL_Z_OFFSET)) {
         options.fillZOffset = feature.getProperty(PROPERTY_FILL_Z_OFFSET).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) {
+        options.fillBridgeGuardRailColorUseTheme = feature.getProperty(PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_FILL_COLOR_USE_THEME)) {
         options.fillColorUseTheme = feature.getProperty(PROPERTY_FILL_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) {
         options.fillOutlineColorUseTheme = feature.getProperty(PROPERTY_FILL_OUTLINE_COLOR_USE_THEME).asString
+      }
+      if (feature.hasProperty(PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) {
+        options.fillTunnelStructureColorUseTheme = feature.getProperty(PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME).asString
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

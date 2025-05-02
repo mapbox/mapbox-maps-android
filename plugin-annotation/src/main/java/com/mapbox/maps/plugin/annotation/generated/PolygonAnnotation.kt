@@ -52,6 +52,39 @@ class PolygonAnnotation(
 
   // Property accessors
   /**
+   * The fillConstructBridgeGuardRail property
+   *
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   */
+  var fillConstructBridgeGuardRail: Boolean?
+    /**
+     * Get the fillConstructBridgeGuardRail property
+     *
+     * @return property wrapper value around Boolean
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)
+      value?.let {
+        return it.asString.toBoolean()
+      }
+      return null
+    }
+    /**
+     * Set the fillConstructBridgeGuardRail property
+     *
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Boolean
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)
+      }
+    }
+
+  /**
    * The fillSortKey property
    *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -81,6 +114,72 @@ class PolygonAnnotation(
         jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY, value)
       } else {
         jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)
+      }
+    }
+
+  /**
+   * The fillBridgeGuardRailColor property in Int
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  var fillBridgeGuardRailColorInt: Int?
+    /**
+     * Get the fillBridgeGuardRailColor property
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the fillBridgeGuardRailColor property
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        jsonObject.addProperty(
+          PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      }
+    }
+
+  /**
+   * The fillBridgeGuardRailColor property in String
+   *
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  var fillBridgeGuardRailColorString: String?
+    /**
+     * Get the fillBridgeGuardRailColor property
+     * @return color value for String
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillBridgeGuardRailColor property
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param color value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
       }
     }
 
@@ -283,6 +382,72 @@ class PolygonAnnotation(
     }
 
   /**
+   * The fillTunnelStructureColor property in Int
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  var fillTunnelStructureColorInt: Int?
+    /**
+     * Get the fillTunnelStructureColor property
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the fillTunnelStructureColor property
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        jsonObject.addProperty(
+          PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      }
+    }
+
+  /**
+   * The fillTunnelStructureColor property in String
+   *
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  var fillTunnelStructureColorString: String?
+    /**
+     * Get the fillTunnelStructureColor property
+     * @return color value for String
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillTunnelStructureColor property
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param color value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      }
+    }
+
+  /**
    * The fillZOffset property
    *
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
@@ -312,6 +477,39 @@ class PolygonAnnotation(
         jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET, value)
       } else {
         jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+      }
+    }
+
+  /**
+   * The fillBridgeGuardRailColorUseTheme property
+   *
+   * This property defines whether the `fillBridgeGuardRailColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillBridgeGuardRailColorUseTheme: String?
+    /**
+     * Get the fillBridgeGuardRailColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillBridgeGuardRailColorUseTheme property
+     *
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)
       }
     }
 
@@ -382,6 +580,39 @@ class PolygonAnnotation(
     }
 
   /**
+   * The fillTunnelStructureColorUseTheme property
+   *
+   * This property defines whether the `fillTunnelStructureColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  var fillTunnelStructureColorUseTheme: String?
+    /**
+     * Get the fillTunnelStructureColorUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillTunnelStructureColorUseTheme property
+     *
+     * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -415,8 +646,14 @@ class PolygonAnnotation(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)
+    }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)
+    }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
     }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)
@@ -430,14 +667,23 @@ class PolygonAnnotation(
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)
     }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+    }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)
+    }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)
     }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME)
     }
     jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)?.let {
       annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)
+    }
+    jsonObject.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)?.let {
+      annotationManager.enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)
     }
   }
 

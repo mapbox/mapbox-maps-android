@@ -20,9 +20,11 @@ import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
  */
 @Stable
 public class PolygonAnnotationGroupState private constructor(
+  initialFillConstructBridgeGuardRail: Boolean?,
   initialFillElevationReference: FillElevationReference?,
   initialFillSortKey: Double?,
   initialFillAntialias: Boolean?,
+  initialFillBridgeGuardRailColor: Color?,
   initialFillColor: Color?,
   initialFillEmissiveStrength: Double?,
   initialFillOpacity: Double?,
@@ -30,15 +32,20 @@ public class PolygonAnnotationGroupState private constructor(
   initialFillPattern: String?,
   initialFillTranslate: List<Double>?,
   initialFillTranslateAnchor: FillTranslateAnchor?,
+  initialFillTunnelStructureColor: Color?,
   initialFillZOffset: Double?,
+  initialFillBridgeGuardRailColorUseTheme: String?,
   initialFillColorUseTheme: String?,
   initialFillOutlineColorUseTheme: String?,
+  initialFillTunnelStructureColorUseTheme: String?,
   initialPolygonAnnotationGroupInteractionsState: PolygonAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
+    initialFillConstructBridgeGuardRail = null,
     initialFillElevationReference = null,
     initialFillSortKey = null,
     initialFillAntialias = null,
+    initialFillBridgeGuardRailColor = null,
     initialFillColor = null,
     initialFillEmissiveStrength = null,
     initialFillOpacity = null,
@@ -46,9 +53,12 @@ public class PolygonAnnotationGroupState private constructor(
     initialFillPattern = null,
     initialFillTranslate = null,
     initialFillTranslateAnchor = null,
+    initialFillTunnelStructureColor = null,
     initialFillZOffset = null,
+    initialFillBridgeGuardRailColorUseTheme = null,
     initialFillColorUseTheme = null,
     initialFillOutlineColorUseTheme = null,
+    initialFillTunnelStructureColorUseTheme = null,
     initialPolygonAnnotationGroupInteractionsState = PolygonAnnotationGroupInteractionsState(),
   )
 
@@ -56,6 +66,11 @@ public class PolygonAnnotationGroupState private constructor(
    * Holds all interactions with [PointAnnotationGroup]
    */
   public var interactionsState: PolygonAnnotationGroupInteractionsState by mutableStateOf(initialPolygonAnnotationGroupInteractionsState)
+  /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   */
+  @MapboxExperimental
+  public var fillConstructBridgeGuardRail: Boolean? by mutableStateOf(initialFillConstructBridgeGuardRail)
   /**
    * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
@@ -69,6 +84,11 @@ public class PolygonAnnotationGroupState private constructor(
    * Whether or not the fill should be antialiased. Default value: true.
    */
   public var fillAntialias: Boolean? by mutableStateOf(initialFillAntialias)
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  public var fillBridgeGuardRailColor: Color? by mutableStateOf(initialFillBridgeGuardRailColor)
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
    */
@@ -98,10 +118,20 @@ public class PolygonAnnotationGroupState private constructor(
    */
   public var fillTranslateAnchor: FillTranslateAnchor? by mutableStateOf(initialFillTranslateAnchor)
   /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  public var fillTunnelStructureColor: Color? by mutableStateOf(initialFillTunnelStructureColor)
+  /**
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
   public var fillZOffset: Double? by mutableStateOf(initialFillZOffset)
+  /**
+   * This property defines whether the `fillBridgeGuardRailColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var fillBridgeGuardRailColorUseTheme: String? by mutableStateOf(initialFillBridgeGuardRailColorUseTheme)
   /**
    * This property defines whether the `fillColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
    */
@@ -112,7 +142,17 @@ public class PolygonAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var fillOutlineColorUseTheme: String? by mutableStateOf(initialFillOutlineColorUseTheme)
+  /**
+   * This property defines whether the `fillTunnelStructureColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  public var fillTunnelStructureColorUseTheme: String? by mutableStateOf(initialFillTunnelStructureColorUseTheme)
 
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillConstructBridgeGuardRail(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillConstructBridgeGuardRail = fillConstructBridgeGuardRail
+  }
   @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateFillElevationReference(annotationManager: PolygonAnnotationManager) {
@@ -125,6 +165,11 @@ public class PolygonAnnotationGroupState private constructor(
   @Composable
   private fun UpdateFillAntialias(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillAntialias = fillAntialias
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillBridgeGuardRailColor(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillBridgeGuardRailColorString = fillBridgeGuardRailColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
   }
   @Composable
   private fun UpdateFillColor(annotationManager: PolygonAnnotationManager) {
@@ -156,8 +201,18 @@ public class PolygonAnnotationGroupState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
+  private fun UpdateFillTunnelStructureColor(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillTunnelStructureColorString = fillTunnelStructureColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateFillZOffset(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillZOffset = fillZOffset
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillBridgeGuardRailColorUseTheme(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillBridgeGuardRailColorUseTheme = fillBridgeGuardRailColorUseTheme
   }
   @Composable
   @OptIn(MapboxExperimental::class)
@@ -169,12 +224,19 @@ public class PolygonAnnotationGroupState private constructor(
   private fun UpdateFillOutlineColorUseTheme(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillOutlineColorUseTheme = fillOutlineColorUseTheme
   }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateFillTunnelStructureColorUseTheme(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillTunnelStructureColorUseTheme = fillTunnelStructureColorUseTheme
+  }
 
   @Composable
   internal fun UpdateProperties(annotationManager: PolygonAnnotationManager) {
+    UpdateFillConstructBridgeGuardRail(annotationManager)
     UpdateFillElevationReference(annotationManager)
     UpdateFillSortKey(annotationManager)
     UpdateFillAntialias(annotationManager)
+    UpdateFillBridgeGuardRailColor(annotationManager)
     UpdateFillColor(annotationManager)
     UpdateFillEmissiveStrength(annotationManager)
     UpdateFillOpacity(annotationManager)
@@ -182,9 +244,12 @@ public class PolygonAnnotationGroupState private constructor(
     UpdateFillPattern(annotationManager)
     UpdateFillTranslate(annotationManager)
     UpdateFillTranslateAnchor(annotationManager)
+    UpdateFillTunnelStructureColor(annotationManager)
     UpdateFillZOffset(annotationManager)
+    UpdateFillBridgeGuardRailColorUseTheme(annotationManager)
     UpdateFillColorUseTheme(annotationManager)
     UpdateFillOutlineColorUseTheme(annotationManager)
+    UpdateFillTunnelStructureColorUseTheme(annotationManager)
   }
 }
 

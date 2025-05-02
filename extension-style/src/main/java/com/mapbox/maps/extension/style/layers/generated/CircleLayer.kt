@@ -237,6 +237,72 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   // Property getters and setters
 
   /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  val circleElevationReference: CircleElevationReference?
+    /**
+     * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * Use static method [CircleLayer.defaultCircleElevationReference] to get the default property.
+     *
+     * @return CircleElevationReference
+     */
+    get() {
+      getPropertyValue<String?>("circle-elevation-reference")?.let {
+        return CircleElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * Use static method [CircleLayer.defaultCircleElevationReference] to set the default property.
+   *
+   * @param circleElevationReference value of circleElevationReference
+   */
+  @MapboxExperimental
+  override fun circleElevationReference(circleElevationReference: CircleElevationReference): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-elevation-reference", circleElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * This is an Expression representation of "circle-elevation-reference".
+   *
+   */
+  @MapboxExperimental
+  val circleElevationReferenceAsExpression: Expression?
+    /**
+     * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * Get the CircleElevationReference property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleElevationReferenceAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValue("circle-elevation-reference")
+        ?: circleElevationReference?.let {
+          Expression.literal(it.value)
+        }
+
+  /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * Use static method [CircleLayer.defaultCircleElevationReferenceAsExpression] to set the default property.
+   *
+   * @param circleElevationReference value of circleElevationReference as Expression
+   */
+  @MapboxExperimental
+  override fun circleElevationReference(circleElevationReference: Expression): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-elevation-reference", circleElevationReference)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   val circleSortKey: Double?
@@ -1528,6 +1594,48 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "maxzoom").silentUnwrap()
 
     /**
+     * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     */
+    @MapboxExperimental
+    val defaultCircleElevationReference: CircleElevationReference?
+      /**
+       * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+       *
+       * Get the default value of CircleElevationReference property
+       *
+       * @return CircleElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference").silentUnwrap<String>()?.let {
+          return CircleElevationReference.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+     *
+     * This is an Expression representation of "circle-elevation-reference".
+     *
+     */
+    @MapboxExperimental
+    val defaultCircleElevationReferenceAsExpression: Expression?
+      /**
+       * Get default value of the CircleElevationReference property as an Expression
+       *
+       * @return CircleElevationReference
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultCircleElevationReference?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      */
     val defaultCircleSortKey: Double?
@@ -2286,6 +2394,22 @@ interface CircleLayerDsl {
   fun maxZoom(maxZoom: Double): CircleLayer
 
   // Property getters and setters
+
+  /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * @param circleElevationReference value of circleElevationReference
+   */
+  @MapboxExperimental
+  fun circleElevationReference(circleElevationReference: CircleElevationReference = CircleElevationReference.NONE): CircleLayer
+
+  /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   *
+   * @param circleElevationReference value of circleElevationReference as Expression
+   */
+  @MapboxExperimental
+  fun circleElevationReference(circleElevationReference: Expression): CircleLayer
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.

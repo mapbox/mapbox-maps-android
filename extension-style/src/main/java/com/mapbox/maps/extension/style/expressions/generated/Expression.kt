@@ -299,7 +299,7 @@ class Expression : Value {
     }
 
     /**
-     * Returns the arccosine of the input.
+     * Returns the arccosine of the input, in radians between −π/2 and π/2.
      */
     fun acos(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.acos(block))
@@ -343,7 +343,7 @@ class Expression : Value {
     }
 
     /**
-     * Returns the arcsine of the input.
+     * Returns the arcsine of the input, in radians between −π/2 and π/2.
      */
     fun asin(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.asin(block))
@@ -357,7 +357,15 @@ class Expression : Value {
     }
 
     /**
-     * Returns the arctangent of the input.
+     * Retrieves an item from an array. If the array contains numeric values and the provided index
+     * is non-integer, the expression returns an interpolated value between adjacent items.
+     */
+    fun atInterpolated(block: InterpolatorBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.atInterpolated(block))
+    }
+
+    /**
+     * Returns the arctangent of the input, in radians between −π/2 and π/2.
      */
     fun atan(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.atan(block))
@@ -416,14 +424,14 @@ class Expression : Value {
     }
 
     /**
-     * Retrieves the configuration value for the given option.
+     * Retrieves the configuration value for the given option. Returns null if the requested option is missing.
      */
     fun config(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.config(block))
     }
 
     /**
-     * Returns the cosine of the input.
+     * Returns the cosine of the input, interpreted as radians.
      */
     fun cos(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.cos(block))
@@ -861,7 +869,7 @@ class Expression : Value {
     }
 
     /**
-     * Returns the sine of the input.
+     * Returns the sine of the input, interpreted as radians.
      */
     fun sin(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sin(block))
@@ -912,7 +920,7 @@ class Expression : Value {
     }
 
     /**
-     * Returns the tangent of the input.
+     * Returns the tangent of the input, interpreted as radians.
      */
     fun tan(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.tan(block))
@@ -2176,7 +2184,7 @@ class Expression : Value {
     fun accumulated(): Expression = ExpressionBuilder("accumulated").build()
 
     /**
-     * Returns the arccosine of the input.
+     * Returns the arccosine of the input, in radians between −π/2 and π/2.
      */
     @JvmStatic
     fun acos(vararg expressions: Expression): Expression {
@@ -2263,7 +2271,7 @@ class Expression : Value {
       ExpressionBuilder("array").apply(block).build()
 
     /**
-     * Returns the arcsine of the input.
+     * Returns the arcsine of the input, in radians between −π/2 and π/2.
      */
     @JvmStatic
     fun asin(vararg expressions: Expression): Expression {
@@ -2299,7 +2307,26 @@ class Expression : Value {
       ExpressionBuilder("at").apply(block).build()
 
     /**
-     * Returns the arctangent of the input.
+     * Retrieves an item from an array. If the array contains numeric values and the provided index
+     * is non-integer, the expression returns an interpolated value between adjacent items.
+     */
+    @JvmStatic
+    fun atInterpolated(vararg expressions: Expression): Expression {
+      val builder = InterpolatorBuilder("at-interpolated")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "at-interpolated".
+     */
+    fun atInterpolated(block: InterpolatorBuilder.() -> Unit): Expression =
+      InterpolatorBuilder("at-interpolated").apply(block).build()
+
+    /**
+     * Returns the arctangent of the input, in radians between −π/2 and π/2.
      */
     @JvmStatic
     fun atan(vararg expressions: Expression): Expression {
@@ -2467,7 +2494,7 @@ class Expression : Value {
       ExpressionBuilder("concat").apply(block).build()
 
     /**
-     * Retrieves the configuration value for the given option.
+     * Retrieves the configuration value for the given option. Returns null if the requested option is missing.
      */
     @JvmStatic
     fun config(vararg expressions: Expression): Expression {
@@ -2485,7 +2512,7 @@ class Expression : Value {
       ExpressionBuilder("config").apply(block).build()
 
     /**
-     * Returns the cosine of the input.
+     * Returns the cosine of the input, interpreted as radians.
      */
     @JvmStatic
     fun cos(vararg expressions: Expression): Expression {
@@ -3337,7 +3364,7 @@ class Expression : Value {
       ExpressionBuilder("round").apply(block).build()
 
     /**
-     * Returns the sine of the input.
+     * Returns the sine of the input, interpreted as radians.
      */
     @JvmStatic
     fun sin(vararg expressions: Expression): Expression {
@@ -3442,7 +3469,7 @@ class Expression : Value {
       ExpressionBuilder("string").apply(block).build()
 
     /**
-     * Returns the tangent of the input.
+     * Returns the tangent of the input, interpreted as radians.
      */
     @JvmStatic
     fun tan(vararg expressions: Expression): Expression {

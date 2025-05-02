@@ -343,6 +343,198 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_atInterpolated_exponential() {
+    val expression = atInterpolated {
+      exponential {
+        literal(0.5)
+      }
+      zoom()
+      stop {
+        literal(1.0)
+        color(Color.RED)
+      }
+      stop {
+        literal(5.0)
+        color(Color.BLUE)
+      }
+      stop {
+        literal(10.0)
+        color(Color.GREEN)
+      }
+    }
+    assertEquals("assert at-interpolated expression", "[at-interpolated, [exponential, 0.5], [zoom], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 5.0, [rgba, 0.0, 0.0, 255.0, 1.0], 10.0, [rgba, 0.0, 255.0, 0.0, 1.0]]", expression.toString())
+  }
+
+  @Test
+  fun dsl_expression_atInterpolated_cubicBezier() {
+    val expression = atInterpolated {
+      cubicBezier {
+        literal(0.42)
+        literal(0.0)
+        literal(1.0)
+        literal(1.0)
+      }
+      zoom()
+      stop {
+        literal(1.0)
+        color(Color.RED)
+      }
+      stop {
+        literal(5.0)
+        color(Color.BLUE)
+      }
+      stop {
+        literal(10.0)
+        color(Color.GREEN)
+      }
+    }
+    assertEquals("assert at-interpolated expression", "[at-interpolated, [cubic-bezier, 0.42, 0.0, 1.0, 1.0], [zoom], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 5.0, [rgba, 0.0, 0.0, 255.0, 1.0], 10.0, [rgba, 0.0, 255.0, 0.0, 1.0]]", expression.toString())
+  }
+
+  @Test
+  fun dls_expression_atInterpolated_linear() {
+    val expression = atInterpolated {
+      linear()
+      zoom()
+      stop {
+        literal(12)
+        step {
+          get { literal("stroke-width") }
+          color(Color.BLACK)
+          stop {
+            literal(1.0)
+            color(Color.RED)
+          }
+          stop {
+            literal(2.0)
+            color(Color.WHITE)
+          }
+          stop {
+            literal(3.0)
+            color(Color.BLUE)
+          }
+        }
+      }
+      stop {
+        literal(15)
+        step {
+          get { literal("stroke-width") }
+          color(Color.BLACK)
+          stop {
+            literal(1.0)
+            color(Color.YELLOW)
+          }
+          stop {
+            literal(2.0)
+            color(Color.LTGRAY)
+          }
+          stop {
+            literal(3.0)
+            color(Color.BLUE)
+          }
+        }
+      }
+      stop {
+        literal(18)
+        step {
+          get { literal("stroke-width") }
+          color(Color.BLACK)
+          stop {
+            literal(1.0)
+            color(Color.WHITE)
+          }
+          stop {
+            literal(2.0)
+            color(Color.GRAY)
+          }
+          stop {
+            literal(3.0)
+            color(Color.GREEN)
+          }
+        }
+      }
+    }
+    assertEquals("assert at-interpolated expression", "[at-interpolated, [linear], [zoom], 12, [step, [get, stroke-width], [rgba, 0.0, 0.0, 0.0, 1.0], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 2.0, [rgba, 255.0, 255.0, 255.0, 1.0], 3.0, [rgba, 0.0, 0.0, 255.0, 1.0]], 15, [step, [get, stroke-width], [rgba, 0.0, 0.0, 0.0, 1.0], 1.0, [rgba, 255.0, 255.0, 0.0, 1.0], 2.0, [rgba, 204.0, 204.0, 204.0, 1.0], 3.0, [rgba, 0.0, 0.0, 255.0, 1.0]], 18, [step, [get, stroke-width], [rgba, 0.0, 0.0, 0.0, 1.0], 1.0, [rgba, 255.0, 255.0, 255.0, 1.0], 2.0, [rgba, 136.0, 136.0, 136.0, 1.0], 3.0, [rgba, 0.0, 255.0, 0.0, 1.0]]]", expression.toString())
+  }
+
+  @Test
+  fun expression_atInterpolated_exponential() {
+    val expression = Expression.atInterpolated(
+      Expression.exponential(literal(0.5)),
+      Expression.zoom(),
+      Expression.literal(1.0),
+      Expression.color(Color.RED),
+      Expression.literal(5.0),
+      Expression.color(Color.BLUE),
+      Expression.literal(10.0),
+      Expression.color(Color.GREEN)
+    )
+    assertEquals("assert at-interpolated expression", "[at-interpolated, [exponential, 0.5], [zoom], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 5.0, [rgba, 0.0, 0.0, 255.0, 1.0], 10.0, [rgba, 0.0, 255.0, 0.0, 1.0]]", expression.toString())
+  }
+
+  @Test
+  fun expression_atInterpolated_cubicBezier() {
+    val expression = Expression.atInterpolated(
+      Expression.cubicBezier(
+        Expression.literal(0.42),
+        Expression.literal(0.0),
+        Expression.literal(1.0),
+        Expression.literal(1.0)
+      ),
+      Expression.zoom(),
+      Expression.literal(1.0),
+      Expression.color(Color.RED),
+      Expression.literal(5.0),
+      Expression.color(Color.BLUE),
+      Expression.literal(10.0),
+      Expression.color(Color.GREEN)
+    )
+    assertEquals("assert at-interpolated expression", "[at-interpolated, [cubic-bezier, 0.42, 0.0, 1.0, 1.0], [zoom], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 5.0, [rgba, 0.0, 0.0, 255.0, 1.0], 10.0, [rgba, 0.0, 255.0, 0.0, 1.0]]", expression.toString())
+  }
+
+  @Test
+  fun expression_atInterpolated_linear() {
+    val expression = Expression.atInterpolated(
+      Expression.linear(),
+      Expression.zoom(),
+      Expression.literal(12),
+      Expression.step(
+        Expression.get(Expression.literal("stroke-width")),
+        Expression.color(Color.BLACK),
+        Expression.literal(1.0),
+        Expression.color(Color.RED),
+        Expression.literal(2.0),
+        Expression.color(Color.WHITE),
+        Expression.literal(3.0),
+        Expression.color(Color.BLUE)
+      ),
+      Expression.literal(15),
+      Expression.step(
+        Expression.get(Expression.literal("stroke-width")),
+        Expression.color(Color.BLACK),
+        Expression.literal(1.0),
+        Expression.color(Color.YELLOW),
+        Expression.literal(2.0),
+        Expression.color(Color.LTGRAY),
+        Expression.literal(3.0),
+        Expression.color(Color.BLUE)
+      ),
+      Expression.literal(18),
+      Expression.step(
+        Expression.get(Expression.literal("stroke-width")),
+        Expression.color(Color.BLACK),
+        Expression.literal(1.0),
+        Expression.color(Color.WHITE),
+        Expression.literal(2.0),
+        Expression.color(Color.GRAY),
+        Expression.literal(3.0),
+        Expression.color(Color.GREEN)
+      )
+    )
+    assertEquals("assert at-interpolated expression", "[at-interpolated, [linear], [zoom], 12, [step, [get, stroke-width], [rgba, 0.0, 0.0, 0.0, 1.0], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 2.0, [rgba, 255.0, 255.0, 255.0, 1.0], 3.0, [rgba, 0.0, 0.0, 255.0, 1.0]], 15, [step, [get, stroke-width], [rgba, 0.0, 0.0, 0.0, 1.0], 1.0, [rgba, 255.0, 255.0, 0.0, 1.0], 2.0, [rgba, 204.0, 204.0, 204.0, 1.0], 3.0, [rgba, 0.0, 0.0, 255.0, 1.0]], 18, [step, [get, stroke-width], [rgba, 0.0, 0.0, 0.0, 1.0], 1.0, [rgba, 255.0, 255.0, 255.0, 1.0], 2.0, [rgba, 136.0, 136.0, 136.0, 1.0], 3.0, [rgba, 0.0, 255.0, 0.0, 1.0]]]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_atan() {
     val expression = atan {
       // test builder function

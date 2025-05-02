@@ -1144,6 +1144,59 @@ class TextTransform private constructor(override val value: String) : LayerPrope
     }
   }
 }
+// CIRCLE_ELEVATION_REFERENCE: Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset.
+/**
+ * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class CircleElevationReference private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is CircleElevationReference &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "CircleElevationReference(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Elevated rendering is disabled.
+     */
+    @JvmField
+    val NONE = CircleElevationReference("none")
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features that should exist only on top of road polygons.
+     */
+    @JvmField
+    val HD_ROAD_MARKUP = CircleElevationReference("hd-road-markup")
+
+    /**
+     * Utility function to get [CircleElevationReference] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): CircleElevationReference {
+      return when (value) {
+        "NONE" -> NONE
+        "HD_ROAD_MARKUP" -> HD_ROAD_MARKUP
+        else -> throw RuntimeException("CircleElevationReference.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // FILL_TRANSLATE_ANCHOR: Controls the frame of reference for `fill-translate`.
 /**
  * Controls the frame of reference for `fill-translate`.

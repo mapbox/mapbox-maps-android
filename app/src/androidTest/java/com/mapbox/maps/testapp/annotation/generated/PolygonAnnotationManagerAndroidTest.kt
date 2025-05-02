@@ -39,6 +39,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillConstructBridgeGuardRail() {
+    rule.runOnUiThread {
+      val expectedValue = true
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillConstructBridgeGuardRail = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillConstructBridgeGuardRail)
+      polygonAnnotationManager.fillConstructBridgeGuardRail = null
+      assertEquals(null, polygonAnnotationManager.fillConstructBridgeGuardRail)
+    }
+  }
+
+  @Test
   fun testFillElevationReference() {
     rule.runOnUiThread {
       val expectedValue = FillElevationReference.NONE
@@ -72,6 +84,21 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polygonAnnotationManager.fillAntialias)
       polygonAnnotationManager.fillAntialias = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias").silentUnwrap(), polygonAnnotationManager.fillAntialias)
+    }
+  }
+
+  @Test
+  fun testFillBridgeGuardRailColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillBridgeGuardRailColorString = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillBridgeGuardRailColorString)
+      polygonAnnotationManager.fillBridgeGuardRailColorString = null
+      assertEquals(
+        null,
+        polygonAnnotationManager.fillBridgeGuardRailColorString
+      )
     }
   }
 
@@ -167,6 +194,21 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillTunnelStructureColor() {
+    rule.runOnUiThread {
+      val expectedValue = "rgba(0, 0, 0, 1)"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillTunnelStructureColorString = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillTunnelStructureColorString)
+      polygonAnnotationManager.fillTunnelStructureColorString = null
+      assertEquals(
+        null,
+        polygonAnnotationManager.fillTunnelStructureColorString
+      )
+    }
+  }
+
+  @Test
   fun testFillZOffset() {
     rule.runOnUiThread {
       val expectedValue = 1.0
@@ -191,6 +233,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillBridgeGuardRailColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "default"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillBridgeGuardRailColorUseTheme = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillBridgeGuardRailColorUseTheme)
+      polygonAnnotationManager.fillBridgeGuardRailColorUseTheme = null
+      assertEquals(null, polygonAnnotationManager.fillBridgeGuardRailColorUseTheme)
+    }
+  }
+
+  @Test
   fun testFillColorUseTheme() {
     rule.runOnUiThread {
       val expectedValue = "default"
@@ -211,6 +265,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(expectedValue, polygonAnnotationManager.fillOutlineColorUseTheme)
       polygonAnnotationManager.fillOutlineColorUseTheme = null
       assertEquals(null, polygonAnnotationManager.fillOutlineColorUseTheme)
+    }
+  }
+
+  @Test
+  fun testFillTunnelStructureColorUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "default"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillTunnelStructureColorUseTheme = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillTunnelStructureColorUseTheme)
+      polygonAnnotationManager.fillTunnelStructureColorUseTheme = null
+      assertEquals(null, polygonAnnotationManager.fillTunnelStructureColorUseTheme)
     }
   }
 

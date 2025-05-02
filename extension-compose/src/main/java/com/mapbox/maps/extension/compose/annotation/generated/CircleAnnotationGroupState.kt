@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference
 import com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment
 import com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale
 import com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor
@@ -21,6 +22,7 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
  */
 @Stable
 public class CircleAnnotationGroupState private constructor(
+  initialCircleElevationReference: CircleElevationReference?,
   initialCircleSortKey: Double?,
   initialCircleBlur: Double?,
   initialCircleColor: Color?,
@@ -39,6 +41,7 @@ public class CircleAnnotationGroupState private constructor(
   initialCircleAnnotationGroupInteractionsState: CircleAnnotationGroupInteractionsState,
 ) {
   public constructor() : this(
+    initialCircleElevationReference = null,
     initialCircleSortKey = null,
     initialCircleBlur = null,
     initialCircleColor = null,
@@ -61,6 +64,11 @@ public class CircleAnnotationGroupState private constructor(
    * Holds all interactions with [PointAnnotationGroup]
    */
   public var interactionsState: CircleAnnotationGroupInteractionsState by mutableStateOf(initialCircleAnnotationGroupInteractionsState)
+  /**
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  public var circleElevationReference: CircleElevationReference? by mutableStateOf(initialCircleElevationReference)
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
@@ -124,6 +132,11 @@ public class CircleAnnotationGroupState private constructor(
   @MapboxExperimental
   public var circleStrokeColorUseTheme: String? by mutableStateOf(initialCircleStrokeColorUseTheme)
 
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateCircleElevationReference(annotationManager: CircleAnnotationManager) {
+    annotationManager.circleElevationReference = circleElevationReference
+  }
   @Composable
   private fun UpdateCircleSortKey(annotationManager: CircleAnnotationManager) {
     annotationManager.circleSortKey = circleSortKey
@@ -189,6 +202,7 @@ public class CircleAnnotationGroupState private constructor(
 
   @Composable
   internal fun UpdateProperties(annotationManager: CircleAnnotationManager) {
+    UpdateCircleElevationReference(annotationManager)
     UpdateCircleSortKey(annotationManager)
     UpdateCircleBlur(annotationManager)
     UpdateCircleColor(annotationManager)

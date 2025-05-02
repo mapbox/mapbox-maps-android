@@ -1556,6 +1556,60 @@ public data class TextTranslateAnchorValue(public override val value: Value) : H
 }
 
 /**
+ * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class CircleElevationReferenceValue(public override val value: Value) : HoldsValue {
+  /**
+   * Construct the [CircleElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: CircleElevationReferenceValue = CircleElevationReferenceValue(Value.valueOf("CircleElevationReferenceValue.INITIAL"))
+
+    /**
+     * Default value for [CircleElevationReferenceValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: CircleElevationReferenceValue = CircleElevationReferenceValue(Value.nullValue())
+
+    /**
+     * Elevated rendering is disabled.
+     */
+    @JvmField
+    public val NONE: CircleElevationReferenceValue = CircleElevationReferenceValue(Value("none"))
+
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features that should exist only on top of road polygons.
+     */
+    @JvmField
+    public val HD_ROAD_MARKUP: CircleElevationReferenceValue = CircleElevationReferenceValue(Value("hd-road-markup"))
+  }
+}
+
+/**
  * Orientation of circle when map is pitched. Default value: "viewport".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.

@@ -5,6 +5,7 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for CircleLayer
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class CircleLayerTest : BaseStyleTest() {
 
@@ -67,6 +69,29 @@ class CircleLayerTest : BaseStyleTest() {
     assertEquals(expression.toString(), layer.filter.toString())
   }
   // Property getters and setters
+
+  @Test
+  @UiThreadTest
+  fun circleElevationReferenceTest() {
+    val layer = circleLayer("id", "source") {
+      circleElevationReference(CircleElevationReference.NONE)
+    }
+    setupLayer(layer)
+    assertEquals(CircleElevationReference.NONE, layer.circleElevationReference)
+  }
+
+  @Test
+  @UiThreadTest
+  fun circleElevationReferenceAsExpressionTest() {
+    val expression = literal("none")
+    val layer = circleLayer("id", "source") {
+      circleElevationReference(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.circleElevationReferenceAsExpression.toString())
+    assertEquals(CircleElevationReference.NONE, layer.circleElevationReference!!)
+  }
 
   @Test
   @UiThreadTest
@@ -807,6 +832,8 @@ class CircleLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", CircleLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", CircleLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", CircleLayer.defaultMaxZoom)
+    assertNotNull("defaultCircleElevationReference should not be null", CircleLayer.defaultCircleElevationReference)
+    assertNotNull("defaultCircleElevationReferenceAsExpression should not be null", CircleLayer.defaultCircleElevationReferenceAsExpression)
     assertNotNull("defaultCircleSortKey should not be null", CircleLayer.defaultCircleSortKey)
     assertNotNull("defaultCircleSortKeyAsExpression should not be null", CircleLayer.defaultCircleSortKeyAsExpression)
     assertNotNull("defaultCircleBlur should not be null", CircleLayer.defaultCircleBlur)
@@ -859,6 +886,7 @@ class CircleLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val circleElevationReferenceTestValue = CircleElevationReference.NONE
     val circleSortKeyTestValue = 1.0
     val circleBlurTestValue = 1.0
     val circleColorTestValue = "rgba(0, 0, 0, 1)"
@@ -882,6 +910,7 @@ class CircleLayerTest : BaseStyleTest() {
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
+      circleElevationReference(circleElevationReferenceTestValue)
       circleSortKey(circleSortKeyTestValue)
       circleBlur(circleBlurTestValue)
       circleColor(circleColorTestValue)
@@ -910,6 +939,7 @@ class CircleLayerTest : BaseStyleTest() {
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(circleElevationReferenceTestValue, cachedLayer.circleElevationReference)
     assertEquals(circleSortKeyTestValue, cachedLayer.circleSortKey)
     assertEquals(circleBlurTestValue, cachedLayer.circleBlur)
     assertEquals(circleColorTestValue, cachedLayer.circleColor)

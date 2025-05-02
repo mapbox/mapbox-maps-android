@@ -237,6 +237,66 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   // Property getters and setters
 
   /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   */
+  @MapboxExperimental
+  val fillConstructBridgeGuardRail: Boolean?
+    /**
+     * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+     *
+     * Use static method [FillLayer.defaultFillConstructBridgeGuardRail] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("fill-construct-bridge-guard-rail")
+    }
+
+  /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   *
+   * Use static method [FillLayer.defaultFillConstructBridgeGuardRail] to set the default property.
+   *
+   * @param fillConstructBridgeGuardRail value of fillConstructBridgeGuardRail
+   */
+  @MapboxExperimental
+  override fun fillConstructBridgeGuardRail(fillConstructBridgeGuardRail: Boolean): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-construct-bridge-guard-rail", fillConstructBridgeGuardRail)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   *
+   * This is an Expression representation of "fill-construct-bridge-guard-rail".
+   *
+   */
+  @MapboxExperimental
+  val fillConstructBridgeGuardRailAsExpression: Expression?
+    /**
+     * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+     *
+     * Get the FillConstructBridgeGuardRail property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillConstructBridgeGuardRailAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-construct-bridge-guard-rail")
+
+  /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   *
+   * Use static method [FillLayer.defaultFillConstructBridgeGuardRailAsExpression] to set the default property.
+   *
+   * @param fillConstructBridgeGuardRail value of fillConstructBridgeGuardRail as Expression
+   */
+  @MapboxExperimental
+  override fun fillConstructBridgeGuardRail(fillConstructBridgeGuardRail: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-construct-bridge-guard-rail", fillConstructBridgeGuardRail)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
   @MapboxExperimental
@@ -411,6 +471,195 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   override fun fillAntialias(fillAntialias: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-antialias", fillAntialias)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  val fillBridgeGuardRailColor: String?
+    /**
+     * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+     *
+     * Use static method [FillLayer.defaultFillBridgeGuardRailColor] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      fillBridgeGuardRailColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
+    }
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Use static method [FillLayer.defaultFillBridgeGuardRailColor] to set the default property.
+   *
+   * @param fillBridgeGuardRailColor value of fillBridgeGuardRailColor
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColor(fillBridgeGuardRailColor: String): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-bridge-guard-rail-color", fillBridgeGuardRailColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * This is an Expression representation of "fill-bridge-guard-rail-color".
+   *
+   */
+  @MapboxExperimental
+  val fillBridgeGuardRailColorAsExpression: Expression?
+    /**
+     * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+     *
+     * Get the FillBridgeGuardRailColor property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillBridgeGuardRailColorAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValue("fill-bridge-guard-rail-color")
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Use static method [FillLayer.defaultFillBridgeGuardRailColorAsExpression] to set the default property.
+   *
+   * @param fillBridgeGuardRailColor value of fillBridgeGuardRailColor as Expression
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColor(fillBridgeGuardRailColor: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-bridge-guard-rail-color", fillBridgeGuardRailColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  val fillBridgeGuardRailColorAsColorInt: Int?
+    /**
+     * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+     *
+     * Use static method [FillLayer.defaultFillBridgeGuardRailColorAsColorInt] to get the default property.
+     *
+     * @return int representation of a rgba string color
+     */
+    @ColorInt
+    get() {
+      fillBridgeGuardRailColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Use static method [FillLayer.defaultFillBridgeGuardRailColorAsColorInt] to set the default property.
+   *
+   * @param fillBridgeGuardRailColor value of fillBridgeGuardRailColor
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColor(@ColorInt fillBridgeGuardRailColor: Int): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-bridge-guard-rail-color", colorIntToRgbaExpression(fillBridgeGuardRailColor))
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillBridgeGuardRailColor.
+   */
+  @MapboxExperimental
+  val fillBridgeGuardRailColorTransition: StyleTransition?
+    /**
+     * Get the FillBridgeGuardRailColor property transition options
+     *
+     * Use static method [FillLayer.defaultFillBridgeGuardRailColorTransition] to get the default property.
+     *
+     * @return transition options for String
+     */
+    get() {
+      return getPropertyValue("fill-bridge-guard-rail-color-transition")
+    }
+
+  /**
+   * Set the FillBridgeGuardRailColor property transition options
+   *
+   * Use static method [FillLayer.defaultFillBridgeGuardRailColorTransition] to set the default property.
+   *
+   * @param options transition options for String
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColorTransition(options: StyleTransition): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-bridge-guard-rail-color-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillBridgeGuardRailColorTransition].
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
+    fillBridgeGuardRailColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [fillBridgeGuardRailColor].
+   */
+  @MapboxExperimental
+  val fillBridgeGuardRailColorUseTheme: String?
+    /**
+     * Get the FillBridgeGuardRailColorUseTheme property
+     *
+     * Use static method [FillLayer.defaultFillBridgeGuardRailColorUseTheme] to get the default property.
+     *
+     * @return current FillBridgeGuardRailColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("fill-bridge-guard-rail-color-use-theme")
+    }
+
+  /**
+   * Set the FillBridgeGuardRailColorUseTheme as String
+   *
+   * Use static method [FillLayer.defaultFillBridgeGuardRailColorUseTheme] to get the default property.
+   *
+   * @param fillBridgeGuardRailColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColorUseTheme(fillBridgeGuardRailColorUseTheme: String): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-bridge-guard-rail-color-use-theme", fillBridgeGuardRailColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [fillBridgeGuardRailColor].
+   */
+  @MapboxExperimental
+  val fillBridgeGuardRailColorUseThemeAsExpression: Expression?
+    /**
+     * Get the FillBridgeGuardRailColorUseTheme property
+     *
+     * Use static method [FillLayer.defaultFillBridgeGuardRailColorUseTheme] to get the default property.
+     *
+     * @return current FillBridgeGuardRailColorUseTheme property as String
+     */
+    get() = getPropertyValueAsExpressionOrLiteralExpression("fill-bridge-guard-rail-color-use-theme")
+
+  /**
+   * Set the FillBridgeGuardRailColorUseTheme as Expression
+   *
+   * Use static method [FillLayer.defaultFillBridgeGuardRailColorUseTheme] to get the default property.
+   *
+   * @param fillBridgeGuardRailColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillBridgeGuardRailColorUseTheme(fillBridgeGuardRailColorUseTheme: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-bridge-guard-rail-color-use-theme", fillBridgeGuardRailColorUseTheme)
     setProperty(propertyValue)
   }
 
@@ -1163,6 +1412,195 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  val fillTunnelStructureColor: String?
+    /**
+     * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+     *
+     * Use static method [FillLayer.defaultFillTunnelStructureColor] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      fillTunnelStructureColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
+    }
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Use static method [FillLayer.defaultFillTunnelStructureColor] to set the default property.
+   *
+   * @param fillTunnelStructureColor value of fillTunnelStructureColor
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColor(fillTunnelStructureColor: String): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-tunnel-structure-color", fillTunnelStructureColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * This is an Expression representation of "fill-tunnel-structure-color".
+   *
+   */
+  @MapboxExperimental
+  val fillTunnelStructureColorAsExpression: Expression?
+    /**
+     * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+     *
+     * Get the FillTunnelStructureColor property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillTunnelStructureColorAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValue("fill-tunnel-structure-color")
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Use static method [FillLayer.defaultFillTunnelStructureColorAsExpression] to set the default property.
+   *
+   * @param fillTunnelStructureColor value of fillTunnelStructureColor as Expression
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColor(fillTunnelStructureColor: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-tunnel-structure-color", fillTunnelStructureColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  val fillTunnelStructureColorAsColorInt: Int?
+    /**
+     * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+     *
+     * Use static method [FillLayer.defaultFillTunnelStructureColorAsColorInt] to get the default property.
+     *
+     * @return int representation of a rgba string color
+     */
+    @ColorInt
+    get() {
+      fillTunnelStructureColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Use static method [FillLayer.defaultFillTunnelStructureColorAsColorInt] to set the default property.
+   *
+   * @param fillTunnelStructureColor value of fillTunnelStructureColor
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColor(@ColorInt fillTunnelStructureColor: Int): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-tunnel-structure-color", colorIntToRgbaExpression(fillTunnelStructureColor))
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillTunnelStructureColor.
+   */
+  @MapboxExperimental
+  val fillTunnelStructureColorTransition: StyleTransition?
+    /**
+     * Get the FillTunnelStructureColor property transition options
+     *
+     * Use static method [FillLayer.defaultFillTunnelStructureColorTransition] to get the default property.
+     *
+     * @return transition options for String
+     */
+    get() {
+      return getPropertyValue("fill-tunnel-structure-color-transition")
+    }
+
+  /**
+   * Set the FillTunnelStructureColor property transition options
+   *
+   * Use static method [FillLayer.defaultFillTunnelStructureColorTransition] to set the default property.
+   *
+   * @param options transition options for String
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColorTransition(options: StyleTransition): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-tunnel-structure-color-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillTunnelStructureColorTransition].
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
+    fillTunnelStructureColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Сolor theme override for [fillTunnelStructureColor].
+   */
+  @MapboxExperimental
+  val fillTunnelStructureColorUseTheme: String?
+    /**
+     * Get the FillTunnelStructureColorUseTheme property
+     *
+     * Use static method [FillLayer.defaultFillTunnelStructureColorUseTheme] to get the default property.
+     *
+     * @return current FillTunnelStructureColorUseTheme property as String
+     */
+    get() {
+      return getPropertyValue("fill-tunnel-structure-color-use-theme")
+    }
+
+  /**
+   * Set the FillTunnelStructureColorUseTheme as String
+   *
+   * Use static method [FillLayer.defaultFillTunnelStructureColorUseTheme] to get the default property.
+   *
+   * @param fillTunnelStructureColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColorUseTheme(fillTunnelStructureColorUseTheme: String): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-tunnel-structure-color-use-theme", fillTunnelStructureColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [fillTunnelStructureColor].
+   */
+  @MapboxExperimental
+  val fillTunnelStructureColorUseThemeAsExpression: Expression?
+    /**
+     * Get the FillTunnelStructureColorUseTheme property
+     *
+     * Use static method [FillLayer.defaultFillTunnelStructureColorUseTheme] to get the default property.
+     *
+     * @return current FillTunnelStructureColorUseTheme property as String
+     */
+    get() = getPropertyValueAsExpressionOrLiteralExpression("fill-tunnel-structure-color-use-theme")
+
+  /**
+   * Set the FillTunnelStructureColorUseTheme as Expression
+   *
+   * Use static method [FillLayer.defaultFillTunnelStructureColorUseTheme] to get the default property.
+   *
+   * @param fillTunnelStructureColorUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun fillTunnelStructureColorUseTheme(fillTunnelStructureColorUseTheme: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-tunnel-structure-color-use-theme", fillTunnelStructureColorUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
    */
   @MapboxExperimental
@@ -1319,6 +1757,45 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "maxzoom").silentUnwrap()
 
     /**
+     * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+     */
+    @MapboxExperimental
+    val defaultFillConstructBridgeGuardRail: Boolean?
+      /**
+       * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+       *
+       * Get the default value of FillConstructBridgeGuardRail property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-construct-bridge-guard-rail").silentUnwrap()
+      }
+
+    /**
+     * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+     *
+     * This is an Expression representation of "fill-construct-bridge-guard-rail".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillConstructBridgeGuardRailAsExpression: Expression?
+      /**
+       * Get default value of the FillConstructBridgeGuardRail property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-construct-bridge-guard-rail").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillConstructBridgeGuardRail?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
      */
     @MapboxExperimental
@@ -1432,6 +1909,105 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
           return Expression.literal(it)
         }
         return null
+      }
+
+    /**
+     * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+     */
+    @MapboxExperimental
+    val defaultFillBridgeGuardRailColor: String?
+      /**
+       * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+       *
+       * Get the default value of FillBridgeGuardRailColor property
+       *
+       * @return String
+       */
+      get() {
+        defaultFillBridgeGuardRailColorAsExpression?.let {
+          return rgbaExpressionToColorString(it)
+        }
+        return null
+      }
+
+    /**
+     * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+     *
+     * This is an Expression representation of "fill-bridge-guard-rail-color".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillBridgeGuardRailColorAsExpression: Expression?
+      /**
+       * Get default value of the FillBridgeGuardRailColor property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        return null
+      }
+
+    /**
+     * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+     */
+    @MapboxExperimental
+    val defaultFillBridgeGuardRailColorAsColorInt: Int?
+      /**
+       * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+       *
+       * Get the default value of FillBridgeGuardRailColor property as color int.
+       *
+       * @return int representation of a rgba string color
+       */
+      @ColorInt
+      get() {
+        defaultFillBridgeGuardRailColorAsExpression?.let {
+          return rgbaExpressionToColorInt(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillBridgeGuardRailColor.
+     */
+    @MapboxExperimental
+    val defaultFillBridgeGuardRailColorTransition: StyleTransition?
+      /**
+       * Get the FillBridgeGuardRailColor property transition options
+       *
+       * @return transition options for String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [fillBridgeGuardRailColor].
+     */
+    @MapboxExperimental
+    val defaultFillBridgeGuardRailColorUseTheme: String?
+      /**
+       * Get default value of the FillBridgeGuardRailColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [fillBridgeGuardRailColor].
+     */
+    @MapboxExperimental
+    val defaultFillBridgeGuardRailColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the FillBridgeGuardRailColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultFillBridgeGuardRailColorUseTheme?.let { Expression.literal(it) }
       }
 
     /**
@@ -1846,6 +2422,105 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+     */
+    @MapboxExperimental
+    val defaultFillTunnelStructureColor: String?
+      /**
+       * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+       *
+       * Get the default value of FillTunnelStructureColor property
+       *
+       * @return String
+       */
+      get() {
+        defaultFillTunnelStructureColorAsExpression?.let {
+          return rgbaExpressionToColorString(it)
+        }
+        return null
+      }
+
+    /**
+     * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+     *
+     * This is an Expression representation of "fill-tunnel-structure-color".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillTunnelStructureColorAsExpression: Expression?
+      /**
+       * Get default value of the FillTunnelStructureColor property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        return null
+      }
+
+    /**
+     * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+     */
+    @MapboxExperimental
+    val defaultFillTunnelStructureColorAsColorInt: Int?
+      /**
+       * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+       *
+       * Get the default value of FillTunnelStructureColor property as color int.
+       *
+       * @return int representation of a rgba string color
+       */
+      @ColorInt
+      get() {
+        defaultFillTunnelStructureColorAsExpression?.let {
+          return rgbaExpressionToColorInt(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillTunnelStructureColor.
+     */
+    @MapboxExperimental
+    val defaultFillTunnelStructureColorTransition: StyleTransition?
+      /**
+       * Get the FillTunnelStructureColor property transition options
+       *
+       * @return transition options for String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color-transition").silentUnwrap()
+
+    /**
+     * Default color theme for [fillTunnelStructureColor].
+     */
+    @MapboxExperimental
+    val defaultFillTunnelStructureColorUseTheme: String?
+      /**
+       * Get default value of the FillTunnelStructureColor property as String
+       *
+       * @return String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [fillTunnelStructureColor].
+     */
+    @MapboxExperimental
+    val defaultFillTunnelStructureColorUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the FillTunnelStructureColor property as Expression
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color-use-theme")
+          .silentUnwrap<Expression>() ?: defaultFillTunnelStructureColorUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
      */
     @MapboxExperimental
@@ -1974,6 +2649,22 @@ interface FillLayerDsl {
   // Property getters and setters
 
   /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   *
+   * @param fillConstructBridgeGuardRail value of fillConstructBridgeGuardRail
+   */
+  @MapboxExperimental
+  fun fillConstructBridgeGuardRail(fillConstructBridgeGuardRail: Boolean = true): FillLayer
+
+  /**
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   *
+   * @param fillConstructBridgeGuardRail value of fillConstructBridgeGuardRail as Expression
+   */
+  @MapboxExperimental
+  fun fillConstructBridgeGuardRail(fillConstructBridgeGuardRail: Expression): FillLayer
+
+  /**
    * Selects the base of fill-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    *
    * @param fillElevationReference value of fillElevationReference
@@ -2016,6 +2707,64 @@ interface FillLayerDsl {
    * @param fillAntialias value of fillAntialias as Expression
    */
   fun fillAntialias(fillAntialias: Expression): FillLayer
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillBridgeGuardRailColor value of fillBridgeGuardRailColor
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColor(fillBridgeGuardRailColor: String = "rgba(241, 236, 225, 255)"): FillLayer
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillBridgeGuardRailColor value of fillBridgeGuardRailColor as Expression
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColor(fillBridgeGuardRailColor: Expression): FillLayer
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillBridgeGuardRailColor value of fillBridgeGuardRailColor
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColor(@ColorInt fillBridgeGuardRailColor: Int): FillLayer
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Set the FillBridgeGuardRailColor property transition options
+   *
+   * @param options transition options for String
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColorTransition(options: StyleTransition): FillLayer
+
+  /**
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   *
+   * DSL for [fillBridgeGuardRailColorTransition].
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
+
+  /**
+   * Set the fillBridgeGuardRailColorUseTheme as String for [fillBridgeGuardRailColor].
+   *
+   * @param fillBridgeGuardRailColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColorUseTheme(fillBridgeGuardRailColorUseTheme: String): FillLayer
+
+  /**
+   * Set the fillBridgeGuardRailColorUseTheme as Expression for [fillBridgeGuardRailColor].
+   *
+   * @param fillBridgeGuardRailColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillBridgeGuardRailColorUseTheme(fillBridgeGuardRailColorUseTheme: Expression): FillLayer
 
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used. Default value: "#000000".
@@ -2240,6 +2989,64 @@ interface FillLayerDsl {
    * @param fillTranslateAnchor value of fillTranslateAnchor as Expression
    */
   fun fillTranslateAnchor(fillTranslateAnchor: Expression): FillLayer
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillTunnelStructureColor value of fillTunnelStructureColor
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColor(fillTunnelStructureColor: String = "rgba(241, 236, 225, 255)"): FillLayer
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillTunnelStructureColor value of fillTunnelStructureColor as Expression
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColor(fillTunnelStructureColor: Expression): FillLayer
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * @param fillTunnelStructureColor value of fillTunnelStructureColor
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColor(@ColorInt fillTunnelStructureColor: Int): FillLayer
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * Set the FillTunnelStructureColor property transition options
+   *
+   * @param options transition options for String
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColorTransition(options: StyleTransition): FillLayer
+
+  /**
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   *
+   * DSL for [fillTunnelStructureColorTransition].
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
+
+  /**
+   * Set the fillTunnelStructureColorUseTheme as String for [fillTunnelStructureColor].
+   *
+   * @param fillTunnelStructureColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColorUseTheme(fillTunnelStructureColorUseTheme: String): FillLayer
+
+  /**
+   * Set the fillTunnelStructureColorUseTheme as Expression for [fillTunnelStructureColor].
+   *
+   * @param fillTunnelStructureColorUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun fillTunnelStructureColorUseTheme(fillTunnelStructureColorUseTheme: Expression): FillLayer
 
   /**
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.

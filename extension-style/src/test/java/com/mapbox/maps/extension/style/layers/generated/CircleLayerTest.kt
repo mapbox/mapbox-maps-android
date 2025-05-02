@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class CircleLayerTest {
@@ -156,6 +158,74 @@ class CircleLayerTest {
     verify { style.getStyleLayerProperty("id", "filter") }
   }
   // Property getters and setters
+
+  @Test
+  fun circleElevationReferenceSet() {
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleElevationReference(CircleElevationReference.NONE)
+    verify { style.setStyleLayerProperty("id", "circle-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun circleElevationReferenceGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("none")
+
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(CircleElevationReference.NONE, layer.circleElevationReference)
+    verify { style.getStyleLayerProperty("id", "circle-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun circleElevationReferenceAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleElevationReference(expression)
+    verify { style.setStyleLayerProperty("id", "circle-elevation-reference", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun circleElevationReferenceAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.circleElevationReferenceAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-elevation-reference") }
+  }
+
+  @Test
+  fun circleElevationReferenceAsExpressionGetNull() {
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.circleElevationReferenceAsExpression)
+    verify { style.getStyleLayerProperty("id", "circle-elevation-reference") }
+  }
+
+  @Test
+  fun circleElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.circleElevationReferenceAsExpression?.toString())
+    assertEquals(CircleElevationReference.NONE.value, layer.circleElevationReferenceAsExpression.toString())
+    assertEquals(CircleElevationReference.NONE, layer.circleElevationReference)
+    verify { style.getStyleLayerProperty("id", "circle-elevation-reference") }
+  }
 
   @Test
   fun circleSortKeySet() {
@@ -1714,6 +1784,39 @@ class CircleLayerTest {
   }
 
   // Default property getter tests
+
+  @Test
+  fun defaultCircleElevationReferenceTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("none")
+
+    assertEquals(CircleElevationReference.NONE, CircleLayer.defaultCircleElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultCircleElevationReferenceAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), CircleLayer.defaultCircleElevationReferenceAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference") }
+  }
+
+  @Test
+  fun defaultCircleElevationReferenceAsExpressionGetFromLiteral() {
+    val value = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), CircleLayer.defaultCircleElevationReferenceAsExpression?.toString())
+    assertEquals(CircleElevationReference.NONE.value, CircleLayer.defaultCircleElevationReferenceAsExpression.toString())
+    assertEquals(CircleElevationReference.NONE, CircleLayer.defaultCircleElevationReference)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference") }
+  }
 
   @Test
   fun defaultCircleSortKeyTest() {

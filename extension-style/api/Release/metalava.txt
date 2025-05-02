@@ -247,6 +247,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression asin(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression at(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression at(double index, com.mapbox.maps.extension.style.expressions.generated.Expression array);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression atInterpolated(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression atan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression atan(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression boolean(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -392,6 +393,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression asin(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression at(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression at(double index, com.mapbox.maps.extension.style.expressions.generated.Expression array);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression atInterpolated(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression atan(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression atan(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression boolean(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -581,6 +583,8 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression at(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression at(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression at(double index, com.mapbox.maps.extension.style.expressions.generated.Expression array);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression atInterpolated(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression atInterpolated(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression atan(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression atan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression atan(double value);
@@ -810,6 +814,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder asin(double value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder at(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder at(double index, com.mapbox.maps.extension.style.expressions.generated.Expression array);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder atInterpolated(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder atan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder atan(double value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder boolean(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -1352,6 +1357,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorUseTheme(String circleColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression circleColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference circleElevationReference);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression circleElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(double circleEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression circleEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1401,6 +1408,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getCircleColorTransition();
     method public String? getCircleColorUseTheme();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCircleColorUseThemeAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference? getCircleElevationReference();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCircleElevationReferenceAsExpression();
     method public Double? getCircleEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCircleEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getCircleEmissiveStrengthTransition();
@@ -1457,6 +1466,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? circleColorTransition;
     property public final String? circleColorUseTheme;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? circleColorUseThemeAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference? circleElevationReference;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? circleElevationReferenceAsExpression;
     property public final Double? circleEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? circleEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? circleEmissiveStrengthTransition;
@@ -1511,6 +1522,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultCircleColorTransition();
     method public String? getDefaultCircleColorUseTheme();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultCircleColorUseThemeAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference? getDefaultCircleElevationReference();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultCircleElevationReferenceAsExpression();
     method public Double? getDefaultCircleEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultCircleEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultCircleEmissiveStrengthTransition();
@@ -1555,6 +1568,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultCircleColorTransition;
     property public final String? defaultCircleColorUseTheme;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultCircleColorUseThemeAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference? defaultCircleElevationReference;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultCircleElevationReferenceAsExpression;
     property public final Double? defaultCircleEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultCircleEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultCircleEmissiveStrengthTransition;
@@ -1604,6 +1619,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorUseTheme(String circleColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression circleColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference circleElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference.NONE);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression circleElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(double circleEmissiveStrength = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression circleEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2282,6 +2299,13 @@ package com.mapbox.maps.extension.style.layers.generated {
     ctor public FillLayer(String layerId, String sourceId);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillAntialias(boolean fillAntialias);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillAntialias(com.mapbox.maps.extension.style.expressions.generated.Expression fillAntialias);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColor(String fillBridgeGuardRailColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillBridgeGuardRailColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColor(@ColorInt int fillBridgeGuardRailColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorUseTheme(String fillBridgeGuardRailColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillBridgeGuardRailColorUseTheme);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(String fillColor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillColor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(@ColorInt int fillColor);
@@ -2289,6 +2313,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorUseTheme(String fillColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillConstructBridgeGuardRail(boolean fillConstructBridgeGuardRail);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillConstructBridgeGuardRail(com.mapbox.maps.extension.style.expressions.generated.Expression fillConstructBridgeGuardRail);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference fillElevationReference);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression fillElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(double fillEmissiveStrength);
@@ -2316,6 +2342,13 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColor(String fillTunnelStructureColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTunnelStructureColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColor(@ColorInt int fillTunnelStructureColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorUseTheme(String fillTunnelStructureColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillTunnelStructureColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(double fillZOffset);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression fillZOffset);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2323,12 +2356,20 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public Boolean? getFillAntialias();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillAntialiasAsExpression();
+    method public String? getFillBridgeGuardRailColor();
+    method @ColorInt public Integer? getFillBridgeGuardRailColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillBridgeGuardRailColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillBridgeGuardRailColorTransition();
+    method public String? getFillBridgeGuardRailColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillBridgeGuardRailColorUseThemeAsExpression();
     method public String? getFillColor();
     method @ColorInt public Integer? getFillColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillColorTransition();
     method public String? getFillColorUseTheme();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillColorUseThemeAsExpression();
+    method public Boolean? getFillConstructBridgeGuardRail();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillConstructBridgeGuardRailAsExpression();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? getFillElevationReference();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillElevationReferenceAsExpression();
     method public Double? getFillEmissiveStrength();
@@ -2352,6 +2393,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillTranslateAnchorAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillTranslateAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillTranslateTransition();
+    method public String? getFillTunnelStructureColor();
+    method @ColorInt public Integer? getFillTunnelStructureColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillTunnelStructureColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillTunnelStructureColorTransition();
+    method public String? getFillTunnelStructureColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillTunnelStructureColorUseThemeAsExpression();
     method public Double? getFillZOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillZOffsetAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillZOffsetTransition();
@@ -2372,12 +2419,20 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
     property public final Boolean? fillAntialias;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillAntialiasAsExpression;
+    property public final String? fillBridgeGuardRailColor;
+    property @ColorInt public final Integer? fillBridgeGuardRailColorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillBridgeGuardRailColorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillBridgeGuardRailColorTransition;
+    property public final String? fillBridgeGuardRailColorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillBridgeGuardRailColorUseThemeAsExpression;
     property public final String? fillColor;
     property @ColorInt public final Integer? fillColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillColorTransition;
     property public final String? fillColorUseTheme;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillColorUseThemeAsExpression;
+    property public final Boolean? fillConstructBridgeGuardRail;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillConstructBridgeGuardRailAsExpression;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? fillElevationReference;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillElevationReferenceAsExpression;
     property public final Double? fillEmissiveStrength;
@@ -2401,6 +2456,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillTranslateAnchorAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillTranslateAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillTranslateTransition;
+    property public final String? fillTunnelStructureColor;
+    property @ColorInt public final Integer? fillTunnelStructureColorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillTunnelStructureColorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillTunnelStructureColorTransition;
+    property public final String? fillTunnelStructureColorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillTunnelStructureColorUseThemeAsExpression;
     property public final Double? fillZOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillZOffsetAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillZOffsetTransition;
@@ -2419,12 +2480,20 @@ package com.mapbox.maps.extension.style.layers.generated {
   public static final class FillLayer.Companion {
     method public Boolean? getDefaultFillAntialias();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillAntialiasAsExpression();
+    method public String? getDefaultFillBridgeGuardRailColor();
+    method @ColorInt public Integer? getDefaultFillBridgeGuardRailColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillBridgeGuardRailColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillBridgeGuardRailColorTransition();
+    method public String? getDefaultFillBridgeGuardRailColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillBridgeGuardRailColorUseThemeAsExpression();
     method public String? getDefaultFillColor();
     method @ColorInt public Integer? getDefaultFillColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillColorTransition();
     method public String? getDefaultFillColorUseTheme();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillColorUseThemeAsExpression();
+    method public Boolean? getDefaultFillConstructBridgeGuardRail();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillConstructBridgeGuardRailAsExpression();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? getDefaultFillElevationReference();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillElevationReferenceAsExpression();
     method public Double? getDefaultFillEmissiveStrength();
@@ -2448,6 +2517,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillTranslateAnchorAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillTranslateAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillTranslateTransition();
+    method public String? getDefaultFillTunnelStructureColor();
+    method @ColorInt public Integer? getDefaultFillTunnelStructureColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillTunnelStructureColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillTunnelStructureColorTransition();
+    method public String? getDefaultFillTunnelStructureColorUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillTunnelStructureColorUseThemeAsExpression();
     method public Double? getDefaultFillZOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillZOffsetAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillZOffsetTransition();
@@ -2456,12 +2531,20 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
     property public final Boolean? defaultFillAntialias;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillAntialiasAsExpression;
+    property public final String? defaultFillBridgeGuardRailColor;
+    property @ColorInt public final Integer? defaultFillBridgeGuardRailColorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillBridgeGuardRailColorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillBridgeGuardRailColorTransition;
+    property public final String? defaultFillBridgeGuardRailColorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillBridgeGuardRailColorUseThemeAsExpression;
     property public final String? defaultFillColor;
     property @ColorInt public final Integer? defaultFillColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillColorTransition;
     property public final String? defaultFillColorUseTheme;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillColorUseThemeAsExpression;
+    property public final Boolean? defaultFillConstructBridgeGuardRail;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillConstructBridgeGuardRailAsExpression;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? defaultFillElevationReference;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillElevationReferenceAsExpression;
     property public final Double? defaultFillEmissiveStrength;
@@ -2485,6 +2568,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillTranslateAnchorAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillTranslateAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillTranslateTransition;
+    property public final String? defaultFillTunnelStructureColor;
+    property @ColorInt public final Integer? defaultFillTunnelStructureColorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillTunnelStructureColorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillTunnelStructureColorTransition;
+    property public final String? defaultFillTunnelStructureColorUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillTunnelStructureColorUseThemeAsExpression;
     property public final Double? defaultFillZOffset;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillZOffsetAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillZOffsetTransition;
@@ -2496,6 +2585,13 @@ package com.mapbox.maps.extension.style.layers.generated {
   @com.mapbox.maps.extension.style.types.LayersDsl public interface FillLayerDsl {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillAntialias(boolean fillAntialias = true);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillAntialias(com.mapbox.maps.extension.style.expressions.generated.Expression fillAntialias);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColor(String fillBridgeGuardRailColor = "rgba(241, 236, 225, 255)");
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillBridgeGuardRailColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColor(@ColorInt int fillBridgeGuardRailColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorUseTheme(String fillBridgeGuardRailColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillBridgeGuardRailColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillBridgeGuardRailColorUseTheme);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(String fillColor = "#000000");
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillColor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(@ColorInt int fillColor);
@@ -2503,6 +2599,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorUseTheme(String fillColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillConstructBridgeGuardRail(boolean fillConstructBridgeGuardRail = true);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillConstructBridgeGuardRail(com.mapbox.maps.extension.style.expressions.generated.Expression fillConstructBridgeGuardRail);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference fillElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference.NONE);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression fillElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(double fillEmissiveStrength = 0.0);
@@ -2530,6 +2628,13 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColor(String fillTunnelStructureColor = "rgba(241, 236, 225, 255)");
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTunnelStructureColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColor(@ColorInt int fillTunnelStructureColor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorUseTheme(String fillTunnelStructureColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTunnelStructureColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillTunnelStructureColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(double fillZOffset = 0.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression fillZOffset);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillZOffsetTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6045,6 +6150,19 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
   public static final class BackgroundPitchAlignment.Companion {
     method public com.mapbox.maps.extension.style.layers.properties.generated.BackgroundPitchAlignment valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class CircleElevationReference {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference HD_ROAD_MARKUP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference NONE;
+  }
+
+  public static final class CircleElevationReference.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference valueOf(String value);
   }
 
   public final class CirclePitchAlignment {

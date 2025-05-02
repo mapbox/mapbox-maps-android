@@ -163,6 +163,34 @@ class CircleAnnotationManager(
 
   // Property accessors
   /**
+   * The CircleElevationReference property
+   *
+   * Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  var circleElevationReference: CircleElevationReference?
+    /**
+     * Get the CircleElevationReference property
+     *
+     * @return property wrapper value around CircleElevationReference
+     */
+    get(): CircleElevationReference? {
+      return layer.circleElevationReference
+    }
+    /**
+     * Set the CircleElevationReference property
+     * @param value property wrapper value around CircleElevationReference
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference").value
+      }
+      setLayerProperty(wrappedValue, "circle-elevation-reference")
+    }
+
+  /**
    * The default circleSortKey for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.

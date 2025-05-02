@@ -214,6 +214,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getCircleBlur();
     method public androidx.compose.ui.graphics.Color? getCircleColor();
     method public String? getCircleColorUseTheme();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference? getCircleElevationReference();
     method public Double? getCircleEmissiveStrength();
     method public Double? getCircleOpacity();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? getCirclePitchAlignment();
@@ -230,6 +231,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setCircleBlur(Double?);
     method public void setCircleColor(androidx.compose.ui.graphics.Color?);
     method public void setCircleColorUseTheme(String?);
+    method public void setCircleElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference?);
     method public void setCircleEmissiveStrength(Double?);
     method public void setCircleOpacity(Double?);
     method public void setCirclePitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment?);
@@ -246,6 +248,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? circleBlur;
     property public final androidx.compose.ui.graphics.Color? circleColor;
     property public final String? circleColorUseTheme;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleElevationReference? circleElevationReference;
     property public final Double? circleEmissiveStrength;
     property public final Double? circleOpacity;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? circlePitchAlignment;
@@ -758,8 +761,11 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   @androidx.compose.runtime.Stable public final class PolygonAnnotationGroupState {
     ctor public PolygonAnnotationGroupState();
     method public Boolean? getFillAntialias();
+    method public androidx.compose.ui.graphics.Color? getFillBridgeGuardRailColor();
+    method public String? getFillBridgeGuardRailColorUseTheme();
     method public androidx.compose.ui.graphics.Color? getFillColor();
     method public String? getFillColorUseTheme();
+    method public Boolean? getFillConstructBridgeGuardRail();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? getFillElevationReference();
     method public Double? getFillEmissiveStrength();
     method public Double? getFillOpacity();
@@ -769,11 +775,16 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getFillSortKey();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
+    method public androidx.compose.ui.graphics.Color? getFillTunnelStructureColor();
+    method public String? getFillTunnelStructureColorUseTheme();
     method public Double? getFillZOffset();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState getInteractionsState();
     method public void setFillAntialias(Boolean?);
+    method public void setFillBridgeGuardRailColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillBridgeGuardRailColorUseTheme(String?);
     method public void setFillColor(androidx.compose.ui.graphics.Color?);
     method public void setFillColorUseTheme(String?);
+    method public void setFillConstructBridgeGuardRail(Boolean?);
     method public void setFillElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference?);
     method public void setFillEmissiveStrength(Double?);
     method public void setFillOpacity(Double?);
@@ -783,11 +794,16 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setFillSortKey(Double?);
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
+    method public void setFillTunnelStructureColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillTunnelStructureColorUseTheme(String?);
     method public void setFillZOffset(Double?);
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState);
     property public final Boolean? fillAntialias;
+    property public final androidx.compose.ui.graphics.Color? fillBridgeGuardRailColor;
+    property public final String? fillBridgeGuardRailColorUseTheme;
     property public final androidx.compose.ui.graphics.Color? fillColor;
     property public final String? fillColorUseTheme;
+    property public final Boolean? fillConstructBridgeGuardRail;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillElevationReference? fillElevationReference;
     property public final Double? fillEmissiveStrength;
     property public final Double? fillOpacity;
@@ -797,6 +813,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? fillSortKey;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
+    property public final androidx.compose.ui.graphics.Color? fillTunnelStructureColor;
+    property public final String? fillTunnelStructureColorUseTheme;
     property public final Double? fillZOffset;
     property public final com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState interactionsState;
   }
@@ -829,34 +847,51 @@ package com.mapbox.maps.extension.compose.annotation.generated {
   }
 
   public final class PolygonAnnotationOptionsExtKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillBridgeGuardRailColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillBridgeGuardRailColor);
     method public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillColor);
     method public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillOutlineColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillOutlineColor);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions withFillTunnelStructureColor(com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions, long fillTunnelStructureColor);
   }
 
   @androidx.compose.runtime.Stable public final class PolygonAnnotationState {
     ctor public PolygonAnnotationState();
+    method public androidx.compose.ui.graphics.Color? getFillBridgeGuardRailColor();
+    method public String? getFillBridgeGuardRailColorUseTheme();
     method public androidx.compose.ui.graphics.Color? getFillColor();
     method public String? getFillColorUseTheme();
+    method public Boolean? getFillConstructBridgeGuardRail();
     method public Double? getFillOpacity();
     method public androidx.compose.ui.graphics.Color? getFillOutlineColor();
     method public String? getFillOutlineColorUseTheme();
     method public String? getFillPattern();
+    method public androidx.compose.ui.graphics.Color? getFillTunnelStructureColor();
+    method public String? getFillTunnelStructureColorUseTheme();
     method public Double? getFillZOffset();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState getInteractionsState();
+    method public void setFillBridgeGuardRailColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillBridgeGuardRailColorUseTheme(String?);
     method public void setFillColor(androidx.compose.ui.graphics.Color?);
     method public void setFillColorUseTheme(String?);
+    method public void setFillConstructBridgeGuardRail(Boolean?);
     method public void setFillOpacity(Double?);
     method public void setFillOutlineColor(androidx.compose.ui.graphics.Color?);
     method public void setFillOutlineColorUseTheme(String?);
     method public void setFillPattern(String?);
+    method public void setFillTunnelStructureColor(androidx.compose.ui.graphics.Color?);
+    method public void setFillTunnelStructureColorUseTheme(String?);
     method public void setFillZOffset(Double?);
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState);
+    property public final androidx.compose.ui.graphics.Color? fillBridgeGuardRailColor;
+    property public final String? fillBridgeGuardRailColorUseTheme;
     property public final androidx.compose.ui.graphics.Color? fillColor;
     property public final String? fillColorUseTheme;
+    property public final Boolean? fillConstructBridgeGuardRail;
     property public final Double? fillOpacity;
     property public final androidx.compose.ui.graphics.Color? fillOutlineColor;
     property public final String? fillOutlineColorUseTheme;
     property public final String? fillPattern;
+    property public final androidx.compose.ui.graphics.Color? fillTunnelStructureColor;
+    property public final String? fillTunnelStructureColorUseTheme;
     property public final Double? fillZOffset;
     property public final com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationInteractionsState interactionsState;
   }
@@ -1822,6 +1857,23 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class BackgroundPitchAlignmentValue.Companion {
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class CircleElevationReferenceValue {
+    ctor public CircleElevationReferenceValue(com.mapbox.bindgen.Value value);
+    ctor public CircleElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue HD_ROAD_MARKUP;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue NONE;
+  }
+
+  public static final class CircleElevationReferenceValue.Companion {
+  }
+
   public final class CircleLayerKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("circle")
@@ -1840,6 +1892,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.ColorValue getCircleColor();
     method public com.mapbox.maps.extension.compose.style.Transition getCircleColorTransition();
     method public com.mapbox.maps.extension.compose.style.StringValue getCircleColorUseTheme();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue getCircleElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getCircleEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getCircleEmissiveStrengthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getCircleOpacity();
@@ -1870,6 +1923,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setCircleColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setCircleColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setCircleColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
+    method public void setCircleElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue);
     method public void setCircleEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setCircleEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setCircleOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -1900,6 +1954,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.ColorValue circleColor;
     property public final com.mapbox.maps.extension.compose.style.Transition circleColorTransition;
     property public final com.mapbox.maps.extension.compose.style.StringValue circleColorUseTheme;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.CircleElevationReferenceValue circleElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue circleEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition circleEmissiveStrengthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue circleOpacity;
@@ -2300,9 +2355,13 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   @androidx.compose.runtime.Stable public final class FillLayerState {
     ctor public FillLayerState();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getFillAntialias();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getFillBridgeGuardRailColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getFillBridgeGuardRailColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getFillBridgeGuardRailColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.ColorValue getFillColor();
     method public com.mapbox.maps.extension.compose.style.Transition getFillColorTransition();
     method public com.mapbox.maps.extension.compose.style.StringValue getFillColorUseTheme();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getFillConstructBridgeGuardRail();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue getFillElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getFillEmissiveStrengthTransition();
@@ -2316,6 +2375,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getFillTranslate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue getFillTranslateAnchor();
     method public com.mapbox.maps.extension.compose.style.Transition getFillTranslateTransition();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getFillTunnelStructureColor();
+    method public com.mapbox.maps.extension.compose.style.Transition getFillTunnelStructureColorTransition();
+    method public com.mapbox.maps.extension.compose.style.StringValue getFillTunnelStructureColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillZOffset();
     method public com.mapbox.maps.extension.compose.style.Transition getFillZOffsetTransition();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
@@ -2325,9 +2387,13 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue getVisibility();
     method public void setFillAntialias(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setFillBridgeGuardRailColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setFillBridgeGuardRailColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFillBridgeGuardRailColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setFillColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setFillColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
+    method public void setFillConstructBridgeGuardRail(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setFillElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue);
     method public void setFillEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -2341,6 +2407,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue);
     method public void setFillTranslateTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFillTunnelStructureColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setFillTunnelStructureColorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFillTunnelStructureColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setFillZOffset(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillZOffsetTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFilter(com.mapbox.maps.extension.compose.style.layers.Filter);
@@ -2350,9 +2419,13 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setVisibility(com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue);
     property public final com.mapbox.maps.extension.compose.style.BooleanValue fillAntialias;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue fillBridgeGuardRailColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition fillBridgeGuardRailColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue fillBridgeGuardRailColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.ColorValue fillColor;
     property public final com.mapbox.maps.extension.compose.style.Transition fillColorTransition;
     property public final com.mapbox.maps.extension.compose.style.StringValue fillColorUseTheme;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue fillConstructBridgeGuardRail;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.FillElevationReferenceValue fillElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition fillEmissiveStrengthTransition;
@@ -2366,6 +2439,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue fillTranslate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue fillTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.style.Transition fillTranslateTransition;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue fillTunnelStructureColor;
+    property public final com.mapbox.maps.extension.compose.style.Transition fillTunnelStructureColorTransition;
+    property public final com.mapbox.maps.extension.compose.style.StringValue fillTunnelStructureColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillZOffset;
     property public final com.mapbox.maps.extension.compose.style.Transition fillZOffsetTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.Filter filter;

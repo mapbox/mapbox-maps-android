@@ -38,6 +38,19 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testCircleElevationReference() {
+    rule.runOnUiThread {
+      val expectedValue = CircleElevationReference.NONE
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.circleElevationReference = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.circleElevationReference)
+      circleAnnotationManager.circleElevationReference = null
+      val expectedDefaultValue = CircleElevationReference.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-elevation-reference").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, circleAnnotationManager.circleElevationReference)
+    }
+  }
+
+  @Test
   fun testCircleSortKey() {
     rule.runOnUiThread {
       val expectedValue = 1.0

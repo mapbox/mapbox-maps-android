@@ -33,9 +33,17 @@ class PolygonAnnotationManager(
   @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
+      PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL -> {
+        layer.fillConstructBridgeGuardRail(get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL))
+        dragLayer.fillConstructBridgeGuardRail(get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL))
+      }
       PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY -> {
         layer.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
         dragLayer.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR -> {
+        layer.fillBridgeGuardRailColor(get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR))
+        dragLayer.fillBridgeGuardRailColor(get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR))
       }
       PolygonAnnotationOptions.PROPERTY_FILL_COLOR -> {
         layer.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
@@ -53,9 +61,17 @@ class PolygonAnnotationManager(
         layer.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
         dragLayer.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
       }
+      PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR -> {
+        layer.fillTunnelStructureColor(get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR))
+        dragLayer.fillTunnelStructureColor(get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR))
+      }
       PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET -> {
         layer.fillZOffset(get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET))
         dragLayer.fillZOffset(get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME -> {
+        layer.fillBridgeGuardRailColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME))
+        dragLayer.fillBridgeGuardRailColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME))
       }
       PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME -> {
         layer.fillColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME))
@@ -64,6 +80,10 @@ class PolygonAnnotationManager(
       PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME -> {
         layer.fillOutlineColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME))
         dragLayer.fillOutlineColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME -> {
+        layer.fillTunnelStructureColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME))
+        dragLayer.fillTunnelStructureColorUseTheme(get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME))
       }
     }
   }
@@ -74,14 +94,19 @@ class PolygonAnnotationManager(
    * PolygonAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
+   * PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL - Boolean
    * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -100,14 +125,19 @@ class PolygonAnnotationManager(
    * PolygonAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
+   * PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL - Boolean
    * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR - String
    * PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME - String
    * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
@@ -136,6 +166,41 @@ class PolygonAnnotationManager(
   }
 
   // Property accessors
+  /**
+   * The default fillConstructBridgeGuardRail for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   */
+  @MapboxExperimental
+  var fillConstructBridgeGuardRail: Boolean?
+    /**
+     * Get the fillConstructBridgeGuardRail property.
+     *
+     * @return property wrapper value around Boolean
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)
+      value?.let {
+        return it.asString.toBoolean()
+      }
+      return null
+    }
+    /**
+     * Set the fillConstructBridgeGuardRail property.
+     *
+     * @param value constant property value for Boolean
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
   /**
    * The FillElevationReference property
    *
@@ -223,6 +288,79 @@ class PolygonAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias").value
       }
       setLayerProperty(wrappedValue, "fill-antialias")
+    }
+
+  /**
+   * The default fillBridgeGuardRailColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  var fillBridgeGuardRailColorInt: Int?
+    /**
+     * Get the fillBridgeGuardRailColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the fillBridgeGuardRailColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default fillBridgeGuardRailColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  var fillBridgeGuardRailColorString: String?
+    /**
+     * Get the fillBridgeGuardRailColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillBridgeGuardRailColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -517,6 +655,79 @@ class PolygonAnnotationManager(
     }
 
   /**
+   * The default fillTunnelStructureColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color int.
+   *
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  var fillTunnelStructureColorInt: Int?
+    /**
+     * Get the fillTunnelStructureColor property.
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the fillTunnelStructureColor property.
+     *
+     * @param value color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(
+          PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
+   * The default fillTunnelStructureColor for all annotations added to this annotation manager if not overwritten by individual annotation settings in color string.
+   *
+   * The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  var fillTunnelStructureColorString: String?
+    /**
+     * Get the fillTunnelStructureColor property.
+     * @return color value for String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillTunnelStructureColor property.
+     *
+     * @param value color value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The default fillZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
    * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
@@ -576,6 +787,41 @@ class PolygonAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("fill", "slot").value
       }
       setLayerProperty(wrappedValue, "slot")
+    }
+
+  /**
+   * The default fillBridgeGuardRailColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `fillBridgeGuardRailColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var fillBridgeGuardRailColorUseTheme: String?
+    /**
+     * Get the fillBridgeGuardRailColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillBridgeGuardRailColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -649,6 +895,41 @@ class PolygonAnnotationManager(
     }
 
   /**
+   * The default fillTunnelStructureColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * This property defines whether the `fillTunnelStructureColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var fillTunnelStructureColorUseTheme: String?
+    /**
+     * Get the fillTunnelStructureColorUseTheme property.
+     *
+     * @return property wrapper value around String
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the fillTunnelStructureColorUseTheme property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME, value)
+        enableDataDrivenProperty(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
+    }
+
+  /**
    * The filter on the managed polygonAnnotations.
    */
   override var layerFilter: Expression?
@@ -671,14 +952,19 @@ class PolygonAnnotationManager(
     }
 
   init {
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_COLOR] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OPACITY] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_PATTERN] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME] = false
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME] = false
+    dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME] = false
   }
 
   /**

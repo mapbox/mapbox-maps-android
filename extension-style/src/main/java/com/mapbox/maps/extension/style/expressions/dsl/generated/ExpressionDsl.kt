@@ -87,7 +87,7 @@ fun abs(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression
 fun accumulated(): Expression = Expression.accumulated()
 
 /**
- * Returns the arccosine of the input.
+ * Returns the arccosine of the input, in radians between −π/2 and π/2.
  */
 fun acos(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.acos(block)
 
@@ -113,7 +113,7 @@ fun any(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression
 fun array(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.array(block)
 
 /**
- * Returns the arcsine of the input.
+ * Returns the arcsine of the input, in radians between −π/2 and π/2.
  */
 fun asin(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.asin(block)
 
@@ -123,7 +123,12 @@ fun asin(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expressio
 fun at(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.at(block)
 
 /**
- * Returns the arctangent of the input.
+ * Retrieves an item from an array. If the array contains numeric values and the provided index is non-integer, the expression returns an interpolated value between adjacent items.
+ */
+fun atInterpolated(block: Expression.InterpolatorBuilder.() -> Unit): Expression = Expression.atInterpolated(block)
+
+/**
+ * Returns the arctangent of the input, in radians between −π/2 and π/2.
  */
 fun atan(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.atan(block)
 
@@ -158,12 +163,12 @@ fun collator(block: Expression.CollatorBuilder.() -> Unit): Expression = Express
 fun concat(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.concat(block)
 
 /**
- * Retrieves the configuration value for the given option.
+ * Retrieves the configuration value for the given option. Returns null if the requested option is missing.
  */
 fun config(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.config(block)
 
 /**
- * Returns the cosine of the input.
+ * Returns the cosine of the input, interpreted as radians.
  */
 fun cos(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.cos(block)
 /**
@@ -431,7 +436,7 @@ fun rgba(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expressio
 fun round(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.round(block)
 
 /**
- * Returns the sine of the input.
+ * Returns the sine of the input, interpreted as radians.
  */
 fun sin(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.sin(block)
 
@@ -461,7 +466,7 @@ fun step(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expressio
 fun string(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.string(block)
 
 /**
- * Returns the tangent of the input.
+ * Returns the tangent of the input, interpreted as radians.
  */
 fun tan(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.tan(block)
 

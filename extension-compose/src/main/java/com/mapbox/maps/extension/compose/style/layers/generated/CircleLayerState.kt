@@ -30,6 +30,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 public class CircleLayerState
 @OptIn(MapboxExperimental::class)
 private constructor(
+  initialCircleElevationReference: CircleElevationReferenceValue,
   initialCircleSortKey: DoubleValue,
   initialCircleBlur: DoubleValue,
   initialCircleBlurTransition: Transition,
@@ -66,6 +67,7 @@ private constructor(
    */
   @OptIn(MapboxExperimental::class)
   public constructor() : this(
+    initialCircleElevationReference = CircleElevationReferenceValue.INITIAL,
     initialCircleSortKey = DoubleValue.INITIAL,
     initialCircleBlur = DoubleValue.INITIAL,
     initialCircleBlurTransition = Transition.INITIAL,
@@ -103,6 +105,14 @@ private constructor(
    */
   @MapboxExperimental
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
+
+  @MapboxExperimental
+  private val circleElevationReferenceState: MutableState<CircleElevationReferenceValue> = mutableStateOf(initialCircleElevationReference)
+  /**
+   *  Selects the base of circle-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
+   */
+  @MapboxExperimental
+  public var circleElevationReference: CircleElevationReferenceValue by circleElevationReferenceState
 
   private val circleSortKeyState: MutableState<DoubleValue> = mutableStateOf(initialCircleSortKey)
   /**
@@ -285,6 +295,7 @@ private constructor(
   @Composable
   @OptIn(MapboxExperimental::class)
   internal fun UpdateProperties(layerNode: LayerNode) {
+    ActionWhenNotInitial(layerNode.setPropertyAction, circleElevationReferenceState, "circle-elevation-reference")
     ActionWhenNotInitial(layerNode.setPropertyAction, circleSortKeyState, "circle-sort-key")
     ActionWhenNotInitial(layerNode.setPropertyAction, circleBlurState, "circle-blur")
     ActionWhenNotInitial(layerNode.setPropertyAction, circleBlurTransitionState, "circle-blur-transition")

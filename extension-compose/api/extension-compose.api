@@ -229,6 +229,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getCircleColorUseTheme ()Ljava/lang/String;
+	public final fun getCircleElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleElevationReference;
 	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;
@@ -245,6 +246,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
+	public final fun setCircleElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleElevationReference;)V
 	public final fun setCircleEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCirclePitchAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;)V
@@ -617,8 +619,11 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupState {
 	public fun <init> ()V
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
+	public final fun getFillBridgeGuardRailColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillBridgeGuardRailColorUseTheme ()Ljava/lang/String;
 	public final fun getFillColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getFillColorUseTheme ()Ljava/lang/String;
+	public final fun getFillConstructBridgeGuardRail ()Ljava/lang/Boolean;
 	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
 	public final fun getFillOpacity ()Ljava/lang/Double;
@@ -628,11 +633,16 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
+	public final fun getFillTunnelStructureColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
+	public final fun setFillBridgeGuardRailColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillColorUseTheme (Ljava/lang/String;)V
+	public final fun setFillConstructBridgeGuardRail (Ljava/lang/Boolean;)V
 	public final fun setFillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)V
 	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
@@ -642,6 +652,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
+	public final fun setFillTunnelStructureColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;)V
 }
@@ -669,26 +681,38 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationOptionsExtKt {
+	public static final fun withFillBridgeGuardRailColor-4WTKRHQ (Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;J)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public static final fun withFillColor-4WTKRHQ (Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;J)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public static final fun withFillOutlineColor-4WTKRHQ (Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;J)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public static final fun withFillTunnelStructureColor-4WTKRHQ (Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;J)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationState {
 	public fun <init> ()V
+	public final fun getFillBridgeGuardRailColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillBridgeGuardRailColorUseTheme ()Ljava/lang/String;
 	public final fun getFillColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getFillColorUseTheme ()Ljava/lang/String;
+	public final fun getFillConstructBridgeGuardRail ()Ljava/lang/Boolean;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
+	public final fun getFillTunnelStructureColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;
+	public final fun setFillBridgeGuardRailColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillColorUseTheme (Ljava/lang/String;)V
+	public final fun setFillConstructBridgeGuardRail (Ljava/lang/Boolean;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
+	public final fun setFillTunnelStructureColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
+	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState;)V
 }
@@ -1547,6 +1571,26 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Back
 public final class com/mapbox/maps/extension/compose/style/layers/generated/BackgroundPitchAlignmentValue$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;
+	public static final field HD_ROAD_MARKUP Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;
+	public static final field NONE Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun isNotInitial ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleLayerKt {
 	public static final fun CircleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleLayerState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun CircleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
@@ -1559,6 +1603,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun getCircleColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getCircleColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getCircleColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getCircleElevationReference ()Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;
 	public final fun getCircleEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getCircleEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getCircleOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
@@ -1589,6 +1634,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 	public final fun setCircleColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setCircleColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setCircleColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setCircleElevationReference (Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleElevationReferenceValue;)V
 	public final fun setCircleEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setCircleEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setCircleOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
@@ -1938,9 +1984,13 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillLayerState {
 	public fun <init> ()V
 	public final fun getFillAntialias ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getFillBridgeGuardRailColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getFillBridgeGuardRailColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillBridgeGuardRailColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getFillColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getFillColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getFillConstructBridgeGuardRail ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;
 	public final fun getFillEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -1954,6 +2004,9 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
 	public final fun getFillTranslateTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillTunnelStructureColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getFillTunnelStructureColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getFillTunnelStructureColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getFillZOffset ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillZOffsetTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFilter ()Lcom/mapbox/maps/extension/compose/style/layers/Filter;
@@ -1963,9 +2016,13 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getSourceLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getVisibility ()Lcom/mapbox/maps/extension/compose/style/layers/generated/VisibilityValue;
 	public final fun setFillAntialias (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setFillBridgeGuardRailColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setFillBridgeGuardRailColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillBridgeGuardRailColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setFillColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setFillColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setFillConstructBridgeGuardRail (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setFillElevationReference (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillElevationReferenceValue;)V
 	public final fun setFillEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
@@ -1979,6 +2036,9 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;)V
 	public final fun setFillTranslateTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillTunnelStructureColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setFillTunnelStructureColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setFillTunnelStructureColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setFillZOffset (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillZOffsetTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFilter (Lcom/mapbox/maps/extension/compose/style/layers/Filter;)V

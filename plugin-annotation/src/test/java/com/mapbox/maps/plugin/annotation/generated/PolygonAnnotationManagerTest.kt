@@ -89,8 +89,12 @@ class PolygonAnnotationManagerTest {
     manager.source = source
     manager.dragLayer = dragLayer
     manager.dragSource = dragSource
+    every { layer.fillConstructBridgeGuardRail(any<Expression>()) } answers { layer }
+    every { dragLayer.fillConstructBridgeGuardRail(any<Expression>()) } answers { dragLayer }
     every { layer.fillSortKey(any<Expression>()) } answers { layer }
     every { dragLayer.fillSortKey(any<Expression>()) } answers { dragLayer }
+    every { layer.fillBridgeGuardRailColor(any<Expression>()) } answers { layer }
+    every { dragLayer.fillBridgeGuardRailColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillColor(any<Expression>()) } answers { layer }
     every { dragLayer.fillColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillOpacity(any<Expression>()) } answers { layer }
@@ -99,12 +103,18 @@ class PolygonAnnotationManagerTest {
     every { dragLayer.fillOutlineColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillPattern(any<Expression>()) } answers { layer }
     every { dragLayer.fillPattern(any<Expression>()) } answers { dragLayer }
+    every { layer.fillTunnelStructureColor(any<Expression>()) } answers { layer }
+    every { dragLayer.fillTunnelStructureColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillZOffset(any<Expression>()) } answers { layer }
     every { dragLayer.fillZOffset(any<Expression>()) } answers { dragLayer }
+    every { layer.fillBridgeGuardRailColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.fillBridgeGuardRailColorUseTheme(any<Expression>()) } answers { dragLayer }
     every { layer.fillColorUseTheme(any<Expression>()) } answers { layer }
     every { dragLayer.fillColorUseTheme(any<Expression>()) } answers { dragLayer }
     every { layer.fillOutlineColorUseTheme(any<Expression>()) } answers { layer }
     every { dragLayer.fillOutlineColorUseTheme(any<Expression>()) } answers { dragLayer }
+    every { layer.fillTunnelStructureColorUseTheme(any<Expression>()) } answers { layer }
+    every { dragLayer.fillTunnelStructureColorUseTheme(any<Expression>()) } answers { dragLayer }
   }
 
   @After
@@ -220,10 +230,25 @@ class PolygonAnnotationManagerTest {
   fun annotationPropertiesUpdate() {
     val annotation = manager.create(PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
 
+    annotation.fillConstructBridgeGuardRail = true
+    assertEquals(true, annotation.fillConstructBridgeGuardRail)
+    annotation.fillConstructBridgeGuardRail = null
+    assertNull(annotation.fillConstructBridgeGuardRail)
+
     annotation.fillSortKey = 1.0
     assertEquals(1.0, annotation.fillSortKey)
     annotation.fillSortKey = null
     assertNull(annotation.fillSortKey)
+
+    annotation.fillBridgeGuardRailColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.fillBridgeGuardRailColorInt)
+    annotation.fillBridgeGuardRailColorInt = null
+    assertNull(annotation.fillBridgeGuardRailColorInt)
+
+    annotation.fillBridgeGuardRailColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.fillBridgeGuardRailColorString)
+    annotation.fillBridgeGuardRailColorString = null
+    assertNull(annotation.fillBridgeGuardRailColorString)
 
     annotation.fillColorInt = Color.BLACK
     assertEquals(Color.BLACK, annotation.fillColorInt)
@@ -255,10 +280,25 @@ class PolygonAnnotationManagerTest {
     annotation.fillPattern = null
     assertNull(annotation.fillPattern)
 
+    annotation.fillTunnelStructureColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.fillTunnelStructureColorInt)
+    annotation.fillTunnelStructureColorInt = null
+    assertNull(annotation.fillTunnelStructureColorInt)
+
+    annotation.fillTunnelStructureColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.fillTunnelStructureColorString)
+    annotation.fillTunnelStructureColorString = null
+    assertNull(annotation.fillTunnelStructureColorString)
+
     annotation.fillZOffset = 0.0
     assertEquals(0.0, annotation.fillZOffset)
     annotation.fillZOffset = null
     assertNull(annotation.fillZOffset)
+
+    annotation.fillBridgeGuardRailColorUseTheme = "default"
+    assertEquals("default", annotation.fillBridgeGuardRailColorUseTheme)
+    annotation.fillBridgeGuardRailColorUseTheme = null
+    assertNull(annotation.fillBridgeGuardRailColorUseTheme)
 
     annotation.fillColorUseTheme = "default"
     assertEquals("default", annotation.fillColorUseTheme)
@@ -269,6 +309,11 @@ class PolygonAnnotationManagerTest {
     assertEquals("default", annotation.fillOutlineColorUseTheme)
     annotation.fillOutlineColorUseTheme = null
     assertNull(annotation.fillOutlineColorUseTheme)
+
+    annotation.fillTunnelStructureColorUseTheme = "default"
+    assertEquals("default", annotation.fillTunnelStructureColorUseTheme)
+    annotation.fillTunnelStructureColorUseTheme = null
+    assertNull(annotation.fillTunnelStructureColorUseTheme)
   }
 
   @Test
@@ -752,6 +797,35 @@ class PolygonAnnotationManagerTest {
   }
 
   @Test
+  fun testFillConstructBridgeGuardRailLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillConstructBridgeGuardRail(true)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+    verify(exactly = 1) { manager.dragLayer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+    verify(exactly = 1) { manager.dragLayer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+  }
+
+  @Test
+  fun testFillConstructBridgeGuardRailInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillConstructBridgeGuardRail = true
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+    verify(exactly = 1) { manager.dragLayer.fillConstructBridgeGuardRail(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL)) }
+  }
+
+  @Test
   fun testFillSortKeyLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -778,6 +852,49 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
     verify(exactly = 1) { manager.dragLayer.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
+  }
+
+  @Test
+  fun testFillBridgeGuardRailColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillBridgeGuardRailColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+  }
+
+  @Test
+  fun testFillBridgeGuardRailColorLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillBridgeGuardRailColor("rgba(0, 0, 0, 1)")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+  }
+
+  @Test
+  fun testFillBridgeGuardRailColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillBridgeGuardRailColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillBridgeGuardRailColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR)) }
   }
 
   @Test
@@ -925,6 +1042,49 @@ class PolygonAnnotationManagerTest {
   }
 
   @Test
+  fun testFillTunnelStructureColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillTunnelStructureColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+  }
+
+  @Test
+  fun testFillTunnelStructureColorLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillTunnelStructureColor("rgba(0, 0, 0, 1)")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+  }
+
+  @Test
+  fun testFillTunnelStructureColorInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillTunnelStructureColorString = "rgba(0, 0, 0, 1)"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer.fillTunnelStructureColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR)) }
+  }
+
+  @Test
   fun testFillZOffsetLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -951,6 +1111,35 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
     verify(exactly = 1) { manager.dragLayer.fillZOffset(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_Z_OFFSET)) }
+  }
+
+  @Test
+  fun testFillBridgeGuardRailColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillBridgeGuardRailColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testFillBridgeGuardRailColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillBridgeGuardRailColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillBridgeGuardRailColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME)) }
   }
 
   @Test
@@ -1009,5 +1198,34 @@ class PolygonAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
     verify(exactly = 1) { manager.dragLayer.fillOutlineColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testFillTunnelStructureColorUseThemeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillTunnelStructureColorUseTheme("default")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+  }
+
+  @Test
+  fun testFillTunnelStructureColorUseThemeInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+    val options = PolygonAnnotationOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+    manager.fillTunnelStructureColorUseTheme = "default"
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
+    verify(exactly = 1) { manager.dragLayer.fillTunnelStructureColorUseTheme(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME)) }
   }
 }

@@ -160,6 +160,74 @@ class FillLayerTest {
   // Property getters and setters
 
   @Test
+  fun fillConstructBridgeGuardRailSet() {
+    val layer = fillLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.fillConstructBridgeGuardRail(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-construct-bridge-guard-rail", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun fillConstructBridgeGuardRailGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.fillConstructBridgeGuardRail?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-construct-bridge-guard-rail") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillConstructBridgeGuardRailAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillConstructBridgeGuardRail(expression)
+    verify { style.setStyleLayerProperty("id", "fill-construct-bridge-guard-rail", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillConstructBridgeGuardRailAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillConstructBridgeGuardRailAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-construct-bridge-guard-rail") }
+  }
+
+  @Test
+  fun fillConstructBridgeGuardRailAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillConstructBridgeGuardRailAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-construct-bridge-guard-rail") }
+  }
+
+  @Test
+  fun fillConstructBridgeGuardRailAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.fillConstructBridgeGuardRailAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.fillConstructBridgeGuardRail)
+    verify { style.getStyleLayerProperty("id", "fill-construct-bridge-guard-rail") }
+  }
+
+  @Test
   fun fillElevationReferenceSet() {
     val layer = fillLayer("id", "source") {}
     layer.bindTo(style)
@@ -360,6 +428,241 @@ class FillLayerTest {
     val expectedValue = true
     assertEquals(expectedValue, layer.fillAntialias)
     verify { style.getStyleLayerProperty("id", "fill-antialias") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorSet() {
+    val layer = fillLayer("id", "source") {}
+    val testValue = "rgba(0, 0, 0, 1)"
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColor(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "rgba(0, 0, 0, 1)")
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), layer.fillBridgeGuardRailColor?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeSetAfterInitialization() {
+    val layer = fillLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeSet() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("fill-bridge-guard-rail-color-use-theme"))
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.fillBridgeGuardRailColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillBridgeGuardRailColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.fillBridgeGuardRailColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillBridgeGuardRailColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.fillBridgeGuardRailColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color-use-theme") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColor(expression)
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillBridgeGuardRailColorAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillBridgeGuardRailColorAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillBridgeGuardRailColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", layer.fillBridgeGuardRailColor)
+    assertEquals(Color.BLACK, layer.fillBridgeGuardRailColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorAsColorIntSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColor(Color.CYAN)
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color", capture(valueSlot)) }
+    assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(Color.RED, layer.fillBridgeGuardRailColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorTransitionSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillBridgeGuardRailColorTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-bridge-guard-rail-color-transition") }
+  }
+
+  @Test
+  fun fillBridgeGuardRailColorTransitionSetDsl() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillBridgeGuardRailColorTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-bridge-guard-rail-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
   @Test
@@ -1288,6 +1591,241 @@ class FillLayerTest {
   }
 
   @Test
+  fun fillTunnelStructureColorSet() {
+    val layer = fillLayer("id", "source") {}
+    val testValue = "rgba(0, 0, 0, 1)"
+    layer.bindTo(style)
+    layer.fillTunnelStructureColor(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "rgba(0, 0, 0, 1)")
+  }
+
+  @Test
+  fun fillTunnelStructureColorGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), layer.fillTunnelStructureColor?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeSetAfterInitialization() {
+    val layer = fillLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.fillTunnelStructureColorUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeSet() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("fill-tunnel-structure-color-use-theme"))
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.fillTunnelStructureColorUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillTunnelStructureColorUseThemeAsExpressionSet() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillTunnelStructureColorUseTheme(expression)
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "none")
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeAsExpressionGet() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillTunnelStructureColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(null, layer.fillTunnelStructureColorUseThemeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeAsExpressionGetFromLiteral() {
+    val expression = literal("none")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillTunnelStructureColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorUseThemeAsExpressionGetFromString() {
+    val testValue = "none"
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorUseTheme(testValue)
+    }
+    layer.bindTo(style)
+    assertEquals(literal(testValue).toString(), layer.fillTunnelStructureColorUseThemeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color-use-theme") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillTunnelStructureColor(expression)
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillTunnelStructureColorAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillTunnelStructureColorAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillTunnelStructureColorAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillTunnelStructureColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", layer.fillTunnelStructureColor)
+    assertEquals(Color.BLACK, layer.fillTunnelStructureColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorAsColorIntSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillTunnelStructureColor(Color.CYAN)
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color", capture(valueSlot)) }
+    assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun fillTunnelStructureColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(Color.RED, layer.fillTunnelStructureColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorTransitionSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillTunnelStructureColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillTunnelStructureColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillTunnelStructureColorTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-tunnel-structure-color-transition") }
+  }
+
+  @Test
+  fun fillTunnelStructureColorTransitionSetDsl() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillTunnelStructureColorTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-tunnel-structure-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun fillZOffsetSet() {
     val layer = fillLayer("id", "source") {}
     val testValue = 1.0
@@ -1463,6 +2001,38 @@ class FillLayerTest {
   // Default property getter tests
 
   @Test
+  fun defaultFillConstructBridgeGuardRailTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), FillLayer.defaultFillConstructBridgeGuardRail?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-construct-bridge-guard-rail") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillConstructBridgeGuardRailAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillConstructBridgeGuardRailAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-construct-bridge-guard-rail") }
+  }
+
+  @Test
+  fun defaultFillConstructBridgeGuardRailAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", FillLayer.defaultFillConstructBridgeGuardRailAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, FillLayer.defaultFillConstructBridgeGuardRail)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-construct-bridge-guard-rail") }
+  }
+
+  @Test
   fun defaultFillElevationReferenceTest() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("none")
 
@@ -1556,6 +2126,90 @@ class FillLayerTest {
     val expectedValue = true
     assertEquals(expectedValue, FillLayer.defaultFillAntialias)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias") }
+  }
+
+  @Test
+  fun defaultFillBridgeGuardRailColorTest() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), FillLayer.defaultFillBridgeGuardRailColor?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun defaultFillBridgeGuardRailColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, FillLayer.defaultFillBridgeGuardRailColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color-use-theme") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun defaultFillBridgeGuardRailColorAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillBridgeGuardRailColorAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun defaultFillBridgeGuardRailColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(expression.toString(), FillLayer.defaultFillBridgeGuardRailColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", FillLayer.defaultFillBridgeGuardRailColor)
+    assertEquals(Color.BLACK, FillLayer.defaultFillBridgeGuardRailColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun defaultFillBridgeGuardRailColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(Color.RED, FillLayer.defaultFillBridgeGuardRailColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color") }
+  }
+
+  @Test
+  fun defaultFillBridgeGuardRailColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillLayer.defaultFillBridgeGuardRailColorTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-bridge-guard-rail-color-transition") }
   }
 
   @Test
@@ -1921,6 +2575,90 @@ class FillLayerTest {
     assertEquals(FillTranslateAnchor.MAP.value, FillLayer.defaultFillTranslateAnchorAsExpression.toString())
     assertEquals(FillTranslateAnchor.MAP, FillLayer.defaultFillTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor") }
+  }
+
+  @Test
+  fun defaultFillTunnelStructureColorTest() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), FillLayer.defaultFillTunnelStructureColor?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun defaultFillTunnelStructureColorUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, FillLayer.defaultFillTunnelStructureColorUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color-use-theme") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun defaultFillTunnelStructureColorAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillTunnelStructureColorAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun defaultFillTunnelStructureColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(expression.toString(), FillLayer.defaultFillTunnelStructureColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", FillLayer.defaultFillTunnelStructureColor)
+    assertEquals(Color.BLACK, FillLayer.defaultFillTunnelStructureColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun defaultFillTunnelStructureColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(Color.RED, FillLayer.defaultFillTunnelStructureColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color") }
+  }
+
+  @Test
+  fun defaultFillTunnelStructureColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillLayer.defaultFillTunnelStructureColorTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-tunnel-structure-color-transition") }
   }
 
   @Test

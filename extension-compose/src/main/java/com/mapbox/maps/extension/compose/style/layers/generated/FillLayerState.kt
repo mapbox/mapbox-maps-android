@@ -33,9 +33,13 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 public class FillLayerState
 @OptIn(MapboxExperimental::class)
 private constructor(
+  initialFillConstructBridgeGuardRail: BooleanValue,
   initialFillElevationReference: FillElevationReferenceValue,
   initialFillSortKey: DoubleValue,
   initialFillAntialias: BooleanValue,
+  initialFillBridgeGuardRailColor: ColorValue,
+  initialFillBridgeGuardRailColorUseTheme: StringValue,
+  initialFillBridgeGuardRailColorTransition: Transition,
   initialFillColor: ColorValue,
   initialFillColorUseTheme: StringValue,
   initialFillColorTransition: Transition,
@@ -50,6 +54,9 @@ private constructor(
   initialFillTranslate: DoubleListValue,
   initialFillTranslateTransition: Transition,
   initialFillTranslateAnchor: FillTranslateAnchorValue,
+  initialFillTunnelStructureColor: ColorValue,
+  initialFillTunnelStructureColorUseTheme: StringValue,
+  initialFillTunnelStructureColorTransition: Transition,
   initialFillZOffset: DoubleValue,
   initialFillZOffsetTransition: Transition,
   initialVisibility: VisibilityValue,
@@ -64,9 +71,13 @@ private constructor(
    */
   @OptIn(MapboxExperimental::class)
   public constructor() : this(
+    initialFillConstructBridgeGuardRail = BooleanValue.INITIAL,
     initialFillElevationReference = FillElevationReferenceValue.INITIAL,
     initialFillSortKey = DoubleValue.INITIAL,
     initialFillAntialias = BooleanValue.INITIAL,
+    initialFillBridgeGuardRailColor = ColorValue.INITIAL,
+    initialFillBridgeGuardRailColorUseTheme = StringValue.INITIAL,
+    initialFillBridgeGuardRailColorTransition = Transition.INITIAL,
     initialFillColor = ColorValue.INITIAL,
     initialFillColorUseTheme = StringValue.INITIAL,
     initialFillColorTransition = Transition.INITIAL,
@@ -81,6 +92,9 @@ private constructor(
     initialFillTranslate = DoubleListValue.INITIAL,
     initialFillTranslateTransition = Transition.INITIAL,
     initialFillTranslateAnchor = FillTranslateAnchorValue.INITIAL,
+    initialFillTunnelStructureColor = ColorValue.INITIAL,
+    initialFillTunnelStructureColorUseTheme = StringValue.INITIAL,
+    initialFillTunnelStructureColorTransition = Transition.INITIAL,
     initialFillZOffset = DoubleValue.INITIAL,
     initialFillZOffsetTransition = Transition.INITIAL,
     initialVisibility = VisibilityValue.INITIAL,
@@ -96,6 +110,14 @@ private constructor(
    */
   @MapboxExperimental
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
+
+  @MapboxExperimental
+  private val fillConstructBridgeGuardRailState: MutableState<BooleanValue> = mutableStateOf(initialFillConstructBridgeGuardRail)
+  /**
+   *  Determines whether bridge guard rails are added for elevated roads. Default value: "true".
+   */
+  @MapboxExperimental
+  public var fillConstructBridgeGuardRail: BooleanValue by fillConstructBridgeGuardRailState
 
   @MapboxExperimental
   private val fillElevationReferenceState: MutableState<FillElevationReferenceValue> = mutableStateOf(initialFillElevationReference)
@@ -116,6 +138,30 @@ private constructor(
    *  Whether or not the fill should be antialiased. Default value: true.
    */
   public var fillAntialias: BooleanValue by fillAntialiasState
+
+  @MapboxExperimental
+  private val fillBridgeGuardRailColorState: MutableState<ColorValue> = mutableStateOf(initialFillBridgeGuardRailColor)
+  /**
+   *  The color of bridge guard rail. Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  public var fillBridgeGuardRailColor: ColorValue by fillBridgeGuardRailColorState
+
+  @MapboxExperimental
+  private val fillBridgeGuardRailColorUseThemeState: MutableState<StringValue> = mutableStateOf(initialFillBridgeGuardRailColorUseTheme)
+  /**
+   *  Overrides applying of color theme for [fillBridgeGuardRailColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var fillBridgeGuardRailColorUseTheme: StringValue by fillBridgeGuardRailColorUseThemeState
+
+  @MapboxExperimental
+  private val fillBridgeGuardRailColorTransitionState: MutableState<Transition> = mutableStateOf(initialFillBridgeGuardRailColorTransition)
+  /**
+   *  Defines the transition of [fillBridgeGuardRailColor].
+   */
+  @MapboxExperimental
+  public var fillBridgeGuardRailColorTransition: Transition by fillBridgeGuardRailColorTransitionState
 
   private val fillColorState: MutableState<ColorValue> = mutableStateOf(initialFillColor)
   /**
@@ -206,6 +252,30 @@ private constructor(
   public var fillTranslateAnchor: FillTranslateAnchorValue by fillTranslateAnchorState
 
   @MapboxExperimental
+  private val fillTunnelStructureColorState: MutableState<ColorValue> = mutableStateOf(initialFillTunnelStructureColor)
+  /**
+   *  The color of tunnel structures (tunnel entrance and tunnel walls). Default value: "rgba(241, 236, 225, 255)".
+   */
+  @MapboxExperimental
+  public var fillTunnelStructureColor: ColorValue by fillTunnelStructureColorState
+
+  @MapboxExperimental
+  private val fillTunnelStructureColorUseThemeState: MutableState<StringValue> = mutableStateOf(initialFillTunnelStructureColorUseTheme)
+  /**
+   *  Overrides applying of color theme for [fillTunnelStructureColor] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var fillTunnelStructureColorUseTheme: StringValue by fillTunnelStructureColorUseThemeState
+
+  @MapboxExperimental
+  private val fillTunnelStructureColorTransitionState: MutableState<Transition> = mutableStateOf(initialFillTunnelStructureColorTransition)
+  /**
+   *  Defines the transition of [fillTunnelStructureColor].
+   */
+  @MapboxExperimental
+  public var fillTunnelStructureColorTransition: Transition by fillTunnelStructureColorTransitionState
+
+  @MapboxExperimental
   private val fillZOffsetState: MutableState<DoubleValue> = mutableStateOf(initialFillZOffset)
   /**
    *  Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
@@ -254,9 +324,13 @@ private constructor(
   @Composable
   @OptIn(MapboxExperimental::class)
   internal fun UpdateProperties(layerNode: LayerNode) {
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillConstructBridgeGuardRailState, "fill-construct-bridge-guard-rail")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillElevationReferenceState, "fill-elevation-reference")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillSortKeyState, "fill-sort-key")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillAntialiasState, "fill-antialias")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillBridgeGuardRailColorState, "fill-bridge-guard-rail-color")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillBridgeGuardRailColorUseThemeState, "fill-bridge-guard-rail-color-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillBridgeGuardRailColorTransitionState, "fill-bridge-guard-rail-color-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillColorState, "fill-color")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillColorUseThemeState, "fill-color-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillColorTransitionState, "fill-color-transition")
@@ -271,6 +345,9 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, fillTranslateState, "fill-translate")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillTranslateTransitionState, "fill-translate-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillTranslateAnchorState, "fill-translate-anchor")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillTunnelStructureColorState, "fill-tunnel-structure-color")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillTunnelStructureColorUseThemeState, "fill-tunnel-structure-color-use-theme")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillTunnelStructureColorTransitionState, "fill-tunnel-structure-color-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillZOffsetState, "fill-z-offset")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillZOffsetTransitionState, "fill-z-offset-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, visibilityState, "visibility")

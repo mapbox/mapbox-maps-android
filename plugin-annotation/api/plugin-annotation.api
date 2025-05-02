@@ -123,6 +123,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun getCircleColorInt ()Ljava/lang/Integer;
 	public final fun getCircleColorString ()Ljava/lang/String;
 	public final fun getCircleColorUseTheme ()Ljava/lang/String;
+	public final fun getCircleElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleElevationReference;
 	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
 	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;
@@ -146,6 +147,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun setCircleColorInt (Ljava/lang/Integer;)V
 	public final fun setCircleColorString (Ljava/lang/String;)V
 	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
+	public final fun setCircleElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleElevationReference;)V
 	public final fun setCircleEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setCircleOpacity (Ljava/lang/Double;)V
 	public final fun setCirclePitchAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;)V
@@ -749,29 +751,43 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotation$Companion;
 	public static final field ID_KEY Ljava/lang/String;
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Polygon;)V
+	public final fun getFillBridgeGuardRailColorInt ()Ljava/lang/Integer;
+	public final fun getFillBridgeGuardRailColorString ()Ljava/lang/String;
+	public final fun getFillBridgeGuardRailColorUseTheme ()Ljava/lang/String;
 	public final fun getFillColorInt ()Ljava/lang/Integer;
 	public final fun getFillColorString ()Ljava/lang/String;
 	public final fun getFillColorUseTheme ()Ljava/lang/String;
+	public final fun getFillConstructBridgeGuardRail ()Ljava/lang/Boolean;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColorInt ()Ljava/lang/Integer;
 	public final fun getFillOutlineColorString ()Ljava/lang/String;
 	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
+	public final fun getFillTunnelStructureColorInt ()Ljava/lang/Integer;
+	public final fun getFillTunnelStructureColorString ()Ljava/lang/String;
+	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public synthetic fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Geometry;
 	public fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Polygon;
 	public final fun getPoints ()Ljava/util/List;
 	public fun getType ()Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public final fun setFillBridgeGuardRailColorInt (Ljava/lang/Integer;)V
+	public final fun setFillBridgeGuardRailColorString (Ljava/lang/String;)V
+	public final fun setFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillColorInt (Ljava/lang/Integer;)V
 	public final fun setFillColorString (Ljava/lang/String;)V
 	public final fun setFillColorUseTheme (Ljava/lang/String;)V
+	public final fun setFillConstructBridgeGuardRail (Ljava/lang/Boolean;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColorInt (Ljava/lang/Integer;)V
 	public final fun setFillOutlineColorString (Ljava/lang/String;)V
 	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
+	public final fun setFillTunnelStructureColorInt (Ljava/lang/Integer;)V
+	public final fun setFillTunnelStructureColorString (Ljava/lang/String;)V
+	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setPoints (Ljava/util/List;)V
 	public fun setUsedDataDrivenProperties ()V
@@ -788,9 +804,13 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun create (Ljava/lang/String;)Ljava/util/List;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
+	public final fun getFillBridgeGuardRailColorInt ()Ljava/lang/Integer;
+	public final fun getFillBridgeGuardRailColorString ()Ljava/lang/String;
+	public final fun getFillBridgeGuardRailColorUseTheme ()Ljava/lang/String;
 	public final fun getFillColorInt ()Ljava/lang/Integer;
 	public final fun getFillColorString ()Ljava/lang/String;
 	public final fun getFillColorUseTheme ()Ljava/lang/String;
+	public final fun getFillConstructBridgeGuardRail ()Ljava/lang/Boolean;
 	public final fun getFillElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;
 	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
 	public final fun getFillOpacity ()Ljava/lang/Double;
@@ -801,13 +821,20 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
+	public final fun getFillTunnelStructureColorInt ()Ljava/lang/Integer;
+	public final fun getFillTunnelStructureColorString ()Ljava/lang/String;
+	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getSlot ()Ljava/lang/String;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
+	public final fun setFillBridgeGuardRailColorInt (Ljava/lang/Integer;)V
+	public final fun setFillBridgeGuardRailColorString (Ljava/lang/String;)V
+	public final fun setFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillColorInt (Ljava/lang/Integer;)V
 	public final fun setFillColorString (Ljava/lang/String;)V
 	public final fun setFillColorUseTheme (Ljava/lang/String;)V
+	public final fun setFillConstructBridgeGuardRail (Ljava/lang/Boolean;)V
 	public final fun setFillElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillElevationReference;)V
 	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
@@ -818,6 +845,9 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
+	public final fun setFillTunnelStructureColorInt (Ljava/lang/Integer;)V
+	public final fun setFillTunnelStructureColorString (Ljava/lang/String;)V
+	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun setSlot (Ljava/lang/String;)V
@@ -835,48 +865,70 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 
 public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions : com/mapbox/maps/plugin/annotation/AnnotationOptions {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions$Companion;
+	public static final field PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR Ljava/lang/String;
+	public static final field PROPERTY_FILL_BRIDGE_GUARD_RAIL_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_FILL_COLOR Ljava/lang/String;
 	public static final field PROPERTY_FILL_COLOR_USE_THEME Ljava/lang/String;
+	public static final field PROPERTY_FILL_CONSTRUCT_BRIDGE_GUARD_RAIL Ljava/lang/String;
 	public static final field PROPERTY_FILL_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_FILL_OUTLINE_COLOR Ljava/lang/String;
 	public static final field PROPERTY_FILL_OUTLINE_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_FILL_PATTERN Ljava/lang/String;
 	public static final field PROPERTY_FILL_SORT_KEY Ljava/lang/String;
+	public static final field PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR Ljava/lang/String;
+	public static final field PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_FILL_Z_OFFSET Ljava/lang/String;
 	public fun <init> ()V
 	public synthetic fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
 	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotation;
 	public final fun getData ()Lcom/google/gson/JsonElement;
 	public final fun getDraggable ()Z
+	public final fun getFillBridgeGuardRailColor ()Ljava/lang/String;
+	public final fun getFillBridgeGuardRailColorUseTheme ()Ljava/lang/String;
 	public final fun getFillColor ()Ljava/lang/String;
 	public final fun getFillColorUseTheme ()Ljava/lang/String;
+	public final fun getFillConstructBridgeGuardRail ()Ljava/lang/Boolean;
 	public final fun getFillOpacity ()Ljava/lang/Double;
 	public final fun getFillOutlineColor ()Ljava/lang/String;
 	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
 	public final fun getFillSortKey ()Ljava/lang/Double;
+	public final fun getFillTunnelStructureColor ()Ljava/lang/String;
+	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getGeometry ()Lcom/mapbox/geojson/Polygon;
 	public final fun getPoints ()Ljava/util/List;
+	public final fun setFillBridgeGuardRailColor (Ljava/lang/String;)V
+	public final fun setFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillColor (Ljava/lang/String;)V
 	public final fun setFillColorUseTheme (Ljava/lang/String;)V
+	public final fun setFillConstructBridgeGuardRail (Ljava/lang/Boolean;)V
 	public final fun setFillOpacity (Ljava/lang/Double;)V
 	public final fun setFillOutlineColor (Ljava/lang/String;)V
 	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
+	public final fun setFillTunnelStructureColor (Ljava/lang/String;)V
+	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun withData (Lcom/google/gson/JsonElement;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withDraggable (Z)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillBridgeGuardRailColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillBridgeGuardRailColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillConstructBridgeGuardRail (Z)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOutlineColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOutlineColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillOutlineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillPattern (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillSortKey (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillTunnelStructureColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillTunnelStructureColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
+	public final fun withFillTunnelStructureColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withFillZOffset (D)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withGeometry (Lcom/mapbox/geojson/Polygon;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;
 	public final fun withPoints (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationOptions;

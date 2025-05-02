@@ -72,6 +72,32 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillConstructBridgeGuardRailTest() {
+    val testValue = true
+    val layer = fillLayer("id", "source") {
+      fillConstructBridgeGuardRail(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.fillConstructBridgeGuardRail?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillConstructBridgeGuardRailAsExpressionTest() {
+    val expression = get {
+      literal("boolean")
+    }
+    val layer = fillLayer("id", "source") {
+      fillConstructBridgeGuardRail(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillConstructBridgeGuardRailAsExpression.toString())
+    assertEquals(null, layer.fillConstructBridgeGuardRail)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillElevationReferenceTest() {
     val layer = fillLayer("id", "source") {
       fillElevationReference(FillElevationReference.NONE)
@@ -143,6 +169,108 @@ class FillLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.fillAntialiasAsExpression.toString())
     assertEquals(true, layer.fillAntialias!!)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorTest() {
+    val testValue = "rgba(0, 0, 0, 1)"
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColor(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.fillBridgeGuardRailColor?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorAsExpressionTest() {
+    val expression = toColor {
+      get {
+        literal("color")
+      }
+    }
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColor(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillBridgeGuardRailColorAsExpression.toString())
+    assertEquals(null, layer.fillBridgeGuardRailColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.fillBridgeGuardRailColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.fillBridgeGuardRailColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorAsColorIntTest() {
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColor(Color.CYAN)
+    }
+    setupLayer(layer)
+    assertEquals(Color.CYAN, layer.fillBridgeGuardRailColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorUseTheme() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.fillBridgeGuardRailColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillBridgeGuardRailColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillBridgeGuardRailColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillBridgeGuardRailColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillBridgeGuardRailColorTransition)
   }
 
   @Test
@@ -573,6 +701,108 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillTunnelStructureColorTest() {
+    val testValue = "rgba(0, 0, 0, 1)"
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColor(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.fillTunnelStructureColor?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorAsExpressionTest() {
+    val expression = toColor {
+      get {
+        literal("color")
+      }
+    }
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColor(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillTunnelStructureColorAsExpression.toString())
+    assertEquals(null, layer.fillTunnelStructureColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.fillTunnelStructureColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.fillTunnelStructureColorUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorAsColorIntTest() {
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColor(Color.CYAN)
+    }
+    setupLayer(layer)
+    assertEquals(Color.CYAN, layer.fillTunnelStructureColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorUseTheme() {
+    val theme = "none"
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.fillTunnelStructureColorUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillTunnelStructureColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillTunnelStructureColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillTunnelStructureColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillTunnelStructureColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillZOffsetTest() {
     val testValue = 1.0
     val layer = fillLayer("id", "source") {
@@ -663,12 +893,20 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", FillLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", FillLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", FillLayer.defaultMaxZoom)
+    assertNotNull("defaultFillConstructBridgeGuardRail should not be null", FillLayer.defaultFillConstructBridgeGuardRail)
+    assertNotNull("defaultFillConstructBridgeGuardRailAsExpression should not be null", FillLayer.defaultFillConstructBridgeGuardRailAsExpression)
     assertNotNull("defaultFillElevationReference should not be null", FillLayer.defaultFillElevationReference)
     assertNotNull("defaultFillElevationReferenceAsExpression should not be null", FillLayer.defaultFillElevationReferenceAsExpression)
     assertNotNull("defaultFillSortKey should not be null", FillLayer.defaultFillSortKey)
     assertNotNull("defaultFillSortKeyAsExpression should not be null", FillLayer.defaultFillSortKeyAsExpression)
     assertNotNull("defaultFillAntialias should not be null", FillLayer.defaultFillAntialias)
     assertNotNull("defaultFillAntialiasAsExpression should not be null", FillLayer.defaultFillAntialiasAsExpression)
+    assertNotNull("defaultFillBridgeGuardRailColor should not be null", FillLayer.defaultFillBridgeGuardRailColor)
+    assertNotNull("defaultFillBridgeGuardRailColorAsExpression should not be null", FillLayer.defaultFillBridgeGuardRailColorAsExpression)
+    assertNotNull("defaultFillBridgeGuardRailColorAsColorInt should not be null", FillLayer.defaultFillBridgeGuardRailColorAsColorInt)
+    assertNotNull("defaultFillBridgeGuardRailColorUseTheme should not be null", FillLayer.defaultFillBridgeGuardRailColorUseTheme)
+    assertNotNull("defaultFillBridgeGuardRailColorUseThemeAsExpression should not be null", FillLayer.defaultFillBridgeGuardRailColorUseThemeAsExpression)
+    assertNotNull("defaultFillBridgeGuardRailColorTransition should not be null", FillLayer.defaultFillBridgeGuardRailColorTransition)
     assertNotNull("defaultFillColor should not be null", FillLayer.defaultFillColor)
     assertNotNull("defaultFillColorAsExpression should not be null", FillLayer.defaultFillColorAsExpression)
     assertNotNull("defaultFillColorAsColorInt should not be null", FillLayer.defaultFillColorAsColorInt)
@@ -694,6 +932,12 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillTranslateTransition should not be null", FillLayer.defaultFillTranslateTransition)
     assertNotNull("defaultFillTranslateAnchor should not be null", FillLayer.defaultFillTranslateAnchor)
     assertNotNull("defaultFillTranslateAnchorAsExpression should not be null", FillLayer.defaultFillTranslateAnchorAsExpression)
+    assertNotNull("defaultFillTunnelStructureColor should not be null", FillLayer.defaultFillTunnelStructureColor)
+    assertNotNull("defaultFillTunnelStructureColorAsExpression should not be null", FillLayer.defaultFillTunnelStructureColorAsExpression)
+    assertNotNull("defaultFillTunnelStructureColorAsColorInt should not be null", FillLayer.defaultFillTunnelStructureColorAsColorInt)
+    assertNotNull("defaultFillTunnelStructureColorUseTheme should not be null", FillLayer.defaultFillTunnelStructureColorUseTheme)
+    assertNotNull("defaultFillTunnelStructureColorUseThemeAsExpression should not be null", FillLayer.defaultFillTunnelStructureColorUseThemeAsExpression)
+    assertNotNull("defaultFillTunnelStructureColorTransition should not be null", FillLayer.defaultFillTunnelStructureColorTransition)
     assertNotNull("defaultFillZOffset should not be null", FillLayer.defaultFillZOffset)
     assertNotNull("defaultFillZOffsetAsExpression should not be null", FillLayer.defaultFillZOffsetAsExpression)
     assertNotNull("defaultFillZOffsetTransition should not be null", FillLayer.defaultFillZOffsetTransition)
@@ -708,9 +952,12 @@ class FillLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val fillConstructBridgeGuardRailTestValue = true
     val fillElevationReferenceTestValue = FillElevationReference.NONE
     val fillSortKeyTestValue = 1.0
     val fillAntialiasTestValue = true
+    val fillBridgeGuardRailColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillBridgeGuardRailColorUseThemeTestValue = "default"
     val fillColorTestValue = "rgba(0, 0, 0, 1)"
     val fillColorUseThemeTestValue = "default"
     val fillEmissiveStrengthTestValue = 1.0
@@ -720,6 +967,8 @@ class FillLayerTest : BaseStyleTest() {
     val fillPatternTestValue = "abc"
     val fillTranslateTestValue = listOf(0.0, 1.0)
     val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
+    val fillTunnelStructureColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillTunnelStructureColorUseThemeTestValue = "default"
     val fillZOffsetTestValue = 1.0
 
     val minZoomTestValue = 10.0
@@ -729,9 +978,12 @@ class FillLayerTest : BaseStyleTest() {
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
+      fillConstructBridgeGuardRail(fillConstructBridgeGuardRailTestValue)
       fillElevationReference(fillElevationReferenceTestValue)
       fillSortKey(fillSortKeyTestValue)
       fillAntialias(fillAntialiasTestValue)
+      fillBridgeGuardRailColor(fillBridgeGuardRailColorTestValue)
+      fillBridgeGuardRailColorUseTheme(fillBridgeGuardRailColorUseThemeTestValue)
       fillColor(fillColorTestValue)
       fillColorUseTheme(fillColorUseThemeTestValue)
       fillEmissiveStrength(fillEmissiveStrengthTestValue)
@@ -741,6 +993,8 @@ class FillLayerTest : BaseStyleTest() {
       fillPattern(fillPatternTestValue)
       fillTranslate(fillTranslateTestValue)
       fillTranslateAnchor(fillTranslateAnchorTestValue)
+      fillTunnelStructureColor(fillTunnelStructureColorTestValue)
+      fillTunnelStructureColorUseTheme(fillTunnelStructureColorUseThemeTestValue)
       fillZOffset(fillZOffsetTestValue)
     }
 
@@ -755,9 +1009,12 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillConstructBridgeGuardRailTestValue, cachedLayer.fillConstructBridgeGuardRail)
     assertEquals(fillElevationReferenceTestValue, cachedLayer.fillElevationReference)
     assertEquals(fillSortKeyTestValue, cachedLayer.fillSortKey)
     assertEquals(fillAntialiasTestValue, cachedLayer.fillAntialias)
+    assertEquals(fillBridgeGuardRailColorTestValue, cachedLayer.fillBridgeGuardRailColor)
+    assertEquals(fillBridgeGuardRailColorUseThemeTestValue, cachedLayer.fillBridgeGuardRailColorUseTheme)
     assertEquals(fillColorTestValue, cachedLayer.fillColor)
     assertEquals(fillColorUseThemeTestValue, cachedLayer.fillColorUseTheme)
     assertEquals(fillEmissiveStrengthTestValue, cachedLayer.fillEmissiveStrength)
@@ -767,6 +1024,8 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(fillPatternTestValue, cachedLayer.fillPattern)
     assertEquals(fillTranslateTestValue, cachedLayer.fillTranslate)
     assertEquals(fillTranslateAnchorTestValue, cachedLayer.fillTranslateAnchor)
+    assertEquals(fillTunnelStructureColorTestValue, cachedLayer.fillTunnelStructureColor)
+    assertEquals(fillTunnelStructureColorUseThemeTestValue, cachedLayer.fillTunnelStructureColorUseTheme)
     assertEquals(fillZOffsetTestValue, cachedLayer.fillZOffset)
   }
 }
