@@ -1,7 +1,9 @@
 package com.mapbox.maps.extension.compose.internal
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCallback
+import com.mapbox.maps.CameraChangedCoalescedCallback
 import com.mapbox.maps.MapIdleCallback
 import com.mapbox.maps.MapLoadedCallback
 import com.mapbox.maps.MapLoadingErrorCallback
@@ -30,6 +32,7 @@ internal class MapEventCancelableHolder constructor(private val mapboxMap: Mapbo
   private var styleImageMissingCancelable: Cancelable? = null
   private var styleImageRemoveUnusedCancelable: Cancelable? = null
   private var cameraChangedCancelable: Cancelable? = null
+  private var cameraChangedCoalescedCancelable: Cancelable? = null
   private var renderFrameStartedCancelable: Cancelable? = null
   private var renderFrameFinishedCancelable: Cancelable? = null
   private var resourceRequestCancelable: Cancelable? = null
@@ -87,6 +90,12 @@ internal class MapEventCancelableHolder constructor(private val mapboxMap: Mapbo
   fun cancelAndSubscribeToCameraChanged(callback: CameraChangedCallback?) {
     cameraChangedCancelable?.cancel()
     cameraChangedCancelable = callback?.let(mapboxMap::subscribeCameraChanged)
+  }
+
+  @MapboxExperimental
+  fun cancelAndSubscribeToCameraChangedCoalesced(callback: CameraChangedCoalescedCallback?) {
+    cameraChangedCoalescedCancelable?.cancel()
+    cameraChangedCoalescedCancelable = callback?.let(mapboxMap::subscribeCameraChangedCoalesced)
   }
 
   fun cancelAndSubscribeToRenderFrameStarted(callback: RenderFrameStartedCallback?) {

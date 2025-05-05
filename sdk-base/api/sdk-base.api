@@ -2226,6 +2226,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapListenerDele
 	public abstract fun removeOnStyleImageUnusedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageUnusedListener;)V
 	public abstract fun removeOnStyleLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleLoadedListener;)V
 	public abstract fun subscribeCameraChanged (Lcom/mapbox/maps/CameraChangedCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun subscribeCameraChangedCoalesced (Lcom/mapbox/maps/CameraChangedCoalescedCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun subscribeGenericEvent (Ljava/lang/String;Lcom/mapbox/maps/GenericEventCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun subscribeMapIdle (Lcom/mapbox/maps/MapIdleCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun subscribeMapLoaded (Lcom/mapbox/maps/MapLoadedCallback;)Lcom/mapbox/common/Cancelable;

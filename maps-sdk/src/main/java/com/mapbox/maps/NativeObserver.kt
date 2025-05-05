@@ -404,6 +404,15 @@ internal class NativeObserver(
     listener = onCameraChangeListener,
   )
 
+  @com.mapbox.annotation.MapboxExperimental
+  fun subscribeCameraChangedCoalesced(
+    cameraChangedCoalescedCallback: CameraChangedCoalescedCallback,
+    onCancel: (() -> Unit)? = null,
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(cameraChangedCoalescedCallback),
+    onCancel = onCancel,
+  )
+
   fun subscribeMapLoaded(
     mapLoadedCallback: MapLoadedCallback,
     onCancel: (() -> Unit)? = null,

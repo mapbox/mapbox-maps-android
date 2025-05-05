@@ -1834,6 +1834,20 @@ class MapboxMap :
   }
 
   /**
+   * Subscribes to [CameraChangedCoalesced] event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param cameraChangedCoalescedCallback the callback to be invoked when the camera changes.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  @com.mapbox.annotation.MapboxExperimental
+  override fun subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback: CameraChangedCoalescedCallback): Cancelable {
+    checkNativeMap("subscribeCameraChangedCoalesced")
+    return nativeObserver.subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback)
+  }
+
+  /**
    * Subscribes to `RenderFrameStarted` event.
    *
    * @return cancellable object to unsubscribe from the event.

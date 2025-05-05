@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.bindgen.DataRef
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
@@ -18,6 +19,7 @@ import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.R
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -517,36 +519,110 @@ class ObservableEventsTest : BaseMapTest() {
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   @Test
   @UiThread
   fun subscribeCameraChangedEvent() {
-    val latch = CountDownLatch(1)
+    var latch = CountDownLatch(2)
+    val targetCameraOptions2 = cameraOptions {
+        center(Point.fromLngLat(1.0, 2.0))
+        zoom(16.0)
+        bearing(18.0)
+        pitch(85.0)
+        anchor(ScreenCoordinate(1.0, 2.0))
+        padding(EdgeInsets(1.0, 2.0, 3.0, 4.0))
+      }
 
+    val cameraChangedResults = mutableListOf<CameraChanged>()
     val listener = CameraChangedCallback {
-      val actualCameraOption = it.cameraState.toCameraOptions()
-      assertNotNull(it.timestamp.time)
-      assertEquals(targetCameraOptions.center!!.longitude(), actualCameraOption.center!!.longitude(), EPS)
-      assertEquals(targetCameraOptions.center!!.latitude(), actualCameraOption.center!!.latitude(), EPS)
-      assertEquals(targetCameraOptions.zoom, actualCameraOption.zoom)
+      cameraChangedResults.add(it)
       latch.countDown()
     }
 
-    rule.scenario.onActivity { activity ->
-      activity.runOnUiThread {
-        mapboxMap.apply {
-          cancelable = subscribeCameraChanged(listener)
-          setCamera(targetCameraOptions)
-        }
-      }
-    }
-    loadTestStyle()
-    if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
+    val coalescedLatch = CountDownLatch(1)
+    val cameraChangedCoalescedResults = mutableListOf<CameraChangedCoalesced>()
+    val listenerCoalesced = CameraChangedCoalescedCallback {
+      cameraChangedCoalescedResults.add(it)
+      coalescedLatch.countDown()
     }
 
-    rule.scenario.onActivity { activity ->
-      activity.runOnUiThread {
-        cancelable.cancel()
+    var cancelableCoalesced: Cancelable? = null
+
+    try {
+      rule.scenario.onActivity { activity ->
+        activity.runOnUiThread {
+          mapboxMap.apply {
+            cancelable = subscribeCameraChanged(listener)
+            cancelableCoalesced = subscribeCameraChangedCoalesced(listenerCoalesced)
+            setCamera(targetCameraOptions)
+            setCamera(targetCameraOptions2)
+          }
+        }
+      }
+      loadTestStyle()
+
+      // For normal camera changed events we should get 2 events (same as `setCamera` calls)
+      assertTrue(latch.await(20_000, TimeUnit.MILLISECONDS))
+      assertEquals(2, cameraChangedResults.size)
+      assertNotNull(cameraChangedResults[0].timestamp.time)
+      with(cameraChangedResults[0].cameraState) {
+        assertEquals(targetCameraOptions.center!!.longitude(), center.longitude(), EPS)
+        assertEquals(targetCameraOptions.center!!.latitude(), center.latitude(), EPS)
+        assertEquals(targetCameraOptions.zoom, zoom)
+      }
+      with(cameraChangedResults[1].cameraState) {
+        assertEquals(targetCameraOptions2.center!!.longitude(), center.longitude(), EPS)
+        assertEquals(targetCameraOptions2.center!!.latitude(), center.latitude(), EPS)
+        assertEquals(targetCameraOptions2.zoom, zoom)
+        assertEquals(targetCameraOptions2.bearing, bearing)
+        assertEquals(targetCameraOptions2.pitch, pitch)
+        assertEquals(targetCameraOptions2.anchor, ScreenCoordinate(1.0, 2.0))
+        assertEquals(targetCameraOptions2.padding, EdgeInsets(1.0, 2.0, 3.0, 4.0))
+      }
+
+      // We should only get one coalesced event instead of 2 like the normal camera changed event
+      assertEquals(1, cameraChangedCoalescedResults.size)
+      assertNotNull(cameraChangedCoalescedResults[0].timestamp.time)
+      with(cameraChangedCoalescedResults[0].cameraState) {
+        assertEquals(targetCameraOptions2.center!!.longitude(), center.longitude(), EPS)
+        assertEquals(targetCameraOptions2.center!!.latitude(), center.latitude(), EPS)
+        assertEquals(targetCameraOptions2.zoom, zoom)
+        assertEquals(targetCameraOptions2.bearing, bearing)
+        assertEquals(targetCameraOptions2.pitch, pitch)
+        assertEquals(targetCameraOptions2.anchor, ScreenCoordinate(1.0, 2.0))
+        assertEquals(targetCameraOptions2.padding, EdgeInsets(1.0, 2.0, 3.0, 4.0))
+      }
+
+      latch = CountDownLatch(1)
+      rule.scenario.onActivity { activity ->
+        activity.runOnUiThread {
+          mapboxMap.apply {
+            setCamera(targetCameraOptions2)
+          }
+        }
+      }
+      assertTrue(latch.await(20_000, TimeUnit.MILLISECONDS))
+      assertEquals(3, cameraChangedResults.size)
+      assertNotNull(cameraChangedResults[2].timestamp.time)
+      with(cameraChangedResults[2].cameraState) {
+        assertEquals(targetCameraOptions2.center!!.longitude(), center.longitude(), EPS)
+        assertEquals(targetCameraOptions2.center!!.latitude(), center.latitude(), EPS)
+        assertEquals(targetCameraOptions2.zoom, zoom)
+        assertEquals(targetCameraOptions2.bearing, bearing)
+        assertEquals(targetCameraOptions2.pitch, pitch)
+        assertEquals(targetCameraOptions2.anchor, ScreenCoordinate(1.0, 2.0))
+        assertEquals(targetCameraOptions2.padding, EdgeInsets(1.0, 2.0, 3.0, 4.0))
+      }
+
+      // The camera changed coalesced event should not be called again because we pushed the same
+      // camera than last time.
+      assertEquals(1, cameraChangedCoalescedResults.size)
+    } finally {
+      rule.scenario.onActivity { activity ->
+        activity.runOnUiThread {
+          cancelable.cancel()
+          cancelableCoalesced?.cancel()
+        }
       }
     }
   }

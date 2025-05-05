@@ -2197,6 +2197,7 @@ package com.mapbox.maps.plugin.delegates {
     method @Deprecated public void removeOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
     method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
     method public com.mapbox.common.Cancelable subscribeCameraChanged(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.Cancelable subscribeCameraChangedCoalesced(com.mapbox.maps.CameraChangedCoalescedCallback cameraChangedCoalescedCallback);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable subscribeGenericEvent(String eventName, com.mapbox.maps.GenericEventCallback genericEventCallback);
     method public com.mapbox.common.Cancelable subscribeMapIdle(com.mapbox.maps.MapIdleCallback mapIdleCallback);
     method public com.mapbox.common.Cancelable subscribeMapLoaded(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);

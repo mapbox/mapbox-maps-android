@@ -3,6 +3,7 @@ package com.mapbox.maps.debugoptions
 import android.content.Context
 import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapboxMap
 import kotlin.properties.Delegates
@@ -49,11 +50,12 @@ internal class DebugOptionsController {
     this.paddingDebugViewProvider = paddingDebugViewProvider
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun updateCameraSubscriptionIfNeeded() {
     val needsCameraUpdates =
       options.contains(MapViewDebugOptions.CAMERA) || options.contains(MapViewDebugOptions.PADDING)
     if (started && needsCameraUpdates && cameraSubscriptionCancelable == null) {
-      cameraSubscriptionCancelable = mapboxMap.subscribeCameraChanged {
+      cameraSubscriptionCancelable = mapboxMap.subscribeCameraChangedCoalesced {
         cameraDebugView?.update(it.cameraState)
         paddingDebugView?.update(it.cameraState.padding)
       }

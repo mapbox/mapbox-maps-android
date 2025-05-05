@@ -1,6 +1,8 @@
 package com.mapbox.maps
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
+import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.genericEvents
 import com.mapbox.maps.coroutine.mapIdleEvents
@@ -26,6 +28,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -96,6 +99,16 @@ class MapboxMapExtTest {
       NativeObserver::subscribeCameraChanged,
       MapboxMap::cameraChangedEvents,
       CameraChangedCallback::run
+    )
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun cameraChangedCoalescedEvents() = runTest {
+    testEventsFlow(
+      NativeObserver::subscribeCameraChangedCoalesced,
+      MapboxMap::cameraChangedCoalescedEvents,
+      CameraChangedCoalescedCallback::run
     )
   }
 
@@ -225,26 +238,50 @@ class MapboxMapExtTest {
     assertSame(genericEvent2, values[2])
   }
 
+  private inline fun <reified EventCallback : Any, reified EventData> testEventsFlow(
+    crossinline subscribe: NativeObserver.(EventCallback, (() -> Unit)?) -> Cancelable,
+    crossinline getFlow: MapboxMap.() -> Flow<EventData>,
+    crossinline callbackRun: EventCallback.(EventData) -> Unit
+  ) = runTest {
+    val callbackSlot: CapturingSlot<EventCallback> = CapturingSlot()
+    val onCancelSlot = slot<() -> Unit>()
+    every {
+      nativeObserver.subscribe(
+        capture(callbackSlot),
+        capture(onCancelSlot),
+      )
+    } returns cancelable
+    testEventsFlow<EventCallback, EventData>(getFlow, callbackSlot, callbackRun, onCancelSlot)
+  }
+
   private inline fun <reified EventCallback : Any, reified EventListener : Any, reified EventData> testEventsFlow(
     crossinline subscribe: NativeObserver.(EventCallback, (() -> Unit)?, EventListener?) -> Cancelable,
     crossinline getFlow: MapboxMap.() -> Flow<EventData>,
     crossinline callbackRun: EventCallback.(EventData) -> Unit
   ) = runTest {
     val callbackSlot: CapturingSlot<EventCallback> = CapturingSlot()
-    val listenerSlot = mutableListOf<EventListener?>()
     val onCancelSlot = slot<() -> Unit>()
     every {
       nativeObserver.subscribe(
         capture(callbackSlot),
         capture(onCancelSlot),
-        captureNullable(listenerSlot),
+        any(),
       )
     } returns cancelable
 
+    testEventsFlow<EventCallback, EventData>(getFlow, callbackSlot, callbackRun, onCancelSlot)
+  }
+
+  private inline fun <reified EventCallback : Any, reified EventData> TestScope.testEventsFlow(
+      crossinline getFlow: MapboxMap.() -> Flow<EventData>,
+      callbackSlot: CapturingSlot<EventCallback>,
+      callbackRun: EventCallback.(EventData) -> Unit,
+      onCancelSlot: CapturingSlot<() -> Unit>
+  ) {
     val values = mutableListOf<EventData>()
     backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
       mapboxMap.getFlow().toList(values)
-    }
+      }
     val styleDataLoaded: EventData = mockk()
     callbackSlot.captured.callbackRun(styleDataLoaded)
     callbackSlot.captured.callbackRun(styleDataLoaded)

@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.CameraChangedCallback
+import com.mapbox.maps.CameraChangedCoalescedCallback
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -30,7 +31,8 @@ internal class ScaleBarPluginImpl(
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   override var internalSettings: ScaleBarSettings = ScaleBarSettings { }
-  private val cameraChangeListener = CameraChangedCallback {
+  @OptIn(MapboxExperimental::class)
+  private val cameraChangedCoalescedCallback = CameraChangedCoalescedCallback {
     invalidateScaleBar(it.cameraState)
   }
   private var cancelable: Cancelable? = null
@@ -77,9 +79,10 @@ internal class ScaleBarPluginImpl(
   /**
    * Called when the plugin is first added to the map.
    */
+  @OptIn(MapboxExperimental::class)
   override fun initialize() {
     applySettings()
-    cancelable = mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
+    cancelable = mapListenerDelegate.subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback)
   }
 
   /**
@@ -115,11 +118,16 @@ internal class ScaleBarPluginImpl(
   /**
    * Defines whether the plugins is enabled or disabled.
    */
+  @OptIn(MapboxExperimental::class)
   override var enabled: Boolean
     get() = internalSettings.enabled
     set(value) {
+      if (internalSettings.enabled == value) {
+        // Skip if not changed
+        return
+      }
       if (value) {
-        cancelable = mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
+        cancelable = mapListenerDelegate.subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback)
         invalidateScaleBar()
       } else {
         cancelable?.cancel()

@@ -25,8 +25,9 @@ import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.maps.MapView
-import com.mapbox.maps.coroutine.cameraChangedEvents
+import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
@@ -61,6 +62,7 @@ public class MapCompassScope internal constructor(
    * @param resetToNorthUponClick Whether the map camera bearing should be reset to 0 when the compass is clicked.
    * @param content The composable to draw the compass.
    */
+  @OptIn(MapboxExperimental::class)
   @Composable
   public fun Compass(
     modifier: Modifier = Modifier,
@@ -83,7 +85,7 @@ public class MapCompassScope internal constructor(
     }
     LaunchedEffect(Unit) {
       compassBearing = -mapView.mapboxMap.cameraState.bearing.toFloat()
-      mapView.mapboxMap.cameraChangedEvents
+      mapView.mapboxMap.cameraChangedCoalescedEvents
         .map { it.cameraState.bearing.toFloat() }
         .distinctUntilChanged { old, new ->
           abs(old - new) < 0.1

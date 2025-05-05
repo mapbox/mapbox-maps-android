@@ -319,6 +319,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun startPerformanceStatisticsCollection (Lcom/mapbox/maps/PerformanceStatisticsOptions;Lcom/mapbox/maps/PerformanceStatisticsCallback;)V
 	public final fun stopPerformanceStatisticsCollection ()V
 	public fun subscribeCameraChanged (Lcom/mapbox/maps/CameraChangedCallback;)Lcom/mapbox/common/Cancelable;
+	public fun subscribeCameraChangedCoalesced (Lcom/mapbox/maps/CameraChangedCoalescedCallback;)Lcom/mapbox/common/Cancelable;
 	public fun subscribeGenericEvent (Ljava/lang/String;Lcom/mapbox/maps/GenericEventCallback;)Lcom/mapbox/common/Cancelable;
 	public fun subscribeMapIdle (Lcom/mapbox/maps/MapIdleCallback;)Lcom/mapbox/common/Cancelable;
 	public fun subscribeMapLoaded (Lcom/mapbox/maps/MapLoadedCallback;)Lcom/mapbox/common/Cancelable;
@@ -635,6 +636,7 @@ public final class com/mapbox/maps/coroutine/MapboxMapExtKt {
 	public static final synthetic fun cameraForCoordinates (Lcom/mapbox/maps/MapboxMap;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun cameraForCoordinates$default (Lcom/mapbox/maps/MapboxMap;Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final synthetic fun genericEvents (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public static final synthetic fun getCameraChangedCoalescedEvents (Lcom/mapbox/maps/MapboxMap;)Lkotlinx/coroutines/flow/Flow;
 	public static final synthetic fun getCameraChangedEvents (Lcom/mapbox/maps/MapboxMap;)Lkotlinx/coroutines/flow/Flow;
 	public static final synthetic fun getFeatureState (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getFeatureState$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;

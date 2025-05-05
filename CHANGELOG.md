@@ -2,6 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 11.12.0
+## Bug fixes 🐞
+* Fix registering camera change listener every time `mapView.scalebar.enabled` is called with value `true` and it was already enabled.
 
 # 11.12.0-rc.1 April 24, 2025
 ## Bug fixes 🐞

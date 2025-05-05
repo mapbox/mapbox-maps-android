@@ -320,6 +320,7 @@ package com.mapbox.maps {
     method @com.mapbox.maps.MapboxExperimental public void startPerformanceStatisticsCollection(com.mapbox.maps.PerformanceStatisticsOptions options, com.mapbox.maps.PerformanceStatisticsCallback callback);
     method @com.mapbox.maps.MapboxExperimental public void stopPerformanceStatisticsCollection();
     method public com.mapbox.common.Cancelable subscribeCameraChanged(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.Cancelable subscribeCameraChangedCoalesced(com.mapbox.maps.CameraChangedCoalescedCallback cameraChangedCoalescedCallback);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable subscribeGenericEvent(String eventName, com.mapbox.maps.GenericEventCallback genericEventCallback);
     method public com.mapbox.common.Cancelable subscribeMapIdle(com.mapbox.maps.MapIdleCallback mapIdleCallback);
     method public com.mapbox.common.Cancelable subscribeMapLoaded(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
@@ -568,6 +569,7 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
     method @Deprecated @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.CameraOptions! cameraForCoordinates(com.mapbox.maps.MapboxMap, java.util.List<? extends com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding = null, double maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
     method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.GenericEvent>! genericEvents(com.mapbox.maps.MapboxMap, String eventName);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> getCameraChangedCoalescedEvents(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterChildren(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);

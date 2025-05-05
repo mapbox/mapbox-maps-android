@@ -187,6 +187,12 @@ class NativeObserverTest {
     subscribe(NativeObserver::subscribeCameraChanged, NativeMapImpl::subscribe)
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @Test
+  fun subscribeCameraChangeCoalesced() {
+    subscribe(NativeObserver::subscribeCameraChangedCoalesced, NativeMapImpl::subscribe)
+  }
+
   @Test
   fun subscribeMapIdleListener() {
     subscribe(NativeObserver::subscribeMapIdle, NativeMapImpl::subscribe)

@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -15,6 +14,7 @@ import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -288,13 +288,13 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     val paddingView = PaddingView(context)
     addView(paddingView)
     mapboxMap.subscribeCameraChanged {
-      mapboxMap.cameraState.padding.let {
+      it.cameraState.padding.let { padding ->
         paddingView.updateRect(
           Rect(
-            /* left = */ it.left.toInt(),
-            /* top = */ it.top.toInt(),
-            /* right = */ width - it.right.toInt(),
-            /* bottom = */ height - it.bottom.toInt()
+            /* left = */ padding.left.toInt(),
+            /* top = */ padding.top.toInt(),
+            /* right = */ width - padding.right.toInt(),
+            /* bottom = */ height - padding.bottom.toInt()
           )
         )
       }
@@ -497,15 +497,12 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    return BitmapDrawable(
-      resources,
-      BitmapUtils.drawableToBitmap(
-        getDrawable(this, R.drawable.bg_dva_eta)!!,
-        flipX = flipX,
-        flipY = flipY,
-        tint = tint,
-      )
-    )
+    return BitmapUtils.drawableToBitmap(
+      getDrawable(this, R.drawable.bg_dva_eta)!!,
+      flipX = flipX,
+      flipY = flipY,
+      tint = tint,
+    ).toDrawable(resources)
   }
 
   private companion object {

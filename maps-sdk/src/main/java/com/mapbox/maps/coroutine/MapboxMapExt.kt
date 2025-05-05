@@ -6,6 +6,7 @@
 
 package com.mapbox.maps.coroutine
 
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -305,6 +306,19 @@ val MapboxMap.cameraChangedEvents: Flow<CameraChanged>
   @JvmSynthetic
   get() = callbackFlow<CameraChanged> {
     val cancelable = nativeObserver.subscribeCameraChanged(::trySendBlocking, onCancel = channel::close)
+    awaitClose(cancelable::cancel)
+  }.flowOn(Dispatchers.Main.immediate).conflate()
+
+/**
+ * Conflated [Flow] of [CameraChangedCoalesced] updates from [MapboxMap.subscribeCameraChangedCoalesced].
+ */
+@get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@com.mapbox.annotation.MapboxExperimental
+val MapboxMap.cameraChangedCoalescedEvents: Flow<CameraChangedCoalesced>
+  @JvmSynthetic
+  get() = callbackFlow<CameraChangedCoalesced> {
+    val cancelable =
+      nativeObserver.subscribeCameraChangedCoalesced(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate).conflate()
 
