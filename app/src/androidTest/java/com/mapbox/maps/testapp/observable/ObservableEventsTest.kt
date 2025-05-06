@@ -126,7 +126,7 @@ class ObservableEventsTest : BaseMapTest() {
       assertNotNull(eventData.timestamp.time)
       assertEquals(MapLoadingErrorType.STYLE, eventData.type)
       assertEquals(
-        "Failed to load style 'https://wrongurl': Couldn't connect to server: Exception in CronetUrlRequest: net::ERR_NAME_NOT_RESOLVED, ErrorCode=1, InternalErrorCode=-105, Retryable=false",
+        "Failed to load style: Couldn't connect to server: Exception in CronetUrlRequest: net::ERR_NAME_NOT_RESOLVED, ErrorCode=1, InternalErrorCode=-105, Retryable=false",
         eventData.message
       )
       latch.countDown()
