@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.12.0
+
 ## Features ✨ and improvements 🏁
 * Mapbox Geofencing is now available in public preview. Follow the documentation and code examples for [Android](https://docs.mapbox.com/android/maps/guides/geofencing/) and [iOS](https://docs.mapbox.com/ios/maps/guides/geofencing/) to get started.
 * Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
